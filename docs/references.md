@@ -8,8 +8,8 @@
 - Brun, J.-M. & Mohammadi, B. (2008). Reduced-Order Modelling of Dispersion. In Glowinski, R. & Neittaanmäki, P. (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, Springer, Dordrecht, chap. 14, p. 245 et s. https://doi.org/10.1007/978-1-4020-8758-5_14
 - Bozon, N., Mohammadi, B. & Sinfort, C. (2008). Similitude and non symmetric geometry for dispersion modelling. e-sta vol. 5, numéro spécial STIC et Environnement'07.
 - Bozon, N., Sinfort, C. & Mohammadi, B. (2009). A GIS-based atmospheric dispersion model (plateforme Drift-X, plugin QGIS). HAL : https://hal.science/hal-00468863 (PDF : https://hal.science/hal-00468863/file/MO2009-PUB00026817.pdf)
-- - Bozon, N., Sinfort, C. & Mohammadi, B. (2010). A GIS-based atmospheric dispersion model. *Journal Européen des Systèmes Automatisés* 44(4-5), 445–461. https://doi.org/10.3166/jesa.44.445-461 (version journal du papier STIC & Environnement 2009 / HAL hal-00468863)
-Mohammadi, B. & Bozon, N. (2009). GIS-based atmospheric dispersion modelling. *Applied Geomatics* 1, 33–39. https://doi.org/10.1007/s12518-009-0006-0
+- Mohammadi, B. & Bozon, N. (2009). GIS-based atmospheric dispersion modelling. *Applied Geomatics* 1, 33–39. https://doi.org/10.1007/s12518-009-0006-0
+- Bozon, N., Sinfort, C. & Mohammadi, B. (2010). A GIS-based atmospheric dispersion model. *Journal Européen des Systèmes Automatisés* 44(4-5), 445–461. https://doi.org/10.3166/jesa.44.445-461 (version journal du papier STIC & Environnement 2009 / HAL hal-00468863) *Applied Geomatics* 1, 33–39. https://doi.org/10.1007/s12518-009-0006-0
 
 ## État de l'art — dispersion opérationnelle et réglementaire
 
