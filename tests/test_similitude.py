@@ -11,7 +11,7 @@ from jdriftx.similitude import (
 )
 
 
-@pytest.fixture()
+@pytest.fixture
 def grille() -> tuple[np.ndarray, np.ndarray]:
     """Grille laterale/verticale a x = 500 m."""
     y = np.linspace(-500.0, 500.0, 401)

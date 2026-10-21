@@ -60,6 +60,11 @@ select = [
 ]
 ignore = ["D203", "D213", "ANN401", "PLR0913", "PLR2004"]
 
+[tool.ruff.lint.per-file-ignores]
+# Tests : asserts autorises (S101), docstrings et annotations assouplies,
+# style pytest tolere (PT001).
+"tests/**" = ["S101", "D", "ANN", "PT001"]
+
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
