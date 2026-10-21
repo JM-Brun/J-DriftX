@@ -15,16 +15,19 @@ J-DriftX prédit la dispersion (panaches, puffs, dérive de pulvérisation) via 
 | 2006 | *Reduced order modelling of dispersion* — B. Mohammadi, J.-M. Brun & O. Pironneau | Springer (non ouvert) |
 | 2008 | [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14) — J.-M. Brun & B. Mohammadi | Springer, CSM vol. 16, chap. 14, p. 245 et s. |
 | 2008 | *Similitude and non symmetric geometry for dispersion modelling* — N. Bozon, B. Mohammadi & C. Sinfort | e-sta vol. 5 (STIC & Environnement'07) |
-| 2009 | [A GIS-based atmospheric dispersion model — plateforme Drift-X](https://hal.science/hal-00468863) — N. Bozon, C. Sinfort & B. Mohammadi | HAL hal-00468863 |
+| 2009 | [A GIS-based atmospheric dispersion model — plateforme Drift-X](https://hal.science/hal-00468863) — N. Bozon, C. Sinfort & B. Mohammadi | Actes STIC & Environnement, HAL hal-00468863 |
 | 2009 | [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0) — B. Mohammadi & N. Bozon | *Applied Geomatics* 1, 33–39 |
+| 2010 | [A GIS-based atmospheric dispersion model](https://doi.org/10.3166/jesa.44.445-461) — N. Bozon, C. Sinfort & B. Mohammadi | *JESA* 44(4-5), 445–461 (version journal) |
 
-Détails : [docs/references.md](docs/references.md)
+Détails : [docs/references.md](docs/references.md) — **fiches de lecture par papier source** (contenus extraits, équations, statuts d'accès) : [docs/04-revues-papiers-sources.md](docs/04-revues-papiers-sources.md)
 
 ## Documentation
 
 Le site documentaire (Quarto, publié sur GitHub Pages) présente le projet, ses fondements théoriques, les hypothèses et leurs limites, les théories mathématiques et la bibliographie :
 
 📚 https://jm-brun.github.io/J-DriftX/
+
+Pages à lire en priorité : [Lectures des sources](https://jm-brun.github.io/J-DriftX/projet/lectures.html) (revue par papier du corpus historique) et le [Glossaire](https://jm-brun.github.io/J-DriftX/glossaire.html) (les notions clés expliquées simplement).
 
 Sources du site : [site/](site/) — rendu local : <code>quarto preview site</code>
 
@@ -34,7 +37,7 @@ Sources du site : [site/](site/) — rendu local : <code>quarto preview site</co
 site/                 # Site Quarto (GitHub Pages)
 src/jdriftx/          # Cœur Python (similitude, métrique, contraintes)
 tests/                # Pytest (tests physiques + unitaires)
-docs/                 # Documents de travail (audit, revue, roadmap, biblio)
+docs/                 # Documents de travail (audit, revues, roadmap, biblio)
 .github/workflows/    # CI (ruff, pytest) + publication du site
 ~~~
 
@@ -60,7 +63,7 @@ uv run pre-commit run --all-files
 
 ## Statut
 
-🚧 Phase 0 (documentation, audit, revue, roadmap) → M1 (noyau Python + benchmark gaussien). Voir [docs/03-roadmap-jdriftx-v2.md](docs/03-roadmap-jdriftx-v2.md).
+🚧 Phase 0 (documentation, audit, revues, roadmap) → M1 (noyau Python + benchmark gaussien). Voir [docs/03-roadmap-jdriftx-v2.md](docs/03-roadmap-jdriftx-v2.md).
 
 ## Licence
 

@@ -47,8 +47,10 @@ L'analyse complète : [Audit de l'héritage](projet/audit.qmd), [Panorama de l'�
 | Entrée | Contenu |
 |---|---|
 | [Le projet](projet/heritage.qmd) | Héritage Drift-X (2006–2009), [objectifs](projet/objectifs.qmd), audit et feuille de route |
+| [Lectures des sources](projet/lectures.qmd) | Ce que dit chaque papier du corpus historique, et ce que J-DriftX en reprend |
 | [Fondements théoriques](theorie/modele-direct.qmd) | Modèle direct, réduction a priori, similitude, métrique, contraintes, assimilation — avec les théories mathématiques |
 | [Qualité & tests](projet/qualite.qmd) | Tests unitaires Given/When/Then — la physique comme oracle |
 | [Hypothèses](hypotheses/catalogue.qmd) | Le catalogue des hypothèses du modèle et leurs limites de validité |
 | [État de l'art](etat-art/panorama.qmd) | Ce qui a changé entre 2008 et 2026, et le [positionnement](etat-art/positionnement.qmd) de J-DriftX |
+| [Glossaire](glossaire.qmd) | Les notions clés (τ, similitude, ROM, assimilation…) expliquées en français simple |
 | [Références](references.qmd) | Bibliographie complète, du corpus historique aux travaux récents |
