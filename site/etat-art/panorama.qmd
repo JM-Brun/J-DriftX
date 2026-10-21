@@ -16,7 +16,7 @@ Le couple AgDRIFT/AGDISP domine le risque réglementaire. Son extension gaussien
 
 ## ROM et apprentissage
 
-Les ROM de dispersion se sont standardisées : Arnoldi (2015, gain ~×2500 vs CFD), POD+RBF sur 144 km² (Pékin, 2021), ROM physique POD-NN (Bologne, 2024), POD-GPR depuis ~50 snapshots LES (2024), ROM + assimilation de données (2023). Les surrogates neuronaux montent en gamme : opérateurs de Fourier pour panaches radioactifs (2024) [@fno2024plume], architectures masquage/correction 3D (CEA, 2024), prévision d'accidents Seveso (2022). **Toutes exigent un modèle haute-fidélité et des snapshots** ; leur faiblesse déclarée est la généralisation hors domaine.
+Les ROM de dispersion se sont standardisées : Arnoldi (2015, gain ~×2500 vs CFD) [@vervecken2015rom], POD+RBF sur 144 km² (Pékin, 2021), ROM physique POD-NN (Bologne, 2024), POD-GPR depuis ~50 snapshots LES (2024), ROM + assimilation de données (2023). Les surrogates neuronaux montent en gamme : opérateurs de Fourier pour panaches radioactifs (2024) [@fno2024plume], architectures masquage/correction 3D (CEA, 2024), prévision d'accidents Seveso (2022). **Toutes exigent un modèle haute-fidélité et des snapshots** ; leur faiblesse déclarée est la généralisation hors domaine.
 
 ## Identification de source (STE)
 

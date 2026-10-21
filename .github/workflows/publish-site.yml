@@ -20,9 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/configure-pages@v5
+
       - uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: pre-release
 
       - uses: quarto-dev/quarto-actions/render@v2
         with:
