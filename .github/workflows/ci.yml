@@ -21,7 +21,7 @@ jobs:
         run: uv sync
 
       - name: Lint (ruff)
-        run: uv run ruff check .
+        run: uv run ruff check . --output-format=github
 
       - name: Format (ruff)
         run: uv run ruff format --check .
