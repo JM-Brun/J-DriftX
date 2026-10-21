@@ -31,7 +31,11 @@ jobs:
           fi
 
       - name: Typage (mypy)
-        run: uv run mypy
+        run: |
+          if ! uv run mypy; then
+            echo "::error title=mypy::$(uv run mypy 2>&1 | tr '\n' ' ' | head -c 3000)"
+            exit 1
+          fi
 
       - name: Tests (pytest)
         run: uv run pytest --cov=jdriftx --cov-report=term-missing
