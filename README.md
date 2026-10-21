@@ -11,7 +11,7 @@ J-DriftX prédit la dispersion (panaches, puffs, dérive de pulvérisation) via 
 | Année | Référence | Support |
 |---|---|---|
 | 2006 | *Modélisation à complexité réduite de la dérive* — J.-M. Brun, thèse de doctorat, Université Montpellier II | — (non déposée en ligne à ce jour) |
-| 2006 | [Similitude généralisée et modélisation géométrique à complexité réduite](https://www.em-consulte.com/article/69927) — B. Mohammadi & J.-M. Brun | *C. R. Mécanique* 334(10), 634–638 |
+| 2006 | [Similitude généralisée et modélisation géométrique à complexité réduite](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) — B. Mohammadi & J.-M. Brun | *C. R. Mécanique* 334(10), 634–638 (PDF libre, Académie des sciences) |
 | 2006 | *Reduced order modelling of dispersion* — B. Mohammadi, J.-M. Brun & O. Pironneau | Springer (non ouvert) |
 | 2008 | [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14) — J.-M. Brun & B. Mohammadi | Springer, CSM vol. 16, chap. 14, p. 245 et s. |
 | 2008 | *Similitude and non symmetric geometry for dispersion modelling* — N. Bozon, B. Mohammadi & C. Sinfort | e-sta vol. 5 (STIC & Environnement'07) |
@@ -19,7 +19,7 @@ J-DriftX prédit la dispersion (panaches, puffs, dérive de pulvérisation) via 
 | 2009 | [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0) — B. Mohammadi & N. Bozon | *Applied Geomatics* 1, 33–39 |
 | 2010 | [A GIS-based atmospheric dispersion model](https://doi.org/10.3166/jesa.44.445-461) — N. Bozon, C. Sinfort & B. Mohammadi | *JESA* 44(4-5), 445–461 (version journal) |
 
-Détails : [docs/references.md](docs/references.md) — **fiches de lecture par papier source** (contenus extraits, équations, statuts d'accès) : [docs/04-revues-papiers-sources.md](docs/04-revues-papiers-sources.md)
+Détails : [docs/references.md](docs/references.md) — **fiches de lecture par papier source** (contenus extraits, équations, statuts d'accès) : [docs/04-revues-papiers-sources.md](docs/04-revues-papiers-sources.md) — PDF et extractions texte des sources primaires : [raw/](raw/)
 
 ## Documentation
 
@@ -38,6 +38,7 @@ site/                 # Site Quarto (GitHub Pages)
 src/jdriftx/          # Cœur Python (similitude, métrique, contraintes)
 tests/                # Pytest (tests physiques + unitaires)
 docs/                 # Documents de travail (audit, revues, roadmap, biblio)
+raw/                  # Sources primaires : PDF du corpus + extractions texte brutes
 .github/workflows/    # CI (ruff, pytest) + publication du site
 ~~~
 
