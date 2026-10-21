@@ -1,0 +1,48 @@
+---
+title: "Métriques non riemanniennes"
+---
+
+# Des distances qui ne se retournent pas : métriques non riemanniennes
+
+La métrique travel-time de Drift-X appartient à une famille d'objets plus ancienne que le projet : les métriques **non riemanniennes**, où la « distance » dépend du sens de parcours, du mode de transport ou du point de vue. Cette page situe l'idée centrale du projet dans sa généalogie — de la cartographie des distances-temps en géographie humaine aux métriques de Finsler.
+
+## Riemannien, non riemannien : de quoi parle-t-on ?
+
+Une métrique **riemannienne** mesure les longueurs à l'aide d'un produit scalaire $g(\mathbf{x})$ qui varie doucement d'un point à l'autre : $ds^2 = g_{ij}\, dx^i dx^j$. La distance euclidienne du plan en est le cas particulier le plus simple. Elle est **symétrique et réversible** : la longueur d'un chemin ne dépend pas du sens dans lequel on le parcourt.
+
+Une métrique **non riemannienne** lève une ou plusieurs de ces hypothèses :
+
+| Famille | Ce qui change | Exemple |
+|---|---|---|
+| Quasi-métrique | la symétrie : $d(\mathbf{a} \to \mathbf{b}) \neq d(\mathbf{b} \to \mathbf{a})$ | temps de transport dans un vent : on ne remonte pas le courant |
+| Métrique de Finsler | la longueur dépend aussi de la **direction** de parcours | navigation de Zermelo dans un courant |
+| Distance-temps réseau | la longueur se mesure sur un **réseau** (routes, rails) | isochrones d'un réseau de transport |
+| Métrique de maillage | la longueur est pondérée par un tenseur anisotrope $M(\mathbf{x})$ | adaptation de maillage [@borouchaki1997delaunay] |
+
+![Trois boules unités : euclidienne (cercle), riemannienne (ellipse symétrique), non riemannienne (ovale décentré).](../images/boules-unites-metriques.svg)
+
+## L'ancrage géographique : les distances-temps de Muller (1979)
+
+L'idée que les postulats de la géométrie euclidienne sont souvent inapplicables en géographie humaine est ancienne. Jean-Claude Muller la formalise pour la cartographie : les distances et localisations géographiques **ne sont pas uniques** et varient suivant le type d'espace envisagé — économique, social, culturel ou mental ; parfois même, la métrique de ces espaces est **inconnue ou incomplète** [@muller1979persee]. Sa réponse : cartographier une métrique non euclidienne, la **distance-temps** — le temps de parcours du réseau de transport plutôt que les mètres au sol — et en accepter les déformations (isochrones, anamorphoses).
+
+Drift-X transpose exactement ce programme, avec un changement décisif de source : la métrique n'est plus reconstruite depuis des **données de réseau**, mais dérivée **de la physique** — le champ de vent à divergence nulle. La distance-temps du géographe devient le temps de transport advectif $\tau$ de la source au point (voir [Métrique travel-time](metrique-travel-time.qmd)) :
+
+$$
+\tau(\mathbf{x}_0 \to \mathbf{x}) = \int_\gamma \frac{ds}{|\mathbf{u}(s)|}.
+$$
+
+![Quasi-distance de Drift-X : τ(source→A) fini sur la ligne de courant, τ(A→source) = ∞ ; d(B,A) = ∞ si A est en amont de B.](../images/metrique-non-symetrique.svg)
+
+## Le lien mathématique : navigation de Zermelo et métriques de Finsler
+
+Le problème de **Zermelo** (1931) demande le chemin le plus rapide d'un point à un autre pour un mobile de vitesse propre fixe naviguant dans un **courant**. La réponse est une métrique de **Randers** — le prototype des métriques de Finsler, où la longueur d'un trajet dépend de sa direction : naviguer avec le courant coûte moins cher que contre lui.
+
+Un polluant advecté par le vent vit exactement dans ce type d'espace : son « coût » pour rejoindre un point en aval n'a rien à voir avec celui du chemin de retour. La métrique travel-time en est la version advective pure — le scalaire passif n'a pas de vitesse propre, il est purement transporté, et la non-symétrie devient infinie : $\tau(\mathbf{b} \to \mathbf{a}) = \infty$ dès que $\mathbf{a}$ est en amont.
+
+## Ce que J-DriftX hérite, et ce qu'il apporte
+
+- **Héritage géographique** [@muller1979persee] : la distance pertinente est celle *vécue par l'objet* — temps de parcours, pas mètres au sol ; la carte se déforme pour rester fidèle à cette métrique (isochrones, anamorphoses ; ici : courbes iso-$\tau$).
+- **Héritage numérique** [@borouchaki1997delaunay] : la spécification métrique gouverne la géométrie — technologie transférée de l'adaptation de maillage au panache.
+- **Apport Drift-X** : une métrique **reconstruite depuis la physique** (conservation de la masse, divergence nulle), évaluable **ponctuellement** sans maillage, et dont la non-symétrie encode le vent — ce qu'aucune distance-temps de réseau ne fait.
+
+La suite de la construction (coordonnées $(\tau, n)$, conservation sur les surfaces iso-$\tau$, limite $|\mathbf{u}| \to 0$) : page [Métrique travel-time](metrique-travel-time.qmd).
