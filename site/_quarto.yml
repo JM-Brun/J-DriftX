@@ -19,6 +19,8 @@ website:
     contents:
       - href: index.qmd
         text: "Accueil"
+      - href: glossaire.qmd
+        text: "Glossaire"
       - section: "Le projet"
         contents:
           - href: projet/heritage.qmd
@@ -27,6 +29,8 @@ website:
             text: "Objectifs de J-DriftX"
           - href: projet/audit.qmd
             text: "Audit de l'héritage"
+          - href: projet/lectures.qmd
+            text: "Lectures des sources"
           - href: projet/roadmap.qmd
             text: "Feuille de route"
           - href: projet/qualite.qmd

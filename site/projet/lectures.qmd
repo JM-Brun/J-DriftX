@@ -1,0 +1,100 @@
+---
+title: "Lectures des sources"
+---
+
+# Lectures des sources : que disent les papiers historiques ?
+
+Le corpus Drift-X compte sept publications (2006–2009). Cette page relit chaque papier **en français et sans jargon inutile** : ce qu'il dit, ce qu'on en a extrait, et ce que J-DriftX en reprend. Les fiches détaillées (contenus verbatim, équations, statuts d'accès) sont dans le dépôt : <code>docs/04-revues-papiers-sources.md</code>.
+
+::: {.callout-note}
+**Un principe de lecture honnête.** Chaque fiche ci-dessous distingue ce qui est **extrait du papier** (résumé, équations, architecture) de ce qui n'est **pas encore accessible** (thèse non déposée, articles introuvables). Rien n'est inventé pour combler les trous.
+:::
+
+## La thèse (2006) — le document fondateur, à déposer
+
+**Brun, J.-M., *Modélisation à complexité réduite de la dérive*, Université Montpellier II.**
+
+La thèse n'a jamais été numérisée ni déposée : elle est introuvable en ligne. On ne peut donc pas encore la relire. On sait seulement, par les bibliographies des autres papiers, qu'elle existe sous ce titre exact — et le résumé de l'article de 2006 ci-dessous en décrit le contenu scientifique contemporain.
+
+**Ce que J-DriftX en attend :** tout. C'est le document le plus complet sur le modèle ; le déposer sur HAL est l'action M0 de la [feuille de route](roadmap.qmd).
+
+## L'article de 2006 (C. R. Mécanique) — le manifeste en 5 pages
+
+**Mohammadi, B. & Brun, J.-M., « Similitude généralisée et modélisation géométrique à complexité réduite ».**
+
+Publié en octobre 2006 aux Comptes Rendus Mécanique, ce court papier pose les quatre piliers du projet, tous déjà présents :
+
+1. **Assimilation de données partielles** : on calibre le modèle sur les quelques mesures disponibles, pas sur un champ complet.
+2. **Solutions de similitude généralisées** : on part des formes connues des jets et panaches, étendues à une **métrique non symétrique basée sur les temps de transport**.
+3. **Sans EDP ni maillage** : aucune équation aux dérivées partielles n'est résolue.
+4. **Évaluation ponctuelle** : la concentration se calcule en un point isolé, sans calculer le champ entier.
+
+Les mots-clés de l'auteur disent tout : jets, similitude, modèles réduits, panaches.
+
+**Ce que J-DriftX en reprend :** c'est la référence-cadre du noyau Python — la métrique τ et l'évaluation ponctuelle sont exactement ce que testent les tests unitaires du socle. Voir [Métrique travel-time](../theorie/metrique-travel-time.qmd) et [Qualité & tests](qualite.qmd).
+
+## Le chapitre de 2008 (Springer) — le cahier des charges scientifique
+
+**Brun, J.-M. & Mohammadi, B., « Reduced-Order Modelling of Dispersion », chap. 14, p. 245 et s.**
+
+Version longue du travail (fournie par l'auteur), c'est la source la plus complète sur le cœur mathématique. Les premières pages extraites disent :
+
+- **Objectif affiché** : un coût si bas que l'assimilation et l'**analyse de risque par Monte Carlo massif** deviennent réalistes.
+- **Hiérarchie multi-niveaux** : chaque niveau fournit la condition d'entrée du niveau supérieur — champ proche de la buse (construit sur des observations expérimentales) → quantité quittant la sous-couche atmosphérique → transport longue distance.
+- **Le verrou central, cité mot pour mot** : généraliser les solutions de similitude « dans une métrique non symétrique basée sur les temps de transport pour rendre compte de vents non uniformes ».
+- **Un contrat de confiance** : les solutions approchées doivent rester solutions du modèle direct — divergence nulle du vent, conservation, positivité, linéarité.
+- **Positionnement anti-snapshots** : là où les modèles d'ordre réduits classiques projettent sur des solutions précalculées coûteuses d'une CFD, Drift-X vise à « supprimer le calcul de ces snapshots » en construisant l'espace de recherche à partir de la physique.
+
+**Ce que J-DriftX en reprend :** le cahier des charges du noyau — multi-niveaux, contraintes physiques, sensibilité analytique pour l'identification de source. Les exemples numériques (pages suivantes, à extraire) serviront de jeux de validation.
+
+## L'article e-sta de 2008 — le chaînon manquant
+
+**Bozon, N., Mohammadi, B. & Sinfort, C., « Similitude and non symmetric geometry for dispersion modelling ».**
+
+Premier papier avec N. Bozon et C. Sinfort (ITAP), donc la transition vers le monde viticole/SIG. Son titre (« similitude et géométrie non symétrique ») suggère qu'il introduit la **topographie** dans le modèle — mais il est introuvable en ligne (archives de la revue e-sta inaccessibles). À localiser auprès de la SEE ou des auteurs ; citation exacte conservée dans les fiches.
+
+## Le papier plateforme (2009) — le plus riche de tous
+
+**Bozon, N., Sinfort, C. & Mohammadi, B., « A GIS-based atmospheric dispersion model »** — actes STIC & Environnement (Calais), déposé sur [HAL](https://hal.science/hal-00468863). **Nouveauté de la relecture : une version journal existe**, *JESA* 44(4-5), 445–461, 2010.
+
+Le manuscrit intégral (17 pages) est accessible et documente tout : le modèle, le multi-niveaux, la topographie, et même le code. En voici l'essentiel, notion par notion :
+
+### Le modèle gaussien spatialisé
+
+La concentration d'un panache se décompose en un comportement le long de l'axe (décroissance exponentielle en fonction du vent) et un étalement transverse (gaussien). L'épaisseur δ du panache croît paraboliquement pour un jet laminaire, linéairement en turbulent — c'est la **similitude** fournie par la physique. Deux fonctions, a et b, contrôlent le tout : a décroît avec le vent, b croît avec le vent et décroît avec l'épaisseur.
+
+### Le multi-niveaux à 4 coins
+
+Pour couvrir à la fois 10 km² et 10 m², le domaine est emboîté en **3 niveaux rectangulaires homothétiques** (typiquement 20×20 points par niveau : topographie tous les 500 m au niveau grossier, tous les 50 cm au niveau fin). À chaque niveau, le vent et la concentration sont restreints par interpolation aux **4 coins** du rectangle — une construction qui **garantit mathématiquement** que le vent reste à divergence nulle et que la masse se conserve. C'est le secret du « sans maillage ».
+
+### La topographie
+
+Le MNT (modèle numérique de terrain) fournit la normale au sol. Une correction de type **Bernoulli-Newton** (la formule classique de la pression sur un cylindre en aéronautique) ajuste le vent pour rester parallèle au relief. Le papier souligne un point fin : même à vent uniforme, une pente **brise la symétrie** de la diffusion transverse — d'où la correction des fonctions a et b sous contrainte de conservation de la masse.
+
+### Les grandeurs utiles au risque
+
+Le modèle sort des **données intégrales** : dépôt au sol, quantité encore en suspension au-delà d'un rayon donné. Ce sont ces grandeurs qui alimentent l'analyse de risque géoréférencée (exposition des riverains, contamination des cours d'eau).
+
+### L'architecture logicielle historique
+
+Point inédit de cette relecture : le prototype historique était un **programme Fortran** dialoguant avec un plugin **QGIS** via des fichiers CSV — extraction du MNT par commandes GDAL, zoom multi-niveaux dessiné à la main (outil « Region Tool »), sorties en nuages de points (shapefile) interpolées en raster (algorithme inverse-distance de gdal_grid). Le noyau Python de J-DriftX remplace le Fortran ; le CSV reste une bonne interface de compatibilité, et la chaîne GDAL/QGIS reste la spécification de la future couche SIG.
+
+## Le papier journal de 2009 (Applied Geomatics) — la synthèse de positionnement
+
+**Mohammadi, B. & Bozon, N., « GIS-based atmospheric dispersion modelling », 7 pages.**
+
+La version la plus courte, utile pour situer le projet en une lecture : modèle multi-niveaux à faible complexité, **reconstruction de champ de vent**, scalaire passif, métrique non symétrique, assimilation, le tout dans un SIG open source. Le papier précise le principe d'emboîtement : « le modèle local fournit les conditions d'entrée des niveaux supérieurs ».
+
+**Ce que J-DriftX en reprend :** la formulation de référence pour communiquer (résumé de 7 pages à citer), et la bibliographie qui relie le projet à ses fondements (k-epsilon, optimisation de forme).
+
+## Ce qu'il reste à extraire
+
+| Priorité | Action | Verrou |
+|---|---|---|
+| Haute | Déposer la thèse 2006 sur HAL (M0), puis la relire | Document en possession de l'auteur |
+| Haute | Extraire la suite du chapitre 2008 (exemples numériques, sensibilité) | Chapitre fourni — OCR à poursuivre |
+| Moyenne | Localiser l'article e-sta 2008 | Archives SEE introuvables en ligne |
+| Moyenne | Localiser le recueil Springer 2006 (Mohammadi–Brun–Pironneau) | Introuvable en accès ouvert |
+| Moyenne | Textes intégraux CR 2006 et Applied Geomatics 2009 | Abonnements / tirés-à-part |
+
+Fiches complètes et sources d'accès : [docs/04-revues-papiers-sources.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/04-revues-papiers-sources.md). Notions à clarifier ? Voir le [glossaire](../glossaire.qmd).

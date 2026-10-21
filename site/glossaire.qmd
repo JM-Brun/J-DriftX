@@ -1,0 +1,71 @@
+---
+title: "Glossaire"
+---
+
+# Glossaire — les notions en français simple
+
+Le vocabulaire de la dispersion atmosphérique et de la modélisation réduite, expliqué en quelques phrases. Chaque terme renvoie vers la page théorique du site qui le développe.
+
+## Dispersion et pollution
+
+**Scalaire passif.** Une substance transportée par l'air **sans le modifier** : elle ne change pas le vent, ne réagit pas chimiquement. Un pesticide en suspension est traité comme un scalaire passif. → [Modèle direct](theorie/modele-direct.qmd)
+
+**Panache (plume).** La traînée allongée laissée par une source **continue** (une cheminée qui émet en permanence). → [Solutions de similitude](theorie/similitude.qmd)
+
+**Puff.** Une « bouffée » : la traînée d'une émission **brève et localisée** dans le temps (déversement accidentel).
+
+**Dérive de pulvérisation (spray drift).** La part d'un pesticide pulvérisé qui ne atteint pas la cible et part dans l'air — l'application historique de Drift-X, en viticulture, de la parcelle au bassin versant.
+
+**Near-field / far-field.** Le champ proche (près de la buse ou de la source : l'émission et sa distribution immédiate) et le champ lointain (le transport sur de grandes distances). Le modèle Drift-X couple les deux : le champ proche fournit les conditions d'entrée du transport.
+
+**Concentration.** Quantité de substance par volume d'air (typiquement en g/m³). C'est la grandeur que le modèle calcule en tout point.
+
+## Similitude et métrique
+
+**Solution de similitude.** Une forme **déjà connue** de la physique pour les jets et panaches : le profil de concentration suit des lois universelles (l'épaisseur croît paraboliquement pour un jet laminaire, linéairement en turbulent). Plutôt que de tout recalculer, on **part de ces formes**. → [Solutions de similitude](theorie/similitude.qmd)
+
+**Métrique des temps de transport (τ).** L'idée centrale de Drift-X. La distance naturelle n'est pas « x mètres » mais « le temps τ qu'il faut au vent pour aller de la source à ce point ». Avec un vent variable, τ dépend du chemin — c'est une **métrique non symétrique** : aller de A à B ne prend pas le même temps que de B à A. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
+
+**Non-symétrie.** Propriété clé de τ : les vents cisaillés et la topographie rendent le transport irréversible. C'est ce que teste le test unitaire « non-symétrie de la métrique ».
+
+**Topographie et MNT (DEM).** Le modèle numérique de terrain : l'altitude du sol en chaque point. Le MNT donne la normale au sol, utilisée pour « coller » le panache au relief. Le multi-niveaux permet de charger le MNT à la bonne résolution : grossière au loin, fine près des zones d'intérêt.
+
+## Réduction de complexité
+
+**Réduction a priori.** Construire l'espace des solutions possibles **à partir de la physique** (similitude) avant tout calcul — par opposition aux approches a posteriori. → [Réduction a priori](theorie/reduction-a-priori.qmd)
+
+**ROM (modèle d'ordre réduit).** Famille de méthodes qui remplacent une simulation complète par un calcul en petit nombre de dimensions. Les ROM classiques (POD…) commencent par calculer de nombreux *snapshots* d'une simulation complète — ce que Drift-X évite.
+
+**Snapshot.** Une solution complète précalculée d'un modèle coûteux (typiquement CFD), utilisée comme brique de base des ROM classiques. Drift-X n'en utilise pas : c'est sa différence structurelle.
+
+**Sans EDP, sans maillage.** Le modèle n'estime pas la solution d'équations aux dérivées partielles sur un maillage (grille de calcul); il **évalue une formule** en chaque point demandé. → [Modèle direct](theorie/modele-direct.qmd)
+
+**Évaluation ponctuelle.** Capacité à donner la concentration en **un seul point**, sans calculer le champ entier. C'est ce qui rend le coût marginal quasi nul — et Monte Carlo massif abordable. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
+
+**Multi-niveaux.** Domaines rectangulaires emboîtés (typiquement 3, de ~10 km² à ~10 m²), chaque niveau affinant le précédent par interpolation aux 4 coins. La construction garantit divergence nulle du vent et conservation de la masse. → [Réduction a priori](theorie/reduction-a-priori.qmd)
+
+## Contraintes et calibration
+
+**Contraintes physiques.** Le contrat de confiance du modèle : conservation de la masse, positivité des concentrations, superposition (linéarité), divergence nulle du vent généré. Le modèle approché doit rester solution du modèle direct. → [Contraintes physiques](theorie/contraintes-physiques.qmd)
+
+**Divergence nulle.** Le vent généré ne « crée » ni ne « détruit » d'air : c'est la condition d'incompressibilité, conservée par construction à chaque niveau du multi-niveaux.
+
+**Assimilation de données.** Régler les paramètres du modèle (a, b, …) sur les **mesures disponibles, même partielles** — quelques points de mesure suffisent, pas besoin d'un champ complet. → [Assimilation & identification](theorie/assimilation-identification.qmd)
+
+**Analyse de sensibilité.** Mesurer comment la sortie varie quand un paramètre bouge. Ici l'adjoint est **analytique, donc gratuit** : double usage, analyse de risque et identification de source. → [Assimilation & identification](theorie/assimilation-identification.qmd)
+
+**Identification de source (problème inverse).** À partir de concentrations mesurées, retrouver **d'où vient** la pollution : position, intensité, date de la source. L'autre face de l'analyse de sensibilité.
+
+**Adjoint.** Outil mathématique donnant la sensibilité de la sortie à tous les paramètres d'un coup. Dans Drift-X il s'obtient par dérivation de la formule — sans simulation supplémentaire.
+
+## Outils et logiciel
+
+**SIG (système d'information géographique).** Logiciel de gestion et de cartographie des données localisées. Le prototype historique était un plugin **QGIS** (open source) autour d'un cœur Fortran échangeant par fichiers CSV.
+
+**GDAL.** Bibliothèque open source de traitement des données géographiques — extraction du MNT, interpolation en raster. Le prototype l'utilisait déjà ; la future couche SIG de J-DriftX s'appuiera sur ses équivalents modernes.
+
+**Benchmark gaussien.** Le premier jalon de validation (M1 de la feuille de route) : comparer J-DriftX au modèle gaussien classique, la référence de la discipline. → [Qualité & tests](projet/qualite.qmd)
+
+---
+
+Une notion manquante ou obscure ? Ouvrez une [issue](https://github.com/JM-Brun/J-DriftX/issues) ou relisez les fiches détaillées : [Lectures des sources](projet/lectures.qmd).
