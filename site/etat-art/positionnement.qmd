@@ -15,13 +15,13 @@ title: "Positionnement de J-DriftX"
 | STE | Standards adjoint/bayésien | Adjoint **analytique** disponible par construction |
 | Confiance | Boîtes noires en quête d'interprétabilité | Contraintes physiques garanties, auditables |
 
-## Trois paris différenciants
+## Trois hypothèses différenciantes à tester
 
-1. **La métrique travel-time n'a pas été reprise** : dix-huit ans après, aucune approche concurrente n'a repris la généralisation des solutions de similitude par les temps de transport. La niche est intacte — et le far-field réglementaire la réclame.
-2. **Hybridation vertueuse** : DriftX comme *prior* physique et modèle d'évaluation ponctuelle ; l'apprentissage pour la calibration. Complémentaire des ROM-POD, concurrent de personne sur leur terrain, inattaquable sur le sien.
-3. **Garde-fou des surrogates ML** : là où un réseau diverge silencieusement hors domaine, le modèle analytique contraint (conservation, positivité) borné sur son domaine de validité explicite — l'argument de confiance pour les usages réglementaires et d'urgence.
+1. **Originalité de la métrique travel-time :** dans le corpus consulté, aucune approche concurrente identifiée ne reprend explicitement cette généralisation. Cette observation ne constitue pas une preuve d'absence dans toute la littérature ; la recherche doit être rendue reproductible.
+2. **Hybridation physique-données :** évaluer J-DriftX comme prior physique et modèle d'évaluation ponctuelle, avec apprentissage éventuel pour la calibration, sur des benchmarks définis.
+3. **Garde-fou hors domaine :** tester si les contraintes physiques du modèle améliorent la détection des extrapolations et la fiabilité par rapport à un surrogate ML. La conservation et la positivité doivent être démontrées ou testées avant d'être présentées comme garanties.
 
-## Pourquoi maintenant (et pas en 2008)
+## Portée et limites\n\nCe positionnement décrit des hypothèses de recherche, non des performances démontrées. J-DriftX reste un prototype de recherche ; aucune supériorité prédictive ni aptitude réglementaire n'est revendiquée sans benchmarks indépendants. Voir le [protocole de validation scientifique](../projet/validation-scientifique.qmd).\n\n## Pourquoi maintenant (et pas en 2008)
 
 - **Données** : ERA5/Copernicus, MNT ouverts, capteurs low-cost — le verrou « données rares » de 2006 a disparu ; la calibration par assimilation devient crédible.
 - **Outils** : QGIS mature, Python scientifique, CI — le socle d'exécution existe.
