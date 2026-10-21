@@ -1,0 +1,35 @@
+---
+title: "Métrique travel-time"
+---
+
+# La métrique non symétrique des temps de transport
+
+C'est la contribution centrale de Drift-X [@mohammadi2006crmeca; @brun2008] : les solutions de similitude ci-dessus supposent un vent **uniforme** (métrique cartésienne). Pour les vents non uniformes, on les généralise en changeant de coordonnée naturelle : la distance devient le **temps de transport**.
+
+## Définition
+
+Le temps de transport de la source $\mathbf{x}_0$ au point $\mathbf{x}$ le long de la ligne de courant $\gamma$ :
+
+$$
+\tau(\mathbf{x}_0 \to \mathbf{x}) = \int_\gamma \frac{ds}{|\mathbf{u}(s)|}.
+$$
+
+Les solutions de similitude, valables en métrique cartésienne $\times$ vent uniforme, sont réexprimées dans le système de coordonnées $(\tau, n)$ — temps de transport et coordonnée normale — ce qui les étend aux ciseaux de vent et à la topographie.
+
+## Trois propriétés structurantes
+
+**Non symétrie.** $\tau(\mathbf{a} \to \mathbf{b}) \neq \tau(\mathbf{b} \to \mathbf{a})$ dès que le champ n'est pas uniforme : la métrique encode la direction du vent. C'est ce qui la rend *informative* là où la distance euclidienne est muette.
+
+**Divergence temporelle.** $\tau \to \infty$ quand $|\mathbf{u}| \to 0$ : la métrique signale les zones de stagnation — précieusement discriminante pour le risque.
+
+**Conservation.** Le changement de variables $(x, y, z) \to (\tau, n_1, n_2)$ transporte la conservation de la masse : le flux intégré sur une surface iso-$\tau$ restitue $Q$ *exactement*, à condition que le champ de vent généré soit à **divergence nulle** — la contrainte clé de la construction [@brun2008].
+
+## Généalogie : adaptation de maillage par métrique
+
+La métrique travel-time descend d'une autre métrique non euclidienne : celle de l'adaptation de maillage anisotrope, où la spécification métrique gouverne la génération de Delaunay [@borouchaki1997delaunay]. Drift-X transfère cette technologie du contrôle du maillage au **contrôle de la géométrie du panache** : la « distance » qui compte pour un polluant est le temps qu'il met pour y arriver, pas les mètres au sol.
+
+## Ce qui reste à formaliser (reprise v2)
+
+- Une définition autonome et auto-contenue de $\tau$ et de ses propriétés (actuellement dispersée entre la thèse [@brun2006these], le CR Mécanique et le chapitre Springer) — objectif M0/M1.
+- L'estimateur d'erreur entre niveaux dans la hiérarchie multi-échelles — objectif M2.
+- Le traitement du régime $|\mathbf{u}| \to 0$ (troncature, physique de stagnation) — voir [Limites](../hypotheses/limites.qmd).

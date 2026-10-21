@@ -1,0 +1,49 @@
+---
+title: "Contraintes physiques"
+---
+
+# Les contraintes physiques imposées au modèle réduit
+
+Un modèle réduit n'est acceptable que s'il reste **solution du modèle direct**. Drift-X impose quatre contraintes non négociables à son modèle approché [@brun2008] — elles constituent le contrat de confiance de J-DriftX et sont vérifiées en continu par la CI du paquet Python.
+
+## 1. Conservation de la masse
+
+Le flux de matière traversant toute surface iso-temps de transport doit restituer l'émission :
+
+$$
+\int_{\Sigma_\tau} U C \; \mathrm{d}A = Q \qquad \forall \tau > 0.
+$$
+
+Numériquement : l'intégrale du panache gaussien sur $(y, z)$ vérifie $\int\!\!\int U C \, \mathrm{d}y \, \mathrm{d}z = Q$ — testé dans <code>tests/test_similitude.py</code>.
+
+## 2. Positivité
+
+$$
+C(\mathbf{x}, t) \ge 0 \qquad \forall (\mathbf{x}, t),
+$$
+
+pour toute émission positive : la concentration est une densité de probabilité de présence de matière. Toute paramétrisation ou interpolation qui la viole est rejetée.
+
+## 3. Linéarité et superposition
+
+L'équation de transport est linéaire en $C$ : le champ d'une émission $Q_1 + Q_2$ est la somme des champs. C'est ce qui autorise le **multi-sources** sans re-calcul :
+
+$$
+C_{Q_1 + Q_2} = C_{Q_1} + C_{Q_2}.
+$$
+
+Testé par <code>jdriftx.constraints.linearite</code>.
+
+## 4. Divergence nulle du vent généré
+
+Le champ de vent reconstruit par la métrique travel-time doit être incompressible :
+
+$$
+\nabla \cdot \mathbf{u} = 0,
+$$
+
+faute de quoi la conservation (contrainte 1) est faussée par des sources/puits artificiels. C'est la contrainte la plus délicate de la construction : le changement de variables $(\tau, n)$ doit préserver le jacobien du champ.
+
+## Pourquoi c'est différenciant
+
+Les approches purement statistiques (surrogates ML de dérive, random forests) ne garantissent **aucune** de ces propriétés : elles peuvent violer conservation et positivité hors de leur domaine d'entraînement. Dans un contexte réglementaire et de réponse d'urgence, où l'interprétabilité et l'auditabilité deviennent des exigences explicites, un modèle analytique contraint est un atout de confiance — voir [Positionnement](../etat-art/positionnement.qmd).
