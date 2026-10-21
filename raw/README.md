@@ -23,6 +23,7 @@ Extractions automatiques (octobre 2026), grep-ables, avec en-tête documentaire.
 | <code>2009-bozon-sinfort-mohammadi-driftx-hal.pdf</code> | Actes STIC & Environnement 2009 | [PDF HAL](https://hal.science/hal-00468863/file/MO2009-PUB00026817.pdf) — manuscrit auteur, dépôt ouvert | **À ajouter** |
 | <code>2009-mohammadi-bozon-applied-geomatics.pdf</code> | Applied Geomatics 1, 33–39 | Abonnement Springer / tiré-à-part auteur | **À ajouter** |
 | <code>2010-bozon-sinfort-mohammadi-jesa.pdf</code> | JESA 44(4-5), 445–461 | Abonnement Lavoisier ; DOI 10.3166/jesa.44.445-461 | **À ajouter** |
+| <code>1979-muller-espace-geographique.pdf</code> | Muller, *La cartographie d'une métrique non euclidienne : les distances-temps*, L'Espace géographique 8(3), 215–227 | [Persée](https://www.persee.fr/doc/spgeo_0046-2497_1979_num_8_3_1915) — DOI 10.3406/spgeo.1979.1915 | **À ajouter** — hors corpus Drift-X, référence théorique (métriques non riemanniennes) |
 
 ## Comment ajouter les PDF
 
@@ -37,10 +38,10 @@ git commit -m "raw: ajoute les PDF sources du corpus Drift-X"
 git push origin main
 ~~~
 
-Ou via l'interface GitHub : onglet **Add file → Upload files** sur ce dossier.
+Ou via l'interface GitHub : onglet **Add file → Upload files** sur ce dossier (en sélectionnant la branche de la PR en cours, pour versionner les documents dans la pull request avant fusion).
 
 ## Note de prudence (copyright)
 
 - Les **manuscrits auteurs** (thèse, HAL, tirés-à-part acceptés) peuvent être versionnés et déposés sur HAL sans difficulté : c'est la voie propre pour l'archivage public (action M0).
-- Les **versions éditeurs** (Académie des sciences/Elsevier, Springer, Lavoisier) restent sous le copyright de l'éditeur même quand elles sont librement téléchargeables : ce dossier est une archive de travail privée du projet ; en cas de doute, ne versionner que les manuscrits auteurs et laisser les liens ci-dessus faire le travail d'accès.
+- Les **versions éditeurs** (Académie des sciences/Elsevier, Springer, Lavoisier, Persée) restent sous le copyright de l'éditeur même quand elles sont librement téléchargeables : ce dossier est une archive de travail privée du projet ; en cas de doute, ne versionner que les manuscrits auteurs et laisser les liens ci-dessus faire le travail d'accès.
 - Les extractions texte de <code>raw/extracts/</code> sont des extraits attribués destinés à l'analyse (recherche/text mining), avec mention complète du copyright dans leur en-tête.

@@ -11,6 +11,11 @@
 - Mohammadi, B. & Bozon, N. (2009). GIS-based atmospheric dispersion modelling. *Applied Geomatics* 1, 33–39. https://doi.org/10.1007/s12518-009-0006-0
 - Bozon, N., Sinfort, C. & Mohammadi, B. (2010). A GIS-based atmospheric dispersion model. *Journal Européen des Systèmes Automatisés* 44(4-5), 445–461. https://doi.org/10.3166/jesa.44.445-461 (version journal du papier STIC & Environnement 2009 / HAL hal-00468863)
 
+## Fondements — métriques non euclidiennes et distances-temps
+
+- Muller, J.-C. (1979). La cartographie d'une métrique non euclidienne : les distances-temps. *L'Espace géographique* 8(3), 215–227. DOI 10.3406/spgeo.1979.1915 — https://www.persee.fr/doc/spgeo_0046-2497_1979_num_8_3_1915 (ancrage géographique de la métrique travel-time : postulats euclidiens inapplicables en géographie humaine, distances-temps, isochrones, espaces à métrique inconnue ou incomplète — voir site/theorie/metriques-non-riemanniennes.qmd)
+- Borouchaki, H., George, P.-L., Hecht, F., Laug, P. & Saltel, E. (1997). Delaunay mesh generation governed by metric specifications. Part I: Algorithms. *Finite Elements in Analysis and Design* 25(1-2), 61–83. https://doi.org/10.1016/S0168-874X(96)00057-1 (lignée des métriques de l'adaptation de maillage — généalogie numérique de la métrique travel-time)
+
 ## État de l'art — dispersion opérationnelle et réglementaire
 
 - US EPA (2024). Guideline on Air Quality Models — Enhancements to the AERMOD Dispersion Modeling System, Appendix W, révision finale (règle effective 2025-01-28). https://www.federalregister.gov/documents/2024/11/29/2024-27636/guideline-on-air-quality-models-enhancements-to-the-aermod-dispersion-modeling-system
