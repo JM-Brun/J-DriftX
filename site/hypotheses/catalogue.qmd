@@ -1,0 +1,69 @@
+---
+title: "Catalogue des hypothèses"
+---
+
+# Catalogue des hypothèses du modèle
+
+Toute modélisation à complexité réduite vit de ses hypothèses. J-DriftX les rend **explicites, numérotées et traçables** : chaque hypothèse porte sa justification, sa conséquence et le point de la documentation où elle opère.
+
+## Hypothèses physiques
+
+::: {.callout-note}
+### H1 — Scalaire passif
+La substance transportée ne réagit pas chimiquement, ne se dépose pas significativement sur les temps de transport étudiés, et n'influence pas l'écoulement.
+*Conséquence* : linéarité et superposition exactes ; *limite* : les dépôts secs/humides et la volatilisation ne sont pas modélisés (voir [Limites](limites.qmd)).
+:::
+
+::: {.callout-note}
+### H2 — Régime auto-similaire établi
+Le panache suit les solutions de similitude : profils gaussiens, croissance de $\sigma(x)$ par classe de stabilité.
+*Justification* : invariance d'échelle des panaches turbulents ; *limite* : champ proche non établi traité séparément (niveau 1 de la hiérarchie).
+:::
+
+::: {.callout-note}
+### H3 — Quasi-stationnarité du vent
+Le champ de vent est constant au cours d'un temps de transport $\tau$.
+*Conséquence* : $\tau$ définit la métrique ; *limite* : rafales, fronts, inversions — candidats à une discrétisation en sous-périodes.
+:::
+
+::: {.callout-note}
+### H4 — Transport advectif dominant dans la métrique
+$\tau = \int ds / |\mathbf{u}|$ néglige la diffusion dans le temps d'arrivée ; la diffusion agit transversalement (via $\sigma$), pas longitudinalement dans $\tau$.
+*Conséquence* : la métrique est bien définie et bon marché ; *limite* : vents très faibles ($\tau \to \infty$, régimes de stagnation).
+:::
+
+## Hypothèses structurelles
+
+::: {.callout-note}
+### H5 — Homogénéité horizontale par morceaux
+La couche de surface est homogène par morceaux : chaque segment de la trajectoire porte ses paramètres (stabilité, rugosité), assemblés par la métrique.
+:::
+
+::: {.callout-note}
+### H6 — Domaine de validité local du modèle réduit
+Le modèle approché n'est valable que dans un domaine des paramètres ; on change de modèle réduit selon la zone (approche multi-niveaux), au lieu d'exiger un modèle global.
+*Conséquence* : pas d'entraînement global ; *exigence* : un contrôle explicite du domaine — l'objet de l'estimateur d'erreur du jalon M2.
+:::
+
+::: {.callout-note}
+### H7 — Données d'assimilation représentatives
+Les observations partielles assimilées échantillonnent correctement le domaine d'intérêt.
+*Risque* : biais d'échantillonnage des capteurs ; *parade v2* : quantification bayésienne des incertitudes.
+:::
+
+::: {.callout-note}
+### H8 — Superposition des sources
+Les émissions se composent linéairement (dérivée de H1) — garantie par construction et testée en continu (contrainte 3).
+:::
+
+## Traçabilité
+
+| Hypothèse | Intervient dans | Test / contrôle |
+|---|---|---|
+| H1 | [Modèle direct](../theorie/modele-direct.qmd), contraintes | linéarité (pytest) |
+| H2 | [Similitude](../theorie/similitude.qmd) | benchmarks gaussiens |
+| H3, H4 | [Métrique](../theorie/metrique-travel-time.qmd) | divergence nulle, garde umin |
+| H5 | Métrique, multi-niveaux | plan M2 |
+| H6 | [Réduction a priori](../theorie/reduction-a-priori.qmd) | estimateur d'erreur (M2) |
+| H7 | [Assimilation](../theorie/assimilation-identification.qmd) | calibration bayésienne (M3) |
+| H8 | [Contraintes](../theorie/contraintes-physiques.qmd) | superposition (pytest) |
