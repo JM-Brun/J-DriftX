@@ -14,7 +14,7 @@ Le vocabulaire de la dispersion atmosphérique et de la modélisation réduite, 
 
 **Puff.** Une « bouffée » : la traînée d'une émission **brève et localisée** dans le temps (déversement accidentel).
 
-**Dérive de pulvérisation (spray drift).** La part d'un pesticide pulvérisé qui ne atteint pas la cible et part dans l'air — l'application historique de Drift-X, en viticulture, de la parcelle au bassin versant.
+**Dérive de pulvérisation (spray drift).** La part d'un pesticide pulvérisé qui n'atteint pas la cible et part dans l'air — l'application historique de Drift-X, en viticulture, de la parcelle au bassin versant.
 
 **Near-field / far-field.** Le champ proche (près de la buse ou de la source : l'émission et sa distribution immédiate) et le champ lointain (le transport sur de grandes distances). Le modèle Drift-X couple les deux : le champ proche fournit les conditions d'entrée du transport.
 
@@ -27,6 +27,16 @@ Le vocabulaire de la dispersion atmosphérique et de la modélisation réduite, 
 **Métrique des temps de transport (τ).** L'idée centrale de Drift-X. La distance naturelle n'est pas « x mètres » mais « le temps τ qu'il faut au vent pour aller de la source à ce point ». Avec un vent variable, τ dépend du chemin — c'est une **métrique non symétrique** : aller de A à B ne prend pas le même temps que de B à A. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
 
 **Non-symétrie.** Propriété clé de τ : les vents cisaillés et la topographie rendent le transport irréversible. Concrètement : si A est en amont de B, le temps de A vers B est fini, mais celui de B vers A est infini (on ne remonte pas le vent). C'est ce que teste le test unitaire « non-symétrie de la métrique ».
+
+**Métrique riemannienne.** La façon « classique » de mesurer les longueurs dans un espace courbe : au voisinage de chaque point, une règle (produit scalaire) **symétrique et réversible**. La distance euclidienne en est le cas plat : la boule unité est un cercle. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd)
+
+**Métrique non riemannienne.** Toute métrique qui abandonne un axiome du cadre riemannien : la symétrie (**quasi-métrique** : aller ≠ revenir), l'indépendance directionnelle (**Finsler** : la longueur dépend du sens de parcours), ou le plan lui-même (**distance-temps** mesurée sur un réseau). La métrique τ de Drift-X cumule ces ruptures. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd)
+
+**Distance-temps.** Distance mesurée en **temps de parcours** — sur un réseau de transport (géographie humaine, Muller 1979) ou dans un champ de vent (Drift-X). C'est la distance « vécue » par le voyageur ou le polluant, pas celle mesurée au sol. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd)
+
+**Isochrone.** Courbe reliant les points à temps de parcours égal d'une source ; les courbes **iso-τ** du modèle en sont l'analogue advectif. Les cartes en isochrones et les anamorphoses déforment la carte pour respecter la métrique.
+
+**Navigation de Zermelo (métrique de Randers).** Le problème du chemin le plus rapide pour un mobile naviguant dans un **courant** ; la métrique qui en résulte dépend de la direction de parcours. Un polluant dans le vent vit dans un tel espace — la non-symétrie devient le cœur du modèle. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd)
 
 **Topographie et MNT (DEM).** Le modèle numérique de terrain : l'altitude du sol en chaque point. Le MNT donne la normale au sol, utilisée pour « coller » le panache au relief. Le multi-niveaux permet de charger le MNT à la bonne résolution : grossière au loin, fine près des zones d'intérêt.
 
