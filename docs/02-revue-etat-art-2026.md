@@ -1,6 +1,6 @@
-# Revue de l'état de l'art — dispersion atmosphérique à complexité réduite (2008 → 2026)
+# Revue structurée de l'état de l'art — dispersion atmosphérique à complexité réduite (2008 → 2026)
 
-> Revue systémique établie en octobre 2026 pour décider de la reprise du projet Drift-X sous le nom **J-DriftX**.
+> Revue structurée établie en octobre 2026 pour décider de la reprise du projet Drift-X sous le nom **J-DriftX**.
 > Toutes les sources citées sont listées dans [references.md](references.md) ; ce document n'utilise que des sources inspectées (résumés, notices, textes ouverts).
 
 ## Question de recherche
@@ -11,13 +11,13 @@ Le modèle Drift-X (2006–2009) reposait sur quatre paris : (1) une dispersion 
 
 Angles de recherche : (a) modèles opérationnels et réglementaires de dispersion ; (b) dérive de pulvérisation ; (c) ROM et apprentissage (POD, opérateurs neuronaux, surrogates) ; (d) identification de source / STE ; (e) SIG et open source ; (f) temps réel / jumeaux numériques. Sources privilégiées : textes réglementaires (US EPA, Federal Register), revues à comité de lecture, HAL/Zenodo, dépôts GitHub. Limite : le chapitre Springer 2008 n'est accessible qu'en extraits (paywall) ; l'analyse repose sur le texte fourni par l'auteur (p. 245–246) et le corpus compagnon.
 
-## Résumé exécutif
+## Limites de méthode et niveau de preuve\n\nCette version est une revue structurée, mais la méthode n'est pas encore entièrement reproductible : les chaînes de recherche exactes, dates par base, critères d'inclusion/exclusion, décomptes de sélection et évaluation formelle de la qualité des études ne sont pas consignés ici. Il faut compléter ces éléments avant de qualifier le travail de revue systématique. Certaines sources ne sont accessibles que par notice, résumé ou source secondaire ; ces limites doivent être prises en compte dans la force des conclusions. Les affirmations d'absence de concurrents et les avantages annoncés pour J-DriftX sont des hypothèses bornées par le corpus consulté, pas des preuves de nouveauté ou de supériorité. Voir aussi [le plan d'intégration et de validation](05-plan-validation-et-integration.md).\n\n## Résumé exécutif
 
 1. **Aucun modèle concurrent n'a repris l'idée de la métrique travel-time.** Les ROM modernes (POD-GPR, POD-NN, Arnoldi) restent toutes construites *a posteriori* à partir de snapshots CFD/LES coûteux : la niche « réduction a priori par la physique » reste ouverte.
 2. **Le besoin applicatif s'est renforcé.** L'extension gaussienne du couple AGDISP (far-field) est officiellement jugée « extrêmement conservatrice » par l'EPA, et le régulateur lui-même lance (2026) une modernisation open source d'AGDISP — une fenêtre d'opportunité directe pour un far-field à complexité réduite.
 3. **Les prémisses « assimilation + physique » de Drift-X sont devenues mainstream** (ROM + data assimilation, surrogate physics-informed, STE par méthodes d'adjoint/bayésiennes) : la reprise peut capitaliser sur un écosystème méthodologique mature.
 4. **Le contexte données a changé du tout au tout** (ERA5/Copernicus, MNT ouverts, capteurs low-cost, drones) : les verrous de 2006 (données rares) ont disparu, ce qui rend la calibration par assimilation bien plus crédible.
-5. **Verdict : oui, la reprise a du sens**, à condition de (i) publier d'abord des benchmarks de validation publics, (ii) livrer un noyau Python/QGIS moderne, (iii) positionner l'article de synthèse sur la niche far-field + réduction a priori, où la concurrence est la plus faible.
+5. **Conclusion provisoire : la reprise mérite d'être instruite et validée**, à condition de (i) publier d'abord des benchmarks de validation publics, (ii) livrer un noyau Python/QGIS moderne, (iii) positionner l'article de synthèse sur la niche far-field + réduction a priori, où la concurrence est la plus faible.
 
 ## Constats par thème
 
@@ -67,7 +67,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 | STE | Méthodes standardisées (adjoint/bayésien) | Adjoint analytique disponible par construction |
 | SIG | Plugins QGIS gaussiens multiples | Cœur Python + plugin QGIS, standard attendu |
 
-**Conclusion de la revue : la reprise est scientifiquement justifiée.** L'idée n'a été ni reprise ni démentie ; le contexte applicatif (dérive far-field, drones, exposition résidentielle, réponse d'urgence auditable) s'est amélioré ; l'écosystème méthodologique (assimilation, STE, benchmarks) offre maintenant tout ce qui manquait en 2008 pour valider et publier proprement.
+**Conclusion provisoire : les résultats de la revue justifient de poursuivre l'investigation, mais la nouveauté, la robustesse et la valeur prédictive de J-DriftX restent à démontrer par des benchmarks reproductibles.** L'idée n'a été ni reprise ni démentie ; le contexte applicatif (dérive far-field, drones, exposition résidentielle, réponse d'urgence auditable) s'est amélioré ; l'écosystème méthodologique (assimilation, STE, benchmarks) offre maintenant tout ce qui manquait en 2008 pour valider et publier proprement.
 
 ## Notes de sources
 
