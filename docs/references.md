@@ -36,10 +36,14 @@
 - Agronomy 14(9), 1977 (2024). Machine learning methods for evaluation of technical factors of spraying. https://doi.org/10.3390/agronomy14091977
 - Sci. Total Environ. (2018). CAREA : GIS-based dispersion model for pollutants emitted by complex source areas (exposition résidentielle aux pesticides, Directive 2009/128/CE). https://www.sciencedirect.com/science/article/abs/pii/S0048969717318995
 
+## Contexte — mesures de terrain et exposition (France)
+
+- InVS / Santé publique France (2009). Évaluation de l'exposition aérienne aux pesticides de la population générale. Étude en air extérieur dans quatre sites de l'Hérault en 2006. Rapport de synthèse. PDF : https://www.santepubliquefrance.fr/content/download/186474/document_file/82748_9958-9958-ps.pdf (mesures de pesticides dans l'air extérieur, contemporaines et locales du corpus Drift-X — candidates pour l'étalonnage, la validation et l'assimilation ; PDF et fiche de lecture archivés dans <code>raw/</code>)
+
 ## État de l'art — ROM et apprentissage pour la dispersion
 
 - HAL (2024). POD-GPR reduced-order model for microscale atmospheric dispersion (statistiques 1er/2e ordre depuis ~50 snapshots LES). https://hal.science/hal-04310899/document
-- Vervecken, L. & Meyers, J. (2015). Stable reduced-order models (Arnoldi) for pollutant dispersion in the built environment (facteur ~2500 vs CFD). https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment
+- Verveecken, L. & Meyers, J. (2015). Stable reduced-order models (Arnoldi) for pollutant dispersion in the built environment (facteur ~2500 vs CFD). https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment
 - CMAME (2024). A physics-based reduced order model for urban air pollution (POD-NN, cas Bologne, monitoring temps réel). https://www.sciencedirect.com/science/article/abs/pii/S0045782523005406
 - Appl. Math. Comput. / Elsevier (2023). A reduced order model with data assimilation — pollutant dispersion in urban environment. https://www.sciencedirect.com/science/article/abs/pii/S0045793023000877
 - Build. Sim. Eng. / Urban Clim. (2021). ROM POD+RBF pour environnement urbain (144 km², Pékin). https://www.sciencedirect.com/science/article/pii/S2666449621000372

@@ -19,7 +19,7 @@ title: "Références"
 
 9. Mohammadi, B. & Pironneau, O. (2001). *Applied Shape Optimization for Fluids*. Oxford University Press. (concept de sensibilité incomplète)
 10. Muller, J.-C. (1979). [La cartographie d'une métrique non euclidienne : les distances-temps](https://www.persee.fr/doc/spgeo_0046-2497_1979_num_8_3_1915). *L'Espace géographique* 8(3), 215–227. DOI 10.3406/spgeo.1979.1915. (l'ancrage géographique de la métrique travel-time : distances-temps, isochrones, espaces à métrique inconnue ou incomplète)
-11. Borouchaki, H., George, P.-L., Hecht, F., Laug, P. & Saltel, E. (1997). [Delaunay mesh generation governed by metric specifications. Part I: Algorithms](https://doi.org/10.1016/S0168-874X(96)00057-1). *Finite Elements in Analysis and Design* 25, 61–83. (lignée des métriques de l'adaptation de maillage)
+11. Borouchaki, H., George, P.-L., Hecht, F., Laug, P. & Saltel, E. (1997). [Delaunay mesh generation governed by metric specifications. Part I: Algorithms](https://doi.org/10.1016/S0168-874X(96)00057-1). *Finite Elements in Analysis and Design* 25(1-2), 61–83. (lignée des métriques de l'adaptation de maillage)
 12. Raupach, M. R. & Thom, A. S. (1981). Turbulence in and above plant canopies. *Annual Review of Fluid Mechanics* 13, 97–129.
 13. Simpson, J. E. (1997). *Gravity Currents in the Environment and the Laboratory*. Cambridge University Press.
 
@@ -32,5 +32,6 @@ title: "Références"
 18. Ayoub, A. et al. (2024). [An enhanced Fourier neural operator surrogate for radioactive plume transport forecasting](https://doi.org/10.1007/s00477-024-02738-8). *Stochastic Environmental Research and Risk Assessment* (WSPEEDI).
 19. HAL (2024). [Reduced-order model (POD-GPR) for microscale atmospheric dispersion](https://hal.science/hal-04310899/document).
 20. Turbelin, G., Singh, S. K. & Issartel, J.-P. (2016). [Reconstructing source terms from atmospheric concentration measurements: the renormalization technique](https://doi.org/10.1002/2014MS000385). *Journal of Advances in Modeling Earth Systems*.
+21. InVS / Santé publique France (2009). Évaluation de l'exposition aérienne aux pesticides de la population générale — étude en air extérieur dans quatre sites de l'Hérault en 2006. Rapport. (mesures de terrain contemporaines et locales du corpus Drift-X : candidates pour l'étalonnage, la validation et l'assimilation — PDF et fiche de lecture archivés dans <code>raw/</code>)
 
 La bibliographie complète, catégorisée et datée (une trentaine d'entrées), est maintenue dans le dépôt : <code>docs/references.md</code>. Les citations du site sont gérées par <code>references.bib</code>. Les fiches de lecture détaillées par papier source : <code>docs/04-revues-papiers-sources.md</code>. Les sources primaires (PDF, extractions texte) sont archivées dans <code>raw/</code>.
