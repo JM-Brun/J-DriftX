@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  qualite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+
+      - name: Installer l'environnement
+        run: uv sync
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+
+      - name: Format (ruff)
+        run: uv run ruff format --check .
+
+      - name: Typage (mypy)
+        run: uv run mypy
+
+      - name: Tests (pytest)
+        run: uv run pytest --cov=jdriftx --cov-report=term-missing
