@@ -4,7 +4,7 @@ title: "Lectures des sources"
 
 # Lectures des sources : que disent les papiers historiques ?
 
-Le corpus Drift-X compte sept publications (2006–2009). Cette page relit chaque papier **en français et sans jargon inutile** : ce qu'il dit, ce qu'on en a extrait, et ce que J-DriftX en reprend. Les fiches détaillées (contenus verbatim, équations, statuts d'accès) sont dans le dépôt : <code>docs/04-revues-papiers-sources.md</code>.
+Le corpus Drift-X compte sept publications (2006–2009). Cette page relit chaque papier **en français et sans jargon inutile** : ce qu'il dit, ce qu'on en a extrait, et ce que J-DriftX en reprend. Les fiches détaillées (contenus verbatim, équations, statuts d'accès) sont dans le dépôt : <code>docs/04-revues-papiers-sources.md</code>. Les sources primaires (PDF et extractions texte intégrales, dont le papier de 2006) sont archivées dans <code>raw/</code> du dépôt.
 
 ::: {.callout-note}
 **Un principe de lecture honnête.** Chaque fiche ci-dessous distingue ce qui est **extrait du papier** (résumé, équations, architecture) de ce qui n'est **pas encore accessible** (thèse non déposée, articles introuvables). Rien n'est inventé pour combler les trous.
@@ -18,20 +18,27 @@ La thèse n'a jamais été numérisée ni déposée : elle est introuvable en li
 
 **Ce que J-DriftX en attend :** tout. C'est le document le plus complet sur le modèle ; le déposer sur HAL est l'action M0 de la [feuille de route](roadmap.qmd).
 
-## L'article de 2006 (C. R. Mécanique) — le manifeste en 5 pages
+## L'article de 2006 (C. R. Mécanique) — le cœur mathématique, relu intégralement
 
-**Mohammadi, B. & Brun, J.-M., « Similitude généralisée et modélisation géométrique à complexité réduite ».**
+**Mohammadi, B. & Brun, J.-M., « Similitude généralisée et modélisation géométrique à complexité réduite »** — [PDF libre (Académie des sciences)](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
 
-Publié en octobre 2006 aux Comptes Rendus Mécanique, ce court papier pose les quatre piliers du projet, tous déjà présents :
+Publié en octobre 2006 (reçu en avril, accepté en juin), ce papier de 5 pages pose les quatre piliers du projet, tous déjà présents :
 
 1. **Assimilation de données partielles** : on calibre le modèle sur les quelques mesures disponibles, pas sur un champ complet.
 2. **Solutions de similitude généralisées** : on part des formes connues des jets et panaches, étendues à une **métrique non symétrique basée sur les temps de transport**.
 3. **Sans EDP ni maillage** : aucune équation aux dérivées partielles n'est résolue.
 4. **Évaluation ponctuelle** : la concentration se calcule en un point isolé, sans calculer le champ entier.
 
-Les mots-clés de l'auteur disent tout : jets, similitude, modèles réduits, panaches.
+Nous l'avons relu **en entier** (extraction texte archivée dans <code>raw/extracts/</code> du dépôt). Ce que la relecture intégrale ajoute :
 
-**Ce que J-DriftX en reprend :** c'est la référence-cadre du noyau Python — la métrique τ et l'évaluation ponctuelle sont exactement ce que testent les tests unitaires du socle. Voir [Métrique travel-time](../theorie/metrique-travel-time.qmd) et [Qualité & tests](qualite.qmd).
+- **La définition mathématique de la métrique.** Une pseudo-distance où, si A est en amont de B : d(B,A) = ∞ — on ne remonte pas le vent — et d(A,B) = temps de migration de A vers B le long de la caractéristique. Ce n'est **pas** une vraie distance (ni symétrique, ni l'inégalité triangulaire) : c'est précisément l'objet du test « non-symétrie » du noyau.
+- **La conservation, calée au rang de culture.** La quantité totale émise (résolue par un modèle de traitement au niveau du rang de vigne) est conservée globalement — réaliste car les traitements ne se font que par vent faible (moins de 20 km/h).
+- **Le vent complété par un écoulement potentiel.** En pratique, moins d'un point de mesure par parcelle de plusieurs hectares : le champ de vitesse est reconstruit par u = ∇φ calé sur les observations.
+- **Le gradient « gratuit ».** L'adjoint était construit par différentiation automatique (l'outil INRIA **Tapenade**), à coût indépendant du nombre de paramètres — c'est lui qui permet l'identification de source.
+- **Le benchmark fondateur.** Comparaison avec une simulation éléments finis stabilisés (~3000 points) : l'évaluation ponctuelle réduit le coût **d'un facteur ≈ 10³–10⁴ par point**, croissant avec la taille du problème (quadratique en 2D, cubique en 3D). Dimensions réalistes : buse de 10 cm, rangs espacés de 1,5 m, parcelle d'un hectare dans un bassin de 400 km².
+- **Deux pistes documentaires neuves** : une soumission à l'IJNMF 2006 jamais retrouvée en publication, et la thèse citée « 2007 » dans la bibliographie de ce papier (alors que les sources de 2008–2009 citent 2006) — voir les fiches détaillées.
+
+**Ce que J-DriftX en reprend :** la définition de référence de la pseudo-distance (contrat du module métrique), le facteur 10³–10⁴ comme cible de performance des benchmarks, le protocole éléments finis comme patron du futur benchmark gaussien (M1), et l'hypothèse « vent < 20 km/h » à inscrire au catalogue. Voir [Métrique travel-time](../theorie/metrique-travel-time.qmd), [Contraintes physiques](../theorie/contraintes-physiques.qmd) et [Qualité & tests](qualite.qmd).
 
 ## Le chapitre de 2008 (Springer) — le cahier des charges scientifique
 

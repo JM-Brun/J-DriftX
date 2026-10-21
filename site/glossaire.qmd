@@ -26,7 +26,7 @@ Le vocabulaire de la dispersion atmosphérique et de la modélisation réduite, 
 
 **Métrique des temps de transport (τ).** L'idée centrale de Drift-X. La distance naturelle n'est pas « x mètres » mais « le temps τ qu'il faut au vent pour aller de la source à ce point ». Avec un vent variable, τ dépend du chemin — c'est une **métrique non symétrique** : aller de A à B ne prend pas le même temps que de B à A. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
 
-**Non-symétrie.** Propriété clé de τ : les vents cisaillés et la topographie rendent le transport irréversible. C'est ce que teste le test unitaire « non-symétrie de la métrique ».
+**Non-symétrie.** Propriété clé de τ : les vents cisaillés et la topographie rendent le transport irréversible. Concrètement : si A est en amont de B, le temps de A vers B est fini, mais celui de B vers A est infini (on ne remonte pas le vent). C'est ce que teste le test unitaire « non-symétrie de la métrique ».
 
 **Topographie et MNT (DEM).** Le modèle numérique de terrain : l'altitude du sol en chaque point. Le MNT donne la normale au sol, utilisée pour « coller » le panache au relief. Le multi-niveaux permet de charger le MNT à la bonne résolution : grossière au loin, fine près des zones d'intérêt.
 
@@ -56,7 +56,7 @@ Le vocabulaire de la dispersion atmosphérique et de la modélisation réduite, 
 
 **Identification de source (problème inverse).** À partir de concentrations mesurées, retrouver **d'où vient** la pollution : position, intensité, date de la source. L'autre face de l'analyse de sensibilité.
 
-**Adjoint.** Outil mathématique donnant la sensibilité de la sortie à tous les paramètres d'un coup. Dans Drift-X il s'obtient par dérivation de la formule — sans simulation supplémentaire.
+**Adjoint.** Outil mathématique donnant la sensibilité de la sortie à tous les paramètres d'un coup. Dans Drift-X historique, il était construit par différentiation automatique (l'outil INRIA Tapenade) à coût indépendant du nombre de paramètres ; dans J-DriftX, la dérivation de la formule le rend analytique — sans simulation supplémentaire.
 
 ## Outils et logiciel
 
