@@ -1,0 +1,1123 @@
+=====================================================================
+EXTRACTION TEXTE BRUTE — papier source n° 6 du corpus Drift-X
+=====================================================================
+Référence : N. Bozon, C. Sinfort & B. Mohammadi, « A GIS-based
+atmospheric dispersion model » (plateforme Drift-X). Actes STIC &
+Environnement, Calais (2009). Manuscrit auteur déposé sur HAL :
+https://hal.science/hal-00468863 (version 1, 31 mars 2010).
+Version journal : JESA 44(4-5), 445-461, 2010, DOI 10.3166/jesa.44.445-461.
+Texte récupéré via le relais public ResearchGate de la publication
+(extraction d'octobre 2026). Manuscrit auteur (dépôt ouvert HAL) ;
+le projet J-DriftX est porté par les auteurs du papier.
+
+NOTE TECHNIQUE : extraction automatique ; mise en page, figures et
+équations non conservées. Le PDF HAL original reste la référence :
+https://hal.science/hal-00468863/file/MO2009-PUB00026817.pdf
+Ce fichier sert au grep, aux citations rapides et à la traçabilité
+documentaire (voir docs/04-revues-papiers-sources.md, fiche n° 6).
+=====================================================================
+
+ArticlePDF Available
+
+# A GIS-based atmospheric dispersion model
+
+*   May 2010
+*   Journal Européen des Systèmes Automatisés 44(4-5):445-461
+
+DOI:10.3166/jesa.44.445-461
+
+Authors:
+
+
+
+Nicolas Bozon
+
+*   Cartogenic
+
+
+
+Carole Sinfort
+
+*   Institut Agro Montpellier
+
+
+
+Bijan Mohammadi
+
+Bijan Mohammadi
+
+*   This person is not on ResearchGate, or hasn't claimed this research yet.
+
+
+
+Download full-text PDFRead full-text
+
+Download full-text PDF
+
+Read full-text
+
+Download citation
+
+* * *
+
+Read full-text
+
+Download citation
+
+## Abstract and Figures
+
+This work aims to model pesticide atmospheric dispersion during vine spraying, from the plot to the watershed scales, using fluid mechanics equations and open-source GIS programming capabilities. This work focuses on pesticide spray drift modelling for viticulture applications. Our goal is to provide a GIS based atmospheric transport simulation platform at very low calculation cost using solution space reduction and reduced order modelling. The coupling of fluid mechanic equations with GIS is first described, regarding the enhancement of the mathematical model according to GIS parameters like topography and scale variations. A digital elevation model (DEM) is used to replace former Cartesian outputs by georeferenced raster pesticide cloud. The plateform has been developed as a plugin for Quantum GIS open source software, which offers many spatial modelling programmation capabilities.
+
+Example of three-level construction of a flow field, genereated by the model and loaded into GIS as a vectorial layer.
+
+… 
+
+Sketch of topography variation and normals definitions
+
+… 
+
+Example of vectorial pesticide cloud generated as ESRI Shapefile (.shp) with applied gratued color on the concentration field.
+
+… 
+
+Example of interpolated and masked raster pesticide coud.
+
+… 
+
+Figures - uploaded by Carole Sinfort
+
+Author content
+
+All figure content in this area was uploaded by Carole Sinfort
+
+Content may be subject to copyright.
+
+**Discover the world's research**
+
+*   25+ million members
+*   160+ million publication pages
+*   2.3+ billion citations
+
+Join for free
+
+Content uploaded by Carole Sinfort
+
+Author content
+
+All content in this area was uploaded by Carole Sinfort on Jan 13, 2015
+
+Content may be subject to copyright.
+
+,
+
+A GIS-based
+
+atmospheric dispersion model
+
+Nicolas Bozon\*—Carole Sinfort\*\* —Bijan Mohammadi\*\*\*
+
+\*Cemagref - UMR ITAP
+
+BP 5095
+
+F-Montpellier
+
+nicolas.bozon@gmail.com
+
+\*\* Montpellier SupAgro - UMR ITAP
+
+2 pl. Viala
+
+F-34060 Montpellier
+
+sinfort@supagro.inra.fr
+
+\*\*\* Université Montpellier 2 - UMR5149
+
+Mathematical Modelling Institute
+
+F-34095 Montpellier
+
+bijan.mohammadi@universite-montpellier2.eu
+
+ABSTRACT. Atmospheric pollution due to the use of agricultural pesticide is a major concern to-
+
+day, regarding both public health, sustainable agriculture and ecosystems quality monitoring.
+
+This work aims to model pesticide atmospheric dispersion and to propose an useful air pollution
+
+prediction tool, using ﬂuid mechanics equations and open-source GIS programming capabili-
+
+ties. This work focuses on pesticide spray drift modelling for viticulture applications from the
+
+plot to the watershed scales. Our goal is to provide a GIS based atmospheric transport simu-
+
+lation platform at very low calculation cost using solution space reduction and reduced order
+
+modelling. This is necessary to make affordable simulation and very helpful to quickly perform
+
+georeferenced pollution predictions, which can then be used as a basis for risk analysis. The
+
+coupling of ﬂuid mechanic equations with GIS is ﬁrst described, regarding the enhancement
+
+of the mathematical model according to GIS parameters like topography and scale variations.
+
+Indeed, ground variations are implemented in the model using digital elevation model (DEM).
+
+The use of DEM is an asset to replace former Cartesian outputs by georeferenced raster pesti-
+
+cide cloud and also, it allows to use the model on any area. Furthermore, the implementation of
+
+topography in the spatialized Gaussian plume model allows scale changes. The plateform has
+
+been developed as a plugin for Quantum GIS open source software, which offers many spatial
+
+hal-00468863, version 1 - 31 Mar 2010
+
+Author manuscript, published in "STIC & Environnement, Calais : France (2009)"
+
+modelling programmation capabilities. This paper describes the platform and proposes vector
+
+and raster based simulation results.
+
+RÉSUMÉ. La pollution atmosphérique liée à l’usage agricole des produits phytosanitaires re-
+
+présente aujourd’hui un enjeu d’actualité pour la santé publique, pour l’agriculture durable
+
+et pour le contrôle de la qualité des écosystèmes. Un modèle de dispersion atmosphérique des
+
+pesticides a été développé à partir d’équations de la mécanique des ﬂuides intégrées dans une
+
+programmation SIG pour fournir un outil de prediction de la pollution de l’air . Ce travail
+
+concerne la modélisation de la dérive des pulvérisations lors des applications sur vigne, de
+
+l’échelle de la parcelle à celle du bassin versant. Notre objectif est de fournir une plateforme
+
+de simulation du transport à très faible coût de calcul en utilisant des techniques de réduction
+
+de l’espace. Cette méthode permet de fournir rapidement des prédictions de pollution géo-
+
+référencées qui peuvent par la suite servir de base pour une analyse de risque. Le couplage
+
+entre équations de mécanique des ﬂuides et le SIG est tout d’abord décrit en insistant sur les
+
+modiﬁcations apporées au modèle mathématique pour l’intégration de données géographiques
+
+comme la topographie ou les variations d’échelle. En effet les variation de niveau du sol ont été
+
+intégrées dans le modèle à partir d’un modèle d’élévation numérique (DEM). L’utilisation du
+
+DEM permet aussi de remplacer les descriptions du nuage en coordonnées cartésiennes par des
+
+données raster et permet de travailler sur n’importe quelle zone. De plus l’intégration de la to-
+
+pographie dans la modélisation d’un nuage Gaussien spatialisé permet de travailler à plusieurs
+
+échelles. La plateforme a été développée sous la forme d’un plugin du logiciel libre Quantum
+
+GIS (QGIS) qui offre de nombreuses possibilités de programmation avancée. L’article présente
+
+les développements réalisés et les résultats des simulations vecteur et raster.
+
+KEYWORDS: Atmospheric Dispersion, risk analysis, reduced-order modelling, Gaussian plume
+
+model, multi-scaled, digital elevation models, open source GIS development, Quantum GIS
+
+MOTS-CLÉS : Dispersion Atmosphérique, Analyse de Risque, Modélisation d’ordre réduit, modéle
+
+Gaussien, multi-échelle, modèle d’élévation numérique, SIG libre, Quantum GIS
+
+2
+
+hal-00468863, version 1 - 31 Mar 2010
+
+1\. Introduction
+
+Let us consider environmental phenomenons presented by the atmospheric disper-
+
+sion process. These are common in agricultural pesticide applications. The latter is
+
+part of our research interests, and this paper focuses on pesticide spray drift modelling
+
+over vineyards, using mathematical modelling and Geographical Information Systems
+
+(GIS). Our aim is to provide a platform dedicated to georeferenced atmospheric trans-
+
+port simulations at very low calculation cost, using reduced order modelling and open
+
+source GIS.
+
+Atmospheric dispersion equations are based on parameters which are strongly af-
+
+fected by spatial and temporal variations \[1\]. These variations signiﬁcantly affect
+
+the spray drift’s behaviour and trajectory. The spatial dimension is thus essential in
+
+atmospheric dispersion modelling, but also represents the Geographical Information
+
+System’s paradigm \[2\]. GIS have so become an adequate tool to analyze and visualize
+
+spatial based environmental models \[3\]. The coupling of the model with such tech-
+
+nologies is presented here, regarding both the use of DEM and the role that GIS plays
+
+in the enhancement of the former model.
+
+The optimization of the mathematical model regarding the spatial dimension ﬁrst
+
+appears as necessary as we wish to couple a low-complexity model with the landscape
+
+representation provided by GIS. This work implies to establish links between the spray
+
+drift model and GIS algorithms, by selecting the most signiﬁcative geospatial parame-
+
+ters that can improve the calculation. Topography effects and scale variations have
+
+been naturally chosen as one needed to get an optimized height dimension, in order to
+
+implement more reality in the drift phenomenon calcultation. Then, a second side of
+
+the coupling consists in integrating the model within a GIS environment in the aim to
+
+manage and automate the model inputs and to promote its outputs using cartographic
+
+rendering.
+
+In a previous work we have treated the problem of agricultural pesticide emission
+
+and dispersion, by coupling local (i.e. emission and near-ﬁeld distribution) and global
+
+(i.e. transport over large distance) models \[4, 6\]. In this approach, the local model
+
+provides the inlet conditions for the levels above. The dependency between levels
+
+is a major asset to avoid the solution of partial differential equations using model
+
+reduction, as detailed in previous publications.\[4, 5, 6, 7\]
+
+The goal of the present work is ﬁrst to improve the existing long range transport
+
+model, and then to account for non uniform topographies to get more realistic simula-
+
+tions. We also want to be able to locally optimize the calculation accuracy according
+
+to scales variations, by using nested numerical zoom and modifying the wind ﬂow
+
+ﬁeld construction algorithm. Thus, two main aspects are presented in this paper. The
+
+optimisation of the dispersion model according to topography and scale changes is
+
+ﬁrst presented using mathematical modelling. The coupling with GIS is then detailed
+
+in a second part, regarding the model integration and the main computational tasks.
+
+3
+
+hal-00468863, version 1 - 31 Mar 2010
+
+2. Reduced-order modelling
+
+2.1. Transport and non-symmetric geometry
+
+We consider the situation of a source releasing a time dependent quantity cinj (t)
+
+in the atmosphere at a given location, and aim to develop a low-complexity model to
+
+represent the dispersion of this quantity. The primary factors inﬂuencing the disper-
+
+sion of a neutral plume are advection by the wind and turbulent mixing. The simplest
+
+model of this process is to assume that the plume advects downwind and spreads out
+
+in the horizontal and vertical directions. Hence, the distribution of a passive scalar c,
+
+emitted from a given point and transported by a uniform plane ﬂow ﬁled Ualong x
+
+coordinate, can be represented by:
+
+c(x, y, z) = cc(x)f(py2+z2, δ(x)) \[1\]
+
+where
+
+cc(x)∼exp(−a(U)x)
+
+and
+
+f(py2+z2, δ(x)) ∼exp(−b(U, δ(x))py2+z2)
+
+ccis the behavior along the central axis of the distribution and δ(x)characterizes
+
+the thickness of the distribution at a given xcoordinate. An analogy exists with plane
+
+or axisymmetric mixing layers and neutral plumes where δis parabolic for a laminar
+
+jet and linear in turbulent cases \[12, 8\]. a(.)is a positive monotonic decreasing func-
+
+tion and b(., .)is positive, monotonic increasing in Uand decreasing in δ. In a uniform
+
+atmospheric ﬂow ﬁeld, this solution can be used for the transport of c+above.
+
+This solution has been then generalized in a non symmetric metric deﬁned by
+
+migration times calculation based on the ﬂow ﬁeld as explained in previous works
+
+\[4, 5, 6, 7\] . For ground variations modelling, the ﬂow is locally rotated to remain
+
+parallel to the ground (see ﬁgure 1)
+
+Figure 1. Left: A typical Digital Elevation Model (x and y coordinates range over
+
+2 km). Atmospheric dispersion in a uniform north wind with (middle) and without
+
+(right) the DEM
+
+4
+
+hal-00468863, version 1 - 31 Mar 2010
+
+2.1.1. Multi-level construction
+
+In realistic conﬁgurations, simulation needs be carried out over several hundreds
+
+square kilometers domains. At the same time, we must be able to account for local
+
+topography variations with details provided every few meters. As wind measurements
+
+are most of the time available on very coarse grids, it is unrealistic and inefﬁcient to
+
+perform the whole simulation with a metric topographic accuracy. Rather we would
+
+like to account large scale variations of topography on a coarse level simulation and
+
+include gradually the details of the ground variations near the main points of interest.
+
+To perform this task, one recursively applies the modelling described above on a cas-
+
+cade of embedded rectangular homothetic domains ωi, i \= 0, ..., with ω0\= Ω the full
+
+domain1
+
+No information is transferred at this time from ﬁne to coarse. Indeed, we em-
+
+phasize that the grids correspond to the locations where topography is available. As
+
+we mentioned, our approach is mesh free in the sense that no meshes is used for cal-
+
+culation. Only, evaluated information on wind and concentration are stored at these
+
+locations. The total wind ﬁeld is expressed as:
+
+\~
+
+UH\=
+
+nlevel
+
+X
+
+i\=0
+
+\~uiχ(ωi)\[2\]
+
+where \~u0\=\~uHis calculated in equation for the coarser level and χ(ωi)is the char-
+
+acteristic function for the subdomain on which level iis deﬁned. In other words, the
+
+correction is equal to zero outside ωi.nlevel is the total number of levels used. For
+
+i > 1, velocity restriction from level i−1to iis evaluated using the information from
+
+the observation point being the information at the four corners qjof a rectangle:
+
+\~ui\=−∇φi,−∆φi\= 0, φi(qj) = φi−1(qj), j \= 1, .., 4
+
+Once again we can take advantage of the linearity of the operator, to use a similar
+
+decomposition for \~uithan for \~u0where the observation quantities are becoming the
+
+values at the corners of the homothetic restriction:
+
+\~ui(x) =
+
+4
+
+X
+
+j\=1
+
+λj(x)\~ui−1(qj)\[3\]
+
+W here
+
+4
+
+X
+
+j\=1
+
+λj(x) = 1,and λj(xi) = δij , i, j \= 1, .., 4
+
+If \~ui−1is divergence free, then this construction guarantees that
+
+Z∂ωi
+
+\~ui.~nidS \=Z∂ωi
+
+\~ui−1|∂ωi.~nidS \= 0
+
+1. For the sake of simplicity, and also because this is enough rich for environmental applica-
+
+tions, we deliberately limit ourself to rectangular conﬁgurations.
+
+5
+
+hal-00468863, version 1 - 31 Mar 2010
+
+Hence, the velocity restriction in ωiremains divergence free and is compatible with
+
+the overall ﬁeld. In the simulation presented here, three levels has been used to link
+
+Ω = ω0∼10km2to the ω2∼10m2.
+
+Once the velocity restriction is deﬁned, the concentration restriction is calculated
+
+as follow:
+
+ci\=
+
+4
+
+X
+
+j\=1
+
+λj(x)ci−1(qj)\[4\]
+
+This construction guarantees that the total mass in ωiﬁts the entering quantity 2:
+
+Zωi
+
+cidV \=Z∂ωi
+
+ci(\~ui
+
+k\~uik.~ni)dS
+
+In practice, we use the same sampling for each level, typically a 20×20 grid which
+
+means topography needs to be deﬁned every 500 meters at coarse level and every 50
+
+cm at the ﬁnest level.This is interesting as it permits to locally provide a more accurate
+
+Digital Elevation Model.
+
+2.1.2. Integral data
+
+Once the species distribution c(x, y, z)is found and that the total injected quantity
+
+in time interval \[0, T \]is known, one can assumes:
+
+K\=ZT
+
+0
+
+cinj (t)dt
+
+Various quantities can be computed. For instance, we can have an estimation of the
+
+amount of species which has reached the ground using:
+
+Cg(x, y) = Zz≤z0
+
+c(x, y, z)dz
+
+or estimate the quantity still in the atmosphere beyond a distance R0from the source,
+
+using:
+
+Ca\=K−ZR≥R0
+
+Cg(x, y)dV
+
+R\=px2+y2corresponds to the radius from source.
+
+2.2. Multilevel correction for ground variations
+
+2.2.1. Multi-level correction
+
+At this point we would like to account for the topography or ground variations
+
+((x, y)→ψ(x, y)) in the prediction model above. These are available from Digi-
+
+tal Elevation Models (DEM) \[26\],\[25\]. Despite this plays an important role in the
+
+2. The four points trapezoidal rule is exact for numerical integration of bilinear functions
+
+Rωf(x, y)dxdy \=1
+
+4P4
+
+j\=1 f(qj).
+
+6
+
+hal-00468863, version 1 - 31 Mar 2010
+
+dispersion process, it is obviously hopeless to launch direct simulations using a Com-
+
+putational Fluid Dynamic (CFD) model, based on a detailed ground description . We
+
+should mention that ground variations effects are implicitly present in observation
+
+data for wind. However, as we said, wind observations are quite incomplete. In par-
+
+ticular, wind measurements are available every few kilometers while topographic data
+
+are available on a metric basis. At each level iof the construction (see ﬁgure 2) we
+
+introduce a correction \~utito the restriction
+
+\~
+
+UH\=
+
+nlevel
+
+X
+
+i\=0
+
+(\~ui+\~uti)χ(ωi)\[5\]
+
+Various local modelling can be considered for \~utigoing from simple algebraic expres-
+
+Figure 2. Example of three-level construction of a ﬂow ﬁeld, genereated by the model
+
+and loaded into GIS as a vectorial layer.
+
+sions to more sophisticated local CFD models. We propose the following correction3
+
+\~uti\=−1
+
+ρsgn(Ut)∇pi, pi\=pi−1
+
+rU2
+
+t\[6\]
+
+where
+
+Ut\=\~ui−1
+
+k\~ui−1k. ~ntiand pi−1
+
+r\=1
+
+2ρ(\~ui−1.~ni)2
+
+−
+
+3. This is the Bernoulli-Newton formula widely used in aeronautics and reproducing well the
+
+pressure distribution over a cylinder for a potential ﬂow.
+
+7
+
+hal-00468863, version 1 - 31 Mar 2010
+
+ρis the density of the ﬂuid. pris a local pressure reference based on averaged entering
+
+velocity into subdomain i:
+
+(\~ui−1.~ni)−\=1
+
+n−
+
+4
+
+X
+
+j\=0
+
+min(0, ~ui−1(qj).~ni
+
+j)
+
+1≤n−<4being the number of entering ﬂow corners. The normal to the ground
+
+evaluated from the digital terrain model restriction at level iis denoted by \~nti. This is
+
+different from the normal \~nito subdomain i. In absence of ground variations the two
+
+normals are orthogonal (see ﬁgure 3).
+
+Figure 3. Sketch of topography variation and normals deﬁnitions
+
+In case the topography is not constant, we have
+
+\~ui−1. ~nti−1\= 0,but \~ui−1. ~nti6\= 0
+
+This multi-level correction improves the predictive capacity of the model introducing
+
+a dependency between ground variations and migration time. However, this is not
+
+sufﬁcient to correctly account for ground variations in dispersion. For instance, it is
+
+indeed clear that, even in a uniform ﬂow, cross diffusion is not symmetric on a sloppy
+
+ground when dispersion is performed parallel to the iso-level contours (see ﬁgure (see
+
+ﬁgure 4).
+
+We also need to correct the functions aand bappearing in the dispersion mod-
+
+elling. As we have assumed the construction is only coarse to ﬁne without feedback
+
+from ﬁne to coarse levels, we assume the correction conservative in the sense that the
+
+incoming mass into subdomain i:
+
+Ki\=ci−1\~ui−1
+
+k\~ui−1k.~ni−
+
+\=1
+
+n−
+
+4
+
+X
+
+j\=0
+
+min 0, ci−1(qj)\~ui−1(qj)
+
+k\~ui−1(qj)k.~ni
+
+j
+
+8
+
+hal-00468863, version 1 - 31 Mar 2010
+
+Figure 4. Sketch of topography variation and non symmetry in cross-deﬁnition for a
+
+constant velocity ﬁeld
+
+deﬁnes the integral expression with or without topography changes:
+
+Ki\=Zωi
+
+cidV \=Zωi
+
+ci
+
+tdV
+
+where ctis the modiﬁed expression for the concentration to account for topography
+
+changes and \~ni
+
+jis the normal to face j\= 1, .., 4of subdomain i. This implies a
+
+constraint on the modiﬁed expressions of aand b(e.g. correction on bcan be deduced
+
+from a) through our analytical dispersion model.
+
+Ki\=Zωi
+
+ci
+
+t(a, b)dV \[7\]
+
+The correction in ais a scaling by a positive monotonic decreasing function worthing
+
+one in absence of topography changes. For instance, one can assume:
+
+ai
+
+t\=aik\~ui+\~utik
+
+k\~uik
+
+Hence, in case a change in topography increases the local velocity the dispersion goes
+
+further downstream with less cross-diffusion due to decreasing bthrough constraint.
+
+3. GIS based coupling
+
+3.1. Linking Dispersion model and GIS
+
+It should ﬁrst be reminded that we want to couple the above physical model which
+
+involves unsteadiness and uncertainties, with GIS that are tending to provide an ac-
+
+curate numerical copy of the study area’s surface. Thus, GIS can be used to apply
+
+the model in a richer georeferenced numerical environment. GIS capabilities regard-
+
+ing DEM generation and exploitation are signiﬁcally improving the former dispersion
+
+9
+
+hal-00468863, version 1 - 31 Mar 2010
+
+equations, as they allow the model to be run on any local topography \[26\]. Further-
+
+more, GIS permits to map directly the drift process and to get standard atmopsheric
+
+concentrations at given geographical coordinates. Then it becomes rather easy to make
+
+the pesticide cloud interacts with other relevant geodata, and so to proceed to advanced
+
+risk analysis \[32\] regarding for example bystanders exposure, agricultural plots or wa-
+
+ter courses contamination after treatments. Although GIS allows to gain some more
+
+precision regarding topographic impact on calculations and to georeference the model
+
+outputs, we should keep in mind that the main objective of the reduced order mod-
+
+elling approach is to provide mean tendancies of the spray drift with very low calcu-
+
+lation cost, and that potential errors are duplicated into the GIS. In addition to this,
+
+automated geoprocessing tasks that are carried, like DEM generation or point-based
+
+data interpolation can also add some more spatial incoherence and introduce a new
+
+level of uncertainties. As those limits regarding precision and application on real sit-
+
+uation have been raised, it is now interesting to explain more precisly how the model
+
+and GIS comunicate, and how we can get the best of geospatial techniques to improve
+
+the model’s efﬁciency.
+
+3.1.1. Loose coupling method
+
+Several way to couple GIS and environmental models are known in litterature,
+
+mainly "‘tight"’ or "‘loose"’ coupling and more recently "‘integrating"’ systems \[20,
+
+21\]. Each technique presents assets and limitations, and is more or less adapted de-
+
+pending on the complexity of the model. In our case, the loose coupling has been
+
+chosen for several reasons that have to be explained. As the latest describes an ap-
+
+proach where interfaces are developed with minimal assumptions between the send-
+
+ing/receiving parties, therefore the risk that a change in one application will force a
+
+change in another application is reduced \[22\]. Loose coupling has also multiple assets
+
+regarding development costs, as we want to couple the model with existing GIS, and
+
+not coding a entire GIS software able to implement natively the dispersion model, as
+
+the integrated approach would suggests. As more and more GIS programs are being
+
+made available by open-source communities, we opted for Quantum GIS (QGIS) soft-
+
+ware to achieve the coupling, as it is one of the most highly capable open-source tool
+
+which offers advanced programming possibilities \[27\]. Indeed, QGIS is based on a
+
+robust C++ API that presents plenty of spatial algorithms and native GIS functions.
+
+Those have been made acessible through Python bindings, which allow a simpler pro-
+
+gramming environment for developping speciﬁc QGIS plugins that directly interact
+
+with the core source code \[28\]. We opted for this technical solution to propose a
+
+friendly-user atmospheric pesticide spray drift plugin. It is dedicated to agricultural
+
+atmospheric pollution prediction, and has been designed to be fast and extensible,
+
+mixing reduced-order modelling and GIS development.
+
+3.1.2. GIS as input data provider
+
+The ﬁrst roles of GIS deals with the automatic DEM extraction, needed by the
+
+model to compute the effects of ground variations on the windﬁeld and so on the
+
+pesticide cloud movements. As the multi-leveled approach has been conceptualized to
+
+10
+
+hal-00468863, version 1 - 31 Mar 2010
+
+gain in topographic accuracy, one has to work with several DEM resolutions and must
+
+be able to extract pixel values from any loaded DEM in the GIS. Using the Python
+
+bindings, this can simply being done with some common GDAL (Geospatial Data
+
+Abstraction Library) 4commands. In our case we use two successive gdal translate
+
+commands \[30\], as described bellow:
+
+g da l \_t r a ns l a te \- o t Fl o at 3 2 \- pr o jw i n " st r ( xm i n ) + s tr ( y ma x ) +
+
+st r ( x ma x ) + st r ( ym i n )+ " i n pu t \_ de m . t if o u t pu t \_ de m . t if
+
+This ﬁrst command is done to clip the loaded DEM according the user deﬁned
+
+extent in which the calculation must be launched.
+
+g da l \_ tr a n sl a t e -o f A AI G r id c l ip . t i f cl i p . as c
+
+And this one to extract the elevation value of each pixel of the extent to an ESRI grid
+
+ﬁle \[31\]. The obtained grid is then converted into x,y,z triplets \[34\] needed by the
+
+model as topography inputs, using the grd2xyz python class 5Theses succesive com-
+
+mands permits to get the topographic input data for the dispersion model, overriding
+
+the user’s DEM resolution and spatial projection as the Fortran program is then able
+
+to convert cartesian metric into the same values it reads in input.
+
+3.2. Spatialisation of the the model
+
+Once those input parameters are being made available for QGIS, we must use
+
+them to provide a georeferenced environment for the model’s ouput data. This step
+
+deals both with some basic ﬁle formats conversion, the multi-leveled equation imple-
+
+mentation and some advanced geodata processing. The georeferencing technique is
+
+ﬁrst presented, and then we show how the GIS deals with the multi-scaled dispersion
+
+model. Some cartographic ramblings are ﬁnally presented, regarding the best way to
+
+map pesticide atmospheric drift.
+
+3.2.1. Georeferencing the model’s topographic input data
+
+The mathematical model works on a cartesian metric basis, which is not read-
+
+able as is by QGIS. As we want the plugin to be able to read any resolution in any
+
+geographic projection, the spatial properties of the image DEM have to be read and
+
+understood by the model. This is done by sending the resulting ﬁle of the gdal trans-
+
+late commands to the Fortran program, which one reads the given tabular x,y,z ﬁle
+
+by accessing the standard Comma Separated Values (CSV) format \[30\]. The gener-
+
+ated DEM is sent to Fortran using simple Fortran open,do and read commands: Each
+
+4. The GDAL/OGR open source library was developed by Franck Warmerdam, independent
+
+developer from Egganville (CA) and president of OSGeo since 2006.
+
+5. This code is inspired from one of David Finlayson from the United States Geological Survey,
+
+Santa Cruz (USA).
+
+11
+
+hal-00468863, version 1 - 31 Mar 2010
+
+triplets (i.e each line of the former raster matrix) is then understood by Fortran and
+
+provides the elevation data on which the calcultaion have to be computed, fo every
+
+point of the domain.
+
+3.2.2. Introducing the multi-leveled algorithm
+
+The multi-leveled correction for ground variations let the user choose the number
+
+of levels wanted (i.e nlevels in equation (10)), as well as their spatial extent (see ﬁgure
+
+2). This permits to deﬁne the local area where the DEM resolution must be ﬁner
+
+in order to compute ground variations more precisly. This "micro-scale" area can
+
+be deﬁned for example just around the considered source plot or any other area that
+
+presents particular topography or signiﬁcative obstacle (like local depression, small
+
+hill or other interesting rock-formings) to the spray drift. This is done in QGIS using
+
+an adaptation of the Region Tool 6algorithm \[33\] applied in a recursive way:
+
+de f d o ne R ec t a ng l e ( se l f ) :
+
+l ev el \= s el f . i fa c e . ge t M ap C an v a s () . s e tM a p To o l ( se l f .
+
+saveTool)
+
+s el f . u p d at e B o un d s ( s e lf . r . b b )
+
+This ﬁrst function permits to draw and save a rectangle on QGIS map view (map
+
+canvas) that deﬁnes the new extent.
+
+de f u p d at e B o un d s ( s el f , b b ) :
+
+s el f . x m i nd o m ai n . s et T e xt ( st r ( b b . x Mi n ( ) ) )
+
+s el f . y m i nd o m ai n . s et T e xt ( st r ( b b . y Mi n ( ) ) )
+
+s el f . x m a xd o m ai n . s et T e xt ( st r ( b b . x Ma x ( ) ) )
+
+s el f . y m a xd o m ai n . s et T e xt ( st r ( b b . y Ma x ( ) ) )
+
+n ew L e ve l \= bb . x M i n () , bb . y M in ( ) , bb . x M ax () , bb . y M ax ( )
+
+Then, the previous code allows to update the four corners of the extent and so to
+
+determine a new level for calculation. This way Region Tool can be used as many
+
+times as wanted, in order to set up the right number of levels for the calculation.
+
+3.2.3. Cartography of pesticide clouds
+
+The last step of the plugin development concerns the conversion of CSV outputs
+
+into standard GIS formats, but also the way one can enhance the cartographic ren-
+
+dering of the pesticide cloud. Using the QGIS API once again , we can ﬁrst easily
+
+generates the model output results as ESRI shapeﬁle (.shp) or any other OGR sup-
+
+ported GIS vector format. This is done using the QGIS QgsVectorFileWriter class as
+
+presented bellow:
+
+ur i = " p l um e . c s v ? d el i m it e r = % s & x Fi e l d = % s& y Fi e l d =% s " % ( " ; " ,"
+
+l on g i tu d e " , " l a ti t u de " )
+
+6. This code is inspired from one of Barry Stephen Rowlingson from the Mathematics and
+
+Statistics department of Lancaster University (UK).
+
+12
+
+hal-00468863, version 1 - 31 Mar 2010
+
+v = Qg s Ve c to r La y er ( u ri , " v ec to r ia l ␣ p lu me " )
+
+Q gs V ec t o rF i le W r it e r . w ri t eA s S ha p ef i le ( v ," v ec t or i al \- p l um e . sh p "
+
+’)
+
+Where plume.csv is the input CSV ﬁle that include longitude, latitude and at-
+
+mospheric concentrations ﬁelds, and vectorial-plume.shp is the created point shape-
+
+ﬁle. Once this done, one can instantaneously apply some styling options to the created
+
+layer, in order to emphasize the concentrations values. This can be done using the
+
+QGIS QgsContinuousColorRenderer class, by alloting a symbol type to the geome-
+
+tries and a couple of minimum and maximum colors for the continuous color rendering
+
+(see ﬁgure 5).
+
+r=QgsContinuousColorRenderer(v.vectorType())
+
+r . sm i n = Qg s Sy m bo l ( v . v ec t or T yp e ( ) , "0 " , "" , " " )
+
+r . sm a x = Qg s Sy m bo l ( v . v ec t or T yp e ( ) , "1 " , "" , " " )
+
+r . sm i n . s e tP e n ( Q Pe n ( Q t . g re en ,1 . 0 ) )
+
+r . sm a x . s e tP e n ( Q Pe n ( Q t . re d , 1. 0 ) )
+
+Thus, the resulted vectorial pesticide cloud is readable by any standard GIS pro-
+
+gram, and can be used in a simpler way for spatial analysis and atmospheric pollution
+
+prediction.
+
+Figure 5. Example of vectorial pesticide cloud generated as ESRI Shapeﬁle (.shp)
+
+with applied gratued color on the concentration ﬁeld.
+
+Another point of interest for mapping pesticide clouds is the raster generation, as
+
+the spray drift is a diffuse phenomenon and that a surfacic representation is much
+
+more readable than points in this case. The raster creation can signiﬁcally improve
+
+the cartographic meassage. In order to interpolate point-based values, one opted for
+
+the inverse distance algorithm, assumuming that the nearer a point to be interpolated
+
+is located to a point with known value, the more similar is the value of the point to
+
+be interpolated to the known value in close distance. This can be done using the gdal
+
+13
+
+hal-00468863, version 1 - 31 Mar 2010
+
+grid interpolation capabilities, using the GDAL virtual format (i.e VRT driver) \[30\]
+
+and playing on the power and smooting values:
+
+g da l \_g r i d -a i n vd i st : p ow e r = 1. 0 : s m oo t hi n g = 5 0. 0 \- tx e " + st r ( x mi n
+
+) + st r ( x ma x ) +" - t ye " + s tr ( y mi n ) + st r ( y ma x ) +"
+
+\- of G T if f \- ot F l oa t 64 \- l d ri f tx d ri f tx . v r t ou t pu t . t if " ) .
+
+r ea dl in e s ()
+
+Where -txe is the spatial extent in which to interpolate (i.e the user deﬁned extent
+
+via the Region Tool class), -of is the desired output format and -ot the raster type.
+
+As the point-based values are interpolated over the whole domain, one has to apply a
+
+vectorial mask, in order to account only for points with values and so to kill the raster
+
+nodata. This can be done using the clipping functions of GDAL, using a gdal -clip
+
+command line. Finally and as for the vector ouputs, one can apply coloring schemes
+
+and transparency values, using the QGIS QgsRasterLayer optionnal arguments (see
+
+ﬁgure 6), as suggested bellow:
+
+r = Qg s Ra s te r La ye r ( f il eN am e , b a se Na m e )
+
+r . se t Dr a wi n gS t yl e ( Qg s Ra s te r La y er . S I NG L E\_ B AN D \_P S EU D O\_ C OL O R )
+
+r . se t Co l or S ha d in g Al g o ri t hm ( Q g sR a st e rL ay e r . PS E UD O \_C O LO R )
+
+r . se t Tr a ns pa r en c y ( 90 )
+
+Figure 6. Example of interpolated and masked raster pesticide coud.
+
+4. CONCLUSION AND PERSPECTIVES
+
+A low-complexity model for the prediction of passive scalar dispersion in at-
+
+mospheric ﬂows has been presented and coupled with open source GIS. The solution
+
+search space has been reduced using a priori physical information and a non symmet-
+
+ric metric based on migration times has been used to generalize injection and plume
+
+similitude solutions in the context of variable ﬂow ﬁelds.
+
+14
+
+ha
+
+... [Content truncated]
