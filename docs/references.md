@@ -11,6 +11,11 @@
 - Mohammadi, B. & Bozon, N. (2009). GIS-based atmospheric dispersion modelling. *Applied Geomatics* 1, 33–39. https://doi.org/10.1007/s12518-009-0006-0
 - Bozon, N., Sinfort, C. & Mohammadi, B. (2010). A GIS-based atmospheric dispersion model. *Journal Européen des Systèmes Automatisés* 44(4-5), 445–461. https://doi.org/10.3166/jesa.44.445-461 (version journal du papier STIC & Environnement 2009 / HAL hal-00468863)
 
+## Fondements — métriques non euclidiennes et distances-temps
+
+- Muller, J.-C. (1979). La cartographie d'une métrique non euclidienne : les distances-temps. *L'Espace géographique* 8(3), 215–227. DOI 10.3406/spgeo.1979.1915 — https://www.persee.fr/doc/spgeo_0046-2497_1979_num_8_3_1915 (ancrage géographique de la métrique travel-time : postulats euclidiens inapplicables en géographie humaine, distances-temps, isochrones, espaces à métrique inconnue ou incomplète — voir site/theorie/metriques-non-riemanniennes.qmd)
+- Borouchaki, H., George, P.-L., Hecht, F., Laug, P. & Saltel, E. (1997). Delaunay mesh generation governed by metric specifications. Part I: Algorithms. *Finite Elements in Analysis and Design* 25(1-2), 61–83. https://doi.org/10.1016/S0168-874X(96)00057-1 (lignée des métriques de l'adaptation de maillage — généalogie numérique de la métrique travel-time)
+
 ## État de l'art — dispersion opérationnelle et réglementaire
 
 - US EPA (2024). Guideline on Air Quality Models — Enhancements to the AERMOD Dispersion Modeling System, Appendix W, révision finale (règle effective 2025-01-28). https://www.federalregister.gov/documents/2024/11/29/2024-27636/guideline-on-air-quality-models-enhancements-to-the-aermod-dispersion-modeling-system
@@ -31,10 +36,14 @@
 - Agronomy 14(9), 1977 (2024). Machine learning methods for evaluation of technical factors of spraying. https://doi.org/10.3390/agronomy14091977
 - Sci. Total Environ. (2018). CAREA : GIS-based dispersion model for pollutants emitted by complex source areas (exposition résidentielle aux pesticides, Directive 2009/128/CE). https://www.sciencedirect.com/science/article/abs/pii/S0048969717318995
 
+## Contexte — mesures de terrain et exposition (France)
+
+- InVS / Santé publique France (2009). Évaluation de l'exposition aérienne aux pesticides de la population générale. Étude en air extérieur dans quatre sites de l'Hérault en 2006. Rapport de synthèse. PDF : https://www.santepubliquefrance.fr/content/download/186474/document_file/82748_9958-9958-ps.pdf (mesures de pesticides dans l'air extérieur, contemporaines et locales du corpus Drift-X — candidates pour l'étalonnage, la validation et l'assimilation ; PDF et fiche de lecture archivés dans <code>raw/</code>)
+
 ## État de l'art — ROM et apprentissage pour la dispersion
 
 - HAL (2024). POD-GPR reduced-order model for microscale atmospheric dispersion (statistiques 1er/2e ordre depuis ~50 snapshots LES). https://hal.science/hal-04310899/document
-- Vervecken, L. & Meyers, J. (2015). Stable reduced-order models (Arnoldi) for pollutant dispersion in the built environment (facteur ~2500 vs CFD). https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment
+- Verveecken, L. & Meyers, J. (2015). Stable reduced-order models (Arnoldi) for pollutant dispersion in the built environment (facteur ~2500 vs CFD). https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment
 - CMAME (2024). A physics-based reduced order model for urban air pollution (POD-NN, cas Bologne, monitoring temps réel). https://www.sciencedirect.com/science/article/abs/pii/S0045782523005406
 - Appl. Math. Comput. / Elsevier (2023). A reduced order model with data assimilation — pollutant dispersion in urban environment. https://www.sciencedirect.com/science/article/abs/pii/S0045793023000877
 - Build. Sim. Eng. / Urban Clim. (2021). ROM POD+RBF pour environnement urbain (144 km², Pékin). https://www.sciencedirect.com/science/article/pii/S2666449621000372

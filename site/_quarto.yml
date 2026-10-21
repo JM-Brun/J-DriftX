@@ -45,6 +45,8 @@ website:
             text: "Solutions de similitude"
           - href: theorie/metrique-travel-time.qmd
             text: "Métrique travel-time"
+          - href: theorie/metriques-non-riemanniennes.qmd
+            text: "Métriques non riemanniennes"
           - href: theorie/contraintes-physiques.qmd
             text: "Contraintes physiques"
           - href: theorie/assimilation-identification.qmd
