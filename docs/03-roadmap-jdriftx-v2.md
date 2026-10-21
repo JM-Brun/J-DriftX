@@ -4,7 +4,7 @@
 
 ## Vision
 
-**J-DriftX v2** est un moteur open source de dispersion à complexité réduite : solutions de similitude généralisées dans une métrique non symétrique de temps de transport, évaluation ponctuelle sans maillage, calibration par assimilation de données, contraintes physiques garanties (conservation, positivité, divergence nulle). Cible applicative : far-field de la dérive de pulvérisation (dont drones), exposition résidentielle, analyse de risque et identification de source.
+**J-DriftX v2** est un moteur open source de dispersion à complexité réduite : solutions de similitude généralisées dans une métrique non symétrique de temps de transport, évaluation ponctuelle sans maillage, calibration par assimilation de données, contraintes physiques à formaliser et à valider (conservation, positivité, divergence nulle). Cible applicative : far-field de la dérive de pulvérisation (dont drones), exposition résidentielle, analyse de risque et identification de source.
 
 ## Principes directeurs
 
@@ -30,7 +30,7 @@
 
 ## Jalons
 
-- **M0 — Ancrage (en cours)** : audit, revue d'état de l'art, bibliographie (ce dépôt) ; numérisation et dépôt HAL de la thèse 2006 et du chapitre 2008 ; choix de licence (proposition : GPLv3 pour le code, CC BY 4.0 pour les docs).
+- **M0 — Ancrage documentaire (revue structurée disponible ; reproductibilité à compléter)** : audit, revue d'état de l'art, bibliographie (ce dépôt) ; numérisation et dépôt HAL de la thèse 2006 et du chapitre 2008 ; choix de licence (proposition : GPLv3 pour le code, CC BY 4.0 pour les docs).
 - **M1 — Cœur et preuve (T+2 mois)** : modules similitude/metric/constraints + benchmark gaussien classique (cas flat terrain, classes Pasquill) ; CI avec tests physiques (conservation/positivité) ; publication v0.1.
 - **M2 — Calibration et multi-niveaux (T+6 mois)** : assimilation de données partielles ; hiérarchie multi-niveaux avec estimateur d'erreur ; identification de source simple ; comparaison publique contre un POD-ML sur un cas académique (article de blog + note technique).
 - **M3 — Terrains et GIS (T+12 mois)** : topographie réelle via MNT, cas dérive viticole/drones, plugin QGIS ; validation sur données de campagne publiées.
@@ -39,9 +39,9 @@
 
 ## Positionnement scientifique (hypothèses d'article)
 
-1. La métrique travel-time généralise les solutions gaussiennes de similitude aux vents non uniformes avec conservation exacte de la masse — démonstration théorique + benchmark.
-2. La calibration hybride (assimilation dans un modèle analytique) est plus robuste hors domaine qu'un surrogate ML équivalent — protocole de comparaison explicité (le problème ouvert identifié par la revue STE 2025).
-3. Le far-field à topographie via métrique est moins conservateur et plus réaliste que l'extension gaussienne AGDISP sur cas avec barrières/relief — validation croisée sur campagnes publiées.
+1. **Hypothèse à tester :** la métrique travel-time généralise les solutions de similitude aux vents non uniformes tout en respectant la conservation de masse dans les conditions précisées — preuve théorique et benchmark requis.
+2. **Hypothèse à tester :** la calibration hybride peut être plus robuste hors domaine qu'un surrogate ML comparable — protocole de comparaison et validation indépendante requis.
+3. **Hypothèse à tester :** le far-field topographique via métrique peut améliorer la représentation de certains cas par rapport à l'extension gaussienne AGDISP — validation croisée sur campagnes publiées requise.
 
 ## Risques et parades
 
@@ -52,7 +52,7 @@
 | Dérive vers le « tout ML » (facile à démontrer, dur à publier) | Moyenne | Principe 1 gravé dans la roadmap ; benchmarks hors-domaine systématiques |
 | Charge de formalisation mathématique de la métrique | Moyenne | Consolider depuis la thèse 2006 ; demander relecture à B. Mohammadi / O. Pironneau (co-auteurs historiques) |
 
-## Prochaines actions immédiates
+## Critères de sortie des jalons\n\n- **M0 :** requêtes et dates de recherche, critères de sélection, décompte du corpus et limites d'accès consignés ; références vérifiées.\n- **M1 :** benchmark gaussien reproductible, tests physiques automatisés, métriques d'erreur et coût documentés.\n- **M2 :** calibration évaluée sur données distinctes de celles utilisées pour l'ajustement ; comparaison avec une baseline.\n- **M3 :** validation indépendante sur données de terrain et analyse d'incertitude.\n- **M4 :** manuscrit fondé sur les résultats vérifiables, avec limites et résultats négatifs.\n\n## Prochaines actions immédiates
 
 1. Valider cette feuille de route et la licence proposée.
 2. Déposer thèse (2006) et chapitre (2008) en archive ouverte.
