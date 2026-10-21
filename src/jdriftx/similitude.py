@@ -113,7 +113,7 @@ def concentration_panache(
     terme_vertical = np.exp(-((z_arr - hauteur) ** 2) / (2.0 * sz**2)) + np.exp(
         -((z_arr + hauteur) ** 2) / (2.0 * sz**2)
     )
-    return debit / (2.0 * np.pi * u * sy * sz) * terme_lateral * terme_vertical
+    return np.asarray(debit / (2.0 * np.pi * u * sy * sz) * terme_lateral * terme_vertical)
 
 
 def concentration_puff(
@@ -171,4 +171,4 @@ def concentration_puff(
         * np.exp(-(y_arr**2) / (2.0 * sy**2))
         * np.exp(-(z_arr**2) / (2.0 * sz**2))
     )
-    return masse / denom * exponentiel
+    return np.asarray(masse / denom * exponentiel)
