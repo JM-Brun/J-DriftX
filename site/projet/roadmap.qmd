@@ -1,0 +1,38 @@
+---
+title: "Feuille de route J-DriftX v2"
+---
+
+# Feuille de route v2
+
+> Version complète avec architecture détaillée et analyse de risques : <code>docs/03-roadmap-jdriftx-v2.md</code> dans le dépôt.
+
+## Jalons
+
+| Jalon | Horizon | Contenu |
+|---|---|---|
+| **M0 — Ancrage** | en cours | Documentation, audit, revue, roadmap ; dépôt HAL de la thèse et du chapitre ; choix de licence |
+| **M1 — Cœur et preuve** | T+2 mois | Modules similitude / métrique / contraintes + benchmark gaussien ; CI avec tests physiques ; v0.1 |
+| **M2 — Calibration et multi-niveaux** | T+6 mois | Assimilation de données partielles ; estimateur d'erreur entre niveaux ; identification de source ; comparaison publique contre un POD-ML |
+| **M3 — Terrains et GIS** | T+12 mois | Topographie réelle via MNT ; cas dérive viticulture/drones ; plugin QGIS |
+| **M4 — Article de synthèse** | T+15 mois | Soumission *Environmental Modelling & Software* ou *Atmospheric Environment* |
+| **M5 — Impact réglementaire** | T+24 mois | Proposition d'extension far-field à l'AGDISP Modernization Project ; conformité interprétabilité (EU AI Act) |
+
+## Architecture cible
+
+| Module | Rôle | Priorité |
+|---|---|---|
+| <code>core/similitude</code> | Solutions de similitude jets/panaches/puffs (portage du chapitre 2008) | M1 |
+| <code>core/metric</code> | Métrique non symétrique des temps de transport (vents non uniformes, topographie) | M1 |
+| <code>core/constraints</code> | Conservation, positivité, divergence nulle — tests systématiques | M1 |
+| <code>core/levels</code> | Hiérarchie multi-niveaux + estimateur d'erreur | M2 |
+| <code>assim/calibration</code> | Moindres carrés → Tikhonov → bayésien | M1→M3 |
+| <code>assim/ste</code> | Identification de source (adjoint analytique, standards STE) | M2 |
+| <code>io/</code> | Météo (CSV/ERA5), MNT (GeoTIFF), sorties ponctuelles et rasters | M1–M2 |
+| <code>bindings/qgis</code> | Plugin QGIS (équivalent Drift-X 2009, modernisé) | M3 |
+| <code>benchmarks/</code> | Gaussien de référence, comparaisons ROM, cas spray drift | M1 puis continu |
+
+## Hypothèses scientifiques à démontrer
+
+1. La métrique travel-time généralise les solutions de similitude aux vents non uniformes **avec conservation exacte de la masse**.
+2. La calibration hybride dans un modèle analytique est **plus robuste hors domaine** qu'un surrogate ML équivalent.
+3. Le far-field à topographie via métrique est **moins conservateur et plus réaliste** que l'extension gaussienne AGDISP sur les cas avec barrières et relief.

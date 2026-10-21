@@ -1,0 +1,36 @@
+---
+title: "Héritage Drift-X (2006–2009)"
+---
+
+# Héritage Drift-X
+
+Le projet **Drift-X** est né à Montpellier entre 2006 et 2009, dans la collaboration entre le Cemagref (unité ITAP, technologies et systèmes d'information pour les agrosystèmes) et le laboratoire I3M (Université Montpellier II, avec B. Mohammadi et O. Pironneau). Son objectif : modéliser la **dispersion atmosphérique des pesticides** pendant la pulvérisation en viticulture, de la parcelle au bassin versant, à un coût de calcul compatible avec l'analyse de risque statistique.
+
+## Chronologie
+
+| Année | Étape | Support |
+|---|---|---|
+| 2006 | Thèse *Modélisation à complexité réduite de la dérive* (J.-M. Brun) | Université Montpellier II |
+| 2006 | Première formulation publique : similitude généralisée dans une métrique non symétrique de temps de transport | C. R. Mécanique 334 [@mohammadi2006crmeca] |
+| 2006 | Version étendue avec O. Pironneau | Springer [@mohammadi2006pironneau] |
+| 2008 | Version longue de référence : multi-niveaux, contraintes physiques, multi-sources, sensibilité | Springer, CSM vol. 16 [@brun2008] |
+| 2008 | Similitude et géométrie non symétrique pour la dispersion | e-sta vol. 5 [@bozon2008esta] |
+| 2009 | Plateforme **Drift-X** : plugin QGIS, MNT, sorties raster géoréférencées | HAL [@bozon2009driftx] |
+| 2009 | Déclinaison journal | Applied Geomatics [@mohammadi2009gis] |
+
+## Le corpus fondateur
+
+::: {.callout-tip}
+### Référence centrale
+Le chapitre Springer 2008 [@brun2008] — *Reduced-Order Modelling of Dispersion*, p. 245 et s. — constitue le document de référence : définition de l'espace de recherche, approche multi-niveaux, généralisation de la métrique, contraintes imposées au modèle approché, exemples numériques et analyse de sensibilité pour l'identification de source.
+:::
+
+## Ce que Drift-X savait déjà faire
+
+1. **Évaluation ponctuelle** : la concentration en un point isolé, sans calculer le champ sur tout le domaine — donc sans maillage.
+2. **Multi-niveaux** : le champ proche (périphérie de la buse, rangs de culture) fournit l'entrée du champ lointain ; chaque niveau réduit la dimension de l'espace solution.
+3. **Vents non uniformes** : les solutions de similitude, connues en métrique cartésienne, sont généralisées via les temps de transport.
+4. **Multi-sources et sensibilité** : superposition linéaire, gradients explicites, identification de source d'une pollution observée.
+5. **Intégration SIG** : MNT, sorties raster géoréférencées, plugin QGIS — une avance pour l'époque [@bozon2009driftx].
+
+Pour le bilan critique complet : voir [Audit de l'héritage](audit.qmd).

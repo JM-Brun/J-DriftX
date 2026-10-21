@@ -1,0 +1,69 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "J-DriftX"
+  site-url: "https://jm-brun.github.io/J-DriftX/"
+  description: "Dispersion atmosphérique à complexité réduite : reprise open-source du projet Drift-X"
+  repo-url: "https://github.com/JM-Brun/J-DriftX"
+  repo-actions: [edit, issue]
+  page-navigation: true
+  navbar:
+    tools:
+      - icon: github
+        url: "https://github.com/JM-Brun/J-DriftX"
+  sidebar:
+    style: docked
+    search: true
+    contents:
+      - href: index.qmd
+        text: "Accueil"
+      - section: "Le projet"
+        contents:
+          - href: projet/heritage.qmd
+            text: "Héritage Drift-X"
+          - href: projet/objectifs.qmd
+            text: "Objectifs de J-DriftX"
+          - href: projet/audit.qmd
+            text: "Audit de l'héritage"
+          - href: projet/roadmap.qmd
+            text: "Feuille de route"
+      - section: "Fondements théoriques"
+        contents:
+          - href: theorie/modele-direct.qmd
+            text: "Modèle direct"
+          - href: theorie/reduction-a-priori.qmd
+            text: "Réduction a priori"
+          - href: theorie/similitude.qmd
+            text: "Solutions de similitude"
+          - href: theorie/metrique-travel-time.qmd
+            text: "Métrique travel-time"
+          - href: theorie/contraintes-physiques.qmd
+            text: "Contraintes physiques"
+          - href: theorie/assimilation-identification.qmd
+            text: "Assimilation & identification"
+      - section: "Hypothèses"
+        contents:
+          - href: hypotheses/catalogue.qmd
+            text: "Catalogue des hypothèses"
+          - href: hypotheses/limites.qmd
+            text: "Limites et domaines de validité"
+      - section: "État de l'art"
+        contents:
+          - href: etat-art/panorama.qmd
+            text: "Panorama 2026"
+          - href: etat-art/positionnement.qmd
+            text: "Positionnement de J-DriftX"
+      - href: references.qmd
+        text: "Références"
+
+format:
+  html:
+    theme: cosmo
+    lang: fr
+    toc: true
+    toc-depth: 3
+    grid:
+      sidebar-width: 280px
+    bibliography: references.bib

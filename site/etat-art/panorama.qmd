@@ -1,0 +1,31 @@
+---
+title: "Panorama de l'état de l'art (2008 → 2026)"
+---
+
+# Panorama de l'état de l'art
+
+> Synthèse de la revue systémique déposée dans le dépôt (<code>docs/02-revue-etat-art-2026.md</code>, sources notées et datées).
+
+## Modèles opérationnels et réglementaires
+
+Le paysage near-field reste gaussien : l'EPA a promulgué en novembre 2024 une révision complète de son guideline (Appendix W) centrée sur les améliorations d'AERMOD, effective janvier 2025 [@epa2024appendixw]. CALPUFF, modèle préféré de 2003 à 2017, est rétrogradé « modèle alternatif ». Les comparatifs montrent des facteurs 2 d'écart avec les mesures : l'**incertitude des modèles opérationnels reste le problème central**, et le besoin de modèles rapides à contraintes physiques demeure.
+
+## Dérive de pulvérisation
+
+Le couple AgDRIFT/AGDISP domine le risque réglementaire. Son extension gaussienne far-field est reconnue par l'EPA « extrêmement conservatrice » et peu validée pour les barrières végétales et la topographie — **exactement la cible de la métrique travel-time**. L'**AGDISP Modernization Project** (AMP) réécrit le near-field en open source (langage moderne, rejoint par Bayer Crop Science en 2026) : le far-field réaliste reste la case vide. Les approches ML de dérive (random forests, ANN, SVR) sont purement statistiques, fragiles en extrapolation. Les drones (UASS/RPAAS) créent un besoin nouveau de modèles de dérive validés.
+
+## ROM et apprentissage
+
+Les ROM de dispersion se sont standardisées : Arnoldi (2015, gain ~×2500 vs CFD) [@vervecken2015rom], POD+RBF sur 144 km² (Pékin, 2021), ROM physique POD-NN (Bologne, 2024), POD-GPR depuis ~50 snapshots LES (2024), ROM + assimilation de données (2023). Les surrogates neuronaux montent en gamme : opérateurs de Fourier pour panaches radioactifs (2024) [@fno2024plume], architectures masquage/correction 3D (CEA, 2024), prévision d'accidents Seveso (2022). **Toutes exigent un modèle haute-fidélité et des snapshots** ; leur faiblesse déclarée est la généralisation hors domaine.
+
+## Identification de source (STE)
+
+Le champ s'est structuré : revue de référence (Information Fusion, 2017) classant optimisation, adjoint, bayésien, renormalisation [@hutchinson2017ste] ; formalisme d'opérateur inverse généralisé par la renormalisation [@renormalization2016] ; opérationnalisation à toutes échelles (NARAC/LLNL). Deux problèmes ouverts identifiés en 2025 : la régularisation automatique sous données rares, et **la détection du hors-domaine des surrogates ML** — argument direct pour un modèle physique rapide servant de garde-fou.
+
+## SIG et open source
+
+Les plugins QGIS gaussiens existent désormais (intercomparaison 2026, plugins éducatifs) : l'intégration GIS n'est plus un différenciateur, c'est un standard d'usage. Le différenciateur doit être le modèle — d'où l'architecture cœur Python pur + bindings en aval.
+
+## Temps réel et jumeaux numériques
+
+Jumeaux numériques urbains, prévisions CBRN opérationnelles, sessions CBRNe exigeant interprétabilité et conformité (EU AI Act) : un modèle analytique contraint par la physique est un atout d'**auditabilité** face aux boîtes noires.

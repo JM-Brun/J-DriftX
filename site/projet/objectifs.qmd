@@ -1,0 +1,28 @@
+---
+title: "Objectifs de J-DriftX"
+---
+
+# Objectifs de J-DriftX
+
+## Vision
+
+**J-DriftX v2** est un moteur open source de dispersion à complexité réduite : solutions de similitude généralisées dans une métrique non symétrique de temps de transport, évaluation ponctuelle sans maillage, calibration par assimilation de données, contraintes physiques garanties.
+
+## Cibles applicatives
+
+- **Far-field de la dérive de pulvérisation** (vignes, grandes cultures, drones) : au-delà des quelques centaines de mètres couverts par les modèles lagrangiens near-field, là où l'extension gaussienne réglementaire est reconnue très conservatrice.
+- **Exposition résidentielle aux pesticides** : cartographie multi-échelles parcelle → paysage, couplée à un SIG.
+- **Analyse de risque statistique** : Monte Carlo massif rendu possible par le coût quasi nul de l'évaluation ponctuelle.
+- **Identification de source** (problème inverse) : adjoint analytique, sensibilité exacte.
+
+## Principes directeurs
+
+1. **Physique d'abord, données ensuite.** Le modèle analytique reste la source de vérité ; l'apprentissage ne sert qu'à calibrer. Garde-fou contre l'extrapolation, exigence d'interprétabilité.
+2. **Benchmarks avant fonctionnalités.** Chaque module est livré avec son jeu de validation public.
+3. **Cœur pur, bindings en aval.** Noyau Python sans dépendance SIG ; plugin QGIS et API séparés.
+4. **Coût nul par évaluation.** Préserver la propriété d'évaluation ponctuelle : un million d'échantillons Monte Carlo sur un ordinateur portable.
+5. **Interopérabilité réglementaire.** Formats d'entrée météo compatibles AERMOD/AgDRIFT quand c'est possible ; sorties GeoTIFF géoréférencées.
+
+## Statut
+
+Phase 0 terminée (documentation, audit, revue de l'état de l'art, roadmap). Le jalon M1 — noyau Python et benchmark gaussien — est en cours : voir la [feuille de route](roadmap.qmd) et le code du dépôt.

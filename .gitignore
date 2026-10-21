@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+dist/
+build/
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.reports/
+
+# Quarto
+site/_site/
+site/.quarto/
+
+# Éditeurs / OS
+.vscode/
+.idea/
+.DS_Store

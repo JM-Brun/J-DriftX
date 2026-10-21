@@ -1,0 +1,33 @@
+---
+title: "Positionnement de J-DriftX"
+---
+
+# Positionnement de J-DriftX en 2026
+
+## La case vide
+
+| Dimension | État de l'art 2026 | Apport J-DriftX |
+|---|---|---|
+| Réduction | POD/ML *a posteriori* — dépendantes de snapshots CFD | Réduction *a priori* par similitude, sans EDP ni entraînement |
+| Coût | Rapide après un entraînement coûteux | Évaluation ponctuelle quasi nulle, Monte Carlo massif |
+| Far-field dérive | Extension gaussienne AGDISP très conservatrice ; AMP en cours | Similitude généralisée + topographie via métrique travel-time |
+| Calibration | Assimilation et ML matures | Assimilation de données partielles — à moderniser (bayésien) |
+| STE | Standards adjoint/bayésien | Adjoint **analytique** disponible par construction |
+| Confiance | Boîtes noires en quête d'interprétabilité | Contraintes physiques garanties, auditables |
+
+## Trois paris différenciants
+
+1. **La métrique travel-time n'a pas été reprise** : dix-huit ans après, aucune approche concurrente n'a repris la généralisation des solutions de similitude par les temps de transport. La niche est intacte — et le far-field réglementaire la réclame.
+2. **Hybridation vertueuse** : DriftX comme *prior* physique et modèle d'évaluation ponctuelle ; l'apprentissage pour la calibration. Complémentaire des ROM-POD, concurrent de personne sur leur terrain, inattaquable sur le sien.
+3. **Garde-fou des surrogates ML** : là où un réseau diverge silencieusement hors domaine, le modèle analytique contraint (conservation, positivité) borné sur son domaine de validité explicite — l'argument de confiance pour les usages réglementaires et d'urgence.
+
+## Pourquoi maintenant (et pas en 2008)
+
+- **Données** : ERA5/Copernicus, MNT ouverts, capteurs low-cost — le verrou « données rares » de 2006 a disparu ; la calibration par assimilation devient crédible.
+- **Outils** : QGIS mature, Python scientifique, CI — le socle d'exécution existe.
+- **Marché** : modernisation réglementaire d'AGDISP, drones, exposition résidentielle aux pesticides, exigences d'auditabilité des modèles.
+- **Science** : le débat ROM/ML a mûri ; la revue STE 2025 désigne le hors-domaine comme problème ouvert — la réponse structurelle de Drift-X.
+
+## Conditions de réussite
+
+Voir la [feuille de route](../projet/roadmap.qmd) : benchmarks publics d'abord (M1), code moderne ensuite, article de synthèse enfin (M4), extension réglementaire à terme (M5).

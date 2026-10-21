@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  qualite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: pyproject.toml
+
+      - name: Installer l'environnement
+        run: uv sync
+
+      - name: Lint (ruff)
+        run: uv run ruff check . --output-format=github
+
+      - name: Format (ruff)
+        run: |
+          if ! uv run ruff format --check .; then
+            echo "::error title=Format ruff::$(uv run ruff format --check . 2>&1 | tr '\n' ' ')"
+            exit 1
+          fi
+
+      - name: Typage (mypy)
+        run: |
+          if ! uv run mypy; then
+            echo "::error title=mypy::$(uv run mypy 2>&1 | tr '\n' ' ' | head -c 3000)"
+            exit 1
+          fi
+
+      - name: Tests (pytest)
+        run: uv run pytest --cov=jdriftx --cov-report=term-missing

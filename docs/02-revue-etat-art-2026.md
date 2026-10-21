@@ -36,7 +36,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 
 ### 3. ROM et apprentissage : maturité méthodologique, mais toujours a posteriori
 
-- Les ROM de dispersion urbaine se sont standardisées : Arnoldi (2011, facteur ~2500 vs CFD), POD+RBF sur 144 km² (Pékin, 2021), ROM physique POD-NN (Bologne, 2024, avec vent réel pour le monitoring temps réel), POD-GPR avec ~50 snapshots LES (2024), ROM + assimilation de données (2023).
+- Les ROM de dispersion urbaine se sont standardisées : Arnoldi (2015, facteur ~2500 vs CFD), POD+RBF sur 144 km² (Pékin, 2021), ROM physique POD-NN (Bologne, 2024, avec vent réel pour le monitoring temps réel), POD-GPR avec ~50 snapshots LES (2024), ROM + assimilation de données (2023).
 - Les surrogate neuronaux montent en gamme : FNO pour panaches radioactifs (2024), architectures masquage/correction 3D (CEA, 2024, priors physiques + opérateurs neuronaux), surrogates ML d'émissions industrielles, prévision d'accidents Seveso (2022).
 - **Point commun à toutes ces approches : elles exigent un modèle haute-fidélité (CFD/LES) et des snapshots pour exister.** Elles excellent en interpolation dans leur domaine d'entraînement mais leur faiblesse déclarée est la généralisation hors domaine (identifiée comme problème ouvert dans la revue STE 2025). La réduction a priori de Drift-X est précisément complémentaire : coût indépendant du domaine, extrapolation par construction, pas d'entraînement requis. **Positionnement naturel : hybride — Drift-X comme prior physique et modèle d'évaluation ponctuelle, ML pour la calibration.**
 
@@ -81,7 +81,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 | [NCASI TB808 — historique AGDISP/AgDRIFT](https://ncasi.org/wp-content/uploads/2011/11/tb808.pdf) | 4/5 | 2007 |
 | [HAL — ROM POD-GPR dispersion micro-échelle](https://hal.science/hal-04310899/document) | 4/5 | 2024 |
 | [CMAME — ROM physique pollution urbaine](https://www.sciencedirect.com/science/article/abs/pii/S0045782523005406) | 4/5 | 2024 |
-| [ResearchGate — ROM Arnoldi built environment](https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment) | 3/5 | 2011 |
+| [ResearchGate — ROM Arnoldi built environment](https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment) | 3/5 | 2015 |
 | [SERRA — surrogate FNO panache radioactif](https://link.springer.com/article/10.1007/s00477-024-02738-8) | 4/5 | 2024 |
 | [CEA/HAL — MCxM 3D deep learning dispersion](https://cea.hal.science/cea-04810109/document) | 4/5 | 2024 |
 | [SERRA — surrogate accidents Seveso](https://link.springer.com/article/10.1007/s00477-022-02288-x) | 4/5 | 2022 |

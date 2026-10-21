@@ -1,0 +1,46 @@
+---
+title: "Modèle direct"
+---
+
+# Le modèle direct : transport d'un scalaire passif
+
+Le point de départ de J-DriftX est le modèle *direct* complet qu'il s'agit d'approcher sans le résoudre : le transport d'un scalaire passif (un pesticide, un traceur) dans un écoulement atmosphérique turbulent.
+
+## Équation de transport
+
+La concentration $C(\mathbf{x}, t)$ d'un scalaire passif obéit à l'équation d'advection–diffusion :
+
+$$
+\frac{\partial C}{\partial t} + \mathbf{u} \cdot \nabla C
+= \nabla \cdot \left( \mathbf{K} \, \nabla C \right) + S,
+$$
+
+où $\mathbf{u}$ est le champ de vent, $\mathbf{K}$ le tenseur de diffusion turbulente et $S$ le terme source. Le modèle est *complet* mais son coût de résolution numérique est rédhibitoire pour les usages visés (Monte Carlo massif, SIG, temps réel).
+
+## Moyennage et fermeture
+
+Le vent atmosphérique est turbulent : $\mathbf{u} = \overline{\mathbf{u}} + \mathbf{u}'$. Après moyennage de Reynolds, l'équation s'écrit sur $\overline{C}$, avec le flux turbulent $\overline{\mathbf{u}' C'}$ qu'il faut fermer. La fermeture gradient (K-théorie) :
+
+$$
+\overline{\mathbf{u}' C'} = -\mathbf{K} \, \nabla \overline{C},
+$$
+
+où $\mathbf{K}$ dépend de la stabilité (classes de Pasquill) et de la hauteur. C'est cette fermeture qui produit les coefficients de dispersion $\sigma_y, \sigma_z$ des solutions de similitude.
+
+## Vent incompressible
+
+Sur les échelles visées, le vent est incompressible :
+
+$$
+\nabla \cdot \mathbf{u} = 0.
+$$
+
+Cette contrainte est *héritée par le modèle réduit* : le champ de vent généré par la métrique travel-time doit être à divergence nulle [@brun2008]. C'est l'une des quatre [contraintes physiques](contraintes-physiques.qmd) imposées à l'approche.
+
+## Ce que J-DriftX refuse de faire
+
+- Résoudre l'EDP sur un maillage du domaine : incompatible avec l'évaluation ponctuelle.
+- Entraîner un modèle sur des snapshots CFD/LES : coût initial élevé, fragilité hors domaine d'entraînement.
+- Renoncer aux propriétés du modèle direct : conservation, positivité, linéarité, incompressibilité sont *imposées* à l'approche.
+
+La réponse à ces trois refus est la [réduction *a priori*](reduction-a-priori.qmd).

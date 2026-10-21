@@ -1,0 +1,35 @@
+---
+title: "Réduction a priori"
+---
+
+# Réduction a priori de l'espace de recherche
+
+L'idée fondatrice de Drift-X [@brun2008] : plutôt que de réduire *a posteriori* un modèle coûteux (POD, snapshots), construire directement un **espace de recherche physiquement pertinent** dans lequel la solution vit.
+
+## Les deux réductions classiques
+
+**Méthodes de projection (éléments finis)** : la solution est cherchée dans un sous-espace $S(\{W_N\})$ décrit par une base fonctionnelle $\{W_N\}$, avec $N \to \infty$ pour la consistance. Le problème reste de grande taille ($1 \ll N < \infty$) et exige un maillage.
+
+**Réduction a posteriori (POD/snapshots)** : la solution est projetée sur $S(\{w_n\})$, famille de solutions (*snapshots*) du modèle complet, avec $n \ll N$. Excellente en interpolation — mais il faut d'abord *payer* les snapshots (CFD/LES), et la généralisation hors du domaine d'entraînement n'est pas garantie.
+
+## L'approche Drift-X : un modèle approché a priori
+
+On remplace le modèle direct $p \mapsto V(p)$ (calcul complet de l'état) par un **modèle approché** $p \mapsto v(p)$, construit à partir de ce que la physique nous apprend des panaches :
+
+$$
+V(p) \;\longrightarrow\; v(p), \qquad v \in S(\text{similitude}), \qquad \text{coût} \; \ll \; \text{coût}(V).
+$$
+
+Trois conséquences structurantes :
+
+1. **Pas de snapshots à générer** : l'espace de recherche est donné par les solutions de similitude (jets, panaches, puffs — voir [Similitude](similitude.qmd)).
+2. **Domaine de validité local** : le modèle approché n'a pas besoin d'être global. On n'utilise pas nécessairement le même modèle réduit sur toute la plage des paramètres — d'où l'approche [multi-niveaux](modele-direct.qmd), chaque niveau ayant son domaine.
+3. **Consistance garantie par contraintes** : $v$ est astreint à être solution du modèle direct (conservation, positivité, linéarité, $\nabla \cdot \mathbf{u} = 0$) — voir [Contraintes physiques](contraintes-physiques.qmd).
+
+## Lignée scientifique
+
+La démarche s'inscrit dans la famille des *modèles approchés d'état* de l'optimisation de forme : le concept de sensibilité incomplète [@mohammadi2001shape] linéarise non pas le modèle direct, mais une équation d'état approchée. Drift-X étend cette logique du gradient à la solution elle-même.
+
+## Ce que cela ne veut pas dire
+
+Réduction a priori ne signifie pas renoncer aux données : la [calibration](assimilation-identification.qmd) par assimilation de données partielles identifie les paramètres libres du modèle approché. La physique structure l'espace de recherche ; les données ferment le problème.
