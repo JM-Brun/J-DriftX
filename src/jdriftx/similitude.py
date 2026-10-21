@@ -110,9 +110,8 @@ def concentration_panache(
     sz = sigma_z(x_arr, classe)
 
     terme_lateral = np.exp(-(y_arr**2) / (2.0 * sy**2))
-    terme_vertical = (
-        np.exp(-((z_arr - hauteur) ** 2) / (2.0 * sz**2))
-        + np.exp(-((z_arr + hauteur) ** 2) / (2.0 * sz**2))
+    terme_vertical = np.exp(-((z_arr - hauteur) ** 2) / (2.0 * sz**2)) + np.exp(
+        -((z_arr + hauteur) ** 2) / (2.0 * sz**2)
     )
     return debit / (2.0 * np.pi * u * sy * sz) * terme_lateral * terme_vertical
 
