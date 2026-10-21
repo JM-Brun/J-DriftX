@@ -5,7 +5,7 @@
 - Brun, J.-M. (2006). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II.
 - Mohammadi, B. & Brun, J.-M. (2006). Similitude généralisée et modélisation géométrique à complexité réduite. *C. R. Mécanique* 334(10), 634–638. https://www.em-consulte.com/article/69927
 - Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006). Reduced order modelling of dispersion. In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
-- Brun, J.-M. & Mohammadi, B. (2008). Reduced-Order Modelling of Dispersion. In Glowinski, R. & Neittaanmäki, P. (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, Springer, Dordrecht. https://doi.org/10.1007/978-1-4020-8758-5_14
+- Brun, J.-M. & Mohammadi, B. (2008). Reduced-Order Modelling of Dispersion. In Glowinski, R. & Neittaanmäki, P. (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, Springer, Dordrecht, chap. 14, p. 245 et s. https://doi.org/10.1007/978-1-4020-8758-5_14
 - Bozon, N., Mohammadi, B. & Sinfort, C. (2008). Similitude and non symmetric geometry for dispersion modelling. e-sta vol. 5, numéro spécial STIC et Environnement'07.
 - Bozon, N., Sinfort, C. & Mohammadi, B. (2009). A GIS-based atmospheric dispersion model (plateforme Drift-X, plugin QGIS). HAL : https://hal.science/hal-00468863 (PDF : https://hal.science/hal-00468863/file/MO2009-PUB00026817.pdf)
 - Mohammadi, B. & Bozon, N. (2009). GIS-based atmospheric dispersion modelling. *Applied Geomatics* 1, 33–39. https://doi.org/10.1007/s12518-009-0006-0
@@ -33,11 +33,11 @@
 ## État de l'art — ROM et apprentissage pour la dispersion
 
 - HAL (2024). POD-GPR reduced-order model for microscale atmospheric dispersion (statistiques 1er/2e ordre depuis ~50 snapshots LES). https://hal.science/hal-04310899/document
-- Isaacson et al. (2011). Stable reduced-order models (Arnoldi) for pollutant dispersion in the built environment (facteur ~2500 vs CFD). https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment
+- Vervecken, L. & Meyers, J. (2015). Stable reduced-order models (Arnoldi) for pollutant dispersion in the built environment (facteur ~2500 vs CFD). https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment
 - CMAME (2024). A physics-based reduced order model for urban air pollution (POD-NN, cas Bologne, monitoring temps réel). https://www.sciencedirect.com/science/article/abs/pii/S0045782523005406
 - Appl. Math. Comput. / Elsevier (2023). A reduced order model with data assimilation — pollutant dispersion in urban environment. https://www.sciencedirect.com/science/article/abs/pii/S0045793023000877
 - Build. Sim. Eng. / Urban Clim. (2021). ROM POD+RBF pour environnement urbain (144 km², Pékin). https://www.sciencedirect.com/science/article/pii/S2666449621000372
-- SERRA (2024). Enhanced Fourier neural operator surrogate for radioactive plume dispersion. https://link.springer.com/article/10.1007/s00477-024-02738-8
+- SERRA (2024). An enhanced Fourier neural operator surrogate for radioactive plume transport forecasting (Ayoub et al., WSPEEDI). https://link.springer.com/article/10.1007/s00477-024-02738-8
 - CEA / HAL (2024). Enhanced deep learning architecture for 3D air pollution dispersion forecasting (MCxM : masquage + correction, priors physiques + opérateurs neuronaux). https://cea.hal.science/cea-04810109/document
 - Springer (2025). Machine learning-based surrogate models for predicting atmospheric dispersion of industrial emissions (linéaires, arbres, RNN vs TAPM). https://link.springer.com/chapter/10.1007/978-3-032-02728-3_53
 - SERRA (2022). Surrogate modelling for the forecast of Seveso-type atmospheric dispersion incidents. https://link.springer.com/article/10.1007/s00477-022-02288-x
@@ -46,7 +46,7 @@
 
 - Hutchinson, M., Oh, H. et al. (2017). A review of source term estimation methods for atmospheric dispersion events using static or mobile sensors. *Information Fusion*. https://www.sciencedirect.com/science/article/pii/S156625351630152X
 - NARAC / LLNL. Source Term Estimation (Inverse Modeling) — infrastructures opérationnelles (adjoint, bayésien, urban→continental). https://narac.llnl.gov/research-and-development/source-term-estimation
-- JAMES (2016). Reconstructing source terms from atmospheric concentration measurements — renormalization technique, generalized inverse operator. https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014MS000385
+- Turbelin, G., Singh, S. K. & Issartel, J.-P. (2016). Reconstructing source terms from atmospheric concentration measurements — renormalization technique, generalized inverse operator. *JAMES*. https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014MS000385
 - Zenodo (2025). Source Term Estimation for Atmospheric Pollutant Releases — revue + expérience (adjoint, Tikhonov, bayésien, PINN ; problèmes ouverts : régularisation automatique, détection hors-domaine d'entraînement). https://zenodo.org/records/22914336
 
 ## État de l'art — SIG et open source
