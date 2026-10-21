@@ -2,7 +2,7 @@
 
 ## Corpus historique (Drift-X, 2006–2009)
 
-- Brun, J.-M. (2006). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II.
+- Brun, J.-M. (2006). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. Non déposée en ligne à ce jour — dépôt HAL prévu (action M0 de la roadmap).
 - Mohammadi, B. & Brun, J.-M. (2006). Similitude généralisée et modélisation géométrique à complexité réduite. *C. R. Mécanique* 334(10), 634–638. https://www.em-consulte.com/article/69927
 - Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006). Reduced order modelling of dispersion. In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
 - Brun, J.-M. & Mohammadi, B. (2008). Reduced-Order Modelling of Dispersion. In Glowinski, R. & Neittaanmäki, P. (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, Springer, Dordrecht, chap. 14, p. 245 et s. https://doi.org/10.1007/978-1-4020-8758-5_14

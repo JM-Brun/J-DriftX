@@ -7,7 +7,7 @@
 
 Le projet **Drift-X** (modèle de dispersion atmosphérique de pesticides couplé à un SIG, développé à Cemagref/ITAP et I3M Montpellier) repose sur le corpus suivant :
 
-1. **Brun, J.-M. (2006)**. *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II.
+1. **Brun, J.-M. (2006)**. *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. Non déposée en ligne à ce jour — dépôt HAL prévu (action M0 de la roadmap).
 2. **Mohammadi, B. & Brun, J.-M. (2006)**. « Similitude généralisée et modélisation géométrique à complexité réduite ». *C. R. Mécanique* 334(10), 634–638. DOI 10.1016/j.crme.2006.06.007 — première formulation publique : assimilation de données partielles, solutions de similitude dans une métrique non symétrique basée sur les temps de transport, sans EDP ni maillage, évaluation ponctuelle.
 3. **Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006)**. « Reduced order modelling of dispersion ». In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
 4. **Brun, J.-M. & Mohammadi, B. (2008)**. « Reduced-Order Modelling of Dispersion ». In Glowinski, R. & Neittaanmäki, P. (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, Computational Methods in Applied Sciences vol. 16, Springer, Dordrecht, chap. 14, p. 245 et s. — version longue de référence : approche multi-niveaux, similitude généralisée, contraintes physiques (incompressibilité du vent généré, conservation, positivité, linéarité), exemples numériques multi-sources, analyse de sensibilité pour l'identification de source et l'analyse de risque.
