@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1000" height="640" fill="#ffffff"/>
+  <text x="30" y="36" font-size="21" font-weight="bold" fill="#202124">Tests unitaires — la physique comme oracle</text>
+  <text x="30" y="58" font-size="13" fill="#5f6368">Structure Given / When / Then — exécutée à chaque push (ruff, format, mypy strict, pytest)</text>
+  <g font-size="14" font-weight="bold" text-anchor="middle">
+    <rect x="20" y="74" width="190" height="32" rx="6" fill="#5f6368"/>
+    <text x="115" y="95" fill="#ffffff">test</text>
+    <rect x="220" y="74" width="260" height="32" rx="6" fill="#1a73e8"/>
+    <text x="350" y="95" fill="#ffffff">GIVEN — contexte</text>
+    <rect x="490" y="74" width="250" height="32" rx="6" fill="#e37400"/>
+    <text x="615" y="95" fill="#ffffff">WHEN — action</text>
+    <rect x="750" y="74" width="230" height="32" rx="6" fill="#188038"/>
+    <text x="865" y="95" fill="#ffffff">THEN — oracle</text>
+  </g>
+  <g font-size="13" fill="#202124">
+    <rect x="20" y="116" width="190" height="104" rx="8" fill="#f1f3f4"/>
+    <text x="32" y="150" font-family="Consolas, Menlo, monospace" font-size="12" fill="#3c4043">test_conservation</text>
+    <text x="32" y="166" font-family="Consolas, Menlo, monospace" font-size="12" fill="#3c4043">_masse_panache</text>
+    <rect x="220" y="116" width="260" height="104" rx="8" fill="#e8f0fe"/>
+    <text x="232" y="142">Panache gaussien, classe D :</text>
+    <text x="232" y="160">x = 1 000 m, Q = 1,5 kg/s,</text>
+    <text x="232" y="178">U = 4 m/s</text>
+    <rect x="490" y="116" width="250" height="104" rx="8" fill="#fef7e0"/>
+    <text x="502" y="142">On intègre le flux U·C</text>
+    <text x="502" y="160">sur le plan (y, z)</text>
+    <rect x="750" y="116" width="230" height="104" rx="8" fill="#e6f4ea"/>
+    <text x="762" y="142">Le flux restitue Q</text>
+    <text x="762" y="160">à 2 % près</text>
+  </g>
+  <g font-size="13" fill="#202124">
+    <rect x="20" y="228" width="190" height="104" rx="8" fill="#f1f3f4"/>
+    <text x="32" y="262" font-family="Consolas, Menlo, monospace" font-size="12" fill="#3c4043">test_symetrie</text>
+    <text x="32" y="278" font-family="Consolas, Menlo, monospace" font-size="12" fill="#3c4043">_laterale</text>
+    <rect x="220" y="228" width="260" height="104" rx="8" fill="#e8f0fe"/>
+    <text x="232" y="254">Vent uniforme ; un point (y, z)</text>
+    <text x="232" y="272">et son image (−y, z)</text>
+    <rect x="490" y="228" width="250" height="104" rx="8" fill="#fef7e0"/>
+    <text x="502" y="254">On évalue C aux</text>
+    <text x="502" y="272">deux points</text>
+    <rect x="750" y="228" width="230" height="104" rx="8" fill="#e6f4ea"/>
+    <text x="762" y="254">C(y, z) = C(−y, z)</text>
+  </g>
+  <g font-size="13" fill="#202124">
+    <rect x="20" y="340" width="190" height="104" rx="8" fill="#f1f3f4"/>
+    <text x="32" y="374" font-family="Consolas, Menlo, monospace" font-size="12" fill="#3c4043">test_superposition</text>
+    <text x="32" y="390" font-family="Consolas, Menlo, monospace" font-size="12" fill="#3c4043">_panache</text>
+    <rect x="220" y="340" width="260" height="104" rx="8" fill="#e8f0fe"/>
+    <text x="232" y="366">Deux sources de débits</text>
+    <text x="232" y="384">Q₁ et Q₂</text>
+    <rect x="490" y="340" width="250" height="104" rx="8" fill="#fef7e0"/>
+    <text x="502" y="366">On superpose</text>
+    <text x="502" y="384">les panaches</text>
+    <rect x="750" y="340" width="230" height="104" rx="8" fill="#e6f4ea"/>
+    <text x="762" y="366">C(Q₁+Q₂) = C(Q₁) + C(Q₂)</text>
+    <text x="762" y="384">et C ≥ 0 partout</text>
+  </g>
+  <g font-size="13" fill="#202124">
+    <rect x="20" y="452" width="190" height="104" rx="8" fill="#f1f3f4"/>
+    <text x="32" y="486" font-family="Consolas, Menlo, monospace" font-size="12" fill="#3c4043">test_non_symetrie</text>
+    <text x="32" y="502" font-family="Consolas, Menlo, monospace" font-size="12" fill="#3c4043">_champ_non_uniforme</text>
+    <rect x="220" y="452" width="260" height="104" rx="8" fill="#e8f0fe"/>
+    <text x="232" y="478">Champ de vent non uniforme,</text>
+    <text x="232" y="496">trajet de A vers B</text>
+    <rect x="490" y="452" width="250" height="104" rx="8" fill="#fef7e0"/>
+    <text x="502" y="478">On échange source</text>
+    <text x="502" y="496">et récepteur</text>
+    <rect x="750" y="452" width="230" height="104" rx="8" fill="#e6f4ea"/>
+    <text x="762" y="478">τ(A→B) ≠ τ(B→A)</text>
+    <text x="762" y="496">(τ non symétrique)</text>
+  </g>
+  <text x="30" y="596" font-size="12" fill="#5f6368">L'oracle est une propriété physique (conservation, symétrie, superposition, non-symétrie de τ) — jamais une valeur codée en dur.</text>
+  <text x="30" y="614" font-size="12" fill="#5f6368">Chaque jalon de la roadmap commence par l'écriture de ses tests Given / When / Then (TDD).</text>
+</svg>

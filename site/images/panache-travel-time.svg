@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4285f4"/>
+    </marker>
+  </defs>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <text x="30" y="34" font-size="20" font-weight="bold" fill="#202124">Panache gaussien généralisé — métrique des temps de transport</text>
+  <text x="30" y="56" font-size="13" fill="#5f6368">J-DriftX : évaluation ponctuelle, sans EDP ni maillage — la distance qui compte est le temps τ</text>
+  <text x="870" y="34" font-size="15" fill="#a14200" text-anchor="end" font-style="italic">τ(A→B) = ∫ ds / |u(s)| le long du trajet</text>
+  <text x="870" y="52" font-size="12" fill="#5f6368" text-anchor="end">métrique non symétrique : τ(A→B) ≠ τ(B→A)</text>
+  <line x1="42" y1="120" x2="86" y2="120" stroke="#4285f4" stroke-width="2" marker-end="url(#fleche)"/>
+  <line x1="42" y1="165" x2="104" y2="165" stroke="#4285f4" stroke-width="2" marker-end="url(#fleche)"/>
+  <line x1="42" y1="210" x2="122" y2="210" stroke="#4285f4" stroke-width="2" marker-end="url(#fleche)"/>
+  <text x="42" y="103" font-size="12" fill="#4285f4">vent cisaillé u(z)</text>
+  <line x1="40" y1="352" x2="870" y2="352" stroke="#9aa0a6" stroke-width="2"/>
+  <text x="42" y="370" font-size="12" fill="#5f6368">sol (réflexion au sol)</text>
+  <g fill="#34a853">
+    <ellipse cx="185" cy="292" rx="60" ry="16" opacity="0.55"/>
+    <ellipse cx="295" cy="292" rx="125" ry="30" opacity="0.40"/>
+    <ellipse cx="445" cy="292" rx="205" ry="46" opacity="0.28"/>
+    <ellipse cx="635" cy="292" rx="290" ry="57" opacity="0.18"/>
+    <ellipse cx="815" cy="292" rx="360" ry="60" opacity="0.10"/>
+  </g>
+  <g stroke="#f9ab00" stroke-width="2" stroke-dasharray="7 5" fill="none">
+    <path d="M 260 292 A 150 62 0 0 0 110 230"/>
+    <path d="M 400 292 A 290 120 0 0 0 110 172"/>
+    <path d="M 560 292 A 450 185 0 0 0 110 107"/>
+  </g>
+  <text x="205" y="248" font-size="13" fill="#a14200">iso-τ₁</text>
+  <text x="288" y="196" font-size="13" fill="#a14200">iso-τ₂</text>
+  <text x="348" y="135" font-size="13" fill="#a14200">iso-τ₃</text>
+  <text x="870" y="405" font-size="12" fill="#a14200" text-anchor="end" font-style="italic">courbes iso-τ : temps de transport constants depuis la source</text>
+  <circle cx="110" cy="292" r="7" fill="#202124"/>
+  <line x1="110" y1="299" x2="110" y2="352" stroke="#202124" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="98" y="318" font-size="13" fill="#202124" text-anchor="end">source (Q, h)</text>
+  <g stroke="#c5221f" stroke-width="2" fill="none">
+    <circle cx="700" cy="246" r="9"/>
+    <line x1="688" y1="246" x2="712" y2="246"/>
+    <line x1="700" y1="234" x2="700" y2="258"/>
+  </g>
+  <text x="718" y="240" font-size="13" fill="#c5221f">évaluation ponctuelle</text>
+  <text x="718" y="258" font-size="13" fill="#c5221f" font-style="italic">C(x, y, z) sans maillage</text>
+  <line x1="110" y1="292" x2="870" y2="292" stroke="#5f6368" stroke-width="1" stroke-dasharray="2 6"/>
+  <text x="868" y="286" font-size="12" fill="#5f6368" text-anchor="end">x (sous le vent)</text>
+</svg>
