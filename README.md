@@ -11,7 +11,7 @@ J-DriftX prédit la dispersion (panaches, puffs, dérive de pulvérisation) via 
 | 2006 | *Modélisation à complexité réduite de la dérive* — J.-M. Brun, thèse de doctorat, Université Montpellier II | — |
 | 2006 | [Similitude généralisée et modélisation géométrique à complexité réduite](https://www.em-consulte.com/article/69927) — B. Mohammadi & J.-M. Brun | *C. R. Mécanique* 334(10), 634–638 |
 | 2006 | *Reduced order modelling of dispersion* — B. Mohammadi, J.-M. Brun & O. Pironneau | Springer (non ouvert) |
-| 2008 | [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14) — J.-M. Brun & B. Mohammadi | Springer, CSM vol. 16, p. 245–256 |
+| 2008 | [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14) — J.-M. Brun & B. Mohammadi | Springer, CSM vol. 16, chap. 14, p. 245 et s. |
 | 2008 | *Similitude and non symmetric geometry for dispersion modelling* — N. Bozon, B. Mohammadi & C. Sinfort | e-sta vol. 5 (STIC & Environnement'07) |
 | 2009 | [A GIS-based atmospheric dispersion model — plateforme Drift-X](https://hal.science/hal-00468863) — N. Bozon, C. Sinfort & B. Mohammadi | HAL hal-00468863 |
 | 2009 | [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0) — B. Mohammadi & N. Bozon | *Applied Geomatics* 1, 33–39 |
