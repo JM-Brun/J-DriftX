@@ -29,6 +29,8 @@ website:
             text: "Audit de l'héritage"
           - href: projet/roadmap.qmd
             text: "Feuille de route"
+          - href: projet/qualite.qmd
+            text: "Qualité & tests"
       - section: "Fondements théoriques"
         contents:
           - href: theorie/modele-direct.qmd

@@ -1,0 +1,46 @@
+---
+title: "Qualité & tests"
+---
+
+# Qualité & tests : la physique comme oracle
+
+Un modèle sans EDP ni maillage n'a pas de « valeur de référence » précalculée : l'**oracle des tests est la physique elle-même** — conservation de la masse, symétries, positivité, superposition, non-symétrie de la métrique. Chaque test unitaire encode une propriété physique sous la forme **Given / When / Then**.
+
+![Structure des tests unitaires J-DriftX en Given / When / Then](../images/tests-given-when-then.svg)
+
+## Les quatre familles de tests (M1)
+
+| Test | GIVEN (contexte) | WHEN (action) | THEN (oracle physique) |
+|---|---|---|---|
+| <code>test_conservation_masse_panache</code> | Panache gaussien, classe D (x = 1 000 m, Q = 1,5 kg/s, U = 4 m/s) | On intègre le flux U·C sur le plan (y, z) | Le flux restitue Q à 2 % près |
+| <code>test_symetrie_laterale</code> | Vent uniforme ; un point (y, z) et son image (−y, z) | On évalue C aux deux points | C(y, z) = C(−y, z) |
+| <code>test_superposition_panache</code> | Deux sources de débits Q₁ et Q₂ | On superpose les panaches | C(Q₁+Q₂) = C(Q₁) + C(Q₂), et C ≥ 0 partout |
+| <code>test_non_symetrie_champ_non_uniforme</code> | Champ de vent non uniforme ; trajet de A vers B | On échange source et récepteur | τ(A→B) ≠ τ(B→A) |
+
+::: {.callout-tip}
+### Pourquoi Given / When / Then ?
+
+Le triplet GIVEN / WHEN / THEN sépare le **contexte**, l'**action** et l'**oracle**. Un test qui échoue dit immédiatement *quelle propriété physique* est violée, pas seulement quelle ligne est fausse. C'est le format adopté pour tous les jalons de la roadmap : M1 (benchmark gaussien), M2 (métrique τ), M3 (assimilation et identification).
+:::
+
+## TDD adapté aux modèles physiques
+
+La reprise suit une discipline TDD où le « rouge » initial encode la physique du jalon :
+
+1. **Écrire d'abord la propriété** (Given / When / Then) — elle encode la physique attendue du jalon.
+2. **Vérifier que le test échoue** — l'implémentation est absente.
+3. **Implémenter la réduction** — solution de similitude, métrique, contrainte.
+4. **Vérifier que le test passe** — sans jamais toucher à l'oracle.
+
+## La CI comme contrat de confiance
+
+Chaque push déclenche la chaîne qualité complète (voir <code>.github/workflows/ci.yml</code>) :
+
+| Étape | Outil | Rôle |
+|---|---|---|
+| Lint | Ruff | style et pièges classiques |
+| Format | Ruff | forme canonique du code |
+| Typage | mypy (strict) | types garantis de bout en bout |
+| Tests | pytest + coverage | propriétés physiques vérifiées |
+
+La publication du site (Quarto, GitHub Pages) est déclenchée à chaque push sur <code>main</code>. Voir la [feuille de route](roadmap.qmd) pour les prochains jalons et leurs tests.
