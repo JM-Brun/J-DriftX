@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="fleche-v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4285f4"/>
+    </marker>
+    <marker id="fleche-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c5221f"/>
+    </marker>
+  </defs>
+  <rect width="900" height="430" fill="#ffffff"/>
+  <text x="30" y="34" font-size="20" font-weight="bold" fill="#202124">Quasi-distance de Drift-X — la métrique a un sens</text>
+  <text x="30" y="56" font-size="13" fill="#5f6368">On ne remonte pas le vent : τ(A→B) est fini sur la ligne de courant, τ(B→A) = ∞ en amont.</text>
+  <g stroke="#4285f4" stroke-width="2">
+    <line x1="42" y1="110" x2="90" y2="110" marker-end="url(#fleche-v)"/>
+    <line x1="42" y1="150" x2="104" y2="150" marker-end="url(#fleche-v)"/>
+    <line x1="42" y1="190" x2="120" y2="190" marker-end="url(#fleche-v)"/>
+    <line x1="42" y1="230" x2="138" y2="230" marker-end="url(#fleche-v)"/>
+  </g>
+  <text x="42" y="95" font-size="12" fill="#4285f4">vent u(x)</text>
+  <line x1="40" y1="352" x2="870" y2="352" stroke="#9aa0a6" stroke-width="2"/>
+  <text x="42" y="370" font-size="12" fill="#5f6368">sol</text>
+  <circle cx="250" cy="240" r="7" fill="#c5221f"/>
+  <text x="250" y="218" font-size="14" fill="#c5221f" text-anchor="middle" font-weight="bold">B (amont)</text>
+  <circle cx="470" cy="290" r="7" fill="#202124"/>
+  <line x1="470" y1="297" x2="470" y2="352" stroke="#202124" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="458" y="316" font-size="13" fill="#202124" text-anchor="end">source (Q, h)</text>
+  <circle cx="770" cy="252" r="7" fill="#34a853"/>
+  <text x="770" y="230" font-size="14" fill="#188038" text-anchor="middle" font-weight="bold">A (aval)</text>
+  <path d="M 478 288 Q 620 262 758 254" stroke="#4285f4" stroke-width="3" fill="none" marker-end="url(#fleche-v)"/>
+  <text x="618" y="296" font-size="13" fill="#4285f4">τ(source → A) : temps de transport fini</text>
+  <g stroke="#c5221f" stroke-width="2" fill="none" stroke-dasharray="7 5">
+    <path d="M 762 260 Q 640 316 480 296" marker-end="url(#fleche-r)"/>
+  </g>
+  <line x1="640" y1="302" x2="672" y2="334" stroke="#c5221f" stroke-width="3"/>
+  <line x1="672" y1="302" x2="640" y2="334" stroke="#c5221f" stroke-width="3"/>
+  <text x="700" y="340" font-size="13" fill="#c5221f">τ(A → source) = ∞</text>
+  <g stroke="#c5221f" stroke-width="2" fill="none" stroke-dasharray="7 5">
+    <path d="M 258 248 Q 360 280 458 288" marker-end="url(#fleche-r)"/>
+  </g>
+  <line x1="360" y1="252" x2="392" y2="284" stroke="#c5221f" stroke-width="3"/>
+  <line x1="392" y1="252" x2="360" y2="284" stroke="#c5221f" stroke-width="3"/>
+  <text x="300" y="320" font-size="13" fill="#c5221f">d(B, source) = ∞</text>
+  <text x="30" y="405" font-size="12" fill="#a14200" font-style="italic">Pseudo-distance (C. R. Mécanique 2006) : d(B,A) = ∞ si A est en amont de B ; sinon distance à la projection de B sur la normale à l'écoulement passant par A.</text>
+</svg>
