@@ -1,0 +1,236 @@
+=====================================================================
+EXTRACTION TEXTE BRUTE — papier source n° 2 du corpus Drift-X
+=====================================================================
+Référence : B. Mohammadi & J.-M. Brun, « Similitude généralisée et
+modélisation géométrique à complexité réduite », C. R. Mécanique
+334 (2006) 634-638. DOI 10.1016/j.crme.2006.06.007.
+Source : archive ouverte de l'Académie des sciences
+https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf
+Copyright : © 2006 Académie des sciences. Publié par Elsevier Masson
+SAS. Tous droits réservés. Extraction de recherche (text mining)
+avec attribution, destinée au travail de relecture du projet J-DriftX
+(voir docs/04-revues-papiers-sources.md, fiche n° 2).
+
+NOTE TECHNIQUE : extraction automatique du texte du PDF (octobre 2026).
+La mise en page, les figures et les équations ne sont PAS conservées
+(les formules apparaissent dégradées ou hors contexte). Le PDF original
+reste la référence unique. Ce fichier sert au grep, aux citations
+rapides et à la traçabilité documentaire.
+=====================================================================
+
+C. R. Mecanique 334 (2006) 634–638
+http://france.elsevier.com/direct/CRAS2B/
+Similitude généralisée et modélisation géométrique
+à complexité réduite
+Bijan Mohammadi a,b,∗, Jean-Marc Brun a,b
+a Cemagref, UMR-ITAP, 34196 Montpellier cedex 5, France
+b Institut de mathématiques et de modélisation de Montpellier, université Montpellier II, CC51, 34095 Montpellier, France
+Reçu le 3 avril 2006 ; accepté après révision le 9 juin 2006
+Disponible sur Internet le 24 juillet 2006
+Présenté par Évariste Sanchez-Palencia
+Résumé
+Nous présentons une modélisation à complexité réduite pour le transport et la dispersion d’un scalaire passif pour les applica-
+tions environnementales. Le modèle utilise l’assimilation de données partielles d’observations. On propose une généralisation des
+solutions de similitudes pour les jets dans une métrique nonsymétrique basée sur les temps de transport. L’approche ne nécessite
+pas la solution d’EDP, donc pas de maillage et on peut accéder à la solution en un point sans avoir à la calculer partout. Pour citer
+cet article : B. Mohammadi, J.-M. Brun, C. R. Mecanique 334 (2006).
+© 2006 Académie des sciences. Publié par Elsevier Masson SAS. Tous droits réservés.
+Abstract
+General similitude solutions and low-complexity geometric models. We present low complexity models for the transport of
+passive scalars for environmental applications. The model uses partial observations assimilation. Similitude solutions are proposed
+in a non symmetric metric based on travel times. The approach does not require the solution of any PDE and is mesh free. Also, the
+solution can be computed in one point only without computing the whole solution. To cite this article: B. Mohammadi, J.-M. Brun,
+C. R. Mecanique 334 (2006).
+© 2006 Académie des sciences. Publié par Elsevier Masson SAS. Tous droits réservés.
+Mots-clés : Mécanique des ﬂuides numérique ; Dispersion ; Transport ; Similitude ; Modèles réduits ; Jets
+Keywords: Computational ﬂuid mechanics; Dispersion; Transport; Similarity; Reduced order models; Plumes
+Abridged English version
+Air and water contamination by pesticides is a major health and environmental issue. One aims to model pesticide
+transport in atmospheric ﬂows with very low calculation cost making Monte Carlo simulations realistic. Partial data
+being available on wind and transported species measured by localized apparatus, a prediction model should be para-
+metric in order to assimilate these data. In the present work, the parameters gather all independent variables in the
+* Auteur correspondant.
+Adresses e-mail : bijan.mohammadi@univ-montp2.fr (B. Mohammadi), jean-marc.brun@montpellier.cemagref.fr (J.-M. Brun).
+1631-0721/$ – see front matter © 2006 Académie des sciences. Publié par Elsevier Masson SAS. Tous droits réservés.
+doi:10.1016/j.crme.2006.06.007
+
+B. Mohammadi, J.-M. Brun / C. R. Mecanique 334 (2006) 634–638
+635
+model. This Note is to present our geometric transport model based on the generalization of similarity solutions for
+plumes in Euclidean metrics to non symmetric ‘travel-time’ based metrics.
+1. Introduction
+La problématique de la contamination de l’air par les produits phytosanitaires (pesticides) constitue une préoccu-
+pation de plus en plus importante. Les outils de modélisation sont nécessaires pour analyser les stratégies de réduction
+d’impacts. Le but de ce projet, réalisé au Cemagref à Montpellier, est le développement d’un modèle à complexité
+réduite pour la simulation de la dispersion de pesticides dans l’atmosphère. Les paramètres du modèle proviennent de
+la solution d’un problème d’assimilation de données partielles météo, ainsi que des mesures de dispersion :
+min
+p∈O J(p) =
+ ⃗u(p) −⃗uobs
+  +
+ c
+
+p, ⃗u(p)
+
+−cobs
+
+(1)
+où p représente les variables indépendantes du modèle incluant la deﬁnition du domaine de calcul, la topographie,
+les conditions météo, les localisations des sources d’émission, les caractéristiques des buses d’injection, ... ⃗uobs et
+cobs sont les observations, en des points parfois différents, de la vitesse et des concentrations (ici une seule concentra-
+tion pour simpliﬁer, mais en pratique plusieurs espèces sont présentes). ⃗u(p) est un champs de vitesse à divergence
+nulle servant au transport de c(p, ⃗u(p)). Un bon modèle numérique doit prédire, tout en respectant ces informations
+observées, et ne doit pas être trop sensible aux petites perturbations des observations.
+Cette Note est dédiée à la description du modèle géométrique utilisé pour le transport. Ce modèle est basé sur une
+généralisation des solutions de similitudes pour les jets. Les autres détails de la modélisation, notamment les aspects
+multi-echelle, sont décrits en [1,2].
+2. Solution de similitude dans une métrique non symétrique
+On cherche à réduire l’espace de recherche de la solution. Nous modélisons la distribution d’un scalaire passif c,
+émis à l’origine et transporté par un ﬂot plan uniforme U par :
+c(x,y) = cc(x)f
+
+y,δ(x)
+
+où cc(x) ∼exp
+
+−a(U)x
+
+et f
+
+y,δ(x)
+
+∼exp
+
+−b
+
+U,δ(x)
+
+y2
+(2)
+cc est la répartition sur l’axe central de la distribution d’épaisseur δ(x). Une analogie existe avec les jets où cette fonc-
+tion est parabolique en laminaire et linéaire en turbulent [3]. a(.) est une fonction positive monotone décroissante et
+b(.,.) est positive, monotone croissante en U et décroissante en δ. Dans un champ de vitesse atmosphérique uniforme,
+cette solution peut servir au transport d’un scalaire passif. Nous nous proposons de généraliser cette solution dans une
+métrique non symétrique, déﬁnie par les temps de transport, et ainsi résoudre, avec un très faible coût, le transport par
+des champs de vitesses quelconques.
+3. Distance généralisée
+Dans une géométrie «classique », symétrique, la fonction distance vériﬁe d(A,B) = 0 ⇒A = B, d(A,B) =
+d(B,A), d(A,B) ⩽d(A,C) + d(C,B). Cependant, la distance peut être non uniforme et anisotrope. La distance
+entre deux points A et B est donnée par :
+dM(AB) =
+1
+
+0
+ t −−→
+ABM(A + t
+−−→
+AB)
+−−→
+AB
+ 1/2 dt
+(3)
+où M est la métrique choisie, déﬁnie positive et symétrique en géométrie symétrique. Si M = I, on retrouve la
+géométrie euclidienne et M variable permet d’introduire l’anisotropie (les sphères unité sont alors des ellipsoides).
+Considérons la pseudo-distance suivante : si A est amont par rapport à B alors d(B,A) = ∞et d(A,B) =
+  B⊥
+A
+ds/u = temps de migration de A à B⊥le long de la caractéristique passant par A, que l’on supposera unique,
+écartant les sources et puits. B⊥est la projection de B sur cette caractéristique. Les situations de non unicité de cette
+projection sont résolues en considérant comme direction de projection celle qui vériﬁe au mieux (⃗u.∇c = 0) en B. On
+introduit, par ailleurs, une condition de conservation globale pour la quantité transportée
+
+R3 c(p,u(p)) = quantité
+
+636
+B. Mohammadi, J.-M. Brun / C. R. Mecanique 334 (2006) 634–638
+totale émise, solution d’un modéle de traitement au niveau du rang de culture [1]. Les traitements des cultures n’étant
+effectués que si le vent est faible (moins de 20 km/h), ces hypothèses sont réalistes. La pseudo-distance ainsi construite
+n’a pas les caractéristiques d’une distance : d(A,B) = 0 ⇏A = B et elle n’est plus symétrique d(A,B) ̸= d(B,A).
+De même, l’inégalité triangulaire peut être mise en défaut.
+Il faut garder à l’esprit que sur les conﬁgurations réalistes, on possède très peu d’information météo (moins d’un
+point par parcelle de plusieurs hectares). Le champ de vitesse est complété par une solution approchée de :
+⃗u = ∇φ,
+− φ =
+
+i=1,...,nobs
+∥∇φ −⃗uobs∥
+(4)
+où φ est un potentiel et nobs le nombre de points d’observation. Une alternative à cette approche est de considérer une
+grille de représentation des temps de migration bien plus grossière que celle utilisée pour la migration et procéder par
+interpolation pour connaître le temps de transport entre une source et un point quelconque (temps qui sera inﬁni si le
+point est amont).
+Ainsi, on se propose de représenter la distribution d’un scalaire passif transporté par un ﬂot, à divergence nulle,
+mais non uniforme par :
+c = cc
+
+d(p)
+
+f
+
+d⊥(p),δ
+
+d(p)
+
+(5)
+où d⊥est la distance euclidienne dans la direction normale locale à la caractéristique « source » (i.e., la direction
+BB⊥).
+Cette approche a donc un très faible coût de calcul en comparaison à la résolution d’une EDP. Par ailleurs, on peut
+accéder à la solution en un point sans avoir à la calculer partout.
+4. Calcul de gradient et identiﬁcation des sources d’une pollution
+Par sa faible complexité, cette approche permet d’identiﬁer les sources d’une pollution observée. On utilise la
+différentiation automatique en mode inverse par Tapenade [4] pour construire le code adjoint et accéder au gradient
+avec un coût indépendant du nombre des paramètres de contrôle [5,2]. Ce gradient est aussi utilisé pour la résolution
+de (1).
+5. Quelques exemples
+Le problème de traîtement des cultures est multi-echelle. Deux problèmes d’intérêt sont : connaîssant la source
+et la météo, déﬁnir la zone touchée par la dispersion et, de façon duale, ayant observé une pollution à un endroit et
+connaîssant la météo, trouver d’où cela pourrait venir.
+Quelques dimensions caractéristiques sont : la buse (diamètre 10 cm), rangs de vigne espacés de 1.5 m, parcelles
+de quelques hectares dans un bassin de quelques centaines de km2 (voir Fig. 1). Le traitement s’effectue à une vitesse
+de 1 m/s et la vitesse d’injection en sortie de la buse est de 10 m/s pour un traitement type de 10 kg/km2. Nous
+montrons les résultats de transport avec ce modèle géométrique pour des situations mono et multi-source (Figs. 3 et
+4). Des exemples de champ de vitesse construit sont présentés avec les points de mesure de la vitesse (Figs. 1, 4 et 5).
+Un exemple de métrique non symmétrique est comparé avec une métrique euclidienne en Fig. 2.
+On compare notamment le transport par modèle réduit avec le résultat d’une simulation avec un modèle de trans-
+port complet (Fig. 3) basé sur la solution instationnaire d’une équation de transport-diffusion-dépôt par éléments ﬁnis
+stabilisés pour le même champ de vitesse. Des conditions d’entrée/sortie libre sont appliquées à toutes les frontières et
+une source mobile est déﬁnie suivant une discrétisation de la trajectoire en Fig. 1. Une intégration en temps explicite
+avec un schéma Runge Kutta d’ordre deux à été utilisée. Le pas de temps est limité par la condition de stabilité clas-
+sique, mais doit aussi être compatible avec la vitesse du déplacement de la source et ainsi permettre de correctement
+représenter l’injection des pesticides dans la parcelle. Le terme de puit prennant en compte le dépot a été calé pour un
+champ de vitesse uniforme pour retrouver la solution de dispersion analytique (2) par la solution de l’EDP. La solu-
+tion de similitude a été évaluée en tous les points du maillage éléments ﬁnis pour comparaison. On utilise la linéarité
+pour accumuler les solutions de similitude et ainsi traiter le cas d’une source mobile. A titre d’indication, l’approche
+solution de similitude permet une réduction du coût de l’évaluation de la solution en un point d’un facteur d’environ
+103–104 (ici on a utilisé un maillage d’environ 3000 points) comparé au calcul global. Ce rapport augmente, au moins
+de façon quadratique en 2D et cubique en 3D, avec la taille du problème.
+
+B. Mohammadi, J.-M. Brun / C. R. Mecanique 334 (2006) 634–638
+637
+Fig. 1. On représente les deux points de mesure de vent et la trajectoire de la source dans une parcelle d’un hectare ; le tout dans un bassin de
+400 km2.
+Fig. 1. A typical conﬁguration with a one acre vineyard, 2 points of wind measures, the trajectory of the source in the vineyard and the whole in a
+domain of 400 km2.
+Fig. 2. Exemples de distances symétrique euclidienne et nonsymétrique basée sur les temps de transport.
+Fig. 2. Examples of Euclidean and nonsymmetric transport time based metrics.
+Fig. 3. Solution de similitude généralisée (ﬁgure de droite) basée sur un champs de vitesse assimilé à partir de deux points (similaire à Fig. 1)
+comparée à la solution d’une equation de transport–diffusion par éléments ﬁnis pour le même champ. Nous avons évalué la solution de similitude
+sur tous les points du maillage éléments ﬁnis pour comparaison.
+Fig. 3. Generalized similitude solution (right) for a 2-point based wind (similar to Fig. 1) compared to a direct simulation with a PDE based
+transport–diffusion model for the same wind. The similitude solution has been evaluated on all the nodes of the ﬁnite element mesh for comparison.
+
+638
+B. Mohammadi, J.-M. Brun / C. R. Mecanique 334 (2006) 634–638
+Fig. 4. Un calcul avec deux parcelles pour un champ de vitesse construit à partir de trois points de mesure.
+Fig. 4. Multi-agent calculation (2 vineyards) for a 3-point based wind.
+Fig. 5. Gauche : champs de vitesse construit. Milieu : exemple de dispersion à partir d’une parcelle. Droite : sensibilité (gradient) d’une pollution
+observée au coin bas-gauche du domaine par rapport à la position de la source de la pollution. Ainsi, connaissant les positions des parcelles, on sait
+identiﬁer les sources d’une pollution observée.
+Fig. 5. Left: assimilated ﬂow ﬁeld. Middle: example of dispersion from one vineyard. Right: solution of the dual problem: a pollution has been
+observed at the lower left corner and one would like to identify the sources.
+Références
+[1] J.-M. Brun, Modélisation à complexité réduite de la dérive, Thèse université Montpellier II, 2007.
+[2] B. Mohammadi, J.-M. Brun, Reduced-order geometrical modelling of dispersion, Int. J. Num. Meth. Fluids, 2006, submitted for publication.
+[3] J. Cousteix, Turbulence et couche limite, Cepadues, 1989.
+[4] L. Hascoet, V. Pascual, TAPENADE 2.1 user’s guide, INRIA Technical Report 300, 2004.
+[5] B. Mohammadi, O. Pironneau, Applied Shape Optimization for Fluids, Oxford Univ. Press, 2001.
