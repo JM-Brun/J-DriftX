@@ -24,7 +24,11 @@ jobs:
         run: uv run ruff check . --output-format=github
 
       - name: Format (ruff)
-        run: uv run ruff format --check .
+        run: |
+          if ! uv run ruff format --check .; then
+            echo "::error title=Format ruff::$(uv run ruff format --check . 2>&1 | tr '\n' ' ')"
+            exit 1
+          fi
 
       - name: Typage (mypy)
         run: uv run mypy
