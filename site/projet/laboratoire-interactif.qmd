@@ -19,15 +19,29 @@ Chaque outil devra afficher l'équation utilisée, les unités, les hypothèses,
 
 Une carte ou un champ de vecteurs est une visualisation, pas une preuve. Un relief synthétique ne suffit pas à déterminer le champ de vent. Une solution analytique simplifiée n'est pas une prévision de dispersion réelle.
 
-## Pourquoi commencer par une application Python séparée ?
+## Intégrer l'interactivité dans les pages : quelles possibilités ?
 
-Le site Quarto est statique. Une petite application Streamlit exécutée localement permettra de valider rapidement l'ergonomie sans ajouter une dépendance au cœur scientifique ni rendre la documentation dépendante d'un service externe. Une éventuelle publication en ligne sera une décision séparée.
+Oui, c'est possible, mais il faut distinguer une interface réellement exécutée dans la page d'une application distante affichée dans un cadre intégré.
 
-Le cœur Python restera indépendant de l'interface : les fonctions numériques seront testables sans Streamlit. Les figures du site pourront rester consultables même si l'application est indisponible.
+| Solution | Interactivité | Exécution Python côté visiteur | Compatible avec un site GitHub Pages statique |
+|---|---|---|---|
+| Figures Plotly intégrées à Quarto | Zoom, survol, légendes ; pas de recalcul Python arbitraire | Non : les données sont calculées au rendu | Oui |
+| Widgets JavaScript/Observable | Interactions réactives dans la page | Non, sauf environnement Python navigateur ajouté séparément | Oui |
+| Application Streamlit intégrée par iframe | Interface complète, calcul Python côté serveur distant | Non : Python tourne sur le serveur de l'application | Oui, si l'application distante autorise l'intégration et reste disponible |
+| Quarto avec runtime Shiny for Python | Interaction native avec callbacks Python côté serveur | Non : serveur Python nécessaire | Non, pas sur GitHub Pages seul |
+
+### Architecture recommandée
+
+1. **Dès maintenant** : garder les calculs dans le package Python et améliorer le prototype Streamlit. Les figures Plotly sont zoomables, survolables et montrent des diagnostics calculés.
+2. **Dans la documentation statique** : ajouter des figures Plotly autonomes pour les exemples de référence, afin que les pages restent utilisables sans serveur.
+3. **Pour une interaction Python complète dans la page** : déployer Streamlit séparément puis l'intégrer par iframe dans la page Quarto. Il faudra tester l'intégration réelle, la largeur sur mobile, les règles d'iframe/CSP, les performances et la disponibilité. L'URL de l'application ne sera ajoutée qu'après déploiement et vérification.
+4. **Alternative** : si l'intégration serveur dans les pages devient centrale, évaluer Quarto + Shiny for Python et un hébergement qui supporte le serveur. Ce n'est pas servi par GitHub Pages seul.
+
+Le cœur Python reste indépendant de l'interface : les fonctions numériques sont testables sans Streamlit. Les pages Quarto ne doivent jamais dépendre exclusivement de la disponibilité du service interactif.
 
 ## Étapes envisagées
 
-1. **Prototype disponible dans le dépôt** : champs de vecteurs synthétiques avec tests numériques (uniforme, cisaillement, radial).
+1. **Prototype disponible dans le dépôt** : champs de vecteurs synthétiques (uniforme, cisaillement, radial), figures Plotly interactives, diagnostics de divergence/rotationnel et reliefs 3D synthétiques.
 2. Reliefs synthétiques, sans couplage physique implicite avec le vent.
 3. Cas analytique d'advection-diffusion et comparaison à la référence.
 4. Visualisation des erreurs, cas limites et export des paramètres reproductibles.
