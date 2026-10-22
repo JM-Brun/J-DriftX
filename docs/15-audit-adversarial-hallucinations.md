@@ -214,3 +214,40 @@ Réserves : les effectifs de CAPRIV (« 3 792 observations / 38 variables », `d
 - **Vérifié :** environ 45 références/affirmations, principalement sur les métadonnées (DOI, notices Crossref/OpenAlex/Springer/HAL/Zenodo, Federal Register, Persée, pages institutionnelles) et, pour quelques affirmations chiffrées, sur le contenu des documents.
 - **Non couvert :** fiches `raw/fiches/*` page à page, PDF de `raw/reviews/*`, pages Quarto individuelles, liens institutionnels individuels (MODISAFE, R-LINE, Cefas, barrières near-road EPA, HARMO, Hamburg EWTL).
 - **Prudence :** conformément au § 3, « erroné » n'est utilisé que pour des contradictions positives (B-01, B-02, B-04, B-05, B-06, B-07) ou une association démontrée (B-03) ; B-08 est une imprécision ; B-09 requalifie un constat de la première passe en faveur de l'existence de la référence. Les entrées non couvertes ne sont ni vraies ni fausses : elles restent à contrôler.
+
+
+### A-10 — NOAA DATEM et ETEX : contradiction interne dans le catalogue
+
+- **Statut :** erreur factuelle interne confirmée et corrigée dans cette PR.
+- **Emplacement :** `docs/12-catalogue-donnees-transport-dispersion.md`, première ligne de la table des corpus.
+- **Constat :** le catalogue affirmait que NOAA DATEM « inclut ETEX et CAPTEX », tandis que `docs/15-audit-corpus-g0-resultats.md` indique explicitement qu'ETEX n'est pas inclus dans DATEM et renvoie au JRC pour le corpus ETEX. Les deux formulations ne peuvent pas être vraies simultanément.
+- **Contrôle externe :** la documentation NOAA DATEM et le site JRC présentent des ressources distinctes ; la fiche ETEX du JRC propose les données des deux lâchers séparément. [NOAA DATEM](https://www.arl.noaa.gov/hysplit/datem-tracer-evaluation/datem/) ; [JRC ETEX datasets](https://remon.jrc.ec.europa.eu/past_activities/etex/site/datasets.htm).
+- **Correction effectuée dans cette PR :** le catalogue indique maintenant que DATEM inclut notamment CAPTEX, et que l'ETEX est documenté séparément par le JRC.
+- **Preuve de clôture :** vérifier les autres lignes du catalogue contre les sources de données officielles, puis ajouter un contrôle automatisé des contradictions entre fiches.
+
+### A-11 — Statut G0 contradictoire dans la documentation
+
+- **Statut :** incohérence de statut confirmée ; formulation corrigée dans cette PR.
+- **Emplacement :** `docs/11-g0-evidence-externe.md` et `docs/14-seance-validation-experimentale.md`.
+- **Constat :** `docs/11` déclarait d'abord « G0 n'est pas franchi », puis plus loin « G0 est franchi ». La séance de validation utilisait en parallèle G0-S/G0-A sans distinguer clairement ces pistes du jalon documentaire G0. Le lecteur pouvait conclure à tort que le cadrage global restait bloqué, ou au contraire que la validation applicative était autorisée.
+- **Correction effectuée dans cette PR :** le premier statut est désormais explicitement historique et remplacé par la mise à jour ; la séance distingue le jalon G0 déclaré franchi des travaux scientifiques encore ouverts et des prérequis G1 sur les fichiers bruts.
+- **Réserve :** « G0 franchi » signifie que le cadrage documentaire est rempli selon les critères du projet ; cela ne signifie pas que les données ont été validées au niveau des fichiers, que la licence DIFLU est confirmée ou qu'un benchmark a été exécuté.
+
+### A-12 — Conclusions de la revue d'état de l'art plus fortes que les preuves consignées
+
+- **Statut :** extrapolations non démontrées ; formulation corrigée dans cette PR.
+- **Emplacement :** `docs/02-revue-etat-art-2026.md`.
+- **Constat :** le résumé exécutif et les tableaux comparatifs affirmaient notamment qu'aucun concurrent n'avait repris la métrique travel-time, que la niche restait ouverte, que la dérive mécaniste rapide était une « case vide », que les ROM exigeaient toutes des snapshots CFD/LES, que J-DriftX extrapolerait « par construction » et qu'un adjoint serait « disponible par construction ». La revue elle-même reconnaissait que les requêtes, les critères et les décomptes n'étaient pas entièrement reproductibles.
+- **Pourquoi c'est problématique :** une recherche ciblée ne prouve pas l'absence de travaux ; les familles de ROM sont hétérogènes ; une formule analytique ne garantit ni extrapolation prédictive ni disponibilité d'un adjoint utile ; un besoin réglementaire non couvert ne prouve pas qu'une méthode proposée le couvre.
+- **Correction effectuée dans cette PR :** réécriture des conclusions exécutives et de plusieurs affirmations thématiques en hypothèses bornées ; correction du tableau de positionnement et des recommandations pour ne pas présenter la nouveauté, la supériorité ou le besoin d'une extension AGDISP comme acquis.
+- **Preuve de clôture :** chaque comparaison restante doit pointer vers le passage précis de la source primaire, expliciter le régime et l'observable, et être classée comme fait, hypothèse ou question ouverte.
+
+## 7. Modifications réalisées dans la PR #23
+
+Cette PR ne se limite donc plus au registre initial. Elle :
+- ajoute le registre d'audit ;
+- corrige des affirmations excessives dans la revue d'état de l'art ;
+- corrige la relation DATEM/ETEX dans le catalogue de données ;
+- clarifie le statut G0 et la séparation entre cadrage documentaire, travail scientifique et prérequis G1.
+
+Les changements n'établissent pas encore la validité de chaque référence du corpus. Les PDF de revue exécutive, les métadonnées bibliographiques complètes et les fichiers bruts de données restent à auditer.
