@@ -105,10 +105,16 @@ Critères minimaux :
 - comparaison de performances sans protocole, baseline et données de référence ;
 - promesse d'hébergement public permanent avant décision d'exploitation.
 
-## 8. Plan de réalisation
+## 8. État du prototype et plan de réalisation
 
-1. Valider cette architecture et l'inventaire des objets mathématiques déjà implémentés.
-2. Construire le module « champs de vecteurs » avec trois champs synthétiques et tests.
+Le premier prototype est présent dans `apps/interactive_lab.py`. Le module indépendant `src/jdriftx/fields.py` définit trois champs synthétiques (uniforme, cisaillement linéaire et radial) et `tests/test_fields.py` couvre leurs comportements élémentaires et quelques entrées invalides. L'interface utilise Matplotlib et Streamlit, déclarés dans le groupe de dépendances optionnel `app` ; le cœur reste utilisable sans ces dépendances.
+
+Ce code constitue un prototype, pas un outil scientifique validé. Les tests et le rendu de l'application doivent être exécutés avant fusion ; aucune validation d'exécution n'est présumée ici.
+
+Étapes suivantes :
+
+1. Vérifier le prototype (CI, tests, lint, typage et lancement Streamlit), puis corriger les problèmes observés.
+2. Construire et tester le module « champs de vecteurs » avec trois champs synthétiques et tests.
 3. Ajouter les reliefs synthétiques, en gardant le relief découplé de la dynamique du vent.
 4. Ajouter un cas d'advection-diffusion analytique et ses tests.
 5. Créer les expériences de comparaison et d'export reproductible.
