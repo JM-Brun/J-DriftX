@@ -32,6 +32,12 @@ Le chapitre de 2008 confirme la projection \(B\mapsto B^\perp\), mais précise q
 
 Il faut donc distinguer la **définition géométrique** de la **procédure numérique approchée**. Les contraintes de conservation énoncées pour le modèle réduit ne constituent pas, à elles seules, une preuve que le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\).
 
+## Écart avec le code Python actuel
+
+La fonction \`jdriftx.metric.temps_transport\` calcule une somme de longueurs de segments divisées par la norme des vitesses fournies. Elle ne calcule pas de caractéristiques ni la projection historique \(B^\perp\), et le signe des vecteurs vitesse n'affecte pas le résultat. Les anciens noms de tests laissaient entendre une non-symétrie qui n'était pas réellement testée; ils ont été corrigés dans la PR.
+
+Le code est désormais documenté comme **primitive provisoire de coût sur une polyligne**, pas comme implémentation validée de la pseudo-distance de 2006. La prochaine décision est de créer une implémentation de référence distincte ou de conserver cette primitive comme outil auxiliaire, sans confondre les deux objets.
+
 ## Précaution sur la non-symétrie
 
 **Un champ spatialement non uniforme ne suffit pas, à lui seul, à rendre asymétrique une intégrale de \(ds/v(s)\) sur une même courbe parcourue dans les deux sens.** Dans l'advection, l'asymétrie peut venir de la direction imposée par la dynamique et de l'inaccessibilité du parcours inverse. Cette convention doit être explicite.
