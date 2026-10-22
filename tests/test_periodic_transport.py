@@ -57,6 +57,8 @@ def test_spatial_refinement_reduces_error() -> None:
         )
         errors.append(float(np.sqrt(np.mean((actual - exact) ** 2))))
     assert errors[2] < errors[1] < errors[0]
+    observed_order = float(np.polyfit(np.log([1 / 24, 1 / 48, 1 / 96]), np.log(errors), 1)[0])
+    assert 1.8 < observed_order < 2.2
 
 
 def test_temporal_refinement_converges_to_fine_step_reference() -> None:
@@ -67,6 +69,8 @@ def test_temporal_refinement_converges_to_fine_step_reference() -> None:
         _, actual, _ = _solve(n_cells, dt)
         errors.append(float(np.sqrt(np.mean((actual - reference) ** 2))))
     assert errors[2] < errors[1] < errors[0]
+    observed_order = float(np.polyfit(np.log([0.0004, 0.0002, 0.0001]), np.log(errors), 1)[0])
+    assert 3.5 < observed_order < 4.5
 
 
 def test_unstable_time_step_is_rejected() -> None:
@@ -105,6 +109,19 @@ def test_independent_upwind_euler_solver_matches_exact_solution() -> None:
     )
     assert np.sqrt(np.mean((actual - exact) ** 2)) < 5e-3
     assert float(np.mean(actual)) == pytest.approx(1.0, abs=1e-12)
+    _, centered, _ = _solve(128, 0.0001)
+    centered_exact = periodic_sine_solution(
+        x,
+        0.4,
+        length=1.0,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=0.4,
+        diffusivity=0.01,
+    )
+    centered_error = float(np.sqrt(np.mean((centered - centered_exact) ** 2)))
+    upwind_error = float(np.sqrt(np.mean((actual - exact) ** 2)))
+    assert centered_error < upwind_error
 
 
 def test_upwind_euler_rejects_unstable_time_step() -> None:
