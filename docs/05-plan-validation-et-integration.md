@@ -6,7 +6,7 @@
 
 La revue de l’état de l’art justifie de poursuivre l’investigation de J-DriftX, mais elle ne démontre pas à elle seule la nouveauté, la supériorité prédictive ni la conformité réglementaire du modèle. Les conclusions comparatives sont des **hypothèses de recherche** tant qu’elles ne sont pas étayées par des sources suffisamment examinées et des benchmarks reproductibles.
 
-La priorité reste le noyau mathématique et sa validation, avant l’ajout de fonctionnalités applicatives. Le premier cas d’usage à instruire est la dispersion à longue distance (*far-field*) de dérive de pulvérisation, sans présenter J-DriftX comme substitut à un modèle réglementaire validé.
+La priorité reste le noyau mathématique et sa validation, avant l’ajout de fonctionnalités applicatives. Le cadrage G0 documentaire a été franchi le 22 octobre 2026 : il fixe la question scientifique sur la dispersion d’un scalaire passif et retient DIFLU comme premier corpus candidat au test discriminant. Ce verdict documentaire ne valide ni l’utilité applicative (G0-A), ni la disponibilité exploitable des fichiers bruts, ni la performance du modèle. La dérive de pulvérisation en champ lointain reste une piste applicative possible, non le cas d’usage prioritaire établi.
 
 ## 2. Intégration dans le dépôt
 
