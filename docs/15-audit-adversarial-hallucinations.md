@@ -162,13 +162,13 @@ Cette seconde passe a comparé environ 45 références et affirmations du dépô
 - **Source :** https://doi.org/10.1016/j.compfluid.2023.105862.
 - **Correction sûre :** remplacer « Appl. Math. Comput. » par *Computers & Fluids* (2023).
 
-### B-06 — Journal mal attribué (POD+RBF, Pékin, 2021)
+### B-06 — Référence POD+RBF, Pékin (2021) : attribution non vérifiée
 
 - **Statut :** erroné.
 - **Emplacement :** `docs/references.md` (l. 51), `docs/bibliographie/rom-et-apprentissage.md` (l. 40).
-- **Constat :** le dépôt attribue l'étude POD+RBF sur 144 km² à Pékin à « Build. Sim. Eng. / Urban Clim. ». Le journal réel est le *Journal of Safety Science and Resilience* (ISSN 2666-4496). Le contenu (POD+RBF, 144 km²) est confirmé.
-- **Source :** notice du journal *Journal of Safety Science and Resilience* (ISSN 2666-4496).
-- **Correction sûre :** remplacer la source par *Journal of Safety Science and Resilience* (2021).
+- **Constat :** le dépôt attribuait le PII ScienceDirect S2666449621000372 à une étude POD+RBF sur 144 km² à Pékin et donnait des journaux incompatibles (« Build. Sim. Eng. / Urban Clim. »). Les contrôles disponibles n'ont pas confirmé de façon indépendante le titre, les auteurs, le journal, l'année ni le contenu. Il n'est donc pas possible d'affirmer quel journal est correct ni que le contenu POD+RBF est confirmé.
+- **Source :** [lien éditeur ScienceDirect](https://www.sciencedirect.com/science/article/pii/S2666449621000372), non exploitable par le contrôle automatisé ; aucune notice primaire exploitable n'a été obtenue lors de cette passe.
+- **Correction sûre :** retirer l'attribution bibliographique et la description de méthode des éléments probants jusqu'à vérification de la notice éditeur/Crossref et du résumé. Ce constat est non vérifié, pas une erreur démontrée.
 
 ### B-07 — « Le régulateur lui-même lance (2026) une modernisation open source d'AGDISP »
 
@@ -213,7 +213,7 @@ Réserves : les effectifs de CAPRIV (« 3 792 observations / 38 variables », `d
 
 - **Vérifié :** environ 45 références/affirmations, principalement sur les métadonnées (DOI, notices Crossref/OpenAlex/Springer/HAL/Zenodo, Federal Register, Persée, pages institutionnelles) et, pour quelques affirmations chiffrées, sur le contenu des documents.
 - **Non couvert :** fiches `raw/fiches/*` page à page, PDF de `raw/reviews/*`, pages Quarto individuelles, liens institutionnels individuels (MODISAFE, R-LINE, Cefas, barrières near-road EPA, HARMO, Hamburg EWTL).
-- **Prudence :** conformément au § 3, « erroné » n'est utilisé que pour des contradictions positives (B-01, B-02, B-04, B-05, B-06, B-07) ou une association démontrée (B-03) ; B-08 est une imprécision ; B-09 requalifie un constat de la première passe en faveur de l'existence de la référence. Les entrées non couvertes ne sont ni vraies ni fausses : elles restent à contrôler.
+- **Prudence :** « erroné » doit être réservé aux contradictions positives (B-01, B-02, B-04, B-05, B-07) ou à une association démontrée (B-03). B-06 est désormais classé non vérifié ; B-08 est une imprécision ; B-09 précise que l'existence d'une citation secondaire ne valide pas toutes les métadonnées. Les entrées non couvertes ne sont ni vraies ni fausses : elles restent à contrôler.
 
 
 ### A-10 — NOAA DATEM et ETEX : contradiction interne dans le catalogue
