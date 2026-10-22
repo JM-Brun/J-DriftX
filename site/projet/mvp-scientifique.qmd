@@ -6,7 +6,7 @@ title: "G0 — MVP scientifique minimal et trajectoire maximale"
 
 **Décision proposée :** autoriser une exploration mathématique minimale de J-DriftX tout en maintenant bloquées les revendications applicatives. Cela permet d'avancer sans confondre un modèle jouet scientifique avec un modèle de dispersion validé.
 
-> **Suivi :** l'investigation mathématique est suivie dans l'issue [#41](https://github.com/JM-Brun/J-DriftX/issues/41) ; le squelette benchmarks pour G1 dans l'issue [#17](https://github.com/JM-Brun/J-DriftX/issues/17).
+> **Suivi :** l'investigation mathématique est suivie dans l'issue [#41](https://github.com/JM-Brun/J-DriftX/issues/41) ; le squelette benchmarks pour G1 dans l'issue [#17](https://github.com/JM-Brun/J-DriftX/issues/17). Le premier livrable de #41 — définitions, cas 1D, contre-exemples et positionnement — est le document [docs/19-investigation-g0s-temps-de-parcours.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md).
 
 ## Deux portes, deux niveaux de preuve
 
@@ -40,6 +40,15 @@ La source primaire de 2006 définit une pseudo-distance en projetant le point ci
 Le premier cas analytique est maintenant implémenté comme fonction de référence distincte `pseudo_distance_uniforme` et couvert par des tests : coût longitudinal, coût nul entre points distincts de même abscisse, coût infini en amont, invariance par rotation et rejet d'une vitesse nulle. Toute variante de temps d'arrivée au point cible doit être identifiée séparément. Les points stagnants, les sources/puits, les projections non uniques et les champs variables restent hors du périmètre de cette référence.
 
 Un contre-exemple analytique à l'inégalité triangulaire a aussi été établi pour le champ lisse divergence nulle \(\mathbf u=(1+9y,0)\), avec trois points \(A=(0,0)\), \(B=(1,1)\), \(C=(2,0)\) : \(d(A,C)=2\) alors que \(d(A,B)+d(B,C)=1.1\). La propriété est donc réfutée pour la pseudo-distance générale; l'exemple reste à traduire en test après spécification d'une API de champ variable.
+
+## Résultat de l'investigation G0-S (octobre 2026)
+
+L'investigation de l'issue #41 est terminée au niveau G0-S ; le document complet est [docs/19 sur GitHub](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md). Ses résultats principaux :
+
+1. **Deux objets distincts.** Le temps de première arrivée \(T(A,B)\) (variante V1) et la pseudo-distance projetée historique \(d(A,B)=T(A,B^\perp)\) (variante V2) ne partagent pas les mêmes propriétés. V1 satisfait automatiquement positivité, séparation et inégalité triangulaire dirigée ; V2 perd la séparation et la triangulation dès la dimension 2. En dimension 1, les deux coïncident.
+2. **Caractérisation en champ de cisaillement.** Pour \(\mathbf u=(v(y),0)\), l'inégalité triangulaire dirigée vaut (abscisses ordonnées) si et seulement si \(v(y_B)\le v(y_A)\) : tout champ de cisaillement non uniforme viole donc la triangulation.
+3. **Stagnation.** Pour un champ de classe C¹, un point de stagnation n'est ni atteint ni quitté en temps fini ; les temps d'évasion finis exigent une annulation d'ordre non entier (champ non C¹), régime où le flot lui-même cesse d'être unique.
+4. **Verdict de nouveauté.** L'intégrale de temps le long d'une ligne de courant est classique (time-of-flight des méthodes streamline, distances-temps) ; la construction projetée est publiée (2006) et ses échecs d'axiomes y sont annoncés. Conclusion du MVP : idée connue, utile pédagogiquement, délimitée précisément — aucune revendication d'originalité.
 
 ## Critères d'acceptation
 
