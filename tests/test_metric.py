@@ -91,6 +91,7 @@ def test_polyline_speed_below_minimum_raises_value_error() -> None:
     with pytest.raises(ValueError, match="umin"):
         temps_transport(ligne, vent)
 
+
 @pytest.mark.parametrize("umin", [0.0, -1.0, float("inf"), float("nan")])
 def test_polyline_cost_rejects_invalid_speed_threshold(umin: float) -> None:
     ligne = np.array([[0.0, 0.0], [1.0, 0.0]])
@@ -102,8 +103,16 @@ def test_polyline_cost_rejects_invalid_speed_threshold(umin: float) -> None:
 @pytest.mark.parametrize(
     ("ligne", "vent", "message"),
     [
-        (np.array([[0.0, 0.0], [float("nan"), 1.0]]), np.array([[1.0, 0.0]]), "coordonnees finies"),
-        (np.array([[0.0, 0.0], [1.0, 0.0]]), np.array([[float("inf"), 0.0]]), "vitesses finies"),
+        (
+            np.array([[0.0, 0.0], [float("nan"), 1.0]]),
+            np.array([[1.0, 0.0]]),
+            "coordonnees finies",
+        ),
+        (
+            np.array([[0.0, 0.0], [1.0, 0.0]]),
+            np.array([[float("inf"), 0.0]]),
+            "vitesses finies",
+        ),
     ],
 )
 def test_polyline_cost_rejects_non_finite_inputs(
@@ -116,8 +125,18 @@ def test_polyline_cost_rejects_non_finite_inputs(
 @pytest.mark.parametrize(
     ("a", "b", "vent", "message"),
     [
-        (np.array([float("nan"), 0.0]), np.zeros(2), np.array([1.0, 0.0]), "coordonnees finies"),
-        (np.zeros(2), np.ones(2), np.array([1.0, float("inf")]), "vitesses finies"),
+        (
+            np.array([float("nan"), 0.0]),
+            np.zeros(2),
+            np.array([1.0, 0.0]),
+            "coordonnees finies",
+        ),
+        (
+            np.zeros(2),
+            np.ones(2),
+            np.array([1.0, float("inf")]),
+            "vitesses finies",
+        ),
     ],
 )
 def test_uniform_pseudodistance_rejects_non_finite_inputs(
