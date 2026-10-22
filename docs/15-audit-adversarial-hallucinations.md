@@ -438,3 +438,20 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 - **Limite :** ces corrections harmonisent le statut documentaire ; elles ne valident pas les fichiers, les licences, la pertinence physique du corpus ni la performance de J-DriftX.
 - **Preuve de clôture :** vérifier après chaque décision que les statuts des documents de gouvernance restent cohérents et qu'aucun benchmark n'est annoncé avant le contrôle G1.
 
+### B-30 — Filiation historique non établie entre la pseudo-distance travel-time et les métriques d'adaptation de maillage
+
+- **Statut :** affirmation historique trop catégorique, corrigée.
+- **Emplacement :** `site/theorie/metrique-travel-time.qmd`, section « Généalogie ».
+- **Constat :** le texte affirmait que la métrique travel-time « descend » de la métrique utilisée pour l'adaptation de maillage anisotrope et que Drift-X transfère cette technologie au contrôle de la géométrie du panache. La référence Borouchaki et al. sur la génération de maillages ne suffit pas, à elle seule, à prouver une filiation historique ou une équivalence mathématique avec la pseudo-distance définie dans les sources Drift-X.
+- **Correction effectuée :** le rapprochement est présenté comme une analogie conceptuelle entre deux usages de géométries dépendantes du problème. La filiation directe reste non établie faute de source explicite.
+- **Preuve de clôture :** retrouver une source historique primaire décrivant ce transfert, ou conserver la formulation en termes d'analogie et non de généalogie.
+
+### B-31 — Domaine d'entrée incomplet des primitives travel-time
+
+- **Statut :** défaut de validation d'entrée confirmé et corrigé dans cette PR.
+- **Emplacements :** `src/jdriftx/metric.py`, `tests/test_metric.py`.
+- **Constat :** les fonctions convertissaient les entrées en tableaux numériques et contrôlaient leur forme, mais ne rejetaient pas systématiquement les coordonnées/vitesses non finies (`NaN`, (+\infty), (-\infty)). Dans `temps_transport`, une valeur `umin` nulle ou négative pouvait également neutraliser le garde-fou sur la vitesse; les calculs pouvaient alors retourner `NaN` ou `inf` au lieu d'un rejet explicite.
+- **Correction effectuée :** les primitives rejettent maintenant les coordonnées et vitesses non finies; `temps_transport` exige en outre un seuil `umin` fini et strictement positif. Des tests paramétrés couvrent ces cas.
+- **Limite :** ces contrôles améliorent la robustesse numérique des API; ils ne valident ni la définition historique complète de la pseudo-distance, ni la physique du modèle.
+- **Preuve de clôture :** suite de tests et CI sur le HEAD de la PR; conserver une distinction explicite entre validité des entrées, propriétés mathématiques et validation physique.
+
