@@ -1,6 +1,6 @@
 """Temps de parcours sur une polyligne : approximation géométrique provisoire.
 
-La fonction \`temps_transport\` calcule la somme longueur / norme de vitesse sur
+La fonction temps_transport calcule la somme longueur / norme de vitesse sur
 une polyligne fournie par l'appelant. Elle ne calcule pas la caractéristique
 d'un champ de vitesse, ne projette pas le point cible sur une caractéristique
 et ne reproduit donc pas la pseudo-distance historique de Mohammadi & Brun
