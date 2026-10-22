@@ -1,8 +1,8 @@
 ---
-title: "Métriques non riemanniennes"
+title: "Pseudo-distances, coûts orientés et géométries non riemanniennes"
 ---
 
-# Des distances qui ne se retournent pas : métriques non riemanniennes
+# Des coûts orientés aux métriques non riemanniennes
 
 Le travel-time de Drift-X est un **objet de coût orienté construit à partir d'un champ de vitesse**. Il est lié à plusieurs familles géométriques, mais ne doit pas être classé comme métrique de Finsler ou quasi-métrique avant que ses axiomes soient vérifiés. Cette page situe les analogies utiles — distances-temps géographiques, géométrie de Finsler et métriques d'adaptation de maillage — sans supposer qu'elles sont équivalentes.
 
