@@ -1,0 +1,100 @@
+---
+title: "Laboratoire interactif"
+lang: fr
+---
+
+# Du champ mathématique à la vérification numérique
+
+Cette page présente des expériences pédagogiques associées au projet J-DriftX. Leur rôle est de rendre les équations et les hypothèses inspectables, pas de faire passer un exemple synthétique pour une simulation validée.
+
+::: {.callout-warning}
+**Statut scientifique.** Les champs, reliefs et cas de transport décrits ici sont des exemples mathématiques sans unités physiques imposées. Ils ne constituent ni une simulation météorologique, ni une validation CFD, ni une preuve de validité de J-DriftX.
+:::
+
+## Expériences disponibles dans le prototype
+
+- **Champs de vecteurs** : champ uniforme, cisaillement linéaire et champ radial ; affichage de la norme, des flèches, de la divergence et du rotationnel estimés sur une grille.
+- **Reliefs synthétiques** : plan, colline ou vallée gaussienne et crête ; visualisation 3D et pente estimée. Aucun effet sur le vent n'est déduit du relief.
+- **Trajectoires** : intégration de \(dx/dt=u(x,y,t)\) et \(dy/dt=v(x,y,t)\) par Euler explicite et RK4, puis comparaison à une solution analytique dans un champ rotationnel de vérification.
+- **Advection-diffusion 1D** : solution gaussienne exacte pour une vitesse et une diffusivité constantes ; comparaison du déplacement, de l'élargissement, de la masse intégrée et de la variance.
+
+## Trajectoires : une vérification, pas une validation physique
+
+Pour le champ \(u=-y,\;v=x\), la trajectoire issue de \((1,0)\) est \((x(t),y(t))=(\cos t,\sin t)\). Ce cas permet de comparer l'erreur numérique des intégrateurs à une référence connue. Il ne représente pas un champ de vent ni la dynamique complète d'une gouttelette.
+
+Le modèle cinématique actuel n'inclut pas l'inertie, la turbulence stochastique, le dépôt ou le couplage entre particules et écoulement. Toute extension devra nommer explicitement les termes ajoutés et les hypothèses correspondantes.
+
+## Advection-diffusion : un cas analytique de référence
+
+L'équation testée est
+
+\[
+\frac{\partial c}{\partial t}
++u\frac{\partial c}{\partial x}
+=K\frac{\partial^2 c}{\partial x^2},\qquad K\geq 0.
+\]
+
+Pour un profil initial gaussien d'écart-type \(\sigma_0\), sur la droite réelle et avec \(u\) et \(K\) constants, le centre se déplace de \(ut\), la variance devient \(\sigma_0^2+2Kt\), et la masse intégrée reste constante. Sur une fenêtre de tracé finie, une partie des queues peut sortir du domaine ; la masse numérique sur cette fenêtre peut donc être inférieure à la masse totale.
+
+Ce cas exclut les sources continues, les réactions, le dépôt, les coefficients variables et les conditions aux limites finies. Il sert de référence mathématique, pas de prédiction de dispersion réelle.
+
+## Lancer les outils localement
+
+Depuis la racine du dépôt, avec Python 3.12 et uv :
+
+```bash
+uv sync --group app
+uv run streamlit run apps/interactive_lab.py
+```
+
+L'application dédiée aux comparaisons analytiques se lance avec :
+
+```bash
+uv run streamlit run apps/scientific_validation.py
+```
+
+Les fonctions numériques sont séparées des interfaces dans `src/jdriftx/`. Les tests correspondants se trouvent dans `tests/test_fields.py`, `tests/test_terrain.py`, `tests/test_trajectories.py` et `tests/test_advection_diffusion.py`. Les tests contrôlent des propriétés ciblées du code ; ils ne remplacent pas une validation par des données de référence.
+
+## Intégrer les expériences dans le site Quarto
+
+| Solution | Avantage | Limite |
+|---|---|---|
+| Figure Plotly intégrée à Quarto | Zoom et survol des résultats pré-calculés | Pas de recalcul Python à chaque interaction |
+| Streamlit dans une iframe | Paramètres et calculs Python réellement interactifs côté serveur | Nécessite un service distant hébergé, disponible et autorisant l'intégration |
+| Quarto + Shiny for Python | Callbacks Python intégrés à l'application | Nécessite un serveur ; GitHub Pages seul ne suffit pas |
+
+La stratégie recommandée est de garder le cœur Python indépendant de l'interface et de documenter les références analytiques dans Quarto. Une iframe ne sera ajoutée qu'après déploiement et vérification d'une URL réelle. Le contenu scientifique de la documentation doit rester accessible si l'application est indisponible.
+
+## Convergence spatiale et temporelle
+
+L'application complémentaire `apps/convergence_lab.py` vérifie une équation d'advection-diffusion sur un domaine périodique, avec une condition initiale sinusoïdale. Le solveur numérique est implémenté séparément de la solution analytique :
+
+\[
+\frac{\partial c}{\partial t}+u\frac{\partial c}{\partial x}
+=K\frac{\partial^2 c}{\partial x^2},
+\qquad
+c(x,t)=\bar c+A e^{-K(2\pi/L)^2t}\sin\left(\frac{2\pi}{L}(x-ut)\right).
+\]
+
+Le solveur principal utilise des différences finies centrées en espace et RK4 en temps, avec contrôle de stabilité linéaire. Une seconde implémentation, indépendante, utilise un schéma conservatif amont avec Euler explicite ; l'application superpose les deux solutions et mesure leur écart. Le schéma amont est d'ordre un et généralement plus diffusif. L'interface affiche l'erreur $L^2$, l'erreur maximale, la conservation de la moyenne et deux études de convergence :
+
+- **Convergence spatiale** : le maillage est raffiné et le pas temporel réduit comme $\Delta x^2$, afin de limiter la contamination de l'estimation par l'erreur temporelle.
+- **Convergence temporelle** : le maillage reste fixe et les solutions sont comparées à un calcul de référence utilisant le même opérateur spatial avec un pas de temps beaucoup plus fin.
+
+L'ordre ajusté est un indicateur empirique sur la plage de paramètres choisie, pas une preuve générale. La référence temporelle fine n'est pas exacte ; le test spatial contre la solution analytique fournit un contrôle complémentaire.
+
+Lancer avec :
+
+```bash
+uv run streamlit run apps/convergence_lab.py
+```
+
+Ce cas périodique lisse ne teste pas les conditions aux limites ouvertes, les sources localisées, les coefficients variables ni la physique des gouttelettes. Il sert à vérifier le comportement numérique sur un problème contrôlé, pas à valider une simulation atmosphérique.
+
+## Références conceptuelles
+
+- L'intégration d'EDO par Euler et Runge–Kutta est ici utilisée pour comparer une solution numérique à un cas exact simple.
+- La solution gaussienne de l'équation d'advection-diffusion découle de la translation à vitesse constante et de l'évolution de la variance sous diffusion constante.
+- Les tests automatisés portent sur ces hypothèses restreintes ; ils ne valident pas à eux seuls une formulation de dispersion atmosphérique.
+
+Voir aussi la [spécification détaillée du laboratoire](../../docs/17-laboratoire-interactif.md).

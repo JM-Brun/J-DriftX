@@ -29,6 +29,11 @@ dev = [
   "pre-commit>=4.0",
 ]
 
+app = [
+  "plotly>=5.24",
+  "streamlit>=1.40",
+]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
