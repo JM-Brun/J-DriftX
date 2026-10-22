@@ -32,6 +32,19 @@ La construction historique ne définit pas simplement le temps d'une trajectoire
 
 La source appelle explicitement cette construction une **pseudo-distance** et précise qu'elle ne satisfait pas en général les propriétés d'une distance : elle peut vérifier \(d(A,B)=0\) sans \(A=B\), elle est non symétrique, et l'inégalité triangulaire peut échouer. Ces échecs ne sont donc pas simplement des lacunes de documentation dans la reprise : au moins pour la séparation et la triangulation, ils sont annoncés dans la formulation historique elle-même.
 
+### Vérification complémentaire du chapitre de 2008
+
+Le chapitre *Reduced-Order Modelling of Dispersion* est également disponible dans le volume Springer, pp. 245–256 ([texte du volume](https://www.sgo.fi/~j/baylie/Partial%20Differential%20Equations%20-%20Modelling%20and%20Numerical%20Simulation%20-%20R.%20Glowinski%2C%20P.%20Neittaanmaki%20%28Springer%2C%202008%29%20WW.pdf), §2.2, pp. 248–250). Il confirme la définition projetée, mais ajoute un détail qui change le statut de l'implémentation :
+
+- la définition exacte utilise \(B^\perp\), projection euclidienne de \(B\) sur la caractéristique passant par \(A\);
+- plus loin, la méthode numérique approxime \(B^\perp=B\), en indiquant que la caractéristique passant par \(A\) passe exactement par \(B\), ce qui est présenté comme peu probable en général;
+- en champ uniforme, le chapitre introduit un facteur correctif \(2/\pi\) (noté dans le texte comme une moyenne cosinus stochastique) pour corriger le temps calculé sous cette approximation;
+- la méthode est présentée comme satisfaisante pour des champs atmosphériques lisses et dans un contexte applicatif particulier, pas comme une construction sans restriction pour tout champ de vitesse.
+
+Il faut donc séparer **la définition géométrique idéale** et **l'algorithme approché publié**. Reproduire seulement la projection exacte teste la définition; reproduire l'algorithme de 2008 demande également de documenter l'approximation \(B^\perp\approx B\), le facteur correctif, l'interpolation de la caractéristique et son domaine de validité.
+
+Le chapitre formule aussi des contraintes de divergence nulle, d'advection, de positivité et de conservation pour les champs et les solutions réduites. Dans les passages examinés, cela ne remplace pas une preuve détaillée du résultat plus spécifique « le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\) ». Cette dernière affirmation doit être rattachée à une dérivation précise avant d'être conservée comme résultat démontré dans la documentation actuelle.
+
 ### Contre-exemple analytique minimal : champ uniforme
 
 Prenons le champ 2D uniforme \(\mathbf u=(U,0)\), avec \(U>0\), et les points \(A=(x_A,y_A)\), \(B=(x_B,y_B)\). La caractéristique passant par \(A\) est horizontale. La projection normale décrite dans l'article donne \(B^\perp=(x_B,y_A)\). Pour \(x_B\ge x_A\), le coût historique devient
@@ -89,7 +102,7 @@ La conservation de masse ne découle pas de la seule définition de \(\tau\). El
 | Contreras & Kachroo (2020), [*The Viscosity Solution for Hamilton Jacobi Travel Time Dynamics*](https://doi.org/10.1109/TITS.2019.2946109) | Équation de temps de parcours de type Hamilton–Jacobi et solution de viscosité | Application au trafic/LWR : analogue méthodologique, pas la même dynamique physique |
 | Sethian & Vladimirsky (2001), [*Ordered upwind methods for static Hamilton–Jacobi equations*](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/) | Problèmes de temps minimal anisotrope et équations Hamilton–Jacobi–Bellman | Pertinent si le temps est un minimum sur un ensemble de directions et si un solveur de front est envisagé |
 
-Cette liste établit que le voisinage conceptuel est riche; elle **n'établit pas** que la contribution historique de Drift-X est redondante. Le texte intégral du rapport CR Mécanique (2006) a maintenant été lu pour le §3 et la définition de pseudo-distance. Il reste à comparer cette construction aux détails de la thèse de Brun (2007, et non 2006 dans la référence bibliographique du rapport) et du chapitre de 2008; cette lecture n'est pas encore achevée.
+Cette liste établit que le voisinage conceptuel est riche; elle **n'établit pas** que la contribution historique de Drift-X est redondante. Les sections pertinentes du rapport CR Mécanique (2006) et du chapitre Springer de 2008 ont maintenant été lues. La thèse elle-même n'a pas encore été examinée; sa date bibliographique reste incohérente entre les références consultées.
 
 ## 5. Décision scientifique pour le MVP
 
@@ -121,7 +134,7 @@ Le risque le plus immédiat n'est pas simplement que « Zermelo existe déjà »
 | Séparation des points | **Levé pour la construction publiée** : la source reconnaît que \(d(A,B)=0\) n'implique pas \(A=B\) | Ajouter un test analytique de reproduction; ne pas présenter cette propriété comme un défaut nouvellement découvert |
 | Inégalité triangulaire | **Levé au niveau de l'affirmation historique** : la source dit qu'elle peut échouer | Trouver ou construire un contre-exemple explicite à partir de la définition exacte avant d'écrire un test de non-régression |
 | Non-symétrie | **Partiellement levé** : la définition est orientée et fixe \(+\infty\) pour certains couples amont/aval | Formaliser la convention de domaine et distinguer coût non défini, coût étendu \(+\infty\), et trajet physiquement impossible |
-| Conservation de masse | **Non levé** : l'article mentionne une contrainte globale sur la quantité transportée, mais cela ne remplace pas la dérivation du changement de coordonnées | Reconstituer le jacobien, les hypothèses sur \(\nabla\cdot\mathbf u\), les frontières et le lien avec le scalaire \(c\) dans la thèse/chapitre |
+| Conservation de masse | **Non levé** : les sources imposent des contraintes de conservation au modèle réduit, mais les passages lus ne démontrent pas le résultat plus précis de conservation exacte du flux sur chaque surface iso-\(\tau\) | Reconstituer le jacobien, les hypothèses sur \(\nabla\cdot\mathbf u\), les frontières et le lien avec le scalaire \(c\) dans la thèse/chapitre |
 | Originalité | **Non levé** : un article de 2006 décrit déjà la pseudo-distance et son usage pour les solutions de similitude | Comparer les équations et résultats spécifiques, sans revendiquer la pseudo-distance elle-même comme nouvelle |
 | Date de la thèse | **Métadonnées incohérentes** : la bibliographie du dépôt indique 2006, alors que l'article de 2006 cite la thèse comme 2007 | Vérifier la page de titre ou le dépôt institutionnel de la thèse avant de normaliser la référence |
 
