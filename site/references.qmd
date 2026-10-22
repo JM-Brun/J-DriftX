@@ -6,13 +6,13 @@ title: "Références"
 
 ## Corpus historique Drift-X (2006–2010)
 
-1. Brun, J.-M. (2006). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. Non déposée en ligne à ce jour — numérisation et dépôt HAL prévus (action M0 de la roadmap).
+1. Brun, J.-M. *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. L'article primaire de Mohammadi & Brun (2006) la cite comme 2007 ; certaines bibliographies secondaires donnent 2006. Non localisée dans les recherches consignées ; vérifier la page de titre avant de figer l'année et ne pas conclure qu'elle n'a jamais été déposée/numérisée.
 2. Mohammadi, B. & Brun, J.-M. (2006). [Similitude généralisée et modélisation géométrique à complexité réduite](https://www.em-consulte.com/article/69927). *C. R. Mécanique* 334(10), 634–638 — [PDF en accès libre (Académie des sciences)](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
 3. Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006). Reduced order modelling of dispersion. In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
 4. Brun, J.-M. & Mohammadi, B. (2008). [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14). In Glowinski & Neittaanmäki (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, Springer, chap. 14, p. 245 et s.
 5. Bozon, N., Mohammadi, B. & Sinfort, C. (2008). Similitude and non symmetric geometry for dispersion modelling. e-sta vol. 5, STIC & Environnement'07.
 6. Bozon, N., Sinfort, C. & Mohammadi, B. (2009). [A GIS-based atmospheric dispersion model (Drift-X)](https://hal.science/hal-00468863). Actes STIC & Environnement, Calais. HAL.
-7. Mohammadi, B. & Bozon, N. (2009). [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0). *Applied Geomatics* 1, 33–39.
+7. Bozon, N. & Mohammadi, B. (2009). [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0). *Applied Geomatics* 1, 59–74.
 8. Bozon, N., Sinfort, C. & Mohammadi, B. (2010). [A GIS-based atmospheric dispersion model](https://doi.org/10.3166/jesa.44.445-461). *Journal Européen des Systèmes Automatisés* 44(4-5), 445–461. Version journal du papier n° 6.
 
 ## Fondements méthodologiques
@@ -31,7 +31,7 @@ title: "Références"
 17. AgAir Update (2026). [Bayer Crop Science joins Ag industry efforts to modernize spray drift model (AGDISP Modernization Project)](https://agairupdate.com/2026/03/09/bayer-crop-science-joins-ag-industry-efforts-to-modernize-spray-drift-model-used-by-pesticide-regulators/).
 18. Ayoub, A. et al. (2024). [An enhanced Fourier neural operator surrogate for radioactive plume transport forecasting](https://doi.org/10.1007/s00477-024-02738-8). *Stochastic Environmental Research and Risk Assessment* (WSPEEDI).
 19. HAL (2024). [Reduced-order model (POD-GPR) for microscale atmospheric dispersion](https://hal.science/hal-04310899/document).
-20. Turbelin, G., Singh, S. K. & Issartel, J.-P. (2016). [Reconstructing source terms from atmospheric concentration measurements: the renormalization technique](https://doi.org/10.1002/2014MS000385). *Journal of Advances in Modeling Earth Systems*.
+20. Turbelin, G., Singh, S. K. & Issartel, J.-P. (2014). [Reconstructing source terms from atmospheric concentration measurements: Optimality analysis of an inversion technique](https://doi.org/10.1002/2014MS000385). *Journal of Advances in Modeling Earth Systems* 6, 1244–1255.
 21. InVS / Santé publique France (2009). Évaluation de l'exposition aérienne aux pesticides de la population générale — étude en air extérieur dans quatre sites de l'Hérault en 2006. Rapport. (mesures de terrain contemporaines et locales du corpus Drift-X : candidates pour l'étalonnage, la validation et l'assimilation — PDF et fiche de lecture archivés dans <code>raw/</code>)
 
 La bibliographie complète, catégorisée et datée (une trentaine d'entrées), est maintenue dans le dépôt : <code>docs/references.md</code>. Les citations du site sont gérées par <code>references.bib</code>. Les fiches de lecture détaillées par papier source : <code>docs/04-revues-papiers-sources.md</code>. Les sources primaires (PDF, extractions texte) sont archivées dans <code>raw/</code>.
