@@ -224,3 +224,15 @@ Cette fiche devra contenir :
 - [Feuille de route J-DriftX v2](03-roadmap-jdriftx-v2.md)
 - [Plan d'intégration scientifique et de validation](05-plan-validation-et-integration.md)
 - [Choix de la méthode de revue systématique](06-choix-methode-revue-systematique.md)
+
+
+## 7. Deux voies distinctes pour éviter un blocage artificiel
+
+Le projet distingue maintenant :
+
+- **G0-S — valeur scientifique exploratoire :** autorise un modèle jouet mathématique précisément défini, avec preuves, contre-exemples et tests. Il peut avancer sans jeu de données réel, car il ne prétend pas valider une prédiction physique.
+- **G0-A — utilité applicative :** reste obligatoire avant toute revendication de valeur applicative, benchmark réel, sélection de domaine industriel ou développement d'une chaîne opérationnelle.
+
+Cette séparation n'est pas une façon de déclarer G0 franchi. Elle permet seulement de produire un résultat scientifique de portée limitée sans prétendre avoir résolu le besoin utilisateur. Le [MVP scientifique minimal et la trajectoire maximale](13-mvp-scientifique-et-g0.md) définissent le périmètre autorisé et les portes d'extension.
+
+Le MVP ne peut conclure qu'à des propriétés mathématiques ou à une valeur pédagogique. Toute conclusion sur concentration, dépôt, exposition, coût applicatif ou utilité décisionnelle requiert une formulation physique et une validation distinctes.
