@@ -20,6 +20,15 @@ Cette projection fait partie de la définition : elle signifie que le coût peut
 
 Les solutions de similitude formulées en vent uniforme sont réexprimées dans un système lié au temps de transport et à la coordonnée normale. La portée de cette généralisation dépend des hypothèses sur le champ, les caractéristiques et la projection; elle ne découle pas de la seule formule d'intégrale.
 
+### Définition géométrique et approximation numérique
+
+Le chapitre de 2008 distingue implicitement deux objets qu'il faut garder séparés dans J-DriftX :
+
+- **Définition géométrique** : projeter \(B\) sur la caractéristique passant par \(A\), en \(B^\perp\), puis intégrer le temps jusqu'à cette projection.
+- **Approximation de calcul** : approximer \(B^\perp\approx B\), puis appliquer en champ uniforme une correction \(2/\pi\) motivée par une moyenne cosinus stochastique. Le chapitre précise que l'égalité exacte entre la caractéristique issue de \(A\) et le point \(B\) est peu probable en général, et présente la méthode pour des champs atmosphériques lisses.
+
+Ces deux étapes ne doivent pas être confondues. Le MVP doit d'abord reproduire la définition, puis mesurer séparément l'effet de l'approximation numérique et de sa correction.
+
 ## Trois propriétés structurantes
 
 **Non-symétrie : condition à préciser.** La non-uniformité du champ ne suffit pas, à elle seule, à rendre asymétrique l'intégrale $\int ds/|\mathbf u|$ si l'on parcourt la même courbe dans les deux sens. Dans l'advection pure, l'asymétrie peut venir de la dynamique orientée : la trajectoire inverse n'est généralement pas admissible pour le même champ. Il faut alors préciser si le temps inverse est non défini, infini par convention, ou calculé avec une autre dynamique. Voir la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
