@@ -53,7 +53,7 @@ Les tests vérifient le cas sans diffusion, l'intégrale numérique de la masse 
 
 ## 4. Expériences et critères de vérification
 
-L'application `apps/scientific_validation.py` expose les deux expériences précédentes et compare visuellement Euler/RK4 à la trajectoire exacte, puis le profil initial au profil advecté-diffusé. Elle affiche l'erreur de position finale et la masse intégrée sur le domaine tracé.
+L'application `apps/scientific_validation.py` expose les deux expériences précédentes et compare visuellement Euler/RK4 à la trajectoire exacte, puis le profil initial au profil advecté-diffusé. Elle affiche l'erreur de position finale, une courbe de convergence en fonction du pas de temps et la masse intégrée sur le domaine tracé.
 
 Pour toute nouvelle formulation :
 - comparer à une solution analytique lorsque disponible ;
