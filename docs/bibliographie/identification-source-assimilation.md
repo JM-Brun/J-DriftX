@@ -12,7 +12,7 @@ L'identification de source (source-term estimation, STE) est le **problème inve
 - **Conséquence :** choisir des baselines adaptées et expliciter les hypothèses d'observabilité, le bruit et la régularisation.
 - [Article](https://www.sciencedirect.com/science/article/pii/S156625351630152X)
 
-### Turbelin, Singh & Issartel (2016) — renormalisation pour reconstruire des sources
+### Turbelin, Singh & Issartel (2014) — renormalisation pour reconstruire des sources
 
 - **Type :** article de méthode dans *Journal of Advances in Modeling Earth Systems* (JAMES).
 - **Relation :** approche alternative du problème inverse ; lien conceptuel avec l'opérateur de transport et son inverse généralisé.
@@ -26,7 +26,7 @@ L'identification de source (source-term estimation, STE) est le **problème inve
 - **Conséquence :** identifier les contraintes de latence, de robustesse et de validation ; ne pas traiter la page institutionnelle comme un benchmark quantitatif.
 - [Documentation](https://narac.llnl.gov/research-and-development/source-term-estimation)
 
-### Source Term Estimation for Atmospheric Pollutant Releases (Zenodo, 2025)
+### Source Term Estimation for Atmospheric Pollutant Releases (Zenodo, 2026)
 
 - **Type :** revue/prépublication ou rapport déposé sur Zenodo ; statut éditorial à confirmer.
 - **Relation :** synthèse secondaire pour les méthodes adjointes, Tikhonov, bayésiennes et PINNs.
