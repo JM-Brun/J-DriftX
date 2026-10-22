@@ -83,6 +83,15 @@ Pour chaque candidat, vérifier licence, terme source, coordonnées et temps, m�
 
 G0 ne peut être déclaré franchi que lorsque sont renseignés et sourcés : (a) utilisateur et décision, (b) observable primaire, (c) régime physique et hypothèses, (d) baseline, (e) données de validation indépendantes, (f) seuil de succès et (g) critère d'arrêt.
 
+## Mise à jour — sortie de G0 (22 octobre 2026, en soirée)
+
+**G0 est franchi.** La décision provisoire ci-dessus est remplacée par deux documents :
+
+- la [fiche de cadrage du besoin](13-fiche-g0-cadrage-besoin.md), dont les critères (a)–(g) sont renseignés, sourcés et ratifiés ;
+- les [résultats de l'audit des corpus](15-audit-corpus-g0-resultats.md) : verdicts **V** pour DIFLU (champ proche, licence à confirmer), NOAA DATEM (far-field) et ETEX (far-field, deux lâchers), avec réserves explicites.
+
+CAPRIV reste classé champ proche, sans changement. La vérification au niveau des fichiers bruts (licence DIFLU, unités, limites de détection, sommes de contrôle) est un prérequis G1 avant tout benchmark.
+
 ## Références externes
 
 - US EPA, [AGDISP-Gaussian Extension guidance](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension), 2010.
