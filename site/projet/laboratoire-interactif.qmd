@@ -76,7 +76,7 @@ L'application complémentaire `apps/convergence_lab.py` vérifie une équation d
 c(x,t)=\bar c+A e^{-K(2\pi/L)^2t}\sin\left(\frac{2\pi}{L}(x-ut)\right).
 \]
 
-Le solveur utilise des différences finies centrées en espace et RK4 en temps, avec contrôle de stabilité linéaire pour le pas demandé. L'interface affiche l'erreur $L^2$, l'erreur maximale, la conservation de la moyenne et deux études de convergence :
+Le solveur principal utilise des différences finies centrées en espace et RK4 en temps, avec contrôle de stabilité linéaire. Une seconde implémentation, indépendante, utilise un schéma conservatif amont avec Euler explicite ; l'application superpose les deux solutions et mesure leur écart. Le schéma amont est d'ordre un et généralement plus diffusif. L'interface affiche l'erreur $L^2$, l'erreur maximale, la conservation de la moyenne et deux études de convergence :
 
 - **Convergence spatiale** : le maillage est raffiné et le pas temporel réduit comme $\Delta x^2$, afin de limiter la contamination de l'estimation par l'erreur temporelle.
 - **Convergence temporelle** : le maillage reste fixe et les solutions sont comparées à un calcul de référence utilisant le même opérateur spatial avec un pas de temps beaucoup plus fin.
