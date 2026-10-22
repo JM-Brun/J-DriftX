@@ -25,6 +25,12 @@ Le MVP comprend une définition mathématique sans ambiguïté, un cas 1D calcul
 
 **Hors périmètre :** aucune prédiction de dépôt ou de concentration, aucune affirmation de supériorité, aucun benchmark multi-domaines, aucune calibration ou ML, aucune interface QGIS/API, et aucune revendication de nouveauté avant revue bibliographique.
 
+## Antécédents mathématiques : risque de nouveauté
+
+Le temps de parcours minimal et la géométrie asymétrique sont déjà étudiés, notamment via le problème de navigation de Zermelo et les métriques de Randers/Finsler. Voir [Gibbons et al. (2009)](https://doi.org/10.1103/PhysRevD.79.044022), [Zermelo avec obstacles (2024)](https://doi.org/10.1016/j.difgeo.2024.102177) et [navigation dépendant du temps (2025)](https://arxiv.org/abs/2508.07274).
+
+La première étape du MVP doit donc être une revue ciblée comparant les définitions et résultats exacts. Si l'idée est déjà connue, le résultat peut être pédagogique et reproductible, sans revendication d'originalité.
+
 ## Critères d'acceptation
 
 - définition, hypothèses, domaine et unités explicites ;
