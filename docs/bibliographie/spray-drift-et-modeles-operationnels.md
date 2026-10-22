@@ -52,7 +52,7 @@ Références recensées dans le dépôt : ANN/SVR, random forest et analyse de s
 - **Type :** étude applicative, *Science of the Total Environment*.
 - **Lien :** application de dispersion/exposition et intégration spatiale ; possible contexte pour les sorties de J-DriftX.
 - **Conséquence :** examiner les sources d'émission, la topographie, la résolution spatiale et la chaîne de calcul avant d'en faire une baseline.
-- [Article](https://www.sciencedirect.com/science/article/abs/pii/S0048969717318995)
+- [Costanzini et al. (2018), *Atmosphere* 9(2), 38 — exposition aux pesticides](https://doi.org/10.3390/atmos9020038)
 
 ### AGDISP Modernization Project (2026)
 
