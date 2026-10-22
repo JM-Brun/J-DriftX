@@ -32,6 +32,16 @@ Le chapitre de 2008 confirme la projection \(B\mapsto B^\perp\), mais précise q
 
 Il faut donc distinguer la **définition géométrique** de la **procédure numérique approchée**. Les contraintes de conservation énoncées pour le modèle réduit ne constituent pas, à elles seules, une preuve que le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\).
 
+## Contre-exemple à l'inégalité triangulaire
+
+Considérons le champ lisse, stationnaire et divergence nulle \(\mathbf u(x,y)=(1+9y,0)\) sur \(y\in[0,1]\). Les caractéristiques sont horizontales, et le coût projeté vers l'aval vaut \(d(A,B)=(x_B-x_A)/(1+9y_A)\). Pour \(A=(0,0)\), \(B=(1,1)\), \(C=(2,0)\),
+
+\[
+d(A,C)=2,\qquad d(A,B)=1,\qquad d(B,C)=0.1.
+\]
+
+Ainsi \(d(A,C)>d(A,B)+d(B,C)=1.1\). La construction peut donc violer l'inégalité triangulaire même dans un champ lisse, divergence nulle et sans stagnation. Ce cas analytique est documenté dans la note détaillée; il reste à l'intégrer comme test lorsque l'API de pseudo-distance sur champ variable sera spécifiée.
+
 ## Écart avec le code Python actuel
 
 La fonction \`jdriftx.metric.temps_transport\` calcule une somme de longueurs de segments divisées par la norme des vitesses fournies. Elle ne calcule pas de caractéristiques ni la projection historique \(B^\perp\), et le signe des vecteurs vitesse n'affecte pas le résultat. Les anciens noms de tests laissaient entendre une non-symétrie qui n'était pas réellement testée; ils ont été corrigés dans la PR.
