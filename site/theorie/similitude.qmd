@@ -62,9 +62,9 @@ $$
 
 **Étape 5 — Normalisation dans le domaine non borné.** Avant d'imposer le sol, la gaussienne de cette étape est une solution dans l'espace vertical non borné $z\in\mathbb R$. Avec $y,z\in\mathbb R$, son préfacteur est normalisé pour que
 
-$
+$$
 \int_{-\infty}^{+\infty}\!\int_{-\infty}^{+\infty} U C \; \mathrm{d}y \, \mathrm{d}z = Q \qquad \forall x > 0.
-$
+$$
 
 Ce calcul analytique utilise les intégrales complètes des deux gaussiennes et les diffusivités constantes. Il ne décrit pas encore le domaine physique $z\geq0$ avec sol imperméable : à cette étape, la moitié de l'espace vertical sous le sol est encore incluse. L'étape 6 ajoute la source image et permet d'obtenir la normalisation correspondante sur le demi-espace $z\geq0$.
 
