@@ -55,6 +55,17 @@ Cette liste est un point de départ, pas une revue exhaustive ni une preuve que 
 
 **Conséquence pour le MVP :** la première tâche est une note de positionnement mathématique. Si aucune propriété ou construction nouvelle n'émerge, continuer comme ressource pédagogique / banc d'essai reproductible reste valide, mais la revendication de contribution originale doit être abandonnée ou reformulée autour d'un différentiel précisément démontré.
 
+### Prérequis ajouté après lecture de la source primaire
+
+Le MVP ne doit pas commencer par une pseudo-distance simplifiée inventée pour le besoin. La note de 2006 définit une projection du point cible \(B\) sur la caractéristique passant par \(A\), puis le temps de migration vers \(B^\perp\). Elle reconnaît que la construction peut perdre la séparation des points et violer l'inégalité triangulaire.
+
+En conséquence, le premier test de référence doit distinguer deux implémentations explicitement nommées :
+
+1. **Reproduction historique** : pseudo-distance projetée, avec règles de caractéristique unique, projection, orientation et points inaccessibles.
+2. **Variante exploratoire** : temps d'arrivée au point cible ou autre coût, si une question scientifique le justifie. Cette variante doit porter un nom distinct et ne peut pas être présentée comme reproduction de la méthode de 2006.
+
+**Critère de sortie du verrou de définition** : un exemple calculable à la main doit spécifier le champ \(\mathbf u\), les points \(A,B\), la projection \(B^\perp\), le coût, les unités, et le résultat attendu. Au minimum, le cas uniforme \(\mathbf u=(U,0)\) doit démontrer que le coût historique dépend de l'avancement longitudinal et pas de l'écart transversal; un test doit vérifier qu'il peut être nul pour deux points distincts. Les cas sans caractéristique unique ou avec sources/puits doivent être explicitement exclus ou recevoir une règle documentée.
+
 ## 3. Critères d'acceptation du MVP
 
 Le MVP est terminé lorsqu'il contient :
