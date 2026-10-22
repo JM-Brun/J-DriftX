@@ -79,9 +79,7 @@ mass_expected = mean_concentration * length
 
 figure = go.Figure()
 figure.add_trace(go.Scatter(x=x, y=exact, mode="lines", name="Solution analytique"))
-figure.add_trace(
-    go.Scatter(x=x, y=numerical, mode="markers", name="Différences centrées + RK4")
-)
+figure.add_trace(go.Scatter(x=x, y=numerical, mode="markers", name="Différences centrées + RK4"))
 x_upwind, upwind, _upwind_dt = solve_periodic_upwind_euler(
     n_cells=n_cells,
     length=length,
@@ -229,9 +227,7 @@ for time_step in time_steps:
         diffusivity=diffusivity,
     )
     time_actual_steps.append(actual_time_step)
-    time_errors.append(
-        float(np.sqrt(np.mean((temporal_solution - temporal_reference) ** 2)))
-    )
+    time_errors.append(float(np.sqrt(np.mean((temporal_solution - temporal_reference) ** 2))))
 
 time_order = _observed_order(time_actual_steps, time_errors)
 time_order_label = f"{time_order:.2f}" if time_order is not None else "indisponible"
