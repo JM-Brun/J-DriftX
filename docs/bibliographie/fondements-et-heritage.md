@@ -26,10 +26,10 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 ### Mohammadi, Brun & Pironneau (2006) — *Reduced order modelling of dispersion*
 
 - **Lien :** source historique annoncée dans la bibliographie, directement pertinente.
-- **Référence :** chapitre dans *Numerical Analysis and Scientific Computing with PDE and their Challenging Applications*, Springer.
+- **Référence :** entrée bibliographique citée sous le titre *Reduced order modelling of dispersion* et associée à *Numerical Analysis and Scientific Computing with PDE and their Challenging Applications* ; le recueil et le statut éditorial n'ont pas été confirmés par une notice primaire.
 - **Idées pertinentes :** modélisation réduite de dispersion ; détails à confirmer à partir du chapitre lui-même.
 - **Conséquence :** retrouver le chapitre pour vérifier les recouvrements, les différences de formulation et la chronologie scientifique.
-- **Statut :** source non localisée dans le corpus de travail ; ne pas lui attribuer de résultats non vérifiés.
+- **Statut :** citation secondaire attestée, mais source primaire et métadonnées du recueil non confirmées ; ne pas lui attribuer de résultats ni la présenter comme chapitre Springer établi.
 
 ### Brun & Mohammadi (2008) — *Reduced-Order Modelling of Dispersion*
 
