@@ -34,7 +34,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 - Le couple réglementaire AgDRIFT/AGDISP (Lagrangien near-field ≤ 800 m + extension gaussienne far-field) domine toujours l'évaluation du risque. L'EPA reconnaît que l'extension gaussienne far-field est « extrêmement conservatrice » et peu validée pour les barrières végétales et la topographie — un scénario qui pourrait être étudié ; aucune preuve ne montre que la métrique travel-time de Drift-X représente correctement ces effets.
 - L'**AGDISP Modernization Project** (AMP) lancé par l'industrie et rejoint par Bayer Crop Science (mars 2026) réécrit AGDISP en langage moderne, open source, pour intégrer agriculture de précision et conditions site-spécifiques. Un far-field rapide et réaliste y est une pièce manquante identifiée.
 - L'arrivée des drones (RPAAS/UASS) crée un besoin nouveau de modèles de dérive validés : AGDISPpro est en cours de validation pour les drones (2025), et les approches ML (random forest, ANN, SVR) se multiplient pour la dérive — toutes statistiques, sans contraintes physiques, donc fragiles en extrapolation. la présence d'une « case vide » n'est pas établie ; il faut cartographier les méthodes mécanistes et les comparer sur des observables communs.
-- Côté européen, la Directive 2009/128/CE encadre l'aérien et les modèles type CAREA (2018) couplent dispersion gaussienne et SIG pour l'exposition résidentielle aux pesticides, avec des écarts d'exposition très importants selon le modèle utilisé — la qualité du modèle change les décisions sanitaires.
+- Côté européen, la Directive 2009/128/CE encadre l'aérien et les modèles type Costanzini et al. (2018) comparent un modèle de proximité et CAREA pour l'exposition résidentielle aux pesticides ; le modèle CAREA lui-même est décrit séparément par Teggi et al. (2018) — la qualité du modèle change les décisions sanitaires.
 
 ### 3. ROM et apprentissage : maturité méthodologique, mais toujours a posteriori
 
@@ -44,7 +44,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 
 ### 4. Identification de source (STE) : un champ qui s'est structuré
 
-- La revue de référence (Information Fusion, 2017) classe les méthodes STE (optimisation, adjoint, bayésien, renormalisation) ; NARAC opérationalise le STE à toutes échelles ; la technique de renormalisation (JAMES, 2016) fournit le formalisme d'opérateur inverse généralisé.
+- La revue de référence (Information Fusion, 2017) classe les méthodes STE (optimisation, adjoint, bayésien, renormalisation) ; NARAC opérationalise le STE à toutes échelles ; la technique de renormalisation (JAMES, 2014) fournit le formalisme d'opérateur inverse généralisé.
 - L'entrée Zenodo 22914336 correspond à une ressource de Shafiyev et al. publiée le 22 septembre 2026 (v1), et non en 2025 comme indiqué précédemment. Son contenu décrit les méthodes adjointes, Tikhonov, bayésiennes/MCMC et PINN ainsi que des problèmes ouverts en estimation de source. Elle peut être citée comme ressource de synthèse, mais son statut de revue évaluée par les pairs n'est pas établi ici ; ses conclusions doivent être corroborées par les articles primaires.
 - Les documents historiques mentionnent une analyse de sensibilité du modèle direct. La disponibilité, l'exactitude et l'utilité d'un adjoint pour la formulation actuelle ne sont pas démontrées par le seul caractère analytique du modèle ; elles doivent être dérivées et vérifiées.
 
@@ -93,7 +93,8 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 | [Shafiyev et al. — Source Term Estimation for Atmospheric Pollutant Releases](https://zenodo.org/records/22914336) | Ressource Zenodo ; évaluation par les pairs non établie ici | 2026-09-22 |
 | [Appl. Sci. — modèle QGIS gaussien 2026](https://www.mdpi.com/2076-3417/16/4/1833) | 3/5 | 2026 |
 | [GitHub — plugin QGIS éducatif gaussien](https://github.com/Sebapac90/qgis-educational-gaussian-plume) | 2/5 | 2025 |
-| [Sci. Total Environ. — CAREA, exposition pesticides](https://www.sciencedirect.com/science/article/abs/pii/S0048969717318995) | 4/5 | 2018 |
+| [Teggi et al. — modèle CAREA pour sources complexes](https://doi.org/10.1016/j.scitotenv.2017.07.196) | 4/5 | 2018 |
+| [Costanzini et al. — exposition aux pesticides avec CAREA](https://doi.org/10.3390/atmos9020038) | 4/5 | 2018 |
 | [PMC — digital twin urbain feu/fumée](https://pmc.ncbi.nlm.nih.gov/articles/PMC12513986/) | 3/5 | 2025 |
 | [SICC 2026 — session IA/Digital Twins CBRNe](https://www.sicc-series.com/technical-and-poster-sessions/session-3-artificial-intelligence-digital-twins-decision-support-in-cbrne-risk-management/) | 3/5 | 2026 |
 | [EM-Consulte — CR Mécanique 334 (Mohammadi & Brun)](https://www.em-consulte.com/article/69927) | 5/5 | 2006 |
@@ -104,7 +105,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 
 ## Questions ouvertes
 
-1. La métrique travel-time a-t-elle déjà été formalisée de façon autonome (thèse 2006) ? Le document original doit être numérisé/déposé sur HAL pour servir de référence — action M0 de la roadmap.
+1. La métrique travel-time a-t-elle déjà été formalisée de façon autonome (thèse citée comme 2007 par l'article primaire ; année officielle à confirmer) ? Le document original doit être numérisé/déposé sur HAL pour servir de référence — action M0 de la roadmap.
 2. Quel niveau d'accord (facteur 2 ? erreur L2 ?) viser sur les benchmarks far-field pour convaincre la communauté spray drift, sachant que les modèles réglementaires eux-mêmes vivent avec des facteurs 2 ?
 3. Faut-il viser la conformité aux standards d'entrée AERMOD/AgDRIFT (météo au format météorologique réglementaire) pour l'interopérabilité ?
 4. La calibration bayésienne (au lieu des moindres carrés) vaut-elle le coût en complexité au stade M1, ou est-ce un M2/M3 ?
