@@ -4,38 +4,118 @@ title: "Solutions de similitude"
 
 # Solutions de similitude : le socle de l'espace de recherche
 
-Les solutions de similitude des panaches et puffs constituent la brique élémentaire de Drift-X : c'est l'information physique *a priori* qui structure l'espace de recherche.
+Les solutions de similitude des panaches et puffs constituent la brique élémentaire de Drift-X : c'est l'information physique *a priori* qui structure l'espace de recherche. Cette page explique **d'où vient leur forme** : elles ne sont pas posées comme une hypothèse décorative, elles se **dérivent** de l'équation de transport ([Modèle direct](modele-direct.qmd)) sous un jeu d'hypothèses explicites — que J-DriftX héritera ou généralisera.
 
-## Panache gaussien (régime établi)
+## D'où vient la forme gaussienne ?
 
-Pour une source continue de débit $Q$ (kg/s) à hauteur $h$ dans un vent uniforme $U$, la concentration en $(x, y, z)$ (axe $x$ sous le vent) est :
+Deux lectures convergentes, avant toute dérivation :
+
+- **Marche aléatoire.** Une particule de traceur relâchée dans une turbulence subit une succession de petites secousses quasi indépendantes. Après un grand nombre de ces déplacements, la distribution de ses positions transversales tend vers une **gaussienne** — c'est le théorème central limite.
+- **Fermeture gradient.** Si le flux turbulent est supposé proportionnel au gradient de concentration (fermeture « K-théorie » du [Modèle direct](modele-direct.qmd)), l'équation de transport se réduit à une **équation de diffusion** — dont la solution élémentaire (fonction de Green) est la gaussienne.
+
+Les deux chemins mènent à la même structure : **profils transversaux gaussiens, amplitude en décroissance comme $1/(\sigma_y \sigma_z)$**. La dérivation ci-dessous la fait apparaître terme à terme.
+
+## Dérivation du panache gaussien (régime établi)
+
+Hypothèses de départ : régime établi (pas de dépendance temporelle), vent **uniforme** $U$ porté par l'axe $x$, fermeture gradient, source ponctuelle continue de débit $Q$ à la hauteur $h$, sol sans déposition.
+
+**Étape 1 — Réduire l'équation.** L'équation d'advection–diffusion devient :
 
 $$
-C(x, y, z) = \frac{Q}{2 \pi U \, \sigma_y(x) \, \sigma_z(x)}
+U \frac{\partial C}{\partial x}
+= K_y \frac{\partial^2 C}{\partial y^2}
++ K_z \frac{\partial^2 C}{\partial z^2},
+$$
+
+où $K_y, K_z$ sont les diffusivités turbulentes transversales.
+
+**Étape 2 — Reconnaître une équation de diffusion « datée ».** Posons
+
+$$
+t' = \frac{x}{U}
+$$
+
+le **temps de transport** depuis la source. L'équation s'écrit alors
+
+$$
+\frac{\partial C}{\partial t'} = K_y \frac{\partial^2 C}{\partial y^2} + K_z \frac{\partial^2 C}{\partial z^2},
+$$
+
+qui est l'équation de la chaleur transversale, où le rôle du temps est joué par le temps de transport. En vent uniforme, $t' = x/U$ **est** la métrique $\tau$ de Drift-X. La généralisation à un vent non uniforme — remplacer $x/U$ par $\tau$ — est précisément l'objet de la page [Métrique travel-time](metrique-travel-time.qmd), avec ses précautions (projection, pseudo-distance).
+
+**Étape 3 — Diffuser un point.** La fonction de Green de l'équation de diffusion pour une impulsion ponctuelle en $t' = 0$ est une gaussienne de variance croissante :
+
+$$
+\frac{1}{\sqrt{2\pi \sigma_y^2(t')}} \exp\!\left(-\frac{y^2}{2\sigma_y^2(t')}\right),
+\qquad \sigma_y^2(t') = 2 K_y t',
+$$
+
+et de même en $z$. La variance croît **linéairement avec le temps de transport** tant que $K$ est constant.
+
+**Étape 4 — Somme de la source continue.** La source continue émet $Q\,\mathrm{d}t'$ de matière à chaque instant ; par linéarité de l'équation (principe de superposition), le champ établi est la superposition de toutes ces contributions. Le calcul — par transformée de Laplace en $x$, ou en sommant les puffs élémentaires de la section suivante — donne un champ stationnaire :
+
+$$
+C(x, y, z) = \frac{Q}{2\pi U \, \sigma_y(x) \, \sigma_z(x)}
 \exp\!\left(-\frac{y^2}{2\sigma_y^2}\right)
-\left[
+\exp\!\left(-\frac{(z-h)^2}{2\sigma_z^2}\right).
+$$
+
+**Étape 5 — Préfacteur fixé par la conservation de la masse.** Le coefficient $\frac{Q}{2\pi U \sigma_y \sigma_z}$ n'est pas ajustable : il est le seul qui garantisse
+
+$$
+\int\!\!\int U C \; \mathrm{d}y \, \mathrm{d}z = Q \qquad \forall x > 0,
+$$
+
+c'est-à-dire la [conservation de la masse](contraintes-physiques.qmd), première des quatre contraintes physiques, testée en continu par la CI du paquet.
+
+**Étape 6 — Réflexion au sol par la méthode des images.** Le sol ne laisse rien passer à travers lui : la condition est un flux vertical nul en $z = 0$. La méthode des images la satisfait exactement en ajoutant une **source virtuelle symétrique** en $(0, 0, -h)$ : la somme des deux gaussiennes annule le flux au sol et **double** la concentration au niveau du sol. C'est l'origine des deux termes verticaux de la formule de la page d'accueil :
+
+$$
 \exp\!\left(-\frac{(z-h)^2}{2\sigma_z^2}\right)
 +
-\exp\!\left(-\frac{(z+h)^2}{2\sigma_z^2}\right)
-\right],
+\exp\!\left(-\frac{(z+h)^2}{2\sigma_z^2}\right).
 $$
 
-où le second terme exponentiel vertical encode la réflexion au sol, et où les écarts-types $\sigma_y, \sigma_z$ croissent avec $x$ selon la classe de stabilité de Pasquill (A à F) — formules de Briggs : par exemple $\sigma_y = a x / \sqrt{1 + d x}$ et, selon la classe, $\sigma_z$ linéaire, en racine ou inverse en $x$.
+**Étape 7 — Les vrais $\sigma$ : de $K$ aux formules de Briggs.** La dérivation suppose $K_y, K_z$ constants — rarement réaliste : la turbulence dépend de la stabilité et de la hauteur. La démarche opérationnelle (Pasquill 1961, courbes de Gifford, formules de Briggs 1973) ne modélise pas $K$ : elle **tabule directement les $\sigma_y(x)$, $\sigma_z(x)$** à partir d'essais de traçage, par classe de stabilité A–F, en lois puissance de la distance. La théorie statistique de la diffusion turbulente (Taylor 1921) en donne la charpente :
 
-## Puff gaussien (rejet instantané)
+$$
+\sigma^2(T) = 2\, v'^2 \int_0^T (T - s)\, R(s)\, \mathrm{d}s,
+$$
 
-Pour une masse $M$ émise en $t = 0$ :
+où $R$ est la corrélation des vitesses lagrangiennes : croissance de $\sigma$ **linéaire** aux courts temps de parcours, **en racine carrée** aux longs. Les formules de Briggs interpolent ces deux régimes.
+
+## Dérivation du puff gaussien (rejet instantané)
+
+Pour un rejet bref, plus d'hypothèse de régime établi : l'équation de diffusion agit aussi **le long du vent** ($\sigma_x$ apparaît), et le champ dépend du temps. La fonction de Green 3D pour une masse $M$ émise en $(x_0, 0, 0)$ à $t = 0$ :
 
 $$
 C(x, y, z, t) = \frac{M}{(2\pi)^{3/2} \sigma_x \sigma_y \sigma_z}
 \exp\!\left(-\frac{(x - x_0 - U t)^2}{2\sigma_x^2}\right)
 \exp\!\left(-\frac{y^2}{2\sigma_y^2}\right)
-\exp\!\left(-\frac{z^2}{2\sigma_z^2}\right).
+\exp\!\left(-\frac{z^2}{2\sigma_z^2}\right),
 $$
 
-## Pourquoi la similitude ?
+- le **centroïde** suit le vent ($x_0 + U t$) ;
+- les $\sigma$ croissent avec le temps de parcours ($\sigma^2 = 2 K t$ à $K$ constant) ;
+- une source en hauteur s'obtient par translation, et la réflexion au sol par images, comme à l'étape 6.
 
-Les panaches turbulents sont **auto-similaires** : les profils transversaux, adimensionnés par les échelles locales, se superposent d'une station à l'autre [@raupach1981canopy; @simpson1997gravity]. Cette invariance d'échelle est exactement ce qui permet de *pré-structurer* l'espace de recherche sans calcul : la famille des gaussiennes à paramètres ($\sigma_y$, $\sigma_z$) variables est un sous-espace de très faible dimension, parcouru par un petit nombre de paramètres physiques.
+**Le lien entre les deux solutions.** Le panache établi est la **superposition temporelle des puffs** : l'intégrale sur toutes les dates d'émission $Q\,\mathrm{d}t'$ reproduit exactement la formule du panache à $K$ constants. L'intégration fait disparaître $\sigma_x$ — l'étalement longitudinal des puffs est remplacé par l'émission continue. C'est la linéarité qui fait tout le travail ; elle est conservée comme contrainte physique numéro 3.
+
+## Pourquoi le mot « similitude »
+
+Les profils sont **auto-similaires** : une fois adimensionnés par les largeurs locales $\sigma_y(x), \sigma_z(x)$ et l'amplitude locale, les profils transversaux se superposent d'une station à l'autre [@raupach1981canopy; @simpson1997gravity]. Autrement dit, la solution ne vit pas dans un champ arbitraire : elle vit dans une **famille à peu de paramètres** $(Q, h, U, \text{classe de stabilité})$ — un sous-espace de très faible dimension. C'est exactement ce qui permet de [pré-structurer l'espace de recherche sans calcul](reduction-a-priori.qmd). La même mécanique de réduction donne les solutions auto-similaires des jets et panaches, avec des lois de croissance en puissance différentes selon le régime — la famille élargie dont Drift-X hérite.
+
+## Chaque hypothèse de la dérivation est traçable
+
+| Hypothèse de la dérivation | Dans J-DriftX |
+|---|---|
+| Vent uniforme $U$, $t' = x/U$ | remplacé par la métrique $\tau$ ([Métrique travel-time](metrique-travel-time.qmd)) — la portée de la substitution est auditée |
+| Terrain plat, sol réflecteur | terrain suivi par MNT ; déposition en extension M3 ([Limites](../hypotheses/limites.qmd)) |
+| $\sigma$ tabulés (Briggs, classes de Pasquill) | paramètres calibrés par [assimilation](assimilation-identification.qmd) de mesures partielles |
+| $K$ constants | écart admis ; c'est lui que les $\sigma$ empiriques absorbent |
+| Source ponctuelle | le champ proche fournit les conditions d'entrée (section suivante) |
+
+Le catalogue complet des hypothèses est tenu sur la page [Catalogue des hypothèses](../hypotheses/catalogue.qmd).
 
 ## Du champ proche au champ lointain
 
