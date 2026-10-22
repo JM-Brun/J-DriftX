@@ -18,9 +18,9 @@ décrit un temps de parcours le long d'une trajectoire donnée. Il faut distingu
 
 ## Lire les termes de mécanique des fluides
 
-Un **champ de vitesse** \(\\mathbf u\) associe une vitesse à chaque position. Une **ligne de courant** est tangente au champ à un instant donné; une **trajectoire de particule** est le chemin suivi au cours du temps. Pour un champ stationnaire suffisamment régulier, lignes de courant et trajectoires spatiales coïncident; dans un champ instationnaire, elles peuvent différer. Une **caractéristique** est la courbe qui transporte l'information d'une équation différentielle de transport et doit être définie à partir de la dynamique étudiée.
+Un **champ de vitesse** \(\mathbf u\) associe une vitesse à chaque position. Une **ligne de courant** est tangente au champ à un instant donné; une **trajectoire de particule** est le chemin suivi au cours du temps. Pour un champ stationnaire suffisamment régulier, lignes de courant et trajectoires spatiales coïncident; dans un champ instationnaire, elles peuvent différer. Une **caractéristique** est la courbe qui transporte l'information d'une équation différentielle de transport et doit être définie à partir de la dynamique étudiée.
 
-La **divergence** \(\\nabla\\cdot\\mathbf u\) caractérise la dilatation locale du champ. Une divergence nulle est cohérente avec un écoulement incompressible à densité constante, mais ne prouve pas à elle seule la conservation du flux à travers toute surface. Les sources de fluide, les sources de polluant et les points singuliers du champ sont trois cas distincts.
+La **divergence** \(\nabla\cdot\mathbf u\) caractérise la dilatation locale du champ. Une divergence nulle est cohérente avec un écoulement incompressible à densité constante, mais ne prouve pas à elle seule la conservation du flux à travers toute surface. Les sources de fluide, les sources de polluant et les points singuliers du champ sont trois cas distincts.
 
 ## Trois objets à ne pas confondre
 
@@ -96,9 +96,9 @@ Les trois dernières références sont des comparateurs conceptuels : elles ne d
 
 ## Le lien avec l'équation de transport
 
-Pour une concentration passive (c), l'équation conservative d'advection avec source (s) est \(\\partial_t c+\\nabla\\cdot(c\\mathbf u)=s\). Si la divergence du champ est nulle, elle se réduit à \(\\partial_t c+\\mathbf u\\cdot\\nabla c=s\). Cette forme explique pourquoi les caractéristiques sont utiles : elles suivent le transport de l'information. Mais la pseudo-distance projetée est un objet géométrique construit à partir de ces caractéristiques; elle n'est pas, par elle-même, une solution de l'équation de concentration et ne modélise pas automatiquement la diffusion, la turbulence ou le dépôt.
+Pour une concentration passive (c), l'équation conservative d'advection avec source (s) est \(\partial_t c+\nabla\cdot(c\mathbf u)=s\). Si la divergence du champ est nulle, elle se réduit à \(\partial_t c+\mathbf u\cdot\nabla c=s\). Cette forme explique pourquoi les caractéristiques sont utiles : elles suivent le transport de l'information. Mais la pseudo-distance projetée est un objet géométrique construit à partir de ces caractéristiques; elle n'est pas, par elle-même, une solution de l'équation de concentration et ne modélise pas automatiquement la diffusion, la turbulence ou le dépôt.
 
-La revendication de conservation du flux sur les surfaces iso-\(\\tau\) exige une dérivation séparée du changement de variables, du jacobien et des conditions aux limites. La condition \(\\nabla\\cdot\\mathbf u=0\) seule ne suffit pas à établir ce résultat précis.
+La revendication de conservation du flux sur les surfaces iso-\(\tau\) exige une dérivation séparée du changement de variables, du jacobien et des conditions aux limites. La condition \(\nabla\cdot\mathbf u=0\) seule ne suffit pas à établir ce résultat précis.
 
 ## Conclusion provisoire
 
