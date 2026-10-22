@@ -1,5 +1,7 @@
 # Références — J-DriftX
 
+Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX, consulter la [bibliographie annotée](bibliographie-annotee-jdriftx.md). Cette page reste la liste bibliographique générale ; les fiches annotées expliquent les relations et les limites de preuve.
+
 ## Corpus historique (Drift-X, 2006–2009)
 
 - Brun, J.-M. (2006). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. Non déposée en ligne à ce jour — dépôt HAL prévu (action M0 de la roadmap).
