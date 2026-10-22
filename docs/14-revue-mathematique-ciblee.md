@@ -207,6 +207,7 @@ De même, \(\nabla\cdot\mathbf u=0\) contraint la cinématique du champ, mais la
 | Non-symétrie | **Partiellement levé** : la définition est orientée et fixe \(+\infty\) pour certains couples amont/aval | Formaliser la convention de domaine et distinguer coût non défini, coût étendu \(+\infty\), et trajet physiquement impossible |
 | Conservation de masse | **Non levé** : les sources imposent des contraintes de conservation au modèle réduit, mais les passages lus ne démontrent pas le résultat plus précis de conservation exacte du flux sur chaque surface iso-\(\tau\) | Reconstituer le jacobien, les hypothèses sur \(\nabla\cdot\mathbf u\), les frontières et le lien avec le scalaire \(c\) dans la thèse/chapitre |
 | Originalité | **Non levé** : un article de 2006 décrit déjà la pseudo-distance et son usage pour les solutions de similitude | Comparer les équations et résultats spécifiques, sans revendiquer la pseudo-distance elle-même comme nouvelle |
+| Filiation avec les métriques d'adaptation de maillage | **Non établie** : une référence sur la génération de maillages anisotropes ne prouve pas une filiation directe avec la pseudo-distance travel-time | Trouver une source historique explicite ou présenter le rapprochement uniquement comme analogie conceptuelle |
 | Date de la thèse | **Métadonnées incohérentes** : la bibliographie du dépôt indique 2006, alors que l'article de 2006 cite la thèse comme 2007 | Vérifier la page de titre ou le dépôt institutionnel de la thèse avant de normaliser la référence |
 
 ### Prochaine action à plus forte valeur
