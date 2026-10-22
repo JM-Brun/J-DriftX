@@ -38,12 +38,8 @@ with right:
 
 length = 1.0
 dx = length / n_cells
-limits = []
-if abs(velocity) > 0:
-    limits.append(0.5 * dx / abs(velocity))
-if diffusivity > 0:
-    limits.append(0.5 * dx**2 / diffusivity)
-stability_dt = min(limits) if limits else 0.1
+stability_rate = abs(velocity) / dx + 2.0 * diffusivity / dx**2
+stability_dt = 1.0 / stability_rate if stability_rate > 0 else 0.1
 fraction = st.slider("Fraction du pas conservateur", 0.05, 0.8, 0.35, 0.05)
 dt = stability_dt * fraction
 
