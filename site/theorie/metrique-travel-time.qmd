@@ -4,29 +4,56 @@ title: "Métrique travel-time"
 
 # La métrique non symétrique des temps de transport
 
-C'est la contribution centrale de Drift-X [@mohammadi2006crmeca; @brun2008] : les solutions de similitude ci-dessus supposent un vent **uniforme** (métrique cartésienne). Pour les vents non uniformes, on les généralise en changeant de coordonnée naturelle : la distance devient le **temps de transport**.
+Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les solutions de similitude qui supposent un vent **uniforme** (métrique cartésienne) sont envisagées dans une coordonnée naturelle liée au **temps de transport** pour traiter des champs non uniformes. La validité et la portée de cette généralisation doivent être établies à partir des hypothèses et dérivations des sources primaires.
+
+## Vocabulaire et hypothèses
+
+Le champ de vitesse \(\mathbf u\) donne la vitesse locale du fluide. Une ligne de courant est tangente au champ à un instant fixé; une trajectoire de particule suit \(\dot X=\mathbf u(X,t)\). Elles coïncident spatialement seulement pour un champ stationnaire (et sous les conditions de régularité appropriées). La définition historique s'appuie sur une caractéristique d'un champ considéré comme stationnaire; son extension à un champ instationnaire ne doit pas être supposée automatique.
+
+La formule ci-dessous suppose une vitesse non nulle le long de la courbe et une trajectoire suffisamment régulière pour que l'intégrale existe. Dans l'article de 2006, un critère écrit avec \\(\\mathbf u\\cdot\\nabla c\\) intervient dans la discussion des projections non uniques; cette expression est la dérivée directionnelle de la concentration dans la direction du vent. Son rôle exact ne doit pas être généralisé sans relire les hypothèses du passage. Pour reconstruire la projection historique, il faut en plus préciser : (1) le domaine et les conditions aux limites; (2) l'unicité de la caractéristique passant par A; (3) la définition exacte de la projection de B et son unicité; (4) le traitement des sources, puits, séparatrices et stagnations; (5) la convention retenue pour les points inaccessibles.
 
 ## Définition
 
-Le temps de transport de la source $\mathbf{x}_0$ au point $\mathbf{x}$ le long de la ligne de courant $\gamma$ :
+Le temps de parcours le long d'une caractéristique orientée \(\gamma\), entre deux points appartenant à cette caractéristique, s'écrit
 
-$$
-\tau(\mathbf{x}_0 \to \mathbf{x}) = \int_\gamma \frac{ds}{|\mathbf{u}(s)|}.
-$$
+$
+T_\gamma(A,B)=\int_{\gamma_{A\to B}}\frac{ds}{|\mathbf u(s)|}.
+$
 
-Les solutions de similitude, valables en métrique cartésienne $\times$ vent uniforme, sont réexprimées dans le système de coordonnées $(\tau, n)$ — temps de transport et coordonnée normale — ce qui les étend aux ciseaux de vent et à la topographie.
+**Ce n'est pas à lui seul la définition complète de la pseudo-distance historique de Drift-X.** Dans l'article de Mohammadi & Brun (2006, §3), le point cible \(B\) est projeté sur la caractéristique passant par \(A\), en \(B^\perp\), puis le coût est le temps de migration de \(A\) à \(B^\perp\). Voir la [source primaire en texte intégral](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) et la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
+
+![Projection du point cible sur la caractéristique issue du point de départ. Le coût est calculé sur le segment longitudinal; le décalage transversal n'est pas pénalisé.](../images/pseudo-distance-projection-et-triangulation.svg)
+
+Cette projection fait partie de la définition : elle signifie que le coût peut ne pas distinguer deux points séparés transversalement. L'article historique le signale explicitement en qualifiant la construction de **pseudo-distance**, qui peut ne pas séparer les points et peut violer l'inégalité triangulaire.
+
+Les solutions de similitude formulées en vent uniforme sont réexprimées dans un système lié au temps de transport et à la coordonnée normale. La portée de cette généralisation dépend des hypothèses sur le champ, les caractéristiques et la projection; elle ne découle pas de la seule formule d'intégrale.
+
+### Définition géométrique et approximation numérique
+
+Le chapitre de 2008 distingue implicitement deux objets qu'il faut garder séparés dans J-DriftX :
+
+- **Définition géométrique** : projeter \(B\) sur la caractéristique passant par \(A\), en \(B^\perp\), puis intégrer le temps jusqu'à cette projection.
+- **Approximation de calcul** : approximer \(B^\perp\approx B\), puis appliquer en champ uniforme une correction \(2/\pi\) motivée par une moyenne cosinus stochastique. Le chapitre précise que l'égalité exacte entre la caractéristique issue de \(A\) et le point \(B\) est peu probable en général, et présente la méthode pour des champs atmosphériques lisses.
+
+Ces deux étapes ne doivent pas être confondues. Le MVP doit d'abord reproduire la définition, puis mesurer séparément l'effet de l'approximation numérique et de sa correction.
+
+## Lien avec la mécanique des fluides
+
+Pour un traceur passif de concentration \(c\), l'équation conservative d'advection avec source \(s\) est \(\partial_t c+\nabla\cdot(c\mathbf u)=s\). Si \(\nabla\cdot\mathbf u=0\), elle devient \(\partial_t c+\mathbf u\cdot\nabla c=s\). Les caractéristiques suivent la vitesse du fluide et permettent de décrire le transport advectif. Cette interprétation est une passerelle physique, pas une preuve que la pseudo-distance projetée suffit à reconstruire la concentration.
+
+La divergence nulle signifie qu'il n'y a pas de dilatation volumique locale du champ; pour un fluide à densité constante, elle exprime l'incompressibilité cinématique. Elle ne prouve pas seule la conservation du flux sur une surface iso-\(\tau\). Il faut dériver le changement de coordonnées et son jacobien, préciser les conditions aux limites et tenir compte des sources/puits. La diffusion, la turbulence et le dépôt ne sont pas inclus dans la simple intégrale \(\int ds/\|\mathbf u\|\).
 
 ## Trois propriétés structurantes
 
-**Non symétrie.** $\tau(\mathbf{a} \to \mathbf{b}) \neq \tau(\mathbf{b} \to \mathbf{a})$ dès que le champ n'est pas uniforme : la métrique encode la direction du vent. C'est ce qui la rend *informative* là où la distance euclidienne est muette.
+**Non-symétrie : condition à préciser.** La non-uniformité du champ ne suffit pas, à elle seule, à rendre asymétrique l'intégrale $\int ds/|\mathbf u|$ si l'on parcourt la même courbe dans les deux sens. Dans l'advection pure, l'asymétrie peut venir de la dynamique orientée : la trajectoire inverse n'est généralement pas admissible pour le même champ. Il faut alors préciser si le temps inverse est non défini, infini par convention, ou calculé avec une autre dynamique. Voir la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
 
-**Divergence temporelle.** $\tau \to \infty$ quand $|\mathbf{u}| \to 0$ : la métrique signale les zones de stagnation — précieusement discriminante pour le risque.
+**Stagnation : singularité à analyser.** L'intégrande $1/|\mathbf u|$ devient singulier quand $|\mathbf u|\to0$, mais la divergence de l'intégrale dépend du comportement local du champ et de la trajectoire. Le domaine admissible et le traitement des points stagnants doivent être spécifiés; la divergence n'est pas une conséquence automatique de la seule limite ponctuelle.
 
-**Conservation.** Le changement de variables $(x, y, z) \to (\tau, n_1, n_2)$ transporte la conservation de la masse : le flux intégré sur une surface iso-$\tau$ restitue $Q$ *exactement*, à condition que le champ de vent généré soit à **divergence nulle** — la contrainte clé de la construction [@brun2008].
+**Conservation : résultat historique à vérifier.** Les documents historiques associent le changement de variables $(x, y, z) \to (\tau, n_1, n_2)$ à une conservation du flux intégré sur les surfaces iso-$\tau$, sous une condition de divergence nulle [@brun2008]. La présente reprise n'a pas encore reproduit la dérivation complète; le résultat doit être vérifié avec ses hypothèses, le jacobien et les conditions aux limites avant d'être traité comme un théorème établi dans J-DriftX.
 
 ![Quasi-distance de Drift-X : τ(source→A) fini sur la ligne de courant ; τ(A→source) = ∞ — on ne remonte pas le vent.](../images/metrique-non-symetrique.svg)
 
-Cette non-symétrie inscrit τ dans la famille des **métriques non riemanniennes** — la généalogie complète (distances-temps de la géographie humaine, métriques de Finsler, navigation de Zermelo) est détaillée sur la page [Métriques non riemanniennes](metriques-non-riemanniennes.qmd).
+Selon le domaine et les axiomes démontrés, $\tau$ peut relever d'une fonction de coût orientée ou d'une quasi-distance étendue; le terme « métrique » ne doit pas être utilisé sans qualification avant vérification de la séparation, de l'inégalité triangulaire et du traitement des points inaccessibles. La généalogie des objets voisins est détaillée sur la page [Métriques non riemanniennes](metriques-non-riemanniennes.qmd) et dans la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
 
 ## Généalogie : adaptation de maillage par métrique
 

@@ -1,7 +1,7 @@
 [project]
 name = "jdriftx"
 version = "0.1.0"
-description = "Dispersion atmospherique a complexite reduite : solutions de similitude generalisees dans une metrique non symetrique de temps de transport (reprise open-source de Drift-X)"
+description = "Reprise de recherche sur les modèles de dispersion à complexité réduite et les formulations historiques de temps de transport de Drift-X"
 readme = "README.md"
 authors = [{ name = "Jean-Marc Brun" }]
 requires-python = ">=3.12"

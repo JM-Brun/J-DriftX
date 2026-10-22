@@ -1,13 +1,13 @@
-"""J-DriftX : dispersion atmospherique a complexite reduite.
+"""J-DriftX : reprise de recherche sur la dispersion atmosphérique à complexité réduite.
 
-Reprise open-source du projet Drift-X (J.-M. Brun et B. Mohammadi,
-2006-2009) : solutions de similitude generalisees dans une metrique non
-symetrique basee sur les temps de transport, sans resolution d'EDP ni
-maillage, calibrees par assimilation de donnees partielles.
+Le projet étudie les formulations historiques de Drift-X (J.-M. Brun et
+B. Mohammadi, 2006-2009). La primitive actuelle de temps de parcours calcule
+un coût sur une polyligne fournie; elle ne reproduit pas encore la
+pseudo-distance historique ni un modèle de dispersion validé.
 """
 
 from jdriftx.constraints import linearite, positivite
-from jdriftx.metric import temps_transport
+from jdriftx.metric import pseudo_distance_uniforme, temps_transport
 from jdriftx.similitude import concentration_panache, concentration_puff, sigma_y, sigma_z
 
 __version__ = "0.1.0"
@@ -18,6 +18,7 @@ __all__ = [
     "concentration_puff",
     "linearite",
     "positivite",
+    "pseudo_distance_uniforme",
     "sigma_y",
     "sigma_z",
     "temps_transport",

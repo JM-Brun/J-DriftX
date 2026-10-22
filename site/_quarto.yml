@@ -79,6 +79,8 @@ website:
             text: "Panorama 2026"
           - href: etat-art/positionnement.qmd
             text: "Positionnement de J-DriftX"
+          - href: etat-art/revue-mathematique.qmd
+            text: "Revue mathématique ciblée"
       - href: references.qmd
         text: "Références"
 
