@@ -86,7 +86,7 @@ Ce contre-exemple confirme que la construction est une pseudo-distance direction
 - Conserver le terme historique **pseudo-distance de transport** lorsque l'on parle de la construction de 2006.
 - Ne pas la confondre avec le simple temps d'arrivée à \(B\), ni avec une distance de navigation obtenue par minimisation.
 - Distinguer le temps le long de la caractéristique, la projection \(B^\perp\), le coût étendu en cas d'inaccessibilité et le modèle de concentration construit ensuite.
-- Le premier test 1D/2D doit reproduire cette définition historique avant de tester une variante plus intuitive. Sinon, il teste un nouveau modèle et non la formulation publiée.
+- Le test de référence uniforme est maintenant implémenté séparément. Toute variante plus intuitive doit conserver un nom et des tests distincts; elle ne constitue pas une reproduction de la formulation publiée.
 
 ## 3. Ce que les définitions actuelles permettent — et ne permettent pas — d'affirmer
 
@@ -163,7 +163,7 @@ La PR corrige les docstrings et les noms de tests pour que les tests décrivent 
 | Définition historique | **Partiellement levé** : la projection \(B\mapsto B^\perp\) et le statut de pseudo-distance sont explicités au §3 | Lire la thèse et le chapitre de 2008 pour vérifier la cohérence des variantes et les extensions proposées |
 | Domaine de validité | **Partiellement levé** : l'article suppose une caractéristique unique et écarte sources/puits | Définir précisément le traitement des séparatrices, stagnations, caractéristiques multiples et limites du domaine |
 | Séparation des points | **Levé pour la construction publiée** : la source reconnaît que \(d(A,B)=0\) n'implique pas \(A=B\) | Ajouter un test analytique de reproduction; ne pas présenter cette propriété comme un défaut nouvellement découvert |
-| Inégalité triangulaire | **Levé pour un cas analytique** : le champ divergence nulle \\(\mathbf u=(1+9y,0)\\) et trois points donnent \\(d(A,C)=2>d(A,B)+d(B,C)=1.1\\) | Traduire ce cas en test de référence quand l'API de champ variable sera spécifiée |
+| Inégalité triangulaire | **Levé pour un cas analytique** : le champ divergence nulle \(\mathbf u=(1+9y,0)\) et trois points donnent \(d(A,C=2>d(A,B)+d(B,C)=1.1)\) | Traduire ce cas en test de référence quand l'API de champ variable sera spécifiée |
 | Non-symétrie | **Partiellement levé** : la définition est orientée et fixe \(+\infty\) pour certains couples amont/aval | Formaliser la convention de domaine et distinguer coût non défini, coût étendu \(+\infty\), et trajet physiquement impossible |
 | Conservation de masse | **Non levé** : les sources imposent des contraintes de conservation au modèle réduit, mais les passages lus ne démontrent pas le résultat plus précis de conservation exacte du flux sur chaque surface iso-\(\tau\) | Reconstituer le jacobien, les hypothèses sur \(\nabla\cdot\mathbf u\), les frontières et le lien avec le scalaire \(c\) dans la thèse/chapitre |
 | Originalité | **Non levé** : un article de 2006 décrit déjà la pseudo-distance et son usage pour les solutions de similitude | Comparer les équations et résultats spécifiques, sans revendiquer la pseudo-distance elle-même comme nouvelle |
