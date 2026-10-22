@@ -31,4 +31,4 @@ J-DriftX explore une piste spécifique : utiliser des solutions de similitude et
 - Validation indépendante avant toute généralisation à la topographie réelle ou à l'usage réglementaire.
 - Mise à jour du positionnement à partir de la revue systématique et des résultats expérimentaux, y compris négatifs.
 
-Voir la [feuille de route](../projet/roadmap.qmd), le [protocole de validation scientifique](../projet/validation-scientifique.qmd) et le [plan d'intégration des résultats de la revue](../../docs/07-plan-integration-revue-systematique.md).
+Voir la [feuille de route](../projet/roadmap.qmd), le [protocole de validation scientifique](../projet/validation-scientifique.qmd) et le [plan d'intégration des résultats de la revue](https://github.com/JM-Brun/J-DriftX/blob/docs/integrer-revue-systematique-projet/docs/07-plan-integration-revue-systematique.md).
