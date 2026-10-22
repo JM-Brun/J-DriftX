@@ -33,10 +33,14 @@ with trajectory_tab:
         st.latex(r"\frac{dx}{dt}=-y,\qquad \frac{dy}{dt}=x")
         st.markdown(
             "Le champ de rotation est stationnaire. Pour la condition initiale "
-            "$(x(0),y(0))=(1,0)$, la solution exacte est $(\cos t,\sin t)$."
+            r"$(x(0),y(0))=(1,0)$, la solution exacte est $(\cos t,\sin t)$."
         )
-    def velocity(_t: float, x: float, y: float) -> tuple[float, float]:
+
+    def _rotational_velocity(
+        _t: float, x: float, y: float
+    ) -> tuple[float, float]:
         return (-y, x)
+
     times = np.linspace(0.0, end_time, 600)
     figure = go.Figure()
     exact_x, exact_y = np.cos(times), np.sin(times)
@@ -44,12 +48,14 @@ with trajectory_tab:
     errors = {}
     for method in ("euler", "rk4"):
         _times, x_num, y_num = integrate_trajectory(
-            velocity, 1.0, 0.0, 0.0, end_time, dt, method
+            _rotational_velocity, 1.0, 0.0, 0.0, end_time, dt, method
         )
         figure.add_trace(
             go.Scatter(x=x_num, y=y_num, mode="lines+markers", name=method.upper())
         )
-        errors[method] = float(\n            np.hypot(x_num[-1] - np.cos(end_time), y_num[-1] - np.sin(end_time))\n        )
+        errors[method] = float(
+            np.hypot(x_num[-1] - np.cos(end_time), y_num[-1] - np.sin(end_time))
+        )
     figure.update_layout(
         title="Trajectoire dans le plan de phase",
         xaxis_title="x (unité arbitraire)",
@@ -63,13 +69,16 @@ with trajectory_tab:
     m2.metric("Erreur finale RK4", f"{errors['rk4']:.3e}")
     st.caption(
         "L'erreur dépend du pas et de la durée. Une méthode d'ordre supérieur n'est pas "
-        "automatiquement meilleure pour tout problème : stabilité, régularité et coût "\n        "comptent aussi."
+        "automatiquement meilleure pour tout problème : stabilité, régularité et coût "
+        "comptent aussi."
     )
 
 with transport_tab:
     st.subheader("Solution gaussienne de l'équation advection-diffusion")
-    st.latex(r"\frac{\partial c}{\partial t}+u\frac{\partial c}{\partial x}"
-             r"=K\frac{\partial^2 c}{\partial x^2}")
+    st.latex(
+        r"\frac{\partial c}{\partial t}+u\frac{\partial c}{\partial x}"
+        r"=K\frac{\partial^2 c}{\partial x^2}"
+    )
     left, right = st.columns(2)
     with left:
         mass = st.slider("Masse intégrée M", 0.1, 5.0, 1.0, 0.1)
@@ -113,16 +122,18 @@ with validation_tab:
         """
         **Tests automatisés du noyau**
         - Champ de vitesse constant : la trajectoire est intégrée exactement, à l'arrondi près.
-        - Champ rotationnel : comparaison de l'erreur d'Euler et de RK4 à la solution\n          analytique.
-        - Advection-diffusion : cas sans diffusion, conservation de la masse sur un domaine assez large,
-          et croissance de variance conforme à la formule théorique.
-        - Paramètres invalides : valeurs non finies, pas nul/négatif et diffusivité négative rejetés.
+        - Champ rotationnel : comparaison de l'erreur d'Euler et de RK4 à la solution
+          analytique.
+        - Advection-diffusion : cas sans diffusion, conservation de la masse sur un domaine
+          assez large, et croissance de variance conforme à la formule théorique.
+        - Paramètres invalides : valeurs non finies, pas nul/négatif et diffusivité négative
+          rejetés.
 
         **Limites importantes**
         - Les coordonnées et paramètres sont illustratifs ; aucune unité physique n'est imposée.
         - Le champ rotationnel est un problème ODE de vérification, pas un champ de vent.
-        - La solution advection-diffusion suppose un domaine infini, une vitesse et une diffusivité
-          constantes, sans réaction, dépôt, source continue ni conditions aux limites.
+        - La solution advection-diffusion suppose un domaine infini, une vitesse et une
+          diffusivité constantes, sans réaction, dépôt, source continue ni conditions aux limites.
         - L'intégration numérique d'une trajectoire ne valide pas la fidélité du modèle physique.
         - Aucun couplage avec le relief, la turbulence ou la dynamique des particules n'est implémenté.
         """
