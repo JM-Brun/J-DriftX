@@ -135,6 +135,33 @@ Une métrique usuelle est finie et satisfait notamment séparation, symétrie et
 
 La conservation de masse ne découle pas de la seule définition de \(\tau\). Elle dépend de l'équation de transport, de la divergence du champ, des sources/puits, des conditions aux limites et du jacobien de la transformation de coordonnées. La revendication historique selon laquelle un flux intégré sur une surface iso-\(\tau\) restitue exactement \(Q\) doit être reliée à une dérivation complète et à ses hypothèses, et non considérée comme démontrée par la définition de temps de parcours.
 
+### 3.4.1 Résultat conditionnel démontrable par le théorème de la divergence
+
+On peut établir une conservation de flux entre deux sections transverses d'un même tube de courant sans supposer d'emblée une formule particulière pour le jacobien. Soit (V) le volume borné par deux sections (S_1) et (S_2), et par une surface latérale (Sigma) formée de lignes de courant. Si le champ (mathbf u) est suffisamment régulier dans (V), si (
+ablacdotmathbf u=0), et si aucune singularité ou ouverture supplémentaire n'intersecte la frontière, le théorème de la divergence donne
+
+[
+0=int_V 
+ablacdotmathbf u,dV
+ =int_{partial V}mathbf ucdotmathbf n,dS
+ =int_{S_2}mathbf ucdotmathbf n,dS
+  -int_{S_1}mathbf ucdotmathbf n,dS.
+]
+
+Le terme latéral disparaît parce que (mathbf u) y est tangent; les signes opposés viennent des normales sortantes aux deux sections. Le débit volumique signé est donc identique aux deux sections. Cela vaut pour des sections iso-(\tau) **si** elles sont bien définies, transverses au champ et découpent le même tube de courant.
+
+Ce résultat ne prouve pas automatiquement que l'intégrale du flux de polluant vaut le débit source (Q). Pour un scalaire (c), il faut considérer le flux advectif (mathbf J=cmathbf u) et l'équation de bilan correspondante. En régime stationnaire, si (
+ablacdot(cmathbf u)=s), alors
+
+[
+int_{partial V}cmathbf ucdotmathbf n,dS=int_V s,dV.
+]
+
+La différence de flux entre sections dépend donc de la source (s) contenue dans le volume; elle est nulle dans un volume sans source, et égale à l'émission intégrée uniquement si le volume et les conventions de signe englobent exactement cette émission, sans pertes ni flux non comptabilisés. Si l'équation comprend diffusion, réaction, dépôt ou d'autres termes, leurs flux/contributions doivent être ajoutés au bilan.
+
+**Limites de cette dérivation :** elle établit un résultat conditionnel pour un tube de courant régulier, pas une preuve universelle de la revendication historique. Elle ne règle ni les caractéristiques multiples, ni les stagnations, ni les surfaces iso-(\tau) non globalement définies, ni les conditions aux limites du problème réel. Pour valider la formulation publiée, il reste à identifier dans la source le sens précis de (Q), le scalaire transporté, le domaine d'intégration et les hypothèses utilisées. Un jacobien explicite est nécessaire si l'on veut ensuite dériver la formule dans des coordonnées ((\tau,\eta)), mais il ne doit pas être inventé avant que cette transformation soit définie.
+
+
 ## 4. Comparaison ciblée avec les antécédents
 
 | Référence | Objet et proximité avec J-DriftX | Différence à établir avant toute revendication |
