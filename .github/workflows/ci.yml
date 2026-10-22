@@ -20,6 +20,14 @@ jobs:
       - name: Installer l'environnement
         run: uv sync
 
+      - name: Installer Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: 1.6.43
+
+      - name: Rendu du site Quarto
+        run: quarto render site
+
       - name: Lint (ruff)
         run: uv run ruff check . --output-format=github
 
