@@ -1,0 +1,73 @@
+---
+title: "EDP & maillage"
+---
+
+# La modélisation complète : EDP, turbulence et maillage
+
+La page [Modèle direct](modele-direct.qmd) pose l'équation que J-DriftX approche sans la résoudre. La présente page décrit ce que serait sa **résolution complète** : l'équation aux dérivées partielles (EDP), la fermeture de la turbulence, la génération du maillage, les schémas numériques — et le coût qui en découle. C'est la référence de complexité par rapport à laquelle se lisent la [réduction a priori](reduction-a-priori.qmd) et la [comparaison des complexités](comparaison-complexites.qmd).
+
+## Le problème complet
+
+La concentration $C(\mathbf x, t)$ d'un scalaire passif obéit à l'équation d'advection–diffusion :
+
+$$
+\frac{\partial C}{\partial t} + \mathbf u \cdot \nabla C = \nabla\cdot(\mathbf K\,\nabla C) + S,
+$$
+
+La résoudre « pour de vrai », c'est spécifier **tout** :
+
+- **le champ de vent** $\mathbf u$ en tout point — issu d'une climatologie interpolée, d'un modèle météorologique, ou calculé en résolvant les équations de l'écoulement avec le terrain, les obstacles et le forçage thermique ;
+- **les conditions aux limites** : profil de vent et concentrations entrantes sur les faces amont, sorties ouvertes à l'aval, condition au sol (déposition ou réflexion), condition au sommet du domaine ;
+- **la condition initiale** et la chronologie de l'émission $S(\mathbf x, t)$ — en amont, le champ proche (buse, rangées de culture) fournit ces conditions d'entrée ;
+- **le tenseur de diffusion turbulente** $\mathbf K$ (voir ci-dessous).
+
+Chaque grandeur non spécifiée est une hypothèse implicite. Une modélisation complète la remplace par un calcul.
+
+## Fermer la turbulence
+
+Le vent atmosphérique est turbulent : $\mathbf u = \overline{\mathbf u} + \mathbf u'$. Après moyennage de Reynolds, l'équation s'écrit sur la concentration moyenne, et le flux turbulent $\overline{\mathbf u' C'}$ doit être **fermé** :
+
+- **fermeture gradient (K-théorie)** : le flux turbulent est supposé proportionnel au gradient moyen — c'est elle qui produit les coefficients $\sigma_y, \sigma_z$ des [solutions de similitude](similitude.qmd) ;
+- **RANS** : les équations de Reynolds moyennées sont résolues avec un modèle de turbulence (l'équivalent pour le champ de vent) ;
+- **LES** : les grandes structures turbulentes sont résolues explicitement, seules les petites échelles sont modélisées — au prix d'un maillage très fin et de petits pas de temps.
+
+Plus la fermeture est fine, plus le maillage et le coût explosent.
+
+## Le maillage
+
+Une EDP ne se résout pas en continu : on discrétise le domaine en **cellules** — c'est le maillage. Deux grandes familles :
+
+- **maillages structurés** (grilles cartésiennes) : simples et réguliers, difficiles à coller à un relief ou à des obstacles ;
+- **maillages non structurés** (tétraèdres) : épousent la géométrie ; leur génération est gouvernée par une **spécification métrique** qui prescrit la taille et l'orientation idéales des éléments — la génération de Delaunay gouvernée par métrique [@borouchaki1997delaunay].
+
+C'est précisément de cette technologie que descend la métrique travel-time : Drift-X transfère le contrôle métrique du maillage à la **géométrie du panache** (voir la généalogie sur la page [Métrique travel-time](metrique-travel-time.qmd)).
+
+Le nombre de cellules est dicté par les échelles à résoudre : le décimètre près de la buse, le kilomètre sur le bassin. Couvrir la parcelle **et** le bassin en une seule modélisation exige soit un raffinement massif, soit un découpage en domaines emboîtés — l'analogue exact des [multi-niveaux](reduction-a-priori.qmd) de J-DriftX, transposé côté résolution complète.
+
+## Schémas numériques et conditions de robustesse
+
+- **Discrétisation en espace** : volumes finis (conservatifs par construction), éléments finis, différences finies.
+- **Discrétisation en temps** : le pas de temps est limité par la condition **CFL** (l'information ne doit pas franchir plus d'une cellule par pas). Raffiner le maillage d'un facteur 2 par dimension multiplie les cellules par 8 et, via la CFL, réduit le pas de temps d'un facteur 2 : le coût croît d'environ un facteur 16.
+- **Positivité et conservation** : un schéma naïf peut produire des concentrations négatives ou des oscillations numériques ; il faut des schémas upwind, des limiteurs de pente.
+- **Diffusion numérique** : le schéma lui-même disperse artificiellement le panache ; l'erreur se maîtrise par des études de convergence en maillage.
+
+Ces exigences sont exactement celles que la page [Contraintes physiques](contraintes-physiques.qmd) impose au modèle réduit — conservation, positivité. La différence : dans la modélisation complète, elles sont obtenues par le schéma numérique **au prix du calcul** ; dans J-DriftX, elles sont garanties **par construction analytique**.
+
+## Le coût
+
+Le coût d'une simulation se chiffre en (nombre de cellules) × (nombre de pas de temps) — et chaque terme est dicté par les échelles physiques à résoudre. Conséquences structurelles :
+
+- chaque scénario (météo, émission, terrain) exige une **simulation complète** : changer un paramètre, c'est tout recalculer ;
+- le **champ entier** est calculé même si un seul point est demandé ;
+- le **Monte Carlo massif**, l'analyse de sensibilité par perturbations et l'assimilation itérative deviennent hors de portée pour les usages visés (SIG, temps réel) — c'est l'argument fondateur de la page [Modèle direct](modele-direct.qmd) ;
+- le **problème inverse** (identification de source) exige en outre le modèle **adjoint** du solveur — historiquement obtenu par différentiation automatique (Tapenade), au prix d'un développement considérable.
+
+## Ce que la modélisation complète apporte en retour
+
+L'honnêteté impose de le dire : la modélisation complète est la **référence**. Elle résout des régimes que la réduction a priori n'aborde pas — recirculations derrière les obstacles, canyons urbains, stabilité changeante — et fournit les *snapshots* dont les ROM *a posteriori* sont extraites. Elle est donc à la fois (i) le coût que J-DriftX cherche à éviter pour ses usages, et (ii) la **baseline de validation** avec laquelle il devra être comparé ([validation scientifique](../projet/validation-scientifique.qmd)).
+
+## Pour aller plus loin
+
+- [Comparaison des complexités](comparaison-complexites.qmd) : les familles d'approches côte à côte.
+- [Réduction a priori](reduction-a-priori.qmd) : la réponse de Drift-X à ce coût.
+- [Hypothèses et limites](../hypotheses/limites.qmd) : où la réduction s'arrête.
