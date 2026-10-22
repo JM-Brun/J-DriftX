@@ -9,6 +9,7 @@ from jdriftx.trajectories import integrate_trajectory
 def test_constant_velocity_is_integrated_exactly_by_both_methods() -> None:
     def velocity(_t: float, _x: float, _y: float) -> tuple[float, float]:
         return (2.0, -1.0)
+
     for method in ("euler", "rk4"):
         times, x, y = integrate_trajectory(velocity, 1.0, 3.0, 0.0, 1.0, 0.3, method)
         assert times[-1] == pytest.approx(1.0)
@@ -19,6 +20,7 @@ def test_constant_velocity_is_integrated_exactly_by_both_methods() -> None:
 def test_rk4_is_more_accurate_than_euler_for_rotational_field() -> None:
     def velocity(_t: float, x: float, y: float) -> tuple[float, float]:
         return (-y, x)
+
     _, x_euler, y_euler = integrate_trajectory(velocity, 1.0, 0.0, 0.0, 2.0, 0.1, "euler")
     _, x_rk4, y_rk4 = integrate_trajectory(velocity, 1.0, 0.0, 0.0, 2.0, 0.1, "rk4")
     exact_x, exact_y = np.cos(2.0), np.sin(2.0)
