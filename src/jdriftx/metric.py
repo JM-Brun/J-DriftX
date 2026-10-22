@@ -1,15 +1,18 @@
-"""Metrique non symetrique basee sur les temps de transport.
+"""Temps de parcours sur une polyligne : approximation géométrique provisoire.
 
-La coordonnee naturelle du modele J-DriftX n'est pas la distance euclidienne
-mais le temps de transport : l'integrale de ds / |u(s)| le long de la ligne
-de courant entre la source et le point considere. Cette metrique est non
-symetrique : aller de A vers B avec le vent ne coute pas le meme temps que
-venir de B vers A des que le champ de vent n'est pas uniforme. Les solutions
-de similitude classiques, connues en metrique cartesienne, y sont ensuite
-generalisees (Mohammadi & Brun, C. R. Mecanique 334, 2006).
+La fonction \`temps_transport\` calcule la somme longueur / norme de vitesse sur
+une polyligne fournie par l'appelant. Elle ne calcule pas la caractéristique
+d'un champ de vitesse, ne projette pas le point cible sur une caractéristique
+et ne reproduit donc pas la pseudo-distance historique de Mohammadi & Brun
+(2006).
 
-Ce module fournit l'evaluation de la metrique ; la transformation complete
-des solutions de similitude dans cette metrique est livree au jalon M1.
+Comme le calcul utilise uniquement la norme de chaque vecteur vitesse, il ne
+représente pas la direction du vent : inverser le signe des vecteurs vitesse
+ne change pas le résultat. Le module ne doit donc pas être décrit comme une
+métrique non symétrique ni comme une implémentation validée de Drift-X.
+
+Cette fonction est conservée comme primitive géométrique simple; sa relation
+avec la définition historique devra être décidée séparément avant le jalon M1.
 """
 
 from __future__ import annotations
@@ -25,19 +28,20 @@ def temps_transport(
     vent: ArrayLike,
     umin: float = UMIN_PAR_DEFAUT,
 ) -> float:
-    """Temps de transport (s) le long d'une polyligne dans un champ de vent.
+    """Calcule un coût de parcours de polyligne en secondes.
 
     Args:
-        ligne: points (N, 2) de la polyligne, depuis la source.
-        vent: vitesse moyenne du vent (N-1, 2) sur chaque segment (m s^-1).
-        umin: vitesse minimale admissible avant declenchement d'une erreur
-            (conditions de vent faible : la metrique diverge).
+        ligne: points (N, 2) de la polyligne, dans l'ordre de parcours.
+        vent: vecteur vitesse moyen (N-1, 2) associé à chaque segment (m s^-1).
+        umin: norme minimale admissible pour chaque vecteur vitesse (m s^-1).
 
     Returns:
-        tau = somme_i |L_i| / |u_i|, ou L_i est le i-eme segment.
+        Somme des longueurs de segments divisées par les normes de vitesse.
+        Le calcul ne tient pas compte de l'orientation des vecteurs vitesse.
 
     Raises:
-        ValueError: formes incoherentes, ligne trop courte ou vent sous umin.
+        ValueError: si les formes sont incohérentes ou si une vitesse est sous
+            le seuil umin.
     """
     pts = np.asarray(ligne, dtype=float)
     u_seg = np.asarray(vent, dtype=float)
