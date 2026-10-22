@@ -53,17 +53,17 @@ Les observations partielles assimilées échantillonnent correctement le domaine
 
 ::: {.callout-note}
 ### H8 — Superposition des sources
-Les émissions se composent linéairement (dérivée de H1) — garantie par construction et testée en continu (contrainte 3).
+Les émissions se composent linéairement (dérivée de H1) — conséquence de la construction analytique, vérifiée en CI par un test ciblé (un point d'évaluation, précision machine) : pas une preuve générale (contrainte 3).
 :::
 
 ## Traçabilité
 
 | Hypothèse | Intervient dans | Test / contrôle |
 |---|---|---|
-| H1 | [Modèle direct](../theorie/modele-direct.qmd), contraintes | linéarité (pytest) |
+| H1 | [Modèle direct](../theorie/modele-direct.qmd), contraintes | linéarité (test ciblé : un point, précision machine) |
 | H2 | [Similitude](../theorie/similitude.qmd) | benchmarks gaussiens |
-| H3, H4 | [Métrique](../theorie/metrique-travel-time.qmd) | divergence nulle, garde umin |
+| H3, H4 | [Métrique](../theorie/metrique-travel-time.qmd) | garde umin (implémentée) ; divergence nulle : hypothèse historique, non testée |
 | H5 | Métrique, multi-niveaux | plan M2 |
 | H6 | [Réduction a priori](../theorie/reduction-a-priori.qmd) | estimateur d'erreur (M2) |
 | H7 | [Assimilation](../theorie/assimilation-identification.qmd) | calibration bayésienne (M3) |
-| H8 | [Contraintes](../theorie/contraintes-physiques.qmd) | superposition (pytest) |
+| H8 | [Contraintes](../theorie/contraintes-physiques.qmd) | superposition (test ciblé : un point) |

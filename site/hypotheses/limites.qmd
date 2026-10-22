@@ -31,6 +31,6 @@ Une modélisation à complexité réduite honnête publie ses limites au même n
 ## Stratégie générale de maîtrise du risque
 
 1. **Domaine de validité explicite** : chaque modèle réduit déclare son domaine (H6) ; hors domaine, alerte — pas de prédiction silencieuse.
-2. **Contraintes physiques systématiques** : conservation, positivité, superposition testées en CI.
+2. **Contraintes physiques systématiques** : conservation (cas gaussien, grille finie), positivité et superposition (un point) testées en CI — tests ciblés, pas une preuve générale ; l'état de chaque preuve (formulée, testée, démontrée) est suivi sur la page [Contraintes physiques](../theorie/contraintes-physiques.qmd).
 3. **Benchmarks publics** : comparaison permanente au gaussien de référence, aux cas académiques et aux campagnes publiées.
 4. **Estimateur d'erreur inter-niveaux** : jalon M2 — la pièce méthodologique manquante de l'héritage.
