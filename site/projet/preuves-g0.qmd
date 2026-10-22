@@ -1,0 +1,34 @@
+---
+title: "G0 — preuves externes et décision"
+---
+
+# G0 — Ce que les preuves externes permettent de conclure
+
+> **Conclusion provisoire : G0 n'est pas franchi.** Les sources attestent de décisions concrètes liées à la dérive de pulvérisation, mais elles ne démontrent pas que J-DriftX constitue une réponse adaptée.
+
+## Ce que l'on sait
+
+- L'EPA documente des incertitudes de l'extension gaussienne d'AGDISP au-delà de 0,5 mile et une validation limitée au-delà de 2 miles dans le cadre précis de son guide 2010. Ce guide limite l'usage concerné à certains scénarios de pulvérisation aérienne ([EPA](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension)).
+- Les modèles AgDRIFT et AGDISP restent des références utilisées pour évaluer les dépôts hors site ([EPA — modèles d'évaluation des risques](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/models-pesticide-risk-assessment)).
+- En France, les ZNT et les conditions de réduction de certaines distances sont encadrées ; les dossiers de matériels de réduction de dérive s'appuient sur des résultats d'essais ou des justifications d'analogie ([Ministère de l'Agriculture](https://agriculture.gouv.fr/materiels-permettant-la-limitation-de-la-derive-de-pulverisation-des-produits-phytopharmaceutiques)).
+- Un jeu de données français public, CAPRIV, comprend 3 792 collecteurs pour les cultures de plein champ, ainsi que des données de viticulture et d'arboriculture ([dépôt Recherche Data Gouv](https://doi.org/10.57745/Z8OJ3A), [article descriptif](https://doi.org/10.1016/j.dib.2024.110366)).
+
+## Ce que l'on ne sait pas
+
+CAPRIV décrit des essais de proximité : les collecteurs de dépôt sont positionnés à environ 1–25 m selon le scénario, tandis que les collecteurs de dérive aérienne décrits pour les cultures de plein champ sont à 5 m. Ce jeu ne valide donc pas le far-field à plusieurs kilomètres. En outre, la mesure du dépôt de gouttelettes ne peut être assimilée sans justification à la concentration d'un scalaire passif.
+
+Le nombre de collecteurs n'est pas le nombre d'essais indépendants. Les mesures partagent des conditions par essai ; une partition aléatoire au niveau des collecteurs risquerait une fuite de données.
+
+Enfin, une estimation plus précise n'est pas automatiquement plus utile : il faut spécifier quelle décision serait modifiée, pour quel utilisateur et selon quel coût d'erreur.
+
+## Décision actuelle
+
+**Ne pas lancer de benchmark far-field à partir de CAPRIV.** Avant tout benchmark, il faut :
+
+1. identifier l'utilisateur, la décision et l'observable primaire ;
+2. définir le régime physique : gouttelettes, phase vapeur ou scalaire passif ;
+3. sélectionner une baseline réellement applicable au même régime ;
+4. trouver des données indépendantes qui couvrent ce régime ;
+5. fixer les métriques, le seuil de succès et les conditions d'arrêt avant de comparer les résultats.
+
+L'audit complet, la matrice de preuve et les références sont dans [docs/11-g0-evidence-externe.md](../../docs/11-g0-evidence-externe.md). Voir aussi la [revue adversariale](revue-adversariale-g0.qmd), le [cadre d'utilité scientifique](utilite-scientifique.qmd) et la [feuille de route](roadmap.qmd).
