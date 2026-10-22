@@ -26,14 +26,14 @@ Ces méthodes peuvent être **concurrentes sur la vitesse d'évaluation** et **c
 - **Conséquence :** comparer sur le même cas de dispersion, et ne pas assimiler la présence d'un prior physique à une preuve de conservation ou de robustesse.
 - [Article](https://www.sciencedirect.com/science/article/abs/pii/S0045782523005406)
 
-### ROM avec assimilation de données (2023)
+### ROM avec assimilation de données (2023, *Computers & Fluids*)
 
 - **Relation :** méthode complémentaire ou concurrente selon que la question principale est la prédiction directe ou l'estimation d'état.
 - **Intuition commune :** réduire les coûts tout en exploitant des observations.
 - **Conséquence :** comparer la manière dont les observations entrent dans le modèle et évaluer l'identifiabilité.
-- [Article](https://www.sciencedirect.com/science/article/abs/pii/S0045793023000877)
+- [Article, *Computers & Fluids* 257, 105862](https://doi.org/10.1016/j.compfluid.2023.105862)
 
-### POD + RBF pour un environnement urbain (2021)
+### POD + RBF pour un environnement urbain (2021, *Journal of Safety Science and Resilience*)
 
 - **Relation :** baseline de surrogate spatial à comparer pour les cas compatibles.
 - **Limite :** le cadre urbain et les données d'entraînement peuvent être éloignés de la dérive de pulvérisation.
@@ -52,12 +52,12 @@ Ces méthodes peuvent être **concurrentes sur la vitesse d'évaluation** et **c
 - **Différence :** architecture apprise sur des données, contre l'hypothèse d'une solution de similitude explicite.
 - [Document](https://cea.hal.science/cea-04810109/document)
 
-### Surrogate ML pour les émissions industrielles (2025) et accidents de type Seveso (2022)
+### Surrogate ML pour les émissions industrielles (2025) et accidents de type Seveso (numéro 2023, publication en ligne 2022)
 
 - **Relation :** analogues applicatifs de dispersion rapide, mais avec sources et régimes différents.
 - **Conséquence :** utiles pour définir métriques de précision, protocoles de validation et exigences de décision en situation d'urgence ; ne pas les considérer comme validation directe de J-DriftX.
 - [Émissions industrielles (2025)](https://link.springer.com/chapter/10.1007/978-3-032-02728-3_53)
-- [Accidents Seveso (2022)](https://link.springer.com/article/10.1007/s00477-022-02288-x)
+- [Accidents Seveso (numéro 2023 ; en ligne en 2022)](https://link.springer.com/article/10.1007/s00477-022-02288-x)
 
 ## Protocole minimal de comparaison
 
