@@ -47,6 +47,8 @@ website:
             text: "MVP scientifique minimal"
           - href: projet/modele-jouet.qmd
             text: "Fallback théorique"
+          - href: projet/laboratoire-interactif.qmd
+            text: "Laboratoire interactif"
           - href: projet/validation-scientifique.qmd
             text: "Validation scientifique"
           - href: projet/qualite.qmd
