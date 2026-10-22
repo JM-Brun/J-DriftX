@@ -38,7 +38,7 @@ Le chapitre de [Brun & Mohammadi (2008, §2.2, pp. 248–250)](https://doi.org/1
 
 Il faut donc distinguer la **définition géométrique** de la **procédure numérique approchée**. Les contraintes de conservation énoncées pour le modèle réduit ne constituent pas, à elles seules, une preuve que le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\).
 
-![Schéma de la projection historique et du contre-exemple à l'inégalité triangulaire. Les flèches illustrent le champ, sans représenter une simulation.](../images/pseudo-distance-projection-et-triangulation.svg)
+![À gauche, projection de B sur la caractéristique de A. À droite, B⊥ et C⊥ sont les projections utilisées pour calculer d(A,B) et d(B,C); les flèches sont schématiques, pas une simulation.](../images/pseudo-distance-projection-et-triangulation.svg)
 
 ## Contre-exemple à l'inégalité triangulaire
 
