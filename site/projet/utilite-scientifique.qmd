@@ -1,0 +1,81 @@
+---
+title: "Utilité scientifique : que faut-il démontrer ?"
+---
+
+# Commencer par l'utilité, pas par l'implémentation
+
+> **Question directrice :** pour quel problème concret J-DriftX apporte-t-il une valeur mesurable que les méthodes existantes ne fournissent pas suffisamment bien ?
+
+Le fait qu'une approche soit mathématiquement intéressante, implémentable ou différente de l'état de l'art ne prouve pas qu'elle soit utile. J-DriftX doit donc être traité comme une hypothèse de recherche à évaluer, et non comme une solution dont les avantages seraient déjà établis.
+
+Le [cadre détaillé de décision et de validation](../../docs/08-decision-utilite-et-preuve.md) décrit les hypothèses, le protocole expérimental et les critères de décision.
+
+## Trois formes d'utilité à distinguer
+
+1. **Scientifique :** la formulation apporte-t-elle une explication, une propriété ou une représentation nouvelle et vérifiable ?
+2. **Méthodologique :** apporte-t-elle une combinaison avantageuse de précision, de coût, de stabilité, d'interprétabilité ou de données requises sur un problème défini ?
+3. **Applicative :** améliore-t-elle une décision ou une analyse réelle dans un domaine de validité explicite ?
+
+Une contribution peut être utile à l'un de ces niveaux sans l'être aux autres.
+
+## G0 — Vérifier le besoin et la valeur potentielle
+
+Avant de développer davantage le noyau, documenter :
+
+- le phénomène et la quantité à prédire ;
+- l'utilisateur et la décision qui dépend du résultat ;
+- les limites documentées des solutions existantes ;
+- les contraintes de précision, de coût, de données et d'incertitude ;
+- le bénéfice attendu et les conditions dans lesquelles il ne serait pas utile.
+
+Le *far-field* de la dérive de pulvérisation est un cas candidat compte tenu de l'héritage de Drift-X ; il ne doit pas être considéré comme le meilleur cas d'usage sans comparaison argumentée avec les besoins alternatifs plausibles.
+
+**Porte de décision G0 :** poursuivre si un besoin étayé et un bénéfice testable sont identifiés. Sinon, reformuler le problème avant d'investir davantage dans l'implémentation.
+
+## Comment apporter une preuve ?
+
+### 1. Établir des références
+
+Identifier les méthodes concurrentes pertinentes, les cas d'usage documentés et les limites réellement démontrées par la littérature. Une absence de référence trouvée ne prouve pas l'absence de concurrent.
+
+### 2. Choisir un test discriminant
+
+Commencer par un cas analytique ou contrôlé où des résultats de référence sont disponibles. Fixer les métriques, la baseline, les seuils de succès et les conditions d'abandon avant de regarder les résultats.
+
+### 3. Isoler les mécanismes
+
+Comparer des variantes du modèle pour déterminer si la similitude généralisée, la métrique de temps de transport ou la calibration apportent chacune une valeur mesurable. Éviter d'attribuer à une composante un gain obtenu par un autre mécanisme.
+
+### 4. Mesurer la valeur à plusieurs dimensions
+
+Évaluer, selon le problème, l'erreur prédictive, les contraintes physiques, le coût total de calcul, la robustesse, la généralisation et l'incertitude. Un gain de vitesse ne suffit pas si la précision devient inacceptable ; une propriété physique respectée ne garantit pas une prédiction exacte.
+
+### 5. Valider indépendamment
+
+Après les tests contrôlés, confronter la méthode à des données ou simulations indépendantes, non utilisées pour concevoir, sélectionner ou calibrer la méthode. Documenter les échecs et le domaine de validité.
+
+## Jalons conditionnels
+
+| Jalon | Question de décision | Résultat attendu |
+|---|---|---|
+| G0 — Besoin | Le problème est-il réel et mal couvert ? | Fiche de problème et critères de succès |
+| G1 — Faisabilité | La formulation est-elle cohérente pour ce problème ? | Hypothèses explicites et cas analytique |
+| G2 — Valeur différentielle | Quelle composante améliore quoi par rapport aux baselines ? | Benchmark reproductible et ablations |
+| G3 — Validité indépendante | Le bénéfice se maintient-il sur des données non utilisées pendant le développement ? | Évaluation indépendante et incertitudes |
+| G4 — Pertinence d'usage | Le bénéfice change-t-il réellement une décision ou ouvre-t-il une capacité scientifique utile ? | Rapport, publication ou décision de réorientation |
+
+Chaque porte peut conduire à poursuivre, restreindre, réviser ou arrêter une piste. Les résultats négatifs sont des résultats utiles : ils empêchent de construire une architecture coûteuse autour d'une hypothèse non soutenue.
+
+## Conséquence sur la feuille de route
+
+Les benchmarks et les baselines doivent être prioritaires, et non ajoutés en fin de développement. Les modules de calibration, les approches apprises, l'intégration SIG et les interfaces ne doivent être développés que lorsqu'ils répondent à une question scientifique ou applicative précise.
+
+La cible est une contribution reproductible dont la valeur, les limites et les conditions d'emploi sont démontrées — pas seulement un logiciel fonctionnel.
+
+## Documents de référence
+
+- [Cadre détaillé : décision d'utilité et protocole de preuve](../../docs/08-decision-utilite-et-preuve.md)
+- [Feuille de route J-DriftX v2](roadmap.qmd)
+- [Validation scientifique](validation-scientifique.qmd)
+- [Panorama de l'état de l'art](../etat-art/panorama.qmd)
+- [Positionnement de J-DriftX](../etat-art/positionnement.qmd)
