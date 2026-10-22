@@ -55,6 +55,8 @@ website:
         contents:
           - href: theorie/modele-direct.qmd
             text: "Modèle direct"
+          - href: theorie/edp-et-maillage.qmd
+            text: "EDP & maillage"
           - href: theorie/reduction-a-priori.qmd
             text: "Réduction a priori"
           - href: theorie/similitude.qmd
@@ -69,6 +71,8 @@ website:
             text: "Équation de Burgers et J-DriftX"
           - href: theorie/assimilation-identification.qmd
             text: "Assimilation & identification"
+          - href: theorie/comparaison-complexites.qmd
+            text: "Comparaison des complexités"
       - section: "Hypothèses"
         contents:
           - href: hypotheses/catalogue.qmd
