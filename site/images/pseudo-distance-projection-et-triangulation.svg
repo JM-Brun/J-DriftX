@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
 <title id="title">Pseudo-distance projetée et contre-exemple à l'inégalité triangulaire</title>
-<desc id="desc">Deux panneaux. À gauche, le point B est projeté orthogonalement sur la caractéristique horizontale issue de A et le coût est intégré seulement le long de cette caractéristique. À droite, un champ horizontal plus rapide à y égal 1 illustre la violation de l'inégalité triangulaire.</desc>
+<desc id="desc">Deux panneaux. À gauche, le point B est projeté orthogonalement sur la caractéristique horizontale issue de A et le coût est intégré seulement le long de cette caractéristique. À droite, les projections B⊥ et C⊥ sont identifiées; les trois coûts sont lus sur les caractéristiques horizontales, dans un champ plus rapide à y égal 1.</desc>
 <defs>
   <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2367a8"/></marker>
   <marker id="arrowDark" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#333"/></marker>
@@ -42,13 +42,13 @@
 <line x1="130" y1="640" x2="130" y2="475" stroke="#687582" stroke-width="2" marker-end="url(#arrowDark)"/>
 <text class="small" x="698" y="665">x</text><text class="small" x="106" y="481">y</text>
 <line class="blue" x1="170" y1="620" x2="675" y2="620" marker-end="url(#arrow)"/>
-<line class="blue" x1="170" y1="500" x2="675" y2="500" marker-end="url(#arrow)"/>
-<line class="dash" x1="170" y1="500" x2="170" y2="620"/>
+<line class="blue" x1="422" y1="500" x2="675" y2="500" marker-end="url(#arrow)"/>
+
 <line class="dash" x1="422" y1="500" x2="422" y2="620"/>
 <line class="dash" x1="675" y1="500" x2="675" y2="620"/>
-<circle cx="170" cy="620" r="8" fill="#2367a8"/><circle cx="422" cy="500" r="8" fill="#c45b18"/><circle cx="675" cy="620" r="8" fill="#2367a8"/>
-<text class="label" x="145" y="610">A (0,0)</text><text class="label" x="435" y="490">B (1,1)</text><text class="label" x="633" y="610">C (2,0)</text>
-<text class="small" x="195" y="600">vitesse = 1</text><text class="small" x="194" y="480">vitesse = 10</text>
+<circle cx="170" cy="620" r="8" fill="#2367a8"/><circle cx="422" cy="500" r="8" fill="#c45b18"/><circle cx="422" cy="620" r="7" fill="#ffffff" stroke="#c45b18" stroke-width="3"/><circle cx="675" cy="500" r="7" fill="#ffffff" stroke="#c45b18" stroke-width="3"/><circle cx="675" cy="620" r="8" fill="#2367a8"/>
+<text class="label" x="145" y="610">A (0,0)</text><text class="label" x="435" y="490">B (1,1)</text><text class="small" x="430" y="658">B⊥ (1,0)</text><text class="small" x="684" y="490">C⊥ (2,1)</text><text class="label" x="633" y="610">C (2,0)</text>
+<text class="small" x="195" y="600">vitesse = 1</text><text class="small" x="465" y="480">vitesse = 10</text>
 <text class="small" x="245" y="690">d(A,C) = 2</text><text class="small" x="445" y="690">d(A,B) = 1</text><text class="small" x="625" y="690">d(B,C) = 0,1</text>
 <rect x="770" y="472" width="350" height="190" rx="12" fill="#fff4e9" stroke="#e7bd96" stroke-width="2"/>
 <text class="label" x="792" y="508">Comparaison</text>
