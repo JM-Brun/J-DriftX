@@ -60,3 +60,50 @@ def temps_transport(
         msg = f"Vent plus faible que umin ({umin} m/s) : temps de transport non defini."
         raise ValueError(msg)
     return float(np.sum(longueurs / vitesses))
+
+
+def pseudo_distance_uniforme(
+    a: ArrayLike,
+    b: ArrayLike,
+    vent: ArrayLike,
+) -> float:
+    """Évalue la pseudo-distance historique dans un champ uniforme 2D.
+
+    Le champ est constant et non nul. Le coût est le temps longitudinal entre
+    les projections de a et b sur une ligne de courant parallèle au vent.
+    L'écart transversal n'est pas pénalisé; les points en amont reçoivent
+    +inf conformément à la convention orientée de la définition historique.
+
+    Cette fonction est une référence analytique limitée au champ uniforme,
+    pas une implémentation générale des caractéristiques d'un champ variable.
+
+    Args:
+        a: point de départ (x, y).
+        b: point cible (x, y).
+        vent: vecteur vitesse constant (ux, uy), non nul.
+
+    Returns:
+        Temps longitudinal en secondes, ou inf si b est en amont de a.
+
+    Raises:
+        ValueError: si un point ou le vecteur vitesse n'a pas la forme (2,),
+            ou si la vitesse est nulle.
+    """
+    point_a = np.asarray(a, dtype=float)
+    point_b = np.asarray(b, dtype=float)
+    vitesse = np.asarray(vent, dtype=float)
+
+    if point_a.shape != (2,) or point_b.shape != (2,) or vitesse.shape != (2,):
+        msg = "a, b et vent doivent etre des vecteurs de forme (2,)."
+        raise ValueError(msg)
+
+    norme_vitesse = float(np.hypot(vitesse[0], vitesse[1]))
+    if norme_vitesse == 0.0:
+        msg = "Le champ uniforme doit avoir une vitesse non nulle."
+        raise ValueError(msg)
+
+    direction = vitesse / norme_vitesse
+    avance_longitudinale = float(np.dot(point_b - point_a, direction))
+    if avance_longitudinale < 0.0:
+        return float("inf")
+    return avance_longitudinale / norme_vitesse
