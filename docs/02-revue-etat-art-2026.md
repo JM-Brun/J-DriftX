@@ -45,7 +45,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 ### 4. Identification de source (STE) : un champ qui s'est structuré
 
 - La revue de référence (Information Fusion, 2017) classe les méthodes STE (optimisation, adjoint, bayésien, renormalisation) ; NARAC opérationalise le STE à toutes échelles ; la technique de renormalisation (JAMES, 2016) fournit le formalisme d'opérateur inverse généralisé.
-- Une entrée attribuée à Zenodo (2025) avait été utilisée pour étayer des problèmes ouverts en estimation de source, mais l'identité du record et son contenu n'ont pas été confirmés lors de l'audit du 22 octobre 2026. Cette entrée ne peut donc pas soutenir cette conclusion à ce stade. Les difficultés de régularisation sous données rares/bruitées et de détection hors domaine doivent être sourcées par des articles vérifiés avant d'être présentées comme conclusions d'une revue.
+- L'entrée Zenodo 22914336 correspond à une ressource de Shafiyev et al. publiée le 22 septembre 2026 (v1), et non en 2025 comme indiqué précédemment. Son contenu décrit les méthodes adjointes, Tikhonov, bayésiennes/MCMC et PINN ainsi que des problèmes ouverts en estimation de source. Elle peut être citée comme ressource de synthèse, mais son statut de revue évaluée par les pairs n'est pas établi ici ; ses conclusions doivent être corroborées par les articles primaires.
 - Les documents historiques mentionnent une analyse de sensibilité du modèle direct. La disponibilité, l'exactitude et l'utilité d'un adjoint pour la formulation actuelle ne sont pas démontrées par le seul caractère analytique du modèle ; elles doivent être dérivées et vérifiées.
 
 ### 5. SIG et open source : l'avenant de Drift-X est devenu banal — d'où l'exigence
@@ -90,7 +90,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 | [Information Fusion — revue STE](https://www.sciencedirect.com/science/article/pii/S156625351630152X) | 5/5 | 2017 |
 | [JAMES — renormalisation / STE](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014MS000385) | 4/5 | 2016 |
 | [NARAC / LLNL — STE opérationnel](https://narac.llnl.gov/research-and-development/source-term-estimation) | 4/5 | - |
-| [Référence Zenodo annoncée comme revue STE 2025 — non vérifiée](https://zenodo.org/records/22914336) | Non évaluée : identité et contenu du record non confirmés | À vérifier |
+| [Shafiyev et al. — Source Term Estimation for Atmospheric Pollutant Releases](https://zenodo.org/records/22914336) | Ressource Zenodo ; évaluation par les pairs non établie ici | 2026-09-22 |
 | [Appl. Sci. — modèle QGIS gaussien 2026](https://www.mdpi.com/2076-3417/16/4/1833) | 3/5 | 2026 |
 | [GitHub — plugin QGIS éducatif gaussien](https://github.com/Sebapac90/qgis-educational-gaussian-plume) | 2/5 | 2025 |
 | [Sci. Total Environ. — CAREA, exposition pesticides](https://www.sciencedirect.com/science/article/abs/pii/S0048969717318995) | 4/5 | 2018 |
@@ -100,7 +100,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 | [HAL — Drift-X / GIS-based model](https://hal.science/hal-00468863) | 4/5 | 2009 |
 | [Springer — chapitre Brun & Mohammadi 2008](https://link.springer.com/chapter/10.1007/978-1-4020-8758-5_14) | 5/5 | 2008 |
 
-**Conflits et réserves** : les évaluations de CALPUFF vs AERMOD divergent selon les études (meilleure corrélation CALPUFF sur les tracer studies, mais facteurs 2 d'écart résiduels) ; les sources presse spécialisée (AgAir Update) sont à reconfirmer par les publications de l'AMP ; la référence Zenodo annoncée comme revue 2025 n'a pas été identifiée de manière fiable ; son existence et son contenu restent à vérifier.
+**Conflits et réserves** : les évaluations de CALPUFF vs AERMOD divergent selon les études (meilleure corrélation CALPUFF sur les tracer studies, mais facteurs 2 d'écart résiduels) ; les sources presse spécialisée (AgAir Update) sont à reconfirmer par les publications de l'AMP ; la référence Zenodo est bien identifiée, mais son année était erronée : publication en 2026 ; son statut de revue évaluée par les pairs reste à vérifier.
 
 ## Questions ouvertes
 
