@@ -155,6 +155,7 @@ for count in space_counts:
     space_errors.append(float(np.sqrt(np.mean((local_c - local_exact) ** 2))))
     space_steps.append(local_dx)
 
+
 def _observed_order(steps: list[float], errors: list[float]) -> float | None:
     valid = [
         (step, error)
