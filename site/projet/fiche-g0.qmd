@@ -1,0 +1,22 @@
+---
+title: "Fiche G0 — cadrage du besoin"
+---
+
+# Fiche G0 — cadrage du besoin indépendant de la solution
+
+> **Statut : proposition à ratifier.** G0 n'est pas encore franchi : les champs (a), (b), (f) et (g) doivent être ratifiés par l'auteur du projet, et l'audit des données (issues #13) doit conclure.
+
+## Ce que la fiche retient
+
+- **Utilisateurs en ordre hiérarchique** : chercheur en dispersion (utilisateur primaire), évaluateur de risque (candidat pratique dès G2), instruction de ZNT (horizon *in fine*). Instruire les trois en parallèle fragmenterait observable, baselines et standards de preuve.
+- **Observable primaire proposé** : concentration aérienne d'un scalaire passif — l'observable la plus proche de l'hypothèse centrale (temps de transport) et des corpus traceurs propres ; dépôt et exposition en observables dérivés.
+- **Deux pistes physiques instruites en parallèle** : champ proche contrôlé (DIFLU) et far-field (DATEM/ETEX), tranchées après l'audit des données ; CAPRIV reste limité au champ proche.
+- **Multi-baselines** : panache gaussien simple (toujours) + modèle état de l'art du corpus retenu (AGDISP/AgDRIFT, extension gaussienne/AERMOD, panache calibré).
+- **Seuil de succès proposé** : battre le gaussien simple en FAC2 sur ≥ 60 % des essais indépendants, puis erreur ≤ état de l'art ou coût total inférieur d'un facteur ≥ 10 sur un sous-ensemble documenté.
+- **Critère d'arrêt proposé** : si aucun corpus n'est reconstructible, si le gaussien simple n'est pas battu à coût comparable, ou si le gain ne subsiste que dans des régimes déjà bien servis, repli sur le [fallback théorique](modele-jouet.qmd).
+
+## Test discriminant le moins coûteux
+
+Sur **un seul** corpus après audit (DIFLU ou DATEM/ETEX) : J-DriftX contre panache gaussien simple, observable concentration, essais indépendants. Ce test peut réfuter l'hypothèse centrale sans développement applicatif.
+
+La documentation complète est dans [docs/13-fiche-g0-cadrage-besoin.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/13-fiche-g0-cadrage-besoin.md). Voir aussi les [preuves externes](preuves-g0.qmd), la [revue adversariale](revue-adversariale-g0.qmd) et la [feuille de route](roadmap.qmd).
