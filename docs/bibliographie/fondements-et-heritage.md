@@ -55,10 +55,10 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 - **Conséquence :** réutiliser les choix historiques comme référence de conception, mais séparer noyau scientifique, interfaces et données géographiques.
 - **Statut :** manuscrit auteur indiqué comme relu intégralement dans le dépôt.
 
-### Mohammadi & Bozon (2009) — *GIS-based atmospheric dispersion modelling*
+### Bozon & Mohammadi (2009) — *GIS-based atmospheric dispersion modelling*
 
 - **Lien :** publication directe sur l'application SIG de Drift-X.
-- **Référence :** *Applied Geomatics*, 1, 33–39. [DOI 10.1007/s12518-009-0006-0](https://doi.org/10.1007/s12518-009-0006-0).
+- **Référence :** *Applied Geomatics*, 1, 59–74. [DOI 10.1007/s12518-009-0006-0](https://doi.org/10.1007/s12518-009-0006-0).
 - **Idées pertinentes :** représentation SIG et application du modèle à la dispersion atmosphérique.
 - **Conséquence :** éclairer l'héritage applicatif ; ne pas considérer le SIG seul comme un différenciateur scientifique actuel.
 - **Statut :** résumé accessible, texte intégral signalé comme sous abonnement.
