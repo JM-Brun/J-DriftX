@@ -33,6 +33,8 @@ website:
             text: "Lectures des sources"
           - href: projet/roadmap.qmd
             text: "Feuille de route"
+          - href: projet/utilite-scientifique.qmd
+            text: "Utilité scientifique"
           - href: projet/validation-scientifique.qmd
             text: "Validation scientifique"
           - href: projet/qualite.qmd
