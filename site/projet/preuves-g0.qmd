@@ -21,6 +21,19 @@ Le nombre de collecteurs n'est pas le nombre d'essais indépendants. Les mesures
 
 Enfin, une estimation plus précise n'est pas automatiquement plus utile : il faut spécifier quelle décision serait modifiée, pour quel utilisateur et selon quel coût d'erreur.
 
+## Données candidates au-delà de CAPRIV
+
+Le [catalogue de données ouvertes pour J-DriftX](catalogue-donnees.qmd) recense des ressources complémentaires :
+- **DATEM/ETEX**, priorité si l'hypothèse est le transport atmosphérique à longue distance;
+- **DIFLU**, pour des lâchers d'hélium contrôlés en champ proche, avec mesures météorologiques;
+- **ERIES**, pour la dispersion urbaine contrôlée en soufflerie;
+- **R-LINE et données EPA de barrières routières**, pour la pollution automobile;
+- **MODISAFE/EWTL**, pour étudier les limites en présence de rejets buoyants ou de gaz lourds;
+- **TIERRAS, Cefas et NOAA Global Drifter Program**, comme analogies méthodologiques en hydrologie et en milieu marin, non comme validations directes de la physique atmosphérique;
+- **OpenRadiation et RADARC311**, comme ressources de surveillance/métadonnées radiologiques, pas comme benchmarks prêts à l'emploi.
+
+Ce catalogue est un pré-tri documentaire : les fichiers bruts, licences, variables, unités et groupes d'essais n'ont pas encore été audités.
+
 ## Décision actuelle
 
 **Ne pas lancer de benchmark far-field à partir de CAPRIV.** Avant tout benchmark, il faut :
@@ -28,7 +41,7 @@ Enfin, une estimation plus précise n'est pas automatiquement plus utile : il fa
 1. identifier l'utilisateur, la décision et l'observable primaire ;
 2. définir le régime physique : gouttelettes, phase vapeur ou scalaire passif ;
 3. sélectionner une baseline réellement applicable au même régime ;
-4. trouver des données indépendantes qui couvrent ce régime ;
+4. auditer les fichiers bruts et retenir des données indépendantes couvrant ce régime ;
 5. fixer les métriques, le seuil de succès et les conditions d'arrêt avant de comparer les résultats.
 
-L'audit complet, la matrice de preuve et les références sont dans [docs/11-g0-evidence-externe.md](../../docs/11-g0-evidence-externe.md). Voir aussi la [revue adversariale](revue-adversariale-g0.qmd), le [cadre d'utilité scientifique](utilite-scientifique.qmd) et la [feuille de route](roadmap.qmd).
+La documentation technique est dans [docs/11-g0-evidence-externe.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/11-g0-evidence-externe.md) et [docs/12-catalogue-donnees-transport-dispersion.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/12-catalogue-donnees-transport-dispersion.md). Voir aussi la [revue adversariale](revue-adversariale-g0.qmd), le [cadre d'utilité scientifique](utilite-scientifique.qmd) et la [feuille de route](roadmap.qmd).
