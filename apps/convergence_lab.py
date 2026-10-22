@@ -12,6 +12,7 @@ import streamlit as st
 from jdriftx.periodic_transport import (
     periodic_sine_solution,
     solve_periodic_sine_transport,
+    solve_periodic_upwind_euler,
 )
 
 st.set_page_config(page_title="J-DriftX — convergence numérique", layout="wide")
@@ -81,6 +82,21 @@ figure.add_trace(go.Scatter(x=x, y=exact, mode="lines", name="Solution analytiqu
 figure.add_trace(
     go.Scatter(x=x, y=numerical, mode="markers", name="Différences centrées + RK4")
 )
+x_upwind, upwind, _upwind_dt = solve_periodic_upwind_euler(
+    n_cells=n_cells,
+    length=length,
+    end_time=end_time,
+    dt=dt,
+    mean_concentration=mean_concentration,
+    amplitude=amplitude,
+    velocity=velocity,
+    diffusivity=diffusivity,
+)
+upwind_error = float(np.sqrt(np.mean((upwind - exact) ** 2)))
+cross_method_error = float(np.sqrt(np.mean((numerical - upwind) ** 2)))
+figure.add_trace(
+    go.Scatter(x=x_upwind, y=upwind, mode="lines", name="Référence indépendante : Euler amont")
+)
 figure.update_layout(
     title="Solution numérique et référence analytique",
     xaxis_title="Position x / longueur du domaine",
@@ -89,15 +105,16 @@ figure.update_layout(
 )
 st.plotly_chart(figure, use_container_width=True)
 
-metrics = st.columns(4)
-metrics[0].metric("Erreur L2 discrète", f"{l2_error:.3e}")
-metrics[1].metric("Erreur maximale", f"{linf_error:.3e}")
-metrics[2].metric("Masse numérique", f"{mass_numerical:.8f}")
-metrics[3].metric("Pas temporel effectif", f"{actual_dt:.3e}")
+metrics = st.columns(5)
+metrics[0].metric("Erreur L2 RK4", f"{l2_error:.3e}")
+metrics[1].metric("Erreur L2 Euler amont", f"{upwind_error:.3e}")
+metrics[2].metric("Écart entre schémas", f"{cross_method_error:.3e}")
+metrics[3].metric("Masse RK4", f"{mass_numerical:.8f}")
+metrics[4].metric("Pas temporel effectif", f"{actual_dt:.3e}")
 st.caption(
-    f"Référence de masse : {mass_expected:.8f}. La moyenne est conservée par le schéma "
-    "périodique à l'arrondi près. Le pas effectif peut différer du pas demandé pour "
-    "atteindre exactement le temps final."
+    f"Référence de masse : {mass_expected:.8f}. Les deux schémas conservent la moyenne "
+    "périodique à l'arrondi près ; leur écart fournit un contrôle croisé indépendant. "
+    "Le schéma Euler amont est d'ordre un et généralement plus diffusif."
 )
 
 st.divider()
