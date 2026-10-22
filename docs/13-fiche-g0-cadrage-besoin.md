@@ -1,20 +1,20 @@
 # Fiche G0 — Cadrage du besoin indépendant de la solution
 
-> **Statut : proposition à ratifier.** Cette fiche formalise le cadrage exigé par le [cadre de décision et de preuve](08-decision-utilite-et-preuve.md) avant tout benchmark applicatif. Les champs marqués **[à ratifier]** sont des choix que l'auteur du projet doit confirmer ; les autres sont documentés et sourcés. G0 ne sera déclaré franchi que lorsque les critères (a)–(g) ci-dessous seront renseignés, sourcés et ratifiés.
+> **Statut : cadrage ratifié sur les champs (a), (b), (f) et (g)** par l'auteur le 22 octobre 2026, avec la priorité suivante : la question scientifique (physique et mathématique) d'abord, la visée pratique restant un horizon *in fine*. Le champ (e) — données de validation indépendantes — reste conditionné par l'audit des corpus (issue #13, [protocole](14-protocole-audit-corpus-g0.md)). G0 ne sera déclaré franchi qu'à l'issue de cet audit.
 
-Rédigée le 22 octobre 2026. Documents liés : [revue adversariale G0](10-revue-adversariale-g0.md), [preuves externes](11-g0-evidence-externe.md), [catalogue de données](12-catalogue-donnees-transport-dispersion.md). Suit le plan de fiche en neuf points du document 08.
+Rédigée et ratifiée le 22 octobre 2026. Documents liés : [revue adversariale G0](10-revue-adversariale-g0.md), [preuves externes](11-g0-evidence-externe.md), [catalogue de données](12-catalogue-donnees-transport-dispersion.md), [protocole d'audit des corpus](14-protocole-audit-corpus-g0.md). Suit le plan de fiche en neuf points du document 08.
 
 ## Matrice de sortie G0 (critères a–g)
 
-| Champ | Valeur retenue ou proposée | Statut |
+| Champ | Valeur retenue | Statut |
 |---|---|---|
-| (a) Utilisateur et décision | Primaire : chercheur en dispersion — obtenir rapidement une estimation ponctuelle défendable, sans maillage. Candidat pratique : évaluateur de risque (exposition hors site). Horizon *in fine* : instruction de ZNT / distances tampons | **[à ratifier]** |
-| (b) Observable primaire | Concentration aérienne d'un scalaire passif aux points de mesure ; dépôt au sol et exposition comme observables dérivés | **[à ratifier]** |
+| (a) Utilisateur et décision | Primaire : chercheur en dispersion — obtenir rapidement une estimation ponctuelle défendable, sans maillage. Candidat pratique : évaluateur de risque (exposition hors site). Horizon *in fine* : instruction de ZNT / distances tampons | **Ratifié le 22/10/2026** |
+| (b) Observable primaire | Concentration aérienne d'un scalaire passif aux points de mesure ; dépôt au sol et exposition comme observables dérivés | **Ratifié le 22/10/2026** |
 | (c) Régime physique et hypothèses | Scalaire passif turbulent ; deux pistes instruites en parallèle : champ proche contrôlé (traceur) et far-field (pulvérisation) ; tranchées après l'audit des données | Tranché : deux pistes |
 | (d) Baseline | Multi-baselines : panache gaussien simple (toujours) + modèle état de l'art du corpus retenu (AGDISP/AgDRIFT pour la pulvérisation, extension gaussienne/AERMOD pour le far-field, panache gaussien calibré pour les traceurs) | Retenu |
-| (e) Données de validation indépendantes | Candidats : DIFLU (champ proche contrôlé), DATEM/ETEX (longue distance) ; audit en cours (issue #13). CAPRIV limité au champ proche | En cours |
-| (f) Seuil de succès | Voir §7 | **[proposé, à ratifier avant tout benchmark]** |
-| (g) Critère d'arrêt | Voir §7 | **[proposé, à ratifier]** |
+| (e) Données de validation indépendantes | Candidats : DIFLU (champ proche contrôlé), DATEM/ETEX (longue distance) ; audit en cours (issue #13). CAPRIV limité au champ proche | **En cours — seule condition restante** |
+| (f) Seuil de succès | Voir §7 | **Ratifié le 22/10/2026** |
+| (g) Critère d'arrêt | Voir §7 | **Ratifié le 22/10/2026** |
 
 ## 1. Problème physique et décision visée
 
@@ -22,7 +22,7 @@ Le problème physique est la prédiction, en un point quelconque de l'espace, du
 
 ## 2. Utilisateurs et contraintes — un ordre hiérarchique, pas trois pistes en parallèle
 
-Trois utilisateurs candidats ont été identifiés. Les instruire simultanément fragmenterait l'observable, les baselines et les standards de preuve exigés. La fiche retient donc un ordre :
+Trois utilisateurs candidats ont été identifiés. Les instruire simultanément fragmenterait l'observable, les baselines et les standards de preuve exigés. La fiche retient donc un ordre, ratifié le 22 octobre 2026 avec la priorité explicite : **la question scientifique (physique et mathématique) d'abord**.
 
 1. **Chercheur en dispersion (utilisateur primaire).** Le plus atteignable : les corpus traceurs (DIFLU, DATEM/ETEX) fournissent des essais contrôlés avec observable directe, et l'hypothèse centrale de J-DriftX (information prédictive d'une métrique de temps de transport) est une affirmation scientifique testable indépendamment de tout usage réglementaire.
 2. **Évaluateur de risque (premier utilisateur pratique candidat).** Il exigera exactement ce que la piste scientifique doit produire : un gain de précision ou de coût démontré sur essais indépendants, et une méthode transparente. Cette piste devient instruisable dès G2.
@@ -51,17 +51,17 @@ Comparaison multi-baselines, équitable (mêmes entrées, mêmes observables, co
 
 ## 6. Données accessibles et lacunes
 
-Audit en cours (issue #13) sur les candidats identifiés par le [catalogue](12-catalogue-donnees-transport-dispersion.md) : **DATEM/ETEX** (longue distance), **DIFLU** (lâchers d'hélium contrôlés en champ proche avec météo), **ERIES** (dispersion urbaine en soufflerie). CAPRIV reste limité au champ proche (1–25 m) avec risque de fuite entre collecteurs d'un même essai. Règle de partition : par essai/scénario, jamais par collecteur isolé ([preuves externes, §2](11-g0-evidence-externe.md)). Lacune connue : aucun corpus ouvert de dépôt far-field de pulvérisation n'est identifié à ce jour ; si l'audit le confirme, la piste far-field pulvérisation est requalifiée en analogie méthodologique, pas en validation.
+Audit en cours (issue #13, [protocole](14-protocole-audit-corpus-g0.md)) sur les candidats identifiés par le [catalogue](12-catalogue-donnees-transport-dispersion.md) : **DATEM/ETEX** (longue distance), **DIFLU** (lâchers d'hélium contrôlés en champ proche avec météo), **ERIES** (dispersion urbaine en soufflerie). CAPRIV reste limité au champ proche (1–25 m) avec risque de fuite entre collecteurs d'un même essai. Règle de partition : par essai/scénario, jamais par collecteur isolé ([preuves externes, §2](11-g0-evidence-externe.md)). Lacune connue : aucun corpus ouvert de dépôt far-field de pulvérisation n'est identifié à ce jour ; si l'audit le confirme, la piste far-field pulvérisation est requalifiée en analogie méthodologique, pas en validation.
 
 ## 7. Critères de succès, seuils et conditions d'arrêt
 
-**Seuil de succès proposé (à ratifier avant tout benchmark) :**
+**Seuil de succès (ratifié le 22 octobre 2026, avant tout benchmark) :**
 
 - Métriques : FAC2 (fraction de points dans un facteur 2) et NMSE, évaluées par essai indépendant, sur la concentration aérienne.
 - Succès G2 (corpus unique) : FAC2 de J-DriftX ≥ FAC2 du panache gaussien simple sur au moins 60 % des essais indépendants, **et** pour au moins un sous-ensemble documenté : erreur ≤ baseline état de l'art, ou erreur comparable à coût total inférieur d'un facteur ≥ 10.
 - Succès G3 (généralisation) : gain maintenu sur au moins un second corpus ou sous-ensemble disjoint non utilisé pour le calibrage.
 
-**Critère d'arrêt proposé :** restreindre ou arrêter la piste applicative si :
+**Critère d'arrêt (ratifié le 22 octobre 2026) :** restreindre ou arrêter la piste applicative si :
 
 1. l'audit conclut qu'aucun corpus ne permet de reconstruire les entrées et d'isoler des essais indépendants pour l'observable choisie ;
 2. ou J-DriftX ne bat pas la baseline gaussienne simple sur le test discriminant (§8), à coût total comparable ;
