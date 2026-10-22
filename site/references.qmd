@@ -6,9 +6,9 @@ title: "Références"
 
 ## Corpus historique Drift-X (2006–2010)
 
-1. Brun, J.-M. *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. L'article primaire de Mohammadi & Brun (2006) la cite comme 2007 ; certaines bibliographies secondaires donnent 2006. Non localisée dans les recherches consignées ; vérifier la page de titre avant de figer l'année et ne pas conclure qu'elle n'a jamais été déposée/numérisée.
+1. Brun, J.-M. Thèse sur la modélisation à complexité réduite de la dérive (description de travail, titre exact non confirmé). L'article primaire de Mohammadi & Brun (2006) la cite comme 2007 ; certaines bibliographies secondaires donnent 2006 et un autre titre. Vérifier la page de titre ou une notice institutionnelle avant de figer le titre, l'établissement et les années de soutenance/dépôt. Les recherches consignées ne permettent pas de conclure à une absence de dépôt ou de numérisation.
 2. Mohammadi, B. & Brun, J.-M. (2006). [Similitude généralisée et modélisation géométrique à complexité réduite](https://www.em-consulte.com/article/69927). *C. R. Mécanique* 334(10), 634–638 — [PDF en accès libre (Académie des sciences)](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
-3. Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006). Reduced order modelling of dispersion. In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
+3. Mohammadi, B., Brun, J.-M. & Pironneau, O. *Reduced order modelling of dispersion*. Référence rapportée par une bibliographie secondaire ; support éditorial, année, pagination, DOI et texte intégral non confirmés. Ne pas la présenter comme un chapitre Springer publié avant vérification.
 4. Brun, J.-M. & Mohammadi, B. (2008). [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14). In Glowinski & Neittaanmäki (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, Springer, chap. 14, p. 245 et s.
 5. Bozon, N., Mohammadi, B. & Sinfort, C. (2008). Similitude and non symmetric geometry for dispersion modelling. e-sta vol. 5, STIC & Environnement'07.
 6. Bozon, N., Sinfort, C. & Mohammadi, B. (2009). [A GIS-based atmospheric dispersion model (Drift-X)](https://hal.science/hal-00468863). Actes STIC & Environnement, Calais. HAL.
