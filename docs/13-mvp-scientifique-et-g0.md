@@ -64,7 +64,7 @@ En conséquence, le premier test de référence doit distinguer deux implémenta
 1. **Reproduction historique** : pseudo-distance projetée, avec règles de caractéristique unique, projection, orientation et points inaccessibles.
 2. **Variante exploratoire** : temps d'arrivée au point cible ou autre coût, si une question scientifique le justifie. Cette variante doit porter un nom distinct et ne peut pas être présentée comme reproduction de la méthode de 2006.
 
-**Critère de sortie du verrou de définition** : un exemple calculable à la main doit spécifier le champ \(\mathbf u\), les points \(A,B\), la projection \(B^\perp\), le coût, les unités, et le résultat attendu. Au minimum, le cas uniforme \(\mathbf u=(U,0)\) doit démontrer que le coût historique dépend de l'avancement longitudinal et pas de l'écart transversal; un test doit vérifier qu'il peut être nul pour deux points distincts. Les cas sans caractéristique unique ou avec sources/puits doivent être explicitement exclus ou recevoir une règle documentée.
+**État du verrou** : le cas uniforme \(\mathbf u=(U,0)\) est maintenant implémenté comme fonction de référence distincte et couvert par des tests : temps longitudinal, coût nul entre points distincts de même abscisse, coût infini en amont, invariance par rotation et rejet d'une vitesse nulle. Les cas sans caractéristique unique, les sources/puits et les champs variables restent exclus de cette implémentation limitée et doivent recevoir des règles documentées avant généralisation.
 
 ## 3. Critères d'acceptation du MVP
 
