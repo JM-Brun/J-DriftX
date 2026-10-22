@@ -31,6 +31,12 @@ Le temps de parcours minimal et la géométrie asymétrique sont déjà étudié
 
 La première étape du MVP doit donc être une revue ciblée comparant les définitions et résultats exacts. Si l'idée est déjà connue, le résultat peut être pédagogique et reproductible, sans revendication d'originalité.
 
+## Prérequis de fidélité à la méthode historique
+
+La source primaire de 2006 définit une pseudo-distance en projetant le point cible \(B\) sur la caractéristique passant par \(A\), en \(B^\perp\), puis en intégrant le temps de migration jusqu'à cette projection. Elle reconnaît que la construction peut donner un coût nul entre deux points distincts et que l'inégalité triangulaire peut échouer.
+
+Le premier cas analytique doit donc être une **reproduction de la définition historique**, pas une variante de temps d'arrivée au point cible. Toute variante doit être identifiée séparément. Dans le champ uniforme \(\mathbf u=(U,0)\), le test doit vérifier que le coût dépend de l'écart longitudinal et pas de l'écart transversal. Les points stagnants, les sources/puits et les projections non uniques doivent être exclus explicitement ou faire l'objet de règles documentées.
+
 ## Critères d'acceptation
 
 - définition, hypothèses, domaine et unités explicites ;
