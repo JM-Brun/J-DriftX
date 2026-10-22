@@ -1,6 +1,8 @@
 # Revue mathématique ciblée — temps de parcours de Drift-X
 
-> **Statut :** revue ciblée de cadrage, non exhaustive. Elle compare les définitions présentes dans le dépôt aux familles mathématiques voisines. Elle ne certifie ni l'originalité de la formulation historique, ni ses résultats physiques : les sources historiques primaires doivent encore être relues équation par équation.
+> **Statut :** revue mathématique ciblée, non exhaustive. Les passages pertinents de l'article de 2006 et du chapitre de 2008 ont été consultés; la thèse reste à examiner. Cette note distingue les définitions rapportées par les sources, les déductions analytiques vérifiables et les questions physiques ou numériques encore ouvertes. Elle ne certifie ni l'originalité de la formulation historique ni sa validité applicative.
+
+> **Guide de lecture.** Une *définition* fixe l'objet étudié; une *hypothèse* précise quand il est défini; une *proposition démontrée* découle de ces éléments; une *illustration* aide à l'interpréter sans constituer une validation physique.
 
 ## 1. Question examinée
 
@@ -24,6 +26,18 @@ La question préalable n'est pas « cette idée est-elle nouvelle ? », mais **q
 
 Ces trois objets peuvent se ressembler mais ne sont pas interchangeables. Une intégrale le long d'une ligne de courant n'est pas automatiquement le temps minimal entre deux points, et le temps minimal d'un navigateur n'est pas le temps d'un traceur passif purement advecté.
 
+### Vocabulaire minimal de mécanique des fluides
+
+- **Champ de vitesse** \\(\\mathbf u(\\mathbf x,t)\\): vecteur vitesse du fluide en chaque position et instant; son unité SI est le m·s⁻¹.
+- **Ligne de courant** (*streamline*): courbe tangente au champ de vitesse à un instant fixé.
+- **Trajectoire de particule** (*pathline*): chemin réellement suivi au cours du temps par une particule fluide, solution de \\(\\dot X(t)=\\mathbf u(X(t),t)\\).
+- **Caractéristique**: courbe utilisée pour suivre l'information d'une équation de transport. Pour un champ de vitesse stationnaire suffisamment régulier, ses courbes spatiales coïncident avec les lignes de courant et les trajectoires spatiales. Dans un champ instationnaire, ces notions ne doivent pas être confondues.
+- **Divergence** \\(\\nabla\\cdot\\mathbf u\\): mesure locale du taux de dilatation volumique du champ. \\(\\nabla\\cdot\\mathbf u=0\\) signifie un champ incompressible au sens cinématique; pour un fluide de densité constante, cela correspond à la continuité locale sans source volumique. Ce n'est pas, à lui seul, une preuve de conservation d'un flux sur une surface arbitraire.
+- **Source/puits**: région où la quantité transportée est injectée ou retirée, ou point singulier du champ selon le modèle. Il faut préciser si l'on parle d'une source de fluide, d'une source de polluant ou d'une singularité mathématique : ces notions ne sont pas synonymes.
+- **Stagnation**: point où \\(\\mathbf u=0\\). L'intégrande \\(1/\\|\\mathbf u\\|\\) y est singulier; la convergence de l'intégrale dépend du comportement local de la vitesse et de la trajectoire.
+
+Dans la suite, sauf mention contraire, le contre-exemple est stationnaire et bidimensionnel. Les coordonnées y vitesses y sont **adimensionnées** pour éviter de mélanger des unités dans la formule \\(u_x=1+9y\\).
+
 ## 2.1 Lecture de la source primaire de 2006 : une clarification importante
 
 La note de Mohammadi & Brun, *Similitude généralisée et modélisation géométrique à complexité réduite* (2006, §3, pp. 635–636, [DOI](https://doi.org/10.1016/j.crme.2006.06.007)), est accessible en texte intégral. Elle permet de préciser l'objet historique plus nettement que la seule formule intégrale donnée dans les pages actuelles du dépôt.
@@ -44,6 +58,12 @@ Le chapitre *Reduced-Order Modelling of Dispersion* est également disponible da
 Il faut donc séparer **la définition géométrique idéale** et **l'algorithme approché publié**. Reproduire seulement la projection exacte teste la définition; reproduire l'algorithme de 2008 demande également de documenter l'approximation \(B^\perp\approx B\), le facteur correctif, l'interpolation de la caractéristique et son domaine de validité.
 
 Le chapitre formule aussi des contraintes de divergence nulle, d'advection, de positivité et de conservation pour les champs et les solutions réduites. Dans les passages examinés, cela ne remplace pas une preuve détaillée du résultat plus spécifique « le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\) ». Cette dernière affirmation doit être rattachée à une dérivation précise avant d'être conservée comme résultat démontré dans la documentation actuelle.
+
+### Schéma de la construction et du contre-exemple
+
+Le schéma ci-dessous sépare la projection utilisée par la définition historique du mécanisme responsable de l'échec de l'inégalité triangulaire. Les flèches sont qualitatives; elles ne représentent pas une simulation numérique.
+
+![À gauche : projection du point B sur la caractéristique issue de A. À droite : champ horizontal plus rapide à y=1 et trois points donnant une violation de l'inégalité triangulaire.](../site/images/pseudo-distance-projection-et-triangulation.svg)
 
 ### Contre-exemple analytique minimal : champ uniforme
 
@@ -155,7 +175,26 @@ L'audit de la fonction `jdriftx.metric.temps_transport` révèle un verrou suppl
 
 La PR corrige les docstrings et les noms de tests pour que les tests décrivent la primitive réellement implémentée. Elle ajoute aussi `pseudo_distance_uniforme`, une référence analytique limitée aux champs uniformes 2D, avec tests de projection longitudinale, coût nul transversal, coût infini en amont, rotation et vitesse nulle. Cette fonction n'est pas une implémentation générale : elle ne résout pas les caractéristiques d'un champ variable et ne reproduit pas les approximations numériques de 2008.
 
-## 6. Registre des incertitudes après cette lecture
+## 6. Références et rôle de chaque source
+
+Les liens ci-dessous pointent vers les documents cités; les pages indiquées précisent où se trouve le résultat mobilisé. Les références de navigation sont des comparateurs conceptuels, pas des preuves directes sur Drift-X.
+
+| Référence | Type et emplacement utile | Ce qui est utilisé ici | Ce qu'elle ne prouve pas pour J-DriftX |
+|---|---|---|---|
+| Mohammadi & Brun (2006), [*Similitude généralisée et modélisation géométrique à complexité réduite*](https://doi.org/10.1016/j.crme.2006.06.007), *Comptes Rendus Mécanique*, 334(10), 634–638 | Source primaire; §3, pp. 635–636 | Définition projetée de la pseudo-distance et limites concernant séparation et triangulation | Validité de toutes les variantes numériques, conservation iso-τ complète ou originalité actuelle |
+| Brun & Mohammadi (2008), [*Reduced-Order Modelling of Dispersion*](https://doi.org/10.1007/978-1-4020-8758-5_14), dans *Partial Differential Equations: Modelling and Numerical Simulation*, Springer, pp. 245–256 | Chapitre de synthèse; §2.2, pp. 248–250 | Distinction entre définition géométrique, approximation (B^\\perp\\approx B) et correction en champ uniforme | Une preuve indépendante de chaque propriété physique annoncée |
+| Gibbons et al. (2009), [*Stationary metrics and optical Zermelo-Randers-Finsler geometry*](https://doi.org/10.1103/PhysRevD.79.044022) | Géométrie de navigation | Relation entre navigation contrôlée et géométrie de Randers/Finsler | Équivalence à l'advection pure d'un traceur passif |
+| Dušek (2018), [*Zermelo Navigation Problem in Geometry*](https://doi.org/10.17818/NM/2018/4SI.16) | Présentation géométrique | Vocabulaire et formulation du problème de navigation | La définition historique projetée de Drift-X |
+| Contreras & Kachroo (2020), [*The Viscosity Solution for Hamilton Jacobi Travel Time Dynamics*](https://doi.org/10.1109/TITS.2019.2946109) | Temps de parcours/Hamilton–Jacobi, contexte trafic | Comparaison avec les fonctions de temps d'arrivée définies par une équation | Même dynamique physique ou même observable que la dispersion atmosphérique |
+| Sethian & Vladimirsky (2001), [*Ordered upwind methods for static Hamilton–Jacobi equations*](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/) | Méthode numérique pour Hamilton–Jacobi | Référence éventuelle si un problème de temps minimal est retenu | Justification d'un solveur pour la définition projetée sans analyse préalable |
+
+### Comment relier ces notions à la physique
+
+Pour un traceur passif sans diffusion, l'équation d'advection s'écrit, sous forme conservative, \\(\\partial_t c+\\nabla\\cdot(c\\mathbf u)=s\\), où \\(c\\) est la concentration et \\(s\\) un terme source. Si \\(\\nabla\\cdot\\mathbf u=0\\), elle se réduit à \\(\\partial_t c+\\mathbf u\\cdot\\nabla c=s\\). Le long d'une trajectoire, la dérivée matérielle est \\(Dc/Dt=\\partial_t c+\\mathbf u\\cdot\\nabla c\\). Ces identités expliquent pourquoi les caractéristiques sont naturelles pour l'advection; elles ne suffisent cependant pas à transformer la pseudo-distance projetée en solution de l'équation de concentration. Il faut encore spécifier la source, les conditions initiales/aux limites et les hypothèses de réduction.
+
+De même, \\(\\nabla\\cdot\\mathbf u=0\\) contraint la cinématique du champ, mais la conservation du débit \\(Q\\) à travers une surface dépend aussi de la surface traversée, de son orientation, des sources/puits et du théorème de transport adapté. La conservation sur une surface iso-\\(\\tau\\) doit donc être démontrée à partir de la transformation de coordonnées et de son jacobien, et non déduite du seul mot « divergence nulle ».
+
+## 7. Registre des incertitudes après cette lecture
 
 | Point | État après lecture du rapport 2006 | Ce qui reste nécessaire pour le lever |
 |---|---|---|
