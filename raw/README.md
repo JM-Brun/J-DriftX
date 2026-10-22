@@ -37,11 +37,11 @@ Les fiches Markdown décrivant les liens scientifiques entre les références et
 
 | Fichier attendu | Source | Où le trouver |
 |---|---|---|
-| <code>2006-these-brun.pdf</code> | Brun, *Modélisation à complexité réduite de la dérive*, thèse Univ. Montpellier II | En possession de l'auteur — puis dépôt HAL (action M0) |
-| <code>2006-mohammadi-brun-pironneau-springer.pdf</code> | Chapitre Springer 2006 (avec Pironneau) | Recueil introuvable en ligne à ce jour |
+| <code>2007-these-brun.pdf</code> | Brun, *Modélisation à complexité réduite de la dérive*, thèse Univ. Montpellier II (citée comme 2007 dans l'article primaire de 2006 ; année exacte à vérifier) | Indiquée comme en possession de l'auteur — vérifier page de titre, métadonnées et droits avant tout dépôt HAL (action M0) |
+| <code>2006-mohammadi-brun-pironneau-reference.pdf</code> | Fichier éventuel pour la référence attribuée à Mohammadi, Brun & Pironneau (2006) | Référence citée secondairement ; recueil et statut éditorial à confirmer, ne pas traiter comme un chapitre Springer établi |
 | <code>2008-bozon-mohammadi-sinfort-esta.pdf</code> | e-sta vol. 5, STIC & Environnement'07 | Archives SEE introuvables en ligne à ce jour |
 | <code>2008-brun-mohammadi-springer-chap14.pdf</code> | Chapitre complet (seul un extrait de 2 pages est présent) | En possession de l'auteur ; [page ResearchGate](https://www.researchgate.net/publication/226478979_Reduced-Order_Modelling_of_Dispersion) |
-| <code>2009-mohammadi-bozon-applied-geomatics.pdf</code> | Applied Geomatics 1, 33–39 | Abonnement Springer / tiré-à-part auteur |
+| <code>2009-bozon-mohammadi-applied-geomatics.pdf</code> | Applied Geomatics 1, 59–74 | Abonnement Springer / tiré-à-part auteur |
 | <code>2010-bozon-sinfort-mohammadi-jesa.pdf</code> | JESA 44(4-5), 445–461 | Abonnement Lavoisier ; DOI 10.3166/jesa.44.445-461 |
 | <code>1979-muller-espace-geographique.pdf</code> | Muller, *La cartographie d'une métrique non euclidienne : les distances-temps*, L'Espace géographique 8(3), 215–227 | [Persée](https://www.persee.fr/doc/spgeo_0046-2497_1979_num_8_3_1915) — référence théorique (métriques non riemanniennes), hors corpus Drift-X |
 

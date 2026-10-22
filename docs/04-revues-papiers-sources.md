@@ -9,24 +9,24 @@
 
 | # | Source | Accès en ligne (oct. 2026) | Information extraite dans cette revue |
 |---|---|---|---|
-| 1 | Brun 2006 (thèse) | Non disponible (jamais déposée/numérisée) | Métadonnées via citations croisées uniquement |
+| 1 | Brun 2007 (thèse, année citée dans l'article primaire de 2006) | Non localisée lors des recherches consignées ; statut de dépôt/numérisation non établi | Métadonnées via citations croisées uniquement |
 | 2 | Mohammadi & Brun 2006 (C. R. Mécanique) | **Papier relu intégralement** (PDF libre, archive ouverte Académie des sciences) | Résumés verbatim, définition complète de la pseudo-distance, benchmark de coût 10³–10⁴, adjoint Tapenade, références internes |
 | 3 | Mohammadi, Brun & Pironneau 2006 (chapitre) | Non localisé | Citation exacte via bibliographie du papier n° 7 |
 | 4 | Brun & Mohammadi 2008 (Springer, chap. 14) | Chapitre fourni par l'auteur ; relais public ResearchGate | Résumé + pages 245–246 (OCR) : introduction et début de la section ROM |
 | 5 | Bozon, Mohammadi & Sinfort 2008 (e-sta) | Non localisé (archives introuvables) | Citation exacte via bibliographie des papiers n° 6 et 7 |
 | 6 | Bozon, Sinfort & Mohammadi 2009 (STIC & Env. / HAL) + version journal JESA 2010 | Manuscrit auteur relu intégralement (HAL via relais ResearchGate) ; DOI JESA valide (accès réservé) ; texte brut dans <code>raw/extracts/</code> | Quasi-intégralité : équations, multi-niveaux, correction topographique, architecture logicielle |
-| 7 | Mohammadi & Bozon 2009 (Applied Geomatics) | Résumé libre ; texte intégral sur abonnement | Résumé verbatim, extraits d'introduction et bibliographie |
+| 7 | Bozon & Mohammadi 2009 (Applied Geomatics) | Résumé libre ; texte intégral sur abonnement | Résumé verbatim, extraits d'introduction et bibliographie |
 
 Points notables de cette campagne de relecture : la source n° 6 s'est révélée la plus riche — le manuscrit auteur complet est accessible et documente l'architecture logicielle historique (cœur Fortran + plugin QGIS) et la construction multi-niveaux. Une **version journal inédite dans notre bibliographie** a été identifiée et vérifiée (JESA 2010, DOI valide). Détail en section 8.
 
-## 1. Fiche — J.-M. Brun (2006), thèse de doctorat
+## 1. Fiche — J.-M. Brun (thèse citée comme 2007), thèse de doctorat
 
-**Référence.** Brun, J.-M. (2006). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II.
+**Référence provisoire.** Brun, J.-M. *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. L'article primaire de Mohammadi & Brun (2006) la cite en 2007 ; certaines bibliographies secondaires donnent 2006. Retenir 2007 comme année citée par la source primaire jusqu'à vérification de la page de titre.
 
-**Statut d'accès.** Introuvable en ligne à ce jour (theses.fr, HAL, moteur général). Jamais numérisée ni déposée. Le document papier est en possession de l'auteur. Action roadmap : M0 (dépôt HAL).
+**Statut d'accès.** Non localisée dans les recherches consignées (theses.fr, HAL, moteur général) ; cela ne prouve pas qu'elle n'a jamais été numérisée ni déposée. Le document papier est indiqué comme étant en possession de l'auteur. Action roadmap : vérifier les métadonnées et les droits, puis envisager un dépôt HAL.
 
 **Ce que l'on sait par recoupement (sources vérifiables).**
-- Le titre exact et l'année sont confirmés par la bibliographie du chapitre Springer 2008 (source n° 4) et par la bibliographie du papier Applied Geomatics 2009 (source n° 7), qui citent toutes deux : « J. M. Brun. Modélisation à complexité réduite de la dérive. PhD thesis, University of Montpellier, 2006. »
+- Le titre est cité sous la forme « Modélisation à complexité réduite de la dérive ». L'année est contradictoire : l'article primaire de Mohammadi & Brun (2006) cite la thèse comme 2007, tandis que certaines bibliographies secondaires la donnent comme 2006. L'année de soutenance et l'intitulé officiel doivent être contrôlés sur la page de titre ou une notice institutionnelle.
 - Le résumé du C. R. Mécanique 2006 (source n° 2, mêmes auteurs, même année) décrit le contenu scientifique contemporain de la thèse : assimilation de données partielles, solutions de similitude dans une métrique non symétrique basée sur les temps de transport, sans EDP ni maillage, évaluation ponctuelle.
 - Le chapitre 2008 (source n° 4) précise que la hiérarchie multi-niveaux traite « du rang de plants de vigne aux bassins versants », avec le champ proche de la buse construit à partir d'observations expérimentales — soit la partie viticulture/ITAP du travail de thèse.
 
@@ -55,15 +55,15 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 
 **Apports pour J-DriftX.** La définition de référence de la pseudo-distance (contrat du module <code>metrique</code> du noyau, objet du test « non-symétrie ») ; le facteur 10³–10⁴ comme cible de performance à documenter dans les benchmarks (le papier donne même sa loi de croissance : quadratique en 2D, cubique en 3D) ; le protocole de validation par éléments finis comme patron du benchmark M1 ; l'hypothèse « vent < 20 km/h » à inscrire au catalogue des hypothèses ; l'héritage AD (Tapenade → équivalents modernes type JAX si l'on veut de la différentiation automatique en Python).
 
-## 3. Fiche — B. Mohammadi, J.-M. Brun & O. Pironneau (2006), chapitre Springer
+## 3. Fiche — Référence bibliographique attribuée à Mohammadi, Brun & Pironneau (2006)
 
-**Référence.** Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006). « Reduced order modelling of dispersion ». In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
+**Référence provisoire.** Une bibliographie publiée cite Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006), « Reduced order modelling of dispersion », en l'associant à *Numerical Analysis and Scientific Computing with PDE and their challenging applications*. Le recueil, l'éditeur, l'année et les autres métadonnées ne sont pas confirmés par une notice éditoriale.
 
-**Statut d'accès.** Non localisé en ligne : la notice du recueil n'a pas été trouvée en accès ouvert. La référence exacte est confirmée par la bibliographie du papier Applied Geomatics 2009 (source n° 7), qui cite « Mohammadi B, Brun JM, Pironneau O (2006) Reduced order modelling of dispersion ».
+**Statut de preuve.** L'existence de cette citation bibliographique est attestée par la bibliographie du papier *Applied Geomatics* de 2009. Cela ne suffit pas à confirmer la publication d'un chapitre dans le recueil indiqué. Le chapitre distinct de Brun & Mohammadi (2008), DOI 10.1007/978-1-4020-8758-5_14, est, lui, confirmé par la notice Springer et couvre les pages 245–256.
 
-**Lecture (par recoupement).** Trois indices rapprochent ce chapitre du chapitre 14 de 2008 (source n° 4) : mêmes deux premiers auteurs, même intitulé à un mot près, et présence d'O. Pironneau — co-auteur avec Mohammadi de la lignée « shape optimization / sensibilité incomplète » (Applied Shape Optimization for Fluids, 2001, citée dans le chapitre 2008). Il s'agit vraisemblablement d'une étape intermédiaire entre la note CR 2006 (5 pages) et le chapitre long de 2008, mais **ce point ne peut pas être affirmé sans le document** : à revoir à l'obtention du recueil.
+**Lecture prudente.** La proximité de titre avec le chapitre Brun & Mohammadi (2008) ne permet pas d'affirmer qu'il s'agit d'une étape intermédiaire ou d'une publication distincte. Il faut retrouver le recueil ou une notice de catalogue avant d'interpréter cette entrée.
 
-**Apports pour J-DriftX.** Tant que le document est introuvable, la seule valeur est la traçabilité de la lignée Pironneau (sensibilité incomplète) — déjà couverte par le chapitre 2008, mieux accessible.
+**Apports pour J-DriftX.** Ne pas tirer de conclusion méthodologique propre à cette référence tant que le document ou une notice fiable n'est pas retrouvé. Les concepts vérifiables doivent être attribués au chapitre de 2008 ou à d'autres sources effectivement consultées.
 
 ## 4. Fiche — J.-M. Brun & B. Mohammadi (2008), chapitre Springer CSM vol. 16
 
@@ -80,7 +80,7 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 - *Contraintes physiques.* Les solutions construites doivent rester solutions du modèle direct : **divergence nulle du vent généré, conservation, positivité, linéarité** de l'équation de transport.
 - *Annoncé de la suite (non couvert par l'OCR).* Comparaison avec une simulation EDP, configurations multi-sources, analyse de sensibilité d'une pollution détectée.
 - *Section 2 (début).* Positionnement vis-à-vis des ROM classiques : la solution d'état V(p) est remplacée par une projection sur un sous-espace S(w_n) généré par des snapshots dans l'approche classique (n ≪ N, référence [VP05]) ; « In our approach, we aim to remove the calculation of these snapshots ». Le modèle direct est remplacé par un modèle approché p → v(p) plus facile à évaluer, avec un **domaine de validation local** (pas nécessairement le même modèle réduit sur toute la plage des paramètres). Renvoi au concept de **sensibilité incomplète** [MP01] : « the linearization is performed not for the direct model but for an approximate state equation ».
-- *Bibliographie visible (extraits).* Thèse Brun 2006 ; Borouchaki, George & Mohammadi (1997), Delaunay mesh generation governed by metric specifications ; Mohammadi & Pironneau, Analysis of the k-epsilon turbulence model ; Mohammadi & Pironneau, Applied shape optimization for fluids (2001) ; Ivorra (2006), thèse Semi-deterministic global optimization. Ces entrées confirment la lignée « métriques de l'adaptation de maillage » et « optimisation de forme » du projet.
+- *Bibliographie visible (extraits).* Thèse Brun (citée comme 2006 dans cette source secondaire ; année à confirmer) ; Borouchaki, George & Mohammadi (1997), Delaunay mesh generation governed by metric specifications ; Mohammadi & Pironneau, Analysis of the k-epsilon turbulence model ; Mohammadi & Pironneau, Applied shape optimization for fluids (2001) ; Ivorra (2006), thèse Semi-deterministic global optimization. Ces entrées confirment la lignée « métriques de l'adaptation de maillage » et « optimisation de forme » du projet.
 
 **Apports pour J-DriftX.** C'est le **cahier des charges scientifique** du noyau : multi-niveaux avec entrée/sortie de sous-couche, métrique τ non symétrique, quatre contraintes physiques (deux déjà testées dans le socle : conservation et non-symétrie), sensibilité/identification. Les pages restantes (exemples numériques, analyse de sensibilité) sont la prochaine extraction à faire sur le document papier.
 
@@ -118,9 +118,9 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 
 **Apports pour J-DriftX.** Fiche la plus opérationnelle du corpus : elle documente (i) la forme gaussienne exacte avec ses fonctions a et b et leurs monotonies — directement testables (tests conservation/non-symétrie) et implémentables ; (ii) la construction multi-niveaux à 4 coins avec ses deux garanties (divergence nulle, conservation) — à réimplémenter en Python et à couvrir par des tests ; (iii) la correction topographique Bernoulli-Newton et la contrainte de masse sur a/b ; (iv) l'architecture historique Fortran+CSV+QGIS que le noyau Python moderne remplace avantageusement (le format CSV d'échange reste une bonne interface de compatibilité) ; (v) les sorties raster/vecteur et l'interpolation invdist comme spécification de la couche SIG future. La version journal JESA 2010 doit être ajoutée à la bibliographie (fait dans <code>references.md</code>).
 
-## 7. Fiche — B. Mohammadi & N. Bozon (2009), Applied Geomatics
+## 7. Fiche — N. Bozon & B. Mohammadi (2009), Applied Geomatics
 
-**Référence.** Mohammadi, B. & Bozon, N. (2009). « GIS-based atmospheric dispersion modelling ». *Applied Geomatics* 1, 33–39. DOI 10.1007/s12518-009-0006-0
+**Référence.** Bozon, N. & Mohammadi, B. (2009). « GIS-based atmospheric dispersion modelling ». *Applied Geomatics* 1(3), 59–74. DOI 10.1007/s12518-009-0006-0
 
 **Statut d'accès.** Résumé libre (notice Springer) ; texte intégral sur abonnement (la page Springer est protégée contre les robots). 7 pages.
 
@@ -135,12 +135,12 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 ## 8. Découvertes bibliographiques de cette revue
 
 1. **Version journal JESA 2010 du papier plateforme** : *Journal Européen des Systèmes Automatisés* 44(4-5), 445–461, DOI 10.3166/jesa.44.445-461 — DOI vérifié (il résout vers la page revue, accès réservé) ; vol/pages/année confirmés par la notice ResearchGate de la publication. Ajoutée à <code>references.md</code> et <code>site/references.qmd</code>.
-2. **Titre exact de la thèse 2006** confirmé par deux bibliographies indépendantes (chapitre 2008, papier Applied Geomatics 2009) : « Modélisation à complexité réduite de la dérive », PhD thesis, University of Montpellier, 2006.
+2. **Titre de la thèse** cité dans deux bibliographies secondaires : « Modélisation à complexité réduite de la dérive ». L'année 2006 n'est pas établie : l'article primaire de 2006 la cite comme 2007 (voir §1).
 3. **Lignée méthodologique confirmée** : les bibliographies des sources 4, 6 et 7 pointent toutes vers Borouchaki–George–Mohammadi 1997 (métriques de maillage), Mohammadi–Pironneau (k-epsilon, Applied Shape Optimization 2001) — la matrice intellectuelle « métrique + optimisation de forme + sensibilité » du projet est ainsi traçable dans les sources elles-mêmes.
 4. **Commanditaires académiques du papier plateforme** : affiliations Cemagref–UMR ITAP, Montpellier SupAgro–UMR ITAP et Université Montpellier 2–UMR5149 (I3M) — documentées pour la fiche « héritage » du site.
 
 5. **Soumission IJNMF jamais retrouvée** : la bibliographie du CR 2006 cite « B. Mohammadi, J.-M. Brun, Reduced-order geometrical modelling of dispersion, Int. J. Num. Meth. Fluids, 2006, submitted for publication » — aucune trace d'une publication sous ce titre n'a été trouvée (publication abandonnée, retitrée, ou jamais parue ?). À clarifier de mémoire d'auteur ; ce serait une huitième source potentielle du corpus.
-6. **Année de la thèse — discordance de citation** : la bibliographie du CR 2006 (reçu avril 2006) cite la thèse Brun avec l'année **2007**, tandis que le chapitre Springer 2008 et le papier Applied Geomatics 2009 la citent **2006**. À trancher de mémoire d'auteur lors du dépôt HAL (M0) — les métadonnées du dépôt doivent être exactes.
+6. **Année de la thèse — discordance de citation** : l'article primaire de 2006 cite la thèse comme **2007**, tandis que certaines bibliographies secondaires indiquent 2006. Vérifier la page de titre ou une notice institutionnelle avant dépôt HAL.
 7. **Chaîne adjointe historique** : en 2006, le gradient était produit par différentiation automatique inverse via **Tapenade** (INRIA) — l'adjoint « analytique et gratuit » revendiqué ensuite s'est construit sur cette base.
 8. **Meilleur accès au CR 2006** : le PDF de l'article est en accès libre sur l'archive ouverte de l'Académie des sciences (comptes-rendus.academie-sciences.fr) — lien ajouté aux bibliographies et extraction texte brute archivée dans <code>raw/extracts/</code>.
 
@@ -148,7 +148,7 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 
 | Priorité | Action | Verrou |
 |---|---|---|
-| Haute | Déposer la thèse 2006 sur HAL (action M0), puis en faire la fiche complète | Document en possession de l'auteur |
+| Haute | Vérifier la page de titre de la thèse de Brun, puis envisager son dépôt HAL (action M0) | Document indiqué comme étant en possession de l'auteur ; année officielle à confirmer |
 | Haute | Récupérer le texte intégral du chapitre 2008 au-delà des pages 245–246 (exemples numériques, analyse de sensibilité, identification de source) | Chapitre fourni par l'auteur — OCR à poursuivre |
 | Moyenne | Localiser l'article e-sta 2008 (archives SEE) | Introuvable en ligne — contacter la SEE ou les auteurs |
 | Moyenne | Localiser le recueil Springer 2006 du chapitre Mohammadi–Brun–Pironneau | Recueil introuvable en accès ouvert |

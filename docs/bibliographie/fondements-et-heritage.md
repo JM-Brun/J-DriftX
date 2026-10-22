@@ -6,7 +6,7 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 
 ## Références
 
-### Mohammadi & Brun (2006) — « Similitude généralisée et modélisation géométrique à complexité réduite »
+### Thèse de J.-M. Brun — titre et année à confirmer
 
 - **Lien :** source scientifique fondatrice, directement liée.
 - **Référence :** *Comptes Rendus Mécanique*, 334(10), 634–638. DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007). [PDF éditeur/archives ouvertes](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
@@ -15,10 +15,10 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 - **Limites à conserver :** le papier est court ; les hypothèses sur l'écoulement et la structure du panache sont spécifiques. La pseudo-distance ne satisfait pas nécessairement les axiomes d'une distance métrique.
 - **Statut de lecture indiqué dans le dépôt :** texte intégral relu.
 
-### Brun (2006) — *Modélisation à complexité réduite de la dérive* (thèse)
+### Brun — *Modélisation à complexité réduite de la dérive* (thèse ; année à confirmer)
 
 - **Lien :** source fondatrice attendue, directement liée mais non consultée intégralement dans le corpus actuel.
-- **Référence :** thèse de doctorat, Université Montpellier II, 2006. La thèse n'est pas encore disponible en ligne selon les notes du dépôt.
+- **Référence :** thèse de doctorat, Université Montpellier II. L'article primaire de Mohammadi & Brun (2006) la cite comme 2007 ; certaines bibliographies secondaires indiquent 2006. Elle n'a pas été localisée dans les recherches consignées, ce qui ne prouve pas l'absence de dépôt ou de numérisation.
 - **Idées pertinentes :** contexte plus large du modèle multi-échelle et des applications à la dérive.
 - **Conséquence :** retrouver, numériser et déposer une version partageable si les droits le permettent ; ne pas inférer son contenu détaillé à partir des seuls articles citants.
 - **Statut :** métadonnées et contenu partiel connus par recoupement ; texte intégral à relire.
@@ -26,10 +26,10 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 ### Mohammadi, Brun & Pironneau (2006) — *Reduced order modelling of dispersion*
 
 - **Lien :** source historique annoncée dans la bibliographie, directement pertinente.
-- **Référence :** chapitre dans *Numerical Analysis and Scientific Computing with PDE and their Challenging Applications*, Springer.
+- **Référence :** entrée bibliographique citée sous le titre *Reduced order modelling of dispersion* et associée à *Numerical Analysis and Scientific Computing with PDE and their Challenging Applications* ; le recueil et le statut éditorial n'ont pas été confirmés par une notice primaire.
 - **Idées pertinentes :** modélisation réduite de dispersion ; détails à confirmer à partir du chapitre lui-même.
 - **Conséquence :** retrouver le chapitre pour vérifier les recouvrements, les différences de formulation et la chronologie scientifique.
-- **Statut :** source non localisée dans le corpus de travail ; ne pas lui attribuer de résultats non vérifiés.
+- **Statut :** citation secondaire attestée, mais source primaire et métadonnées du recueil non confirmées ; ne pas lui attribuer de résultats ni la présenter comme chapitre Springer établi.
 
 ### Brun & Mohammadi (2008) — *Reduced-Order Modelling of Dispersion*
 
@@ -55,10 +55,10 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 - **Conséquence :** réutiliser les choix historiques comme référence de conception, mais séparer noyau scientifique, interfaces et données géographiques.
 - **Statut :** manuscrit auteur indiqué comme relu intégralement dans le dépôt.
 
-### Mohammadi & Bozon (2009) — *GIS-based atmospheric dispersion modelling*
+### Bozon & Mohammadi (2009) — *GIS-based atmospheric dispersion modelling*
 
 - **Lien :** publication directe sur l'application SIG de Drift-X.
-- **Référence :** *Applied Geomatics*, 1, 33–39. [DOI 10.1007/s12518-009-0006-0](https://doi.org/10.1007/s12518-009-0006-0).
+- **Référence :** *Applied Geomatics*, 1, 59–74. [DOI 10.1007/s12518-009-0006-0](https://doi.org/10.1007/s12518-009-0006-0).
 - **Idées pertinentes :** représentation SIG et application du modèle à la dispersion atmosphérique.
 - **Conséquence :** éclairer l'héritage applicatif ; ne pas considérer le SIG seul comme un différenciateur scientifique actuel.
 - **Statut :** résumé accessible, texte intégral signalé comme sous abonnement.
