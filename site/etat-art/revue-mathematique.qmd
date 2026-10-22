@@ -41,8 +41,20 @@ De même, une singularité de \(1/|\mathbf u|\) près d'une stagnation ne prouve
 - Contreras & Kachroo (2020), [Hamilton–Jacobi Travel Time Dynamics](https://doi.org/10.1109/TITS.2019.2946109).
 - Sethian & Vladimirsky (2001), [Ordered upwind methods for static Hamilton–Jacobi equations](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/).
 
+## Ce que dit effectivement la source historique de 2006
+
+La note de Mohammadi & Brun (2006, §3, [texte intégral](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf)) ne définit pas simplement le temps jusqu'au point cible \(B\). Elle projette \(B\) sur la caractéristique passant par \(A\), en \(B^\perp\), puis intègre le temps de migration de \(A\) à \(B^\perp\). La source nomme explicitement cette construction une **pseudo-distance** et indique qu'elle peut perdre la séparation des points et que l'inégalité triangulaire peut échouer.
+
+Dans un champ uniforme \(\mathbf u=(U,0)\), \(U>0\), la formule devient, pour \(x_B\ge x_A\),
+
+\[
+d(A,B)=\frac{x_B-x_A}{U}.
+\]
+
+Elle ne dépend pas de la différence transversale \(y_B-y_A\). Deux points distincts ayant la même abscisse peuvent donc avoir un coût nul. C'est une propriété de la construction historique, pas une distance géométrique ordinaire.
+
 ## Conclusion provisoire
 
-La revue montre que le dépôt doit clarifier l'objet mathématique avant d'implémenter un solveur ou de revendiquer une nouveauté. Elle ne prouve pas que l'approche historique est redondante. La prochaine étape est de relire les sources historiques primaires (Brun 2006/2008) et de relier chaque propriété annoncée à une hypothèse, une preuve et un cas analytique.
+La revue montre que le dépôt doit clarifier l'objet mathématique avant d'implémenter un solveur ou de revendiquer une nouveauté. Elle ne prouve pas que l'approche historique est redondante. La définition de pseudo-distance de l'article de 2006 est maintenant vérifiée. Il reste à comparer en détail la thèse de Brun (2007) et le chapitre de 2008, puis à reproduire la définition avec des tests analytiques.
 
 Voir la [note détaillée dans le dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/14-revue-mathematique-ciblee.md), le [MVP scientifique](mvp-scientifique.qmd) et la [page travel-time actuelle](../theorie/metrique-travel-time.qmd).
