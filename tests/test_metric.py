@@ -144,4 +144,3 @@ def test_uniform_pseudodistance_rejects_non_finite_inputs(
 ) -> None:
     with pytest.raises(ValueError, match=message):
         pseudo_distance_uniforme(a, b, vent)
-
