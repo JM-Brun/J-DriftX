@@ -76,7 +76,7 @@ Chaque affirmation de haut niveau a sa page de détail — dérivation, justific
 | [EDP & maillage](theorie/edp-et-maillage.qmd) | Ce que serait une modélisation complète du problème : EDP, fermeture de la turbulence, CFD, maillage, schémas numériques, coût |
 | [Comparaison des complexités](theorie/comparaison-complexites.qmd) | Où se paie le coût : gaussien, Lagrangien, CFD, ROM a posteriori, ML, réduction a priori — côte à côte |
 | [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) | Distances-temps, quasi-métriques, Finsler/Zermelo : les objets mathématiques voisins de la métrique τ |
-| [Qualité & tests](projet/qualite.qmd) | Ce que les tests vérifient réellement — et ce qu'ils ne prouvent pas |
+| [Qualité & tests](projet/qualite.qmd) | Ce que les tests vérifient réellement — et ce qu'ils ne prouvent pas |\n| [Expériences interactives](projet/experiences-interactives.qmd) | Catalogue des expériences, traçabilité propriétés-tests, convergence et exécution locale des outils Streamlit |
 | [Hypothèses](hypotheses/catalogue.qmd) | Le catalogue des hypothèses du modèle et leurs limites de validité |
 | [État de l'art](etat-art/panorama.qmd) | Ce qui a changé entre 2008 et 2026, et le [positionnement](etat-art/positionnement.qmd) de J-DriftX |
 | [Glossaire](glossaire.qmd) | Notations ($C$, $\tau$, $Q$, $h$…) et notions clés (similitude, ROM, assimilation…) expliquées en français simple, avec leur origine |
