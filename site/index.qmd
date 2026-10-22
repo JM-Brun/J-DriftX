@@ -12,6 +12,8 @@ title: "J-DriftX — dispersion atmosphérique à complexité réduite"
 
 Prédire un panache, un puff ou une dérive de pulvérisation **sans résoudre d'équation aux dérivées partielles ni construire de maillage**, en remplaçant le calcul du champ complet par une **évaluation ponctuelle** dans un espace de recherche construit à partir de la physique : des solutions de similitude, **généralisées dans une métrique non symétrique basée sur les temps de transport**, calibrées par assimilation de données partielles [@mohammadi2006crmeca; @brun2008].
 
+Les notations de cette page ($C(x,y,z)$, $\tau$, $Q$, $h$…) et les notions employées — scalaire passif, panache gaussien généralisé, solutions de similitude, far-field, Finsler/Zermelo, ROM, assimilation… — sont définies, avec leur origine, dans le [glossaire](glossaire.qmd).
+
 ## Quatre propriétés fondatrices
 
 ::: {.panel-tabset}
@@ -51,9 +53,11 @@ L'analyse complète : [Audit de l'héritage](projet/audit.qmd), [Panorama de l'�
 | [Le projet](projet/heritage.qmd) | Héritage Drift-X (2006–2009), [objectifs](projet/objectifs.qmd), audit et feuille de route |
 | [Lectures des sources](projet/lectures.qmd) | Ce que dit chaque papier du corpus historique, et ce que J-DriftX en reprend |
 | [Fondements théoriques](theorie/modele-direct.qmd) | Modèle direct, réduction a priori, similitude, métrique, contraintes, assimilation — avec les théories mathématiques |
+| [EDP & maillage](theorie/edp-et-maillage.qmd) | Ce que serait une modélisation complète du problème : EDP, fermeture de la turbulence, CFD, maillage, schémas numériques, coût |
+| [Comparaison des complexités](theorie/comparaison-complexites.qmd) | Où se paie le coût : gaussien, Lagrangien, CFD, ROM a posteriori, ML, réduction a priori — côte à côte |
 | [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) | Distances-temps, quasi-métriques, Finsler/Zermelo : la généalogie de la métrique τ |
 | [Qualité & tests](projet/qualite.qmd) | Tests unitaires Given/When/Then — la physique comme oracle |
 | [Hypothèses](hypotheses/catalogue.qmd) | Le catalogue des hypothèses du modèle et leurs limites de validité |
 | [État de l'art](etat-art/panorama.qmd) | Ce qui a changé entre 2008 et 2026, et le [positionnement](etat-art/positionnement.qmd) de J-DriftX |
-| [Glossaire](glossaire.qmd) | Les notions clés (τ, similitude, ROM, assimilation…) expliquées en français simple |
+| [Glossaire](glossaire.qmd) | Notations ($C$, $\tau$, $Q$, $h$…) et notions clés (similitude, ROM, assimilation…) expliquées en français simple, avec leur origine |
 | [Références](references.qmd) | Bibliographie complète, du corpus historique aux travaux récents |

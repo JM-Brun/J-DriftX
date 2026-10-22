@@ -12,10 +12,11 @@ La concentration $C(\mathbf{x}, t)$ d'un scalaire passif obéit à l'équation d
 
 $$
 \frac{\partial C}{\partial t} + \mathbf{u} \cdot \nabla C
-= \nabla \cdot \left( \mathbf{K} \, \nabla C \right) + S,
+= 
+\nabla \cdot \left( \mathbf{K} \, \nabla C \right) + S,
 $$
 
-où $\mathbf{u}$ est le champ de vent, $\mathbf{K}$ le tenseur de diffusion turbulente et $S$ le terme source. Le modèle est *complet* mais son coût de résolution numérique est rédhibitoire pour les usages visés (Monte Carlo massif, SIG, temps réel).
+où $\mathbf{u}$ est le champ de vent, $\mathbf{K}$ le tenseur de diffusion turbulente et $S$ le terme source. Le modèle est *complet* mais son coût de résolution numérique est rédhibitoire pour les usages visés (Monte Carlo massif, SIG, temps réel) — ce que cette résolution complète exigerait est détaillé sur la page [EDP & maillage](edp-et-maillage.qmd).
 
 ## Moyennage et fermeture
 
@@ -39,7 +40,7 @@ Cette contrainte est *héritée par le modèle réduit* : le champ de vent gén�
 
 ## Ce que J-DriftX refuse de faire
 
-- Résoudre l'EDP sur un maillage du domaine : incompatible avec l'évaluation ponctuelle.
+- Résoudre l'EDP sur un maillage du domaine (voir [EDP & maillage](edp-et-maillage.qmd)) : incompatible avec l'évaluation ponctuelle.
 - Entraîner un modèle sur des snapshots CFD/LES : coût initial élevé, fragilité hors domaine d'entraînement.
 - Renoncer aux propriétés du modèle direct : conservation, positivité, linéarité, incompressibilité sont *imposées* à l'approche.
 
