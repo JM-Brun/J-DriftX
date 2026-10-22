@@ -237,7 +237,7 @@ time_figure.update_layout(
 st.plotly_chart(time_figure, use_container_width=True)
 st.caption(
     f"Référence calculée avec dt demandé = {reference_dt:.3e}. Pente ajustée : {time_order_label}. "
-    "Pente indicative, dépendant du régime d'erreur, de l’arrondi et de la précision "
+    "Pente indicative, dépendant du régime d'erreur, de l'arrondi et de la précision "
     "de la référence."
 )
 
