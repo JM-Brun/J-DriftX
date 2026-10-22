@@ -4,7 +4,7 @@ title: "Laboratoire interactif"
 
 # Explorer les équations en manipulant leurs paramètres
 
-L'objectif est de faire de J-DriftX un laboratoire où l'on peut modifier les paramètres, visualiser les effets et confronter son intuition aux calculs. Cette page décrit la cible de conception : **l'application interactive n'est pas encore déployée**.
+L'objectif est de faire de J-DriftX un laboratoire où l'on peut modifier les paramètres, visualiser les effets et confronter son intuition aux calculs. Un **premier prototype local** existe pour explorer trois champs vectoriels synthétiques. Il n'est pas encore hébergé en ligne.
 
 ## Ce que le laboratoire doit permettre
 
@@ -27,13 +27,24 @@ Le cœur Python restera indépendant de l'interface : les fonctions numériques 
 
 ## Étapes envisagées
 
-1. Champs de vecteurs synthétiques avec tests numériques.
+1. **Prototype disponible dans le dépôt** : champs de vecteurs synthétiques avec tests numériques (uniforme, cisaillement, radial).
 2. Reliefs synthétiques, sans couplage physique implicite avec le vent.
 3. Cas analytique d'advection-diffusion et comparaison à la référence.
 4. Visualisation des erreurs, cas limites et export des paramètres reproductibles.
 5. Décision sur l'hébergement public après vérification des tests et des contraintes de maintenance.
 
 Le laboratoire pédagogique peut aider à comprendre les hypothèses ; il ne démontre pas à lui seul l'utilité applicative ou la validité scientifique de J-DriftX.
+
+## Lancer le prototype local
+
+Avec Python 3.12 et uv installés, depuis la racine du dépôt :
+
+\`\`\`bash
+uv sync --group app
+uv run streamlit run apps/interactive_lab.py
+\`\`\`
+
+Le prototype affiche les lignes de courant, les vecteurs et la norme du champ. Les fonctions mathématiques sont séparées de l'interface et testées dans \`tests/test_fields.py\`. Le rendu Streamlit n'a pas encore été validé dans la CI.
 
 ## Spécification détaillée
 
