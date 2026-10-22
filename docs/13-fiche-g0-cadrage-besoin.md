@@ -1,8 +1,8 @@
 # Fiche G0 — Cadrage du besoin indépendant de la solution
 
-> **Statut : cadrage ratifié sur les champs (a), (b), (f) et (g)** par l'auteur le 22 octobre 2026, avec la priorité suivante : la question scientifique (physique et mathématique) d'abord, la visée pratique restant un horizon *in fine*. Le champ (e) — données de validation indépendantes — reste conditionné par l'audit des corpus (issue #13, [protocole](14-protocole-audit-corpus-g0.md)). G0 ne sera déclaré franchi qu'à l'issue de cet audit.
+> **Statut : cadrage ratifié le 22 octobre 2026 sur les champs (a), (b), (f) et (g)** (priorité : la question scientifique, physique et mathématique, d'abord ; la visée pratique restant un horizon *in fine*). Le champ (e) a été renseigné le même jour par l'audit documentaire des corpus ([résultats](15-audit-corpus-g0-resultats.md)) : verdicts **V** pour DIFLU, DATEM et ETEX. **Décision : G0 est franchi le 22 octobre 2026.** La vérification au niveau des fichiers bruts (licence DIFLU, unités, limites de détection, sommes de contrôle) est un prérequis G1 avant le test discriminant, pas une condition de G0.
 
-Rédigée et ratifiée le 22 octobre 2026. Documents liés : [revue adversariale G0](10-revue-adversariale-g0.md), [preuves externes](11-g0-evidence-externe.md), [catalogue de données](12-catalogue-donnees-transport-dispersion.md), [protocole d'audit des corpus](14-protocole-audit-corpus-g0.md). Suit le plan de fiche en neuf points du document 08.
+Rédigée et ratifiée le 22 octobre 2026. Documents liés : [revue adversariale G0](10-revue-adversariale-g0.md), [preuves externes](11-g0-evidence-externe.md), [catalogue de données](12-catalogue-donnees-transport-dispersion.md), [protocole d'audit des corpus](14-protocole-audit-corpus-g0.md), [résultats de l'audit](15-audit-corpus-g0-resultats.md). Suit le plan de fiche en neuf points du document 08.
 
 ## Matrice de sortie G0 (critères a–g)
 
@@ -10,9 +10,9 @@ Rédigée et ratifiée le 22 octobre 2026. Documents liés : [revue adversariale
 |---|---|---|
 | (a) Utilisateur et décision | Primaire : chercheur en dispersion — obtenir rapidement une estimation ponctuelle défendable, sans maillage. Candidat pratique : évaluateur de risque (exposition hors site). Horizon *in fine* : instruction de ZNT / distances tampons | **Ratifié le 22/10/2026** |
 | (b) Observable primaire | Concentration aérienne d'un scalaire passif aux points de mesure ; dépôt au sol et exposition comme observables dérivés | **Ratifié le 22/10/2026** |
-| (c) Régime physique et hypothèses | Scalaire passif turbulent ; deux pistes instruites en parallèle : champ proche contrôlé (traceur) et far-field (pulvérisation) ; tranchées après l'audit des données | Tranché : deux pistes |
+| (c) Régime physique et hypothèses | Scalaire passif turbulent ; deux pistes instruites : champ proche contrôlé (traceur) et far-field (traceur continental) ; tranchées après l'audit des données | Tranché : deux pistes |
 | (d) Baseline | Multi-baselines : panache gaussien simple (toujours) + modèle état de l'art du corpus retenu (AGDISP/AgDRIFT pour la pulvérisation, extension gaussienne/AERMOD pour le far-field, panache gaussien calibré pour les traceurs) | Retenu |
-| (e) Données de validation indépendantes | Candidats : DIFLU (champ proche contrôlé), DATEM/ETEX (longue distance) ; audit en cours (issue #13). CAPRIV limité au champ proche | **En cours — seule condition restante** |
+| (e) Données de validation indépendantes | DIFLU (V, champ proche, lâchers d'hélium contrôlés, météo co-localisée), NOAA DATEM (V, cinq expériences longue distance), ETEX (V, deux lâchers, 168 stations, météo ECMWF) — [audit](15-audit-corpus-g0-resultats.md). CAPRIV limité au champ proche | **Renseigné et sourcé le 22/10/2026 — verdicts V, réserves explicites dans l'audit** |
 | (f) Seuil de succès | Voir §7 | **Ratifié le 22/10/2026** |
 | (g) Critère d'arrêt | Voir §7 | **Ratifié le 22/10/2026** |
 
@@ -51,7 +51,7 @@ Comparaison multi-baselines, équitable (mêmes entrées, mêmes observables, co
 
 ## 6. Données accessibles et lacunes
 
-Audit en cours (issue #13, [protocole](14-protocole-audit-corpus-g0.md)) sur les candidats identifiés par le [catalogue](12-catalogue-donnees-transport-dispersion.md) : **DATEM/ETEX** (longue distance), **DIFLU** (lâchers d'hélium contrôlés en champ proche avec météo), **ERIES** (dispersion urbaine en soufflerie). CAPRIV reste limité au champ proche (1–25 m) avec risque de fuite entre collecteurs d'un même essai. Règle de partition : par essai/scénario, jamais par collecteur isolé ([preuves externes, §2](11-g0-evidence-externe.md)). Lacune connue : aucun corpus ouvert de dépôt far-field de pulvérisation n'est identifié à ce jour ; si l'audit le confirme, la piste far-field pulvérisation est requalifiée en analogie méthodologique, pas en validation.
+L'audit documentaire du 22 octobre 2026 ([résultats](15-audit-corpus-g0-resultats.md)) a vérifié l'accès, le terme source, la météo et la structure d'indépendance des candidats du [catalogue](12-catalogue-donnees-transport-dispersion.md) : **DIFLU** (champ proche, hélium, 2019), **DATEM** (cinq expériences longue distance), **ETEX** (deux lâchers continentaux, JRC). CAPRIV reste limité au champ proche (1–25 m) avec risque de fuite entre collecteurs d'un même essai. Règle de partition : par essai/scénario, jamais par point de mesure isolé. Lacune confirmée par l'audit : aucun corpus ouvert de dépôt far-field de pulvérisation n'a été identifié ; la piste far-field rejoint donc la voie traceur (DATEM/ETEX), la pulvérisation restant une analogie méthodologique en far-field et un cas de champ proche documenté par CAPRIV.
 
 ## 7. Critères de succès, seuils et conditions d'arrêt
 
@@ -67,11 +67,11 @@ Audit en cours (issue #13, [protocole](14-protocole-audit-corpus-g0.md)) sur les
 2. ou J-DriftX ne bat pas la baseline gaussienne simple sur le test discriminant (§8), à coût total comparable ;
 3. ou le gain subsiste uniquement dans des régimes déjà bien servis par des modèles simples.
 
-Dans ces cas, le projet se replie sur le [fallback théorique](09-fallback-modele-jouet.md) et documente le résultat négatif.
+Dans ces cas, le projet se replie sur le [fallback théorique](09-fallback-modele-jouet.md) et documente le résultat négatif. *Note : la condition 1 n'est pas activée — l'audit a établi le contraire ([docs/15](15-audit-corpus-g0-resultats.md)).*
 
 ## 8. Test discriminant le moins coûteux
 
-Après l'audit, sur **un seul** corpus (DIFLU si la piste champ proche est retenue, DATEM/ETEX pour le far-field) : comparer J-DriftX au panache gaussien simple sur les essais indépendants identifiés, observable concentration. Ce test peut réfuter l'hypothèse centrale — qu'un temps de transport dirigé apporte une information prédictive au-delà de la seule distance — sans développement applicatif ni calibrage lourd.
+Corpus principal retenu par l'audit : **DIFLU** (champ proche, terme source contrôlé, météo co-localisée, observable conforme). Comparer J-DriftX au panache gaussien simple sur les lâchers indépendants identifiés, observable concentration. Ce test peut réfuter l'hypothèse centrale — qu'un temps de transport dirigé apporte une information prédictive au-delà de la seule distance — sans développement applicatif ni calibrage lourd. DATEM/ETEX restent en réserve pour la généralisation (G3).
 
 ## 9. Sources et niveau de preuve
 
@@ -81,5 +81,5 @@ Après l'audit, sur **un seul** corpus (DIFLU si la piste champ proche est reten
 | Incertitudes et limites AGDISP-Gaussian (far-field) | [EPA 2010](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension) | Officiel, périmètre restreint |
 | Accords variables AgDRIFT / AGDISPpro | [Bird et al. 2002](https://doi.org/10.1002/etc.5620210328), [Castro-Tanzi et al. 2025](https://doi.org/10.1016/j.scitotenv.2025.178725) | Évaluations publiées |
 | CAPRIV limité au champ proche | [Perriot et al. 2024](https://doi.org/10.1016/j.dib.2024.110366) | Article de données |
-| Candidats de validation (DATEM/ETEX, DIFLU, ERIES) | [Catalogue](12-catalogue-donnees-transport-dispersion.md) | Pré-tri documentaire, non audité |
+| DIFLU, DATEM, ETEX : accès, terme source, indépendance | [Audit des corpus](15-audit-corpus-g0-resultats.md) | Audit documentaire du 22/10/2026 |
 | Aucune niche vacante établie | [Revue adversariale](10-revue-adversariale-g0.md) | Objections à instruire |
