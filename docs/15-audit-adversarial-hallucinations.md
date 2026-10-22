@@ -250,7 +250,7 @@ Cette PR de suivi ne se limite donc plus au registre initial. Elle :
 - corrige la relation DATEM/ETEX dans le catalogue de données et clarifie le statut G0 par rapport aux prérequis G1 ;
 - corrige les métadonnées Turbelin et al. (2014), Bozon & Mohammadi (2009), Arcucci et al. (2023) et la date de la ressource Zenodo (2026) ;
 - sépare la source CAREA sur les sources complexes (Teggi et al., 2018) de l'étude d'exposition aux pesticides (Costanzini et al., 2018) ;
-- corrige le journal de l'étude POD+RBF et distingue l'année de publication en ligne de l'année de volume pour l'article Seveso ;
+- requalifie la référence ScienceDirect PII S2666449621000372 comme non vérifiée (les métadonnées et l'association à POD+RBF ne sont pas confirmées) et distingue l'année de publication en ligne de l'année de volume pour l'article Seveso ;
 - retire les affirmations non étayées sur l'absence de dépôt de la thèse et précise que l'année officielle doit être vérifiée sur la page de titre.
 
 Les changements n'établissent pas encore la validité de chaque référence du corpus. Les PDF de revue exécutive, les métadonnées bibliographiques complètes et les fichiers bruts de données restent à auditer.
@@ -264,3 +264,19 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 - **Source :** [record Zenodo](https://zenodo.org/records/22914336).
 - **Correction effectuée dans cette PR :** l'année est corrigée en 2026. La ressource est identifiée comme une ressource de synthèse, mais son statut de revue évaluée par les pairs n'est pas affirmé ; ses conclusions doivent être corroborées par les articles primaires.
 - **Preuve de clôture :** vérifier que toutes les occurrences (notamment `site/references.bib`, `site/references.qmd` et `docs/bibliographie/identification-source-assimilation.md`) utilisent 2026 et que les affirmations associées sont attribuées à la ressource avec le niveau de preuve approprié.
+
+### B-10 — PII ScienceDirect S2666449621000372 : méthode et métadonnées non confirmées
+
+- **Statut :** non vérifié ; ne pas qualifier de faux en l'absence de contradiction positive.
+- **Emplacement :** `docs/bibliographie/rom-et-apprentissage.md` et les mentions associées éventuelles.
+- **Constat :** le dépôt associait ce PII à une étude POD+RBF pour un environnement urbain et indiquait *Journal of Safety Science and Resilience* (2021). La page ScienceDirect a renvoyé HTTP 403 lors du contrôle automatisé et une recherche exacte sur le PII n'a pas retrouvé de notice exploitable permettant de confirmer le titre, les auteurs, la méthode ou la revue.
+- **Correction effectuée :** la fiche décrit désormais cette référence comme non vérifiée et interdit de l'utiliser comme preuve méthodologique avant vérification primaire.
+- **Preuve de clôture :** obtenir une notice éditeur ou Crossref avec titre/auteurs/revue/année, puis lire au minimum le résumé et confirmer que la méthode POD+RBF est bien celle annoncée.
+
+### B-11 — Métadonnées non vérifiées encore présentées comme établies dans la bibliographie du site
+
+- **Statut :** incohérence interne documentaire confirmée et corrigée dans cette PR.
+- **Emplacement :** `site/references.bib`, `site/references.qmd`.
+- **Constat :** malgré les constats A-01 et A-03 qui signalent que les métadonnées exactes de la thèse de Brun et du chapitre attribué à Mohammadi, Brun et Pironneau restent à confirmer, la bibliographie BibTeX et la page Quarto du site leur attribuaient encore des métadonnées fermes (titre, année/établissement pour la thèse ; livre et éditeur pour le chapitre).
+- **Correction effectuée :** ces entrées sont maintenant explicitement provisoires/non vérifiées ; le chapitre n'est plus présenté comme un chapitre Springer confirmé et la thèse n'est plus figée sous un titre et une année non résolus.
+- **Preuve de clôture :** retrouver la page de titre ou une notice institutionnelle de la thèse et une notice éditeur/catalogue pour le chapitre ; rétablir les métadonnées complètes seulement après contrôle.
