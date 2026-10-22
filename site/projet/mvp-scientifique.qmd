@@ -1,0 +1,56 @@
+---
+title: "G0 — MVP scientifique minimal et trajectoire maximale"
+---
+
+# G0 — Avancer sans présumer de l'application
+
+**Décision proposée :** autoriser une exploration mathématique minimale de J-DriftX tout en maintenant bloquées les revendications applicatives. Cela permet d'avancer sans confondre un modèle jouet scientifique avec un modèle de dispersion validé.
+
+## Deux portes, deux niveaux de preuve
+
+| Volet | Question | Statut |
+|---|---|---|
+| **G0-S — Exploration scientifique** | Une propriété précise du temps de parcours dirigé mérite-t-elle une étude mathématique reproductible ? | **Autorisé sous périmètre strict** |
+| **G0-A — Utilité applicative** | Un utilisateur et une décision réels bénéficieraient-ils de J-DriftX face aux alternatives ? | **Non franchi** |
+
+G0-S permet définitions, preuves, contre-exemples et expériences synthétiques. G0-A reste obligatoire avant de choisir un domaine applicatif, d'utiliser des données réelles pour revendiquer une validation physique, ou de prétendre que J-DriftX améliore une décision.
+
+## MVP scientifique
+
+La question minimale est :
+
+> Quelles propriétés possède une fonction de temps de parcours dirigé définie par une dynamique explicite, et lesquelles ne découlent pas de sa seule définition ?
+
+Le MVP comprend une définition mathématique sans ambiguïté, un cas 1D calculable à la main, des propriétés démontrées ou réfutées, des contre-exemples, des tests reproductibles et une recherche ciblée de travaux antérieurs. Un cas 2D synthétique ne sera ajouté que si une question précise ne peut être tranchée en 1D.
+
+**Hors périmètre :** aucune prédiction de dépôt ou de concentration, aucune affirmation de supériorité, aucun benchmark multi-domaines, aucune calibration ou ML, aucune interface QGIS/API, et aucune revendication de nouveauté avant revue bibliographique.
+
+## Critères d'acceptation
+
+- définition, hypothèses, domaine et unités explicites ;
+- cas analytique indépendant du code ;
+- preuves et conjectures séparées ;
+- tests de propriétés et contre-exemples ;
+- code et figures reproductibles ;
+- revue ciblée de la littérature et conclusion honnête : propriété utile, idée connue mais pédagogique, résultat nul ou piste abandonnée.
+
+## Trajectoire maximale, sous conditions
+
+1. **S1 — Champ 2D synthétique** : uniquement avec une dynamique définie et une référence numérique indépendante.
+2. **S2 — Transport physique** : uniquement si le lien avec une équation de transport est dérivé et justifié.
+3. **S3 — Cas atmosphérique contrôlé** : seulement avec observable compatible, baseline et protocole reproductible.
+4. **S4 — Application ciblée** : seulement après identification d'un utilisateur, d'une décision et de données indépendantes.
+5. **S5 — Multi-domaines** : chaque domaine garde ses propres lois physiques et validation; aucune généralisation automatique entre air, gouttelettes, eau et mer.
+
+La vision maximale — modèle de dispersion réduit, éventuellement calibrable et réutilisable sur plusieurs cas — reste une direction possible, pas un engagement à développer tous les modules.
+
+## Règles scientifiques
+
+- Une hypothèse, un test discriminant.
+- Baseline et métriques avant revendication de gain.
+- Distinguer preuve mathématique, simulation, validation expérimentale et utilité décisionnelle.
+- Conserver les résultats négatifs.
+- Ne pas utiliser des données simplement parce qu'elles sont publiques : vérifier la correspondance physique et l'indépendance.
+- N'ajouter aucun module applicatif qui ne soutient pas un test approuvé.
+
+Le [document détaillé](../../docs/13-mvp-scientifique-et-g0.md) explicite les critères, les portes et les actions. Voir également le [cadrage G0 externe](preuves-g0.qmd), la [revue adversariale](revue-adversariale-g0.qmd) et le [catalogue de données](catalogue-donnees.qmd).
