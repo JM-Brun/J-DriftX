@@ -37,7 +37,7 @@ Les fiches Markdown décrivant les liens scientifiques entre les références et
 
 | Fichier attendu | Source | Où le trouver |
 |---|---|---|
-| <code>2006-these-brun.pdf</code> | Brun, *Modélisation à complexité réduite de la dérive*, thèse Univ. Montpellier II | En possession de l'auteur — puis dépôt HAL (action M0) |
+| <code>2007-these-brun.pdf</code> | Brun, *Modélisation à complexité réduite de la dérive*, thèse Univ. Montpellier II (citée comme 2007 dans l'article primaire de 2006 ; année exacte à vérifier) | Indiquée comme en possession de l'auteur — vérifier page de titre, métadonnées et droits avant tout dépôt HAL (action M0) |
 | <code>2006-mohammadi-brun-pironneau-springer.pdf</code> | Chapitre Springer 2006 (avec Pironneau) | Recueil introuvable en ligne à ce jour |
 | <code>2008-bozon-mohammadi-sinfort-esta.pdf</code> | e-sta vol. 5, STIC & Environnement'07 | Archives SEE introuvables en ligne à ce jour |
 | <code>2008-brun-mohammadi-springer-chap14.pdf</code> | Chapitre complet (seul un extrait de 2 pages est présent) | En possession de l'auteur ; [page ResearchGate](https://www.researchgate.net/publication/226478979_Reduced-Order_Modelling_of_Dispersion) |
