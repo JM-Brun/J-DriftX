@@ -85,12 +85,13 @@ Le protocole et les critères d'acceptation sont décrits dans [docs/09-fallback
 
 ## Prochaines actions
 
-1. **G0 — Rédiger la fiche de décision d'utilité** pour le far-field de dérive de pulvérisation : problème, utilisateur, décision, contraintes, limites documentées des alternatives, bénéfice supposé, baselines, données accessibles et critères d'abandon.
-2. Vérifier si la revue de l'état de l'art suggère un autre cas d'usage plus important ou plus testable ; comparer les options sur des critères explicites.
-3. Choisir le test discriminant le moins coûteux et définir ses métriques et seuils avant d'observer les résultats.
-4. Seulement après cette décision, formaliser le problème mathématique minimal et le benchmark correspondant.
-5. Continuer l'intégration de la revue systématique et consigner les décisions en reliant les affirmations aux sources.
-6. Décider des licences et de l'archivage des sources historiques selon les droits applicables.
+Le projet adopte désormais deux pistes de décision séparées, détaillées dans [docs/13-mvp-scientifique-et-g0.md](13-mvp-scientifique-et-g0.md) :
+
+1. **G0-S — exploration scientifique minimale :** autoriser la définition et l'étude du temps de parcours dirigé comme modèle jouet, avec cas analytiques, propriétés, contre-exemples et tests reproductibles. Aucune revendication applicative ou de nouveauté n'est permise à ce stade.
+2. **G0-A — utilité applicative :** reste bloqué tant que l'utilisateur, la décision, l'observable, le régime physique, la baseline et les données indépendantes ne sont pas établis. Le far-field de dérive reste une option parmi d'autres.
+3. Rechercher les travaux antérieurs portant sur la définition mathématique exacte avant d'implémenter un solveur 2D ou d'annoncer une contribution originale.
+4. N'ouvrir qu'une porte d'extension à la fois, avec hypothèse réfutable, référence indépendante et critères d'arrêt.
+5. Continuer à tracer les sources, les limites et les résultats négatifs; différer données réelles, calibration, ML, GIS/QGIS et API jusqu'à ce qu'une question les justifie.
 
 ## Références de travail
 
