@@ -42,6 +42,19 @@ Cette question est plus petite que « prédire la dispersion atmosphérique ». 
 
 Ces exclusions sont des protections contre les conclusions non justifiées, pas une fermeture définitive des possibilités futures.
 
+## 2.1. Antécédents à examiner avant de revendiquer une contribution
+
+Le temps de parcours minimal et sa géométrie ne sont pas des territoires vierges. Le problème de navigation de Zermelo et les métriques de Randers/Finsler relient déjà des champs de vent/courant à des trajectoires à temps minimal. Les travaux à examiner incluent notamment :
+
+- Gibbons et al. (2009), *Stationary metrics and optical Zermelo-Randers-Finsler geometry*, [Physical Review D](https://doi.org/10.1103/PhysRevD.79.044022).
+- Dušek (2018), *Zermelo Navigation Problem in Geometry*, [DOI 10.17818/NM/2018/4SI.16](https://doi.org/10.17818/NM/2018/4SI.16).
+- *Time-optimal solutions of Zermelo's navigation problem with moving obstacles* (2024), [Differential Geometry and its Applications](https://doi.org/10.1016/j.difgeo.2024.102177).
+- Markvorsen, Pendás-Recondo et Rygaard (2025), *Time-dependent Zermelo navigation with tacking*, [arXiv:2508.07274](https://arxiv.org/abs/2508.07274).
+
+Cette liste est un point de départ, pas une revue exhaustive ni une preuve que les idées spécifiques de J-DriftX sont couvertes. Il faut comparer les définitions exactes, hypothèses, résultats et objectifs. La simple réutilisation d'une géométrie de temps de parcours connue n'est pas une nouveauté.
+
+**Conséquence pour le MVP :** la première tâche est une note de positionnement mathématique. Si aucune propriété ou construction nouvelle n'émerge, continuer comme ressource pédagogique / banc d'essai reproductible reste valide, mais la revendication de contribution originale doit être abandonnée ou reformulée autour d'un différentiel précisément démontré.
+
 ## 3. Critères d'acceptation du MVP
 
 Le MVP est terminé lorsqu'il contient :
