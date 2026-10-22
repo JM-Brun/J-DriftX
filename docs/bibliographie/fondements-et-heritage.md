@@ -15,10 +15,10 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 - **Limites à conserver :** le papier est court ; les hypothèses sur l'écoulement et la structure du panache sont spécifiques. La pseudo-distance ne satisfait pas nécessairement les axiomes d'une distance métrique.
 - **Statut de lecture indiqué dans le dépôt :** texte intégral relu.
 
-### Brun (2006) — *Modélisation à complexité réduite de la dérive* (thèse)
+### Brun — *Modélisation à complexité réduite de la dérive* (thèse ; année à confirmer)
 
 - **Lien :** source fondatrice attendue, directement liée mais non consultée intégralement dans le corpus actuel.
-- **Référence :** thèse de doctorat, Université Montpellier II, 2006. La thèse n'est pas encore disponible en ligne selon les notes du dépôt.
+- **Référence :** thèse de doctorat, Université Montpellier II. L'article primaire de Mohammadi & Brun (2006) la cite comme 2007 ; certaines bibliographies secondaires indiquent 2006. Elle n'a pas été localisée dans les recherches consignées, ce qui ne prouve pas l'absence de dépôt ou de numérisation.
 - **Idées pertinentes :** contexte plus large du modèle multi-échelle et des applications à la dérive.
 - **Conséquence :** retrouver, numériser et déposer une version partageable si les droits le permettent ; ne pas inférer son contenu détaillé à partir des seuls articles citants.
 - **Statut :** métadonnées et contenu partiel connus par recoupement ; texte intégral à relire.
