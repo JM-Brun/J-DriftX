@@ -65,6 +65,32 @@ Les fonctions numériques sont séparées des interfaces dans `src/jdriftx/`. Le
 
 La stratégie recommandée est de garder le cœur Python indépendant de l'interface et de documenter les références analytiques dans Quarto. Une iframe ne sera ajoutée qu'après déploiement et vérification d'une URL réelle. Le contenu scientifique de la documentation doit rester accessible si l'application est indisponible.
 
+## Convergence spatiale et temporelle
+
+L'application complémentaire `apps/convergence_lab.py` vérifie une équation d'advection-diffusion sur un domaine périodique, avec une condition initiale sinusoïdale. Le solveur numérique est implémenté séparément de la solution analytique :
+
+\[
+\frac{\partial c}{\partial t}+u\frac{\partial c}{\partial x}
+=K\frac{\partial^2 c}{\partial x^2},
+\qquad
+c(x,t)=\bar c+A e^{-K(2\pi/L)^2t}\sin\left(\frac{2\pi}{L}(x-ut)\right).
+\]
+
+Le solveur utilise des différences finies centrées en espace et RK4 en temps, avec contrôle de stabilité linéaire pour le pas demandé. L'interface affiche l'erreur (L^2), l'erreur maximale, la conservation de la moyenne et deux études de convergence :
+
+- **Convergence spatiale** : le maillage est raffiné et le pas temporel réduit comme (Delta x^2), afin de limiter la contamination de l'estimation par l'erreur temporelle.
+- **Convergence temporelle** : le maillage reste fixe et les solutions sont comparées à un calcul de référence utilisant le même opérateur spatial avec un pas de temps beaucoup plus fin.
+
+L'ordre ajusté est un indicateur empirique sur la plage de paramètres choisie, pas une preuve générale. La référence temporelle fine n'est pas exacte ; le test spatial contre la solution analytique fournit un contrôle complémentaire.
+
+Lancer avec :
+
+```bash
+uv run streamlit run apps/convergence_lab.py
+```
+
+Ce cas périodique lisse ne teste pas les conditions aux limites ouvertes, les sources localisées, les coefficients variables ni la physique des gouttelettes. Il sert à vérifier le comportement numérique sur un problème contrôlé, pas à valider une simulation atmosphérique.
+
 ## Références conceptuelles
 
 - L'intégration d'EDO par Euler et Runge–Kutta est ici utilisée pour comparer une solution numérique à un cas exact simple.
