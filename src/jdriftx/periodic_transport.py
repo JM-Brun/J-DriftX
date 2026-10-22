@@ -110,8 +110,7 @@ def solve_periodic_sine_transport(
     # Eigenvalues of the periodic centered-difference advection-diffusion operator.
     theta = 2.0 * np.pi * np.arange(n_cells, dtype=float) / n_cells
     eigenvalues = (
-        -1j * velocity * np.sin(theta) / dx
-        - 4.0 * diffusivity * np.sin(theta / 2.0) ** 2 / dx**2
+        -1j * velocity * np.sin(theta) / dx - 4.0 * diffusivity * np.sin(theta / 2.0) ** 2 / dx**2
     )
     z = actual_dt * eigenvalues
     amplification = 1.0 + z + z**2 / 2.0 + z**3 / 6.0 + z**4 / 24.0
