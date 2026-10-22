@@ -36,9 +36,7 @@ with trajectory_tab:
             r"$(x(0),y(0))=(1,0)$, la solution exacte est $(\cos t,\sin t)$."
         )
 
-    def _rotational_velocity(
-        _t: float, x: float, y: float
-    ) -> tuple[float, float]:
+    def _rotational_velocity(_t: float, x: float, y: float) -> tuple[float, float]:
         return (-y, x)
 
     times = np.linspace(0.0, end_time, 600)
@@ -50,12 +48,8 @@ with trajectory_tab:
         _times, x_num, y_num = integrate_trajectory(
             _rotational_velocity, 1.0, 0.0, 0.0, end_time, dt, method
         )
-        figure.add_trace(
-            go.Scatter(x=x_num, y=y_num, mode="lines+markers", name=method.upper())
-        )
-        errors[method] = float(
-            np.hypot(x_num[-1] - np.cos(end_time), y_num[-1] - np.sin(end_time))
-        )
+        figure.add_trace(go.Scatter(x=x_num, y=y_num, mode="lines+markers", name=method.upper()))
+        errors[method] = float(np.hypot(x_num[-1] - np.cos(end_time), y_num[-1] - np.sin(end_time)))
     figure.update_layout(
         title="Trajectoire dans le plan de phase",
         xaxis_title="x (unité arbitraire)",
@@ -131,12 +125,22 @@ with transport_tab:
         center0 = st.slider("Centre initial x₀", -3.0, 3.0, 0.0, 0.25)
     x = np.linspace(-10.0, 10.0, 4001)
     concentration = gaussian_advection_diffusion(
-        x, time, mass=mass, initial_center=center0, velocity=speed,
-        diffusivity=diffusivity, initial_sigma=sigma0,
+        x,
+        time,
+        mass=mass,
+        initial_center=center0,
+        velocity=speed,
+        diffusivity=diffusivity,
+        initial_sigma=sigma0,
     )
     initial = gaussian_advection_diffusion(
-        x, 0.0, mass=mass, initial_center=center0, velocity=speed,
-        diffusivity=diffusivity, initial_sigma=sigma0,
+        x,
+        0.0,
+        mass=mass,
+        initial_center=center0,
+        velocity=speed,
+        diffusivity=diffusivity,
+        initial_sigma=sigma0,
     )
     profile = go.Figure()
     profile.add_trace(go.Scatter(x=x, y=initial, mode="lines", name="Initial"))
