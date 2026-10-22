@@ -18,7 +18,7 @@ décrit un temps de parcours le long d'une trajectoire donnée. Il faut distingu
 
 ## Lire les termes de mécanique des fluides
 
-Un **champ de vitesse** \(\mathbf u\) associe une vitesse à chaque position. Une **ligne de courant** est tangente au champ à un instant donné; une **trajectoire de particule** est le chemin suivi au cours du temps. Pour un champ stationnaire suffisamment régulier, lignes de courant et trajectoires spatiales coïncident; dans un champ instationnaire, elles peuvent différer. Une **caractéristique** est la courbe qui transporte l'information d'une équation différentielle de transport et doit être définie à partir de la dynamique étudiée. La notation \\(\\mathbf u\\cdot\\nabla c\\) désigne la dérivée directionnelle de la concentration le long de la vitesse locale; son apparition dans la source historique ne doit pas être interprétée comme un critère complet sans reprendre les hypothèses et le contexte de l'article.
+Un **champ de vitesse** \(\mathbf u\) associe une vitesse à chaque position. Une **ligne de courant** est tangente au champ à un instant donné; une **trajectoire de particule** est le chemin suivi au cours du temps. Pour un champ stationnaire suffisamment régulier, lignes de courant et trajectoires spatiales coïncident; dans un champ instationnaire, elles peuvent différer. Une **caractéristique** est la courbe qui transporte l'information d'une équation différentielle de transport et doit être définie à partir de la dynamique étudiée. La notation \(\mathbf u\cdot\nabla c\) désigne la dérivée directionnelle de la concentration le long de la vitesse locale; son apparition dans la source historique ne doit pas être interprétée comme un critère complet sans reprendre les hypothèses et le contexte de l'article.
 
 La **divergence** \(\nabla\cdot\mathbf u\) caractérise la dilatation locale du champ. Une divergence nulle est cohérente avec un écoulement incompressible à densité constante, mais ne prouve pas à elle seule la conservation du flux à travers toute surface. Les sources de fluide, les sources de polluant et les points singuliers du champ sont trois cas distincts.
 
@@ -34,11 +34,11 @@ Le problème de Zermelo et les géométries de Randers/Finsler sont des antécé
 
 ## Définition idéale et algorithme approché (2008)
 
-Le chapitre de 2008 confirme la projection \(B\mapsto B^\perp\), mais précise que la méthode numérique approxime ensuite \(B^\perp\approx B\), approximation décrite comme généralement peu probable au sens géométrique exact. Il applique en champ uniforme un facteur correctif \(2/\pi\) (moyenne cosinus stochastique) et limite les résultats satisfaisants aux champs atmosphériques lisses visés par l'étude.
+Le chapitre de [Brun & Mohammadi (2008, §2.2, pp. 248–250)](https://doi.org/10.1007/978-1-4020-8758-5_14) confirme la projection \(B\mapsto B^\perp\), mais précise que la méthode numérique approxime ensuite \(B^\perp\approx B\), approximation décrite comme généralement peu probable au sens géométrique exact. Il applique en champ uniforme un facteur correctif \(2/\pi\) (moyenne cosinus stochastique) et limite les résultats satisfaisants aux champs atmosphériques lisses visés par l'étude.
 
 Il faut donc distinguer la **définition géométrique** de la **procédure numérique approchée**. Les contraintes de conservation énoncées pour le modèle réduit ne constituent pas, à elles seules, une preuve que le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\).
 
-![Schéma de la projection historique et du contre-exemple à l'inégalité triangulaire. Les flèches illustrent le champ, sans représenter une simulation.](../images/pseudo-distance-projection-et-triangulation.svg)
+![À gauche, projection de B sur la caractéristique de A. À droite, B⊥ et C⊥ sont les projections utilisées pour calculer d(A,B) et d(B,C); les flèches sont schématiques, pas une simulation.](../images/pseudo-distance-projection-et-triangulation.svg)
 
 ## Contre-exemple à l'inégalité triangulaire
 
@@ -62,18 +62,20 @@ Le code est désormais documenté comme **primitive provisoire de coût sur une 
 
 De même, une singularité de \(1/|\mathbf u|\) près d'une stagnation ne prouve pas automatiquement que toute intégrale diverge; le comportement local doit être analysé. Et la conservation de masse demande une dérivation à partir de l'équation de transport, pas seulement la définition de \(\tau\).
 
-## Antécédents à lire
+## Antécédents à lire : références et portée
 
-- Gibbons et al. (2009), [Zermelo–Randers–Finsler](https://doi.org/10.1103/PhysRevD.79.044022).
-- Dušek (2018), [Zermelo Navigation Problem in Geometry](https://doi.org/10.17818/NM/2018/4SI.16).
-- [Zermelo avec obstacles mobiles (2024)](https://doi.org/10.1016/j.difgeo.2024.102177).
-- Markvorsen et al. (2025), [navigation dépendant du temps](https://arxiv.org/abs/2508.07274).
-- Contreras & Kachroo (2020), [Hamilton–Jacobi Travel Time Dynamics](https://doi.org/10.1109/TITS.2019.2946109).
-- Sethian & Vladimirsky (2001), [Ordered upwind methods for static Hamilton–Jacobi equations](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/).
+| Référence | Objet principal | Pourquoi la comparer | Limite de la comparaison |
+|---|---|---|---|
+| Gibbons, Herdeiro, Warnick & Werner (2009), [*Stationary metrics and optical Zermelo-Randers-Finsler geometry*](https://doi.org/10.1103/PhysRevD.79.044022), *Physical Review D*, 79, 044022 | Correspondance entre navigation de Zermelo et géométrie de Randers/Finsler | Cadre mathématique pour un mobile qui choisit sa trajectoire dans un courant | Le traceur passif advecté ne choisit pas librement sa direction |
+| Dušek (2018), [*Zermelo Navigation Problem in Geometry*](https://doi.org/10.17818/NM/2018/4SI.16) | Présentation du problème de navigation | Clarifier le sens de « temps minimal » et les hypothèses de navigation | Ne définit pas la projection historique de Drift-X |
+| [*Time-optimal solutions of Zermelo's navigation problem with moving obstacles* (2024)](https://doi.org/10.1016/j.difgeo.2024.102177) | Navigation à temps minimal avec obstacles mobiles | Comparateur si le modèle ajoute des contraintes de trajectoire | N'établit pas de propriété de la pseudo-distance projetée |
+| Markvorsen, Pendás-Recondo & Rygaard (2025), [*Time-dependent Zermelo navigation with tacking*](https://arxiv.org/abs/2508.07274) | Navigation dépendante du temps | Comparateur pour une éventuelle extension instationnaire | Ne justifie pas automatiquement l'extension de la définition historique |
+| Contreras & Kachroo (2020), [*The Viscosity Solution for Hamilton Jacobi Travel Time Dynamics*](https://doi.org/10.1109/TITS.2019.2946109) | Dynamique de temps de parcours de type Hamilton–Jacobi en trafic | Comparaison des formulations de temps d'arrivée | Contexte physique différent de l'advection atmosphérique |
+| Sethian & Vladimirsky (2001), [*Ordered upwind methods for static Hamilton–Jacobi equations*](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/) | Méthodes numériques pour Hamilton–Jacobi statiques | Référence possible si un vrai problème de temps minimal est retenu | Ne justifie pas un solveur pour la définition projetée sans analyse préalable |
 
 ## Ce que dit effectivement la source historique de 2006
 
-La note de Mohammadi & Brun (2006, §3, [texte intégral](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf)) ne définit pas simplement le temps jusqu'au point cible \(B\). Elle projette \(B\) sur la caractéristique passant par \(A\), en \(B^\perp\), puis intègre le temps de migration de \(A\) à \(B^\perp\). La source nomme explicitement cette construction une **pseudo-distance** et indique qu'elle peut perdre la séparation des points et que l'inégalité triangulaire peut échouer.
+La note de [Mohammadi & Brun (2006, §3, pp. 635–636)](https://doi.org/10.1016/j.crme.2006.06.007) ([texte intégral en accès libre](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf)) ne définit pas simplement le temps jusqu'au point cible \(B\). Elle projette \(B\) sur la caractéristique passant par \(A\), en \(B^\perp\), puis intègre le temps de migration de \(A\) à \(B^\perp\). La source nomme explicitement cette construction une **pseudo-distance** et indique qu'elle peut perdre la séparation des points et que l'inégalité triangulaire peut échouer.
 
 Dans un champ uniforme \(\mathbf u=(U,0)\), \(U>0\), la formule devient, pour \(x_B\ge x_A\),
 
@@ -96,7 +98,7 @@ Les trois dernières références sont des comparateurs conceptuels : elles ne d
 
 ## Le lien avec l'équation de transport
 
-Pour une concentration passive (c), l'équation conservative d'advection avec source (s) est \(\partial_t c+\nabla\cdot(c\mathbf u)=s\). Si la divergence du champ est nulle, elle se réduit à \(\partial_t c+\mathbf u\cdot\nabla c=s\). Cette forme explique pourquoi les caractéristiques sont utiles : elles suivent le transport de l'information. Mais la pseudo-distance projetée est un objet géométrique construit à partir de ces caractéristiques; elle n'est pas, par elle-même, une solution de l'équation de concentration et ne modélise pas automatiquement la diffusion, la turbulence ou le dépôt.
+Pour une concentration passive \(c\), l'équation conservative d'advection avec source \(s\) est \(\partial_t c+\nabla\cdot(c\mathbf u)=s\). Si la divergence du champ est nulle, elle se réduit à \(\partial_t c+\mathbf u\cdot\nabla c=s\). Cette forme explique pourquoi les caractéristiques sont utiles : elles suivent le transport de l'information. Mais la pseudo-distance projetée est un objet géométrique construit à partir de ces caractéristiques; elle n'est pas, par elle-même, une solution de l'équation de concentration et ne modélise pas automatiquement la diffusion, la turbulence ou le dépôt.
 
 La revendication de conservation du flux sur les surfaces iso-\(\tau\) exige une dérivation séparée du changement de variables, du jacobien et des conditions aux limites. La condition \(\nabla\cdot\mathbf u=0\) seule ne suffit pas à établir ce résultat précis.
 

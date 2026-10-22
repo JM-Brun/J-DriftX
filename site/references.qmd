@@ -6,7 +6,7 @@ title: "Références"
 
 ## Corpus historique Drift-X (2006–2010)
 
-1. Brun, J.-M. (2006). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. Non déposée en ligne à ce jour — numérisation et dépôt HAL prévus (action M0 de la roadmap).
+1. Brun, J.-M. (*année à vérifier : 2006 ou 2007*). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. Les références secondaires consultées divergent sur l'année (l'article de 2006 indique 2007; le chapitre de 2008 indique 2006). La page de titre ou un dépôt institutionnel doit trancher; aucune date définitive n'est retenue ici.
 2. Mohammadi, B. & Brun, J.-M. (2006). [Similitude généralisée et modélisation géométrique à complexité réduite](https://www.em-consulte.com/article/69927). *C. R. Mécanique* 334(10), 634–638 — [PDF en accès libre (Académie des sciences)](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
 3. Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006). Reduced order modelling of dispersion. In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
 4. Brun, J.-M. & Mohammadi, B. (2008). [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14). In Glowinski & Neittaanmäki (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, Springer, chap. 14, p. 245 et s.
