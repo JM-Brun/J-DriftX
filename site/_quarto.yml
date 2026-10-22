@@ -23,6 +23,8 @@ website:
         text: "Glossaire"
       - section: "Le projet"
         contents:
+          - href: projet/carte-articulation.qmd
+            text: "Carte d’articulation scientifique"
           - href: projet/heritage.qmd
             text: "Héritage Drift-X"
           - href: projet/objectifs.qmd
