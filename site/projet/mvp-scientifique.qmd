@@ -6,6 +6,8 @@ title: "G0 — MVP scientifique minimal et trajectoire maximale"
 
 **Décision proposée :** autoriser une exploration mathématique minimale de J-DriftX tout en maintenant bloquées les revendications applicatives. Cela permet d'avancer sans confondre un modèle jouet scientifique avec un modèle de dispersion validé.
 
+> **Suivi :** l'investigation mathématique est suivie dans l'issue [#41](https://github.com/JM-Brun/J-DriftX/issues/41) ; le squelette benchmarks pour G1 dans l'issue [#17](https://github.com/JM-Brun/J-DriftX/issues/17).
+
 ## Deux portes, deux niveaux de preuve
 
 | Volet | Question | Statut |

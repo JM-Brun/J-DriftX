@@ -6,6 +6,8 @@ title: "Fiche G0 — cadrage du besoin"
 
 > **Statut : proposition à ratifier.** G0 n'est pas encore franchi : les champs (a), (b), (f) et (g) doivent être ratifiés par l'auteur du projet, et l'audit des données (issues #13) doit conclure.
 
+> **Suivi :** la ratification et le besoin applicatif (G0-A) sont suivis dans l'issue [#43](https://github.com/JM-Brun/J-DriftX/issues/43) ; l'audit des données dans l'issue [#13](https://github.com/JM-Brun/J-DriftX/issues/13).
+
 ## Ce que la fiche retient
 
 - **Utilisateurs en ordre hiérarchique** : chercheur en dispersion (utilisateur primaire), évaluateur de risque (candidat pratique dès G2), instruction de ZNT (horizon *in fine*). Instruire les trois en parallèle fragmenterait observable, baselines et standards de preuve.

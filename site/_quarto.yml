@@ -19,65 +19,57 @@ website:
     contents:
       - href: index.qmd
         text: "Accueil"
-      - href: glossaire.qmd
-        text: "Glossaire"
-      - section: "Le projet"
+      - section: "Découvrir le projet"
         contents:
           - href: projet/carte-articulation.qmd
-            text: "Carte d’articulation scientifique"
+            text: "Carte d'articulation"
           - href: projet/heritage.qmd
-            text: "Héritage Drift-X"
+            text: "Héritage Drift-X (2006–2009)"
           - href: projet/objectifs.qmd
             text: "Objectifs de J-DriftX"
-          - href: projet/audit.qmd
-            text: "Audit de l'héritage"
-          - href: projet/lectures.qmd
-            text: "Lectures des sources"
-          - href: projet/roadmap.qmd
-            text: "Feuille de route"
           - href: projet/utilite-scientifique.qmd
             text: "Utilité scientifique"
-          - href: projet/revue-adversariale-g0.qmd
-            text: "Revue adversariale G0"
-          - href: projet/preuves-g0.qmd
-            text: "G0 — preuves externes"
-          - href: projet/fiche-g0.qmd
-            text: "Fiche G0 — cadrage du besoin"
-          - href: projet/catalogue-donnees.qmd
-            text: "Catalogue de données"
-          - href: projet/mvp-scientifique.qmd
-            text: "MVP scientifique minimal"
-          - href: projet/modele-jouet.qmd
-            text: "Fallback théorique"
-          - href: projet/laboratoire-interactif.qmd
-            text: "Laboratoire interactif"
-          - href: projet/validation-scientifique.qmd
-            text: "Validation scientifique"
-          - href: projet/qualite.qmd
-            text: "Qualité & tests"
-      - section: "Fondements théoriques"
+          - section: "Vérification et validation"
+            contents:
+              - href: projet/validation-scientifique.qmd
+                text: "Validation scientifique"
+              - href: projet/qualite.qmd
+                text: "Qualité & tests"
+              - href: projet/laboratoire-interactif.qmd
+                text: "Laboratoire interactif"
+              - href: projet/catalogue-donnees.qmd
+                text: "Catalogue de données"
+      - section: "Théorie"
         contents:
-          - href: theorie/modele-direct.qmd
-            text: "Modèle direct"
-          - href: theorie/edp-et-maillage.qmd
-            text: "EDP & maillage"
-          - href: theorie/reduction-a-priori.qmd
-            text: "Réduction a priori"
-          - href: theorie/similitude.qmd
-            text: "Solutions de similitude"
-          - href: theorie/metrique-travel-time.qmd
-            text: "Métrique travel-time"
-          - href: theorie/metriques-non-riemanniennes.qmd
-            text: "Métriques non riemanniennes"
-          - href: theorie/contraintes-physiques.qmd
-            text: "Contraintes physiques"
-          - href: theorie/burgers-et-jdriftx.qmd
-            text: "Équation de Burgers et J-DriftX"
-          - href: theorie/assimilation-identification.qmd
-            text: "Assimilation & identification"
-          - href: theorie/comparaison-complexites.qmd
-            text: "Comparaison des complexités"
-      - section: "Hypothèses"
+          - section: "Le modèle et sa réduction"
+            contents:
+              - href: theorie/modele-direct.qmd
+                text: "Modèle direct"
+              - href: theorie/reduction-a-priori.qmd
+                text: "Réduction a priori"
+          - section: "La métrique des temps de transport"
+            contents:
+              - href: theorie/metrique-travel-time.qmd
+                text: "Métrique travel-time"
+              - href: theorie/metriques-non-riemanniennes.qmd
+                text: "Métriques non riemanniennes"
+          - section: "Solutions et contraintes"
+            contents:
+              - href: theorie/similitude.qmd
+                text: "Solutions de similitude"
+              - href: theorie/contraintes-physiques.qmd
+                text: "Contraintes physiques"
+              - href: theorie/assimilation-identification.qmd
+                text: "Assimilation & identification"
+          - section: "Perspectives et comparaisons"
+            contents:
+              - href: theorie/edp-et-maillage.qmd
+                text: "EDP & maillage"
+              - href: theorie/comparaison-complexites.qmd
+                text: "Comparaison des complexités"
+              - href: theorie/burgers-et-jdriftx.qmd
+                text: "Équation de Burgers et J-DriftX"
+      - section: "Hypothèses & limites"
         contents:
           - href: hypotheses/catalogue.qmd
             text: "Catalogue des hypothèses"
@@ -91,8 +83,28 @@ website:
             text: "Positionnement de J-DriftX"
           - href: etat-art/revue-mathematique.qmd
             text: "Revue mathématique ciblée"
+      - href: glossaire.qmd
+        text: "Glossaire"
       - href: references.qmd
         text: "Références"
+      - section: "Annexes — documents de travail"
+        contents:
+          - href: projet/roadmap.qmd
+            text: "Feuille de route"
+          - href: projet/audit.qmd
+            text: "Audit de l'héritage"
+          - href: projet/lectures.qmd
+            text: "Lectures des sources"
+          - href: projet/revue-adversariale-g0.qmd
+            text: "Revue adversariale G0"
+          - href: projet/preuves-g0.qmd
+            text: "G0 — preuves externes"
+          - href: projet/fiche-g0.qmd
+            text: "Fiche G0 — cadrage du besoin"
+          - href: projet/mvp-scientifique.qmd
+            text: "MVP scientifique minimal"
+          - href: projet/modele-jouet.qmd
+            text: "Fallback théorique"
 
 format:
   html:

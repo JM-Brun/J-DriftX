@@ -6,6 +6,8 @@ title: "Revue adversariale — porte G0"
 
 > **Statut :** hypothèses et objections à tester. Ce document ne conclut ni que J-DriftX est utile, ni qu'il est inutile.
 
+> **Suivi :** les investigations ouvertes sont listées dans les issues [#41](https://github.com/JM-Brun/J-DriftX/issues/41) (investigation mathématique G0-S) et [#43](https://github.com/JM-Brun/J-DriftX/issues/43) (besoin applicatif G0-A).
+
 ## Décision actuelle
 
 Ne pas lancer de développement scientifique substantiel sur le cas d'usage far-field avant d'avoir formulé un besoin indépendant de la solution et un test qui peut réfuter l'hypothèse. Les sources disponibles justifient d'étudier certains scénarios ; elles ne démontrent pas que J-DriftX les résout.

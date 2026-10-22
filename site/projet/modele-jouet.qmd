@@ -6,6 +6,8 @@ title: "Fallback théorique : un modèle jouet rigoureux"
 
 J-DriftX doit pouvoir aboutir à une conclusion négative sur son intérêt applicatif sans que cela entraîne automatiquement l'abandon de toute piste scientifique. Une autre possibilité est de réduire l'ambition à un modèle jouet mathématique, utile pour isoler une idée, démontrer des propriétés ou enseigner les limites d'une construction.
 
+> **Suivi :** les critères d'arrêt et l'éventuel déclenchement de ce repli sont suivis dans l'issue [#43](https://github.com/JM-Brun/J-DriftX/issues/43) (besoin applicatif G0-A).
+
 Ce fallback n'est pas un moyen de déclarer l'approche utile après coup. Le modèle jouet doit lui-même démontrer sa valeur, et toute revendication de nouveauté doit être vérifiée par une recherche bibliographique ciblée.
 
 ## Un arbre de décision explicite

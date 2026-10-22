@@ -6,6 +6,8 @@ title: "G0 — preuves externes et décision"
 
 > **Statut actualisé : G0 est franchi au niveau documentaire depuis le 22 octobre 2026.** Le cadrage et les corpus candidats sont documentés ; cela ne démontre pas que J-DriftX constitue une réponse adaptée, et G1/benchmark restent bloqués jusqu'à l'audit des fichiers bruts et licences.
 
+> **Suivi :** l'audit des jeux de données est suivi dans l'issue [#13](https://github.com/JM-Brun/J-DriftX/issues/13), le besoin applicatif (G0-A) dans l'issue [#43](https://github.com/JM-Brun/J-DriftX/issues/43).
+
 ## Ce que l'on sait
 
 - L'EPA documente des incertitudes de l'extension gaussienne d'AGDISP au-delà de 0,5 mile et une validation limitée au-delà de 2 miles dans le cadre précis de son guide 2010. Ce guide limite l'usage concerné à certains scénarios de pulvérisation aérienne ([EPA](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension)).
