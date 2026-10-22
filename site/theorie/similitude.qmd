@@ -17,9 +17,9 @@ Les deux chemins mènent à la même structure : **profils transversaux gaussien
 
 ## Dérivation du panache gaussien (régime établi)
 
-Hypothèses de départ : régime établi (pas de dépendance temporelle), vent **uniforme** $U$ porté par l'axe $x$, fermeture gradient, source ponctuelle continue de débit $Q$ à la hauteur $h$, sol sans déposition.
+Hypothèses de départ : régime établi (pas de dépendance temporelle), vent **uniforme** $U>0$ porté par l'axe $x$, source ponctuelle continue située en $x=0$ et de débit $Q$ à la hauteur $h$, fermeture gradient, diffusivités transversales constantes $K_y,K_z$, et absence de diffusion longitudinale, de réaction et de dépôt. Le domaine de calcul du panache est $x>0$. La condition de sol imperméable sera ajoutée séparément par la méthode des images à l'étape 6.
 
-**Étape 1 — Réduire l'équation.** L'équation d'advection–diffusion devient :
+**Étape 1 — Réduire l'équation.** À partir de l'équation stationnaire d'advection–diffusion, on néglige ici la diffusion longitudinale $K_x\,\partial_{xx}C$ (approximation de panache à transport dominant selon $x$), on suppose $U$ constant et on ne conserve que les diffusivités transversales. Sous ces hypothèses, l'équation réduite est :
 
 $$
 U \frac{\partial C}{\partial x}
@@ -60,13 +60,15 @@ C(x, y, z) = \frac{Q}{2\pi U \, \sigma_y(x) \, \sigma_z(x)}
 \exp\!\left(-\frac{(z-h)^2}{2\sigma_z^2}\right).
 $$
 
-**Étape 5 — Préfacteur fixé par la conservation de la masse.** Le coefficient $\frac{Q}{2\pi U \sigma_y \sigma_z}$ n'est pas ajustable : il est le seul qui garantisse
+**Étape 5 — Normalisation dans le domaine non borné.** Avant d'imposer le sol, la gaussienne de cette étape est une solution dans l'espace vertical non borné $z\in\mathbb R$. Avec $y,z\in\mathbb R$, son préfacteur est normalisé pour que
 
-$$
-\int\!\!\int U C \; \mathrm{d}y \, \mathrm{d}z = Q \qquad \forall x > 0,
-$$
+$
+\int_{-\infty}^{+\infty}\!\int_{-\infty}^{+\infty} U C \; \mathrm{d}y \, \mathrm{d}z = Q \qquad \forall x > 0.
+$
 
-c'est-à-dire la [conservation de la masse](contraintes-physiques.qmd), première des quatre contraintes physiques, testée en continu par la CI du paquet.
+Ce calcul analytique utilise les intégrales complètes des deux gaussiennes et les diffusivités constantes. Il ne décrit pas encore le domaine physique $z\geq0$ avec sol imperméable : à cette étape, la moitié de l'espace vertical sous le sol est encore incluse. L'étape 6 ajoute la source image et permet d'obtenir la normalisation correspondante sur le demi-espace $z\geq0$.
+
+**Contrôle logiciel distinct.** La CI exécute un test numérique de conservation pour l'implémentation actuelle du panache, à $x=1000\,\mathrm m$, sur une grille finie en $y,z$, avec une tolérance relative de 2 %. Ce test ciblé ne vérifie ni cette dérivation à diffusivités constantes, ni tous les $x>0$, ni une conservation exacte indépendante de la discrétisation.
 
 **Étape 6 — Réflexion au sol par la méthode des images.** Le sol ne laisse rien passer à travers lui : la condition est un flux vertical nul en $z = 0$. La méthode des images la satisfait exactement en ajoutant une **source virtuelle symétrique** en $(0, 0, -h)$ : la somme des deux gaussiennes annule le flux au sol et **double** la concentration au niveau du sol. C'est l'origine des deux termes verticaux de la formule de la page d'accueil :
 
@@ -112,7 +114,7 @@ Les profils sont **auto-similaires** : une fois adimensionnés par les largeurs 
 | Vent uniforme $U$, $t' = x/U$ | remplacé par la métrique $\tau$ ([Métrique travel-time](metrique-travel-time.qmd)) — la portée de la substitution est auditée |
 | Terrain plat, sol réflecteur | terrain suivi par MNT ; déposition en extension M3 ([Limites](../hypotheses/limites.qmd)) |
 | $\sigma$ tabulés (Briggs, classes de Pasquill) | paramètres calibrés par [assimilation](assimilation-identification.qmd) de mesures partielles |
-| $K$ constants | écart admis ; c'est lui que les $\sigma$ empiriques absorbent |
+| Diffusion longitudinale négligée ; $K_y,K_z$ constants dans la dérivation analytique | approximation nécessaire à l'équation parabolique de panache ; les $\sigma$ empiriques de l'implémentation ne constituent pas une validation de cette dérivation |
 | Source ponctuelle | le champ proche fournit les conditions d'entrée (section suivante) |
 
 Le catalogue complet des hypothèses est tenu sur la page [Catalogue des hypothèses](../hypotheses/catalogue.qmd).
