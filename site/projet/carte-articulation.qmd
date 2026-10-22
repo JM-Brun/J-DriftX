@@ -4,7 +4,7 @@ title: "Carte d'articulation du projet"
 
 # Comprendre J-DriftX sans confondre ses niveaux de preuve
 
-Cette page relie l'héritage scientifique, l'hypothèse de recherche, le code actuel, les laboratoires de vérification et les preuves encore nécessaires. Elle sert de **parcours de lecture** ; la feuille de route conserve les décisions et jalons détaillés.
+Cette page relie l'héritage scientifique, l'hypothèse de recherche, le code actuel, les laboratoires de vérification et les preuves encore nécessaires. Elle sert de **parcours de lecture**. Les documents de gouvernance du projet — feuille de route, audits, revues et cadrage des portes G0 — sont des documents de travail conservés dans [la documentation du dépôt](https://github.com/JM-Brun/J-DriftX/tree/main/docs), volontairement non publiés sur ce site.
 
 ## En bref
 
@@ -29,7 +29,7 @@ Une source historique établit ce qu'un article a publié ; un test vérifie un 
 - **G0-A : utilité applicative non démontrée** — le besoin, l'utilisateur, la décision et le bénéfice doivent être établis indépendamment de la méthode.
 - **G1 : cohérence théorique à poursuivre** sur un problème borné ; **G2–G4** restent conditionnels aux résultats.
 
-Le franchissement de G0 documentaire ne valide donc ni le modèle ni le cas d'usage. Voir le [cadre de décision](utilite-scientifique.qmd), la [revue adversariale G0](revue-adversariale-g0.qmd) et la [feuille de route](roadmap.qmd).
+Le franchissement de G0 documentaire ne valide donc ni le modèle ni le cas d'usage. Voir le [cadre de décision](utilite-scientifique.qmd) ; la [revue adversariale G0](https://github.com/JM-Brun/J-DriftX/blob/main/docs/10-revue-adversariale-g0.md) et la [feuille de route](https://github.com/JM-Brun/J-DriftX/blob/main/docs/03-roadmap-jdriftx-v2.md) sont consultables dans le dépôt.
 
 ## Ce que montrent les laboratoires
 
@@ -39,11 +39,11 @@ Ces expériences servent à la **vérification numérique**, non à la validatio
 
 ## Parcours de lecture conseillé
 
-1. [Héritage Drift-X](heritage.qmd) et [Lectures des sources](lectures.qmd) — établir la base documentaire.
+1. [Héritage Drift-X](heritage.qmd) et les [fiches de lecture des sources](https://github.com/JM-Brun/J-DriftX/blob/main/docs/04-revues-papiers-sources.md) — établir la base documentaire.
 2. [Fondements théoriques : modèle direct](../theorie/modele-direct.qmd), [Solutions de similitude](../theorie/similitude.qmd) et [Métrique travel-time](../theorie/metrique-travel-time.qmd) — préciser les objets mathématiques.
-3. [MVP scientifique minimal](mvp-scientifique.qmd) — borner les premières expériences admissibles.
+3. Le [MVP scientifique minimal](https://github.com/JM-Brun/J-DriftX/blob/main/docs/13-mvp-scientifique-et-g0.md) — borner les premières expériences admissibles.
 4. [Laboratoire interactif](laboratoire-interactif.qmd) et [Qualité & tests](qualite.qmd) — lire les résultats numériques avec leurs limites.
-5. [Revue adversariale G0](revue-adversariale-g0.qmd) et [Feuille de route](roadmap.qmd) — décider de la suite selon les preuves.
+5. La [revue adversariale G0](https://github.com/JM-Brun/J-DriftX/blob/main/docs/10-revue-adversariale-g0.md) et la [feuille de route](https://github.com/JM-Brun/J-DriftX/blob/main/docs/03-roadmap-jdriftx-v2.md), dans le dépôt — décider de la suite selon les preuves.
 
 ## Référence éditoriale
 

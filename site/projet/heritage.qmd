@@ -33,4 +33,4 @@ Le chapitre Springer 2008 [@brun2008] — *Reduced-Order Modelling of Dispersion
 4. **Multi-sources et sensibilité** : superposition linéaire, gradients explicites, identification de source d'une pollution observée.
 5. **Intégration SIG** : MNT, sorties raster géoréférencées, plugin QGIS — une avance pour l'époque [@bozon2009driftx].
 
-Pour le bilan critique complet : voir [Audit de l'héritage](audit.qmd).
+Pour le bilan critique complet : voir l'[audit de l'héritage](https://github.com/JM-Brun/J-DriftX/blob/main/docs/01-audit-heritage-driftx.md), document de travail conservé dans le dépôt.

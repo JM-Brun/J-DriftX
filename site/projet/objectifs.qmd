@@ -25,4 +25,4 @@ title: "Objectifs de J-DriftX"
 
 ## Statut
 
-La documentation, l’audit et la revue structurée de l’état de l’art sont disponibles. La méthode de recherche documentaire doit encore être rendue entièrement reproductible avant de qualifier la revue de systématique. Le jalon M1 porte sur le noyau Python et le benchmark gaussien ; son avancement doit être confirmé par des tests et livrables vérifiables. Voir la [feuille de route](roadmap.qmd) et le [protocole de validation scientifique](validation-scientifique.qmd).
+La documentation, l’audit et la revue structurée de l’état de l’art sont disponibles. La méthode de recherche documentaire doit encore être rendue entièrement reproductible avant de qualifier la revue de systématique. Le jalon M1 porte sur le noyau Python et le benchmark gaussien ; son avancement doit être confirmé par des tests et livrables vérifiables. Voir le [protocole de validation scientifique](validation-scientifique.qmd) ; la feuille de route est un document de travail du [dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/03-roadmap-jdriftx-v2.md).

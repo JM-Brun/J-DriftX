@@ -29,7 +29,9 @@ Le site documentaire (Quarto, publié sur GitHub Pages) présente le projet, ses
 
 📚 https://jm-brun.github.io/J-DriftX/
 
-Pour comprendre l'ensemble du projet, commencer par la [carte d'articulation scientifique](https://jm-brun.github.io/J-DriftX/projet/carte-articulation.html), puis consulter [Lectures des sources](https://jm-brun.github.io/J-DriftX/projet/lectures.html), le [Glossaire](https://jm-brun.github.io/J-DriftX/glossaire.html), l'[utilité scientifique](https://jm-brun.github.io/J-DriftX/projet/utilite-scientifique.html) et le [fallback théorique](https://jm-brun.github.io/J-DriftX/projet/modele-jouet.html).
+Pour comprendre l'ensemble du projet, commencer par la [carte d'articulation scientifique](https://jm-brun.github.io/J-DriftX/projet/carte-articulation.html), puis consulter le [Glossaire](https://jm-brun.github.io/J-DriftX/glossaire.html) et l'[utilité scientifique](https://jm-brun.github.io/J-DriftX/projet/utilite-scientifique.html).
+
+La feuille de route, les audits et les revues sont des documents de travail conservés dans [docs/](docs/), publiés uniquement dans le dépôt et volontairement absents du site : [fiches de lecture des sources](docs/04-revues-papiers-sources.md), [feuille de route](docs/03-roadmap-jdriftx-v2.md), [revue adversariale G0](docs/10-revue-adversariale-g0.md), [fallback théorique](docs/09-fallback-modele-jouet.md).
 
 ## Structure du dépôt
 

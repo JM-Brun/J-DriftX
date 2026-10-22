@@ -10,7 +10,7 @@ title: "Panorama de l'état de l'art (2008 → 2026)"
 
 Les requêtes exactes, dates de recherche, critères de sélection, décomptes et évaluations formelles de la qualité des études doivent être documentés avant de qualifier le travail de revue systématique reproductible. Certaines sources ne sont accessibles que par résumé ou notice. Les conclusions de ce panorama sont donc des hypothèses de cadrage à vérifier dans les sources primaires.
 
-Voir la [revue adversariale G0](../projet/revue-adversariale-g0.qmd) et le [protocole de validation scientifique](../projet/validation-scientifique.qmd).
+Voir le [protocole de validation scientifique](../projet/validation-scientifique.qmd) et le [cadre de décision d'utilité](../projet/utilite-scientifique.qmd).
 
 ## Modèles opérationnels et réglementaires
 
@@ -36,4 +36,4 @@ L'intégration SIG, la rapidité, l'interprétabilité et l'auditabilité peuven
 
 ## Conclusion provisoire
 
-L'état de l'art justifie une **investigation critique**, pas encore le développement applicatif. La priorité est de choisir un problème étroit, d'identifier l'utilisateur et la décision, puis de fixer une expérience susceptible de réfuter l'hypothèse de valeur. La [revue adversariale G0](../projet/revue-adversariale-g0.qmd) consigne les objections et les critères de poursuite/arrêt.
+L'état de l'art justifie une **investigation critique**, pas encore le développement applicatif. La priorité est de choisir un problème étroit, d'identifier l'utilisateur et la décision, puis de fixer une expérience susceptible de réfuter l'hypothèse de valeur. La revue adversariale G0, document de travail conservé dans le [dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/10-revue-adversariale-g0.md), consigne les objections et les critères de poursuite/arrêt.

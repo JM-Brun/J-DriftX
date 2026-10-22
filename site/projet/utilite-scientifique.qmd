@@ -8,7 +8,7 @@ title: "Utilité scientifique : que faut-il démontrer ?"
 
 Le fait qu'une approche soit mathématiquement intéressante, implémentable ou différente de l'état de l'art ne prouve pas qu'elle soit utile. J-DriftX doit donc être traité comme une hypothèse de recherche à évaluer, et non comme une solution dont les avantages seraient déjà établis.
 
-Le [cadre détaillé de décision et de validation](../../docs/08-decision-utilite-et-preuve.md) décrit les hypothèses, le protocole expérimental et les critères de décision.
+Le [cadre détaillé de décision et de validation](https://github.com/JM-Brun/J-DriftX/blob/main/docs/08-decision-utilite-et-preuve.md) décrit les hypothèses, le protocole expérimental et les critères de décision.
 
 ## Trois formes d'utilité à distinguer
 
@@ -74,14 +74,14 @@ La cible est une contribution reproductible dont la valeur, les limites et les c
 
 ## Résultat du cadrage externe G0
 
-La décision de cadrage G0 a été **franchie le 22 octobre 2026 au niveau documentaire** : besoin, observable et corpus candidats sont définis et sourcés ([résultats de l'audit G0](../../docs/15-audit-corpus-g0-resultats.md)). Cela ne valide pas encore l'adéquation scientifique de J-DriftX. CAPRIV reste limité à des essais de dérive proche et les dépôts de gouttelettes ne sont pas automatiquement équivalents au transport d'un scalaire passif ; DATEM/ETEX apportent des données de traceur pour étudier le far-field, mais les fichiers bruts, unités, licences et partitions restent à vérifier en G1. **G0 franchi ne signifie ni G1 franchi, ni benchmark validé, ni utilité prédictive démontrée.**
+La décision de cadrage G0 a été **franchie le 22 octobre 2026 au niveau documentaire** : besoin, observable et corpus candidats sont définis et sourcés ([résultats de l'audit G0](https://github.com/JM-Brun/J-DriftX/blob/main/docs/15-audit-corpus-g0-resultats.md)). Cela ne valide pas encore l'adéquation scientifique de J-DriftX. CAPRIV reste limité à des essais de dérive proche et les dépôts de gouttelettes ne sont pas automatiquement équivalents au transport d'un scalaire passif ; DATEM/ETEX apportent des données de traceur pour étudier le far-field, mais les fichiers bruts, unités, licences et partitions restent à vérifier en G1. **G0 franchi ne signifie ni G1 franchi, ni benchmark validé, ni utilité prédictive démontrée.**
 
-Voir la [fiche G0 fondée sur les preuves externes](preuves-g0.qmd) et sa [matrice détaillée](../../docs/11-g0-evidence-externe.md).
+Voir la [matrice détaillée des preuves externes](https://github.com/JM-Brun/J-DriftX/blob/main/docs/11-g0-evidence-externe.md).
 
 ## Documents de référence
 
-- [Cadre détaillé : décision d'utilité et protocole de preuve](../../docs/08-decision-utilite-et-preuve.md)
-- [Feuille de route J-DriftX v2](roadmap.qmd)
+- [Cadre détaillé : décision d'utilité et protocole de preuve](https://github.com/JM-Brun/J-DriftX/blob/main/docs/08-decision-utilite-et-preuve.md)
+- [Feuille de route J-DriftX v2](https://github.com/JM-Brun/J-DriftX/blob/main/docs/03-roadmap-jdriftx-v2.md)
 - [Validation scientifique](validation-scientifique.qmd)
 - [Panorama de l'état de l'art](../etat-art/panorama.qmd)
 - [Positionnement de J-DriftX](../etat-art/positionnement.qmd)

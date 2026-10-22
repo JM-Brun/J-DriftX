@@ -117,4 +117,4 @@ Cette section décrit l'**approche visée** ; l'état réel de l'implémentation
 
 ---
 
-Une notion manquante ou obscure ? Ouvrez une [issue](https://github.com/JM-Brun/J-DriftX/issues) ou relisez les fiches détaillées : [Lectures des sources](projet/lectures.qmd).
+Une notion manquante ou obscure ? Ouvrez une [issue](https://github.com/JM-Brun/J-DriftX/issues) ou relisez les fiches détaillées dans [la documentation du dépôt](https://github.com/JM-Brun/J-DriftX/tree/main/docs).

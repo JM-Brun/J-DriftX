@@ -8,7 +8,7 @@ title: "J-DriftX — dispersion atmosphérique à complexité réduite"
 
 ![Schéma de principe : panache gaussien généralisé dans la métrique des temps de transport τ, avec évaluation ponctuelle sans maillage.](images/panache-travel-time.svg)
 
-> **Statut scientifique :** hypothèse de recherche en phase de cadrage et de validation. Les propriétés présentées ci-dessous sont des **objectifs de conception**, pas des capacités validées ; le README du dépôt consigne l'état réel de l'implémentation. Voir le [positionnement](etat-art/positionnement.qmd) et la [revue adversariale G0](projet/revue-adversariale-g0.qmd).
+> **Statut scientifique :** hypothèse de recherche en phase de cadrage et de validation. Les propriétés présentées ci-dessous sont des **objectifs de conception**, pas des capacités validées ; le README du dépôt consigne l'état réel de l'implémentation. Voir le [positionnement](etat-art/positionnement.qmd) et la [carte d'articulation](projet/carte-articulation.qmd).
 
 ## L'idée en une phrase
 
@@ -46,19 +46,18 @@ L'assimilation de données partielles identifie les paramètres ; l'analyse de s
 - Les **ROM et surrogate ML** modernes restent, en première analyse, *a posteriori* : elles exigent des snapshots CFD. L'hypothèse d'une réduction *a priori* reste à confronter à ce paysage, pas une niche démontrée ([panorama](etat-art/panorama.qmd)).
 - Les données qui manquaient en 2008 (**ERA5/Copernicus, MNT ouverts, capteurs low-cost**) existent désormais.
 
-L'analyse complète : [Audit de l'héritage](projet/audit.qmd), [Panorama de l'état de l'art](etat-art/panorama.qmd) et [Feuille de route](projet/roadmap.qmd).
+L'analyse complète : [Panorama de l'état de l'art](etat-art/panorama.qmd) et la [carte d'articulation](projet/carte-articulation.qmd).
 
 ## Parcours de lecture
 
-Commencer par la [carte d'articulation scientifique](projet/carte-articulation.qmd), qui distingue les sources historiques, l'hypothèse mathématique, les vérifications du code, la comparaison différentielle et la validation indépendante. Le [cadrage documentaire G0 est franchi](projet/roadmap.qmd), mais l'utilité applicative (G0-A) reste non démontrée.
+Commencer par la [carte d'articulation scientifique](projet/carte-articulation.qmd), qui distingue les sources historiques, l'hypothèse mathématique, les vérifications du code, la comparaison différentielle et la validation indépendante. Le cadrage documentaire G0 est franchi, mais l'utilité applicative (G0-A) reste non démontrée. La feuille de route, les audits et les revues internes sont des documents de travail conservés dans [la documentation du dépôt](https://github.com/JM-Brun/J-DriftX/tree/main/docs), volontairement absents de ce site.
 
 ## Explorer
 
 | Entrée | Contenu |
 |---|---|
 | [Carte d'articulation](projet/carte-articulation.qmd) | Parcours de lecture, niveaux de preuve, état des portes et limites des laboratoires |
-| [Le projet](projet/heritage.qmd) | Héritage Drift-X (2006–2009), [objectifs](projet/objectifs.qmd), audit et feuille de route |
-| [Lectures des sources](projet/lectures.qmd) | Ce que dit chaque papier du corpus historique, et ce que J-DriftX en reprend |
+| [Le projet](projet/heritage.qmd) | Héritage Drift-X (2006–2009), [objectifs](projet/objectifs.qmd) et [utilité scientifique](projet/utilite-scientifique.qmd) |
 | [Fondements théoriques](theorie/modele-direct.qmd) | Modèle direct, réduction a priori, similitude, métrique, contraintes, assimilation — avec les théories mathématiques |
 | [EDP & maillage](theorie/edp-et-maillage.qmd) | Ce que serait une modélisation complète du problème : EDP, fermeture de la turbulence, CFD, maillage, schémas numériques, coût |
 | [Comparaison des complexités](theorie/comparaison-complexites.qmd) | Où se paie le coût : gaussien, Lagrangien, CFD, ROM a posteriori, ML, réduction a priori — côte à côte |
