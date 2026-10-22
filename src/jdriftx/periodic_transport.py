@@ -136,3 +136,73 @@ def solve_periodic_sine_transport(
         concentration += actual_dt * (k1 + 2.0 * k2 + 2.0 * k3 + k4) / 6.0
 
     return x, concentration, actual_dt
+
+
+def solve_periodic_upwind_euler(
+    *,
+    n_cells: int,
+    length: float,
+    end_time: float,
+    dt: float,
+    mean_concentration: float = 1.0,
+    amplitude: float = 0.5,
+    velocity: float = 1.0,
+    diffusivity: float = 0.02,
+) -> tuple[NDArray[np.float64], NDArray[np.float64], float]:
+    """Solve the same periodic problem with upwind advection and forward Euler.
+
+    This first-order conservative scheme is an independent cross-check against
+    the centered-space/RK4 solver. It requires |u|*dt/dx + 2*K*dt/dx**2 <= 1.
+    """
+    parameters = (length, end_time, dt, mean_concentration, amplitude, velocity, diffusivity)
+    if not all(np.isfinite(value) for value in parameters):
+        raise ValueError("Parameters must be finite.")
+    if not isinstance(n_cells, int) or n_cells < 8:
+        raise ValueError("n_cells must be an integer greater than or equal to 8.")
+    if length <= 0:
+        raise ValueError("length must be strictly positive.")
+    if end_time < 0:
+        raise ValueError("end_time must be non-negative.")
+    if dt <= 0:
+        raise ValueError("dt must be strictly positive.")
+    if mean_concentration < 0 or amplitude < 0 or mean_concentration < amplitude:
+        raise ValueError("Concentration must remain non-negative: mean >= amplitude >= 0.")
+    if diffusivity < 0:
+        raise ValueError("diffusivity must be non-negative.")
+
+    dx = length / n_cells
+    x = np.arange(n_cells, dtype=float) * dx
+    concentration = periodic_sine_solution(
+        x,
+        0.0,
+        length=length,
+        mean_concentration=mean_concentration,
+        amplitude=amplitude,
+        velocity=velocity,
+        diffusivity=diffusivity,
+    )
+    if end_time == 0:
+        return x, concentration, 0.0
+
+    n_steps = ceil(end_time / dt)
+    actual_dt = end_time / n_steps
+    cfl = abs(velocity) * actual_dt / dx
+    diffusion_number = diffusivity * actual_dt / dx**2
+    if cfl + 2.0 * diffusion_number > 1.0 + _FLOAT_EPS:
+        raise ValueError(
+            "Requested dt violates the upwind-Euler stability condition "
+            "|u|*dt/dx + 2*K*dt/dx**2 <= 1."
+        )
+
+    for _ in range(n_steps):
+        right = np.roll(concentration, -1)
+        left = np.roll(concentration, 1)
+        if velocity >= 0:
+            advection_gradient = (concentration - left) / dx
+        else:
+            advection_gradient = (right - concentration) / dx
+        diffusion_laplacian = (right - 2.0 * concentration + left) / dx**2
+        concentration -= actual_dt * velocity * advection_gradient
+        concentration += actual_dt * diffusivity * diffusion_laplacian
+
+    return x, concentration, actual_dt
