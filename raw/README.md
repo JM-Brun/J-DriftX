@@ -8,33 +8,21 @@ Ce dossier rassemble les **documents sources** du projet : corpus historique Dri
 - une fiche de lecture par source : <code>fiches/AAAA-auteur-sujet.md</code> — référence, revue, informations extraites, valeur pour J-DriftX ;
 - <code>extracts/</code> : extractions texte brutes, grep-ables, avec en-tête documentaire (la mise en page, les figures et les équations n'y sont pas conservées : le PDF original reste la référence).
 
-## Fichiers présents et renommage recommandé
+## Sources PDF présentes
 
-Les PDF ont été ajoutés avec leurs noms d'origine (téléchargement, dépôt) ; le tableau ci-dessous donne le renommage recommandé vers la convention du projet. Les binaires ne peuvent pas être renommés par les outils d'intégration (texte seul) : les commandes sont données plus bas.
+Les fichiers du corpus historique utilisent déjà la convention `AAAA-auteur-sujet.pdf`. La table ci-dessous documente les sources conservées dans `raw/`.
 
-| Fichier actuel | Renommage recommandé | Source | Fiche de lecture |
-|---|---|---|---|
-| <code>CRMECA_2006__334_10_634_0.pdf</code> | <code>2006-mohammadi-brun-crmeca.pdf</code> | C. R. Mécanique 334(10), 634–638 — version éditeur, [accès libre (Académie des sciences)](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) | <code>fiches/2006-mohammadi-brun-crmeca.md</code> |
-| <code>PDF.js viewer.pdf</code> | <code>2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf</code> | Chapitre Springer CSM 16, chap. 14 — extrait de 2 pages (p. 245–246) | <code>fiches/2008-brun-mohammadi-springer-chap14.md</code> |
-| <code>MO2009-PUB00026817.pdf</code> | <code>2009-bozon-sinfort-mohammadi-driftx-hal.pdf</code> | Manuscrit auteur, [HAL hal-00468863](https://hal.science/hal-00468863) | <code>fiches/2009-bozon-sinfort-mohammadi-driftx-hal.md</code> |
-| <code>82748_9958-9958-ps.pdf</code> | <code>2009-invs-exposition-aerienne-pesticides-herault.pdf</code> | Rapport InVS / [Santé publique France](https://www.santepubliquefrance.fr/content/download/186474/document_file/82748_9958-9958-ps.pdf), 2009 | <code>fiches/2009-invs-exposition-aerienne-pesticides-herault.md</code> |
-| Rapport de l'état de l'art sur la dérive conceptuelle et positionnement de J-DriftX.pdf | <code>2026-rapport-derive-conceptuelle-positionnement-jdriftx.pdf</code> | Document de travail de l'auteur (2026, hors corpus Drift-X) | <code>fiches/2026-rapport-derive-conceptuelle-positionnement-jdriftx.md</code> |
+| Fichier | Source | Fiche / état |
+|---|---|---|
+| `2006-mohammadi-brun-crmeca.pdf` | Mohammadi & Brun, *C. R. Mécanique* (2006), DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007) | Texte intégral et extraction texte disponibles |
+| `2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf` | Brun & Mohammadi, chapitre Springer (2008), extrait p. 245–246 | Extrait seulement ; chapitre complet à retrouver |
+| `2009-bozon-sinfort-mohammadi-driftx-hal.pdf` | Bozon, Sinfort & Mohammadi, manuscrit Drift-X (2009), [HAL hal-00468863](https://hal.science/hal-00468863) | Manuscrit auteur et extraction texte disponibles |
+| `2009-invs-exposition-aerienne-pesticides-herault.pdf` | InVS / Santé publique France (2009), mesures d'exposition aux pesticides dans l'Hérault | Rapport d'agence ; données détaillées à vérifier |
+| `2026-rapport-derive-conceptuelle-positionnement-jdriftx.pdf` | Rapport de travail sur la dérive conceptuelle et le positionnement (2026) | Document de travail, pas une source primaire scientifique |
+| `reviews/2026-revue-systematique-jdriftx-resume-executif-partie-1.pdf` | Résumé exécutif de la revue, partie 1 | Synthèse PDF ; voir la cartographie éditable |
+| `reviews/2026-revue-systematique-jdriftx-resume-executif-partie-2.pdf` | Résumé exécutif de la revue, partie 2 | Synthèse PDF ; voir la cartographie éditable |
 
-Commandes de renommage (branche de la PR en cours) :
-
-~~~
-git checkout feat/images-metriques
-git pull
-cd raw
-git mv CRMECA_2006__334_10_634_0.pdf 2006-mohammadi-brun-crmeca.pdf
-git mv "PDF.js viewer.pdf" 2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf
-git mv MO2009-PUB00026817.pdf 2009-bozon-sinfort-mohammadi-driftx-hal.pdf
-git mv 82748_9958-9958-ps.pdf 2009-invs-exposition-aerienne-pesticides-herault.pdf
-git mv Rapport*.pdf 2026-rapport-derive-conceptuelle-positionnement-jdriftx.pdf
-cd ..
-git commit -m "raw: renomme les PDF selon la convention AAAA-auteur-sujet"
-git push origin feat/images-metriques
-~~~
+Les fiches Markdown décrivant les liens scientifiques entre les références et le projet sont centralisées dans [la bibliographie annotée](../docs/bibliographie-annotee-jdriftx.md). Cette cartographie distingue les sources fondatrices, les baselines concurrentes, les méthodes complémentaires, les analogies conceptuelles et les références de contexte applicatif.
 
 ## raw/extracts/ — extractions texte
 
@@ -78,3 +66,17 @@ Ou via l'interface GitHub : onglet **Add file → Upload files** sur ce dossier,
 - Les **versions éditeurs** (Académie des sciences/Elsevier, Springer, Lavoisier, Persée) restent sous le copyright de l'éditeur même quand elles sont librement téléchargeables : ce dossier est une archive de travail du projet ; en cas de doute, ne versionner que les manuscrits auteurs et laisser les liens ci-dessus faire le travail d'accès.
 - Le **rapport InVS / Santé publique France** est un document public d'agence sanitaire : diffusion libre avec citation de la source.
 - Les extractions texte de <code>extracts/</code> sont des extraits attribués destinés à l'analyse (recherche/text mining), avec mention complète du copyright dans leur en-tête.
+
+
+## Revue de l'état de l'art et traçabilité
+
+Les deux résumés exécutifs de la revue sont conservés dans `raw/reviews/`. Ils ne remplacent pas les articles scientifiques primaires qu'ils citent. Leurs références sont organisées en Markdown éditable dans [la bibliographie annotée](../docs/bibliographie-annotee-jdriftx.md), avec une fiche par famille de méthodes.
+
+Les décisions qui découlent de la revue doivent être synthétisées dans [`docs/07-plan-integration-revue-systematique.md`](../docs/07-plan-integration-revue-systematique.md), en reliant chaque décision aux sections de la revue, aux sources vérifiées, aux limites de preuve et aux critères d'acceptation associés. Les PDF bruts sont conservés sans modification de contenu.
+
+Ne pas confondre une synthèse de revue avec une source primaire ni compter comme indépendantes deux versions d'un même travail sans vérifier leurs différences.
+
+
+Le rapport final de revue systématique sera ajouté par le mainteneur dans ce dossier. Son fichier exact sera indiqué ici après dépôt. Le rapport est une source de travail ; les décisions qui en découlent doivent être synthétisées séparément dans docs/07-plan-integration-revue-systematique.md, avec les références vérifiées, les limites de preuve et les critères d'acceptation associés.
+
+Ne pas remplacer les PDF historiques ni confondre le rapport de revue avec les sources primaires qu'il cite. Si le rapport contient des exports bibliographiques ou des données de sélection, les conserver avec leur provenance et leur format d'origine.

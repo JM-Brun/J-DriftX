@@ -4,30 +4,31 @@ title: "Positionnement de J-DriftX"
 
 # Positionnement de J-DriftX en 2026
 
-## La case vide
+## Positionnement à tester, non revendication de supériorité
 
-| Dimension | État de l'art 2026 | Apport J-DriftX |
+J-DriftX explore une piste spécifique : utiliser des solutions de similitude et une métrique de temps de transport non symétrique pour réduire le coût d'évaluation de certains problèmes de dispersion. L'intérêt de cette piste doit être établi par la formalisation mathématique et des comparaisons reproductibles. Le positionnement public sera révisé après intégration de la revue systématique déposée sous raw/.
+
+| Dimension | Question scientifique | Travail nécessaire |
 |---|---|---|
-| Réduction | POD/ML *a posteriori* — dépendantes de snapshots CFD | Réduction *a priori* par similitude, sans EDP ni entraînement |
-| Coût | Rapide après un entraînement coûteux | Évaluation ponctuelle quasi nulle, Monte Carlo massif |
-| Far-field dérive | Extension gaussienne AGDISP très conservatrice ; AMP en cours | Similitude généralisée + topographie via métrique travel-time |
-| Calibration | Assimilation et ML matures | Assimilation de données partielles — à moderniser (bayésien) |
-| STE | Standards adjoint/bayésien | Adjoint **analytique** disponible par construction |
-| Confiance | Boîtes noires en quête d'interprétabilité | Contraintes physiques garanties, auditables |
+| Réduction | Dans quels régimes une approche a priori fondée sur la physique est-elle compétitive avec POD/ROM et les surrogates ? | Cas de référence commun, erreur et coût total mesurés |
+| Coût | L'évaluation ponctuelle réduit-elle réellement le coût pour la tâche visée ? | Mesurer préparation, inférence, mémoire et précision |
+| Far-field de dérive | Quelles limites des modèles existants sont documentées pour des scénarios ciblés ? | Sources primaires vérifiées et comparaison sur cas pertinent |
+| Calibration | La calibration sur observations partielles est-elle identifiable et robuste ? | Séparation calibration-validation, analyse de sensibilité et incertitude |
+| Identification de source | Dans quelles conditions une formulation analytique est-elle compétitive avec les méthodes adjointes/bayésiennes ? | Baselines comparables et protocole explicite |
+| Confiance | Quelles propriétés physiques sont démontrées et sur quel domaine ? | Preuves, tests de propriétés et domaine de validité publié |
 
-## Trois hypothèses différenciantes à tester
+## Hypothèses différenciantes
 
-1. **Originalité de la métrique travel-time :** dans le corpus consulté, aucune approche concurrente identifiée ne reprend explicitement cette généralisation. Cette observation ne constitue pas une preuve d'absence dans toute la littérature ; la recherche doit être rendue reproductible.
-2. **Hybridation physique-données :** évaluer J-DriftX comme prior physique et modèle d'évaluation ponctuelle, avec apprentissage éventuel pour la calibration, sur des benchmarks définis.
-3. **Garde-fou hors domaine :** tester si les contraintes physiques du modèle améliorent la détection des extrapolations et la fiabilité par rapport à un surrogate ML. La conservation et la positivité doivent être démontrées ou testées avant d'être présentées comme garanties.
-
-## Portée et limites\n\nCe positionnement décrit des hypothèses de recherche, non des performances démontrées. J-DriftX reste un prototype de recherche ; aucune supériorité prédictive ni aptitude réglementaire n'est revendiquée sans benchmarks indépendants. Voir le [protocole de validation scientifique](../projet/validation-scientifique.qmd).\n\n## Pourquoi maintenant (et pas en 2008)
-
-- **Données** : ERA5/Copernicus, MNT ouverts, capteurs low-cost — le verrou « données rares » de 2006 a disparu ; la calibration par assimilation devient crédible.
-- **Outils** : QGIS mature, Python scientifique, CI — le socle d'exécution existe.
-- **Marché** : modernisation réglementaire d'AGDISP, drones, exposition résidentielle aux pesticides, exigences d'auditabilité des modèles.
-- **Science** : le débat ROM/ML a mûri ; la revue STE 2025 désigne le hors-domaine comme problème ouvert — la réponse structurelle de Drift-X.
+1. **Métrique de temps de transport :** la revue structurée antérieure n'identifiait pas d'approche directement équivalente dans son corpus consulté. Cela ne prouve pas l'absence de concurrents. La revue systématique et ses limites doivent être examinées avant toute revendication de nouveauté.
+2. **Hybridation physique-données :** évaluer le modèle analytique comme prior ou baseline et l'apprentissage éventuel comme outil de calibration, sans présumer d'un bénéfice.
+3. **Généralisation hors domaine :** tester si les contraintes physiques améliorent la fiabilité par rapport à un surrogate sur des scénarios définis. Conservation, positivité et divergence nulle ne sont garanties que si elles sont démontrées ou vérifiées dans le domaine annoncé.
 
 ## Conditions de réussite
 
-Voir la [feuille de route](../projet/roadmap.qmd) : benchmarks publics d'abord (M1), code moderne ensuite, article de synthèse enfin (M4), extension réglementaire à terme (M5).
+- Formalisation des hypothèses, unités, conditions aux limites et domaine de validité.
+- Benchmark public reproductible avec cas analytique et baselines pertinentes.
+- Mesure de l'erreur, du coût total, de la sensibilité et de l'incertitude.
+- Validation indépendante avant toute généralisation à la topographie réelle ou à l'usage réglementaire.
+- Mise à jour du positionnement à partir de la revue systématique et des résultats expérimentaux, y compris négatifs.
+
+Voir la [feuille de route](../projet/roadmap.qmd), le [protocole de validation scientifique](../projet/validation-scientifique.qmd) et le [plan d'intégration des résultats de la revue](https://github.com/JM-Brun/J-DriftX/blob/docs/integrer-revue-systematique-projet/docs/07-plan-integration-revue-systematique.md).
