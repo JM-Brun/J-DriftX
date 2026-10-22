@@ -30,7 +30,7 @@ dev = [
 ]
 
 app = [
-  "matplotlib>=3.9",
+  "plotly>=5.24",
   "streamlit>=1.40",
 ]
 
