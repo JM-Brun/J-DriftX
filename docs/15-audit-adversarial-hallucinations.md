@@ -428,3 +428,13 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 - **Constat :** après la décision du 22 octobre 2026, qui a fait franchir G0 au niveau documentaire sur la base du cadrage et de l'audit de corpus, certaines pages continuaient à dire que G0 « reste bloqué » ou à présenter le prochain test comme conditionné à un franchissement futur de G0. Cela confondait le jalon documentaire G0 avec G0-A (utilité applicative) et G1 (audit des fichiers/licences).
 - **Correction effectuée :** les pages précisent désormais que G0 documentaire est franchi, que G0-A reste non démontré et que G1/benchmark restent bloqués jusqu'à la vérification des fichiers bruts et des licences.
 - **Preuve de clôture :** garder les statuts synchronisés dans la roadmap, la fiche G0, l'audit des corpus et les pages publiques ; ne pas traiter le franchissement documentaire comme une autorisation de benchmark.
+
+### B-29 — Plan de validation et roadmap interne : statut G0 périmé et prochaine action obsolète
+
+- **Statut :** contradiction documentaire confirmée et corrigée.
+- **Emplacements :** `docs/03-roadmap-jdriftx-v2.md`, `docs/05-plan-validation-et-integration.md`, `docs/08-decision-utilite-et-preuve.md`.
+- **Constat :** ces documents continuaient à présenter G0 comme le jalon immédiat à franchir ou à demander la rédaction future de la fiche G0, alors que la fiche et l'audit des corpus actent un franchissement documentaire le 22 octobre 2026. Un passage de `docs/08` disait également que la distinction G0-S/G0-A ne signifiait pas que G0 était franchi, ce qui contredisait le statut documentaire enregistré ailleurs.
+- **Correction effectuée :** la roadmap distingue désormais G0 documentaire (franchi), G0-A (utilité applicative non démontrée), G1 (cohérence théorique et vérification des fichiers bruts) et G2 (valeur différentielle non évaluée). Le plan de validation nomme DIFLU comme corpus candidat au test discriminant, sous réserve de l'audit G1. La prochaine action demande de vérifier les fichiers bruts et de préparer un protocole, non de refaire le cadrage G0.
+- **Limite :** ces corrections harmonisent le statut documentaire ; elles ne valident pas les fichiers, les licences, la pertinence physique du corpus ni la performance de J-DriftX.
+- **Preuve de clôture :** vérifier après chaque décision que les statuts des documents de gouvernance restent cohérents et qu'aucun benchmark n'est annoncé avant le contrôle G1.
+
