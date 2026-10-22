@@ -72,6 +72,12 @@ Les benchmarks et les baselines doivent être prioritaires, et non ajoutés en f
 
 La cible est une contribution reproductible dont la valeur, les limites et les conditions d'emploi sont démontrées — pas seulement un logiciel fonctionnel.
 
+## Résultat du cadrage externe G0
+
+La recherche a identifié des données CAPRIV ouvertes, mais leur portée est limitée à des essais de dérive proche (quelques dizaines de mètres) ; elles ne valident pas le cas far-field à plusieurs kilomètres. De plus, les dépôts de gouttelettes ne sont pas automatiquement équivalents au transport d'un scalaire passif. La conclusion reste donc **G0 non franchi** : besoin et décisions documentés, mais aucune preuve que J-DriftX soit une solution appropriée.
+
+Voir la [fiche G0 fondée sur les preuves externes](preuves-g0.qmd) et sa [matrice détaillée](../../docs/11-g0-evidence-externe.md).
+
 ## Documents de référence
 
 - [Cadre détaillé : décision d'utilité et protocole de preuve](../../docs/08-decision-utilite-et-preuve.md)

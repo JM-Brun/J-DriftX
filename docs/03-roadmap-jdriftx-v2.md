@@ -97,3 +97,8 @@ Le protocole et les critères d'acceptation sont décrits dans [docs/09-fallback
 - [Cadre de décision : utilité et preuve](08-decision-utilite-et-preuve.md)
 - [Plan d'intégration scientifique et de validation](05-plan-validation-et-integration.md)
 - [Revue de l'état de l'art 2026](02-revue-etat-art-2026.md)
+
+
+## Résultat du cadrage externe G0 (22 octobre 2026)
+
+La recherche a identifié des données CAPRIV ouvertes, mais les mesures décrites concernent la dérive proche (environ 1–25 m pour les dépôts au sol) et ne valident pas le far-field à plusieurs kilomètres. Il faut aussi justifier le lien entre transport de gouttelettes et hypothèse de scalaire passif. **Ne pas lancer le benchmark far-field sur la seule base de CAPRIV.** La [fiche G0 fondée sur les preuves externes](11-g0-evidence-externe.md) précise les données, leurs limites et les conditions pour poursuivre.

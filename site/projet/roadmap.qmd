@@ -51,3 +51,8 @@ Si l'approche ne démontre pas de bénéfice applicatif, J-DriftX peut être ré
 La [revue adversariale G0](revue-adversariale-g0.qmd) est le premier filtre : vérifier les hypothèses sceptiques, définir l'observable, le scénario, l'utilisateur et la décision, puis établir l'accès à une baseline et à des données indépendantes. Le cas far-field reste un candidat, non un choix validé. Aucun benchmark applicatif ne doit être développé avant que ces réponses soient documentées.
 
 La documentation complète se trouve dans [docs/03-roadmap-jdriftx-v2.md](../../docs/03-roadmap-jdriftx-v2.md), [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md) et [docs/10-revue-adversariale-g0.md](../../docs/10-revue-adversariale-g0.md).
+
+
+## Résultat de la recherche externe G0
+
+Le jeu CAPRIV est ouvert mais décrit la dérive de proximité, pas le far-field à plusieurs kilomètres. Il ne doit pas servir de validation du cas far-field. La fiche [G0 — preuves externes](preuves-g0.qmd) conclut que G0 reste bloqué tant que l'utilisateur, la décision, l'observable, le régime physique et les données indépendantes ne sont pas définis.

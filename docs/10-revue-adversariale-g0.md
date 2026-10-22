@@ -108,3 +108,10 @@ Aucune option ne peut être déclarée gagnante sur les informations présentes.
 - [Fallback modèle jouet](09-fallback-modele-jouet.md)
 - [Revue structurée de l'état de l'art](02-revue-etat-art-2026.md)
 - [Plan d'intégration de la revue systématique](07-plan-integration-revue-systematique.md)
+
+
+## Résultat de la recherche externe G0
+
+La recherche externe a identifié le jeu de données ouvert [CAPRIV](https://doi.org/10.57745/Z8OJ3A), dont la table de cultures de plein champ contient 3 792 collecteurs. Les distances décrites sont de l'ordre de 1–25 m pour les collecteurs de dépôt et de 5 m pour les fils de mesure aérienne : ces données ne valident pas le far-field à plusieurs kilomètres. Le dépôt de gouttelettes n'est pas automatiquement équivalent au transport d'un scalaire passif. Le ministère français documente aussi une décision réglementaire concrète liée aux ZNT et à la réduction de dérive, mais cela ne prouve pas que J-DriftX est adapté à cette décision.
+
+**Conclusion : G0 reste bloqué.** Ne pas utiliser CAPRIV comme validation far-field ni lancer un benchmark avant d'avoir défini utilisateur, décision, observable, régime physique et baseline. Voir la [fiche G0 fondée sur les preuves externes](11-g0-evidence-externe.md) pour la matrice complète et les références.

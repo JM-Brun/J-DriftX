@@ -1,0 +1,44 @@
+---
+title: "Catalogue de données ouvertes pour J-DriftX"
+---
+
+# Catalogue de données ouvertes pour J-DriftX
+
+Cette page recense des jeux de données publics pouvant aider à évaluer des modèles de transport et de dispersion. **La disponibilité d'un jeu ne démontre pas son adéquation physique** : un traceur gazeux, des gouttelettes, des particules routières et un polluant marin ne partagent pas nécessairement les mêmes équations ni les mêmes observables.
+
+## Candidats prioritaires
+
+| Jeu de données | Domaine / échelle | Utilité potentielle | Limite déterminante |
+|---|---|---|---|
+| [NOAA DATEM](https://www.arl.noaa.gov/research/atmospheric-transport-and-dispersion/atd-programs-datem/) | Traceurs atmosphériques, dizaines à milliers de km | Candidat prioritaire pour tester le transport atmosphérique à longue distance; données expérimentales, météorologie et outils d'évaluation téléchargeables | Campagnes anciennes; vérifier la disponibilité et l'indépendance par expérience. Un traceur gazeux ne valide pas les gouttelettes |
+| [ETEX / JRC](https://remon.jrc.ec.europa.eu/past_activities/etex/site/datasets.htm) | Dispersion atmosphérique à l'échelle continentale | Données de traceur et météo pour deux expériences; complément pertinent à DATEM | Vérifier l'observable, le terme source et la documentation des fichiers |
+| [DIFLU — hélium à Beuvry](https://doi.org/10.57745/A9YC3C) | Champ proche d'une installation, jusqu'à environ 560 m | 19 lâchers contrôlés avec mesures de concentration, vent et turbulence | Gaz traceur; audit des fichiers bruts nécessaire |
+| [ERIES — dispersion urbaine](https://doi.org/10.4121/e7f87f46-1d17-43ed-be81-60bee65081bf) | Soufflerie, maquette urbaine | Concentrations en 76 points pour deux sources et essais de répétabilité | Échelle réduite; configurations de source limitées |
+| [R-LINE](https://cmascenter.org/r-line/) | Dispersion près des routes | Modèle open source, cas de test et jeux d'évaluation liés aux émissions routières | Vérifier la provenance et les droits de chaque jeu historique |
+| [EPA — barrières routières](https://catalog.data.gov/dataset/data-for-dispersion-at-the-edges-of-near-road-barriers) | Pollution routière en soufflerie | Concentrations normalisées d'un traceur pour plusieurs géométries de barrières | Pas une mesure directe d'exposition réelle |
+| [MODISAFE WP32](https://doi.org/10.15126/surreydata.901739) | Rejets urbains non neutres en soufflerie | Mesures synchronisées de vitesse et concentration; utile pour éprouver les limites d'un scalaire passif | Les effets de flottabilité peuvent sortir du domaine physique du modèle |
+
+## Domaines complémentaires : analogies, pas validation directe
+
+- **Transport en rivière — [TIERRAS](https://doi.org/10.5281/zenodo.15794259)** : plus de 400 expériences de traceurs. Intéressant pour les méthodes de transport, temps de séjour et stockage transitoire; pas pour valider la physique atmosphérique. Licence annoncée CC BY-NC 4.0.
+- **Transport marin — [Cefas seabed drifters](https://doi.org/10.14466/CefasDataHub.93)** : 11 704 entrées de flotteurs (1969–1990), licence Open Government Licence. Données de trajectoire/récupération, pas de concentration de contaminant.
+- **Courants de surface — [NOAA Global Drifter Program](https://www.aoml.noaa.gov/global-drifter-program/)** : trajectoires de bouées, utiles pour tester une méthode de trajectoire, non pour valider un panache atmosphérique.
+- **Radioactivité — [OpenRadiation](https://www.data.gouv.fr/datasets/openradiation)** : mesures citoyennes géolocalisées et temporelles; l'attribution à une source et les métadonnées de dispersion peuvent manquer.
+- **Accident nucléaire — [RADARC311](https://radarc311.isee.nagoya-u.ac.jp/en/)** : catalogue de métadonnées sur des mesures Fukushima, pas un jeu homogène directement prêt pour un benchmark.
+- **Rejets industriels de gaz lourds — [Hamburg EWTL](https://www.mi.uni-hamburg.de/en/arbeitsgruppen/windkanallabor/data-sets.html)** : données très pertinentes pour les rejets denses, mais les fichiers sont protégés par mot de passe et l'accès passe par contact. Publicement décrit ne signifie donc pas librement téléchargeable.
+
+Pour un index plus large, consulter le [catalogue ADMLC](https://admlc.com/datasets/) et les [jeux classiques HARMO](https://harmo.org/classic.php), notamment Kincaid, Bull Run, Round Hill et Prairie Grass.
+
+## Recommandation pour la prochaine étape
+
+Ne pas commencer par un benchmark couvrant tous les domaines. Réaliser un audit de faisabilité **sans entraîner de modèle** sur :
+
+1. **DATEM/ETEX** — priorité si le far-field atmosphérique reste l'hypothèse;
+2. **DIFLU** — mesures contrôlées en champ proche avec météorologie;
+3. **ERIES ou EPA near-road barriers** — selon que la priorité devient la dispersion urbaine ou routière.
+
+Pour chaque jeu, vérifier l'accès aux fichiers, la licence, le terme source, les temps et coordonnées, la météo, l'observable et son unité, les limites de détection, les données manquantes et le nombre d'expériences indépendantes. Les partitions doivent se faire par expérience/scénario, et non par mesure individuelle.
+
+**Critère d'arrêt :** si l'observable ne correspond pas aux équations de J-DriftX, si le terme source ou les conditions de transport ne sont pas reconstructibles, ou si l'évaluation indépendante n'est pas possible, classer le jeu comme référence bibliographique seulement.
+
+La [fiche détaillée de cadrage G0](https://github.com/JM-Brun/J-DriftX/blob/main/docs/11-g0-evidence-externe.md) et le [catalogue détaillé des jeux de données](https://github.com/JM-Brun/J-DriftX/blob/main/docs/12-catalogue-donnees-transport-dispersion.md) documentent les limites et les sources.

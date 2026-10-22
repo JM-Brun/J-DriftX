@@ -44,3 +44,10 @@ Si ces informations ne peuvent pas être obtenues, ne pas construire le benchmar
 La [revue détaillée et la matrice de risques](../../docs/10-revue-adversariale-g0.md) recensent les hypothèses nulles, les modes d'échec, les preuves manquantes et les critères de poursuite ou d'arrêt.
 
 Voir aussi la [feuille de route](roadmap.qmd), le [cadre de décision d'utilité](utilite-scientifique.qmd) et le [fallback théorique](modele-jouet.qmd).
+
+
+## Résultat de la recherche externe
+
+Le jeu ouvert [CAPRIV](https://doi.org/10.57745/Z8OJ3A) offre des mesures françaises de dérive proche, mais pas de validation du far-field à plusieurs kilomètres. Le dépôt de gouttelettes n'est pas automatiquement équivalent au transport d'un scalaire passif. Le cadre réglementaire français établit des décisions concrètes autour de la dérive, sans prouver que J-DriftX est le bon outil.
+
+**G0 reste bloqué.** Lire la [fiche complète fondée sur les preuves externes](preuves-g0.qmd) avant de choisir un benchmark.
