@@ -455,3 +455,11 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 - **Limite :** ces contrôles améliorent la robustesse numérique des API; ils ne valident ni la définition historique complète de la pseudo-distance, ni la physique du modèle.
 - **Preuve de clôture :** suite de tests et CI sur le HEAD de la PR; conserver une distinction explicite entre validité des entrées, propriétés mathématiques et validation physique.
 
+
+### B-32 — Liens internes Quarto non résolus détectés par la CI
+
+- **Statut :** deux liens internes cassés confirmés et corrigés dans cette PR.
+- **Emplacements :** `site/projet/utilite-scientifique.qmd`, `site/etat-art/revue-mathematique.qmd`.
+- **Constat :** le rendu Quarto de la CI signalait `projet/15-audit-corpus-g0-resultats.md` et `etat-art/mvp-scientifique.qmd) comme cibles introuvables. Les documents visés existaient, mais les chemins relatifs étaient erronés depuis les pages sources. Le rendu réussissait malgré ces avertissements : un rendu vert seul ne prouve donc pas que tous les liens internes sont résolus.
+- **Correction effectuée :** les liens pointent désormais respectivement vers `../../docs/15-audit-corpus-g0-resultats.md` et `../projet/mvp-scientifique.qmd`.
+- **Preuve de clôture :** nouveau rendu Quarto sans ces avertissements. À terme, ajouter un contrôle de liens internes explicite au workflow plutôt que compter uniquement sur le succès de `quarto render`.
