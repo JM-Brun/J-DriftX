@@ -4,35 +4,46 @@ title: "Feuille de route J-DriftX v2"
 
 # Feuille de route v2
 
-> Version complète avec architecture détaillée et analyse de risques : <code>docs/03-roadmap-jdriftx-v2.md</code> dans le dépôt.
+La feuille de route est **conditionnelle aux preuves** : les jalons décrivent des questions et livrables attendus, pas des promesses de performance ni un calendrier garanti.
 
-## Jalons
+> La première question est l'utilité : quel problème J-DriftX peut-il résoudre mieux que les méthodes disponibles, et comment le démontrer ? Voir le [cadre de décision scientifique](utilite-scientifique.qmd) et le document détaillé [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md).
 
-| Jalon | Horizon | Contenu |
+## Portes de décision
+
+| Porte | Question | Livrable attendu |
 |---|---|---|
-| **M0 — Ancrage** | en cours | Documentation, audit, revue, roadmap ; dépôt HAL de la thèse et du chapitre ; choix de licence |
-| **M1 — Cœur et preuve** | T+2 mois | Modules similitude / métrique / contraintes + benchmark gaussien ; CI avec tests physiques ; v0.1 |
-| **M2 — Calibration et multi-niveaux** | T+6 mois | Assimilation de données partielles ; estimateur d'erreur entre niveaux ; identification de source ; comparaison publique contre un POD-ML |
-| **M3 — Terrains et GIS** | T+12 mois | Topographie réelle via MNT ; cas dérive viticulture/drones ; plugin QGIS |
-| **M4 — Article de synthèse** | T+15 mois | Soumission *Environmental Modelling & Software* ou *Atmospheric Environment* |
-| **M5 — Impact réglementaire** | T+24 mois | Proposition d'extension far-field à l'AGDISP Modernization Project ; conformité interprétabilité (EU AI Act) |
+| **G0 — Besoin et utilité** | Le problème est-il réel, important et insuffisamment couvert ? | Fiche de problème, alternatives, bénéfice testable, critères de succès et d'abandon |
+| **G1 — Faisabilité théorique** | La formulation est-elle cohérente pour le problème retenu ? | Hypothèses explicites, propriétés démontrées ou conjecturales séparées, cas analytique |
+| **G2 — Valeur différentielle** | Une composante apporte-t-elle un gain par rapport aux baselines ? | Benchmark reproductible, ablations, coût, robustesse et résultats négatifs |
+| **G3 — Validation indépendante** | Le bénéfice résiste-t-il à des données non utilisées pendant le développement ? | Évaluation indépendante, incertitude et domaine de validité |
+| **G4 — Pertinence applicative** | Le gain mesuré améliore-t-il une décision ou une capacité scientifique ? | Décision argumentée de publication, transfert, restriction ou arrêt |
 
-## Architecture cible
+Chaque porte peut conduire à poursuivre, réviser, restreindre ou arrêter une piste. Le résultat négatif d'un test est informatif et ne doit pas être masqué.
 
-| Module | Rôle | Priorité |
+## Jalons techniques conditionnels
+
+| Jalon | Contenu | Condition de démarrage |
 |---|---|---|
-| <code>core/similitude</code> | Solutions de similitude jets/panaches/puffs (portage du chapitre 2008) | M1 |
-| <code>core/metric</code> | Métrique non symétrique des temps de transport (vents non uniformes, topographie) | M1 |
-| <code>core/constraints</code> | Conservation, positivité, divergence nulle — tests systématiques | M1 |
-| <code>core/levels</code> | Hiérarchie multi-niveaux + estimateur d'erreur | M2 |
-| <code>assim/calibration</code> | Moindres carrés → Tikhonov → bayésien | M1→M3 |
-| <code>assim/ste</code> | Identification de source (adjoint analytique, standards STE) | M2 |
-| <code>io/</code> | Météo (CSV/ERA5), MNT (GeoTIFF), sorties ponctuelles et rasters | M1–M2 |
-| <code>bindings/qgis</code> | Plugin QGIS (équivalent Drift-X 2009, modernisé) | M3 |
-| <code>benchmarks/</code> | Gaussien de référence, comparaisons ROM, cas spray drift | M1 puis continu |
+| **M0 — Ancrage documentaire** | Audit historique, revue de littérature, traçabilité des sources et des affirmations | En cours ; limites de couverture explicites |
+| **M1 — Noyau minimal et référence** | Modèle direct limité au besoin retenu, cas analytique, tests et baseline | Après cadrage G0 ; formalisation en G1 |
+| **M2 — Calibration et multi-niveaux** | Calibration, identifiabilité, estimateur d'erreur et comparaisons | Après validation du cas direct et démonstration de valeur en G2 |
+| **M3 — Terrain et SIG** | Données indépendantes, topographie, météorologie et intégration SIG si utile | Après preuve sur cas contrôlés et accès aux données |
+| **M4 — Publication** | Manuscrit reproductible, résultats positifs et négatifs, limites | Selon la solidité des résultats |
+| **M5 — Transfert opérationnel ou réglementaire** | Évaluation adaptée au contexte d'usage et aux exigences applicables | Aucune revendication avant évaluation dédiée |
 
-## Hypothèses scientifiques à démontrer
+Aucun délai fixe ni objectif de performance ne doit être considéré comme acquis avant que le problème, les données et les critères de preuve soient définis.
 
-1. La métrique travel-time généralise les solutions de similitude aux vents non uniformes **avec conservation exacte de la masse**.
-2. La calibration hybride dans un modèle analytique est **plus robuste hors domaine** qu'un surrogate ML équivalent.
-3. Le far-field à topographie via métrique est **moins conservateur et plus réaliste** que l'extension gaussienne AGDISP sur les cas avec barrières et relief.
+## Architecture cible, non engagement d'implémentation
+
+- `core/similitude` : solutions de similitude, sous hypothèses explicites.
+- `core/metric` : métrique de temps de transport et propriétés à démontrer.
+- `core/constraints` : propriétés physiques garanties dans le domaine de validité.
+- `benchmarks/reference` et `benchmarks/baselines` : priorité dès que le problème G0 est défini.
+- `assim/calibration`, `assim/ste`, méthodes POD/ROM et approches apprises : à comparer ou développer si elles répondent à une question utile.
+- `io/`, `bindings/qgis`, API et interfaces : après validation d'un noyau pertinent.
+
+## Prochaine action
+
+Rédiger la fiche **G0 — décision d'utilité** pour le cas candidat de dérive de pulvérisation en champ lointain. La confronter à d'autres cas d'usage crédibles suggérés par la littérature si nécessaire. Définir le problème, les alternatives, le bénéfice attendu, les données accessibles et le test discriminant le moins coûteux avant de développer davantage.
+
+La documentation complète et les critères expérimentaux se trouvent dans [docs/03-roadmap-jdriftx-v2.md](../../docs/03-roadmap-jdriftx-v2.md) et [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md).
