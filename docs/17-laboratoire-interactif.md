@@ -95,7 +95,7 @@ Le site GitHub Pages est statique : Python exécuté au rendu Quarto produit des
 
 ## 7. Convergence spatiale et temporelle
 
-L'application `apps/convergence_lab.py` introduit un cas de vérification distinct : advection-diffusion 1D périodique d'une sinusoïde. Elle utilise un solveur numérique par différences finies centrées et RK4, séparé de la solution analytique
+L'application `apps/convergence_lab.py` introduit un cas de vérification distinct : advection-diffusion 1D périodique d'une sinusoïde. Elle utilise un solveur numérique par différences finies centrées et RK4, séparé de la solution analytique, et un second solveur indépendant par schéma amont conservatif et Euler explicite
 
 \[
 c(x,t)=\bar c+A e^{-K(2\pi/L)^2t}\sin\left(\frac{2\pi}{L}(x-ut)\right).
@@ -106,7 +106,7 @@ Le cas est périodique sur une longueur $L$, avec vitesse $u$ et diffusivité $K
 - **Convergence spatiale** : raffinement du nombre de cellules ; le pas de temps est réduit comme $\Delta x^2$ pour minimiser l'influence temporelle.
 - **Convergence temporelle** : grille fixe, comparaison à une solution numérique calculée avec le même opérateur spatial et un pas temporel beaucoup plus fin.
 
-Le code vérifie la stabilité linéaire du pas choisi pour l'opérateur discret. Les tests automatisés vérifient l'accord avec la solution analytique, la conservation de la moyenne, la diminution des erreurs avec le raffinement et le rejet d'un pas instable. La pente observée reste un diagnostic empirique : la référence temporelle fine est approchée et les résultats dépendent du régime d'erreur et de l'arrondi.
+Le code vérifie la stabilité linéaire du pas choisi pour le solveur centré/RK4 et la condition CFL combinant advection et diffusion pour le schéma amont/Euler. L'application compare les deux solutions et leur erreur par rapport à la référence analytique. Les tests automatisés vérifient l'accord avec la solution analytique, la conservation de la moyenne, la diminution des erreurs avec le raffinement et le rejet d'un pas instable. La pente observée reste un diagnostic empirique : la référence temporelle fine est approchée et les résultats dépendent du régime d'erreur et de l'arrondi.
 
 Lancer :
 
