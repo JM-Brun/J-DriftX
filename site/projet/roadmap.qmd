@@ -42,6 +42,10 @@ Aucun délai fixe ni objectif de performance ne doit être considéré comme acq
 - `assim/calibration`, `assim/ste`, méthodes POD/ROM et approches apprises : à comparer ou développer si elles répondent à une question utile.
 - `io/`, `bindings/qgis`, API et interfaces : après validation d'un noyau pertinent.
 
+## Fallback théorique si l'utilité pratique échoue
+
+Si l'approche ne démontre pas de bénéfice applicatif, J-DriftX peut être réorienté vers un modèle jouet mathématique : propriété démontrable, exemples analytiques, contre-exemples et notebook minimal reproductible. Le transport 1D avec temps de parcours dirigé est un candidat, pas une contribution présumée nouvelle. Il faut vérifier les définitions, les axiomes pertinents et l'état de l'art avant toute revendication d'originalité. Voir le [protocole de fallback théorique](modele-jouet.qmd) et le [document détaillé](../../docs/09-fallback-modele-jouet.md).
+
 ## Prochaine action
 
 Rédiger la fiche **G0 — décision d'utilité** pour le cas candidat de dérive de pulvérisation en champ lointain. La confronter à d'autres cas d'usage crédibles suggérés par la littérature si nécessaire. Définir le problème, les alternatives, le bénéfice attendu, les données accessibles et le test discriminant le moins coûteux avant de développer davantage.
