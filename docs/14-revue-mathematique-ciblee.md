@@ -10,7 +10,7 @@ La page [Métrique travel-time](../site/theorie/metrique-travel-time.qmd) défin
 \tau(\mathbf{x}_0\to\mathbf{x})=\int_\gamma \frac{ds}{|\mathbf{u}(s)|},
 \]
 
-où \(\gamma\) est une ligne de courant. Elle associe à cette quantité la non-symétrie, la divergence du temps près des zones où \(|\mathbf u|\to0\), et une transformation de coordonnées liée à la conservation de masse.
+où \(\gamma\) est une ligne de courant. **Attention : cette formule ne restitue pas à elle seule toute la définition historique de la pseudo-distance.** L'article de 2006 définit le coût jusqu'à la projection \(B^\perp\) du point cible sur la caractéristique passant par le point de départ, et non nécessairement jusqu'au point cible lui-même. La différence est structurante et est détaillée en §2.1.
 
 La question préalable n'est pas « cette idée est-elle nouvelle ? », mais **quel objet mathématique est exactement défini, sur quel domaine, et quelles propriétés en découlent réellement ?**
 
