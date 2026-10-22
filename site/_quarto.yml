@@ -35,6 +35,8 @@ website:
             text: "Feuille de route"
           - href: projet/utilite-scientifique.qmd
             text: "Utilité scientifique"
+          - href: projet/revue-adversariale-g0.qmd
+            text: "Revue adversariale G0"
           - href: projet/modele-jouet.qmd
             text: "Fallback théorique"
           - href: projet/validation-scientifique.qmd
