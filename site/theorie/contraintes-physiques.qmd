@@ -68,3 +68,5 @@ De même, interprétabilité et auditabilité peuvent être des avantages recher
 3. Définir des tests de positivité et de superposition sur des grilles et des configurations plus variées.
 4. Avant toute affirmation sur la divergence, définir puis implémenter le champ de vent concerné ; comparer divergence analytique et discrète.
 5. Pour chaque propriété, consigner l'équation, les hypothèses, le domaine de validité, la tolérance numérique et les contre-exemples recherchés.
+
+Les tests manquants et l'avancement de chaque propriété sont suivis dans l'issue [#42](https://github.com/JM-Brun/J-DriftX/issues/42).

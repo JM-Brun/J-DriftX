@@ -6,6 +6,8 @@ title: "Feuille de route J-DriftX v2"
 
 La feuille de route est **conditionnelle aux preuves** : les jalons décrivent des questions et livrables attendus, pas des promesses de performance ni un calendrier garanti.
 
+> **Suivi :** les travaux ouverts sont listés dans les issues [#41](https://github.com/JM-Brun/J-DriftX/issues/41) (investigation mathématique G0-S), [#42](https://github.com/JM-Brun/J-DriftX/issues/42) (tests des propriétés visées), [#43](https://github.com/JM-Brun/J-DriftX/issues/43) (besoin applicatif G0-A) et [#44](https://github.com/JM-Brun/J-DriftX/issues/44) (ancrage documentaire M0) ; voir aussi [#13](https://github.com/JM-Brun/J-DriftX/issues/13) (audit des jeux de données) et [#17](https://github.com/JM-Brun/J-DriftX/issues/17) (squelette benchmarks).
+
 > La première question est l'utilité : quel problème J-DriftX peut-il résoudre mieux que les méthodes disponibles, et comment le démontrer ? La [carte d'articulation scientifique](carte-articulation.qmd) explique les niveaux de preuve et leur relation. Voir aussi le [cadre de décision scientifique](utilite-scientifique.qmd), la [revue adversariale G0](revue-adversariale-g0.qmd) et le document détaillé [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md).
 
 ## Portes de décision

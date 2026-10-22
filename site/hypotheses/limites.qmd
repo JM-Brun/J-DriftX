@@ -24,7 +24,7 @@ Une modélisation à complexité réduite honnête publie ses limites au même n
 
 ## Limites méthodologiques
 
-- **Validation quantitative** : l'héritage Drift-X souffre d'un déficit de benchmarks chiffrés publics. *Contrôle* : premier livrable de la reprise (M1) — voir l'[audit de l'héritage](https://github.com/JM-Brun/J-DriftX/blob/main/docs/01-audit-heritage-driftx.md), dans le dépôt.
+- **Validation quantitative** : l'héritage Drift-X souffre d'un déficit de benchmarks chiffrés publics. *Contrôle* : premier livrable de la reprise (M1) — voir l'[Audit de l'héritage](../projet/audit.qmd) (annexe).
 - **Formalisation de la métrique** : dispersée entre publications historiques. *Contrôle* : document unique et dépôt HAL de la thèse (M0).
 - **Calibration** : aux moindres carrés dans l'héritage. *Contrôle* : régularisation puis bayésien (M2–M3), alignement sur les standards STE [@hutchinson2017ste].
 

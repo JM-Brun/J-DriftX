@@ -50,4 +50,4 @@ Le projet ne doit donc pas annoncer une propriété comme « vérifiée systéma
 4. Ne créer des tests de divergence qu'après avoir défini et implémenté le champ de vent visé.
 5. Pour chaque jalon, rapporter la couverture réellement obtenue ; ne pas présenter le nombre de tests ou la CI verte comme une preuve de validité scientifique.
 
-Voir la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd), les [contraintes physiques](../theorie/contraintes-physiques.qmd) et la [carte d'articulation](carte-articulation.qmd).
+Voir la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd), les [contraintes physiques](../theorie/contraintes-physiques.qmd), la [carte d'articulation](carte-articulation.qmd) et l'issue [#42](https://github.com/JM-Brun/J-DriftX/issues/42) (tests des propriétés visées).

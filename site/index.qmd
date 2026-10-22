@@ -46,11 +46,25 @@ L'assimilation de données partielles identifie les paramètres ; l'analyse de s
 - Les **ROM et surrogate ML** modernes restent, en première analyse, *a posteriori* : elles exigent des snapshots CFD. L'hypothèse d'une réduction *a priori* reste à confronter à ce paysage, pas une niche démontrée ([panorama](etat-art/panorama.qmd)).
 - Les données qui manquaient en 2008 (**ERA5/Copernicus, MNT ouverts, capteurs low-cost**) existent désormais.
 
-L'analyse complète : [Panorama de l'état de l'art](etat-art/panorama.qmd) et la [carte d'articulation](projet/carte-articulation.qmd).
+L'analyse complète : [Audit de l'héritage](projet/audit.qmd) et [Panorama de l'état de l'art](etat-art/panorama.qmd) ; les documents de gouvernance (feuille de route, revues, cadrage G0) sont regroupés en annexes de ce site.
 
 ## Parcours de lecture
 
-Commencer par la [carte d'articulation scientifique](projet/carte-articulation.qmd), qui distingue les sources historiques, l'hypothèse mathématique, les vérifications du code, la comparaison différentielle et la validation indépendante. Le cadrage documentaire G0 est franchi, mais l'utilité applicative (G0-A) reste non démontrée. La feuille de route, les audits et les revues internes sont des documents de travail conservés dans [la documentation du dépôt](https://github.com/JM-Brun/J-DriftX/tree/main/docs), volontairement absents de ce site.
+Commencer par la [carte d'articulation scientifique](projet/carte-articulation.qmd), qui distingue les sources historiques, l'hypothèse mathématique, les vérifications du code, la comparaison différentielle et la validation indépendante. Le cadrage documentaire G0 est franchi, mais l'utilité applicative (G0-A) reste non démontrée. La feuille de route, les audits et les revues sont des documents de travail regroupés dans les **annexes** de ce site, liés aux [issues de suivi](https://github.com/JM-Brun/J-DriftX/issues) ; leurs versions détaillées vivent dans [la documentation du dépôt](https://github.com/JM-Brun/J-DriftX/tree/main/docs).
+
+## De l'idée au détail
+
+Chaque affirmation de haut niveau a sa page de détail — dérivation, justification, limites :
+
+| Question de haut niveau | Où descendre |
+|---|---|
+| Que disent réellement les sources historiques ? | [Héritage](projet/heritage.qmd) · [Lectures des sources](projet/lectures.qmd) (annexe) · [Audit de l'héritage](projet/audit.qmd) (annexe) |
+| Pourquoi une métrique de temps de transport, et quels objets mathématiques voisins ? | [Métrique travel-time](theorie/metrique-travel-time.qmd) · [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) · [Revue mathématique](etat-art/revue-mathematique.qmd) |
+| Comment les solutions de similitude sont-elles dérivées ? | [Solutions de similitude](theorie/similitude.qmd) |
+| Que garantit le modèle, et avec quelles preuves ? | [Contraintes physiques](theorie/contraintes-physiques.qmd) · [Catalogue des hypothèses](hypotheses/catalogue.qmd) · [Limites](hypotheses/limites.qmd) |
+| Que coûterait une modélisation complète ? | [EDP & maillage](theorie/edp-et-maillage.qmd) · [Comparaison des complexités](theorie/comparaison-complexites.qmd) |
+| Comment les données calibrent-elles le modèle ? | [Assimilation & identification](theorie/assimilation-identification.qmd) |
+| Qu'est-ce qui reste à faire et à valider ? | Annexes : [feuille de route](projet/roadmap.qmd) · [revue adversariale](projet/revue-adversariale-g0.qmd) · [preuves G0](projet/preuves-g0.qmd) — suivi dans les [issues](https://github.com/JM-Brun/J-DriftX/issues) |
 
 ## Explorer
 
