@@ -4,7 +4,7 @@ title: "Métriques non riemanniennes"
 
 # Des distances qui ne se retournent pas : métriques non riemanniennes
 
-La métrique travel-time de Drift-X appartient à une famille d'objets plus ancienne que le projet : les métriques **non riemanniennes**, où la « distance » dépend du sens de parcours, du mode de transport ou du point de vue. Cette page situe l'idée centrale du projet dans sa généalogie — de la cartographie des distances-temps en géographie humaine aux métriques de Finsler.
+Le travel-time de Drift-X est un **objet de coût orienté construit à partir d'un champ de vitesse**. Il est lié à plusieurs familles géométriques, mais ne doit pas être classé comme métrique de Finsler ou quasi-métrique avant que ses axiomes soient vérifiés. Cette page situe les analogies utiles — distances-temps géographiques, géométrie de Finsler et métriques d'adaptation de maillage — sans supposer qu'elles sont équivalentes.
 
 ## Riemannien, non riemannien : de quoi parle-t-on ?
 
@@ -25,7 +25,7 @@ Une métrique **non riemannienne** lève une ou plusieurs de ces hypothèses :
 
 L'idée que les postulats de la géométrie euclidienne sont souvent inapplicables en géographie humaine est ancienne. Jean-Claude Muller la formalise pour la cartographie : les distances et localisations géographiques **ne sont pas uniques** et varient suivant le type d'espace envisagé — économique, social, culturel ou mental ; parfois même, la métrique de ces espaces est **inconnue ou incomplète** [@muller1979persee]. Sa réponse : cartographier une métrique non euclidienne, la **distance-temps** — le temps de parcours du réseau de transport plutôt que les mètres au sol — et en accepter les déformations (isochrones, anamorphoses).
 
-Drift-X transpose exactement ce programme, avec un changement décisif de source : la métrique n'est plus reconstruite depuis des **données de réseau**, mais dérivée **de la physique** — le champ de vent à divergence nulle. L'article de 2006 propose une pseudo-distance de transport (voir [Métrique travel-time](metrique-travel-time.qmd)). Elle ne se réduit pas toujours au temps d'arrivée au point cible : pour un point de départ \(A\), le point \(B\) est projeté sur la caractéristique issue de \(A\), en \(B^\perp\), et le coût est le temps de migration de \(A\) à \(B^\perp\). Le temps le long d'une caractéristique entre deux points de celle-ci s'écrit
+Drift-X présente une **analogie** avec ce programme, mais change la construction : le coût est défini à partir d'un champ de vent et d'une projection caractéristique plutôt que d'un réseau de transport. L'hypothèse de divergence nulle est une condition physique/mathématique distincte; elle ne suffit pas à transformer le coût en métrique ni à démontrer une conservation sur toute surface iso-\(\\tau\). L'article de 2006 propose une pseudo-distance de transport (voir [Métrique travel-time](metrique-travel-time.qmd)). Elle ne se réduit pas toujours au temps d'arrivée au point cible : pour un point de départ \(A\), le point \(B\) est projeté sur la caractéristique issue de \(A\), en \(B^\perp\), et le coût est le temps de migration de \(A\) à \(B^\perp\). Le temps le long d'une caractéristique entre deux points de celle-ci s'écrit
 
 $
 T_\gamma(A,B)=\int_{\gamma_{A\to B}}\frac{ds}{|\mathbf u(s)|}.
@@ -37,7 +37,7 @@ La construction historique a donc une dégénérescence transversale assumée : 
 
 ## Le lien mathématique : navigation de Zermelo et métriques de Finsler
 
-Le problème de **Zermelo** (1931) demande le chemin le plus rapide d'un point à un autre pour un mobile de vitesse propre fixe naviguant dans un **courant**. La réponse est une métrique de **Randers** — le prototype des métriques de Finsler, où la longueur d'un trajet dépend de sa direction : naviguer avec le courant coûte moins cher que contre lui.
+Le problème de **Zermelo** (1931) demande le chemin le plus rapide d'un point à un autre pour un mobile de vitesse propre fixe naviguant dans un **courant**. Sous les hypothèses usuelles de vitesse propre et de courant, sa formulation conduit à une géométrie de **Randers**, cas particulier des métriques de Finsler : la longueur effective dépend de la direction et naviguer avec le courant peut coûter moins cher que contre lui. Cela décrit un navigateur contrôlable, pas directement un traceur passif.
 
 Un traceur passif en advection pure suit le champ de vitesse; il ne choisit pas librement une direction comme le navigateur de Zermelo. Pour des points non situés sur la même trajectoire orientée, le temps advectif peut être non défini; le poser égal à $+\infty$ est une convention de coût étendu qui doit être explicitée. Cette formulation n'est donc pas automatiquement une métrique de Randers, ni une métrique finie. La non-symétrie découle ici de l'accessibilité orientée, pas simplement de la non-uniformité du champ.
 
