@@ -49,7 +49,7 @@ with trajectory_tab:
         figure.add_trace(
             go.Scatter(x=x_num, y=y_num, mode="lines+markers", name=method.upper())
         )
-        errors[method] = float(np.hypot(x_num[-1] - np.cos(end_time), y_num[-1] - np.sin(end_time)))
+        errors[method] = float(\n            np.hypot(x_num[-1] - np.cos(end_time), y_num[-1] - np.sin(end_time))\n        )
     figure.update_layout(
         title="Trajectoire dans le plan de phase",
         xaxis_title="x (unité arbitraire)",
@@ -63,7 +63,7 @@ with trajectory_tab:
     m2.metric("Erreur finale RK4", f"{errors['rk4']:.3e}")
     st.caption(
         "L'erreur dépend du pas et de la durée. Une méthode d'ordre supérieur n'est pas "
-        "automatiquement meilleure pour tout problème : stabilité, régularité et coût comptent aussi."
+        "automatiquement meilleure pour tout problème : stabilité, régularité et coût "\n        "comptent aussi."
     )
 
 with transport_tab:
@@ -113,7 +113,7 @@ with validation_tab:
         """
         **Tests automatisés du noyau**
         - Champ de vitesse constant : la trajectoire est intégrée exactement, à l'arrondi près.
-        - Champ rotationnel : comparaison de l'erreur d'Euler et de RK4 à la solution analytique.
+        - Champ rotationnel : comparaison de l'erreur d'Euler et de RK4 à la solution\n          analytique.
         - Advection-diffusion : cas sans diffusion, conservation de la masse sur un domaine assez large,
           et croissance de variance conforme à la formule théorique.
         - Paramètres invalides : valeurs non finies, pas nul/négatif et diffusivité négative rejetés.
