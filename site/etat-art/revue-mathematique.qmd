@@ -42,7 +42,7 @@ Il faut donc distinguer la **définition géométrique** de la **procédure num�
 
 ## Contre-exemple à l'inégalité triangulaire
 
-Considérons le champ lisse, stationnaire et divergence nulle \(\mathbf u(x,y)=(1+9y,0)\) sur \(y\in[0,1]\). Les caractéristiques sont horizontales, et le coût projeté vers l'aval vaut \(d(A,B)=(x_B-x_A)/(1+9y_A)\). Pour \(A=(0,0)\), \(B=(1,1)\), \(C=(2,0)\),
+Considérons le champ lisse, stationnaire et divergence nulle \(\mathbf u(x,y)=(1+9y,0)\) sur \(y\in[0,1]\). Les coordonnées et la vitesse sont adimensionnées; ce champ est un contre-exemple mathématique, pas un champ atmosphérique calibré. Les caractéristiques sont horizontales, et le coût projeté vers l'aval vaut \(d(A,B)=(x_B-x_A)/(1+9y_A)\). Pour \(A=(0,0)\), \(B=(1,1)\), \(C=(2,0)\),
 
 \[
 d(A,C)=2,\qquad d(A,B)=1,\qquad d(B,C)=0.1.
