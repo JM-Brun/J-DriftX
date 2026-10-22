@@ -101,9 +101,9 @@ L'application `apps/convergence_lab.py` introduit un cas de vérification distin
 c(x,t)=\bar c+A e^{-K(2\pi/L)^2t}\sin\left(\frac{2\pi}{L}(x-ut)\right).
 \]
 
-Le cas est périodique sur une longueur (L), avec vitesse (u) et diffusivité (K) constantes. L'interface affiche les erreurs (L^2) et maximale, la conservation de la moyenne et deux diagnostics :
+Le cas est périodique sur une longueur $L$, avec vitesse $u$ et diffusivité $K$ constantes. L'interface affiche les erreurs $L^2$ et maximale, la conservation de la moyenne et deux diagnostics :
 
-- **Convergence spatiale** : raffinement du nombre de cellules ; le pas de temps est réduit comme (Delta x^2) pour minimiser l'influence temporelle.
+- **Convergence spatiale** : raffinement du nombre de cellules ; le pas de temps est réduit comme $\Delta x^2$ pour minimiser l'influence temporelle.
 - **Convergence temporelle** : grille fixe, comparaison à une solution numérique calculée avec le même opérateur spatial et un pas temporel beaucoup plus fin.
 
 Le code vérifie la stabilité linéaire du pas choisi pour l'opérateur discret. Les tests automatisés vérifient l'accord avec la solution analytique, la conservation de la moyenne, la diminution des erreurs avec le raffinement et le rejet d'un pas instable. La pente observée reste un diagnostic empirique : la référence temporelle fine est approchée et les résultats dépendent du régime d'erreur et de l'arrondi.
