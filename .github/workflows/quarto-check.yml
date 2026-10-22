@@ -1,0 +1,24 @@
+name: Quarto site check
+
+on:
+  pull_request:
+    paths:
+      - "site/**"
+      - ".github/workflows/quarto-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/quarto-check.yml"
+
+jobs:
+  render-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render website
+        run: quarto render site
