@@ -12,14 +12,14 @@ Bozon, N., Sinfort, C. & Mohammadi, B. (2009). « A GIS-based atmospheric disper
 ## Revue — l'essentiel
 
 - **Forme gaussienne** : c(x,y,z) = c_c(x) · f(r, δ(x)) avec c_c ~ exp(−a(U)x) et f ~ exp(−b(U,δ)r) ; monotonies documentées (a décroissante en U ; b croissante en U, décroissante en δ).
-- **Multi-niveaux** : rectangles homothétiques emboîtés, vent interpolé aux 4 coins (partition de l'unité) — garanties : divergence nulle et conservation de la masse dans chaque sous-domaine ; 3 niveaux en pratique (Ω ≈ 10 km² → ω_2 ≈ 10 m²), échantillonnage type 20×20 par niveau.
+- **Multi-niveaux (propriétés rapportées par les auteurs)** : rectangles homothétiques emboîtés, restriction du vent à partir des valeurs aux 4 coins (partition de l'unité). Le texte affirme que la restriction préserve la divergence nulle si le champ précédent est à divergence nulle, et que la restriction de concentration satisfait le bilan de masse entrant dans le sous-domaine. Ce ne sont pas des garanties vérifiées indépendamment pour une implémentation moderne : hypothèses, intégration et erreurs numériques restent à formaliser et tester. Le manuscrit décrit 3 niveaux (Ω ≈ 10 km² → ω₂ ≈ 10 m²), avec échantillonnage type 20×20 par niveau.
 - **Correction topographique** de type Bernoulli-Newton ; fonctions a/b corrigées sous contrainte de conservation de la masse entrante ; la topographie brise la symétrie de la cross-diffusion.
 - **Architecture historique** : cœur Fortran + plugin QGIS (bindings Python), échange CSV, MNT extrait via GDAL, sorties shapefiles et raster (gdal_grid, inverse-distance).
 - **Limites assumées** : tendances moyennes à très bas coût ; erreurs dupliquées dans le SIG ; incertitudes supplémentaires des traitements automatisés.
 
 ## Valeur pour J-DriftX
 
-La source la plus opérationnelle du corpus : forme gaussienne exacte et ses monotonies (testables), construction multi-niveaux à réimplémenter en Python, correction topographique, interface CSV à conserver pour compatibilité, spécification des sorties raster/vecteur.
+Source riche en détails d'implémentation historique : forme de panache, restriction multi-niveaux, correction topographique, échange CSV et sorties SIG. Ces éléments sont des pistes de réimplémentation et de tests, pas une spécification normative ; les propriétés mathématiques et les choix d'interpolation doivent être validés avant d'être repris.
 
 ## Pour aller plus loin
 

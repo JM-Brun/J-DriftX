@@ -120,17 +120,18 @@ Il n'existe pas de seuil universel d'amélioration. Il doit être motivé par le
 
 ## 6. Jalons avec portes de décision
 
-### G0 — Besoin et valeur potentielle
+### G0 — Cadrage documentaire du besoin (franchi le 22 octobre 2026)
 
-**Question :** le problème est-il réel, suffisamment important et mal couvert par les méthodes disponibles ?
+Le **jalon G0 documentaire** est franchi : le besoin scientifique, l’observable cible, les baselines candidates, les critères de succès/arrêt et les corpus candidats ont été cadrés et documentés dans la [fiche G0](13-fiche-g0-cadrage-besoin.md) et l’[audit des corpus](15-audit-corpus-g0-resultats.md).
 
-Livrables :
-- fiche de problème indépendante de la solution ;
-- utilisateurs, décisions et contraintes identifiés ;
-- synthèse des alternatives existantes ;
-- hypothèse d'utilité et critères de succès préenregistrés dans le dépôt.
+Ce verdict est volontairement limité. Il ne signifie pas que l’utilité applicative est démontrée, que les fichiers bruts sont utilisables sous licence compatible, que le modèle est valide ou qu’un avantage sur les baselines a été observé.
 
-**Décision :** poursuivre si un besoin étayé et un avantage testable sont identifiés ; sinon, revoir le cas d'usage avant d'investir dans le développement.
+- **G0 documentaire : franchi.**
+- **G0-A — utilité applicative : non démontrée ; reste à instruire.**
+- **G1 — cohérence/faisabilité du modèle et vérification des données brutes : travaux requis avant le benchmark.**
+- **G2 — valeur différentielle : non évaluée.**
+
+La prochaine décision porte donc sur le test discriminant le plus petit, sans préjuger de son résultat.
 
 ### G1 — Cohérence et faisabilité théoriques
 
@@ -201,19 +202,16 @@ Les modules logiciels ne sont pas des fins en soi. Leur priorité dépend de leu
 
 ## 9. Prochaine action concrète
 
-La prochaine tâche scientifique est de rédiger une **fiche de décision G0** pour le cas d'usage candidat « dérive de pulvérisation en champ lointain », puis de la confronter à au moins une autre formulation possible du besoin si la revue suggère des alternatives crédibles.
+La fiche de cadrage G0 existe désormais ; il ne faut pas la rédiger à nouveau ni traiter le *far-field* de pulvérisation comme un choix déjà validé. La prochaine étape est de préparer le **test discriminant sur DIFLU**, sous réserve de l’audit G1 des fichiers bruts.
 
-Cette fiche devra contenir :
+1. Vérifier, au niveau des fichiers, la licence et les conditions de réutilisation.
+2. Vérifier les unités, le terme source, les métadonnées météorologiques, les valeurs manquantes et les limites de détection.
+3. Définir les identifiants d’essai et la partition indépendante, sans fuite entre mesures d’un même essai.
+4. Fixer les entrées disponibles et une baseline de panache gaussien simple, avec paramètres et coût total comparables.
+5. Formaliser le protocole et les métriques avant de consulter les résultats.
+6. Exécuter le benchmark uniquement lorsque le domaine de validité, les données et l’implémentation sont suffisamment définis ; consigner également les résultats négatifs.
 
-1. le problème physique et la décision visée ;
-2. les utilisateurs et contraintes ;
-3. les limites documentées des solutions existantes ;
-4. la valeur ajoutée supposée de J-DriftX ;
-5. les baselines à comparer et la justification de leur choix ;
-6. les données accessibles et les lacunes ;
-7. les critères de succès et d'abandon ;
-8. le test discriminant le moins coûteux ;
-9. les sources et le niveau de preuve de chaque affirmation.
+Si les fichiers bruts ne sont pas utilisables ou si le protocole ne permet pas un test discriminant, documenter ce blocage et réviser le plan plutôt que d’affirmer que le corpus est prêt.
 
 **Règle de gouvernance :** aucune nouvelle fonctionnalité importante ne doit être priorisée uniquement parce qu'elle figure dans l'architecture cible. Elle doit être reliée à un besoin, une hypothèse, une expérience et une décision qu'elle permettra de prendre.
 
@@ -233,6 +231,6 @@ Le projet distingue maintenant :
 - **G0-S — valeur scientifique exploratoire :** autorise un modèle jouet mathématique précisément défini, avec preuves, contre-exemples et tests. Il peut avancer sans jeu de données réel, car il ne prétend pas valider une prédiction physique.
 - **G0-A — utilité applicative :** reste obligatoire avant toute revendication de valeur applicative, benchmark réel, sélection de domaine industriel ou développement d'une chaîne opérationnelle.
 
-Cette séparation n'est pas une façon de déclarer G0 franchi. Elle permet seulement de produire un résultat scientifique de portée limitée sans prétendre avoir résolu le besoin utilisateur. Le [MVP scientifique minimal et la trajectoire maximale](13-mvp-scientifique-et-g0.md) définissent le périmètre autorisé et les portes d'extension.
+Cette séparation ne doit pas être confondue avec le statut documentaire de G0 : le cadrage documentaire a été franchi le 22 octobre 2026, tandis que G0-A (utilité applicative) reste non démontré. Elle permet de produire un résultat scientifique de portée limitée sans prétendre avoir résolu le besoin utilisateur. Le [MVP scientifique minimal et la trajectoire maximale](13-mvp-scientifique-et-g0.md) définissent le périmètre autorisé et les portes d'extension.
 
 Le MVP ne peut conclure qu'à des propriétés mathématiques ou à une valeur pédagogique. Toute conclusion sur concentration, dépôt, exposition, coût applicatif ou utilité décisionnelle requiert une formulation physique et une validation distinctes.

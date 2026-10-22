@@ -4,7 +4,7 @@ title: "Assimilation & identification"
 
 # Calibration par assimilation, sensibilité et identification de source
 
-Le modèle réduit a des paramètres libres $\theta$ (coefficients de la similitude, fractions d'émission inter-niveaux, calibration du champ de vent). L'identification de $\theta$ se fait par **assimilation de données partielles** — jamais par entraînement d'un modèle de substitution.
+Le modèle réduit a des paramètres libres $\theta$ (coefficients de la similitude, fractions d'émission inter-niveaux, calibration du champ de vent). Dans la formulation historique, l'identification de $\theta$ se fait par **assimilation de données partielles** plutôt que par apprentissage d'un surrogate. Une extension hybride n'est pas exclue ; son intérêt et son coût devraient alors être comparés explicitement.
 
 ## Calibration aux moindres carrés
 
@@ -15,7 +15,7 @@ $$
 J(\theta) = \sum_{i} \left[ v(\mathbf{x}_i; \theta) - y_i \right]^2,
 $$
 
-où $v$ est le modèle approché. Le coût d'une évaluation de $v$ étant quasi nul, la minimisation est triviale — y compris par Monte Carlo ou algorithme global — là où un modèle PDE exigerait des adjoints coûteux.
+où $v$ est le modèle approché. Les publications historiques visent un coût d'évaluation faible, mais le coût total de calibration dépend du nombre d'évaluations, de la dimension des paramètres, de la préparation des champs, de l'optimiseur et du critère d'arrêt. Une évaluation ponctuelle peu coûteuse ne rend pas automatiquement la minimisation triviale.
 
 ## Régularisation (extension v2)
 
@@ -25,18 +25,18 @@ $$
 J_\lambda(\theta) = \| v(\theta) - y \|^2 + \lambda \| \theta - \theta_0 \|^2.
 $$
 
-C'est l'alignement avec les standards du champ *source term estimation* (STE), où les méthodes d'optimisation, d'adjoint et bayésiennes se sont structurées après 2010 [@hutchinson2017ste].
+Cette extension permet de comparer le projet aux méthodes d'estimation de terme source (STE), notamment aux approches d'optimisation et bayésiennes décrites dans la littérature [@hutchinson2017ste]. La référence doit servir de point de comparaison méthodologique, pas de preuve que la calibration bayésienne soit déjà implémentée.
 
 ## Analyse de sensibilité : le double usage
 
-Le modèle approché étant analytique, ses gradients $\partial v / \partial \theta$ sont **exacts et gratuits**. Drift-X les exploite dans deux directions :
+Si la formule retenue est différentiable et ses dérivées sont disponibles, on peut calculer $\partial v / \partial \theta$ analytiquement ou par différentiation automatique. Leur coût n'est pas nul et la validité du gradient dépend du modèle et de son implémentation. Drift-X les exploite dans deux directions :
 
 **Analyse de risque.** Propager les incertitudes (vent, émission, stabilité) par Monte Carlo massif — rendu possible par le coût d'évaluation ponctuelle.
 
-**Identification de source.** Inverser la question : une pollution est observée aux capteurs ; de quelle source provient-elle ? La sensibilité $\partial C(\mathbf{x}_i) / \partial Q_j$ à chaque source candidate $j$ forme le système inverse. L'adjoint du modèle travel-time est analytique par construction — un avantage structurel sur les modèles numériques.
+**Identification de source.** Inverser la question : une pollution est observée aux capteurs ; de quelle source provient-elle ? La sensibilité $\partial C(\mathbf{x}_i) / \partial Q_j$ à chaque source candidate $j$ forme le système inverse. La disponibilité d'un gradient ou d'un adjoint pour la formulation travel-time actuelle n'est pas démontrée par le seul fait que certaines composantes soient analytiques. Il faut dériver l'objet exact, vérifier les points non réguliers et comparer le coût total à des méthodes numériques.
 
 ## Ce que la reprise ajoute
 
-- Alignement STE : comparaison aux méthodes de renormalisation et aux approches bayésiennes de référence [@renormalization2016; @hutchinson2017ste].
+- Alignement STE : comparaison aux méthodes de renormalisation et aux approches bayésiennes de référence [@renormalization2014; @hutchinson2017ste].
 - Quantification d'incertitude (calibration bayésienne, M3).
-- Détection du hors-domaine : le modèle analytique sert de garde-fou aux surrogates ML (voir [Panorama](../etat-art/panorama.qmd)).
+- Détection du hors-domaine : étudier si les contraintes physiques ou un modèle analytique peuvent aider à détecter des prédictions hors domaine. Il s'agit d'une hypothèse à évaluer, pas d'un garde-fou établi.

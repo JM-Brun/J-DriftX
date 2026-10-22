@@ -16,34 +16,34 @@ title: "Comparaison des complexités"
 
 | Famille | Préparation | Évaluation d'un point | Données requises | Garanties physiques |
 |---|---|---|---|---|
-| **Gaussien** (panache/puff, Briggs) | aucune — formules tabulées | $O(1)$ : une formule fermée | vent $U$, classe de Pasquill, $Q$, $h$ | conservation, positivité (par construction) |
+| **Gaussien** (panache/puff, Briggs) | faible si les paramètres sont fournis ; choix de classe et de terrain à justifier | $O(1)$ par point pour la formule fermée | vent $U$, classe de Pasquill, $Q$, $h$ | positivité pour paramètres admissibles ; bilan de masse dépend de la formule, du domaine et des hypothèses |
 | **Lagrangien stochastique** (particules) | configuration du champ de vent et de la turbulence | $O(N_{\text{part}})$ par pas de temps ; bruit statistique en $1/\sqrt{N_{\text{part}}}$ | champ de vent + modèle de turbulence | statistiques (au fil du nombre de particules) |
-| **CFD RANS/LES** (EDP + maillage) | maillage + configuration complète | une simulation du champ : $O(N_{\text{cellules}} \times N_{\text{pas}})$ | conditions aux limites complètes, terrain | selon le schéma (conservatif, positif) |
-| **ROM a posteriori** (POD, Arnoldi…) | $N$ *snapshots* CFD + extraction des modes | $O(n)$, avec $n \ll N$ | *snapshots* du modèle complet | aucune garantie hors du domaine couvert [@verveecken2015rom] |
-| **Surrogates ML** (réseaux, opérateurs) | constitution des données + entraînement | rapide, $O(1)$ par évaluation | *snapshots* ou observations abondantes | aucune garantie intrinsèque [@fno2024plume] |
-| **J-DriftX** (réduction a priori) | aucune simulation CFD ; calibration par assimilation | $O(1)$ : une formule fermée $(Q, U, \sigma, \tau)$ | vent (MNT, réanalyses) + mesures partielles | conservation, positivité, superposition, divergence nulle — imposées |
+| **CFD RANS/LES** (EDP + maillage) | maillage + configuration complète ; réutilisation possible selon le workflow | coût dépendant du nombre de cellules, pas de temps, solveur et convergence | conditions aux limites, terrain et fermetures physiques | selon l'équation, le schéma numérique et les contrôles appliqués |
+| **ROM a posteriori** (POD, Arnoldi…) | souvent snapshots représentatifs + construction de la base ; les coûts varient selon la méthode | dépend de la dimension réduite et de l'opérateur réduit | snapshots ou données de construction, selon la méthode | dépend de la formulation ; erreur hors domaine à évaluer, certaines contraintes peuvent être imposées |
+| **Surrogates ML** (réseaux, opérateurs) | constitution/curation des données + entraînement, variable selon l'architecture | coût d'inférence dépend du modèle et de la taille de l'entrée/sortie | simulations, observations ou données mixtes | dépend de l'architecture et de l'entraînement ; des contraintes peuvent être intégrées, à vérifier empiriquement |
+| **J-DriftX** (hypothèse de réduction a priori) | le coût historique de construction/calibration reste à comptabiliser ; le prototype actuel utilise des formules gaussiennes simples | certaines évaluations du prototype sont $O(1)$ par point ; la métrique historique générale n'est pas encore implémentée | paramètres de vent et de dispersion ; données partielles si calibration | positivité/superposition testées sur des cas ciblés ; conservation testée sur une grille finie ; divergence du champ historique non implémentée/testée |
 
 ## Lecture du tableau
 
 **Gaussien.** La référence de la discipline : même structure que J-DriftX (une formule fermée), mais construit pour un vent uniforme sur terrain plat. C'est le point de départ de Drift-X — les mêmes formules, généralisées à un vent non uniforme via $\tau$ — et le premier benchmark (M1) : retomber sur le gaussien en vent uniforme ([Qualité & tests](../projet/qualite.qmd)).
 
-**Lagrangien stochastique.** Pas de maillage, mais un coût statistique : il faut assez de particules pour que la concentration estimée cesse de fluctuer. L'évaluation d'un seul point reste bruitée — l'inverse exact de l'évaluation ponctuelle déterministe.
+**Lagrangien stochastique.** Selon l'implémentation, le calcul peut éviter un maillage eulérien explicite, mais repose sur un échantillonnage de particules. Les estimations de concentration peuvent présenter une variance d'échantillonnage, généralement réduite en augmentant le nombre de particules sous les hypothèses du schéma ; elles ne sont pas toujours plus coûteuses ni moins précises pour chaque observable.
 
-**CFD RANS/LES.** Tout le budget part dans la simulation du champ — même pour un seul point — et chaque scénario repart de zéro. Le détail (fermeture, maillage, schémas, CFL) est sur la page [EDP & maillage](edp-et-maillage.qmd).
+**CFD RANS/LES.** Le coût peut être dominé par la simulation du champ, mais dépend du workflow : certains champs ou maillages peuvent être réutilisés, et un calcul de référence n'est pas nécessairement relancé intégralement pour chaque point demandé. Le détail (fermeture, maillage, schémas, CFL) est sur la page [EDP & maillage](edp-et-maillage.qmd).
 
-**ROM a posteriori.** Déplace le coût vers la préparation (les *snapshots*) ; excellentes en interpolation **dans** le domaine couvert, fragiles **hors** de ce domaine. C'est la cible explicite de la critique de la page [réduction a priori](reduction-a-priori.qmd).
+**ROM a posteriori.** Les méthodes POD classiques déplacent une partie du coût vers les snapshots et la construction de base. Leur précision dépend du problème, de la sélection des snapshots, de la méthode et des mécanismes de stabilisation/contrainte ; l'interpolation et l'extrapolation doivent être évaluées séparément.
 
-**Surrogates ML.** Même structure de coût que les ROM (coût déplacé vers les données et l'entraînement), sans les contraintes physiques : conservation et positivité ne sont garanties nulle part hors du domaine d'entraînement — l'argument de la page [contraintes physiques](contraintes-physiques.qmd).
+**Surrogates ML.** Le coût comprend les données, l'entraînement et l'inférence. Il est incorrect d'affirmer qu'aucun surrogate ne peut respecter une contrainte physique : certaines architectures, pertes ou post-traitements peuvent l'imposer ou la pénaliser. Il faut comparer la garantie théorique et l'erreur effectivement observée, notamment hors du domaine de construction.
 
-**J-DriftX.** L'hypothèse structurelle : remplacer la préparation par de la physique (similitude) et le maillage par la métrique $\tau$. La question ouverte n'est pas le coût par évaluation (une formule), mais la **précision à précision comparable** — l'objet des jalons de validation.
+**J-DriftX.** L'hypothèse structurelle est de réduire la préparation en utilisant des solutions de similitude et une formulation de temps de transport. Le prototype actuel ne réalise pas encore la métrique historique générale ni le champ de vent multi-niveaux. Le coût total, la précision et les invariants doivent donc être mesurés avant toute comparaison.
 
 ## Le coût du problème inverse
 
-Pour l'identification de source ([Assimilation & identification](assimilation-identification.qmd)), chaque famille paie deux fois : modèle direct **et** modèle adjoint.
+Pour l'identification de source ([Assimilation & identification](assimilation-identification.qmd)), les méthodes à gradient peuvent nécessiter des évaluations du modèle direct et un gradient/adjoint. Le coût relatif dépend de l'algorithme : méthodes sans gradient, adjoints, différentiation automatique et approximations n'ont pas le même profil.
 
 - **CFD** : adjoint par différentiation automatique du solveur — développement lourd (Tapenade dans l'héritage) ;
-- **ROM/ML** : gradients différentiables et rapides, mais dans le seul domaine d'entraînement ;
-- **J-DriftX** : gradient **analytique** de la formule fermée — exact, gratuit, disponible pour l'analyse de risque comme pour l'inversion [@hutchinson2017ste].
+- **ROM/ML** : la disponibilité et le coût des gradients dépendent du modèle et de la méthode de différentiation ; la qualité prédictive hors du domaine doit être évaluée séparément ;
+- **J-DriftX** : les dérivées analytiques de certaines formules fermées peuvent être accessibles, mais l'existence d'un gradient/adjoint utile pour la métrique historique complète et son coût total ne sont pas encore établis.
 
 ## Mise en garde
 

@@ -83,7 +83,7 @@ Tant que les réponses 1–4 et 6 ne sont pas renseignées avec des éléments v
 
 Aucune option ne peut être déclarée gagnante sur les informations présentes. La prochaine action n'est pas de calculer un score composite arbitraire : il faut d'abord recueillir les informations manquantes qui changent réellement la décision.
 
-## 5. Protocole du prochain test, si G0 est franchi
+## 5. Protocole du prochain test après le cadrage documentaire G0
 
 1. Geler une définition du problème et un observable primaire.
 2. Écrire les hypothèses physiques et le domaine de validité avant de coder.
@@ -96,7 +96,8 @@ Aucune option ne peut être déclarée gagnante sur les informations présentes.
 
 ## 6. Décision provisoire et critères d'abandon
 
-- **Poursuivre G0** si un utilisateur, une décision, un observable et un jeu de validation indépendant peuvent être nommés et justifiés.
+- **G0 documentaire : franchi le 22 octobre 2026** après cadrage et audit documentaire des corpus. Cela ne vaut pas validation applicative.
+- **Poursuivre G0-A (utilité applicative)** uniquement si un utilisateur, une décision, un observable, une baseline et des données indépendantes peuvent être nommés et justifiés ; les contrôles de fichiers/licences restent un prérequis G1.
 - **Restreindre le domaine** si le bénéfice potentiel ne concerne qu'un régime physique étroit.
 - **Basculer vers G1 théorique** si le besoin pratique échoue mais qu'une propriété mathématique précise reste intéressante.
 - **Conserver comme ressource pédagogique** si l'idée est connue mais fournit une explication claire et reproductible.

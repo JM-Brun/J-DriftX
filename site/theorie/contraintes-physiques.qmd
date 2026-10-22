@@ -1,49 +1,70 @@
 ---
-title: "Contraintes physiques"
+title: "Contraintes physiques : statut des preuves"
 ---
 
-# Les contraintes physiques imposées au modèle réduit
+# Contraintes physiques : ce qui est testé et ce qui reste à démontrer
 
-Un modèle réduit n'est acceptable que s'il reste **solution du modèle direct**. Drift-X impose quatre contraintes non négociables à son modèle approché [@brun2008] — elles constituent le contrat de confiance de J-DriftX et sont vérifiées en continu par la CI du paquet Python.
+Les publications historiques de Drift-X décrivent des propriétés physiques souhaitées pour la réduction de modèle. Il faut distinguer trois niveaux :
 
-## 1. Conservation de la masse
+1. **Propriété formulée dans une publication** : les auteurs énoncent une contrainte ou un résultat dans le cadre de leur construction.
+2. **Test numérique ciblé** : un calcul vérifie cette propriété pour une fonction, un jeu de paramètres, une grille et une tolérance donnés.
+3. **Propriété démontrée du modèle** : une preuve analytique, ou une validation numérique avec domaine de validité explicite, justifie la conclusion recherchée.
 
-Le flux de matière traversant toute surface iso-temps de transport doit restituer l'émission :
+La CI verte ne suffit pas à passer du niveau 2 au niveau 3. Le code actuel est un socle de panache/puff gaussien en vent uniforme et une primitive géométrique provisoire ; il ne reconstruit pas encore le champ de vent multi-niveaux historique.
 
-$$
-\int_{\Sigma_\tau} U C \; \mathrm{d}A = Q \qquad \forall \tau > 0.
-$$
+## État des tests dans le dépôt
 
-Numériquement : l'intégrale du panache gaussien sur $(y, z)$ vérifie $\int\!\!\int U C \, \mathrm{d}y \, \mathrm{d}z = Q$ — testé dans <code>tests/test_similitude.py</code>.
+| Propriété | Test actuel | Ce que le test établit | Ce qu'il n'établit pas |
+|---|---|---|---|
+| Positivité | `tests/test_similitude.py::test_positivite_panache`, `test_positivite_puff` ; tests du helper dans `tests/test_constraints.py` | Valeurs non négatives pour les configurations évaluées, et comportement du prédicat sur des tableaux de test | Positivité analytique pour tout point, tout paramètre, toute interpolation ou tout modèle futur |
+| Linéarité en débit | `tests/test_constraints.py::test_superposition_panache` | Superposition à un point et pour les paramètres du test, à la tolérance numérique du helper | Validité pour toute extension du modèle, tout couplage non linéaire ou toute chaîne d'assimilation |
+| Bilan de masse du panache | `tests/test_similitude.py::test_conservation_masse_panache` | Le flux numérique intégré sur une grille finie `y ∈ [-500, 500] m`, `z ∈ [0, 400] m`, à `x = 1000 m`, pour la classe D et le débit testé, est proche du débit émis à 2 % près | Conservation exacte sur toute surface iso-temps, pour toute géométrie, toute classe, tout vent ou toute discrétisation |
+| Divergence du vent | Aucun test dédié ; aucun champ de vent multi-niveaux n'est actuellement reconstruit par le noyau | Rien à ce stade | `∇ · u = 0` pour un champ généré, sa compatibilité entre niveaux ou l'absence de sources/puits artificiels |
 
-## 2. Positivité
+## 1. Conservation : ne pas généraliser le test de grille
 
-$$
-C(\mathbf{x}, t) \ge 0 \qquad \forall (\mathbf{x}, t),
-$$
+Pour un panache stationnaire de scalaire passif, un bilan de flux peut s'écrire sous des hypothèses appropriées :
 
-pour toute émission positive : la concentration est une densité de probabilité de présence de matière. Toute paramétrisation ou interpolation qui la viole est rejetée.
+\[
+\int_{\Sigma} C\,\mathbf{u}\cdot\mathbf{n}\,\mathrm{d}A = Q.
+\]
 
-## 3. Linéarité et superposition
+Le domaine d'intégration \(\Sigma\), les conditions aux limites, les sources/puits et le régime du champ doivent être définis. Le test actuel intègre numériquement \(uC\) sur une grille latérale/verticale finie et accepte un écart relatif de 2 %. Il s'agit d'un test de cohérence utile pour une configuration du panache gaussien ; ce n'est ni une preuve de conservation exacte, ni une validation de la propriété historique plus spécifique concernant toutes les surfaces iso-\(\tau\).
 
-L'équation de transport est linéaire en $C$ : le champ d'une émission $Q_1 + Q_2$ est la somme des champs. C'est ce qui autorise le **multi-sources** sans re-calcul :
+La conservation annoncée pour la restriction multi-niveaux de Bozon, Sinfort & Mohammadi (2009) est rapportée dans [la fiche de lecture](../../docs/04-revues-papiers-sources.md) et doit être vérifiée sous les hypothèses de la construction originale avant d'être transposée à un nouveau code.
 
-$$
-C_{Q_1 + Q_2} = C_{Q_1} + C_{Q_2}.
-$$
+## 2. Positivité : concentration et densité de probabilité ne sont pas synonymes
 
-Testé par <code>jdriftx.constraints.linearite</code>.
+Une concentration physique est une quantité non négative dans les régimes considérés, mais **ce n'est pas en général une densité de probabilité** : ses unités, sa normalisation et son interprétation sont différentes. Pour le panache gaussien implémenté, les exponentielles et les paramètres validés donnent une formule non négative dans le domaine prévu. Les tests vérifient quelques cas numériques ; ils ne couvrent pas automatiquement les interpolations, corrections topographiques ou modèles réduits à venir.
 
-## 4. Divergence nulle du vent généré
+## 3. Linéarité : propriété conditionnelle du modèle direct
 
-Le champ de vent reconstruit par la métrique travel-time doit être incompressible :
+Pour une équation de transport linéaire en concentration, avec même champ de vitesse, mêmes conditions et paramètres compatibles, la superposition peut être attendue :
 
-$$
-\nabla \cdot \mathbf{u} = 0,
-$$
+\[
+C_{Q_1+Q_2} = C_{Q_1} + C_{Q_2}.
+\]
 
-faute de quoi la conservation (contrainte 1) est faussée par des sources/puits artificiels. C'est la contrainte la plus délicate de la construction : le changement de variables $(\tau, n)$ doit préserver le jacobien du champ.
+Le test existant vérifie cette relation en un point pour le panache gaussien et les valeurs choisies. La propriété ne doit pas être étendue sans examen à des modèles avec chimie, dépôt non linéaire, saturation, couplage à la source ou paramètres qui changent avec le débit.
 
-## Pourquoi c'est différenciant
+## 4. Divergence nulle : propriété non testée dans le code actuel
 
-Les approches purement statistiques (surrogates ML de dérive, random forests) ne garantissent **aucune** de ces propriétés : elles peuvent violer conservation et positivité hors de leur domaine d'entraînement. Dans un contexte réglementaire et de réponse d'urgence, où l'interprétabilité et l'auditabilité deviennent des exigences explicites, un modèle analytique contraint est un atout de confiance — voir [Positionnement](../etat-art/positionnement.qmd).
+\[
+\nabla\cdot\mathbf{u}=0
+\]
+
+est une contrainte cinématique importante dans un modèle incompressible de densité constante, mais le dépôt ne génère pas encore le champ de vent multi-niveaux historique auquel cette contrainte s'appliquerait. Il serait donc incorrect d'affirmer que la CI la vérifie. Avant d'implémenter ce champ, il faudra préciser la définition continue, les conditions aux limites et les sources/puits ; puis tester la divergence analytique et discrète, la compatibilité entre niveaux et la sensibilité au maillage.
+
+## Une différence scientifique à démontrer, pas à présumer
+
+Les méthodes analytiques, numériques et d'apprentissage peuvent toutes être conçues avec des contraintes physiques, selon leur formulation et leur entraînement. Il serait donc trop fort d'affirmer que les surrogates ML ne garantissent **aucune** de ces propriétés. La comparaison pertinente doit examiner les garanties mathématiques, les pénalités ou contraintes d'entraînement, les erreurs de conservation et de positivité hors domaine, le coût total et la robustesse de chaque méthode.
+
+De même, interprétabilité et auditabilité peuvent être des avantages recherchés, mais leur statut d'exigence réglementaire dépend de l'application et du cadre applicable. Pour J-DriftX, l'avantage potentiel d'une formulation analytique devra être démontré par des propriétés définies, des tests reproductibles et une comparaison équitable — pas par le seul fait que le modèle soit analytique.
+
+## Priorités de validation
+
+1. Garder les tests actuels comme **tests ciblés du panache gaussien**, sans les présenter comme certification générale.
+2. Ajouter des tests de convergence de l'intégrale de masse lorsque la grille s'élargit et se raffine ; tester plusieurs classes, hauteurs et débits.
+3. Définir des tests de positivité et de superposition sur des grilles et des configurations plus variées.
+4. Avant toute affirmation sur la divergence, définir puis implémenter le champ de vent concerné ; comparer divergence analytique et discrète.
+5. Pour chaque propriété, consigner l'équation, les hypothèses, le domaine de validité, la tolérance numérique et les contre-exemples recherchés.

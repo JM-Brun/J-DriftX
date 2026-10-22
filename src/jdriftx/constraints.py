@@ -1,10 +1,12 @@
-"""Contraintes physiques imposees au modele reduit.
+"""Helpers de vérification pour quelques propriétés de champs de concentration.
 
-Le modele approche doit rester solution du modele direct : conservation de
-la masse, positivite des concentrations, linearite (superposition des
-sources) et divergence nulle du champ de vent genere. Ces contraintes
-sont verifiees systematiquement (CI) : elles constituent le contrat de
-confiance du modele, meme reduit.
+Ce module fournit deux vérifications numériques génériques : positivité d'un
+array et superposition d'un modèle évalué en un point. Il ne démontre pas que
+le modèle complet respecte toutes les contraintes physiques. En particulier,
+il n'implémente pas de test de divergence du champ de vent, et la conservation
+de masse est testée séparément uniquement pour un panache gaussien sur une
+grille finie et avec une tolérance numérique. La couverture CI est donc un
+ensemble de tests ciblés, pas une preuve générale de conformité physique.
 """
 
 from __future__ import annotations

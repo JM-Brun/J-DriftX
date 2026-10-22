@@ -2,45 +2,52 @@
 title: "Qualité & tests"
 ---
 
-# Qualité & tests : la physique comme oracle
+# Qualité et tests : portée réelle des vérifications
 
-Un modèle sans EDP ni maillage n'a pas de « valeur de référence » précalculée : l'**oracle des tests est la physique elle-même** — conservation de la masse, symétries, positivité, superposition, non-symétrie de la métrique. Chaque test unitaire encode une propriété physique sous la forme **Given / When / Then**.
+Les tests automatisés vérifient des propriétés définies pour des fonctions et des cas précis. Ils ne remplacent ni une preuve mathématique ni une validation physique. Le terme « oracle physique » n'est justifié que si la propriété attendue est correctement formulée, les hypothèses sont explicites et le test représente effectivement cette propriété.
 
 ![Structure des tests unitaires J-DriftX en Given / When / Then](../images/tests-given-when-then.svg)
 
-## Les quatre familles de tests (M1)
+## Tests présents dans le dépôt
 
-| Test | GIVEN (contexte) | WHEN (action) | THEN (oracle physique) |
-|---|---|---|---|
-| <code>test_conservation_masse_panache</code> | Panache gaussien, classe D (x = 1 000 m, Q = 1,5 kg/s, U = 4 m/s) | On intègre le flux U·C sur le plan (y, z) | Le flux restitue Q à 2 % près |
-| <code>test_symetrie_laterale</code> | Vent uniforme ; un point (y, z) et son image (−y, z) | On évalue C aux deux points | C(y, z) = C(−y, z) |
-| <code>test_superposition_panache</code> | Deux sources de débits Q₁ et Q₂ | On superpose les panaches | C(Q₁+Q₂) = C(Q₁) + C(Q₂), et C ≥ 0 partout |
-| <code>test_non_symetrie_champ_non_uniforme</code> | Champ de vent non uniforme ; trajet de A vers B | On échange source et récepteur | τ(A→B) ≠ τ(B→A) |
-
-::: {.callout-tip}
-### Pourquoi Given / When / Then ?
-
-Le triplet GIVEN / WHEN / THEN sépare le **contexte**, l'**action** et l'**oracle**. Un test qui échoue dit immédiatement *quelle propriété physique* est violée, pas seulement quelle ligne est fausse. C'est le format adopté pour tous les jalons de la roadmap : M1 (benchmark gaussien), M2 (métrique τ), M3 (assimilation et identification).
-:::
-
-## TDD adapté aux modèles physiques
-
-La reprise suit une discipline TDD où le « rouge » initial encode la physique du jalon :
-
-1. **Écrire d'abord la propriété** (Given / When / Then) — elle encode la physique attendue du jalon.
-2. **Vérifier que le test échoue** — l'implémentation est absente.
-3. **Implémenter la réduction** — solution de similitude, métrique, contrainte.
-4. **Vérifier que le test passe** — sans jamais toucher à l'oracle.
-
-## La CI comme contrat de confiance
-
-Chaque push déclenche la chaîne qualité complète (voir <code>.github/workflows/ci.yml</code>) :
-
-| Étape | Outil | Rôle |
+| Test existant | Vérification effectuée | Limite à ne pas oublier |
 |---|---|---|
-| Lint | Ruff | style et pièges classiques |
-| Format | Ruff | forme canonique du code |
-| Typage | mypy (strict) | types garantis de bout en bout |
-| Tests | pytest + coverage | propriétés physiques vérifiées |
+| `test_conservation_masse_panache` | Flux `u C` intégré sur une grille finie pour un panache gaussien de classe D ; tolérance relative de 2 % | Un cas, une grille et une tolérance ; ne prouve pas la conservation exacte pour toute surface ou tout modèle |
+| `test_positivite_panache` et `test_positivite_puff` | Concentrations non négatives dans les configurations testées | Ne couvre pas tous les paramètres, toutes les interpolations ou des extensions futures |
+| `test_superposition_panache` | Superposition du panache à un point et pour deux débits choisis | Ne valide pas tous les couplages ou toutes les extensions multi-sources |
+| `test_symetrie_laterale` | Symétrie latérale attendue du panache gaussien en vent uniforme | Propriété de cette formule et de ce régime, pas d'un champ atmosphérique général |
+| Tests de `pseudo_distance_uniforme` | Projection longitudinale, coût nul pour certains points distincts, coût infini en amont, invariance par rotation et gestion du vent nul/formes invalides | Référence analytique limitée au vent uniforme ; ne reproduit pas la métrique historique dans un champ variable |
+| `test_polyline_cost_is_invariant_to_path_reversal_and_wind_sign` | Confirme que la primitive de polyligne utilise la norme de la vitesse et ignore son orientation | Ce test montre précisément que cette primitive n'est pas la pseudo-distance historique orientée |
+| Divergence du champ de vent | **Aucun test dédié** | Le champ de vent multi-niveaux historique n'est pas implémenté dans le noyau actuel |
 
-La publication du site (Quarto, GitHub Pages) est déclenchée à chaque push sur <code>main</code>. Voir la [feuille de route](roadmap.qmd) pour les prochains jalons et leurs tests.
+## Given / When / Then
+
+Ce format sépare le contexte, l'action et le résultat attendu. Il améliore la lisibilité d'un test, mais ne garantit pas à lui seul que l'oracle est physiquement correct. Pour chaque propriété, la documentation doit indiquer :
+
+1. l'équation ou la définition testée ;
+2. les hypothèses et le domaine de validité ;
+3. les unités, la discrétisation et la tolérance ;
+4. les cas limites et contre-exemples recherchés ;
+5. ce que le test ne permet pas de conclure.
+
+## Ce que vérifie la CI
+
+La chaîne CI exécute le rendu Quarto, Ruff (lint et format), mypy et pytest. Ces contrôles détectent des erreurs de compilation documentaire, de style, de typage et des échecs des tests présents. **Ils ne certifient pas l'exactitude scientifique du modèle, ne prouvent pas les propriétés continues et ne couvrent pas automatiquement tous les invariants annoncés.**
+
+Le projet ne doit donc pas annoncer une propriété comme « vérifiée systématiquement » si aucun test ou aucune preuve ne la couvre. En particulier, le statut actuel est :
+
+- **positivité :** quelques cas numériques testés ;
+- **superposition :** test ponctuel du panache gaussien ;
+- **conservation :** intégrale numérique sur une grille finie, tolérance 2 %, un scénario ;
+- **divergence nulle :** non testée, car le champ de vent correspondant n'est pas encore implémenté ;
+- **métrique historique :** seule une référence analytique de champ uniforme est testée ; la fonction générale de temps de transport sur polyligne est une primitive distincte.
+
+## Priorités qualité avant le benchmark
+
+1. Étendre le test de conservation en faisant varier l'étendue et le raffinement de la grille, les classes de stabilité, les hauteurs et les débits.
+2. Ajouter des tests de convergence et des cas limites indépendants des formules de production.
+3. Formaliser la métrique historique et séparer explicitement son API de la primitive de polyligne.
+4. Ne créer des tests de divergence qu'après avoir défini et implémenté le champ de vent visé.
+5. Pour chaque jalon, rapporter la couverture réellement obtenue ; ne pas présenter le nombre de tests ou la CI verte comme une preuve de validité scientifique.
+
+Voir la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd), les [contraintes physiques](../theorie/contraintes-physiques.qmd) et la [feuille de route](roadmap.qmd).

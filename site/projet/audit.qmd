@@ -10,22 +10,22 @@ title: "Audit de l'héritage"
 
 | # | Forces | Faiblesses héritées |
 |---|---|---|
-| 1 | Réduction *a priori* : coût indépendant du domaine, évaluable en un point | Validation quantitative limitée ; peu de benchmarks chiffrés publiés |
-| 2 | Métrique travel-time originale et transposable | Formalisation dispersée entre plusieurs publications |
-| 3 | Contraintes physiques (conservation, positivité, divergence nulle) | Hiérarchie multi-niveaux sans estimateur d'erreur |
-| 4 | Calibration par assimilation | Assimilation rudimentaire : pas d'incertitudes, pas de bayésien |
-| 5 | Multi-sources, sensibilité, identification de source | Non comparée aux standards STE structurés après 2010 |
-| 6 | Avant-garde SIG : plugin QGIS dès 2009 | Code du plugin jamais versionné ni publié |
-| 7 | Positionnement applicatif clair | Corpus dispersé, pas d'article de synthèse en revue |
+| 1 | Réduction *a priori* : les publications décrivent une évaluation ponctuelle sans calculer tout le champ | Le coût total dépend aussi de la préparation, de l'intégration de la caractéristique et de la calibration ; il n'est pas mesuré pour le code actuel |
+| 2 | Proposition historique de pseudo-distance fondée sur les temps de transport | Formalisation dispersée ; nouveauté exhaustive et transposabilité non établies par cette revue ciblée |
+| 3 | Construction historique visant à préserver certaines contraintes physiques | Portée exacte à formaliser ; le champ de vent multi-niveaux n'est pas implémenté ni testé dans le noyau actuel |
+| 4 | Calibration par assimilation de données partielles dans les publications consultées | Les exemples historiques identifiés ne suffisent pas à établir une quantification complète de l'incertitude ; comparer aux méthodes inverses actuelles |
+| 5 | Les publications historiques décrivent multi-sources, sensibilité et identification de source | Comparaison systématique aux méthodes STE pertinentes non établie dans cette revue ciblée |
+| 6 | Intégration SIG documentée dès 2009 | Aucun dépôt public de code exploitable n'a été identifié dans le corpus consulté ; cela ne prouve pas qu'aucune version n'a jamais été publiée |
+| 7 | Positionnement applicatif historique identifiable | Corpus dispersé ; aucune synthèse de revue n'a été identifiée dans les recherches consignées |
 
 ## Ce qui a vieilli, ce qui n'a pas vieilli
 
-**N'a pas vieilli** : le paradigme réduction *a priori* + calibration par données (aujourd'hui appelé *hybrid modelling*) ; l'évaluation ponctuelle à coût nul ; l'application far-field de la dérive ; le besoin d'identification de source.
+**Hypothèses historiques encore pertinentes à tester** : réduire a priori l'espace de recherche, calibrer à partir de données partielles, évaluer une solution en un point et étudier le transport lointain ou l'identification de source. Ces objectifs ne sont pas des avantages validés ; le coût d'évaluation n'est pas nul par définition et l'adéquation du far-field reste à démontrer.
 
-**A vieilli** : les données disponibles (ERA5/Copernicus, MNT ouverts, capteurs low-cost ont remplacé la rareté de 2006) ; la cible logicielle (QGIS 0.x → QGIS moderne) ; l'état de l'art ROM/ML ; le contexte réglementaire (Directive 2009/128/CE, révision EPA Appendix W 2024).
+**Le contexte a évolué** : ERA5/Copernicus, les MNT ouverts et certains capteurs à bas coût améliorent l'accès à des données, sans supprimer les problèmes de couverture, de résolution, de droits et de qualité ; la cible logicielle est passée de QGIS ancien à l'écosystème actuel ; les méthodes ROM/ML et les cadres réglementaires ont évolué et doivent être réexaminés à partir de sources datées.
 
 ## Verdict
 
-Le cœur scientifique est **sain, original et toujours différenciant**. Les faiblesses sont toutes des faiblesses d'exécution (code, validation, consolidation) — corrigeables dans une reprise open-source structurée.
+Le corpus historique décrit une hypothèse méthodologique à examiner, mais ne suffit pas à établir sa validité générale, sa nouveauté exhaustive ou un avantage en 2026. Les lacunes concernent aussi la formalisation mathématique, les hypothèses et la validation indépendante ; elles ne sont pas seulement des questions d'exécution.
 
 **Recommandation : reprendre**, à trois conditions : benchmarks publics d'abord, code moderne ensuite, article de synthèse enfin.

@@ -16,7 +16,7 @@ $$
 \nabla \cdot \left( \mathbf{K} \, \nabla C \right) + S,
 $$
 
-où $\mathbf{u}$ est le champ de vent, $\mathbf{K}$ le tenseur de diffusion turbulente et $S$ le terme source. Le modèle est *complet* mais son coût de résolution numérique est rédhibitoire pour les usages visés (Monte Carlo massif, SIG, temps réel) — ce que cette résolution complète exigerait est détaillé sur la page [EDP & maillage](edp-et-maillage.qmd).
+où $\mathbf{u}$ est le champ de vent, $\mathbf{K}$ le tenseur de diffusion turbulente et $S$ le terme source. La résolution numérique de ce modèle peut devenir coûteuse pour des balayages de paramètres, de nombreuses évaluations SIG ou des analyses Monte Carlo. Le coût réel dépend toutefois du domaine, du schéma, du maillage, du régime et des ressources ; il doit être mesuré contre une baseline pertinente plutôt que qualifié de rédhibitoire a priori.
 
 ## Moyennage et fermeture
 
@@ -36,12 +36,12 @@ $$
 \nabla \cdot \mathbf{u} = 0.
 $$
 
-Cette contrainte est *héritée par le modèle réduit* : le champ de vent généré par la métrique travel-time doit être à divergence nulle [@brun2008]. C'est l'une des quatre [contraintes physiques](contraintes-physiques.qmd) imposées à l'approche.
+La formulation historique cherche à préserver la divergence nulle dans la construction du champ de vent [@brun2008]. Le code actuel ne génère pas ce champ multi-niveaux ; cette propriété n'est donc pas encore démontrée ni testée dans J-DriftX. Voir [Contraintes physiques](contraintes-physiques.qmd).
 
 ## Ce que J-DriftX refuse de faire
 
 - Résoudre l'EDP sur un maillage du domaine (voir [EDP & maillage](edp-et-maillage.qmd)) : incompatible avec l'évaluation ponctuelle.
-- Entraîner un modèle sur des snapshots CFD/LES : coût initial élevé, fragilité hors domaine d'entraînement.
-- Renoncer aux propriétés du modèle direct : conservation, positivité, linéarité, incompressibilité sont *imposées* à l'approche.
+- Faire de l'apprentissage sur snapshots CFD/LES le point de départ par défaut : ce n'est pas l'option privilégiée dans l'hypothèse historique. Le coût, les données nécessaires et la généralisation des alternatives doivent néanmoins être comparés au cas par cas.
+- Abandonner les propriétés physiques comme critères de validation : conservation, positivité, superposition et divergence doivent être formulées précisément et testées là où elles s'appliquent. Elles ne sont pas toutes démontrées dans le code actuel.
 
 La réponse à ces trois refus est la [réduction *a priori*](reduction-a-priori.qmd).

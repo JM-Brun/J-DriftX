@@ -1,6 +1,6 @@
 # Feuille de route — J-DriftX v2
 
-> Adoptée en octobre 2026 après audit du projet historique et revue structurée de l'état de l'art. Les décisions scientifiques restent révisables après examen de la revue systématique finale. Justifications : [audit historique](01-audit-heritage-driftx.md), [revue structurée](02-revue-etat-art-2026.md), [plan d'intégration de la revue](07-plan-integration-revue-systematique.md). Le premier jalon opérationnel est désormais **G0 — établir le besoin et l'utilité potentielle**, détaillé dans [le cadre de décision et de preuve](08-decision-utilite-et-preuve.md). Une [revue adversariale G0](10-revue-adversariale-g0.md) documente les hypothèses sceptiques, les contre-arguments et les conditions d'arrêt avant tout développement applicatif.
+> Adoptée en octobre 2026 après audit du projet historique et revue structurée de l'état de l'art. Les décisions scientifiques restent révisables après examen de la revue systématique finale. Justifications : [audit historique](01-audit-heritage-driftx.md), [revue structurée](02-revue-etat-art-2026.md), [plan d'intégration de la revue](07-plan-integration-revue-systematique.md). Le **cadrage documentaire G0 a été franchi le 22 octobre 2026** ; cela ne signifie pas que l'utilité applicative est démontrée. La suite distingue G0 documentaire, G0-A (utilité applicative encore non démontrée), G1 (cohérence théorique et vérification des données brutes), puis G2 (valeur différentielle). Le [cadre de décision et de preuve](08-decision-utilite-et-preuve.md) et la [revue adversariale G0](10-revue-adversariale-g0.md) détaillent les preuves requises.
 
 ## Vision
 
@@ -22,7 +22,7 @@ Cette vision est une hypothèse de recherche, pas une validation des performance
 
 Ces portes précèdent ou conditionnent les jalons techniques. Elles peuvent conduire à poursuivre, restreindre, réviser ou arrêter une piste.
 
-- **G0 — Besoin et utilité potentielle (priorité immédiate)** : fiche de problème indépendante de la solution ; utilisateur et décision visés ; limites documentées des alternatives ; bénéfice mesurable attendu ; critères de succès et d'abandon fixés avant le benchmark. Ne pas présumer que le far-field de pulvérisation est le meilleur cas d'usage sans justification comparative.
+- **G0 documentaire — franchi le 22/10/2026** : cadrage du besoin scientifique, observable, baselines, critères et corpus candidats documentés. **G0-A — utilité applicative reste non démontrée** : aucune utilité pratique ni performance différentielle n'est établie. Le far-field de pulvérisation reste une option, pas une décision acquise.
 - **G1 — Cohérence et faisabilité théoriques** : variables, unités, hypothèses et conditions aux limites explicites ; propriétés démontrées séparées des conjectures ; cas analytique minimal reproductible.
 - **G2 — Valeur différentielle en environnement contrôlé** : ablations, baselines équitables, précision, coût, robustesse et résultats négatifs ; attribution des gains aux composants effectivement testés.
 - **G3 — Validation indépendante** : données ou simulations non utilisées pour concevoir ou calibrer la méthode ; provenance, incertitude, échecs et domaine de validité documentés.
@@ -63,7 +63,7 @@ L'architecture est une cible de conception, non une liste de fonctionnalités à
 2. Une calibration hybride peut être plus robuste hors domaine qu'un surrogate ML comparable.
 3. Une métrique intégrant certains effets topographiques peut améliorer des cas définis par rapport à une baseline gaussienne pertinente.
 
-Aucune de ces hypothèses ne doit être présentée comme un résultat acquis avant preuve analytique ou validation empirique indépendante. La priorité et la formulation de chaque hypothèse peuvent être révisées à l'issue de G0.
+Aucune de ces hypothèses ne doit être présentée comme un résultat acquis avant preuve analytique ou validation empirique indépendante. Le cadrage documentaire G0 est terminé ; les hypothèses doivent désormais être révisées à partir des résultats de G1/G2, sans confondre complétude documentaire et preuve scientifique.
 
 ## Risques et parades
 
