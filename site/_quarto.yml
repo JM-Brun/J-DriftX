@@ -37,6 +37,8 @@ website:
             text: "Utilité scientifique"
           - href: projet/revue-adversariale-g0.qmd
             text: "Revue adversariale G0"
+          - href: projet/preuves-g0.qmd
+            text: "G0 — preuves externes"
           - href: projet/modele-jouet.qmd
             text: "Fallback théorique"
           - href: projet/validation-scientifique.qmd
