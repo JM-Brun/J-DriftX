@@ -20,6 +20,14 @@ J-DriftX utilise historiquement une pseudo-distance directionnelle liée au temp
 - **Intérêt :** éclairer la généalogie mathématique, les notations et les conditions de validité, pas fournir une preuve directe du modèle de dispersion.
 - [Article](https://doi.org/10.1016/S0168-874X(96)00057-1)
 
+### Trindade da Silva et al. (2021) — dispersion atmosphérique et urbanisme
+
+- **Relation :** analogie conceptuelle dans la représentation géométrique : typologie de blocs pour modéliser les villes dans les études de dispersion, approche interdisciplinaire urbanisme/CFD.
+- **Intérêt :** vocabulaire et exemples de réduction géométrique de la ville pour la dispersion ; parenté lointaine avec la « modélisation géométrique à complexité réduite » du corpus Drift-X.
+- **Limite :** contexte urbain/planification, pas la dérive de pulvérisation ; aucune équivalence démontrée avec la métrique travel-time ni la pseudo-distance Drift-X.
+- [Article](https://doi.org/10.1016/j.scs.2021.102882)
+
+
 ## Tests mathématiques recommandés
 
 - Vérifier explicitement la non-symétrie et les cas où le temps de transport est infini.

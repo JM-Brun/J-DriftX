@@ -59,6 +59,14 @@ Ces méthodes peuvent être **concurrentes sur la vitesse d'évaluation** et **c
 - [Émissions industrielles (2025)](https://link.springer.com/chapter/10.1007/978-3-032-02728-3_53)
 - [Accidents Seveso (2022)](https://link.springer.com/article/10.1007/s00477-022-02288-x)
 
+### Symétries et apprentissage pour la dispersion urbaine (Symmetry, 2026)
+
+- **Méthode :** CFD et apprentissage automatique pour prédire la dispersion dans une configuration urbaine idéalisée, d'après le résumé ; protocole exact à vérifier au texte intégral (accès libre).
+- **Relation :** baseline récente de la famille ML/urbain ; le motif « symétrie » du titre ne doit pas être assimilé à la similitude généralisée de J-DriftX sans examen du contenu.
+- **Conséquence :** à inclure dans l'état de l'art 2026 de la famille apprentissage ; lecture intégrale requise avant toute comparaison.
+- [Article](https://doi.org/10.3390/sym18081392)
+
+
 ## Protocole minimal de comparaison
 
 1. Définir une question physique et un domaine de validité communs.

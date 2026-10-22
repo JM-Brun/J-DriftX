@@ -17,6 +17,7 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 
 - Muller, J.-C. (1979). La cartographie d'une métrique non euclidienne : les distances-temps. *L'Espace géographique* 8(3), 215–227. DOI 10.3406/spgeo.1979.1915 — https://www.persee.fr/doc/spgeo_0046-2497_1979_num_8_3_1915 (ancrage géographique de la métrique travel-time : postulats euclidiens inapplicables en géographie humaine, distances-temps, isochrones, espaces à métrique inconnue ou incomplète — voir site/theorie/metriques-non-riemanniennes.qmd)
 - Borouchaki, H., George, P.-L., Hecht, F., Laug, P. & Saltel, E. (1997). Delaunay mesh generation governed by metric specifications. Part I: Algorithms. *Finite Elements in Analysis and Design* 25(1-2), 61–83. https://doi.org/10.1016/S0168-874X(96)00057-1 (lignée des métriques de l'adaptation de maillage — généalogie numérique de la métrique travel-time)
+- Trindade da Silva, F., Costa Reis Jr., N., Santos, J. M. et al. (2021). Atmospheric dispersion and urban planning: An interdisciplinary approach to city modeling. *Sustainable Cities and Society* 70, 102882. https://doi.org/10.1016/j.scs.2021.102882 (modélisation géométrique des villes par typologie de blocs — analogie avec la modélisation géométrique à complexité réduite, sans équivalence démontrée)
 
 ## État de l'art — dispersion opérationnelle et réglementaire
 
@@ -37,6 +38,8 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 - Environ. Dev. Sustain. (2023). Sensitivity analysis of spray drift variables via ANN (vent = variable dominante). https://link.springer.com/article/10.1007/s10668-023-04452-x
 - Agronomy 14(9), 1977 (2024). Machine learning methods for evaluation of technical factors of spraying. https://doi.org/10.3390/agronomy14091977
 - Sci. Total Environ. (2018). CAREA : GIS-based dispersion model for pollutants emitted by complex source areas (exposition résidentielle aux pesticides, Directive 2009/128/CE). https://www.sciencedirect.com/science/article/abs/pii/S0048969717318995
+- Bonicelli, B., Cotteux, E., Sinfort, C., Ruelle, B. & de Rudnicki, V. (2012). Ongoing research on pesticides air dispersion. Actes CIGR-AgEng 2012 (Valencia), 6 p. HAL : https://hal.science/hal-00825458 (continuation de la lignée pesticides du corpus — C. Sinfort, co-auteure des papiers Drift-X)
+- Defra (2011). Options for the development of a model for evaluation of bystander and resident exposures to pesticides used in orchard, hop and bush fruit application. Rapport final Defra PS2024 (SID 5), The Arable Group / Silsoe Spray Applications Unit. https://naturalengland.contentdm.oclc.org/digital/api/collection/p21006coll3/id/2458/download (littérature grise publique — besoin applicatif far-field : exposition bystanders/riverains en verger)
 
 ## Contexte — mesures de terrain et exposition (France)
 
@@ -53,6 +56,7 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 - CEA / HAL (2024). Enhanced deep learning architecture for 3D air pollution dispersion forecasting (MCxM : masquage + correction, priors physiques + opérateurs neuronaux). https://cea.hal.science/cea-04810109/document
 - Springer (2025). Machine learning-based surrogate models for predicting atmospheric dispersion of industrial emissions (linéaires, arbres, RNN vs TAPM). https://link.springer.com/chapter/10.1007/978-3-032-02728-3_53
 - SERRA (2022). Surrogate modelling for the forecast of Seveso-type atmospheric dispersion incidents. https://link.springer.com/article/10.1007/s00477-022-02288-x
+- Symmetry 18(8), 1392 (2026). Symmetry patterns and machine learning prediction of urban pollutant dispersion (CFD + ML, configuration urbaine idéalisée). https://doi.org/10.3390/sym18081392
 
 ## État de l'art — identification de source (STE) et assimilation
 
