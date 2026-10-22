@@ -45,4 +45,4 @@ De même, une singularité de \(1/|\mathbf u|\) près d'une stagnation ne prouve
 
 La revue montre que le dépôt doit clarifier l'objet mathématique avant d'implémenter un solveur ou de revendiquer une nouveauté. Elle ne prouve pas que l'approche historique est redondante. La prochaine étape est de relire les sources historiques primaires (Brun 2006/2008) et de relier chaque propriété annoncée à une hypothèse, une preuve et un cas analytique.
 
-Voir la [note détaillée](../../docs/14-revue-mathematique-ciblee.md), le [MVP scientifique](mvp-scientifique.qmd) et la [page travel-time actuelle](../theorie/metrique-travel-time.qmd).
+Voir la [note détaillée dans le dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/14-revue-mathematique-ciblee.md), le [MVP scientifique](mvp-scientifique.qmd) et la [page travel-time actuelle](../theorie/metrique-travel-time.qmd).
