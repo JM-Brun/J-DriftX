@@ -4,11 +4,11 @@
 
 ## Pourquoi cette séance doit respecter la PR G0
 
-La PR qui sépare **G0-S** (exploration scientifique minimale) de **G0-A** (utilité applicative) est une distinction de niveau de preuve, pas une autorisation de présenter un modèle jouet comme modèle de dispersion validé.
+**Terminologie à ne pas confondre :** le jalon documentaire **G0** a été déclaré franchi dans la fiche de cadrage du 22 octobre 2026. Cela ne signifie ni que l'exploration scientifique est terminée, ni que l'utilité applicative est démontrée. Dans cette séance, **G0-S** désigne le volet d'exploration scientifique minimale et **G0-A** le volet d'utilité applicative ; ce sont des sous-pistes de travail, pas le statut global de la porte G0.
 
-- **G0-S peut avancer maintenant** : définition mathématique explicite, cas 1D analytique, propriétés, contre-exemples, tests et positionnement bibliographique.
-- **G0-A reste bloqué** : utilisateur, décision, observable, régime physique, baseline et données indépendantes ne sont pas tous établis.
-- Le catalogue de jeux de données est une présélection documentaire, **pas un audit des fichiers bruts**. Ne pas lancer un benchmark ni télécharger plusieurs jeux « pour voir » avant d'avoir choisi une question applicative.
+- **Le travail G0-S peut avancer** : définition mathématique explicite, cas 1D analytique, propriétés, contre-exemples, tests et positionnement bibliographique.
+- **La validation applicative reste bloquée** : la fiche G0 propose un utilisateur, un observable, des baselines et des corpus candidats, mais les fichiers bruts, les unités, les limites de détection, la licence DIFLU et la structure exacte des essais restent à vérifier en G1. Aucun résultat de performance n'est encore établi.
+- Le catalogue de jeux de données est une présélection documentaire, **pas un audit des fichiers bruts**. Ne pas lancer un benchmark avant d'avoir satisfait les prérequis G1.
 
 ## Objectifs d'apprentissage
 
