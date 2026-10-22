@@ -82,3 +82,38 @@ def test_invalid_grid_and_diffusivity_are_rejected() -> None:
         solve_periodic_sine_transport(
             n_cells=16, length=1, end_time=0.1, dt=0.001, diffusivity=-0.1
         )
+
+
+def test_independent_upwind_euler_solver_matches_exact_solution() -> None:
+    from jdriftx.periodic_transport import solve_periodic_upwind_euler
+
+    x, actual, _ = solve_periodic_upwind_euler(
+        n_cells=128,
+        length=1.0,
+        end_time=0.4,
+        dt=0.0001,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=0.4,
+        diffusivity=0.01,
+    )
+    exact = periodic_sine_solution(
+        x,
+        0.4,
+        length=1.0,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=0.4,
+        diffusivity=0.01,
+    )
+    assert np.sqrt(np.mean((actual - exact) ** 2)) < 5e-3
+    assert float(np.mean(actual)) == pytest.approx(1.0, abs=1e-12)
+
+
+def test_upwind_euler_rejects_unstable_time_step() -> None:
+    from jdriftx.periodic_transport import solve_periodic_upwind_euler
+
+    with pytest.raises(ValueError, match="stability condition"):
+        solve_periodic_upwind_euler(
+            n_cells=64, length=1.0, end_time=0.4, dt=1.0
+        )
