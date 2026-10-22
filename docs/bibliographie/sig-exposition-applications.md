@@ -16,7 +16,7 @@ Ces références décrivent les contextes d'application, l'exposition environnem
 - **Relation :** application proche par le thème de l'exposition et la modélisation spatiale.
 - **Intuition commune :** transformer une source d'émission en distribution de concentration/exposition sur un territoire.
 - **Différence à examiner :** modèles physiques, représentation des sources, hypothèses météorologiques et validation.
-- [Article](https://www.sciencedirect.com/science/article/abs/pii/S0048969717318995)
+- [Costanzini et al. (2018), *Atmosphere* 9(2), 38](https://doi.org/10.3390/atmos9020038)
 
 ### Modèle de panache gaussien dans QGIS (2026)
 
