@@ -51,3 +51,10 @@ Ces références décrivent les contextes d'application, l'exposition environnem
 - **Références :** FireCom, digital risk twins et session SICC CBRNe recensés dans [la bibliographie générale](../references.md).
 - **Relation :** contexte d'usage pour la simulation rapide, la fusion de données et l'aide à la décision ; méthodes et domaines parfois différents.
 - **Conséquence :** ne retenir ces références que pour des exigences opérationnelles explicitement liées au cas d'usage ; elles ne démontrent pas la précision du noyau J-DriftX.
+
+### Jumeaux numériques et réponse aux incidents
+
+- **FireCom (2025) — jumeau numérique urbain feu/fumée.** Analogie d'application autour de la simulation rapide, des données et du contexte urbain ; le phénomène physique n'est pas la dérive de pulvérisation. [Article PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC12513986/)
+- **Digital risk twin for disaster risk management (2025).** Référence de contexte sur les jumeaux numériques, l'IoT, la télédétection et l'aide à la décision. À retenir pour les exigences de chaîne de données, pas comme preuve pour le modèle physique. [Article](https://www.nature.com/articles/s44304-025-00135-x)
+- **ECMWF — prévisions en temps réel pour la dispersion CBRN.** Ressource institutionnelle sur l'intégration de prévisions météo à une chaîne de modélisation opérationnelle ; utile pour cadrer les dépendances d'entrée et les contraintes de latence. [Document](https://events.ecmwf.int/event/211/contributions/1871/attachments/989/1737/Cloud-WS_Carion.pdf)
+- **SICC (2026) — IA, jumeaux numériques et aide à la décision CBRNe.** Programme de conférence, pas article scientifique évalué par les pairs ; à utiliser comme signal de contexte seulement. [Session](https://www.sicc-series.com/technical-and-poster-sessions/session-3-artificial-intelligence-digital-twins-decision-support-in-cbrne-risk-management/)
