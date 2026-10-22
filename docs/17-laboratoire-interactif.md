@@ -20,8 +20,8 @@ Une jolie visualisation ne constitue ni une preuve mathématique ni une validati
 Les calculs doivent rester dans des fonctions Python testables et indépendantes de l'interface. Les widgets ne doivent pas contenir la physique ou les formules elles-mêmes.
 
 - **Cœur scientifique** : fonctions pures, paramètres typés, unités documentées, hypothèses et domaine de validité explicités.
-- **Visualisation** : figures Matplotlib calculées à partir des sorties du cœur.
-- **Interface initiale** : petite application Streamlit, exécutable localement, avec curseurs, choix de scénarios, légendes et explications.
+- **Visualisation** : figures Plotly interactives calculées à partir des sorties du cœur (zoom, survol, légendes et surfaces 3D).
+- **Interface initiale** : application Streamlit exécutable localement, avec curseurs, choix de scénarios, graphiques Plotly, diagnostics et explications.
 - **Site Quarto** : pages explicatives qui intègrent des figures statiques vérifiées et renvoient vers l'application interactive. L'intégration embarquée sera étudiée seulement si l'hébergement et la maintenance sont fiables.
 - **Tests** : cas analytiques, propriétés sous hypothèses explicites, tests des paramètres limites et tests de non-régression.
 
@@ -86,7 +86,7 @@ Les pages Quarto restent accessibles sans l'application. L'absence du service in
 
 ## 6. Dépendances et qualité
 
-Les dépendances d'interface doivent être optionnelles, par exemple dans un groupe `app` séparé. Le noyau reste NumPy et Python compatible avec la configuration du projet. Matplotlib et Streamlit sont réservés à l'interface ; tests du cœur et tests de l'interface doivent être distingués.
+Les dépendances d'interface doivent être optionnelles, par exemple dans un groupe `app` séparé. Le noyau reste NumPy et Python compatible avec la configuration du projet. Plotly et Streamlit sont réservés à l'interface ; tests du cœur et tests de l'interface doivent être distingués.
 
 Critères minimaux :
 - tests numériques comparés à des valeurs analytiques connues ;
@@ -107,7 +107,7 @@ Critères minimaux :
 
 ## 8. État du prototype et plan de réalisation
 
-Le premier prototype est présent dans `apps/interactive_lab.py`. Le module indépendant `src/jdriftx/fields.py` définit trois champs synthétiques (uniforme, cisaillement linéaire et radial) et `tests/test_fields.py` couvre leurs comportements élémentaires et quelques entrées invalides. L'interface utilise Matplotlib et Streamlit, déclarés dans le groupe de dépendances optionnel `app` ; le cœur reste utilisable sans ces dépendances.
+Le prototype est présent dans `apps/interactive_lab.py`. Le module indépendant `src/jdriftx/fields.py` définit trois champs synthétiques (uniforme, cisaillement linéaire et radial) ; `src/jdriftx/terrain.py` définit quatre surfaces de relief synthétiques. Les tests correspondants couvrent leurs comportements élémentaires et quelques entrées invalides. L'interface utilise Plotly et Streamlit, déclarés dans le groupe de dépendances optionnel `app` ; le cœur reste utilisable sans ces dépendances.
 
 Ce code constitue un prototype, pas un outil scientifique validé. Les tests et le rendu de l'application doivent être exécutés avant fusion ; aucune validation d'exécution n'est présumée ici.
 
@@ -121,3 +121,17 @@ Ce code constitue un prototype, pas un outil scientifique validé. Les tests et 
 6. Relier les pages Quarto à l'application, puis décider séparément d'un hébergement public.
 
 Chaque étape doit être livrée par une PR de taille limitée, avec vérifications réellement exécutées et résultats négatifs conservés. L'explorateur pédagogique peut avancer indépendamment du jalon G0 applicatif ; il ne débloque pas, à lui seul, les revendications de validité ou d'utilité de J-DriftX.
+
+
+## 9. Publication et intégration dans Quarto
+
+Le site GitHub Pages est statique : les blocs Python exécutés pendant le rendu Quarto produisent des sorties, mais ne laissent pas automatiquement un noyau Python actif dans le navigateur.
+
+| Option | Ce qu'elle apporte | Contrainte |
+|---|---|---|
+| Figures Plotly incluses dans Quarto | Zoom, survol, exploration des courbes et surfaces déjà calculées | Les curseurs ne relancent pas le calcul Python côté serveur |
+| Streamlit intégré dans une page par iframe | Interface complète et calcul Python sur un service distant | Déploiement et maintenance d'un service séparé ; disponibilité, sécurité d'intégration et ergonomie à tester |
+| Quarto + Shiny for Python | Réactivité et callbacks Python dans une application Quarto | Nécessite un hébergement qui exécute un serveur ; GitHub Pages seul ne suffit pas |
+| JavaScript/Observable dans Quarto | Interaction native et hébergement statique | La logique interactive doit être réécrite en JavaScript, sauf pont spécifique vers un environnement Python dans le navigateur |
+
+**Recommandation** : conserver un seul cœur de calcul Python ; fournir des figures Plotly autonomes dans la documentation pour les exemples stables, et déployer Streamlit séparément si l'on souhaite manipuler les paramètres dans la page. N'ajouter une iframe qu'après avoir vérifié l'URL réelle de l'application, les règles d'intégration, le comportement mobile et la disponibilité. Les pages documentaires doivent rester utiles lorsque le service est arrêté.
