@@ -32,13 +32,13 @@ Priorités :
 - **Source primaire :** [PDF de l'article de 2006](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
 - **Correction sûre :** classer comme « manuscrit/soumission mentionné dans la bibliographie de 2006 ; publication ultérieure non confirmée », pas comme article publié. Ne pas inventer de DOI ni de pagination. Une absence de résultat de recherche ne prouve toutefois pas l'inexistence du manuscrit.
 
-### A-03 — Chapitre Springer 2006 attribué à Mohammadi, Brun et Pironneau
+### A-03 — Référence attribuée à Mohammadi, Brun et Pironneau (2006), statut éditorial non confirmé
 
 - **Statut :** référence secondaire, métadonnées incomplètes ; existence et contenu exacts à confirmer.
 - **Emplacement :** `docs/04-revues-papiers-sources.md`, `raw/README.md`.
-- **Constat :** le dépôt indique que le chapitre « Reduced order modelling of dispersion » (Mohammadi, Brun & Pironneau, 2006) n'a pas été localisé en ligne et que la référence provient d'une bibliographie secondaire. Aucun éditeur/ouvrage complet, éditeurs scientifiques, pages, ISBN ou DOI n'est fourni dans la fiche actuelle.
-- **Correction sûre :** garder l'entrée dans une section « références signalées mais non vérifiées » ; ne pas lui attribuer de résultats, de citations textuelles ni de contenu précis avant d'avoir une notice catalogue/éditeur ou le chapitre lui-même. Vérifier aussi qu'il ne s'agit pas d'une confusion avec le chapitre Brun & Mohammadi de 2008, qui est une publication distincte.
-- **Preuve de clôture :** notice éditeur ou catalogue de bibliothèque avec titre, auteurs, ouvrage, année et pagination.
+- **Constat :** une bibliographie publiée cite « Reduced order modelling of dispersion » avec les auteurs Mohammadi, Brun et Pironneau (2006), et l'associe à un recueil intitulé *Numerical Analysis and Scientific Computing with PDE and their Challenging Applications*. Cela atteste l'existence de la citation, pas à lui seul celle d'un chapitre publié dans cet ouvrage. Aucune notice éditoriale primaire confirmant cet enregistrement n'a été établie lors de cette passe.
+- **Correction sûre :** garder l'entrée dans une section « références signalées mais non vérifiées » ; ne pas lui attribuer de résultats, de citations textuelles ni de contenu précis avant d'avoir une notice catalogue/éditeur ou le chapitre lui-même. Le chapitre distinct de Brun & Mohammadi (2008), *Reduced-Order Modelling of Dispersion*, pages 245–256, DOI 10.1007/978-1-4020-8758-5_14, est confirmé par la notice officielle Springer : https://link.springer.com/book/10.1007/978-1-4020-8758-5.
+- **Preuve de clôture :** notice éditeur ou catalogue de bibliothèque avec titre, auteurs, ouvrage, année et pagination pour la référence 2006. Ne pas confondre cette recherche avec la notice Springer confirmée du chapitre de 2008.
 
 ### A-04 — Thèse et chapitres : accès au document vs informations déduites
 
