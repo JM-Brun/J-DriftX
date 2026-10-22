@@ -6,6 +6,12 @@ title: "Métrique travel-time"
 
 Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les solutions de similitude qui supposent un vent **uniforme** (métrique cartésienne) sont envisagées dans une coordonnée naturelle liée au **temps de transport** pour traiter des champs non uniformes. La validité et la portée de cette généralisation doivent être établies à partir des hypothèses et dérivations des sources primaires.
 
+## Vocabulaire et hypothèses
+
+Le champ de vitesse \\(\\mathbf u\\) donne la vitesse locale du fluide. Une ligne de courant est tangente au champ à un instant fixé; une trajectoire de particule suit \\(\\dot X=\\mathbf u(X,t)\\). Elles coïncident spatialement seulement pour un champ stationnaire (et sous les conditions de régularité appropriées). La définition historique s'appuie sur une caractéristique d'un champ considéré comme stationnaire; son extension à un champ instationnaire ne doit pas être supposée automatique.
+
+La formule ci-dessous suppose une vitesse non nulle le long de la courbe et une trajectoire suffisamment régulière pour que l'intégrale existe. Pour reconstruire la projection historique, il faut en plus préciser : (1) le domaine et les conditions aux limites; (2) l'unicité de la caractéristique passant par A; (3) la définition exacte de la projection de B et son unicité; (4) le traitement des sources, puits, séparatrices et stagnations; (5) la convention retenue pour les points inaccessibles.
+
 ## Définition
 
 Le temps de parcours le long d'une caractéristique orientée \(\gamma\), entre deux points appartenant à cette caractéristique, s'écrit
@@ -15,6 +21,8 @@ T_\gamma(A,B)=\int_{\gamma_{A\to B}}\frac{ds}{|\mathbf u(s)|}.
 $
 
 **Ce n'est pas à lui seul la définition complète de la pseudo-distance historique de Drift-X.** Dans l'article de Mohammadi & Brun (2006, §3), le point cible \(B\) est projeté sur la caractéristique passant par \(A\), en \(B^\perp\), puis le coût est le temps de migration de \(A\) à \(B^\perp\). Voir la [source primaire en texte intégral](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) et la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
+
+![Projection du point cible sur la caractéristique issue du point de départ. Le coût est calculé sur le segment longitudinal; le décalage transversal n'est pas pénalisé.](../images/pseudo-distance-projection-et-triangulation.svg)
 
 Cette projection fait partie de la définition : elle signifie que le coût peut ne pas distinguer deux points séparés transversalement. L'article historique le signale explicitement en qualifiant la construction de **pseudo-distance**, qui peut ne pas séparer les points et peut violer l'inégalité triangulaire.
 
@@ -28,6 +36,12 @@ Le chapitre de 2008 distingue implicitement deux objets qu'il faut garder sépar
 - **Approximation de calcul** : approximer \(B^\perp\approx B\), puis appliquer en champ uniforme une correction \(2/\pi\) motivée par une moyenne cosinus stochastique. Le chapitre précise que l'égalité exacte entre la caractéristique issue de \(A\) et le point \(B\) est peu probable en général, et présente la méthode pour des champs atmosphériques lisses.
 
 Ces deux étapes ne doivent pas être confondues. Le MVP doit d'abord reproduire la définition, puis mesurer séparément l'effet de l'approximation numérique et de sa correction.
+
+## Lien avec la mécanique des fluides
+
+Pour un traceur passif de concentration \\(c\\), l'équation conservative d'advection avec source \\(s\\) est \\(\\partial_t c+\\nabla\\cdot(c\\mathbf u)=s\\). Si \\(\\nabla\\cdot\\mathbf u=0\\), elle devient \\(\\partial_t c+\\mathbf u\\cdot\\nabla c=s\\). Les caractéristiques suivent la vitesse du fluide et permettent de décrire le transport advectif. Cette interprétation est une passerelle physique, pas une preuve que la pseudo-distance projetée suffit à reconstruire la concentration.
+
+La divergence nulle signifie qu'il n'y a pas de dilatation volumique locale du champ; pour un fluide à densité constante, elle exprime l'incompressibilité cinématique. Elle ne prouve pas seule la conservation du flux sur une surface iso-\\(\\tau\\). Il faut dériver le changement de coordonnées et son jacobien, préciser les conditions aux limites et tenir compte des sources/puits. La diffusion, la turbulence et le dépôt ne sont pas inclus dans la simple intégrale \\(\\int ds/\\|\\mathbf u\\|\\).
 
 ## Trois propriétés structurantes
 
