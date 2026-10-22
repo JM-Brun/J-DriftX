@@ -22,7 +22,7 @@ $
 
 **Ce n'est pas à lui seul la définition complète de la pseudo-distance historique de Drift-X.** Dans l'article de Mohammadi & Brun (2006, §3), le point cible \(B\) est projeté sur la caractéristique passant par \(A\), en \(B^\perp\), puis le coût est le temps de migration de \(A\) à \(B^\perp\). Voir la [source primaire en texte intégral](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) et la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
 
-![Projection du point cible sur la caractéristique issue du point de départ. Le coût est calculé sur le segment longitudinal; le décalage transversal n'est pas pénalisé.](../images/pseudo-distance-projection-et-triangulation.svg)
+![Projection du point cible sur la caractéristique issue du point de départ. Le coût est calculé sur le segment longitudinal; le décalage transversal n'est pas pénalisé. Le second panneau identifie B⊥ et C⊥ pour le contre-exemple triangulaire.](../images/pseudo-distance-projection-et-triangulation.svg)
 
 Cette projection fait partie de la définition : elle signifie que le coût peut ne pas distinguer deux points séparés transversalement. L'article historique le signale explicitement en qualifiant la construction de **pseudo-distance**, qui peut ne pas séparer les points et peut violer l'inégalité triangulaire.
 
