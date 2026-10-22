@@ -18,7 +18,7 @@ J-DriftX étudie l'hypothèse qu'une représentation fondée sur des solutions d
 | 2008 | [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14) — J.-M. Brun & B. Mohammadi | Springer, CSM vol. 16, chap. 14, p. 245 et s. |
 | 2008 | *Similitude and non symmetric geometry for dispersion modelling* — N. Bozon, B. Mohammadi & C. Sinfort | e-sta vol. 5 (STIC & Environnement'07) |
 | 2009 | [A GIS-based atmospheric dispersion model — plateforme Drift-X](https://hal.science/hal-00468863) — N. Bozon, C. Sinfort & B. Mohammadi | Actes STIC & Environnement, HAL hal-00468863 |
-| 2009 | [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0) — B. Mohammadi & N. Bozon | *Applied Geomatics* 1, 33–39 |
+| 2009 | [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0) — N. Bozon & B. Mohammadi | *Applied Geomatics* 1, 59–74 |
 | 2010 | [A GIS-based atmospheric dispersion model](https://doi.org/10.3166/jesa.44.445-461) — N. Bozon, C. Sinfort & B. Mohammadi | *JESA* 44(4-5), 445–461 (version journal du papier STIC & Environnement 2009 / HAL hal-00468863) |
 
 Détails : [docs/references.md](docs/references.md) — [fiches de lecture par papier source](docs/04-revues-papiers-sources.md) — [sources primaires et extractions](raw/).
