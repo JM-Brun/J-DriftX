@@ -15,11 +15,11 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 
 ## Limites de méthode et niveau de preuve\n\nCette version est une revue structurée, mais la méthode n'est pas encore entièrement reproductible : les chaînes de recherche exactes, dates par base, critères d'inclusion/exclusion, décomptes de sélection et évaluation formelle de la qualité des études ne sont pas consignés ici. Il faut compléter ces éléments avant de qualifier le travail de revue systématique. Certaines sources ne sont accessibles que par notice, résumé ou source secondaire ; ces limites doivent être prises en compte dans la force des conclusions. Les affirmations d'absence de concurrents et les avantages annoncés pour J-DriftX sont des hypothèses bornées par le corpus consulté, pas des preuves de nouveauté ou de supériorité. Voir aussi [le plan d'intégration et de validation](05-plan-validation-et-integration.md).\n\n## Résumé exécutif
 
-1. **Aucun modèle concurrent n'a repris l'idée de la métrique travel-time.** Les ROM modernes (POD-GPR, POD-NN, Arnoldi) restent toutes construites *a posteriori* à partir de snapshots CFD/LES coûteux : la niche « réduction a priori par la physique » reste ouverte.
-2. **Le besoin applicatif s'est renforcé.** L'extension gaussienne du couple AGDISP (far-field) est officiellement jugée « extrêmement conservatrice » par l'EPA, et le régulateur lui-même lance (2026) une modernisation open source d'AGDISP — une fenêtre d'opportunité directe pour un far-field à complexité réduite.
-3. **Les prémisses « assimilation + physique » de Drift-X sont devenues mainstream** (ROM + data assimilation, surrogate physics-informed, STE par méthodes d'adjoint/bayésiennes) : la reprise peut capitaliser sur un écosystème méthodologique mature.
-4. **Le contexte données a changé du tout au tout** (ERA5/Copernicus, MNT ouverts, capteurs low-cost, drones) : les verrous de 2006 (données rares) ont disparu, ce qui rend la calibration par assimilation bien plus crédible.
-5. **Conclusion provisoire : la reprise mérite d'être instruite et validée**, à condition de (i) publier d'abord des benchmarks de validation publics, (ii) livrer un noyau Python/QGIS moderne, (iii) positionner l'article de synthèse sur la niche far-field + réduction a priori, où la concurrence est la plus faible.
+1. **La recherche effectuée n'établit pas l'absence de travaux concurrents sur le temps de transport dirigé.** Les ROM recensées comprennent plusieurs familles, mais elles ne sont pas toutes équivalentes ni nécessairement fondées sur les mêmes données. La nouveauté de la formulation J-DriftX reste indéterminée tant qu'une recherche systématique des termes mathématiques et des travaux antérieurs n'a pas été menée.
+2. **Un problème applicatif est documenté, mais l'avantage de J-DriftX n'en découle pas.** L'EPA décrit des incertitudes et un caractère potentiellement très conservateur pour des scénarios précis de l'extension gaussienne AGDISP. La modernisation AGDISP vise notamment à mieux représenter les conditions spécifiques aux sites, le terrain et les drones ; elle peut donc réduire ou modifier la lacune supposée et doit être suivie comme une alternative concurrente, non comme une validation de l'opportunité J-DriftX.
+3. **Des méthodes complémentaires sont désormais bien développées**, notamment la réduction de modèle, l'assimilation et l'identification de source. Cela fournit des baselines et des outils potentiels, mais ne démontre ni l'équivalence avec Drift-X ni la valeur d'une reprise.
+4. **La disponibilité de données météorologiques et géographiques s'est améliorée**, mais cela ne signifie pas que les données indépendantes de dépôt/concentration nécessaires à la validation soient abondantes, compatibles ou accessibles. L'identifiabilité et la calibration restent à démontrer pour un observable et un scénario définis.
+5. **Conclusion provisoire : seule une investigation scientifique limitée est justifiée à ce stade.** Avant de construire un noyau applicatif ou de revendiquer une niche, il faut choisir un besoin et un observable, confirmer l'accès à des données indépendantes, formaliser les hypothèses et comparer à des baselines pertinentes. Le résultat peut être de poursuivre, de restreindre fortement le domaine, ou d'arrêter.
 
 ## Constats par thème
 
@@ -27,26 +27,26 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 
 - L'EPA a promulgué en novembre 2024 une révision complète de l'Appendix W (Guideline on Air Quality Models), centrée sur les améliorations d'AERMOD, effective janvier 2025 : le paysage réglementaire near-field reste gaussien stationnaire.
 - CALPUFF, modèle préféré de 2003 à 2017, est désormais un modèle « alternatif » à justification cas par cas ; les comparatifs AERMOD/CALPUFF montrent des écarts d'un facteur 2 avec les mesures — l'incertitude des modèles opérationnels reste le problème central.
-- Les revues récentes d'AERMOD documentent des hybridations (AERMOD + CMAQ pour l'emboîtement local/régional) et un couplage fort avec les SIG et la santé publique. **Aucune remise en cause du paradigme : le besoin de modèles rapides à contraintes physiques demeure.**
+- Les revues récentes d'AERMOD documentent des hybridations (AERMOD + CMAQ pour l'emboîtement local/régional) et un couplage fort avec les SIG et la santé publique. Ces éléments montrent que les modèles opérationnels ont des domaines de validité et des incertitudes documentés ; ils ne démontrent pas à eux seuls que la formulation J-DriftX serait plus appropriée.
 
 ### 2. Dérive de pulvérisation : le domaine d'origine de Drift-X, en pleine ébullition
 
-- Le couple réglementaire AgDRIFT/AGDISP (Lagrangien near-field ≤ 800 m + extension gaussienne far-field) domine toujours l'évaluation du risque. L'EPA reconnaît que l'extension gaussienne far-field est « extrêmement conservatrice » et peu validée pour les barrières végétales et la topographie — **exactement la cible de la métrique travel-time de Drift-X**.
+- Le couple réglementaire AgDRIFT/AGDISP (Lagrangien near-field ≤ 800 m + extension gaussienne far-field) domine toujours l'évaluation du risque. L'EPA reconnaît que l'extension gaussienne far-field est « extrêmement conservatrice » et peu validée pour les barrières végétales et la topographie — un scénario qui pourrait être étudié ; aucune preuve ne montre que la métrique travel-time de Drift-X représente correctement ces effets.
 - L'**AGDISP Modernization Project** (AMP) lancé par l'industrie et rejoint par Bayer Crop Science (mars 2026) réécrit AGDISP en langage moderne, open source, pour intégrer agriculture de précision et conditions site-spécifiques. Un far-field rapide et réaliste y est une pièce manquante identifiée.
-- L'arrivée des drones (RPAAS/UASS) crée un besoin nouveau de modèles de dérive validés : AGDISPpro est en cours de validation pour les drones (2025), et les approches ML (random forest, ANN, SVR) se multiplient pour la dérive — toutes statistiques, sans contraintes physiques, donc fragiles en extrapolation. **La dérive « mécaniste rapide » reste une case vide.**
+- L'arrivée des drones (RPAAS/UASS) crée un besoin nouveau de modèles de dérive validés : AGDISPpro est en cours de validation pour les drones (2025), et les approches ML (random forest, ANN, SVR) se multiplient pour la dérive — toutes statistiques, sans contraintes physiques, donc fragiles en extrapolation. la présence d'une « case vide » n'est pas établie ; il faut cartographier les méthodes mécanistes et les comparer sur des observables communs.
 - Côté européen, la Directive 2009/128/CE encadre l'aérien et les modèles type CAREA (2018) couplent dispersion gaussienne et SIG pour l'exposition résidentielle aux pesticides, avec des écarts d'exposition très importants selon le modèle utilisé — la qualité du modèle change les décisions sanitaires.
 
 ### 3. ROM et apprentissage : maturité méthodologique, mais toujours a posteriori
 
 - Les ROM de dispersion urbaine se sont standardisées : Arnoldi (2015, facteur ~2500 vs CFD), POD+RBF sur 144 km² (Pékin, 2021), ROM physique POD-NN (Bologne, 2024, avec vent réel pour le monitoring temps réel), POD-GPR avec ~50 snapshots LES (2024), ROM + assimilation de données (2023).
 - Les surrogate neuronaux montent en gamme : FNO pour panaches radioactifs (2024), architectures masquage/correction 3D (CEA, 2024, priors physiques + opérateurs neuronaux), surrogates ML d'émissions industrielles, prévision d'accidents Seveso (2022).
-- **Point commun à toutes ces approches : elles exigent un modèle haute-fidélité (CFD/LES) et des snapshots pour exister.** Elles excellent en interpolation dans leur domaine d'entraînement mais leur faiblesse déclarée est la généralisation hors domaine (identifiée comme problème ouvert dans la revue STE 2025). La réduction a priori de Drift-X est précisément complémentaire : coût indépendant du domaine, extrapolation par construction, pas d'entraînement requis. **Positionnement naturel : hybride — Drift-X comme prior physique et modèle d'évaluation ponctuelle, ML pour la calibration.**
+- Certaines approches recensées utilisent des simulations haute-fidélité et des snapshots ; ce n'est pas une propriété universelle de toutes les ROM et méthodes de substitution. Leurs performances d'interpolation et d'extrapolation dépendent de la méthode, des données et du régime étudié. Le coût, la généralisation et le besoin d'entraînement de J-DriftX doivent être mesurés et comparés ; une extrapolation correcte n'est pas garantie par la seule construction analytique. Une architecture hybride reste une hypothèse à évaluer, pas un positionnement déjà justifié.
 
 ### 4. Identification de source (STE) : un champ qui s'est structuré
 
 - La revue de référence (Information Fusion, 2017) classe les méthodes STE (optimisation, adjoint, bayésien, renormalisation) ; NARAC opérationalise le STE à toutes échelles ; la technique de renormalisation (JAMES, 2016) fournit le formalisme d'opérateur inverse généralisé.
 - La revue 2025 (Zenodo) confirme deux problèmes ouverts : la régularisation automatique sous données rares et bruitées, et **la détection du fonctionnement hors domaine d'un surrogate ML** — argument supplémentaire pour un modèle physique rapide servant de garde-fou.
-- Drift-X avait intégré l'identification de source via analyse de sensibilité du modèle direct ; la reprise peut s'aligner sur les standards STE (adjoint du modèle de transport travel-time = naturellement disponible, puisque le modèle est analytique).
+- Les documents historiques mentionnent une analyse de sensibilité du modèle direct. La disponibilité, l'exactitude et l'utilité d'un adjoint pour la formulation actuelle ne sont pas démontrées par le seul caractère analytique du modèle ; elles doivent être dérivées et vérifiées.
 
 ### 5. SIG et open source : l'avenant de Drift-X est devenu banal — d'où l'exigence
 
@@ -62,11 +62,11 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 
 | Dimension | État de l'art 2026 | Apport de J-DriftX |
 |---|---|---|
-| Réduction | POD/ML a posteriori, dépendantes de snapshots CFD | Réduction a priori par similitude, sans EDP ni entraînement |
-| Coût | ROM: évaluation rapide après entraînement coûteux | Évaluation ponctuelle à coût quasi nul, Monte Carlo massif |
-| Far-field dérive | Extension gaussienne AGDISP très conservatrice, AMP en cours | Similitude généralisée + topographie via métrique travel-time |
+| Réduction | Familles hétérogènes : ROM, surrogates, modèles analytiques et apprentissage | Hypothèse de réduction a priori par similitude, à formaliser et comparer |
+| Coût | Coûts variables selon méthode, préparation, calibration et inférence | Coût complet et précision de J-DriftX non mesurés |
+| Far-field dérive | L'EPA documente des limites dans des scénarios précis ; AGDISP est en cours de modernisation | Hypothèse de traitement du terrain et du transport dirigé à tester |
 | Calibration | Assimilation/ML matures | Assimilation de données partielles (déjà dans Drift-X) à moderniser (bayésien) |
-| STE | Méthodes standardisées (adjoint/bayésien) | Adjoint analytique disponible par construction |
+| STE | Plusieurs familles de méthodes inverses existent ; le choix dépend du problème | Applicabilité et calcul d'un adjoint pour J-DriftX à démontrer |
 | SIG | Plugins QGIS gaussiens multiples | Cœur Python + plugin QGIS, standard attendu |
 
 **Conclusion provisoire : les résultats de la revue justifient de poursuivre l'investigation, mais la nouveauté, la robustesse et la valeur prédictive de J-DriftX restent à démontrer par des benchmarks reproductibles.** L'idée n'a été ni reprise ni démentie ; le contexte applicatif (dérive far-field, drones, exposition résidentielle, réponse d'urgence auditable) s'est amélioré ; l'écosystème méthodologique (assimilation, STE, benchmarks) offre maintenant tout ce qui manquait en 2008 pour valider et publier proprement.
@@ -111,8 +111,8 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 
 ## Recommandations
 
-1. **Reprendre le projet** — la niche scientifique est intacte et le contexte applicatif favorable.
+1. **Poursuivre uniquement l'investigation critique** — la niche scientifique n'est pas établie et le besoin applicatif doit être précisé.
 2. Prioriser M1 : noyau Python + benchmark gaussien classique (reproductibilité) avant toute extension.
-3. Suivre l'AGDISP Modernization Project et proposer, à terme, le far-field J-DriftX comme extension — c'est le chemin d'impact maximal.
-4. Déposer les documents historiques (thèse, chapitre) en archive ouverte pour ancrer l'antériorité.
+3. Suivre la modernisation d'AGDISP et évaluer objectivement si un besoin distinct subsiste ; aucune proposition d'extension ne devrait précéder une validation comparative.
+4. Retrouver et vérifier les documents historiques avant de les déposer ou de revendiquer une antériorité ; vérifier les droits de diffusion des documents coécrits/édités.
 5. Cibler une revue type *Atmospheric Environment* / *Environmental Modelling & Software* pour l'article de synthèse v2.
