@@ -1,0 +1,50 @@
+---
+title: "Carte d'articulation du projet"
+---
+
+# Comprendre J-DriftX sans confondre ses niveaux de preuve
+
+Cette page relie l'héritage scientifique, l'hypothèse de recherche, le code actuel, les laboratoires de vérification et les preuves encore nécessaires. Elle sert de **parcours de lecture** ; la feuille de route conserve les décisions et jalons détaillés.
+
+## En bref
+
+J-DriftX explore si des solutions de similitude généralisées dans une représentation dirigée par les temps de transport peuvent aider à traiter certains problèmes de dispersion à coût réduit. Cette proposition est une **hypothèse de recherche**, pas une méthode prédictive validée.
+
+Une source historique établit ce qu'un article a publié ; un test vérifie un comportement du code dans un cas précis ; une convergence numérique vérifie un schéma sur un problème contrôlé. Aucun de ces éléments ne démontre, à lui seul, l'utilité pratique du modèle.
+
+## Les cinq niveaux
+
+| Niveau | Statut actuel | Question à laquelle il répond |
+|---|---|---|
+| Héritage historique | Sources et fiches de lecture disponibles, avec incertitudes signalées | Que disent réellement les travaux antérieurs ? |
+| Hypothèse théorique | Formulation cible partiellement définie | Quel objet mathématique propose-t-on et sous quelles hypothèses ? |
+| Vérification du code | Cas analytiques et tests ciblés | Le calcul implémente-t-il correctement les propriétés attendues sur ces cas ? |
+| Valeur différentielle | Non démontrée | Apporte-t-il un gain face à une baseline équitable ? |
+| Validation et utilité | Non démontrées | Le gain résiste-t-il à des données indépendantes et modifie-t-il une décision réelle ? |
+
+## Portes actuelles
+
+- **G0 documentaire : franchi le 22 octobre 2026** — le cadrage et les questions de preuve sont structurés.
+- **G0-S : exploration scientifique minimale autorisée** — définitions, cas analytiques, propriétés et contre-exemples.
+- **G0-A : utilité applicative non démontrée** — le besoin, l'utilisateur, la décision et le bénéfice doivent être établis indépendamment de la méthode.
+- **G1 : cohérence théorique à poursuivre** sur un problème borné ; **G2–G4** restent conditionnels aux résultats.
+
+Le franchissement de G0 documentaire ne valide donc ni le modèle ni le cas d'usage. Voir le [cadre de décision](utilite-scientifique.qmd), la [revue adversariale G0](revue-adversariale-g0.qmd) et la [feuille de route](roadmap.qmd).
+
+## Ce que montrent les laboratoires
+
+Les applications Python permettent d'étudier des cas synthétiques, des solutions analytiques et des erreurs de discrétisation. Le laboratoire périodique compare notamment deux schémas numériques indépendants sur un profil sinusoïdal régulier.
+
+Ces expériences servent à la **vérification numérique**, non à la validation météorologique ou applicative. Elles ne modélisent pas, à elles seules, la dynamique complète des gouttelettes, la turbulence atmosphérique, le dépôt ou l'effet du relief sur le vent. Pour les détails, voir [Laboratoire interactif](laboratoire-interactif.qmd) et [Qualité & tests](qualite.qmd).
+
+## Parcours de lecture conseillé
+
+1. [Héritage Drift-X](heritage.qmd) et [Lectures des sources](lectures.qmd) — établir la base documentaire.
+2. [Fondements théoriques : modèle direct](../theorie/modele-direct.qmd), [Solutions de similitude](../theorie/similitude.qmd) et [Métrique travel-time](../theorie/metrique-travel-time.qmd) — préciser les objets mathématiques.
+3. [MVP scientifique minimal](mvp-scientifique.qmd) — borner les premières expériences admissibles.
+4. [Laboratoire interactif](laboratoire-interactif.qmd) et [Qualité & tests](qualite.qmd) — lire les résultats numériques avec leurs limites.
+5. [Revue adversariale G0](revue-adversariale-g0.qmd) et [Feuille de route](roadmap.qmd) — décider de la suite selon les preuves.
+
+## Référence éditoriale
+
+La version opérationnelle et détaillée de cette carte se trouve dans [docs/18-carte-articulation-scientifique.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/18-carte-articulation-scientifique.md). Elle précise l'état de chaque niveau, les limites des laboratoires et l'ordre de travail recommandé.
