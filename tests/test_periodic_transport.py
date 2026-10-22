@@ -6,6 +6,7 @@ import pytest
 from jdriftx.periodic_transport import (
     periodic_sine_solution,
     solve_periodic_sine_transport,
+    solve_periodic_upwind_euler,
 )
 
 
@@ -85,8 +86,6 @@ def test_invalid_grid_and_diffusivity_are_rejected() -> None:
 
 
 def test_independent_upwind_euler_solver_matches_exact_solution() -> None:
-    from jdriftx.periodic_transport import solve_periodic_upwind_euler
-
     x, actual, _ = solve_periodic_upwind_euler(
         n_cells=128,
         length=1.0,
