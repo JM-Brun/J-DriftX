@@ -76,9 +76,7 @@ def test_unstable_time_step_is_rejected() -> None:
 
 def test_invalid_grid_and_diffusivity_are_rejected() -> None:
     with pytest.raises(ValueError, match="greater than or equal to 8"):
-        solve_periodic_sine_transport(
-            n_cells=4, length=1, end_time=1, dt=0.01
-        )
+        solve_periodic_sine_transport(n_cells=4, length=1, end_time=1, dt=0.01)
     with pytest.raises(ValueError, match="non-negative"):
         solve_periodic_sine_transport(
             n_cells=16, length=1, end_time=0.1, dt=0.001, diffusivity=-0.1
