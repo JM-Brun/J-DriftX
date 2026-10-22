@@ -6,13 +6,15 @@ title: "Feuille de route J-DriftX v2"
 
 La feuille de route est **conditionnelle aux preuves** : les jalons décrivent des questions et livrables attendus, pas des promesses de performance ni un calendrier garanti.
 
-> La première question est l'utilité : quel problème J-DriftX peut-il résoudre mieux que les méthodes disponibles, et comment le démontrer ? Voir le [cadre de décision scientifique](utilite-scientifique.qmd), la [revue adversariale G0](revue-adversariale-g0.qmd) et le document détaillé [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md).
+> La première question est l'utilité : quel problème J-DriftX peut-il résoudre mieux que les méthodes disponibles, et comment le démontrer ? La [carte d'articulation scientifique](carte-articulation.qmd) explique les niveaux de preuve et leur relation. Voir aussi le [cadre de décision scientifique](utilite-scientifique.qmd), la [revue adversariale G0](revue-adversariale-g0.qmd) et le document détaillé [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md).
 
 ## Portes de décision
 
 | Porte | Question | Livrable attendu |
 |---|---|---|
-| **G0 — Besoin et utilité** | Le problème est-il réel, important et insuffisamment couvert ? | Fiche de problème, alternatives, bénéfice testable, critères de succès et d'abandon |
+| **G0 documentaire — franchi** | Le besoin candidat, les alternatives et les critères de preuve sont-ils suffisamment cadrés pour commencer l'exploration ? | Dossier documentaire traçable ; ce statut ne démontre pas l'utilité |
+| **G0-S — Exploration scientifique** | Peut-on définir et vérifier un cas mathématique minimal sans prétendre à une application validée ? | Définitions explicites, cas analytiques, propriétés et contre-exemples |
+| **G0-A — Utilité applicative (non démontrée)** | Le problème est-il réel, important et insuffisamment couvert pour un utilisateur et une décision identifiés ? | Fiche de problème, alternatives, bénéfice testable, critères de succès et d'abandon |
 | **G1 — Faisabilité théorique** | La formulation est-elle cohérente pour le problème retenu ? | Hypothèses explicites, propriétés démontrées ou conjecturales séparées, cas analytique |
 | **G2 — Valeur différentielle** | Une composante apporte-t-elle un gain par rapport aux baselines ? | Benchmark reproductible, ablations, coût, robustesse et résultats négatifs |
 | **G3 — Validation indépendante** | Le bénéfice résiste-t-il à des données non utilisées pendant le développement ? | Évaluation indépendante, incertitude et domaine de validité |
@@ -25,7 +27,7 @@ Chaque porte peut conduire à poursuivre, réviser, restreindre ou arrêter une 
 | Jalon | Contenu | Condition de démarrage |
 |---|---|---|
 | **M0 — Ancrage documentaire** | Audit historique, revue de littérature, traçabilité des sources et des affirmations | En cours ; limites de couverture explicites |
-| **M1 — Noyau minimal et référence** | Modèle direct limité au besoin retenu, cas analytique, tests et baseline | Après cadrage G0 ; formalisation en G1 |
+| **M1 — Noyau minimal et référence** | Modèle direct limité au besoin retenu, cas analytique, tests et baseline | Après cadrage G0-A suffisant pour choisir le problème ; formalisation en G1 |
 | **M2 — Calibration et multi-niveaux** | Calibration, identifiabilité, estimateur d'erreur et comparaisons | Après validation du cas direct et démonstration de valeur en G2 |
 | **M3 — Terrain et SIG** | Données indépendantes, topographie, météorologie et intégration SIG si utile | Après preuve sur cas contrôlés et accès aux données |
 | **M4 — Publication** | Manuscrit reproductible, résultats positifs et négatifs, limites | Selon la solidité des résultats |
@@ -38,7 +40,7 @@ Aucun délai fixe ni objectif de performance ne doit être considéré comme acq
 - core/similitude : solutions de similitude, sous hypothèses explicites.
 - core/metric : métrique de temps de transport et propriétés à démontrer.
 - core/constraints : propriétés physiques à formaliser et démontrer dans un domaine de validité explicite.
-- benchmarks/reference et benchmarks/baselines : priorité dès que le problème G0 est défini.
+- benchmarks/reference et benchmarks/baselines : priorité dès que le problème G0-A est défini.
 - assim/calibration, assim/ste, méthodes POD/ROM et approches apprises : à comparer ou développer si elles répondent à une question utile.
 - io/, bindings/qgis, API et interfaces : après validation d'un noyau pertinent.
 
@@ -48,7 +50,7 @@ Si l'approche ne démontre pas de bénéfice applicatif, J-DriftX peut être ré
 
 ## Prochaine action
 
-Le projet distingue maintenant deux portes : **G0-S**, exploration mathématique minimale autorisée sous un périmètre strict, et **G0-A**, utilité applicative toujours non démontrée. Le [MVP scientifique](mvp-scientifique.qmd) permet d'avancer sur les définitions, les cas analytiques et les contre-exemples sans prétendre prédire une pollution réelle. Aucun benchmark applicatif ni extension multi-domaines n'est autorisé tant que G0-A n'est pas justifié.
+Le projet distingue trois états : **G0 documentaire** est franchi, **G0-S** autorise l'exploration mathématique minimale sous un périmètre strict, et **G0-A** (utilité applicative) reste non démontrée. Le [MVP scientifique](mvp-scientifique.qmd) permet d'avancer sur les définitions, les cas analytiques et les contre-exemples sans prétendre prédire une pollution réelle. Aucun benchmark applicatif ni extension multi-domaines n'est autorisé tant que G0-A n'est pas justifié.
 
 La documentation complète se trouve dans [docs/03-roadmap-jdriftx-v2.md](../../docs/03-roadmap-jdriftx-v2.md), [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md), [docs/10-revue-adversariale-g0.md](../../docs/10-revue-adversariale-g0.md) et [docs/13-mvp-scientifique-et-g0.md](../../docs/13-mvp-scientifique-et-g0.md).
 
