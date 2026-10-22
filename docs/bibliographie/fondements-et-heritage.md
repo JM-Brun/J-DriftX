@@ -6,7 +6,7 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 
 ## Références
 
-### Mohammadi & Brun (2006) — « Similitude généralisée et modélisation géométrique à complexité réduite »
+### Thèse de J.-M. Brun — titre et année à confirmer
 
 - **Lien :** source scientifique fondatrice, directement liée.
 - **Référence :** *Comptes Rendus Mécanique*, 334(10), 634–638. DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007). [PDF éditeur/archives ouvertes](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
