@@ -253,20 +253,11 @@ Cette PR ne se limite donc plus au registre initial. Elle :
 Les changements n'établissent pas encore la validité de chaque référence du corpus. Les PDF de revue exécutive, les métadonnées bibliographiques complètes et les fichiers bruts de données restent à auditer.
 
 
-### A-13 — Référence Zenodo attribuée à une revue STE de 2025 : identité non confirmée
+### A-13 — Zenodo 22914336 : année de publication erronée
 
-- **Statut :** référence potentiellement erronée ou mal attribuée ; pas encore déclarée fausse.
-- **Emplacement :** `docs/references.md` et `docs/02-revue-etat-art-2026.md`.
-- **Constat :** le dépôt attribuait à « Source Term Estimation for Atmospheric Pollutant Releases » une référence Zenodo datée de 2025, URL `https://zenodo.org/records/22914336`, et lui attribuait une revue de méthodes (adjoint, Tikhonov, bayésien, PINN) ainsi que des conclusions sur les problèmes ouverts. Les recherches exactes n'ont pas permis de confirmer le titre, l'auteur, la date ou le contenu du record ; l'URL n'a pas pu être inspectée via le navigateur utilisé. L'identifiant et la date ne doivent pas être considérés comme preuve d'erreur en eux-mêmes.
-- **Contrôle externe positif :** un article différent, avec titre proche, existe : *An inverse method to estimate the source term of atmospheric pollutant releases*, *Atmospheric Environment* 260 (2021), DOI [10.1016/j.atmosenv.2021.118554](https://doi.org/10.1016/j.atmosenv.2021.118554). Il ne faut pas le confondre avec une revue Zenodo de 2025. [Notice éditeur](https://www.sciencedirect.com/science/article/abs/pii/S1352231021003769).
-- **Correction effectuée dans cette PR :** la référence Zenodo est marquée « à vérifier » dans la bibliographie et ne soutient plus les conclusions de la revue d'état de l'art. L'article de 2021 est proposé comme source distincte vérifiable, sans lui attribuer le contenu de la référence non confirmée.
-- **Preuve de clôture :** retrouver un record Zenodo valide et vérifier ses métadonnées et son texte intégral ; sinon supprimer l'entrée après avoir recherché l'origine de la citation.
-
-### A-14 — Année de la thèse de Brun : erreur dans plusieurs références secondaires
-
-- **Statut :** année 2006 non fiable ; source primaire consultée cite explicitement 2007.
-- **Emplacement :** `docs/references.md`, `docs/04-revues-papiers-sources.md`, `raw/README.md`.
-- **Constat :** l'article primaire Mohammadi & Brun (2006) cite « J.-M. Brun, *Modélisation à complexité réduite de la dérive*, Thèse Université Montpellier II, 2007 ». Des bibliographies secondaires donnent 2006 et une notice de thèse consultée sous un titre voisin « Modèles à complexité réduite de transport pour applications environnementales » est également datée de 2007. Le dépôt avait présenté 2006 comme une métadonnée établie et affirmait que la thèse n'avait jamais été déposée/numérisée, ce que les recherches consignées ne permettent pas de conclure.
-- **Contrôle primaire :** bibliographie de l'article de 2006, [page éditeur et bibliographie](https://comptes-rendus.academie-sciences.fr/mecanique/articles/10.1016/j.crme.2006.06.007/).
-- **Correction effectuée dans cette PR :** l'année 2007 est indiquée comme l'année citée par la source primaire, avec une réserve sur l'année officielle ; « jamais déposée/numérisée » est remplacé par « non localisée dans les recherches consignées ».
-- **Preuve de clôture :** vérifier la page de titre de la thèse ou une notice institutionnelle faisant autorité, et distinguer année de soutenance, de dépôt et éventuelle variation du titre.
+- **Statut :** erreur bibliographique confirmée ; le record et son contenu sont identifiés.
+- **Emplacement :** `docs/references.md`, `docs/02-revue-etat-art-2026.md` et la bibliographie annotée.
+- **Constat :** le dépôt citait « Source Term Estimation for Atmospheric Pollutant Releases » comme une ressource Zenodo de 2025. L'enregistrement 22914336 (Shafiyev et al., Bukhara State University) est publié le **22 septembre 2026 (v1)**. La description du contenu — méthodes adjointes, Tikhonov, bayésiennes/MCMC, PINN et problèmes ouverts en estimation de source — est cohérente avec la ressource.
+- **Source :** [record Zenodo](https://zenodo.org/records/22914336).
+- **Correction effectuée dans cette PR :** l'année est corrigée en 2026. La ressource est identifiée comme une ressource de synthèse, mais son statut de revue évaluée par les pairs n'est pas affirmé ; ses conclusions doivent être corroborées par les articles primaires.
+- **Preuve de clôture :** vérifier que toutes les occurrences (notamment `site/references.bib`, `site/references.qmd` et `docs/bibliographie/identification-source-assimilation.md`) utilisent 2026 et que les affirmations associées sont attribuées à la ressource avec le niveau de preuve approprié.
