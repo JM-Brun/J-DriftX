@@ -55,9 +55,11 @@ La divergence nulle signifie qu'il n'y a pas de dilatation volumique locale du c
 
 Selon le domaine et les axiomes démontrés, $\tau$ peut relever d'une fonction de coût orientée ou d'une quasi-distance étendue; le terme « métrique » ne doit pas être utilisé sans qualification avant vérification de la séparation, de l'inégalité triangulaire et du traitement des points inaccessibles. La généalogie des objets voisins est détaillée sur la page [Métriques non riemanniennes](metriques-non-riemanniennes.qmd) et dans la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
 
-## Généalogie : adaptation de maillage par métrique
+## Analogie avec l'adaptation de maillage par métrique
 
-La métrique travel-time descend d'une autre métrique non euclidienne : celle de l'adaptation de maillage anisotrope, où la spécification métrique gouverne la génération de Delaunay [@borouchaki1997delaunay]. Drift-X transfère cette technologie du contrôle du maillage au **contrôle de la géométrie du panache** : la « distance » qui compte pour un polluant est le temps qu'il met pour y arriver, pas les mètres au sol.
+L'adaptation de maillage anisotrope utilise un champ métrique pour exprimer des exigences locales de taille et d'orientation des éléments; cette formulation peut guider des algorithmes de génération de maillage, dont ceux étudiés par Borouchaki et al. [@borouchaki1997delaunay]. La pseudo-distance travel-time de Drift-X est un autre objet : elle s'appuie sur le temps de transport et une projection sur les caractéristiques du champ de vitesse.
+
+Les deux approches partagent l'idée générale qu'une géométrie utile dépend du problème plutôt que de la seule distance euclidienne. **La référence sur les maillages ne démontre toutefois ni une filiation historique directe, ni une équivalence mathématique entre les deux constructions.** En l'absence d'une source établissant explicitement ce transfert, il faut présenter ce rapprochement comme une analogie conceptuelle, pas comme la généalogie démontrée de la méthode Drift-X.
 
 ## Ce qui reste à formaliser (reprise v2)
 

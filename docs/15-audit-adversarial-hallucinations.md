@@ -438,3 +438,45 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 - **Limite :** ces corrections harmonisent le statut documentaire ; elles ne valident pas les fichiers, les licences, la pertinence physique du corpus ni la performance de J-DriftX.
 - **Preuve de clôture :** vérifier après chaque décision que les statuts des documents de gouvernance restent cohérents et qu'aucun benchmark n'est annoncé avant le contrôle G1.
 
+### B-30 — Filiation historique non établie entre la pseudo-distance travel-time et les métriques d'adaptation de maillage
+
+- **Statut :** affirmation historique trop catégorique, corrigée.
+- **Emplacement :** `site/theorie/metrique-travel-time.qmd`, section « Généalogie ».
+- **Constat :** le texte affirmait que la métrique travel-time « descend » de la métrique utilisée pour l'adaptation de maillage anisotrope et que Drift-X transfère cette technologie au contrôle de la géométrie du panache. La référence Borouchaki et al. sur la génération de maillages ne suffit pas, à elle seule, à prouver une filiation historique ou une équivalence mathématique avec la pseudo-distance définie dans les sources Drift-X.
+- **Correction effectuée :** le rapprochement est présenté comme une analogie conceptuelle entre deux usages de géométries dépendantes du problème. La filiation directe reste non établie faute de source explicite.
+- **Preuve de clôture :** retrouver une source historique primaire décrivant ce transfert, ou conserver la formulation en termes d'analogie et non de généalogie.
+
+### B-31 — Domaine d'entrée incomplet des primitives travel-time
+
+- **Statut :** défaut de validation d'entrée confirmé et corrigé dans cette PR.
+- **Emplacements :** `src/jdriftx/metric.py`, `tests/test_metric.py`.
+- **Constat :** les fonctions convertissaient les entrées en tableaux numériques et contrôlaient leur forme, mais ne rejetaient pas systématiquement les coordonnées/vitesses non finies (`NaN`, (+\infty), (-\infty)). Dans `temps_transport`, une valeur `umin` nulle ou négative pouvait également neutraliser le garde-fou sur la vitesse; les calculs pouvaient alors retourner `NaN` ou `inf` au lieu d'un rejet explicite.
+- **Correction effectuée :** les primitives rejettent maintenant les coordonnées et vitesses non finies; `temps_transport` exige en outre un seuil `umin` fini et strictement positif. Des tests paramétrés couvrent ces cas.
+- **Limite :** ces contrôles améliorent la robustesse numérique des API; ils ne valident ni la définition historique complète de la pseudo-distance, ni la physique du modèle.
+- **Preuve de clôture :** suite de tests et CI sur le HEAD de la PR; conserver une distinction explicite entre validité des entrées, propriétés mathématiques et validation physique.
+
+
+### B-32 — Liens internes Quarto non résolus détectés par la CI
+
+- **Statut :** deux liens internes cassés confirmés et corrigés dans cette PR.
+- **Emplacements :** `site/projet/utilite-scientifique.qmd`, `site/etat-art/revue-mathematique.qmd`.
+- **Constat :** le rendu Quarto de la CI signalait `projet/15-audit-corpus-g0-resultats.md` et `etat-art/mvp-scientifique.qmd` comme cible introuvable. Les documents visés existaient, mais les chemins relatifs étaient erronés depuis les pages sources. Le rendu réussissait malgré ces avertissements : un rendu vert seul ne prouve donc pas que tous les liens internes sont résolus.
+- **Correction effectuée :** les liens pointent désormais respectivement vers `../../docs/15-audit-corpus-g0-resultats.md` et `../projet/mvp-scientifique.qmd`.
+- **Preuve de clôture :** nouveau rendu Quarto sans ces avertissements. À terme, ajouter un contrôle de liens internes explicite au workflow plutôt que compter uniquement sur le succès de `quarto render`.
+
+### B-33 — Doublon bibliographique et ligne de tableau mal formée dans la comparaison Zermelo
+
+- **Statut :** défaut éditorial confirmé et corrigé.
+- **Emplacement :** `docs/14-revue-mathematique-ciblee.md`, section 4.
+- **Constat :** l'article de 2024 *Time-optimal solutions of Zermelo's navigation problem with moving obstacles* apparaissait deux fois. La seconde occurrence comportait en outre quatre cellules pour un tableau à trois colonnes, ce qui décalait la limitation scientifique hors de sa colonne prévue et pouvait rendre la comparaison ambiguë.
+- **Correction effectuée :** fusion des deux lignes en une seule; la pertinence conditionnelle du comparateur et la limite (« ne démontre rien sur la pseudo-distance projetée en advection pure ») restent explicites dans la troisième colonne.
+- **Preuve de clôture :** contrôle du tableau corrigé et rendu Quarto dans la CI de la branche.
+
+### B-34 — Conservation de flux : débit volumique et flux de polluant confondus dans le raisonnement potentiel
+
+- **Statut :** risque d'inférence scientifique identifié; formulation clarifiée, revendication historique exacte toujours à vérifier.
+- **Emplacement :** `docs/14-revue-mathematique-ciblee.md`, §3.4.1.
+- **Constat :** `\nabla\cdot\mathbf u=0` permet, sous régularité et géométrie de tube de courant, de conclure à la conservation du débit volumique signé entre sections transverses. Cela ne suffit pas à conclure que le flux advectif d'un scalaire `c\mathbf u` vaut le débit source `Q`; ce second résultat dépend de l'équation de bilan, des sources et des autres termes de transport.
+- **Correction effectuée :** la note donne une dérivation conditionnelle par le théorème de la divergence et distingue le flux du fluide de celui du polluant. Elle n'affirme pas que cette dérivation prouve la revendication historique des surfaces iso-\tau.
+- **Limite :** le sens précis de `Q`, le domaine d'intégration et les hypothèses de la formule historique doivent encore être vérifiés dans les sources accessibles, sans examiner la thèse.
+- **Preuve de clôture :** relier la revendication à une équation de bilan explicitement sourcée et vérifier les conditions de frontière, l'émission et les termes négligés.

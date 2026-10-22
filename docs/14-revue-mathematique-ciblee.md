@@ -135,14 +135,36 @@ Une métrique usuelle est finie et satisfait notamment séparation, symétrie et
 
 La conservation de masse ne découle pas de la seule définition de \(\tau\). Elle dépend de l'équation de transport, de la divergence du champ, des sources/puits, des conditions aux limites et du jacobien de la transformation de coordonnées. La revendication historique selon laquelle un flux intégré sur une surface iso-\(\tau\) restitue exactement \(Q\) doit être reliée à une dérivation complète et à ses hypothèses, et non considérée comme démontrée par la définition de temps de parcours.
 
+### 3.4.1 Résultat conditionnel démontrable par le théorème de la divergence
+
+On peut établir une conservation de flux entre deux sections transverses d'un même tube de courant sans supposer d'emblée une formule particulière pour le jacobien. Soit \(V\) le volume borné par deux sections \(S_1\) et \(S_2\), et par une surface latérale \(\Sigma\) formée de lignes de courant. Si le champ \(\mathbf u\) est suffisamment régulier dans \(V\), si \(\nabla\cdot\mathbf u=0\), et si aucune singularité ou ouverture supplémentaire n'intersecte la frontière, le théorème de la divergence donne
+
+\[
+0=\int_V \nabla\cdot\mathbf u\,dV
+ =\int_{\partial V}\mathbf u\cdot\mathbf n\,dS
+ =\int_{S_2}\mathbf u\cdot\mathbf n\,dS
+  -\int_{S_1}\mathbf u\cdot\mathbf n\,dS.
+\]
+
+Le terme latéral disparaît parce que \(\mathbf u\) y est tangent; les signes opposés viennent des normales sortantes aux deux sections. Le débit volumique signé est donc identique aux deux sections. Cela vaut pour des sections iso-\(\tau\) **si** elles sont bien définies, transverses au champ et découpent le même tube de courant.
+
+Ce résultat ne prouve pas automatiquement que l'intégrale du flux de polluant vaut le débit source \(Q\). Pour un scalaire \(c\), il faut considérer le flux advectif \(\mathbf J=c\mathbf u\) et l'équation de bilan correspondante. En régime stationnaire, si \(\nabla\cdot(c\mathbf u)=s\), alors
+
+\[
+\int_{\partial V}c\mathbf u\cdot\mathbf n\,dS=\int_V s\,dV.
+\]
+
+La différence de flux entre sections dépend donc de la source \(s\) contenue dans le volume; elle est nulle dans un volume sans source, et égale à l'émission intégrée uniquement si le volume et les conventions de signe englobent exactement cette émission, sans pertes ni flux non comptabilisés. Si l'équation comprend diffusion, réaction, dépôt ou d'autres termes, leurs flux/contributions doivent être ajoutés au bilan.
+
+**Limites de cette dérivation :** elle établit un résultat conditionnel pour un tube de courant régulier, pas une preuve universelle de la revendication historique. Elle ne règle ni les caractéristiques multiples, ni les stagnations, ni les surfaces iso-\(\tau\) non globalement définies, ni les conditions aux limites du problème réel. Pour valider la formulation publiée, il reste à identifier dans la source le sens précis de \(Q\), le scalaire transporté, le domaine d'intégration et les hypothèses utilisées. Un jacobien explicite est nécessaire si l'on veut ensuite dériver la formule dans des coordonnées \((\tau,\eta)\), mais il ne doit pas être inventé avant que cette transformation soit définie.
+
 ## 4. Comparaison ciblée avec les antécédents
 
 | Référence | Objet et proximité avec J-DriftX | Différence à établir avant toute revendication |
 |---|---|---|
 | Gibbons et al. (2009), [*Stationary metrics and optical Zermelo-Randers-Finsler geometry*](https://doi.org/10.1103/PhysRevD.79.044022) | Lien entre navigation de Zermelo et géométrie de Randers/Finsler; temps minimal dans un champ de vent/courant | Le navigateur garde une vitesse propre et choisit sa direction; un traceur passif advecté suit le champ. La limite de vitesse propre nulle n'est pas automatiquement une métrique de Randers régulière |
 | Dušek (2018), [*Zermelo Navigation Problem in Geometry*](https://doi.org/10.17818/NM/2018/4SI.16) | Formulation géométrique du problème de navigation et des métriques de Randers | Établir si J-DriftX optimise sur des trajectoires contrôlables ou intègre une trajectoire imposée |
-| *Time-optimal solutions of Zermelo's navigation problem with moving obstacles* (2024), [DOI](https://doi.org/10.1016/j.difgeo.2024.102177) | Navigation à temps minimal avec contraintes et obstacles mobiles | Pertinent seulement si J-DriftX inclut un choix de chemin/contrôle et des contraintes comparables |
-| *Time-optimal solutions of Zermelo's navigation problem with moving obstacles* (2024), [DOI](https://doi.org/10.1016/j.difgeo.2024.102177) | Navigation à temps minimal avec obstacles mobiles | Comparateur si l'on introduit des contraintes de trajectoire et des obstacles | N'établit rien sur la pseudo-distance projetée en advection pure |
+| *Time-optimal solutions of Zermelo's navigation problem with moving obstacles* (2024), [DOI](https://doi.org/10.1016/j.difgeo.2024.102177) | Navigation à temps minimal avec contraintes et obstacles mobiles | Comparateur si J-DriftX introduit un choix de trajectoire/contrôle et des contraintes comparables; cet article n'établit rien sur la pseudo-distance projetée en advection pure |
 | Markvorsen, Pendás-Recondo & Rygaard (2025), [*Time-dependent Zermelo navigation with tacking*](https://arxiv.org/abs/2508.07274) | Navigation dépendant du temps, changement de stratégie de cap | À comparer si le modèle évolue vers des champs temporels et une optimisation de trajectoire |
 | Contreras & Kachroo (2020), [*The Viscosity Solution for Hamilton Jacobi Travel Time Dynamics*](https://doi.org/10.1109/TITS.2019.2946109) | Équation de temps de parcours de type Hamilton–Jacobi et solution de viscosité | Application au trafic/LWR : analogue méthodologique, pas la même dynamique physique |
 | Sethian & Vladimirsky (2001), [*Ordered upwind methods for static Hamilton–Jacobi equations*](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/) | Problèmes de temps minimal anisotrope et équations Hamilton–Jacobi–Bellman | Pertinent si le temps est un minimum sur un ensemble de directions et si un solveur de front est envisagé |
@@ -207,6 +229,7 @@ De même, \(\nabla\cdot\mathbf u=0\) contraint la cinématique du champ, mais la
 | Non-symétrie | **Partiellement levé** : la définition est orientée et fixe \(+\infty\) pour certains couples amont/aval | Formaliser la convention de domaine et distinguer coût non défini, coût étendu \(+\infty\), et trajet physiquement impossible |
 | Conservation de masse | **Non levé** : les sources imposent des contraintes de conservation au modèle réduit, mais les passages lus ne démontrent pas le résultat plus précis de conservation exacte du flux sur chaque surface iso-\(\tau\) | Reconstituer le jacobien, les hypothèses sur \(\nabla\cdot\mathbf u\), les frontières et le lien avec le scalaire \(c\) dans la thèse/chapitre |
 | Originalité | **Non levé** : un article de 2006 décrit déjà la pseudo-distance et son usage pour les solutions de similitude | Comparer les équations et résultats spécifiques, sans revendiquer la pseudo-distance elle-même comme nouvelle |
+| Filiation avec les métriques d'adaptation de maillage | **Non établie** : une référence sur la génération de maillages anisotropes ne prouve pas une filiation directe avec la pseudo-distance travel-time | Trouver une source historique explicite ou présenter le rapprochement uniquement comme analogie conceptuelle |
 | Date de la thèse | **Métadonnées incohérentes** : la bibliographie du dépôt indique 2006, alors que l'article de 2006 cite la thèse comme 2007 | Vérifier la page de titre ou le dépôt institutionnel de la thèse avant de normaliser la référence |
 
 ### Prochaine action à plus forte valeur

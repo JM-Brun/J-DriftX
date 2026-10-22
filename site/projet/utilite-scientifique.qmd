@@ -74,7 +74,7 @@ La cible est une contribution reproductible dont la valeur, les limites et les c
 
 ## Résultat du cadrage externe G0
 
-La décision de cadrage G0 a été **franchie le 22 octobre 2026 au niveau documentaire** : besoin, observable et corpus candidats sont définis et sourcés ([résultats de l'audit G0](15-audit-corpus-g0-resultats.md)). Cela ne valide pas encore l'adéquation scientifique de J-DriftX. CAPRIV reste limité à des essais de dérive proche et les dépôts de gouttelettes ne sont pas automatiquement équivalents au transport d'un scalaire passif ; DATEM/ETEX apportent des données de traceur pour étudier le far-field, mais les fichiers bruts, unités, licences et partitions restent à vérifier en G1. **G0 franchi ne signifie ni G1 franchi, ni benchmark validé, ni utilité prédictive démontrée.**
+La décision de cadrage G0 a été **franchie le 22 octobre 2026 au niveau documentaire** : besoin, observable et corpus candidats sont définis et sourcés ([résultats de l'audit G0](../../docs/15-audit-corpus-g0-resultats.md)). Cela ne valide pas encore l'adéquation scientifique de J-DriftX. CAPRIV reste limité à des essais de dérive proche et les dépôts de gouttelettes ne sont pas automatiquement équivalents au transport d'un scalaire passif ; DATEM/ETEX apportent des données de traceur pour étudier le far-field, mais les fichiers bruts, unités, licences et partitions restent à vérifier en G1. **G0 franchi ne signifie ni G1 franchi, ni benchmark validé, ni utilité prédictive démontrée.**
 
 Voir la [fiche G0 fondée sur les preuves externes](preuves-g0.qmd) et sa [matrice détaillée](../../docs/11-g0-evidence-externe.md).
 
