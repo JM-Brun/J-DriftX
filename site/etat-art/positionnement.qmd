@@ -4,31 +4,33 @@ title: "Positionnement de J-DriftX"
 
 # Positionnement de J-DriftX en 2026
 
-## Positionnement à tester, non revendication de supériorité
+## Hypothèse de recherche, pas revendication de supériorité
 
-J-DriftX explore une piste spécifique : utiliser des solutions de similitude et une métrique de temps de transport non symétrique pour réduire le coût d'évaluation de certains problèmes de dispersion. L'intérêt de cette piste doit être établi par la formalisation mathématique et des comparaisons reproductibles. Le positionnement public sera révisé après intégration de la revue systématique déposée sous raw/.
+J-DriftX étudie l'hypothèse qu'une combinaison de solutions de similitude et de temps de transport dirigés puisse réduire le coût d'évaluation de certains problèmes de dispersion. L'intérêt de cette représentation n'est pas établi : elle peut se révéler équivalente à une reparamétrisation, moins précise que les modèles existants, trop restrictive physiquement, ou utile uniquement dans un domaine étroit.
 
-| Dimension | Question scientifique | Travail nécessaire |
+Le projet ne revendique actuellement ni nouveauté, ni supériorité prédictive, ni généralisation hors domaine, ni aptitude réglementaire. La priorité est de confronter ces hypothèses à des contre-hypothèses explicites et à des tests reproductibles.
+
+| Dimension | Question sceptique | Preuve nécessaire |
 |---|---|---|
-| Réduction | Dans quels régimes une approche a priori fondée sur la physique est-elle compétitive avec POD/ROM et les surrogates ? | Cas de référence commun, erreur et coût total mesurés |
-| Coût | L'évaluation ponctuelle réduit-elle réellement le coût pour la tâche visée ? | Mesurer préparation, inférence, mémoire et précision |
-| Far-field de dérive | Quelles limites des modèles existants sont documentées pour des scénarios ciblés ? | Sources primaires vérifiées et comparaison sur cas pertinent |
-| Calibration | La calibration sur observations partielles est-elle identifiable et robuste ? | Séparation calibration-validation, analyse de sensibilité et incertitude |
-| Identification de source | Dans quelles conditions une formulation analytique est-elle compétitive avec les méthodes adjointes/bayésiennes ? | Baselines comparables et protocole explicite |
-| Confiance | Quelles propriétés physiques sont démontrées et sur quel domaine ? | Preuves, tests de propriétés et domaine de validité publié |
+| Réduction | Le coût total est-il réellement inférieur à celui d'une baseline à précision comparable ? | Préparation, calibration, inférence, mémoire et erreur mesurés |
+| Temps de transport | La représentation apporte-t-elle de l'information ou ne fait-elle que reparamétrer le modèle ? | Définition formelle, cas limites et ablation |
+| Far-field de dérive | Une estimation différente est-elle préférable pour une décision réelle ? | Utilisateur, décision, pertes d'erreur, données indépendantes et baseline actuelle |
+| Calibration | Les paramètres sont-ils identifiables avec les observations disponibles ? | Analyse d'identifiabilité, sensibilité et incertitude |
+| Identification de source | Le problème inverse est-il suffisamment bien posé ? | Cas inverse de référence et comparaison aux méthodes établies |
+| Physique | Quelles propriétés sont garanties par la formulation et sous quelles hypothèses ? | Preuves et tests limités au domaine démontré |
 
-## Hypothèses différenciantes
+## Hypothèses différenciantes à tester
 
-1. **Métrique de temps de transport :** la revue structurée antérieure n'identifiait pas d'approche directement équivalente dans son corpus consulté. Cela ne prouve pas l'absence de concurrents. La revue systématique et ses limites doivent être examinées avant toute revendication de nouveauté.
-2. **Hybridation physique-données :** évaluer le modèle analytique comme prior ou baseline et l'apprentissage éventuel comme outil de calibration, sans présumer d'un bénéfice.
-3. **Généralisation hors domaine :** tester si les contraintes physiques améliorent la fiabilité par rapport à un surrogate sur des scénarios définis. Conservation, positivité et divergence nulle ne sont garanties que si elles sont démontrées ou vérifiées dans le domaine annoncé.
+1. **Temps de transport dirigé :** formaliser exactement l'objet mathématique et établir les propriétés qu'il satisfait. La revue existante ne prouve pas l'absence de travaux concurrents.
+2. **Réduction a priori :** comparer à une baseline physique et à une ROM/surrogate pertinente sur le même problème, sans présumer que ces familles sont toujours entraînées ou évaluées de la même manière.
+3. **Généralisation :** vérifier si des contraintes physiques précises améliorent réellement l'erreur hors domaine. L'interprétabilité, la conservation ou la positivité ne garantissent pas automatiquement une meilleure prédiction.
 
-## Conditions de réussite
+## Conditions de poursuite
 
-- Formalisation des hypothèses, unités, conditions aux limites et domaine de validité.
-- Benchmark public reproductible avec cas analytique et baselines pertinentes.
-- Mesure de l'erreur, du coût total, de la sensibilité et de l'incertitude.
-- Validation indépendante avant toute généralisation à la topographie réelle ou à l'usage réglementaire.
-- Mise à jour du positionnement à partir de la revue systématique et des résultats expérimentaux, y compris négatifs.
+- Un besoin concret et un utilisateur/décision identifiés avant le choix de la méthode.
+- Un observable primaire, un domaine physique et des données indépendantes définis.
+- Un protocole, des baselines, des métriques et des critères d'arrêt fixés avant le benchmark.
+- Des résultats négatifs, limites et coûts complets publiés.
+- Une validation indépendante avant toute revendication applicative.
 
-Voir la [feuille de route](../projet/roadmap.qmd), le [protocole de validation scientifique](../projet/validation-scientifique.qmd) et le [plan d'intégration des résultats de la revue](https://github.com/JM-Brun/J-DriftX/blob/docs/integrer-revue-systematique-projet/docs/07-plan-integration-revue-systematique.md).
+Voir la [revue adversariale G0](../../docs/10-revue-adversariale-g0.md), le [cadre de décision et de preuve](../../docs/08-decision-utilite-et-preuve.md), la [feuille de route](../projet/roadmap.qmd) et le [plan d'intégration de la revue](https://github.com/JM-Brun/J-DriftX/blob/main/docs/07-plan-integration-revue-systematique.md).
