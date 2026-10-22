@@ -1,0 +1,40 @@
+---
+title: "Laboratoire interactif"
+---
+
+# Explorer les équations en manipulant leurs paramètres
+
+L'objectif est de faire de J-DriftX un laboratoire où l'on peut modifier les paramètres, visualiser les effets et confronter son intuition aux calculs. Cette page décrit la cible de conception : **l'application interactive n'est pas encore déployée**.
+
+## Ce que le laboratoire doit permettre
+
+- **Champs de vecteurs** : modifier la vitesse, la direction et le cisaillement ; afficher flèches, lignes de courant, norme et dérivées discrètes.
+- **Reliefs synthétiques** : manipuler hauteur, largeur et position d'une bosse ou d'une vallée ; visualiser surfaces et courbes de niveau.
+- **Transport et dispersion** : comparer des cas jouets d'advection et de diffusion en faisant varier les paramètres physiques.
+- **Validation** : comparer les sorties à des solutions analytiques, examiner les erreurs et explorer les cas limites.
+
+## Une expérience doit rester interprétable
+
+Chaque outil devra afficher l'équation utilisée, les unités, les hypothèses, les conditions initiales et aux limites, ainsi que le domaine de validité. Les paramètres physiques, les paramètres numériques et les options d'affichage seront séparés.
+
+Une carte ou un champ de vecteurs est une visualisation, pas une preuve. Un relief synthétique ne suffit pas à déterminer le champ de vent. Une solution analytique simplifiée n'est pas une prévision de dispersion réelle.
+
+## Pourquoi commencer par une application Python séparée ?
+
+Le site Quarto est statique. Une petite application Streamlit exécutée localement permettra de valider rapidement l'ergonomie sans ajouter une dépendance au cœur scientifique ni rendre la documentation dépendante d'un service externe. Une éventuelle publication en ligne sera une décision séparée.
+
+Le cœur Python restera indépendant de l'interface : les fonctions numériques seront testables sans Streamlit. Les figures du site pourront rester consultables même si l'application est indisponible.
+
+## Étapes envisagées
+
+1. Champs de vecteurs synthétiques avec tests numériques.
+2. Reliefs synthétiques, sans couplage physique implicite avec le vent.
+3. Cas analytique d'advection-diffusion et comparaison à la référence.
+4. Visualisation des erreurs, cas limites et export des paramètres reproductibles.
+5. Décision sur l'hébergement public après vérification des tests et des contraintes de maintenance.
+
+Le laboratoire pédagogique peut aider à comprendre les hypothèses ; il ne démontre pas à lui seul l'utilité applicative ou la validité scientifique de J-DriftX.
+
+## Spécification détaillée
+
+Voir la [proposition de conception et le plan du MVP](../../docs/17-laboratoire-interactif.md).
