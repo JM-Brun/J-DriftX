@@ -28,13 +28,13 @@ Ces trois objets peuvent se ressembler mais ne sont pas interchangeables. Une in
 
 ### Vocabulaire minimal de mécanique des fluides
 
-- **Champ de vitesse** \(\\mathbf u(\\mathbf x,t)\): vecteur vitesse du fluide en chaque position et instant; son unité SI est le m·s⁻¹.
+- **Champ de vitesse** \(\mathbf u(\mathbf x,t)\): vecteur vitesse du fluide en chaque position et instant; son unité SI est le m·s⁻¹.
 - **Ligne de courant** (*streamline*): courbe tangente au champ de vitesse à un instant fixé.
-- **Trajectoire de particule** (*pathline*): chemin réellement suivi au cours du temps par une particule fluide, solution de \(\\dot X(t)=\\mathbf u(X(t),t)\).
+- **Trajectoire de particule** (*pathline*): chemin réellement suivi au cours du temps par une particule fluide, solution de \(\dot X(t)=\mathbf u(X(t),t)\).
 - **Caractéristique**: courbe utilisée pour suivre l'information d'une équation de transport. Pour un champ de vitesse stationnaire suffisamment régulier, ses courbes spatiales coïncident avec les lignes de courant et les trajectoires spatiales. Dans un champ instationnaire, ces notions ne doivent pas être confondues.
-- **Divergence** \(\\nabla\\cdot\\mathbf u\): mesure locale du taux de dilatation volumique du champ. \(\\nabla\\cdot\\mathbf u=0\) signifie un champ incompressible au sens cinématique; pour un fluide de densité constante, cela correspond à la continuité locale sans source volumique. Ce n'est pas, à lui seul, une preuve de conservation d'un flux sur une surface arbitraire.
+- **Divergence** \(\nabla\cdot\mathbf u\): mesure locale du taux de dilatation volumique du champ. \(\nabla\cdot\mathbf u=0\) signifie un champ incompressible au sens cinématique; pour un fluide de densité constante, cela correspond à la continuité locale sans source volumique. Ce n'est pas, à lui seul, une preuve de conservation d'un flux sur une surface arbitraire.
 - **Source/puits**: région où la quantité transportée est injectée ou retirée, ou point singulier du champ selon le modèle. Il faut préciser si l'on parle d'une source de fluide, d'une source de polluant ou d'une singularité mathématique : ces notions ne sont pas synonymes.
-- **Stagnation**: point où \(\\mathbf u=0\). L'intégrande \(1/\\|\\mathbf u\\|\) y est singulier; la convergence de l'intégrale dépend du comportement local de la vitesse et de la trajectoire.
+- **Stagnation**: point où \(\mathbf u=0\). L'intégrande \(1/\|\mathbf u\|\) y est singulier; la convergence de l'intégrale dépend du comportement local de la vitesse et de la trajectoire.
 
 Dans la suite, sauf mention contraire, le contre-exemple est stationnaire et bidimensionnel. Les coordonnées et les vitesses sont **adimensionnées** pour éviter de mélanger des unités dans la formule \(u_x=1+9y\).
 
@@ -182,7 +182,7 @@ Les liens ci-dessous pointent vers les documents cités; les pages indiquées pr
 | Référence | Type et emplacement utile | Ce qui est utilisé ici | Ce qu'elle ne prouve pas pour J-DriftX |
 |---|---|---|---|
 | Mohammadi & Brun (2006), [*Similitude généralisée et modélisation géométrique à complexité réduite*](https://doi.org/10.1016/j.crme.2006.06.007), *Comptes Rendus Mécanique*, 334(10), 634–638 | Source primaire; §3, pp. 635–636 | Définition projetée de la pseudo-distance et limites concernant séparation et triangulation | Validité de toutes les variantes numériques, conservation iso-τ complète ou originalité actuelle |
-| Brun & Mohammadi (2008), [*Reduced-Order Modelling of Dispersion*](https://doi.org/10.1007/978-1-4020-8758-5_14), dans *Partial Differential Equations: Modelling and Numerical Simulation*, Springer, pp. 245–256 | Chapitre de synthèse; §2.2, pp. 248–250 | Distinction entre définition géométrique, approximation (B^\\perp\\approx B) et correction en champ uniforme | Une preuve indépendante de chaque propriété physique annoncée |
+| Brun & Mohammadi (2008), [*Reduced-Order Modelling of Dispersion*](https://doi.org/10.1007/978-1-4020-8758-5_14), dans *Partial Differential Equations: Modelling and Numerical Simulation*, Springer, pp. 245–256 | Chapitre de synthèse; §2.2, pp. 248–250 | Distinction entre définition géométrique, approximation (B^\perp\approx B) et correction en champ uniforme | Une preuve indépendante de chaque propriété physique annoncée |
 | Gibbons et al. (2009), [*Stationary metrics and optical Zermelo-Randers-Finsler geometry*](https://doi.org/10.1103/PhysRevD.79.044022) | Géométrie de navigation | Relation entre navigation contrôlée et géométrie de Randers/Finsler | Équivalence à l'advection pure d'un traceur passif |
 | Dušek (2018), [*Zermelo Navigation Problem in Geometry*](https://doi.org/10.17818/NM/2018/4SI.16) | Présentation géométrique | Vocabulaire et formulation du problème de navigation | La définition historique projetée de Drift-X |
 | Contreras & Kachroo (2020), [*The Viscosity Solution for Hamilton Jacobi Travel Time Dynamics*](https://doi.org/10.1109/TITS.2019.2946109) | Temps de parcours/Hamilton–Jacobi, contexte trafic | Comparaison avec les fonctions de temps d'arrivée définies par une équation | Même dynamique physique ou même observable que la dispersion atmosphérique |
@@ -190,9 +190,9 @@ Les liens ci-dessous pointent vers les documents cités; les pages indiquées pr
 
 ### Comment relier ces notions à la physique
 
-Pour un traceur passif sans diffusion, l'équation d'advection s'écrit, sous forme conservative, \(\\partial_t c+\\nabla\\cdot(c\\mathbf u)=s\), où \(c\) est la concentration et \(s\) un terme source. Si \(\\nabla\\cdot\\mathbf u=0\), elle se réduit à \(\\partial_t c+\\mathbf u\\cdot\\nabla c=s\). Le long d'une trajectoire, la dérivée matérielle est \(Dc/Dt=\\partial_t c+\\mathbf u\\cdot\\nabla c\). Ces identités expliquent pourquoi les caractéristiques sont naturelles pour l'advection; elles ne suffisent cependant pas à transformer la pseudo-distance projetée en solution de l'équation de concentration. Il faut encore spécifier la source, les conditions initiales/aux limites et les hypothèses de réduction.
+Pour un traceur passif sans diffusion, l'équation d'advection s'écrit, sous forme conservative, \(\partial_t c+\nabla\cdot(c\mathbf u)=s\), où \(c\) est la concentration et \(s\) un terme source. Si \(\nabla\cdot\mathbf u=0\), elle se réduit à \(\partial_t c+\mathbf u\cdot\nabla c=s\). Le long d'une trajectoire, la dérivée matérielle est \(Dc/Dt=\partial_t c+\mathbf u\cdot\nabla c\). Ces identités expliquent pourquoi les caractéristiques sont naturelles pour l'advection; elles ne suffisent cependant pas à transformer la pseudo-distance projetée en solution de l'équation de concentration. Il faut encore spécifier la source, les conditions initiales/aux limites et les hypothèses de réduction.
 
-De même, \(\\nabla\\cdot\\mathbf u=0\) contraint la cinématique du champ, mais la conservation du débit \(Q\) à travers une surface dépend aussi de la surface traversée, de son orientation, des sources/puits et du théorème de transport adapté. La conservation sur une surface iso-\(\\tau\) doit donc être démontrée à partir de la transformation de coordonnées et de son jacobien, et non déduite du seul mot « divergence nulle ».
+De même, \(\nabla\cdot\mathbf u=0\) contraint la cinématique du champ, mais la conservation du débit \(Q\) à travers une surface dépend aussi de la surface traversée, de son orientation, des sources/puits et du théorème de transport adapté. La conservation sur une surface iso-\(\tau\) doit donc être démontrée à partir de la transformation de coordonnées et de son jacobien, et non déduite du seul mot « divergence nulle ».
 
 ## 7. Registre des incertitudes après cette lecture
 
