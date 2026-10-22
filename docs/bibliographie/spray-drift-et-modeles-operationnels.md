@@ -67,3 +67,9 @@ Références recensées dans le dépôt : ANN/SVR, random forest et analyse de s
 - Relever les conditions de validation, les données ouvertes, les erreurs et les limites.
 - Distinguer modèle réglementaire, étude de terrain, article de méthode et annonce de projet logiciel.
 - Définir une baseline avant d'implémenter une nouvelle méthode.
+
+### Modèles de qualité de l'air : AERMOD, CALPUFF et revues d'application
+
+- **US EPA (2024), Appendix W / AERMOD.** Source réglementaire primaire sur le cadre de modélisation de la qualité de l'air aux États-Unis ; utile pour comprendre les exigences et limites du contexte opérationnel, mais pas une baseline automatiquement comparable au spray drift. [Federal Register](https://www.federalregister.gov/documents/2024/11/29/2024-27636/guideline-on-air-quality-models-enhancements-to-the-aermod-dispersion-modeling-system)
+- **US EPA — Alternative Models.** Source institutionnelle sur le statut de CALPUFF et d'autres modèles alternatifs. À utiliser pour vérifier le statut réglementaire à jour, pas pour inférer une performance universelle. [EPA](https://www.epa.gov/scram/air-quality-dispersion-modeling-alternative-models)
+- **Shafie et al. — revue d'AERMOD en environnement complexe.** Revue secondaire sur les applications, hybridations et liens avec la santé publique. Elle sert au cadrage du paysage des modèles ; les conclusions méthodologiques doivent être remontées aux études primaires citées. [Revue](https://rsisinternational.org/journals/ijriss/articles/aermod-in-air-pollution-modeling-for-complex-environment-a-comprehensive-review-of-global-and-regional-applications-technological-integrations-health-risk-assessments-and-policy-implications/)
