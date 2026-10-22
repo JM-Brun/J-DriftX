@@ -29,7 +29,9 @@ def test_valley_is_negative_hill() -> None:
 def test_ridge_is_constant_along_x() -> None:
     x, y = np.meshgrid(np.linspace(-2, 2, 5), np.array([0.0, 1.0]))
     z = terrain_surface(x, y, "ridge")
-    assert np.allclose(z[0], z[1])
+    assert np.allclose(z[0], z[0, 0])
+    assert np.allclose(z[1], z[1, 0])
+    assert z[0, 0] != pytest.approx(z[1, 0])
 
 
 def test_non_positive_width_is_rejected() -> None:
