@@ -149,13 +149,13 @@ with field_tab:
             st.latex(r"u(x,y)=U\cos(\theta)+\gamma y,\qquad v(x,y)=U\sin(\theta)")
             st.write(
                 "Cisaillement : la composante horizontale varie avec y. "
-                "La divergence théorique est nulle ; le rotationnel dépend de γ."
+                "La divergence théorique est nulle ; le rotationnel dépend de gamma."
             )
         else:
             st.latex(r"u(x,y)=\alpha x,\qquad v(x,y)=\alpha y")
             st.write(
-                "Champ radial : divergence théorique égale à 2α et rotationnel nul. "
-                "α positif correspond à une source ; α négatif à un puits."
+                "Champ radial : divergence théorique égale à 2alpha et rotationnel nul. "
+                "alpha positif correspond à une source ; alpha négatif à un puits."
             )
 
 with terrain_tab:
@@ -239,7 +239,7 @@ with terrain_tab:
 with about_tab:
     st.subheader("Comment interpréter ces expériences")
     st.markdown(
-        """
+        r"""
         - **Couleur** : norme du champ dans le premier onglet ; altitude relative dans le second.
         - **Flèches** : direction et sens locaux du champ. Leur longueur est mise à l'échelle
           pour rester lisible ; elle ne constitue donc pas une échelle quantitative directe.
