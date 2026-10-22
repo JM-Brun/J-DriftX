@@ -80,7 +80,7 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 - *Contraintes physiques.* Les solutions construites doivent rester solutions du modèle direct : **divergence nulle du vent généré, conservation, positivité, linéarité** de l'équation de transport.
 - *Annoncé de la suite (non couvert par l'OCR).* Comparaison avec une simulation EDP, configurations multi-sources, analyse de sensibilité d'une pollution détectée.
 - *Section 2 (début).* Positionnement vis-à-vis des ROM classiques : la solution d'état V(p) est remplacée par une projection sur un sous-espace S(w_n) généré par des snapshots dans l'approche classique (n ≪ N, référence [VP05]) ; « In our approach, we aim to remove the calculation of these snapshots ». Le modèle direct est remplacé par un modèle approché p → v(p) plus facile à évaluer, avec un **domaine de validation local** (pas nécessairement le même modèle réduit sur toute la plage des paramètres). Renvoi au concept de **sensibilité incomplète** [MP01] : « the linearization is performed not for the direct model but for an approximate state equation ».
-- *Bibliographie visible (extraits).* Thèse Brun 2006 ; Borouchaki, George & Mohammadi (1997), Delaunay mesh generation governed by metric specifications ; Mohammadi & Pironneau, Analysis of the k-epsilon turbulence model ; Mohammadi & Pironneau, Applied shape optimization for fluids (2001) ; Ivorra (2006), thèse Semi-deterministic global optimization. Ces entrées confirment la lignée « métriques de l'adaptation de maillage » et « optimisation de forme » du projet.
+- *Bibliographie visible (extraits).* Thèse Brun (citée comme 2006 dans cette source secondaire ; année à résoudre) ; Borouchaki, George & Mohammadi (1997), Delaunay mesh generation governed by metric specifications ; Mohammadi & Pironneau, Analysis of the k-epsilon turbulence model ; Mohammadi & Pironneau, Applied shape optimization for fluids (2001) ; Ivorra (2006), thèse Semi-deterministic global optimization. Ces entrées confirment la lignée « métriques de l'adaptation de maillage » et « optimisation de forme » du projet.
 
 **Apports pour J-DriftX.** C'est le **cahier des charges scientifique** du noyau : multi-niveaux avec entrée/sortie de sous-couche, métrique τ non symétrique, quatre contraintes physiques (deux déjà testées dans le socle : conservation et non-symétrie), sensibilité/identification. Les pages restantes (exemples numériques, analyse de sensibilité) sont la prochaine extraction à faire sur le document papier.
 
@@ -148,7 +148,7 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 
 | Priorité | Action | Verrou |
 |---|---|---|
-| Haute | Déposer la thèse 2006 sur HAL (action M0), puis en faire la fiche complète | Document en possession de l'auteur |
+| Haute | Vérifier la page de titre de la thèse de Brun, puis envisager son dépôt HAL (action M0) | Document indiqué comme étant en possession de l'auteur ; année officielle à confirmer |
 | Haute | Récupérer le texte intégral du chapitre 2008 au-delà des pages 245–246 (exemples numériques, analyse de sensibilité, identification de source) | Chapitre fourni par l'auteur — OCR à poursuivre |
 | Moyenne | Localiser l'article e-sta 2008 (archives SEE) | Introuvable en ligne — contacter la SEE ou les auteurs |
 | Moyenne | Localiser le recueil Springer 2006 du chapitre Mohammadi–Brun–Pironneau | Recueil introuvable en accès ouvert |
