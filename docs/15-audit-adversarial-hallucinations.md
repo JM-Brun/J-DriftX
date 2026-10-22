@@ -480,3 +480,13 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 - **Correction effectuée :** la note donne une dérivation conditionnelle par le théorème de la divergence et distingue le flux du fluide de celui du polluant. Elle n'affirme pas que cette dérivation prouve la revendication historique des surfaces iso-\tau.
 - **Limite :** le sens précis de `Q`, le domaine d'intégration et les hypothèses de la formule historique doivent encore être vérifiés dans les sources accessibles, sans examiner la thèse.
 - **Preuve de clôture :** relier la revendication à une équation de bilan explicitement sourcée et vérifier les conditions de frontière, l'émission et les termes négligés.
+
+
+### B-35 — Hypothèses de la dérivation gaussienne et portée du test de conservation
+
+- **Statut :** hypothèses implicites et portée du contrôle CI clarifiées.
+- **Emplacement :** `site/theorie/similitude.qmd`, étapes 1 et 5 de la dérivation du panache gaussien.
+- **Constat :** l'équation parabolique écrite dans la dérivation omet la diffusion longitudinale et suppose un vent uniforme positif ainsi que des diffusivités transversales constantes. Ces conditions doivent être énoncées avant de présenter la réduction en temps de transport. En outre, la normalisation de la gaussienne sans source image intègre sur tout l'axe vertical; elle ne représente pas encore le demi-espace physique au-dessus du sol.
+- **Correction effectuée :** les hypothèses incluent désormais explicitement l'absence de diffusion longitudinale, de réaction et de dépôt, la source en (x=0), (U>0), et (x>0). La normalisation analytique est séparée de l'ajout ultérieur de la condition de sol par méthode des images.
+- **Portée du test :** le test existant vérifie numériquement un cas du panache implémenté à (x=1000\,\mathrm m), sur une grille finie et avec une tolérance relative de 2 %. Il s'agit d'un contrôle de régression ciblé, non d'une preuve de conservation exacte pour tout (x) ni d'une validation de la dérivation à diffusivités constantes.
+- **Preuve de clôture :** rendu Quarto, suite de tests et CI sur le HEAD de cette PR. Ces contrôles vérifient la documentation et l'implémentation, pas la validité de toutes les hypothèses physiques possibles.
