@@ -47,13 +47,6 @@ Références recensées dans le dépôt : ANN/SVR, random forest et analyse de s
 - [Analyse de sensibilité par ANN (2023)](https://link.springer.com/article/10.1007/s10668-023-04452-x)
 - [Machine learning for spraying factors (2024)](https://doi.org/10.3390/agronomy14091977)
 
-### CAREA (2018) — modèle SIG de dispersion pour l'exposition résidentielle aux pesticides
-
-- **Type :** étude applicative, *Science of the Total Environment*.
-- **Lien :** application de dispersion/exposition et intégration spatiale ; possible contexte pour les sorties de J-DriftX.
-- **Conséquence :** examiner les sources d'émission, la topographie, la résolution spatiale et la chaîne de calcul avant d'en faire une baseline.
-- [Costanzini et al. (2018), *Atmosphere* 9(2), 38 — exposition aux pesticides](https://doi.org/10.3390/atmos9020038)
-
 ### Bonicelli et al. (2012) — Ongoing research on pesticides air dispersion
 
 - **Type :** actes de conférence (CIGR-AgEng 2012, Valencia, 6 p.), texte intégral libre sur HAL.
@@ -68,6 +61,13 @@ Références recensées dans le dépôt : ANN/SVR, random forest et analyse de s
 - **Conséquence :** source de cadrage du besoin applicatif et des scénarios d'exposition ; à ne pas traiter comme validation d'un modèle. Lecture intégrale requise avant d'en extraire des exigences.
 - [Rapport (archive Natural England)](https://naturalengland.contentdm.oclc.org/digital/api/collection/p21006coll3/id/2458/download)
 
+
+### CAREA (2018) — modèle SIG de dispersion pour l'exposition résidentielle aux pesticides
+
+- **Type :** étude applicative, *Science of the Total Environment*.
+- **Lien :** application de dispersion/exposition et intégration spatiale ; possible contexte pour les sorties de J-DriftX.
+- **Conséquence :** examiner les sources d'émission, la topographie, la résolution spatiale et la chaîne de calcul avant d'en faire une baseline.
+- [Costanzini et al. (2018), *Atmosphere* 9(2), 38 — exposition aux pesticides](https://doi.org/10.3390/atmos9020038)
 
 ### AGDISP Modernization Project (2026)
 

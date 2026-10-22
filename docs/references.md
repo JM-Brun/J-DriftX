@@ -29,6 +29,8 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 ## État de l'art — dérive de pulvérisation (spray drift)
 
 - NCASI (2007). Technical Bulletin 808 — spray drift models AGDISP/AgDRIFT, approche par tiers, Spray Drift Task Force. https://ncasi.org/wp-content/uploads/2011/11/tb808.pdf
+- Bonicelli, B., Cotteux, E., Sinfort, C., Ruelle, B. & de Rudnicki, V. (2012). Ongoing research on pesticides air dispersion. Actes CIGR-AgEng 2012 (Valencia), 6 p. HAL : https://hal.science/hal-00825458 (continuation de la lignée pesticides du corpus — C. Sinfort, co-auteure des papiers Drift-X)
+- Defra (2011). Options for the development of a model for evaluation of bystander and resident exposures to pesticides used in orchard, hop and bush fruit application. Rapport final Defra PS2024 (SID 5), The Arable Group / Silsoe Spray Applications Unit. https://naturalengland.contentdm.oclc.org/digital/api/collection/p21006coll3/id/2458/download (littérature grise publique — besoin applicatif far-field : exposition bystanders/riverains en verger)
 - US EPA (2014). Pesticides; Consideration of Spray Drift in Pesticide Risk Assessment (AgDRIFT et AGDISP pour l'estimation des fractions de dérive). https://www.federalregister.gov/documents/2014/01/29/2014-01234/pesticides-consideration-of-spray-drift-in-pesticide-risk-assessment-notice-of-availability-and
 - US EPA. Guidance on the Use of the Linked AGDISP-Gaussian Extension Models for far field drift (extension gaussienne reconnue « extrêmement conservatrice », validation limitée pour barrières/topographie). https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension
 - AgAir Update (2026-03-09). Bayer Crop Science rejoint l'AGDISP Modernization Project (AMP) : réécriture open source d'AGDISP en langage moderne. https://agairupdate.com/2026/03/09/bayer-crop-science-joins-ag-industry-efforts-to-modernize-spray-drift-model-used-by-pesticide-regulators/
@@ -39,8 +41,6 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 - Agronomy 14(9), 1977 (2024). Machine learning methods for evaluation of technical factors of spraying. https://doi.org/10.3390/agronomy14091977
 - Teggi et al. (2018). A GIS-based atmospheric dispersion model for pollutants emitted by complex source areas (CAREA). *Science of the Total Environment* 610–611, 175–190. DOI 10.1016/j.scitotenv.2017.07.196. https://doi.org/10.1016/j.scitotenv.2017.07.196
 - Costanzini et al. (2018). Atmospheric dispersion modelling and spatial analysis to evaluate population exposure to pesticides from farming processes. *Atmosphere* 9(2), 38. DOI 10.3390/atmos9020038. https://doi.org/10.3390/atmos9020038
-- Bonicelli, B., Cotteux, E., Sinfort, C., Ruelle, B. & de Rudnicki, V. (2012). Ongoing research on pesticides air dispersion. Actes CIGR-AgEng 2012 (Valencia), 6 p. HAL : https://hal.science/hal-00825458 (continuation de la lignée pesticides du corpus — C. Sinfort, co-auteure des papiers Drift-X)
-- Defra (2011). Options for the development of a model for evaluation of bystander and resident exposures to pesticides used in orchard, hop and bush fruit application. Rapport final Defra PS2024 (SID 5), The Arable Group / Silsoe Spray Applications Unit. https://naturalengland.contentdm.oclc.org/digital/api/collection/p21006coll3/id/2458/download (littérature grise publique — besoin applicatif far-field : exposition bystanders/riverains en verger)
 
 ## Contexte — mesures de terrain et exposition (France)
 
@@ -48,6 +48,7 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 
 ## État de l'art — ROM et apprentissage pour la dispersion
 
+- Mahmud, M. Z., Molla, M. M., Hasan, M. F. & Akhter, M. N. (2026). Symmetry patterns and machine learning prediction of urban pollutant dispersion (CFD + ML, configuration urbaine idéalisée). *Symmetry* 18(8), 1392. https://doi.org/10.3390/sym18081392
 - HAL (2024). POD-GPR reduced-order model for microscale atmospheric dispersion (statistiques 1er/2e ordre depuis ~50 snapshots LES). https://hal.science/hal-04310899/document
 - Verveecken, L. & Meyers, J. (2015). Stable reduced-order models (Arnoldi) for pollutant dispersion in the built environment (facteur ~2500 vs CFD). https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment
 - CMAME (2024). A physics-based reduced order model for urban air pollution (POD-NN, cas Bologne, monitoring temps réel). https://www.sciencedirect.com/science/article/abs/pii/S0045782523005406
@@ -57,7 +58,6 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 - CEA / HAL (2024). Enhanced deep learning architecture for 3D air pollution dispersion forecasting (MCxM : masquage + correction, priors physiques + opérateurs neuronaux). https://cea.hal.science/cea-04810109/document
 - Springer (2025). Machine learning-based surrogate models for predicting atmospheric dispersion of industrial emissions (linéaires, arbres, RNN vs TAPM). https://link.springer.com/chapter/10.1007/978-3-032-02728-3_53
 - Kocijan et al. (2023; publié en ligne le 30 août 2022). Surrogate modelling for the forecast of Seveso-type atmospheric pollutant dispersion. *Stochastic Environmental Research and Risk Assessment* 37, 275–290. https://doi.org/10.1007/s00477-022-02288-x
-- Mahmud, M. Z., Molla, M. M., Hasan, M. F. & Akhter, M. N. (2026). Symmetry patterns and machine learning prediction of urban pollutant dispersion (CFD + ML, configuration urbaine idéalisée). *Symmetry* 18(8), 1392. https://doi.org/10.3390/sym18081392
 
 ## État de l'art — identification de source (STE) et assimilation
 
