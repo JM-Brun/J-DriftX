@@ -44,7 +44,6 @@ def gaussian_advection_diffusion(
     variance = initial_sigma**2 + 2.0 * diffusivity * time
     center = initial_center + velocity * time
     return np.asarray(
-        mass / np.sqrt(2.0 * np.pi * variance)
-        * np.exp(-0.5 * (x_arr - center) ** 2 / variance),
+        mass / np.sqrt(2.0 * np.pi * variance) * np.exp(-0.5 * (x_arr - center) ** 2 / variance),
         dtype=float,
     )
