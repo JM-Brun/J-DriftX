@@ -1,0 +1,48 @@
+---
+title: "Revue mathématique ciblée"
+---
+
+# Temps de parcours : clarifier l'objet avant de revendiquer une contribution
+
+Cette revue ciblée compare la définition de la métrique travel-time de Drift-X aux objets mathématiques voisins. Elle est un cadrage non exhaustif, pas une conclusion sur l'originalité de la formulation historique.
+
+## Point principal
+
+La formule actuellement documentée,
+
+$$
+\tau(\mathbf{x}_0\to\mathbf{x})=\int_\gamma \frac{ds}{|\mathbf{u}(s)|},
+$$
+
+décrit un temps de parcours le long d'une trajectoire donnée. Il faut distinguer cette intégrale d'un **temps minimal de navigation** (où la trajectoire est choisie) et d'un **temps de première arrivée** défini par une loi de propagation.
+
+## Trois objets à ne pas confondre
+
+| Objet | Dynamique | Problème |
+|---|---|---|
+| Temps le long d'une ligne de courant | La trajectoire est imposée par le champ | Quels points sont atteignables et quel est le temps le long de la caractéristique ? |
+| Temps minimal de navigation | Une commande/direction est choisie | Quel chemin admissible minimise le temps ? |
+| Temps de première arrivée | Une loi de propagation définit le front | Quelle équation eikonale/Hamilton–Jacobi décrit l'arrivée ? |
+
+Le problème de Zermelo et les géométries de Randers/Finsler sont des antécédents importants pour la navigation à temps minimal, mais ne sont pas automatiquement équivalents à l'advection pure d'un traceur passif.
+
+## Précaution sur la non-symétrie
+
+**Un champ spatialement non uniforme ne suffit pas, à lui seul, à rendre asymétrique une intégrale de \(ds/v(s)\) sur une même courbe parcourue dans les deux sens.** Dans l'advection, l'asymétrie peut venir de la direction imposée par la dynamique et de l'inaccessibilité du parcours inverse. Cette convention doit être explicite.
+
+De même, une singularité de \(1/|\mathbf u|\) près d'une stagnation ne prouve pas automatiquement que toute intégrale diverge; le comportement local doit être analysé. Et la conservation de masse demande une dérivation à partir de l'équation de transport, pas seulement la définition de \(\tau\).
+
+## Antécédents à lire
+
+- Gibbons et al. (2009), [Zermelo–Randers–Finsler](https://doi.org/10.1103/PhysRevD.79.044022).
+- Dušek (2018), [Zermelo Navigation Problem in Geometry](https://doi.org/10.17818/NM/2018/4SI.16).
+- [Zermelo avec obstacles mobiles (2024)](https://doi.org/10.1016/j.difgeo.2024.102177).
+- Markvorsen et al. (2025), [navigation dépendant du temps](https://arxiv.org/abs/2508.07274).
+- Contreras & Kachroo (2020), [Hamilton–Jacobi Travel Time Dynamics](https://doi.org/10.1109/TITS.2019.2946109).
+- Sethian & Vladimirsky (2001), [Ordered upwind methods for static Hamilton–Jacobi equations](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/).
+
+## Conclusion provisoire
+
+La revue montre que le dépôt doit clarifier l'objet mathématique avant d'implémenter un solveur ou de revendiquer une nouveauté. Elle ne prouve pas que l'approche historique est redondante. La prochaine étape est de relire les sources historiques primaires (Brun 2006/2008) et de relier chaque propriété annoncée à une hypothèse, une preuve et un cas analytique.
+
+Voir la [note détaillée](../../docs/14-revue-mathematique-ciblee.md), le [MVP scientifique](mvp-scientifique.qmd) et la [page travel-time actuelle](../theorie/metrique-travel-time.qmd).
