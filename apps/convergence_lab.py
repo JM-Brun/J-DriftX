@@ -198,8 +198,9 @@ _, temporal_reference, _ = solve_periodic_sine_transport(
     diffusivity=diffusivity,
 )
 time_errors = []
+time_actual_steps = []
 for time_step in time_steps:
-    _, temporal_solution, _ = solve_periodic_sine_transport(
+    _, temporal_solution, actual_time_step = solve_periodic_sine_transport(
         n_cells=n_cells,
         length=length,
         end_time=end_time,
@@ -209,16 +210,17 @@ for time_step in time_steps:
         velocity=velocity,
         diffusivity=diffusivity,
     )
+    time_actual_steps.append(actual_time_step)
     time_errors.append(
         float(np.sqrt(np.mean((temporal_solution - temporal_reference) ** 2)))
     )
 
-time_order = _observed_order(time_steps, time_errors)
+time_order = _observed_order(time_actual_steps, time_errors)
 time_order_label = f"{time_order:.2f}" if time_order is not None else "indisponible"
 time_figure = go.Figure()
 time_figure.add_trace(
     go.Scatter(
-        x=time_steps,
+        x=time_actual_steps,
         y=time_errors,
         mode="lines+markers",
         name="Écart à la référence temporelle",
@@ -226,7 +228,7 @@ time_figure.add_trace(
 )
 time_figure.update_layout(
     title=f"Erreur temporelle (pente observée : {time_order_label})",
-    xaxis_title="Pas temporel effectif demandé Δt",
+    xaxis_title="Pas temporel effectif Δt",
     yaxis_title="Erreur L2 par rapport à la référence",
     xaxis_type="log",
     yaxis_type="log",
@@ -235,7 +237,7 @@ time_figure.update_layout(
 st.plotly_chart(time_figure, use_container_width=True)
 st.caption(
     f"Référence calculée avec dt demandé = {reference_dt:.3e}. Pente ajustée : {time_order_label}.",
-    "Cette pente est indicative et dépend du régime d’erreur, de l’arrondi et de la précision de la référence."
+    "Pente indicative, dépendant du régime d’erreur, de l’arrondi et de la précision de la référence."
 )
 
 with st.expander("Équation, solution exacte et limites"):
