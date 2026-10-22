@@ -237,7 +237,7 @@ time_figure.update_layout(
 st.plotly_chart(time_figure, use_container_width=True)
 st.caption(
     f"Référence calculée avec dt demandé = {reference_dt:.3e}. Pente ajustée : {time_order_label}. "
-    "Pente indicative, dépendant du régime d’erreur, de l’arrondi et de la précision "
+    "Pente indicative, dépendant du régime d'erreur, de l’arrondi et de la précision "
     "de la référence."
 )
 
@@ -256,7 +256,7 @@ with st.expander("Équation, solution exacte et limites"):
         **Hypothèses :** domaine périodique de longueur L, vitesse constante, diffusivité
         constante, condition initiale sinusoïdale et coefficients sans dimension imposée.
 
-        **Schéma numérique :** différences finies centrées en espace et Runge–Kutta classique
+        **Schéma numérique :** différences finies centrées en espace et Runge-Kutta classique
         d'ordre 4 en temps. Le code vérifie la stabilité linéaire du pas choisi pour
         l'opérateur discret.
 
