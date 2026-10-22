@@ -1,6 +1,6 @@
 # Plan d'intégration des résultats de la revue dans J-DriftX
 
-> **Statut au moment de cette PR :** préparation de l'intégration. La revue systématique finale sera ajoutée par le mainteneur sous `raw/`. Ce document ne prétend pas en remplacer le contenu et ne transforme pas les conclusions préliminaires en résultats validés.
+> **Statut :** deux PDF de résumé exécutif sont maintenant présents dans `raw/reviews/`. Le présent plan organise leur traduction en décisions vérifiables ; il ne suppose pas que les résumés remplacent le protocole complet, les données de sélection ou les textes primaires.
 
 ## Objectif
 
@@ -35,7 +35,8 @@ Cette matrice est une **priorisation de travail**, fondée sur l'état actuel du
 
 ### 1. Enregistrer et identifier la revue
 
-- Ajouter le rapport dans `raw/` et préciser son nom exact dans ce document et dans `raw/README.md`.
+- Les deux résumés exécutifs présents sont `raw/reviews/2026-revue-systematique-jdriftx-resume-executif-partie-1.pdf` et `raw/reviews/2026-revue-systematique-jdriftx-resume-executif-partie-2.pdf` ; leurs liens sont documentés dans `raw/README.md`.
+- Vérifier si un protocole complet, les requêtes exactes, les exports bibliographiques et les tableaux de sélection sont disponibles en complément ; ne pas inférer leur existence à partir des résumés.
 - Noter la date/version du rapport, son périmètre, les bases réellement interrogées et ses limites d'accès.
 - Ne pas confondre la revue finale avec les notes historiques déjà présentes dans `docs/02-revue-etat-art-2026.md`.
 
@@ -81,6 +82,10 @@ L'intégration ne sera considérée comme terminée que lorsque :
 - [ ] la feuille de route et le positionnement public ne contiennent pas de revendication plus forte que les preuves ;
 - [ ] les changements du noyau sont couverts par des tests et benchmarks reproductibles ;
 - [ ] Quarto, Ruff et pytest passent, ou chaque échec restant est explicitement documenté.
+
+## Bibliographie annotée
+
+La [bibliographie annotée J-DriftX](bibliographie-annotee-jdriftx.md) fournit des fiches Markdown éditables par famille : héritage historique, dérive de pulvérisation, ROM/apprentissage, identification de source, SIG/applications et analogies autour des métriques. Les fiches qualifient chaque référence comme source directe, baseline concurrente, complément, analogie ou contexte, et signalent les limites d'accès.
 
 ## Liens internes
 
