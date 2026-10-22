@@ -110,8 +110,6 @@ def test_independent_upwind_euler_solver_matches_exact_solution() -> None:
 
 
 def test_upwind_euler_rejects_unstable_time_step() -> None:
-    from jdriftx.periodic_transport import solve_periodic_upwind_euler
-
     with pytest.raises(ValueError, match="stability condition"):
         solve_periodic_upwind_euler(
             n_cells=64, length=1.0, end_time=0.4, dt=1.0
