@@ -1,137 +1,104 @@
 # Laboratoire interactif J-DriftX — proposition de conception
 
-> Statut : proposition d'architecture et de MVP pédagogique. Ce document ne décrit pas une application déjà déployée et ne constitue pas une validation du modèle physique.
+> Statut : prototype pédagogique et numérique en développement. Aucune validation physique ou applicative n'est revendiquée.
 
-## 1. Objectif
+## 1. Objectif et séparation des usages
 
-Permettre à un lecteur de modifier quelques paramètres, d'exécuter des calculs Python reproductibles et d'observer directement leurs effets sur des fonctions, champs, trajectoires et modèles simplifiés. L'outil doit aider à comprendre les hypothèses et à préparer des expériences scientifiques, sans confondre visualisation pédagogique et résultat validé.
+Le laboratoire doit distinguer **exploration** (comprendre le comportement d'une équation dans un cas contrôlé) et **vérification numérique** (comparer un calcul à une solution connue, mesurer l'erreur et conserver les paramètres). Une visualisation n'est ni une preuve mathématique ni une validation empirique.
 
-Deux usages doivent être explicitement séparés :
+## 2. Architecture
 
-1. **Explorer** : apprendre le comportement d'un objet mathématique ou physique dans un cas synthétique contrôlé.
-2. **Évaluer** : confronter une formulation candidate à une référence analytique ou numérique, mesurer l'erreur et conserver un protocole reproductible.
+- **Cœur scientifique** : fonctions Python pures, testées et indépendantes de l'interface.
+- **Visualisation** : Plotly pour les courbes, champs et surfaces interactives.
+- **Interface** : applications Streamlit optionnelles.
+- **Documentation** : pages Quarto qui explicitent les équations, hypothèses, unités et limites.
+- **Vérification** : solutions analytiques et propriétés testables, cas limites, erreurs et tests de non-régression.
 
-Une jolie visualisation ne constitue ni une preuve mathématique ni une validation empirique.
+Streamlit et Plotly sont optionnels ; ils ne deviennent pas des dépendances obligatoires du cœur de calcul.
 
-## 2. Choix d'architecture
+## 3. Expériences disponibles dans la branche
 
-### Principe : un noyau Python, plusieurs interfaces possibles
+### Champs et reliefs synthétiques
 
-Les calculs doivent rester dans des fonctions Python testables et indépendantes de l'interface. Les widgets ne doivent pas contenir la physique ou les formules elles-mêmes.
+L'application `apps/interactive_lab.py` propose des champs uniforme, cisaillement et radial, plus des reliefs plats, gaussiens et en crête. Les dérivées spatiales et pentes sont estimées sur une grille. Ces objets sont sans dimension et ne simulent pas le vent, la turbulence ni la dispersion. Aucun couplage relief–écoulement n'est supposé.
 
-- **Cœur scientifique** : fonctions pures, paramètres typés, unités documentées, hypothèses et domaine de validité explicités.
-- **Visualisation** : figures Plotly interactives calculées à partir des sorties du cœur (zoom, survol, légendes et surfaces 3D).
-- **Interface initiale** : application Streamlit exécutable localement, avec curseurs, choix de scénarios, graphiques Plotly, diagnostics et explications.
-- **Site Quarto** : pages explicatives qui intègrent des figures statiques vérifiées et renvoient vers l'application interactive. L'intégration embarquée sera étudiée seulement si l'hébergement et la maintenance sont fiables.
-- **Tests** : cas analytiques, propriétés sous hypothèses explicites, tests des paramètres limites et tests de non-régression.
+### Trajectoires de particules dans un champ prescrit
 
-L'application est un outil de recherche/pédagogie distinct du package de calcul principal. Streamlit et Matplotlib ne doivent pas devenir des dépendances obligatoires du cœur `jdriftx`.
+Le module `src/jdriftx/trajectories.py` intègre le système cinématique
 
-## 3. MVP proposé
+\[
+\frac{dx}{dt}=u(x,y,t),\qquad \frac{dy}{dt}=v(x,y,t)
+\]
 
-### Module 1 — Champs de vecteurs
+par Euler explicite ou Runge–Kutta classique d'ordre 4 (RK4). Le dernier pas est raccourci si nécessaire pour atteindre exactement la fin de l'intervalle. Les tests couvrent le champ constant, où les deux méthodes sont exactes à l'arrondi près, et un champ rotationnel avec solution analytique, où RK4 doit présenter une erreur finale inférieure à Euler pour le pas de test.
 
-Scénarios initiaux : champ uniforme, cisaillement linéaire et champ radial synthétique. Contrôles : intensité, direction, gradient/cisaillement et taille de la grille. Vues : flèches, lignes de courant, norme, divergence et rotationnel en 2D.
+**Limites :** la trajectoire est celle d'un point advecté par le champ prescrit. Elle ne modélise pas l'inertie des gouttelettes, la turbulence stochastique, le dépôt, la sédimentation ni le rétro-couplage des particules sur l'écoulement. L'exemple rotationnel est un cas de vérification mathématique, pas un champ de vent réaliste.
 
-Garde-fous : expliquer que les lignes de courant sont tangentes au champ instantané et ne sont pas automatiquement des trajectoires temporelles lorsque le champ dépend du temps. Les dérivées discrètes dépendent de la grille et du schéma numérique.
+### Référence analytique d'advection-diffusion 1D
 
-### Module 2 — Fonctions, reliefs et géométrie
+Le module `src/jdriftx/advection_diffusion.py` fournit la solution gaussienne de
 
-Scénarios : plan, bosse gaussienne et vallée synthétique. Contrôles : hauteur, largeur et position. Vues : surface 3D, contours et gradient.
+\[
+\frac{\partial c}{\partial t}
++u\frac{\partial c}{\partial x}
+=K\frac{\partial^2 c}{\partial x^2},
+\qquad K\geq 0
+\]
 
-Garde-fous : ne pas déduire une modification du vent ou de la dispersion à partir du relief seul. Tout couplage relief–écoulement devra être défini séparément et justifié par un modèle physique.
+sur la droite réelle, pour une vitesse constante, une diffusivité constante et un profil initial gaussien d'écart-type \(\sigma_0>0\). Le centre évolue comme \(x_c(t)=x_0+ut\), et la variance comme \(\sigma^2(t)=\sigma_0^2+2Kt\). L'intégrale de la concentration sur la droite réelle est la masse \(M\).
 
-### Module 3 — Transport et dispersion jouets
+Les tests vérifient le cas sans diffusion, l'intégrale numérique de la masse sur un domaine assez large et la variance théorique. L'intégrale sur un intervalle fini peut être inférieure à \(M\) lorsque des queues gaussiennes sortent du domaine ; ce n'est pas en soi une violation de la conservation sur la droite réelle.
 
-Commencer par des formulations à hypothèses visibles : advection uniforme, diffusion unidimensionnelle simple et solution gaussienne analytique lorsque ses hypothèses s'appliquent. Contrôles : vitesse, coefficient de diffusion, durée, largeur initiale et position de source. Vues : profils, cartes, bilans et comparaison à la référence.
+**Limites :** ce cas n'inclut ni source continue, ni réaction, ni dépôt, ni conditions aux limites finies, ni vitesse ou diffusivité variables. Il ne constitue pas une prévision atmosphérique.
 
-Garde-fous : afficher unités, conditions initiales, conditions aux limites et hypothèses de dimension. Ne pas présenter une solution analytique simplifiée comme un modèle réglementaire ou une prévision de dispersion réelle.
+## 4. Expériences et critères de vérification
 
-### Module 4 — Expériences de validation
+L'application `apps/scientific_validation.py` expose les deux expériences précédentes et compare visuellement Euler/RK4 à la trajectoire exacte, puis le profil initial au profil advecté-diffusé. Elle affiche l'erreur de position finale et la masse intégrée sur le domaine tracé.
 
-Pour chaque formulation implémentée :
+Pour toute nouvelle formulation :
 - comparer à une solution analytique lorsque disponible ;
-- tracer l'erreur absolue et relative avec une définition explicite des zones où l'erreur relative est pertinente ;
-- vérifier les limites et les invariants seulement sous les hypothèses qui les garantissent ;
-- proposer des cas de contre-exemple ;
-- permettre d'exporter les paramètres, le scénario et les résultats tabulaires pour reproduction.
+- préciser les unités, conditions initiales, conditions aux limites et domaine de validité ;
+- distinguer erreur absolue et relative, et signaler les zones où l'erreur relative est mal conditionnée ;
+- vérifier les cas limites et invariants uniquement sous les hypothèses qui les garantissent ;
+- tester les paramètres invalides et conserver les résultats négatifs ;
+- séparer erreur de discrétisation, erreur de modèle et incertitude des données.
 
-Le module J-DriftX ne doit exposer comme « modèle » que des fonctions réellement présentes et documentées dans `src/jdriftx/`. Les formulations historiques encore non implémentées doivent être étiquetées comme telles.
+Les tests unitaires démontrent que certaines propriétés du code tiennent sur des cas précis ; ils ne démontrent pas que le modèle représente fidèlement un phénomène physique.
 
-## 4. Ergonomie attendue
+## 5. Lancer les applications
 
-Chaque expérience doit contenir :
+Avec Python 3.12 et uv, depuis la racine du dépôt :
 
-1. **Contrôles** : curseurs avec unités, bornes raisonnables et valeurs par défaut explicites.
-2. **Visualisation** : titre, axes, unités, légende, échelle de couleur et indication de la grille.
-3. **Explication** : équation affichée, définition des variables et interprétation qualitative.
-4. **Hypothèses et limites** : ce qui est supposé, ce qui est calculé et ce que le résultat ne permet pas de conclure.
-5. **Reproductibilité** : paramètres affichés/exportables et graine aléatoire lorsque nécessaire.
-6. **Performance** : domaine de calcul et résolution bornés pour garder une interaction fluide.
+```bash
+uv sync --group app
+uv run streamlit run apps/interactive_lab.py
+```
 
-Les paramètres doivent être regroupés en paramètres physiques, paramètres numériques et paramètres d'affichage. Modifier uniquement la résolution d'affichage ne doit pas être présenté comme une modification du modèle physique.
+Pour les expériences de trajectoire et d'advection-diffusion :
 
-## 5. Déploiement : décision progressive
+```bash
+uv run streamlit run apps/scientific_validation.py
+```
 
-Commencer par une application Streamlit exécutable localement ; cela permet de valider l'expérience sans ajouter immédiatement une infrastructure de service au site statique GitHub Pages.
+## 6. Publication et intégration dans Quarto
 
-Une publication distante ne sera proposée qu'après :
-- installation reproductible et tests automatisés ;
-- revue des dépendances et des risques de sécurité ;
-- limites explicites sur la taille des grilles et le coût des calculs ;
-- décision sur l'hébergement, la maintenance et les versions ;
-- vérification qu'aucune donnée sensible n'est demandée ou enregistrée.
+Le site GitHub Pages est statique : Python exécuté au rendu Quarto produit des sorties, mais ne maintient pas un noyau Python actif dans le navigateur.
 
-Les pages Quarto restent accessibles sans l'application. L'absence du service interactif ne doit pas casser la documentation.
+| Option | Atout | Contrainte |
+|---|---|---|
+| Figures Plotly dans Quarto | Zoom et survol des données calculées | Pas de recalcul Python arbitraire côté serveur |
+| Streamlit par iframe | Interface Python interactive complète via serveur distant | Hébergement, maintenance, disponibilité et test mobile/intégration |
+| Quarto + Shiny for Python | Callbacks Python côté serveur | Nécessite un serveur ; GitHub Pages seul ne suffit pas |
+| JavaScript/Observable | Interaction statique native | La logique doit être écrite en JavaScript ou portée dans un runtime navigateur |
 
-## 6. Dépendances et qualité
+**Recommandation :** garder un seul cœur de calcul Python ; publier des figures Plotly dans les pages pour les cas de référence ; déployer Streamlit séparément seulement si une interaction distante est souhaitée. Ne pas ajouter d'iframe avant de disposer d'une URL réellement déployée et vérifiée. La documentation doit rester utile même si le service interactif est indisponible.
 
-Les dépendances d'interface doivent être optionnelles, par exemple dans un groupe `app` séparé. Le noyau reste NumPy et Python compatible avec la configuration du projet. Plotly et Streamlit sont réservés à l'interface ; tests du cœur et tests de l'interface doivent être distingués.
-
-Critères minimaux :
-- tests numériques comparés à des valeurs analytiques connues ;
-- tests des paramètres limites et de validation des entrées ;
-- absence de calculs physiques dans les callbacks de présentation ;
-- lint, typage et tests exécutables par commandes documentées ;
-- rendu Quarto vérifié avant fusion ;
-- statut scientifique visible sur chaque page et dans l'application.
-
-## 7. Hors périmètre du premier MVP
+## 7. Hors périmètre
 
 - ingestion de données météorologiques ou topographiques réelles ;
-- simulation CFD ou solveur d'EDP général ;
+- simulation CFD ou solveur général d'EDP ;
 - assimilation, identification de source ou entraînement ML ;
-- prétention à reproduire l'intégralité du Drift-X historique ;
-- comparaison de performances sans protocole, baseline et données de référence ;
-- promesse d'hébergement public permanent avant décision d'exploitation.
+- reproduction affirmée de l'intégralité du Drift-X historique ;
+- affirmation de validité applicative ou réglementaire sans données, protocole et validation appropriés.
 
-## 8. État du prototype et plan de réalisation
-
-Le prototype est présent dans `apps/interactive_lab.py`. Le module indépendant `src/jdriftx/fields.py` définit trois champs synthétiques (uniforme, cisaillement linéaire et radial) ; `src/jdriftx/terrain.py` définit quatre surfaces de relief synthétiques. Les tests correspondants couvrent leurs comportements élémentaires et quelques entrées invalides. L'interface utilise Plotly et Streamlit, déclarés dans le groupe de dépendances optionnel `app` ; le cœur reste utilisable sans ces dépendances.
-
-Ce code constitue un prototype, pas un outil scientifique validé. Les tests et le rendu de l'application doivent être exécutés avant fusion ; aucune validation d'exécution n'est présumée ici.
-
-Étapes suivantes :
-
-1. Vérifier le prototype (CI, tests, lint, typage et lancement Streamlit), puis corriger les problèmes observés.
-2. Construire et tester le module « champs de vecteurs » avec trois champs synthétiques et tests.
-3. Ajouter les reliefs synthétiques, en gardant le relief découplé de la dynamique du vent.
-4. Ajouter un cas d'advection-diffusion analytique et ses tests.
-5. Créer les expériences de comparaison et d'export reproductible.
-6. Relier les pages Quarto à l'application, puis décider séparément d'un hébergement public.
-
-Chaque étape doit être livrée par une PR de taille limitée, avec vérifications réellement exécutées et résultats négatifs conservés. L'explorateur pédagogique peut avancer indépendamment du jalon G0 applicatif ; il ne débloque pas, à lui seul, les revendications de validité ou d'utilité de J-DriftX.
-
-
-## 9. Publication et intégration dans Quarto
-
-Le site GitHub Pages est statique : les blocs Python exécutés pendant le rendu Quarto produisent des sorties, mais ne laissent pas automatiquement un noyau Python actif dans le navigateur.
-
-| Option | Ce qu'elle apporte | Contrainte |
-|---|---|---|
-| Figures Plotly incluses dans Quarto | Zoom, survol, exploration des courbes et surfaces déjà calculées | Les curseurs ne relancent pas le calcul Python côté serveur |
-| Streamlit intégré dans une page par iframe | Interface complète et calcul Python sur un service distant | Déploiement et maintenance d'un service séparé ; disponibilité, sécurité d'intégration et ergonomie à tester |
-| Quarto + Shiny for Python | Réactivité et callbacks Python dans une application Quarto | Nécessite un hébergement qui exécute un serveur ; GitHub Pages seul ne suffit pas |
-| JavaScript/Observable dans Quarto | Interaction native et hébergement statique | La logique interactive doit être réécrite en JavaScript, sauf pont spécifique vers un environnement Python dans le navigateur |
-
-**Recommandation** : conserver un seul cœur de calcul Python ; fournir des figures Plotly autonomes dans la documentation pour les exemples stables, et déployer Streamlit séparément si l'on souhaite manipuler les paramètres dans la page. N'ajouter une iframe qu'après avoir vérifié l'URL réelle de l'application, les règles d'intégration, le comportement mobile et la disponibilité. Les pages documentaires doivent rester utiles lorsque le service est arrêté.
+Le laboratoire pédagogique peut soutenir la compréhension et la vérification de composants mathématiques ; il ne suffit pas à démontrer l'utilité applicative ni la validité scientifique de J-DriftX.
