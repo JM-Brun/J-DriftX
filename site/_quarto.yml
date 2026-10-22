@@ -39,6 +39,8 @@ website:
             text: "Revue adversariale G0"
           - href: projet/preuves-g0.qmd
             text: "G0 — preuves externes"
+          - href: projet/fiche-g0.qmd
+            text: "Fiche G0 — cadrage du besoin"
           - href: projet/catalogue-donnees.qmd
             text: "Catalogue de données"
           - href: projet/modele-jouet.qmd
