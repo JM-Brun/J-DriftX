@@ -52,6 +52,15 @@ def temps_transport(
     if u_seg.shape != (pts.shape[0] - 1, 2):
         msg = "vent doit etre un tableau (N-1, 2) aligne sur les segments."
         raise ValueError(msg)
+    if not np.isfinite(umin) or umin <= 0.0:
+        msg = "umin doit etre fini et strictement positif."
+        raise ValueError(msg)
+    if not np.all(np.isfinite(pts)):
+        msg = "ligne doit contenir uniquement des coordonnees finies."
+        raise ValueError(msg)
+    if not np.all(np.isfinite(u_seg)):
+        msg = "vent doit contenir uniquement des vitesses finies."
+        raise ValueError(msg)
 
     segments = np.diff(pts, axis=0)
     longueurs = np.hypot(segments[:, 0], segments[:, 1])
@@ -98,6 +107,12 @@ def pseudo_distance_uniforme(
 
     if point_a.shape != (2,) or point_b.shape != (2,) or vitesse.shape != (2,):
         msg = "a, b et vent doivent etre des vecteurs de forme (2,)."
+        raise ValueError(msg)
+    if not np.all(np.isfinite(point_a)) or not np.all(np.isfinite(point_b)):
+        msg = "a et b doivent contenir uniquement des coordonnees finies."
+        raise ValueError(msg)
+    if not np.all(np.isfinite(vitesse)):
+        msg = "vent doit contenir uniquement des vitesses finies."
         raise ValueError(msg)
 
     norme_vitesse = float(np.hypot(vitesse[0], vitesse[1]))
