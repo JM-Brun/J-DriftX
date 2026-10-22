@@ -4,28 +4,36 @@ title: "Panorama de l'état de l'art (2008 → 2026)"
 
 # Panorama de l'état de l'art
 
-> Synthèse de la revue systémique déposée dans le dépôt (<code>docs/02-revue-etat-art-2026.md</code>, sources notées et datées).
+> Synthèse exploratoire de la revue déposée dans le dépôt ([documentation et références](https://github.com/JM-Brun/J-DriftX/blob/main/docs/02-revue-etat-art-2026.md)). La revue reste à rendre entièrement reproductible ; elle ne démontre ni la nouveauté ni la supériorité de J-DriftX.
 
-## Portée et limites de la revue\n\nCe panorama est une synthèse structurée, non encore une revue systématique entièrement reproductible : les requêtes exactes, dates de recherche, critères de sélection et décomptes du corpus doivent être publiés. Les conclusions sur l'originalité et les avantages potentiels de J-DriftX sont des hypothèses à tester, pas des performances établies. Voir le [protocole de validation scientifique](../projet/validation-scientifique.qmd).\n\n## Modèles opérationnels et réglementaires
+## Portée et limites
 
-Le paysage near-field reste gaussien : l'EPA a promulgué en novembre 2024 une révision complète de son guideline (Appendix W) centrée sur les améliorations d'AERMOD, effective janvier 2025 [@epa2024appendixw]. CALPUFF, modèle préféré de 2003 à 2017, est rétrogradé « modèle alternatif ». Les comparatifs montrent des facteurs 2 d'écart avec les mesures : l'**incertitude des modèles opérationnels reste le problème central**, et le besoin de modèles rapides à contraintes physiques demeure.
+Les requêtes exactes, dates de recherche, critères de sélection, décomptes et évaluations formelles de la qualité des études doivent être documentés avant de qualifier le travail de revue systématique reproductible. Certaines sources ne sont accessibles que par résumé ou notice. Les conclusions de ce panorama sont donc des hypothèses de cadrage à vérifier dans les sources primaires.
+
+Voir la [revue adversariale G0](../projet/revue-adversariale-g0.qmd) et le [protocole de validation scientifique](../projet/validation-scientifique.qmd).
+
+## Modèles opérationnels et réglementaires
+
+Les modèles et les usages réglementaires varient selon le polluant, le régime physique et la décision. Le fait qu'un modèle soit gaussien, qu'une comparaison révèle des écarts ou qu'une incertitude subsiste ne démontre pas à lui seul un besoin auquel J-DriftX répondrait mieux. Toute comparaison doit porter sur un même observable, un régime comparable et une baseline pertinente.
 
 ## Dérive de pulvérisation
 
-Le couple AgDRIFT/AGDISP domine le risque réglementaire. Son extension gaussienne far-field est reconnue par l'EPA « extrêmement conservatrice » et peu validée pour les barrières végétales et la topographie — **exactement la cible de la métrique travel-time**. L'**AGDISP Modernization Project** (AMP) réécrit le near-field en open source (langage moderne, rejoint par Bayer Crop Science en 2026) : le far-field réaliste reste la case vide. Les approches ML de dérive (random forests, ANN, SVR) sont purement statistiques, fragiles en extrapolation. Les drones (UASS/RPAAS) créent un besoin nouveau de modèles de dérive validés.
+L'EPA documente des incertitudes et des limites de validation de l'extension gaussienne d'AGDISP pour certains usages far-field, notamment concernant les barrières physiques et la météorologie ([source EPA](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension)). Cela justifie d'examiner certains scénarios, mais pas d'affirmer que la métrique de J-DriftX les résout. Le caractère conservateur d'une estimation peut être intentionnel selon la décision réglementaire.
 
-## ROM et apprentissage
+L'AGDISP Modernization Project annonce une modernisation open source avec des objectifs plus riches, notamment 3D et drones ([résumé du projet, mars 2026](https://www.agaviation.org/wp-content/uploads/2026/03/AGDISP-Modernization-Project-Summary-20260304f.pdf)). Il faut distinguer les objectifs annoncés des fonctionnalités livrées et validées. Une validation publiée en 2025 pour AGDISPpro et les applications par drones rapporte des performances variables selon les scénarios ([article](https://doi.org/10.1016/j.scitotenv.2025.178725)). Le paysage concurrentiel n'est donc pas une « case vide » démontrée.
 
-Les ROM de dispersion se sont standardisées : Arnoldi (2015, gain ~×2500 vs CFD) [@vervecken2015rom], POD+RBF sur 144 km² (Pékin, 2021), ROM physique POD-NN (Bologne, 2024), POD-GPR depuis ~50 snapshots LES (2024), ROM + assimilation de données (2023). Les surrogates neuronaux montent en gamme : opérateurs de Fourier pour panaches radioactifs (2024) [@fno2024plume], architectures masquage/correction 3D (CEA, 2024), prévision d'accidents Seveso (2022). **Toutes exigent un modèle haute-fidélité et des snapshots** ; leur faiblesse déclarée est la généralisation hors domaine.
+## Réduction de modèle et apprentissage
+
+Les ROM, surrogates et modèles physiques réduits sont des familles hétérogènes. On ne peut pas conclure qu'ils exigent tous le même type de données ni qu'ils généralisent tous de la même manière. Pour établir une valeur différentielle, il faut comparer une méthode précise à des baselines adaptées, sur le même problème, avec les coûts de génération, calibration et inférence séparés.
 
 ## Identification de source (STE)
 
-Le champ s'est structuré : revue de référence (Information Fusion, 2017) classant optimisation, adjoint, bayésien, renormalisation [@hutchinson2017ste] ; formalisme d'opérateur inverse généralisé par la renormalisation [@renormalization2016] ; opérationnalisation à toutes échelles (NARAC/LLNL). Deux problèmes ouverts identifiés en 2025 : la régularisation automatique sous données rares, et **la détection du hors-domaine des surrogates ML** — argument direct pour un modèle physique rapide servant de garde-fou.
+L'identification de source est un problème inverse dont la qualité dépend de l'identifiabilité, du bruit, de la couverture d'observations et de la régularisation. Un modèle direct rapide pourrait être utile, mais ne garantit pas à lui seul une solution inverse stable. Une comparaison nécessite un cas de référence et des méthodes inverses adaptées.
 
-## SIG et open source
+## SIG, temps réel et auditabilité
 
-Les plugins QGIS gaussiens existent désormais (intercomparaison 2026, plugins éducatifs) : l'intégration GIS n'est plus un différenciateur, c'est un standard d'usage. Le différenciateur doit être le modèle — d'où l'architecture cœur Python pur + bindings en aval.
+L'intégration SIG, la rapidité, l'interprétabilité et l'auditabilité peuvent avoir une valeur pratique, mais aucune n'est un avantage démontré sans mesure ni utilisateur/décision cible. Les interfaces doivent rester en aval de la validation du modèle.
 
-## Temps réel et jumeaux numériques
+## Conclusion provisoire
 
-Jumeaux numériques urbains, prévisions CBRN opérationnelles, sessions CBRNe exigeant interprétabilité et conformité (EU AI Act) : un modèle analytique contraint par la physique est un atout d'**auditabilité** face aux boîtes noires.
+L'état de l'art justifie une **investigation critique**, pas encore le développement applicatif. La priorité est de choisir un problème étroit, d'identifier l'utilisateur et la décision, puis de fixer une expérience susceptible de réfuter l'hypothèse de valeur. La [revue adversariale G0](../projet/revue-adversariale-g0.qmd) consigne les objections et les critères de poursuite/arrêt.

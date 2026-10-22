@@ -6,7 +6,7 @@ title: "Feuille de route J-DriftX v2"
 
 La feuille de route est **conditionnelle aux preuves** : les jalons décrivent des questions et livrables attendus, pas des promesses de performance ni un calendrier garanti.
 
-> La première question est l'utilité : quel problème J-DriftX peut-il résoudre mieux que les méthodes disponibles, et comment le démontrer ? Voir le [cadre de décision scientifique](utilite-scientifique.qmd) et le document détaillé [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md).
+> La première question est l'utilité : quel problème J-DriftX peut-il résoudre mieux que les méthodes disponibles, et comment le démontrer ? Voir le [cadre de décision scientifique](utilite-scientifique.qmd), la [revue adversariale G0](revue-adversariale-g0.qmd) et le document détaillé [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md).
 
 ## Portes de décision
 
@@ -35,12 +35,12 @@ Aucun délai fixe ni objectif de performance ne doit être considéré comme acq
 
 ## Architecture cible, non engagement d'implémentation
 
-- `core/similitude` : solutions de similitude, sous hypothèses explicites.
-- `core/metric` : métrique de temps de transport et propriétés à démontrer.
-- `core/constraints` : propriétés physiques garanties dans le domaine de validité.
-- `benchmarks/reference` et `benchmarks/baselines` : priorité dès que le problème G0 est défini.
-- `assim/calibration`, `assim/ste`, méthodes POD/ROM et approches apprises : à comparer ou développer si elles répondent à une question utile.
-- `io/`, `bindings/qgis`, API et interfaces : après validation d'un noyau pertinent.
+- core/similitude : solutions de similitude, sous hypothèses explicites.
+- core/metric : métrique de temps de transport et propriétés à démontrer.
+- core/constraints : propriétés physiques garanties dans le domaine de validité.
+- benchmarks/reference et benchmarks/baselines : priorité dès que le problème G0 est défini.
+- assim/calibration, assim/ste, méthodes POD/ROM et approches apprises : à comparer ou développer si elles répondent à une question utile.
+- io/, bindings/qgis, API et interfaces : après validation d'un noyau pertinent.
 
 ## Fallback théorique si l'utilité pratique échoue
 
@@ -48,6 +48,6 @@ Si l'approche ne démontre pas de bénéfice applicatif, J-DriftX peut être ré
 
 ## Prochaine action
 
-Rédiger la fiche **G0 — décision d'utilité** pour le cas candidat de dérive de pulvérisation en champ lointain. La confronter à d'autres cas d'usage crédibles suggérés par la littérature si nécessaire. Définir le problème, les alternatives, le bénéfice attendu, les données accessibles et le test discriminant le moins coûteux avant de développer davantage.
+La [revue adversariale G0](revue-adversariale-g0.qmd) est le premier filtre : vérifier les hypothèses sceptiques, définir l'observable, le scénario, l'utilisateur et la décision, puis établir l'accès à une baseline et à des données indépendantes. Le cas far-field reste un candidat, non un choix validé. Aucun benchmark applicatif ne doit être développé avant que ces réponses soient documentées.
 
-La documentation complète et les critères expérimentaux se trouvent dans [docs/03-roadmap-jdriftx-v2.md](../../docs/03-roadmap-jdriftx-v2.md) et [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md).
+La documentation complète se trouve dans [docs/03-roadmap-jdriftx-v2.md](../../docs/03-roadmap-jdriftx-v2.md), [docs/08-decision-utilite-et-preuve.md](../../docs/08-decision-utilite-et-preuve.md) et [docs/10-revue-adversariale-g0.md](../../docs/10-revue-adversariale-g0.md).

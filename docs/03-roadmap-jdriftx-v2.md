@@ -1,6 +1,6 @@
 # Feuille de route — J-DriftX v2
 
-> Adoptée en octobre 2026 après audit du projet historique et revue structurée de l'état de l'art. Les décisions scientifiques restent révisables après examen de la revue systématique finale. Justifications : [audit historique](01-audit-heritage-driftx.md), [revue structurée](02-revue-etat-art-2026.md), [plan d'intégration de la revue](07-plan-integration-revue-systematique.md). Le premier jalon opérationnel est désormais **G0 — établir le besoin et l'utilité potentielle**, détaillé dans [le cadre de décision et de preuve](08-decision-utilite-et-preuve.md).
+> Adoptée en octobre 2026 après audit du projet historique et revue structurée de l'état de l'art. Les décisions scientifiques restent révisables après examen de la revue systématique finale. Justifications : [audit historique](01-audit-heritage-driftx.md), [revue structurée](02-revue-etat-art-2026.md), [plan d'intégration de la revue](07-plan-integration-revue-systematique.md). Le premier jalon opérationnel est désormais **G0 — établir le besoin et l'utilité potentielle**, détaillé dans [le cadre de décision et de preuve](08-decision-utilite-et-preuve.md). Une [revue adversariale G0](10-revue-adversariale-g0.md) documente les hypothèses sceptiques, les contre-arguments et les conditions d'arrêt avant tout développement applicatif.
 
 ## Vision
 
