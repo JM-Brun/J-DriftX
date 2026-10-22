@@ -25,7 +25,7 @@ left, right = st.columns(2)
 with left:
     n_cells = st.select_slider(
         "Nombre de cellules spatiales",
-        options=[24, 32, 48, 64, 96, 128, 192, 256],
+        options=[24, 32, 48, 64, 96, 128],
         value=64,
     )
     end_time = st.slider("Temps final", 0.1, 1.0, 0.4, 0.1)
@@ -143,13 +143,26 @@ for count in space_counts:
     space_errors.append(float(np.sqrt(np.mean((local_c - local_exact) ** 2))))
     space_steps.append(local_dx)
 
-spatial_order = float(np.polyfit(np.log(space_steps), np.log(space_errors), 1)[0])
+def _observed_order(steps: list[float], errors: list[float]) -> float | None:
+    valid = [
+        (step, error)
+        for step, error in zip(steps, errors, strict=True)
+        if np.isfinite(error) and error > np.finfo(float).eps
+    ]
+    if len(valid) < 2:
+        return None
+    valid_steps, valid_errors = zip(*valid, strict=True)
+    return float(np.polyfit(np.log(valid_steps), np.log(valid_errors), 1)[0])
+
+
+spatial_order = _observed_order(space_steps, space_errors)
+spatial_order_label = f"{spatial_order:.2f}" if spatial_order is not None else "indisponible"
 space_figure = go.Figure()
 space_figure.add_trace(
     go.Scatter(x=space_steps, y=space_errors, mode="lines+markers", name="Erreur L2")
 )
 space_figure.update_layout(
-    title=f"Erreur spatiale (pente observée ≈ {spatial_order:.2f})",
+    title=f"Erreur spatiale (pente observée : {spatial_order_label})",
     xaxis_title="Pas spatial Δx",
     yaxis_title="Erreur L2 discrète",
     xaxis_type="log",
@@ -173,7 +186,7 @@ st.markdown(
 
 time_counts = [1, 2, 4, 8]
 time_steps = [stability_dt * 0.8 / count for count in time_counts]
-reference_dt = time_steps[0] / 128.0
+reference_dt = max(time_steps[0] / 128.0, end_time / 50000.0)
 _, temporal_reference, _ = solve_periodic_sine_transport(
     n_cells=n_cells,
     length=length,
@@ -200,7 +213,8 @@ for time_step in time_steps:
         float(np.sqrt(np.mean((temporal_solution - temporal_reference) ** 2)))
     )
 
-time_order = float(np.polyfit(np.log(time_steps), np.log(time_errors), 1)[0])
+time_order = _observed_order(time_steps, time_errors)
+time_order_label = f"{time_order:.2f}" if time_order is not None else "indisponible"
 time_figure = go.Figure()
 time_figure.add_trace(
     go.Scatter(
@@ -211,7 +225,7 @@ time_figure.add_trace(
     )
 )
 time_figure.update_layout(
-    title=f"Erreur temporelle (pente observée ≈ {time_order:.2f})",
+    title=f"Erreur temporelle (pente observée : {time_order_label})",
     xaxis_title="Pas temporel effectif demandé Δt",
     yaxis_title="Erreur L2 par rapport à la référence",
     xaxis_type="log",
@@ -220,8 +234,8 @@ time_figure.update_layout(
 )
 st.plotly_chart(time_figure, use_container_width=True)
 st.caption(
-    f"Référence calculée avec dt demandé = {reference_dt:.3e}. La pente ajustée ({time_order:.2f}) "
-    "est indicative ; elle dépend du régime d'erreur, de l'arrondi et de la précision de la référence."
+    f"Référence calculée avec dt demandé = {reference_dt:.3e}. Pente ajustée : {time_order_label}.",
+    "Cette pente est indicative et dépend du régime d’erreur, de l’arrondi et de la précision de la référence."
 )
 
 with st.expander("Équation, solution exacte et limites"):
