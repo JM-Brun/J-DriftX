@@ -4,7 +4,7 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 
 ## Corpus historique (Drift-X, 2006–2009)
 
-- Brun, J.-M. (2006). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. Non déposée en ligne à ce jour — dépôt HAL prévu (action M0 de la roadmap).
+- Brun, J.-M. *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. **Année à résoudre :** l'article primaire de Mohammadi & Brun (2006) la cite comme 2007, tandis que certaines bibliographies secondaires indiquent 2006. Non localisée dans les recherches consignées ; ne pas conclure qu'elle n'a jamais été déposée/numérisée. Vérifier la page de titre et les notices institutionnelles avant de figer les métadonnées.
 - Mohammadi, B. & Brun, J.-M. (2006). Similitude généralisée et modélisation géométrique à complexité réduite. *C. R. Mécanique* 334(10), 634–638. DOI 10.1016/j.crme.2006.06.007. Notice : https://www.em-consulte.com/article/69927 — PDF en accès libre (archive ouverte de l'Académie des sciences) : https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf
 - Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006). Reduced order modelling of dispersion. In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
 - Brun, J.-M. & Mohammadi, B. (2008). Reduced-Order Modelling of Dispersion. In Glowinski, R. & Neittaanmäki, P. (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, Springer, Dordrecht, chap. 14, p. 245 et s. https://doi.org/10.1007/978-1-4020-8758-5_14
@@ -59,7 +59,7 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 - Hutchinson, M., Oh, H. et al. (2017). A review of source term estimation methods for atmospheric dispersion events using static or mobile sensors. *Information Fusion*. https://www.sciencedirect.com/science/article/pii/S156625351630152X
 - NARAC / LLNL. Source Term Estimation (Inverse Modeling) — infrastructures opérationnelles (adjoint, bayésien, urban→continental). https://narac.llnl.gov/research-and-development/source-term-estimation
 - Turbelin, G., Singh, S. K. & Issartel, J.-P. (2016). Reconstructing source terms from atmospheric concentration measurements — renormalization technique, generalized inverse operator. *JAMES*. https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014MS000385
-- Zenodo (2025). Source Term Estimation for Atmospheric Pollutant Releases — revue + expérience (adjoint, Tikhonov, bayésien, PINN ; problèmes ouverts : régularisation automatique, détection hors-domaine d'entraînement). https://zenodo.org/records/22914336
+- **Référence à vérifier avant utilisation :** « Source Term Estimation for Atmospheric Pollutant Releases », attribuée à Zenodo (2025), URL https://zenodo.org/records/22914336. L'identité du record, son titre, sa date et son contenu n'ont pas pu être confirmés lors de l'audit du 22 octobre 2026 ; ne pas l'utiliser pour soutenir une conclusion avant vérification. Une source distincte et vérifiable sur l'estimation inverse du terme source est l'article *An inverse method to estimate the source term of atmospheric pollutant releases*, *Atmospheric Environment* 260 (2021), DOI 10.1016/j.atmosenv.2021.118554: https://doi.org/10.1016/j.atmosenv.2021.118554.
 
 ## État de l'art — SIG et open source
 
