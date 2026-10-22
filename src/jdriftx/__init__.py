@@ -7,7 +7,7 @@ pseudo-distance historique ni un modèle de dispersion validé.
 """
 
 from jdriftx.constraints import linearite, positivite
-from jdriftx.metric import temps_transport
+from jdriftx.metric import pseudo_distance_uniforme, temps_transport
 from jdriftx.similitude import concentration_panache, concentration_puff, sigma_y, sigma_z
 
 __version__ = "0.1.0"
@@ -18,6 +18,7 @@ __all__ = [
     "concentration_puff",
     "linearite",
     "positivite",
+    "pseudo_distance_uniforme",
     "sigma_y",
     "sigma_z",
     "temps_transport",
