@@ -127,6 +127,7 @@ La décision n'est donc ni « arrêter J-DriftX » ni « lancer le modèle compl
 
 ## Liens
 
+- [Fiche de séance — validation expérimentale et G0-S/G0-A](14-seance-validation-experimentale.md)
 - [Cadre de décision et de preuve](08-decision-utilite-et-preuve.md)
 - [Revue adversariale G0](10-revue-adversariale-g0.md)
 - [Catalogue de données de transport et dispersion](12-catalogue-donnees-transport-dispersion.md)
