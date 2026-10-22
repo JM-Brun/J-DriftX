@@ -37,6 +37,8 @@ La source primaire de 2006 définit une pseudo-distance en projetant le point ci
 
 Le premier cas analytique est maintenant implémenté comme fonction de référence distincte `pseudo_distance_uniforme` et couvert par des tests : coût longitudinal, coût nul entre points distincts de même abscisse, coût infini en amont, invariance par rotation et rejet d'une vitesse nulle. Toute variante de temps d'arrivée au point cible doit être identifiée séparément. Les points stagnants, les sources/puits, les projections non uniques et les champs variables restent hors du périmètre de cette référence.
 
+Un contre-exemple analytique à l'inégalité triangulaire a aussi été établi pour le champ lisse divergence nulle \(\mathbf u=(1+9y,0)\), avec trois points \(A=(0,0)\), \(B=(1,1)\), \(C=(2,0)\) : \(d(A,C)=2\) alors que \(d(A,B)+d(B,C)=1.1\). La propriété est donc réfutée pour la pseudo-distance générale; l'exemple reste à traduire en test après spécification d'une API de champ variable.
+
 ## Critères d'acceptation
 
 - définition, hypothèses, domaine et unités explicites ;
