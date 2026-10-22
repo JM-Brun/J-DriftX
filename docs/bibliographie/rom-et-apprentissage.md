@@ -33,11 +33,11 @@ Ces méthodes peuvent être **concurrentes sur la vitesse d'évaluation** et **c
 - **Conséquence :** comparer la manière dont les observations entrent dans le modèle et évaluer l'identifiabilité.
 - [Article, *Computers & Fluids* 257, 105862](https://doi.org/10.1016/j.compfluid.2023.105862)
 
-### POD + RBF pour un environnement urbain (2021, *Journal of Safety Science and Resilience*)
+### Référence ScienceDirect PII S2666449621000372 — métadonnées à confirmer
 
-- **Relation :** baseline de surrogate spatial à comparer pour les cas compatibles.
-- **Limite :** le cadre urbain et les données d'entraînement peuvent être éloignés de la dérive de pulvérisation.
-- [Article](https://www.sciencedirect.com/science/article/pii/S2666449621000372)
+- **Statut bibliographique :** non vérifié dans cette passe. La page éditeur a refusé l'accès automatisé (HTTP 403) et les recherches exactes sur le PII n'ont pas permis de confirmer titre, auteurs, méthode POD+RBF, année ou revue.
+- **Précaution :** ne pas utiliser cette référence comme preuve d'un surrogate POD+RBF urbain tant que le titre et le résumé n'ont pas été contrôlés dans une notice éditeur, Crossref ou un dépôt institutionnel.
+- [Lien éditeur à vérifier](https://www.sciencedirect.com/science/article/pii/S2666449621000372)
 
 ### Fourier Neural Operator pour les panaches radioactifs (Ayoub et al., 2024)
 
