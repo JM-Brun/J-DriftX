@@ -2,16 +2,18 @@ project:
   type: website
   output-dir: _site
   # Pages de gouvernance (feuille de route, audits, revues, cadrage des portes) :
-  # conservées dans le dépôt mais volontairement non publiées sur GitHub Pages.
-  exclude:
-    - projet/roadmap.qmd
-    - projet/audit.qmd
-    - projet/lectures.qmd
-    - projet/revue-adversariale-g0.qmd
-    - projet/preuves-g0.qmd
-    - projet/fiche-g0.qmd
-    - projet/mvp-scientifique.qmd
-    - projet/modele-jouet.qmd
+  # conservées dans le dépôt mais volontairement non publiées sur GitHub Pages
+  # (liste de rendu explicite avec exclusions — méthode documentée Quarto).
+  render:
+    - "*.qmd"
+    - "!projet/roadmap.qmd"
+    - "!projet/audit.qmd"
+    - "!projet/lectures.qmd"
+    - "!projet/revue-adversariale-g0.qmd"
+    - "!projet/preuves-g0.qmd"
+    - "!projet/fiche-g0.qmd"
+    - "!projet/mvp-scientifique.qmd"
+    - "!projet/modele-jouet.qmd"
 
 website:
   title: "J-DriftX"
