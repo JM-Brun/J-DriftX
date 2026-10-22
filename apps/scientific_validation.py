@@ -35,14 +35,15 @@ with trajectory_tab:
             "Le champ de rotation est stationnaire. Pour la condition initiale "
             "$(x(0),y(0))=(1,0)$, la solution exacte est $(\cos t,\sin t)$."
         )
-    velocity = lambda _t, x, y: (-y, x)
+    def velocity(_t: float, x: float, y: float) -> tuple[float, float]:
+        return (-y, x)
     times = np.linspace(0.0, end_time, 600)
     figure = go.Figure()
     exact_x, exact_y = np.cos(times), np.sin(times)
     figure.add_trace(go.Scatter(x=exact_x, y=exact_y, mode="lines", name="Solution exacte"))
     errors = {}
     for method in ("euler", "rk4"):
-        t_num, x_num, y_num = integrate_trajectory(
+        _times, x_num, y_num = integrate_trajectory(
             velocity, 1.0, 0.0, 0.0, end_time, dt, method
         )
         figure.add_trace(
