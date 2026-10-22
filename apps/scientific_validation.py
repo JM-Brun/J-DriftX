@@ -67,6 +67,47 @@ with trajectory_tab:
     m1, m2 = st.columns(2)
     m1.metric("Erreur finale Euler", f"{errors['euler']:.3e}")
     m2.metric("Erreur finale RK4", f"{errors['rk4']:.3e}")
+    convergence = go.Figure()
+    step_sizes = [end_time / count for count in (15, 30, 60, 120, 240)]
+    for convergence_method in ("euler", "rk4"):
+        errors_by_step = []
+        for step_size in step_sizes:
+            _t, x_path, y_path = integrate_trajectory(
+                _rotational_velocity,
+                1.0,
+                0.0,
+                0.0,
+                end_time,
+                step_size,
+                convergence_method,
+            )
+            errors_by_step.append(
+                np.hypot(
+                    x_path[-1] - np.cos(end_time),
+                    y_path[-1] - np.sin(end_time),
+                )
+            )
+        convergence.add_trace(
+            go.Scatter(
+                x=step_sizes,
+                y=errors_by_step,
+                mode="lines+markers",
+                name=convergence_method.upper(),
+            )
+        )
+    convergence.update_layout(
+        title="Erreur finale en fonction du pas de temps",
+        xaxis_title="Pas de temps Δt",
+        yaxis_title="Erreur euclidienne finale",
+        xaxis_type="log",
+        yaxis_type="log",
+        height=420,
+    )
+    st.plotly_chart(convergence, use_container_width=True)
+    st.caption(
+        "La pente de cette courbe en échelle log-log permet d'observer l'ordre de convergence "
+        "dans ce cas régulier ; elle ne garantit pas le même comportement pour tout problème."
+    )
     st.caption(
         "L'erreur dépend du pas et de la durée. Une méthode d'ordre supérieur n'est pas "
         "automatiquement meilleure pour tout problème : stabilité, régularité et coût "
