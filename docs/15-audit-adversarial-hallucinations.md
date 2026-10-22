@@ -463,3 +463,11 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 - **Constat :** le rendu Quarto de la CI signalait `projet/15-audit-corpus-g0-resultats.md` et `etat-art/mvp-scientifique.qmd) comme cibles introuvables. Les documents visés existaient, mais les chemins relatifs étaient erronés depuis les pages sources. Le rendu réussissait malgré ces avertissements : un rendu vert seul ne prouve donc pas que tous les liens internes sont résolus.
 - **Correction effectuée :** les liens pointent désormais respectivement vers `../../docs/15-audit-corpus-g0-resultats.md` et `../projet/mvp-scientifique.qmd`.
 - **Preuve de clôture :** nouveau rendu Quarto sans ces avertissements. À terme, ajouter un contrôle de liens internes explicite au workflow plutôt que compter uniquement sur le succès de `quarto render`.
+
+### B-33 — Doublon bibliographique et ligne de tableau mal formée dans la comparaison Zermelo
+
+- **Statut :** défaut éditorial confirmé et corrigé.
+- **Emplacement :** `docs/14-revue-mathematique-ciblee.md`, section 4.
+- **Constat :** l'article de 2024 *Time-optimal solutions of Zermelo's navigation problem with moving obstacles* apparaissait deux fois. La seconde occurrence comportait en outre quatre cellules pour un tableau à trois colonnes, ce qui décalait la limitation scientifique hors de sa colonne prévue et pouvait rendre la comparaison ambiguë.
+- **Correction effectuée :** fusion des deux lignes en une seule; la pertinence conditionnelle du comparateur et la limite (« ne démontre rien sur la pseudo-distance projetée en advection pure ») restent explicites dans la troisième colonne.
+- **Preuve de clôture :** contrôle du tableau corrigé et rendu Quarto dans la CI de la branche.
