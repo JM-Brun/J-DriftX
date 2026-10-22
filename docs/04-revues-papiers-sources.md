@@ -120,7 +120,7 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 
 ## 7. Fiche — B. Mohammadi & N. Bozon (2009), Applied Geomatics
 
-**Référence.** Mohammadi, B. & Bozon, N. (2009). « GIS-based atmospheric dispersion modelling ». *Applied Geomatics* 1, 33–39. DOI 10.1007/s12518-009-0006-0
+**Référence.** Bozon, N. & Mohammadi, B. (2009). « GIS-based atmospheric dispersion modelling ». *Applied Geomatics* 1, 59–74. DOI 10.1007/s12518-009-0006-0
 
 **Statut d'accès.** Résumé libre (notice Springer) ; texte intégral sur abonnement (la page Springer est protégée contre les robots). 7 pages.
 
@@ -135,12 +135,12 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 ## 8. Découvertes bibliographiques de cette revue
 
 1. **Version journal JESA 2010 du papier plateforme** : *Journal Européen des Systèmes Automatisés* 44(4-5), 445–461, DOI 10.3166/jesa.44.445-461 — DOI vérifié (il résout vers la page revue, accès réservé) ; vol/pages/année confirmés par la notice ResearchGate de la publication. Ajoutée à <code>references.md</code> et <code>site/references.qmd</code>.
-2. **Titre exact de la thèse 2006** confirmé par deux bibliographies indépendantes (chapitre 2008, papier Applied Geomatics 2009) : « Modélisation à complexité réduite de la dérive », PhD thesis, University of Montpellier, 2006.
+2. **Titre de la thèse** cité dans deux bibliographies secondaires : « Modélisation à complexité réduite de la dérive ». L'année 2006 n'est pas établie : l'article primaire de 2006 la cite comme 2007 (voir §1).
 3. **Lignée méthodologique confirmée** : les bibliographies des sources 4, 6 et 7 pointent toutes vers Borouchaki–George–Mohammadi 1997 (métriques de maillage), Mohammadi–Pironneau (k-epsilon, Applied Shape Optimization 2001) — la matrice intellectuelle « métrique + optimisation de forme + sensibilité » du projet est ainsi traçable dans les sources elles-mêmes.
 4. **Commanditaires académiques du papier plateforme** : affiliations Cemagref–UMR ITAP, Montpellier SupAgro–UMR ITAP et Université Montpellier 2–UMR5149 (I3M) — documentées pour la fiche « héritage » du site.
 
 5. **Soumission IJNMF jamais retrouvée** : la bibliographie du CR 2006 cite « B. Mohammadi, J.-M. Brun, Reduced-order geometrical modelling of dispersion, Int. J. Num. Meth. Fluids, 2006, submitted for publication » — aucune trace d'une publication sous ce titre n'a été trouvée (publication abandonnée, retitrée, ou jamais parue ?). À clarifier de mémoire d'auteur ; ce serait une huitième source potentielle du corpus.
-6. **Année de la thèse — discordance de citation** : la bibliographie du CR 2006 (reçu avril 2006) cite la thèse Brun avec l'année **2007**, tandis que le chapitre Springer 2008 et le papier Applied Geomatics 2009 la citent **2006**. À trancher de mémoire d'auteur lors du dépôt HAL (M0) — les métadonnées du dépôt doivent être exactes.
+6. **Année de la thèse — discordance de citation** : l'article primaire de 2006 cite la thèse comme **2007**, tandis que certaines bibliographies secondaires indiquent 2006. Vérifier la page de titre ou une notice institutionnelle avant dépôt HAL.
 7. **Chaîne adjointe historique** : en 2006, le gradient était produit par différentiation automatique inverse via **Tapenade** (INRIA) — l'adjoint « analytique et gratuit » revendiqué ensuite s'est construit sur cette base.
 8. **Meilleur accès au CR 2006** : le PDF de l'article est en accès libre sur l'archive ouverte de l'Académie des sciences (comptes-rendus.academie-sciences.fr) — lien ajouté aux bibliographies et extraction texte brute archivée dans <code>raw/extracts/</code>.
 
