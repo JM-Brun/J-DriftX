@@ -29,7 +29,7 @@ Le site documentaire (Quarto, publié sur GitHub Pages) présente le projet, ses
 
 📚 https://jm-brun.github.io/J-DriftX/
 
-Pages à lire en priorité : [Lectures des sources](https://jm-brun.github.io/J-DriftX/projet/lectures.html), [Glossaire](https://jm-brun.github.io/J-DriftX/glossaire.html), [utilité scientifique](https://jm-brun.github.io/J-DriftX/projet/utilite-scientifique.html) et [fallback théorique](https://jm-brun.github.io/J-DriftX/projet/modele-jouet.html).
+Pour comprendre l'ensemble du projet, commencer par la [carte d'articulation scientifique](https://jm-brun.github.io/J-DriftX/projet/carte-articulation.html), puis consulter [Lectures des sources](https://jm-brun.github.io/J-DriftX/projet/lectures.html), le [Glossaire](https://jm-brun.github.io/J-DriftX/glossaire.html), l'[utilité scientifique](https://jm-brun.github.io/J-DriftX/projet/utilite-scientifique.html) et le [fallback théorique](https://jm-brun.github.io/J-DriftX/projet/modele-jouet.html).
 
 ## Structure du dépôt
 
@@ -62,7 +62,7 @@ Les tests doivent vérifier les propriétés mathématiques et physiques uniquem
 
 ## Statut et prochaine décision
 
-Le premier jalon est **G0 — établir un besoin et une valeur potentielle indépendamment de la solution**. Le cas far-field de dérive de pulvérisation est un candidat, pas une cible déjà validée. Voir la [feuille de route](docs/03-roadmap-jdriftx-v2.md), le [cadre de décision](docs/08-decision-utilite-et-preuve.md) et la [revue adversariale G0](docs/10-revue-adversariale-g0.md).
+**État des portes :** le cadrage documentaire G0 a été franchi le 22 octobre 2026 ; G0-S autorise une exploration mathématique minimale, tandis que G0-A (utilité applicative) reste non démontrée. Le cas far-field de dérive de pulvérisation demeure un candidat, pas une cible validée. Voir la [carte d'articulation scientifique](docs/18-carte-articulation-scientifique.md), la [feuille de route](docs/03-roadmap-jdriftx-v2.md), le [cadre de décision](docs/08-decision-utilite-et-preuve.md) et la [revue adversariale G0](docs/10-revue-adversariale-g0.md).
 
 ## Licence
 
