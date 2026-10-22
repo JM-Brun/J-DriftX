@@ -135,6 +135,6 @@ with validation_tab:
         - La solution advection-diffusion suppose un domaine infini, une vitesse et une
           diffusivité constantes, sans réaction, dépôt, source continue ni conditions aux limites.
         - L'intégration numérique d'une trajectoire ne valide pas la fidélité du modèle physique.
-        - Aucun couplage avec le relief, la turbulence ou la dynamique des particules n'est implémenté.
+        - Aucun couplage avec le relief, la turbulence ou la dynamique des\n          particules n'est implémenté.
         """
     )
