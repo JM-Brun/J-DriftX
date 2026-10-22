@@ -93,7 +93,30 @@ Le site GitHub Pages est statique : Python exécuté au rendu Quarto produit des
 
 **Recommandation :** garder un seul cœur de calcul Python ; publier des figures Plotly dans les pages pour les cas de référence ; déployer Streamlit séparément seulement si une interaction distante est souhaitée. Ne pas ajouter d'iframe avant de disposer d'une URL réellement déployée et vérifiée. La documentation doit rester utile même si le service interactif est indisponible.
 
-## 7. Hors périmètre
+## 7. Convergence spatiale et temporelle
+
+L'application `apps/convergence_lab.py` introduit un cas de vérification distinct : advection-diffusion 1D périodique d'une sinusoïde. Elle utilise un solveur numérique par différences finies centrées et RK4, séparé de la solution analytique
+
+\[
+c(x,t)=\bar c+A e^{-K(2\pi/L)^2t}\sin\left(\frac{2\pi}{L}(x-ut)\right).
+\]
+
+Le cas est périodique sur une longueur (L), avec vitesse (u) et diffusivité (K) constantes. L'interface affiche les erreurs (L^2) et maximale, la conservation de la moyenne et deux diagnostics :
+
+- **Convergence spatiale** : raffinement du nombre de cellules ; le pas de temps est réduit comme (Delta x^2) pour minimiser l'influence temporelle.
+- **Convergence temporelle** : grille fixe, comparaison à une solution numérique calculée avec le même opérateur spatial et un pas temporel beaucoup plus fin.
+
+Le code vérifie la stabilité linéaire du pas choisi pour l'opérateur discret. Les tests automatisés vérifient l'accord avec la solution analytique, la conservation de la moyenne, la diminution des erreurs avec le raffinement et le rejet d'un pas instable. La pente observée reste un diagnostic empirique : la référence temporelle fine est approchée et les résultats dépendent du régime d'erreur et de l'arrondi.
+
+Lancer :
+
+```bash
+uv run streamlit run apps/convergence_lab.py
+```
+
+Ce cas périodique lisse ne représente pas des conditions aux limites atmosphériques, une source localisée, des coefficients variables ou la dynamique des gouttelettes.
+
+## 8. Hors périmètre
 
 - ingestion de données météorologiques ou topographiques réelles ;
 - simulation CFD ou solveur général d'EDP ;
