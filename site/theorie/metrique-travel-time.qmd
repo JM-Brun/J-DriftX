@@ -8,13 +8,17 @@ Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les
 
 ## Définition
 
-Le temps de transport de la source $\mathbf{x}_0$ au point $\mathbf{x}$ le long de la ligne de courant $\gamma$ :
+Le temps de parcours le long d'une caractéristique orientée \(\gamma\), entre deux points appartenant à cette caractéristique, s'écrit
 
-$$
-\tau(\mathbf{x}_0 \to \mathbf{x}) = \int_\gamma \frac{ds}{|\mathbf{u}(s)|}.
-$$
+$
+T_\gamma(A,B)=\int_{\gamma_{A\to B}}\frac{ds}{|\mathbf u(s)|}.
+$
 
-Les solutions de similitude, valables en métrique cartésienne $\times$ vent uniforme, sont réexprimées dans le système de coordonnées $(\tau, n)$ — temps de transport et coordonnée normale — ce qui les étend aux ciseaux de vent et à la topographie.
+**Ce n'est pas à lui seul la définition complète de la pseudo-distance historique de Drift-X.** Dans l'article de Mohammadi & Brun (2006, §3), le point cible \(B\) est projeté sur la caractéristique passant par \(A\), en \(B^\perp\), puis le coût est le temps de migration de \(A\) à \(B^\perp\). Voir la [source primaire en texte intégral](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) et la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
+
+Cette projection fait partie de la définition : elle signifie que le coût peut ne pas distinguer deux points séparés transversalement. L'article historique le signale explicitement en qualifiant la construction de **pseudo-distance**, qui peut ne pas séparer les points et peut violer l'inégalité triangulaire.
+
+Les solutions de similitude formulées en vent uniforme sont réexprimées dans un système lié au temps de transport et à la coordonnée normale. La portée de cette généralisation dépend des hypothèses sur le champ, les caractéristiques et la projection; elle ne découle pas de la seule formule d'intégrale.
 
 ## Trois propriétés structurantes
 
