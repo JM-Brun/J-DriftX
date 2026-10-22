@@ -39,13 +39,13 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 ### 3. ROM et apprentissage : maturité méthodologique, mais toujours a posteriori
 
 - Les ROM de dispersion urbaine se sont standardisées : Arnoldi (2015, facteur ~2500 vs CFD), POD+RBF sur 144 km² (Pékin, 2021), ROM physique POD-NN (Bologne, 2024, avec vent réel pour le monitoring temps réel), POD-GPR avec ~50 snapshots LES (2024), ROM + assimilation de données (2023).
-- Les surrogate neuronaux montent en gamme : FNO pour panaches radioactifs (2024), architectures masquage/correction 3D (CEA, 2024, priors physiques + opérateurs neuronaux), surrogates ML d'émissions industrielles, prévision d'accidents Seveso (2022).
+- Les surrogate neuronaux montent en gamme : FNO pour panaches radioactifs (2024), architectures masquage/correction 3D (CEA, 2024, priors physiques + opérateurs neuronaux), surrogates ML d'émissions industrielles, et prévision d'accidents de type Seveso (publication en ligne en 2022, volume 2023).
 - Certaines approches recensées utilisent des simulations haute-fidélité et des snapshots ; ce n'est pas une propriété universelle de toutes les ROM et méthodes de substitution. Leurs performances d'interpolation et d'extrapolation dépendent de la méthode, des données et du régime étudié. Le coût, la généralisation et le besoin d'entraînement de J-DriftX doivent être mesurés et comparés ; une extrapolation correcte n'est pas garantie par la seule construction analytique. Une architecture hybride reste une hypothèse à évaluer, pas un positionnement déjà justifié.
 
 ### 4. Identification de source (STE) : un champ qui s'est structuré
 
 - La revue de référence (Information Fusion, 2017) classe les méthodes STE (optimisation, adjoint, bayésien, renormalisation) ; NARAC opérationalise le STE à toutes échelles ; la technique de renormalisation (JAMES, 2014) fournit le formalisme d'opérateur inverse généralisé.
-- La revue 2025 (Zenodo) confirme deux problèmes ouverts : la régularisation automatique sous données rares et bruitées, et **la détection du fonctionnement hors domaine d'un surrogate ML** — argument supplémentaire pour un modèle physique rapide servant de garde-fou.
+- La ressource Zenodo de Shafiyev et al. publiée en 2026 synthétise des méthodes STE et mentionne des problèmes ouverts. Elle ne suffit pas, à elle seule, à établir l'état de l'art ni à justifier un modèle physique comme garde-fou ; les affirmations sur la régularisation sous données rares/bruitées et la détection hors domaine doivent être corroborées par les articles primaires cités.
 - Les documents historiques mentionnent une analyse de sensibilité du modèle direct. La disponibilité, l'exactitude et l'utilité d'un adjoint pour la formulation actuelle ne sont pas démontrées par le seul caractère analytique du modèle ; elles doivent être dérivées et vérifiées.
 
 ### 5. SIG et open source : l'avenant de Drift-X est devenu banal — d'où l'exigence
@@ -86,7 +86,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 | [ResearchGate — ROM Arnoldi built environment](https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment) | 3/5 | 2015 |
 | [SERRA — surrogate FNO panache radioactif](https://link.springer.com/article/10.1007/s00477-024-02738-8) | 4/5 | 2024 |
 | [CEA/HAL — MCxM 3D deep learning dispersion](https://cea.hal.science/cea-04810109/document) | 4/5 | 2024 |
-| [SERRA — surrogate accidents Seveso](https://link.springer.com/article/10.1007/s00477-022-02288-x) | 4/5 | 2022 |
+| [SERRA — surrogate accidents Seveso](https://link.springer.com/article/10.1007/s00477-022-02288-x) | 4/5 | 2023 (en ligne 2022) |
 | [Information Fusion — revue STE](https://www.sciencedirect.com/science/article/pii/S156625351630152X) | 5/5 | 2017 |
 | [JAMES — renormalisation / STE](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014MS000385) | 4/5 | 2016 |
 | [NARAC / LLNL — STE opérationnel](https://narac.llnl.gov/research-and-development/source-term-estimation) | 4/5 | - |
