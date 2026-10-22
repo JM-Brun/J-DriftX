@@ -71,8 +71,10 @@ def pseudo_distance_uniforme(
 
     Le champ est constant et non nul. Le coût est le temps longitudinal entre
     les projections de a et b sur une ligne de courant parallèle au vent.
-    L'écart transversal n'est pas pénalisé; les points en amont reçoivent
-    +inf conformément à la convention orientée de la définition historique.
+    L'écart transversal n'est pas pénalisé. Cette API attribue +inf aux points en
+    amont comme convention de coût étendu; cette règle doit être distinguée
+    d'une vérification exhaustive du traitement des points inaccessibles dans
+    toutes les variantes historiques.
 
     Cette fonction est une référence analytique limitée au champ uniforme,
     pas une implémentation générale des caractéristiques d'un champ variable.
@@ -83,7 +85,8 @@ def pseudo_distance_uniforme(
         vent: vecteur vitesse constant (ux, uy), non nul.
 
     Returns:
-        Temps longitudinal en secondes, ou inf si b est en amont de a.
+        Temps longitudinal (dans les unités cohérentes des entrées), ou inf si b est
+        en amont de a selon la convention explicite de cette fonction.
 
     Raises:
         ValueError: si un point ou le vecteur vitesse n'a pas la forme (2,),
