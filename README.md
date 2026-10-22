@@ -1,10 +1,12 @@
 # J-DriftX
 
-**Modélisation à complexité réduite de la dispersion atmosphérique de scalaires passifs** — reprise et modernisation open-source du projet **Drift-X** (J.-M. Brun & B. Mohammadi, 2006–2009).
+**Projet de recherche sur la modélisation à complexité réduite de la dispersion atmosphérique de scalaires passifs**, issu de la reprise et de la modernisation du projet historique **Drift-X** (J.-M. Brun & B. Mohammadi, 2006–2009).
 
-J-DriftX prédit la dispersion (panaches, puffs, dérive de pulvérisation) via des **solutions de similitude généralisées dans une métrique non symétrique basée sur les temps de transport** — sans résoudre d'EDP ni construire de maillage — avec calibration par **assimilation de données partielles**, évaluation ponctuelle directe, analyse de sensibilité et identification de source.
+J-DriftX étudie l'hypothèse qu'une représentation fondée sur des solutions de similitude et des temps de transport dirigés puisse permettre d'évaluer certains problèmes de dispersion à moindre coût, sans résoudre directement une EDP ni construire un maillage. La validité mathématique, le gain prédictif, le coût total et l'utilité applicative de cette approche **ne sont pas encore établis**. La calibration par assimilation de données, l'évaluation ponctuelle et l'identification de source restent des pistes conditionnelles, non des capacités validées.
 
-![Schéma de principe : panache gaussien généralisé dans la métrique des temps de transport τ.](site/images/panache-travel-time.svg)
+![Schéma conceptuel historique : panache dans une représentation de temps de transport.](site/images/panache-travel-time.svg)
+
+> **Statut scientifique :** hypothèse de recherche en phase de cadrage et de validation. La figure et la documentation conceptuelle illustrent l'approche envisagée ; elles ne constituent pas une validation de ses performances.
 
 ## Héritage (2006–2009)
 
@@ -17,55 +19,47 @@ J-DriftX prédit la dispersion (panaches, puffs, dérive de pulvérisation) via 
 | 2008 | *Similitude and non symmetric geometry for dispersion modelling* — N. Bozon, B. Mohammadi & C. Sinfort | e-sta vol. 5 (STIC & Environnement'07) |
 | 2009 | [A GIS-based atmospheric dispersion model — plateforme Drift-X](https://hal.science/hal-00468863) — N. Bozon, C. Sinfort & B. Mohammadi | Actes STIC & Environnement, HAL hal-00468863 |
 | 2009 | [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0) — B. Mohammadi & N. Bozon | *Applied Geomatics* 1, 33–39 |
-| 2010 | [A GIS-based atmospheric dispersion model](https://doi.org/10.3166/jesa.44.445-461) — N. Bozon, C. Sinfort & B. Mohammadi | *JESA* 44(4-5), 445–461 (version journal) |
+| 2010 | [A GIS-based atmospheric dispersion model](https://doi.org/10.3166/jesa.44.445-461) — N. Bozon, C. Sinfort & B. Mohammadi | *JESA* 44(4-5), 445–461 (version journal du papier STIC & Environnement 2009 / HAL hal-00468863) |
 
-Détails : [docs/references.md](docs/references.md) — **fiches de lecture par papier source** (contenus extraits, équations, statuts d'accès) : [docs/04-revues-papiers-sources.md](docs/04-revues-papiers-sources.md) — PDF et extractions texte des sources primaires : [raw/](raw/)
+Détails : [docs/references.md](docs/references.md) — [fiches de lecture par papier source](docs/04-revues-papiers-sources.md) — [sources primaires et extractions](raw/).
 
 ## Documentation
 
-Le site documentaire (Quarto, publié sur GitHub Pages) présente le projet, ses fondements théoriques, les hypothèses et leurs limites, les théories mathématiques et la bibliographie :
+Le site documentaire (Quarto, publié sur GitHub Pages) présente le projet, ses fondements théoriques, les hypothèses et leurs limites :
 
 📚 https://jm-brun.github.io/J-DriftX/
 
-Pages à lire en priorité : [Lectures des sources](https://jm-brun.github.io/J-DriftX/projet/lectures.html) (revue par papier du corpus historique) et le [Glossaire](https://jm-brun.github.io/J-DriftX/glossaire.html) (les notions clés expliquées simplement).
-
-Sources du site : [site/](site/) — rendu local : <code>quarto preview site</code>
+Pages à lire en priorité : [Lectures des sources](https://jm-brun.github.io/J-DriftX/projet/lectures.html), [Glossaire](https://jm-brun.github.io/J-DriftX/glossaire.html), [utilité scientifique](https://jm-brun.github.io/J-DriftX/projet/utilite-scientifique.html) et [fallback théorique](https://jm-brun.github.io/J-DriftX/projet/modele-jouet.html).
 
 ## Structure du dépôt
 
 ~~~
-site/                 # Site Quarto (GitHub Pages)
-src/jdriftx/          # Cœur Python (similitude, métrique, contraintes)
-tests/                # Pytest (tests physiques + unitaires)
-docs/                 # Documents de travail (audit, revues, roadmap, biblio)
-raw/                  # Sources primaires : PDF du corpus + extractions texte brutes
-.github/workflows/    # CI (ruff, pytest) + publication du site
+site/                 # Site Quarto
+src/jdriftx/          # Cœur Python
+tests/                # Tests unitaires et propriétés physiques
+docs/                 # Audit, revues, roadmap, bibliographie et décisions
+raw/                  # Sources primaires et documents bruts
+.github/workflows/    # CI et publication du site
 ~~~
 
 ## Développement
 
-Le projet suit les pratiques Python modernes : gestion [uv](https://docs.astral.sh/uv/), packaging <code>pyproject.toml</code> (src-layout), lint/format [Ruff](https://docs.astral.sh/ruff/), [pre-commit](https://pre-commit.com), tests [pytest](https://pytest.org).
+Le dépôt utilise [uv](https://docs.astral.sh/uv/), pyproject.toml, [Ruff](https://docs.astral.sh/ruff/), [pre-commit](https://pre-commit.com) et [pytest](https://pytest.org).
 
-### Tests : la physique comme oracle
-
-Sans EDP ni maillage, il n'y a pas de valeur de référence précalculée : les tests unitaires encodent des **propriétés physiques** — conservation de la masse, symétrie latérale, superposition, non-symétrie de la métrique τ — sous la forme **Given / When / Then** :
-
-![Tests unitaires Given/When/Then — la physique comme oracle](site/images/tests-given-when-then.svg)
-
-Détails : page [Qualité & tests](https://jm-brun.github.io/J-DriftX/projet/qualite.html) du site.
-
-~~~
-uv sync                        # installe le projet + les dépendances de dev
-uv run pytest                  # tests
-uv run ruff check .            # lint
-uv run ruff format --check .   # format
+~~~bash
+uv sync
+uv run pytest
+uv run ruff check .
+uv run ruff format --check .
 uv run pre-commit run --all-files
 ~~~
 
-## Statut
+Les tests doivent vérifier les propriétés mathématiques et physiques uniquement sous les hypothèses qui les garantissent. Un test de propriété ne démontre pas, à lui seul, l'exactitude empirique ni l'utilité applicative du modèle.
 
-🚧 Phase 0 (documentation, audit, revues, roadmap) → M1 (noyau Python + benchmark gaussien). Voir [docs/03-roadmap-jdriftx-v2.md](docs/03-roadmap-jdriftx-v2.md).
+## Statut et prochaine décision
+
+Le premier jalon est **G0 — établir un besoin et une valeur potentielle indépendamment de la solution**. Le cas far-field de dérive de pulvérisation est un candidat, pas une cible déjà validée. Voir la [feuille de route](docs/03-roadmap-jdriftx-v2.md), le [cadre de décision](docs/08-decision-utilite-et-preuve.md) et la [revue adversariale G0](docs/10-revue-adversariale-g0.md).
 
 ## Licence
 
-À définir (proposition : GPLv3 pour le code, CC BY 4.0 pour la documentation).
+À définir (proposition de travail : GPLv3 pour le code, CC BY 4.0 pour la documentation).
