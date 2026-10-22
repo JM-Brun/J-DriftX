@@ -17,6 +17,7 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 
 - Muller, J.-C. (1979). La cartographie d'une métrique non euclidienne : les distances-temps. *L'Espace géographique* 8(3), 215–227. DOI 10.3406/spgeo.1979.1915 — https://www.persee.fr/doc/spgeo_0046-2497_1979_num_8_3_1915 (ancrage géographique de la métrique travel-time : postulats euclidiens inapplicables en géographie humaine, distances-temps, isochrones, espaces à métrique inconnue ou incomplète — voir site/theorie/metriques-non-riemanniennes.qmd)
 - Borouchaki, H., George, P.-L., Hecht, F., Laug, P. & Saltel, E. (1997). Delaunay mesh generation governed by metric specifications. Part I: Algorithms. *Finite Elements in Analysis and Design* 25(1-2), 61–83. https://doi.org/10.1016/S0168-874X(96)00057-1 (lignée des métriques de l'adaptation de maillage — généalogie numérique de la métrique travel-time)
+- Trindade da Silva, F., Costa Reis Jr., N., Santos, J. M. et al. (2021). Atmospheric dispersion and urban planning: An interdisciplinary approach to city modeling. *Sustainable Cities and Society* 70, 102882. https://doi.org/10.1016/j.scs.2021.102882 (modélisation géométrique des villes par typologie de blocs — analogie avec la modélisation géométrique à complexité réduite, sans équivalence démontrée)
 
 ## État de l'art — dispersion opérationnelle et réglementaire
 
@@ -28,6 +29,8 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 ## État de l'art — dérive de pulvérisation (spray drift)
 
 - NCASI (2007). Technical Bulletin 808 — spray drift models AGDISP/AgDRIFT, approche par tiers, Spray Drift Task Force. https://ncasi.org/wp-content/uploads/2011/11/tb808.pdf
+- Bonicelli, B., Cotteux, E., Sinfort, C., Ruelle, B. & de Rudnicki, V. (2012). Ongoing research on pesticides air dispersion. Actes CIGR-AgEng 2012 (Valencia), 6 p. HAL : https://hal.science/hal-00825458 (continuation de la lignée pesticides du corpus — C. Sinfort, co-auteure des papiers Drift-X)
+- Defra (2011). Options for the development of a model for evaluation of bystander and resident exposures to pesticides used in orchard, hop and bush fruit application. Rapport final Defra PS2024 (SID 5), The Arable Group / Silsoe Spray Applications Unit. https://naturalengland.contentdm.oclc.org/digital/api/collection/p21006coll3/id/2458/download (littérature grise publique — besoin applicatif far-field : exposition bystanders/riverains en verger)
 - US EPA (2014). Pesticides; Consideration of Spray Drift in Pesticide Risk Assessment (AgDRIFT et AGDISP pour l'estimation des fractions de dérive). https://www.federalregister.gov/documents/2014/01/29/2014-01234/pesticides-consideration-of-spray-drift-in-pesticide-risk-assessment-notice-of-availability-and
 - US EPA. Guidance on the Use of the Linked AGDISP-Gaussian Extension Models for far field drift (extension gaussienne reconnue « extrêmement conservatrice », validation limitée pour barrières/topographie). https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension
 - AgAir Update (2026-03-09). Bayer Crop Science rejoint l'AGDISP Modernization Project (AMP) : réécriture open source d'AGDISP en langage moderne. https://agairupdate.com/2026/03/09/bayer-crop-science-joins-ag-industry-efforts-to-modernize-spray-drift-model-used-by-pesticide-regulators/
@@ -45,6 +48,7 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 
 ## État de l'art — ROM et apprentissage pour la dispersion
 
+- Mahmud, M. Z., Molla, M. M., Hasan, M. F. & Akhter, M. N. (2026). Symmetry patterns and machine learning prediction of urban pollutant dispersion (CFD + ML, configuration urbaine idéalisée). *Symmetry* 18(8), 1392. https://doi.org/10.3390/sym18081392
 - HAL (2024). POD-GPR reduced-order model for microscale atmospheric dispersion (statistiques 1er/2e ordre depuis ~50 snapshots LES). https://hal.science/hal-04310899/document
 - Verveecken, L. & Meyers, J. (2015). Stable reduced-order models (Arnoldi) for pollutant dispersion in the built environment (facteur ~2500 vs CFD). https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment
 - CMAME (2024). A physics-based reduced order model for urban air pollution (POD-NN, cas Bologne, monitoring temps réel). https://www.sciencedirect.com/science/article/abs/pii/S0045782523005406

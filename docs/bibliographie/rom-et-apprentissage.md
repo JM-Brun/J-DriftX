@@ -20,6 +20,14 @@ Ces méthodes peuvent être **concurrentes sur la vitesse d'évaluation** et **c
 - **Conséquence :** comparer séparément coût de préparation, coût d'inférence et erreur sur des cas hors échantillon.
 - [Document](https://hal.science/hal-04310899/document)
 
+### Symétries et apprentissage pour la dispersion urbaine (Symmetry, 2026)
+
+- **Méthode :** CFD et apprentissage automatique pour prédire la dispersion dans une configuration urbaine idéalisée, d'après le résumé ; protocole exact à vérifier au texte intégral (accès libre).
+- **Relation :** baseline récente de la famille ML/urbain ; le motif « symétrie » du titre ne doit pas être assimilé à la similitude généralisée de J-DriftX sans examen du contenu.
+- **Conséquence :** à inclure dans l'état de l'art 2026 de la famille apprentissage ; lecture intégrale requise avant toute comparaison.
+- [Article](https://doi.org/10.3390/sym18081392)
+
+
 ### ROM physique POD-NN pour la pollution urbaine (CMAME, 2024)
 
 - **Méthode :** ROM fondée sur POD et réseau neuronal.

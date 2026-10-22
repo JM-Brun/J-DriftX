@@ -47,6 +47,21 @@ Références recensées dans le dépôt : ANN/SVR, random forest et analyse de s
 - [Analyse de sensibilité par ANN (2023)](https://link.springer.com/article/10.1007/s10668-023-04452-x)
 - [Machine learning for spraying factors (2024)](https://doi.org/10.3390/agronomy14091977)
 
+### Bonicelli et al. (2012) — Ongoing research on pesticides air dispersion
+
+- **Type :** actes de conférence (CIGR-AgEng 2012, Valencia, 6 p.), texte intégral libre sur HAL.
+- **Lien :** continuation de la lignée pesticides du corpus — C. Sinfort est co-auteure des papiers Drift-X ; état de la recherche en début des années 2010.
+- **Conséquence :** vérifier le recouvrement avec les papiers Drift-X avant d'en faire une source d'exigences ; statut de conférence, pas d'article de revue.
+- [Document HAL](https://hal.science/hal-00825458/document)
+
+### Defra PS2024 (2011) — exposition des riverains en arboriculture
+
+- **Type :** rapport final Defra (SID 5), littérature grise publique ; contractants The Arable Group / Silsoe Spray Applications Unit (projet 01/06/2010–31/03/2011).
+- **Lien :** cas d'usage far-field direct — évaluation de l'exposition bystanders/résidents lors de pulvérisations en verger, houblon et petits fruits ; proposition d'un modèle d'exposition à développer.
+- **Conséquence :** source de cadrage du besoin applicatif et des scénarios d'exposition ; à ne pas traiter comme validation d'un modèle. Lecture intégrale requise avant d'en extraire des exigences.
+- [Rapport (archive Natural England)](https://naturalengland.contentdm.oclc.org/digital/api/collection/p21006coll3/id/2458/download)
+
+
 ### CAREA (2018) — modèle SIG de dispersion pour l'exposition résidentielle aux pesticides
 
 - **Type :** étude applicative, *Science of the Total Environment*.

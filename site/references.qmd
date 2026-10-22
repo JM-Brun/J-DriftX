@@ -33,5 +33,9 @@ title: "Références"
 19. HAL (2024). [Reduced-order model (POD-GPR) for microscale atmospheric dispersion](https://hal.science/hal-04310899/document).
 20. Turbelin, G., Singh, S. K. & Issartel, J.-P. (2014). [Reconstructing source terms from atmospheric concentration measurements: Optimality analysis of an inversion technique](https://doi.org/10.1002/2014MS000385). *Journal of Advances in Modeling Earth Systems* 6, 1244–1255.
 21. InVS / Santé publique France (2009). Évaluation de l'exposition aérienne aux pesticides de la population générale — étude en air extérieur dans quatre sites de l'Hérault en 2006. Rapport. (mesures de terrain contemporaines et locales du corpus Drift-X : candidates pour l'étalonnage, la validation et l'assimilation — PDF et fiche de lecture archivés dans <code>raw/</code>)
+22. Bonicelli, B., Cotteux, E., Sinfort, C., Ruelle, B. & de Rudnicki, V. (2012). [Ongoing Research on Pesticides Air Dispersion](https://hal.science/hal-00825458). Actes CIGR-AgEng 2012, Valencia. (suite de la lignée pesticides du corpus — C. Sinfort, co-auteure des papiers Drift-X)
+23. Trindade da Silva, F. et al. (2021). [Atmospheric dispersion and urban planning: An interdisciplinary approach to city modeling](https://doi.org/10.1016/j.scs.2021.102882). *Sustainable Cities and Society* 70, 102882.
+24. Mahmud, M. Z., Molla, M. M., Hasan, M. F. & Akhter, M. N. (2026). [Symmetry Patterns and Machine Learning Prediction of Urban Pollutant Dispersion](https://doi.org/10.3390/sym18081392). *Symmetry* 18(8), 1392.
+
 
 La bibliographie complète, catégorisée et datée (une trentaine d'entrées), est maintenue dans le dépôt : <code>docs/references.md</code>. Les citations du site sont gérées par <code>references.bib</code>. Les fiches de lecture détaillées par papier source : <code>docs/04-revues-papiers-sources.md</code>. Les sources primaires (PDF, extractions texte) sont archivées dans <code>raw/</code>.
