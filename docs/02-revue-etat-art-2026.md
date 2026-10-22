@@ -3,6 +3,8 @@
 > Revue structurée établie en octobre 2026 pour décider de la reprise du projet Drift-X sous le nom **J-DriftX**.
 > Toutes les sources citées sont listées dans [references.md](references.md) ; ce document n'utilise que des sources inspectées (résumés, notices, textes ouverts).
 
+> **Avertissement adversarial (22 octobre 2026) :** ce document est une synthèse exploratoire, non une revue systématique reproductible. Plusieurs formulations du résumé exécutif et des constats thématiques ci-dessous (« aucun concurrent », « case vide », « exactement la cible », avantages de généralisation) sont trop affirmatives au regard des preuves consignées. Elles ne doivent pas être reprises comme conclusions établies. Lire en priorité la [revue adversariale G0](10-revue-adversariale-g0.md), qui précise les limites documentées et les objections à tester. Les formulations historiques ci-dessous sont conservées pour traçabilité, pas endossées comme résultats validés.
+
 ## Question de recherche
 
 Le modèle Drift-X (2006–2009) reposait sur quatre paris : (1) une dispersion prédictible par solutions de similitude **généralisées dans une métrique non symétrique de temps de transport**, (2) sans résoudre d'EDP ni mailler, (3) calibrée par assimilation de données partielles, (4) utile pour la dérive de pesticides et l'identification de source. **Ces paris sont-ils toujours pertinents, concurrencés, dépassés ou confirmés par l'état de l'art de 2026 ? La reprise a-t-elle du sens ?**
