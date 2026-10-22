@@ -55,15 +55,15 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 
 **Apports pour J-DriftX.** La définition de référence de la pseudo-distance (contrat du module <code>metrique</code> du noyau, objet du test « non-symétrie ») ; le facteur 10³–10⁴ comme cible de performance à documenter dans les benchmarks (le papier donne même sa loi de croissance : quadratique en 2D, cubique en 3D) ; le protocole de validation par éléments finis comme patron du benchmark M1 ; l'hypothèse « vent < 20 km/h » à inscrire au catalogue des hypothèses ; l'héritage AD (Tapenade → équivalents modernes type JAX si l'on veut de la différentiation automatique en Python).
 
-## 3. Fiche — B. Mohammadi, J.-M. Brun & O. Pironneau (2006), chapitre Springer
+## 3. Fiche — Référence bibliographique attribuée à Mohammadi, Brun & Pironneau (2006)
 
-**Référence.** Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006). « Reduced order modelling of dispersion ». In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
+**Référence provisoire.** Une bibliographie publiée cite Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006), « Reduced order modelling of dispersion », en l'associant à *Numerical Analysis and Scientific Computing with PDE and their challenging applications*. Le recueil, l'éditeur, l'année et les autres métadonnées ne sont pas confirmés par une notice éditoriale.
 
-**Statut d'accès.** Non localisé en ligne : la notice du recueil n'a pas été trouvée en accès ouvert. La référence exacte est confirmée par la bibliographie du papier Applied Geomatics 2009 (source n° 7), qui cite « Mohammadi B, Brun JM, Pironneau O (2006) Reduced order modelling of dispersion ».
+**Statut de preuve.** L'existence de cette citation bibliographique est attestée par la bibliographie du papier *Applied Geomatics* de 2009. Cela ne suffit pas à confirmer la publication d'un chapitre dans le recueil indiqué. Le chapitre distinct de Brun & Mohammadi (2008), DOI 10.1007/978-1-4020-8758-5_14, est, lui, confirmé par la notice Springer et couvre les pages 245–256.
 
-**Lecture (par recoupement).** Trois indices rapprochent ce chapitre du chapitre 14 de 2008 (source n° 4) : mêmes deux premiers auteurs, même intitulé à un mot près, et présence d'O. Pironneau — co-auteur avec Mohammadi de la lignée « shape optimization / sensibilité incomplète » (Applied Shape Optimization for Fluids, 2001, citée dans le chapitre 2008). Il s'agit vraisemblablement d'une étape intermédiaire entre la note CR 2006 (5 pages) et le chapitre long de 2008, mais **ce point ne peut pas être affirmé sans le document** : à revoir à l'obtention du recueil.
+**Lecture prudente.** La proximité de titre avec le chapitre Brun & Mohammadi (2008) ne permet pas d'affirmer qu'il s'agit d'une étape intermédiaire ou d'une publication distincte. Il faut retrouver le recueil ou une notice de catalogue avant d'interpréter cette entrée.
 
-**Apports pour J-DriftX.** Tant que le document est introuvable, la seule valeur est la traçabilité de la lignée Pironneau (sensibilité incomplète) — déjà couverte par le chapitre 2008, mieux accessible.
+**Apports pour J-DriftX.** Ne pas tirer de conclusion méthodologique propre à cette référence tant que le document ou une notice fiable n'est pas retrouvé. Les concepts vérifiables doivent être attribués au chapitre de 2008 ou à d'autres sources effectivement consultées.
 
 ## 4. Fiche — J.-M. Brun & B. Mohammadi (2008), chapitre Springer CSM vol. 16
 
