@@ -245,10 +245,13 @@ Réserves : les effectifs de CAPRIV (« 3 792 observations / 38 variables », `d
 ## 7. Modifications réalisées dans la PR de suivi
 
 Cette PR de suivi ne se limite donc plus au registre initial. Elle :
-- ajoute le registre d'audit ;
-- corrige des affirmations excessives dans la revue d'état de l'art ;
-- corrige la relation DATEM/ETEX dans le catalogue de données ;
-- clarifie le statut G0 et la séparation entre cadrage documentaire, travail scientifique et prérequis G1.
+- ajoute le registre d'audit et conserve les constats A-01 à A-14 ainsi que B-01 à B-09 avec leur niveau de preuve ;
+- corrige des affirmations excessives dans la revue d'état de l'art et distingue les hypothèses J-DriftX des résultats établis ;
+- corrige la relation DATEM/ETEX dans le catalogue de données et clarifie le statut G0 par rapport aux prérequis G1 ;
+- corrige les métadonnées Turbelin et al. (2014), Bozon & Mohammadi (2009), Arcucci et al. (2023) et la date de la ressource Zenodo (2026) ;
+- sépare la source CAREA sur les sources complexes (Teggi et al., 2018) de l'étude d'exposition aux pesticides (Costanzini et al., 2018) ;
+- corrige le journal de l'étude POD+RBF et distingue l'année de publication en ligne de l'année de volume pour l'article Seveso ;
+- retire les affirmations non étayées sur l'absence de dépôt de la thèse et précise que l'année officielle doit être vérifiée sur la page de titre.
 
 Les changements n'établissent pas encore la validité de chaque référence du corpus. Les PDF de revue exécutive, les métadonnées bibliographiques complètes et les fichiers bruts de données restent à auditer.
 
