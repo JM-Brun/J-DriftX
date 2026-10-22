@@ -112,6 +112,23 @@ Le risque le plus immédiat n'est pas simplement que « Zermelo existe déjà »
 - **non établi** : originalité de Drift-X, validité générale des propriétés annoncées, conservation exacte sous les hypothèses réellement implémentées, valeur applicative;
 - **prochaine action discriminante** : lire la thèse de 2007 et le chapitre de 2008, puis implémenter un test de référence du champ uniforme reproduisant la projection (B^\perp), avec tests sur (d(A,B)=0) pour des points distincts et sur l'accessibilité orientée.
 
+## 6. Registre des incertitudes après cette lecture
+
+| Point | État après lecture du rapport 2006 | Ce qui reste nécessaire pour le lever |
+|---|---|---|
+| Définition historique | **Partiellement levé** : la projection \(B\mapsto B^\perp\) et le statut de pseudo-distance sont explicités au §3 | Lire la thèse et le chapitre de 2008 pour vérifier la cohérence des variantes et les extensions proposées |
+| Domaine de validité | **Partiellement levé** : l'article suppose une caractéristique unique et écarte sources/puits | Définir précisément le traitement des séparatrices, stagnations, caractéristiques multiples et limites du domaine |
+| Séparation des points | **Levé pour la construction publiée** : la source reconnaît que \(d(A,B)=0\) n'implique pas \(A=B\) | Ajouter un test analytique de reproduction; ne pas présenter cette propriété comme un défaut nouvellement découvert |
+| Inégalité triangulaire | **Levé au niveau de l'affirmation historique** : la source dit qu'elle peut échouer | Trouver ou construire un contre-exemple explicite à partir de la définition exacte avant d'écrire un test de non-régression |
+| Non-symétrie | **Partiellement levé** : la définition est orientée et fixe \(+\infty\) pour certains couples amont/aval | Formaliser la convention de domaine et distinguer coût non défini, coût étendu \(+\infty\), et trajet physiquement impossible |
+| Conservation de masse | **Non levé** : l'article mentionne une contrainte globale sur la quantité transportée, mais cela ne remplace pas la dérivation du changement de coordonnées | Reconstituer le jacobien, les hypothèses sur \(\nabla\cdot\mathbf u\), les frontières et le lien avec le scalaire \(c\) dans la thèse/chapitre |
+| Originalité | **Non levé** : un article de 2006 décrit déjà la pseudo-distance et son usage pour les solutions de similitude | Comparer les équations et résultats spécifiques, sans revendiquer la pseudo-distance elle-même comme nouvelle |
+| Date de la thèse | **Métadonnées incohérentes** : la bibliographie du dépôt indique 2006, alors que l'article de 2006 cite la thèse comme 2007 | Vérifier la page de titre ou le dépôt institutionnel de la thèse avant de normaliser la référence |
+
+### Prochaine action à plus forte valeur
+
+Ne pas lancer encore un solveur 2D. Reproduire d'abord la pseudo-distance historique dans le champ uniforme, avec cas de test calculés à la main. En parallèle, obtenir et lire la thèse de Brun et le chapitre de 2008 pour formaliser la conservation de masse et vérifier si les sources développent ou modifient la définition du rapport de 2006. Si la source primaire complète n'est pas accessible, documenter cette limite plutôt que combler les lacunes par inférence.
+
 ## Références web consultées
 
 - Gibbons et al. (2009), DOI [10.1103/PhysRevD.79.044022](https://doi.org/10.1103/PhysRevD.79.044022).
