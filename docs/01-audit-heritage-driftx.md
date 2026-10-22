@@ -7,13 +7,13 @@
 
 Le projet **Drift-X** (modèle de dispersion atmosphérique de pesticides couplé à un SIG, développé à Cemagref/ITAP et I3M Montpellier) repose sur le corpus suivant :
 
-1. **Brun, J.-M. (2006)**. *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. Non déposée en ligne à ce jour — dépôt HAL prévu (action M0 de la roadmap).
+1. **Brun, J.-M.** *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. L'article primaire de Mohammadi & Brun (2006) cite la thèse comme 2007 ; certaines bibliographies secondaires donnent 2006. Non localisée dans les recherches consignées ; vérifier la page de titre et les notices institutionnelles avant de figer l'année ou d'affirmer qu'elle n'a jamais été déposée/numérisée.
 2. **Mohammadi, B. & Brun, J.-M. (2006)**. « Similitude généralisée et modélisation géométrique à complexité réduite ». *C. R. Mécanique* 334(10), 634–638. DOI 10.1016/j.crme.2006.06.007 — première formulation publique : assimilation de données partielles, solutions de similitude dans une métrique non symétrique basée sur les temps de transport, sans EDP ni maillage, évaluation ponctuelle.
 3. **Mohammadi, B., Brun, J.-M. & Pironneau, O. (2006)**. « Reduced order modelling of dispersion ». In *Numerical Analysis and Scientific Computing with PDE and their challenging applications*, Springer.
 4. **Brun, J.-M. & Mohammadi, B. (2008)**. « Reduced-Order Modelling of Dispersion ». In Glowinski, R. & Neittaanmäki, P. (eds), *Partial Differential Equations: Modelling and Numerical Simulation*, Computational Methods in Applied Sciences vol. 16, Springer, Dordrecht, chap. 14, p. 245 et s. — version longue de référence : approche multi-niveaux, similitude généralisée, contraintes physiques (incompressibilité du vent généré, conservation, positivité, linéarité), exemples numériques multi-sources, analyse de sensibilité pour l'identification de source et l'analyse de risque.
 5. **Bozon, N., Mohammadi, B. & Sinfort, C. (2008)**. « Similitude and non symmetric geometry for dispersion modelling ». e-sta vol. 5, numéro spécial STIC et Environnement'07.
 6. **Bozon, N., Sinfort, C. & Mohammadi, B. (2009)**. « A GIS-based atmospheric dispersion model » — la plateforme **Drift-X** proprement dite : panache gaussien spatialisé, MNT, sorties raster géoréférencées, plugin **QGIS**. Dépôt HAL : https://hal.science/hal-00468863 (fichier : MO2009-PUB00026817).
-7. **Mohammadi, B. & Bozon, N. (2009)**. « GIS-based atmospheric dispersion modelling ». *Applied Geomatics* 1, 33–39. DOI 10.1007/s12518-009-0006-0 — déclinaison journal de la plateforme.
+7. **Bozon, N. & Mohammadi, B. (2009)**. « GIS-based atmospheric dispersion modelling ». *Applied Geomatics* 1, 59–74. DOI 10.1007/s12518-009-0006-0 — déclinaison journal de la plateforme.
 
 ## 2. Fond scientifique : ce que le projet affirmait
 
