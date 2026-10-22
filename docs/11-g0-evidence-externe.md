@@ -2,11 +2,11 @@
 
 > **État au 22 octobre 2026.** Recherche documentaire ciblée, non revue systématique. Les sources établissent l'existence de problèmes de mesure et d'évaluation de la dérive ; elles ne démontrent pas que J-DriftX y apporte une solution.
 
-**Extension de la recherche de données :** un [catalogue détaillé de jeux de données de transport et dispersion](12-catalogue-donnees-transport-dispersion.md) a été ajouté. Les candidats les plus proches de l'hypothèse atmosphérique sont NOAA DATEM/ETEX (longue distance), DIFLU (traceur hélium contrôlé en champ proche) et ERIES (dispersion urbaine en soufflerie). Des données routières, industrielles, marines, fluviales et radiologiques sont aussi recensées, avec distinction explicite entre validation physique directe, analogie méthodologique et simple surveillance. Ce catalogue est un pré-tri documentaire; aucun des fichiers bruts de ces nouveaux jeux n'a encore été audité.
+**Extension de la recherche de données :** un [catalogue détaillé de jeux de données de transport et dispersion](12-catalogue-donnees-transport-dispersion.md) a été ajouté. Les candidats les plus proches de l'hypothèse atmosphérique sont NOAA DATEM et ETEX-JRC (deux ressources distinctes pour la longue distance), DIFLU (traceur hélium contrôlé en champ proche) et ERIES (dispersion urbaine en soufflerie). Des données routières, industrielles, marines, fluviales et radiologiques sont aussi recensées, avec distinction explicite entre validation physique directe, analogie méthodologique et simple surveillance. Ce catalogue est un pré-tri documentaire; aucun des fichiers bruts de ces nouveaux jeux n'a encore été audité.
 
-## Décision provisoire
+## Décision initiale (historique, remplacée ci-dessous)
 
-**G0 n'est pas franchi.** Ne pas commencer un benchmark applicatif ni présenter le far-field comme cas d'usage retenu. Deux éléments sont maintenant plus clairs :
+**La mention « G0 n'est pas franchi » ci-dessous était le statut initial et est remplacée par la décision mise à jour du 22 octobre 2026.** À ce stade initial, il ne fallait pas commencer un benchmark applicatif ni présenter le far-field comme cas d'usage retenu. Deux éléments étaient alors plus clairs :
 
 1. Il existe des décisions concrètes liées à la dérive de pulvérisation (évaluation d'exposition, distances tampons, évaluation de matériels de réduction de dérive).
 2. CAPRIV est principalement adapté à l'étude de dérive de proximité, pas à la validation du far-field à plusieurs kilomètres. Le décalage entre le phénomène mesuré et les hypothèses physiques du modèle reste à résoudre.
