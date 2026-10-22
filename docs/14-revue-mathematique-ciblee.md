@@ -57,6 +57,30 @@ Le coût ne dépend pas de \(y_B-y_A\). Ainsi, pour \(B=(x_A,y_B)\) avec \(y_B\n
 
 Pour ce champ uniforme, cette expression satisfait l'inégalité triangulaire dans la direction admissible lorsque les abscisses sont ordonnées, mais cela ne prouve pas la propriété pour des champs non uniformes avec projections multiples ou géométrie plus complexe. L'article avertit explicitement que la triangulation peut être mise en défaut dans la construction générale.
 
+### Contre-exemple explicite à l'inégalité triangulaire
+
+La source de 2006 affirme que l'inégalité triangulaire peut échouer. On peut le vérifier sur un champ analytique simple, sans sources ni puits :
+
+\[
+\mathbf u(x,y)=(1+9y,\,0),\qquad (x,y)\in\mathbb R\times[0,1].
+\]
+
+Ce champ est stationnaire, strictement dirigé vers \(+x\), sans divergence (\(\nabla\cdot\mathbf u=0\)); ses caractéristiques sont les droites horizontales. Avec la définition historique projetée, pour un déplacement vers l'aval,
+
+\[
+d(A,B)=\frac{x_B-x_A}{1+9y_A}.
+\]
+
+Choisissons \(A=(0,0)\), \(B=(1,1)\) et \(C=(2,0)\). Alors
+
+\[
+d(A,C)=2,\qquad d(A,B)=1,\qquad d(B,C)=\frac{1}{10},
+\]
+
+d'où \(d(A,C)=2>1+\frac{1}{10}=d(A,B)+d(B,C)\). L'inégalité triangulaire échoue donc même pour un champ lisse, divergence nulle et sans singularité dans le domaine considéré. Le mécanisme est géométrique : \(d(A,C)\) mesure la progression sur la caractéristique de \(A\), tandis que \(d(B,C)\) mesure la progression sur celle de \(B\), où la vitesse est plus élevée.
+
+Ce contre-exemple confirme que la construction est une pseudo-distance directionnelle, et non une distance asymétrique satisfaisant automatiquement l'inégalité triangulaire.
+
 ### Conséquence pour le vocabulaire et le MVP
 
 - Conserver le terme historique **pseudo-distance de transport** lorsque l'on parle de la construction de 2006.
@@ -139,7 +163,7 @@ La PR corrige les docstrings et les noms de tests pour que les tests décrivent 
 | Définition historique | **Partiellement levé** : la projection \(B\mapsto B^\perp\) et le statut de pseudo-distance sont explicités au §3 | Lire la thèse et le chapitre de 2008 pour vérifier la cohérence des variantes et les extensions proposées |
 | Domaine de validité | **Partiellement levé** : l'article suppose une caractéristique unique et écarte sources/puits | Définir précisément le traitement des séparatrices, stagnations, caractéristiques multiples et limites du domaine |
 | Séparation des points | **Levé pour la construction publiée** : la source reconnaît que \(d(A,B)=0\) n'implique pas \(A=B\) | Ajouter un test analytique de reproduction; ne pas présenter cette propriété comme un défaut nouvellement découvert |
-| Inégalité triangulaire | **Levé au niveau de l'affirmation historique** : la source dit qu'elle peut échouer | Trouver ou construire un contre-exemple explicite à partir de la définition exacte avant d'écrire un test de non-régression |
+| Inégalité triangulaire | **Levé pour un cas analytique** : le champ divergence nulle \\(\mathbf u=(1+9y,0)\\) et trois points donnent \\(d(A,C)=2>d(A,B)+d(B,C)=1.1\\) | Traduire ce cas en test de référence quand l'API de champ variable sera spécifiée |
 | Non-symétrie | **Partiellement levé** : la définition est orientée et fixe \(+\infty\) pour certains couples amont/aval | Formaliser la convention de domaine et distinguer coût non défini, coût étendu \(+\infty\), et trajet physiquement impossible |
 | Conservation de masse | **Non levé** : les sources imposent des contraintes de conservation au modèle réduit, mais les passages lus ne démontrent pas le résultat plus précis de conservation exacte du flux sur chaque surface iso-\(\tau\) | Reconstituer le jacobien, les hypothèses sur \(\nabla\cdot\mathbf u\), les frontières et le lien avec le scalaire \(c\) dans la thèse/chapitre |
 | Originalité | **Non levé** : un article de 2006 décrit déjà la pseudo-distance et son usage pour les solutions de similitude | Comparer les équations et résultats spécifiques, sans revendiquer la pseudo-distance elle-même comme nouvelle |
