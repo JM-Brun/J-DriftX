@@ -34,7 +34,7 @@ Le problème de Zermelo et les géométries de Randers/Finsler sont des antécé
 
 ## Définition idéale et algorithme approché (2008)
 
-Le chapitre de 2008 confirme la projection \(B\mapsto B^\perp\), mais précise que la méthode numérique approxime ensuite \(B^\perp\approx B\), approximation décrite comme généralement peu probable au sens géométrique exact. Il applique en champ uniforme un facteur correctif \(2/\pi\) (moyenne cosinus stochastique) et limite les résultats satisfaisants aux champs atmosphériques lisses visés par l'étude.
+Le chapitre de [Brun & Mohammadi (2008, §2.2, pp. 248–250)](https://doi.org/10.1007/978-1-4020-8758-5_14) confirme la projection \(B\mapsto B^\perp\), mais précise que la méthode numérique approxime ensuite \(B^\perp\approx B\), approximation décrite comme généralement peu probable au sens géométrique exact. Il applique en champ uniforme un facteur correctif \(2/\pi\) (moyenne cosinus stochastique) et limite les résultats satisfaisants aux champs atmosphériques lisses visés par l'étude.
 
 Il faut donc distinguer la **définition géométrique** de la **procédure numérique approchée**. Les contraintes de conservation énoncées pour le modèle réduit ne constituent pas, à elles seules, une preuve que le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\).
 
@@ -75,7 +75,7 @@ De même, une singularité de \(1/|\mathbf u|\) près d'une stagnation ne prouve
 
 ## Ce que dit effectivement la source historique de 2006
 
-La note de Mohammadi & Brun (2006, §3, [texte intégral](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf)) ne définit pas simplement le temps jusqu'au point cible \(B\). Elle projette \(B\) sur la caractéristique passant par \(A\), en \(B^\perp\), puis intègre le temps de migration de \(A\) à \(B^\perp\). La source nomme explicitement cette construction une **pseudo-distance** et indique qu'elle peut perdre la séparation des points et que l'inégalité triangulaire peut échouer.
+La note de [Mohammadi & Brun (2006, §3, pp. 635–636)](https://doi.org/10.1016/j.crme.2006.06.007) ([texte intégral en accès libre](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf)) ne définit pas simplement le temps jusqu'au point cible \(B\). Elle projette \(B\) sur la caractéristique passant par \(A\), en \(B^\perp\), puis intègre le temps de migration de \(A\) à \(B^\perp\). La source nomme explicitement cette construction une **pseudo-distance** et indique qu'elle peut perdre la séparation des points et que l'inégalité triangulaire peut échouer.
 
 Dans un champ uniforme \(\mathbf u=(U,0)\), \(U>0\), la formule devient, pour \(x_B\ge x_A\),
 
