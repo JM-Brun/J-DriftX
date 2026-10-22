@@ -10,14 +10,15 @@ Le travel-time de Drift-X est un **objet de coût orienté construit à partir d
 
 Une métrique **riemannienne** mesure les longueurs à l'aide d'un produit scalaire $g(\mathbf{x})$ qui varie doucement d'un point à l'autre : $ds^2 = g_{ij}\, dx^i dx^j$. La distance euclidienne du plan en est le cas particulier le plus simple. Elle est **symétrique et réversible** : la longueur d'un chemin ne dépend pas du sens dans lequel on le parcourt.
 
-Une métrique **non riemannienne** lève une ou plusieurs de ces hypothèses :
+Les familles ci-dessous ne sont pas interchangeables. En particulier, une pseudo-distance qui viole l'inégalité triangulaire n'est pas une quasi-métrique au sens usuel :
 
-| Famille | Ce qui change | Exemple |
+| Famille / objet | Propriété distinctive | Exemple ou précaution |
 |---|---|---|
-| Quasi-métrique | la symétrie : $d(\mathbf{a} \to \mathbf{b}) \neq d(\mathbf{b} \to \mathbf{a})$ | temps de transport dans un vent : on ne remonte pas le courant |
-| Métrique de Finsler | la longueur dépend aussi de la **direction** de parcours | navigation de Zermelo dans un courant |
-| Distance-temps réseau | la longueur se mesure sur un **réseau** (routes, rails) | isochrones d'un réseau de transport |
-| Métrique de maillage | la longueur est pondérée par un tenseur anisotrope $M(\mathbf{x})$ | adaptation de maillage [@borouchaki1997delaunay] |
+| **Pseudo-distance** | Peut échouer à séparer les points; selon la construction, d'autres axiomes peuvent aussi échouer | La construction historique projetée de Drift-X |
+| **Quasi-métrique** | Non symétrique, mais satisfait l'inégalité triangulaire selon la convention adoptée | Certains coûts orientés de réseau; ne pas y classer Drift-X sans vérifier la triangulation |
+| **Métrique de Finsler** | La longueur infinitésimale dépend de la position et de la direction | Navigation de Zermelo dans un courant, avec trajectoire contrôlable |
+| Distance-temps réseau | Le coût est défini sur un réseau (routes, rails) | Isochrones d'un réseau de transport |
+| Métrique de maillage | La longueur est pondérée par un tenseur anisotrope $M(\mathbf{x})$ | Adaptation de maillage [@borouchaki1997delaunay] |
 
 ![Trois boules unités : euclidienne (cercle), riemannienne (ellipse symétrique), non riemannienne (ovale décentré).](../images/boules-unites-metriques.svg)
 
