@@ -4,7 +4,7 @@ title: "Revue mathématique ciblée"
 
 # Temps de parcours : clarifier l'objet avant de revendiquer une contribution
 
-Cette revue ciblée compare la définition de la métrique travel-time de Drift-X aux objets mathématiques voisins. Elle est un cadrage non exhaustif, pas une conclusion sur l'originalité de la formulation historique.
+Cette revue ciblée compare la définition de la pseudo-distance de Drift-X aux objets mathématiques voisins. Elle n'est pas exhaustive et ne conclut pas sur l'originalité. Elle sépare les faits rapportés par les sources, les déductions analytiques et les questions encore ouvertes.
 
 ## Point principal
 
@@ -15,6 +15,12 @@ $$
 $$
 
 décrit un temps de parcours le long d'une trajectoire donnée. Il faut distinguer cette intégrale d'un **temps minimal de navigation** (où la trajectoire est choisie) et d'un **temps de première arrivée** défini par une loi de propagation.
+
+## Lire les termes de mécanique des fluides
+
+Un **champ de vitesse** \\(\\mathbf u\\) associe une vitesse à chaque position. Une **ligne de courant** est tangente au champ à un instant donné; une **trajectoire de particule** est le chemin suivi au cours du temps. Pour un champ stationnaire suffisamment régulier, lignes de courant et trajectoires spatiales coïncident; dans un champ instationnaire, elles peuvent différer. Une **caractéristique** est la courbe qui transporte l'information d'une équation différentielle de transport et doit être définie à partir de la dynamique étudiée.
+
+La **divergence** \\(\\nabla\\cdot\\mathbf u\\) caractérise la dilatation locale du champ. Une divergence nulle est cohérente avec un écoulement incompressible à densité constante, mais ne prouve pas à elle seule la conservation du flux à travers toute surface. Les sources de fluide, les sources de polluant et les points singuliers du champ sont trois cas distincts.
 
 ## Trois objets à ne pas confondre
 
@@ -31,6 +37,8 @@ Le problème de Zermelo et les géométries de Randers/Finsler sont des antécé
 Le chapitre de 2008 confirme la projection \(B\mapsto B^\perp\), mais précise que la méthode numérique approxime ensuite \(B^\perp\approx B\), approximation décrite comme généralement peu probable au sens géométrique exact. Il applique en champ uniforme un facteur correctif \(2/\pi\) (moyenne cosinus stochastique) et limite les résultats satisfaisants aux champs atmosphériques lisses visés par l'étude.
 
 Il faut donc distinguer la **définition géométrique** de la **procédure numérique approchée**. Les contraintes de conservation énoncées pour le modèle réduit ne constituent pas, à elles seules, une preuve que le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\).
+
+![Schéma de la projection historique et du contre-exemple à l'inégalité triangulaire. Les flèches illustrent le champ, sans représenter une simulation.](../images/pseudo-distance-projection-et-triangulation.svg)
 
 ## Contre-exemple à l'inégalité triangulaire
 
@@ -74,6 +82,23 @@ d(A,B)=\frac{x_B-x_A}{U}.
 \]
 
 Elle ne dépend pas de la différence transversale \(y_B-y_A\). Deux points distincts ayant la même abscisse peuvent donc avoir un coût nul. C'est une propriété de la construction historique, pas une distance géométrique ordinaire.
+
+## Références citées : quoi vérifier dans chacune
+
+- **Mohammadi & Brun (2006)**, [article original](https://doi.org/10.1016/j.crme.2006.06.007), *Comptes Rendus Mécanique*, 334(10), 634–638, §3, pp. 635–636 : définition projetée et avertissement sur les axiomes de distance.
+- **Brun & Mohammadi (2008)**, [chapitre Springer](https://doi.org/10.1007/978-1-4020-8758-5_14), pp. 245–256, §2.2, pp. 248–250 : approximation numérique et correction en champ uniforme.
+- **Gibbons et al. (2009)**, [Zermelo–Randers–Finsler](https://doi.org/10.1103/PhysRevD.79.044022) : géométrie de navigation à temps minimal, avec contrôle de trajectoire.
+- **Dušek (2018)**, [Zermelo Navigation Problem in Geometry](https://doi.org/10.17818/NM/2018/4SI.16) : formulation géométrique de la navigation.
+- **Contreras & Kachroo (2020)**, [Hamilton–Jacobi Travel Time Dynamics](https://doi.org/10.1109/TITS.2019.2946109) : temps de parcours de type Hamilton–Jacobi dans un autre contexte physique.
+- **Sethian & Vladimirsky (2001)**, [Ordered upwind methods](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/) : méthodes numériques pour des équations Hamilton–Jacobi statiques.
+
+Les trois dernières références sont des comparateurs conceptuels : elles ne démontrent pas la validité de la définition historique ni son équivalence à un temps minimal de navigation.
+
+## Le lien avec l'équation de transport
+
+Pour une concentration passive (c), l'équation conservative d'advection avec source (s) est \\(\\partial_t c+\\nabla\\cdot(c\\mathbf u)=s\\). Si la divergence du champ est nulle, elle se réduit à \\(\\partial_t c+\\mathbf u\\cdot\\nabla c=s\\). Cette forme explique pourquoi les caractéristiques sont utiles : elles suivent le transport de l'information. Mais la pseudo-distance projetée est un objet géométrique construit à partir de ces caractéristiques; elle n'est pas, par elle-même, une solution de l'équation de concentration et ne modélise pas automatiquement la diffusion, la turbulence ou le dépôt.
+
+La revendication de conservation du flux sur les surfaces iso-\\(\\tau\\) exige une dérivation séparée du changement de variables, du jacobien et des conditions aux limites. La condition \\(\\nabla\\cdot\\mathbf u=0\\) seule ne suffit pas à établir ce résultat précis.
 
 ## Conclusion provisoire
 
