@@ -47,4 +47,4 @@ Ces expériences servent à la **vérification numérique**, non à la validatio
 
 ## Référence éditoriale
 
-La version opérationnelle et détaillée de cette carte se trouve dans [docs/18-carte-articulation-scientifique.md](../../docs/18-carte-articulation-scientifique.md). Elle précise l'état de chaque niveau, les limites des laboratoires et l'ordre de travail recommandé.
+La version opérationnelle et détaillée de cette carte se trouve dans [docs/18-carte-articulation-scientifique.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/18-carte-articulation-scientifique.md). Elle précise l'état de chaque niveau, les limites des laboratoires et l'ordre de travail recommandé.
