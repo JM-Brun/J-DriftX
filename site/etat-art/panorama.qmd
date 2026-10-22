@@ -6,7 +6,7 @@ title: "Panorama de l'état de l'art (2008 → 2026)"
 
 > Synthèse de la revue systémique déposée dans le dépôt (<code>docs/02-revue-etat-art-2026.md</code>, sources notées et datées).
 
-## Modèles opérationnels et réglementaires
+## Portée et limites de la revue\n\nCe panorama est une synthèse structurée, non encore une revue systématique entièrement reproductible : les requêtes exactes, dates de recherche, critères de sélection et décomptes du corpus doivent être publiés. Les conclusions sur l'originalité et les avantages potentiels de J-DriftX sont des hypothèses à tester, pas des performances établies. Voir le [protocole de validation scientifique](../projet/validation-scientifique.qmd).\n\n## Modèles opérationnels et réglementaires
 
 Le paysage near-field reste gaussien : l'EPA a promulgué en novembre 2024 une révision complète de son guideline (Appendix W) centrée sur les améliorations d'AERMOD, effective janvier 2025 [@epa2024appendixw]. CALPUFF, modèle préféré de 2003 à 2017, est rétrogradé « modèle alternatif ». Les comparatifs montrent des facteurs 2 d'écart avec les mesures : l'**incertitude des modèles opérationnels reste le problème central**, et le besoin de modèles rapides à contraintes physiques demeure.
 

@@ -6,23 +6,23 @@ title: "Objectifs de J-DriftX"
 
 ## Vision
 
-**J-DriftX v2** est un moteur open source de dispersion à complexité réduite : solutions de similitude généralisées dans une métrique non symétrique de temps de transport, évaluation ponctuelle sans maillage, calibration par assimilation de données, contraintes physiques garanties.
+**J-DriftX v2** est un moteur open source de dispersion à complexité réduite : solutions de similitude généralisées dans une métrique non symétrique de temps de transport, évaluation ponctuelle sans maillage et calibration par assimilation de données. Les propriétés physiques annoncées constituent des objectifs à démontrer par analyse et benchmarks ; elles ne sont pas présumées garanties avant validation.
 
 ## Cibles applicatives
 
-- **Far-field de la dérive de pulvérisation** (vignes, grandes cultures, drones) : au-delà des quelques centaines de mètres couverts par les modèles lagrangiens near-field, là où l'extension gaussienne réglementaire est reconnue très conservatrice.
+- **Far-field de la dérive de pulvérisation** (vignes, grandes cultures, drones) : domaine à étudier au-delà des distances couvertes par les modèles lagrangiens near-field, avec une attention particulière aux limites des extensions gaussiennes.
 - **Exposition résidentielle aux pesticides** : cartographie multi-échelles parcelle → paysage, couplée à un SIG.
-- **Analyse de risque statistique** : Monte Carlo massif rendu possible par le coût quasi nul de l'évaluation ponctuelle.
-- **Identification de source** (problème inverse) : adjoint analytique, sensibilité exacte.
+- **Analyse de risque statistique** : évaluer si le coût d’évaluation permet des campagnes Monte Carlo à grande échelle.
+- **Identification de source** (problème inverse) : étudier l’apport de la sensibilité du modèle direct et des méthodes adjointes.
 
 ## Principes directeurs
 
-1. **Physique d'abord, données ensuite.** Le modèle analytique reste la source de vérité ; l'apprentissage ne sert qu'à calibrer. Garde-fou contre l'extrapolation, exigence d'interprétabilité.
-2. **Benchmarks avant fonctionnalités.** Chaque module est livré avec son jeu de validation public.
+1. **Physique d’abord, données ensuite.** Le modèle analytique constitue le socle ; l’apprentissage peut contribuer à la calibration si son apport est mesuré et si les limites d’extrapolation sont documentées.
+2. **Benchmarks avant fonctionnalités.** Chaque module doit être associé à un jeu de validation et à des critères d’acceptation publics.
 3. **Cœur pur, bindings en aval.** Noyau Python sans dépendance SIG ; plugin QGIS et API séparés.
-4. **Coût nul par évaluation.** Préserver la propriété d'évaluation ponctuelle : un million d'échantillons Monte Carlo sur un ordinateur portable.
-5. **Interopérabilité réglementaire.** Formats d'entrée météo compatibles AERMOD/AgDRIFT quand c'est possible ; sorties GeoTIFF géoréférencées.
+4. **Coût d’évaluation mesuré.** Quantifier le coût par évaluation et vérifier l’objectif de calcul Monte Carlo à grande échelle sur une machine documentée.
+5. **Interopérabilité.** Étudier les formats météo compatibles AERMOD/AGDISP lorsque cela est pertinent ; documenter les sorties géoréférencées.
 
 ## Statut
 
-Phase 0 terminée (documentation, audit, revue de l'état de l'art, roadmap). Le jalon M1 — noyau Python et benchmark gaussien — est en cours : voir la [feuille de route](roadmap.qmd) et le code du dépôt.
+La documentation, l’audit et la revue structurée de l’état de l’art sont disponibles. La méthode de recherche documentaire doit encore être rendue entièrement reproductible avant de qualifier la revue de systématique. Le jalon M1 porte sur le noyau Python et le benchmark gaussien ; son avancement doit être confirmé par des tests et livrables vérifiables. Voir la [feuille de route](roadmap.qmd) et le [protocole de validation scientifique](validation-scientifique.qmd).

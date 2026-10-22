@@ -1,0 +1,37 @@
+---
+title: "Validation scientifique et protocole de preuve"
+---
+
+# Validation scientifique et protocole de preuve
+
+Cette page traduit la revue de l’état de l’art en critères de validation pour J-DriftX. Elle distingue le positionnement proposé des résultats qui restent à démontrer.
+
+## Statut de la revue
+
+La revue publiée dans le dépôt est une **revue structurée de l’état de l’art**. Elle ne doit être qualifiée de revue systématique reproductible qu’après publication des bases interrogées, requêtes exactes, dates, critères de sélection, nombres de références examinées et méthode d’évaluation de la qualité des sources.
+
+Les conclusions de positionnement — notamment l’absence de concurrents utilisant une métrique *travel-time*, la robustesse hors domaine et l’intérêt pour le *far-field* — sont des hypothèses à instruire, pas des résultats déjà établis. Les affirmations doivent être bornées par les sources réellement consultées.
+
+## Ordre des priorités
+
+1. **M1 — Noyau et référence :** formaliser le domaine de validité, établir un cas gaussien reproductible et automatiser les tests physiques.
+2. **M2 — Calibration et problème inverse :** séparer calibration et validation, puis mesurer l’effet du bruit, des données manquantes et de la régularisation.
+3. **M3 — Terrain :** utiliser des campagnes publiées avec un jeu de validation indépendant et analyser les incertitudes.
+4. **M4 — Publication :** soumettre une synthèse scientifique après validation, en incluant limites et résultats négatifs.
+
+## Critères minimaux d’un benchmark
+
+- Données, hypothèses, unités, paramètres et provenance explicites.
+- Baselines définies et protocole de comparaison équitable.
+- Erreurs absolue et relative, conservation de masse et positivité lorsque pertinentes.
+- Temps de calcul, mémoire, sensibilité et incertitude.
+- Version du code, scripts de reproduction et limites de généralisation.
+
+## Règles de formulation
+
+- Dire « objectif de conservation » ou « propriété à démontrer » tant que preuve ou test concluant n’est pas disponible.
+- Ne pas revendiquer de supériorité générale sur les modèles réglementaires, ROM ou ML sans comparaison indépendante.
+- Présenter J-DriftX comme un prototype de recherche en validation, non comme un substitut réglementaire qualifié.
+- Garder le statut des jalons cohérent entre cette page, les objectifs et la feuille de route.
+
+Le protocole détaillé est maintenu dans [docs/05-plan-validation-et-integration.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/05-plan-validation-et-integration.md).
