@@ -9,7 +9,7 @@
 
 | # | Source | Accès en ligne (oct. 2026) | Information extraite dans cette revue |
 |---|---|---|---|
-| 1 | Brun 2006 (thèse) | Non disponible (jamais déposée/numérisée) | Métadonnées via citations croisées uniquement |
+| 1 | Brun 2007 (thèse, année citée dans l'article primaire de 2006) | Non localisée lors des recherches consignées ; statut de dépôt/numérisation non établi | Métadonnées via citations croisées uniquement |
 | 2 | Mohammadi & Brun 2006 (C. R. Mécanique) | **Papier relu intégralement** (PDF libre, archive ouverte Académie des sciences) | Résumés verbatim, définition complète de la pseudo-distance, benchmark de coût 10³–10⁴, adjoint Tapenade, références internes |
 | 3 | Mohammadi, Brun & Pironneau 2006 (chapitre) | Non localisé | Citation exacte via bibliographie du papier n° 7 |
 | 4 | Brun & Mohammadi 2008 (Springer, chap. 14) | Chapitre fourni par l'auteur ; relais public ResearchGate | Résumé + pages 245–246 (OCR) : introduction et début de la section ROM |
@@ -19,14 +19,14 @@
 
 Points notables de cette campagne de relecture : la source n° 6 s'est révélée la plus riche — le manuscrit auteur complet est accessible et documente l'architecture logicielle historique (cœur Fortran + plugin QGIS) et la construction multi-niveaux. Une **version journal inédite dans notre bibliographie** a été identifiée et vérifiée (JESA 2010, DOI valide). Détail en section 8.
 
-## 1. Fiche — J.-M. Brun (2006), thèse de doctorat
+## 1. Fiche — J.-M. Brun (thèse citée comme 2007), thèse de doctorat
 
-**Référence.** Brun, J.-M. (2006). *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II.
+**Référence provisoire.** Brun, J.-M. *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. L'article primaire de Mohammadi & Brun (2006) la cite en 2007 ; certaines bibliographies secondaires donnent 2006. Retenir 2007 comme année citée par la source primaire jusqu'à vérification de la page de titre.
 
-**Statut d'accès.** Introuvable en ligne à ce jour (theses.fr, HAL, moteur général). Jamais numérisée ni déposée. Le document papier est en possession de l'auteur. Action roadmap : M0 (dépôt HAL).
+**Statut d'accès.** Non localisée dans les recherches consignées (theses.fr, HAL, moteur général) ; cela ne prouve pas qu'elle n'a jamais été numérisée ni déposée. Le document papier est indiqué comme étant en possession de l'auteur. Action roadmap : vérifier les métadonnées et les droits, puis envisager un dépôt HAL.
 
 **Ce que l'on sait par recoupement (sources vérifiables).**
-- Le titre exact et l'année sont confirmés par la bibliographie du chapitre Springer 2008 (source n° 4) et par la bibliographie du papier Applied Geomatics 2009 (source n° 7), qui citent toutes deux : « J. M. Brun. Modélisation à complexité réduite de la dérive. PhD thesis, University of Montpellier, 2006. »
+- Le titre est cité sous la forme « Modélisation à complexité réduite de la dérive ». L'année est contradictoire : l'article primaire de Mohammadi & Brun (2006) cite la thèse comme 2007, tandis que certaines bibliographies secondaires la donnent comme 2006. L'année de soutenance et l'intitulé officiel doivent être contrôlés sur la page de titre ou une notice institutionnelle.
 - Le résumé du C. R. Mécanique 2006 (source n° 2, mêmes auteurs, même année) décrit le contenu scientifique contemporain de la thèse : assimilation de données partielles, solutions de similitude dans une métrique non symétrique basée sur les temps de transport, sans EDP ni maillage, évaluation ponctuelle.
 - Le chapitre 2008 (source n° 4) précise que la hiérarchie multi-niveaux traite « du rang de plants de vigne aux bassins versants », avec le champ proche de la buse construit à partir d'observations expérimentales — soit la partie viticulture/ITAP du travail de thèse.
 
