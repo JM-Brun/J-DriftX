@@ -460,7 +460,7 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 
 - **Statut :** deux liens internes cassés confirmés et corrigés dans cette PR.
 - **Emplacements :** `site/projet/utilite-scientifique.qmd`, `site/etat-art/revue-mathematique.qmd`.
-- **Constat :** le rendu Quarto de la CI signalait `projet/15-audit-corpus-g0-resultats.md` et `etat-art/mvp-scientifique.qmd) comme cibles introuvables. Les documents visés existaient, mais les chemins relatifs étaient erronés depuis les pages sources. Le rendu réussissait malgré ces avertissements : un rendu vert seul ne prouve donc pas que tous les liens internes sont résolus.
+- **Constat :** le rendu Quarto de la CI signalait `projet/15-audit-corpus-g0-resultats.md` et `etat-art/mvp-scientifique.qmd` comme cible introuvable. Les documents visés existaient, mais les chemins relatifs étaient erronés depuis les pages sources. Le rendu réussissait malgré ces avertissements : un rendu vert seul ne prouve donc pas que tous les liens internes sont résolus.
 - **Correction effectuée :** les liens pointent désormais respectivement vers `../../docs/15-audit-corpus-g0-resultats.md` et `../projet/mvp-scientifique.qmd`.
 - **Preuve de clôture :** nouveau rendu Quarto sans ces avertissements. À terme, ajouter un contrôle de liens internes explicite au workflow plutôt que compter uniquement sur le succès de `quarto render`.
 
@@ -471,3 +471,12 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 - **Constat :** l'article de 2024 *Time-optimal solutions of Zermelo's navigation problem with moving obstacles* apparaissait deux fois. La seconde occurrence comportait en outre quatre cellules pour un tableau à trois colonnes, ce qui décalait la limitation scientifique hors de sa colonne prévue et pouvait rendre la comparaison ambiguë.
 - **Correction effectuée :** fusion des deux lignes en une seule; la pertinence conditionnelle du comparateur et la limite (« ne démontre rien sur la pseudo-distance projetée en advection pure ») restent explicites dans la troisième colonne.
 - **Preuve de clôture :** contrôle du tableau corrigé et rendu Quarto dans la CI de la branche.
+
+### B-34 — Conservation de flux : débit volumique et flux de polluant confondus dans le raisonnement potentiel
+
+- **Statut :** risque d'inférence scientifique identifié; formulation clarifiée, revendication historique exacte toujours à vérifier.
+- **Emplacement :** `docs/14-revue-mathematique-ciblee.md`, §3.4.1.
+- **Constat :** `\nabla\cdot\mathbf u=0` permet, sous régularité et géométrie de tube de courant, de conclure à la conservation du débit volumique signé entre sections transverses. Cela ne suffit pas à conclure que le flux advectif d'un scalaire `c\mathbf u` vaut le débit source `Q`; ce second résultat dépend de l'équation de bilan, des sources et des autres termes de transport.
+- **Correction effectuée :** la note donne une dérivation conditionnelle par le théorème de la divergence et distingue le flux du fluide de celui du polluant. Elle n'affirme pas que cette dérivation prouve la revendication historique des surfaces iso-\tau.
+- **Limite :** le sens précis de `Q`, le domaine d'intégration et les hypothèses de la formule historique doivent encore être vérifiés dans les sources accessibles, sans examiner la thèse.
+- **Preuve de clôture :** relier la revendication à une équation de bilan explicitement sourcée et vérifier les conditions de frontière, l'émission et les termes négligés.
