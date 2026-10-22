@@ -1,0 +1,62 @@
+---
+title: "Fallback théorique : un modèle jouet rigoureux"
+---
+
+# Si l'approche n'est pas utile en pratique, que reste-t-il ?
+
+J-DriftX doit pouvoir aboutir à une conclusion négative sur son intérêt applicatif sans que cela entraîne automatiquement l'abandon de toute piste scientifique. Une autre possibilité est de réduire l'ambition à un modèle jouet mathématique, utile pour isoler une idée, démontrer des propriétés ou enseigner les limites d'une construction.
+
+Ce fallback n'est pas un moyen de déclarer l'approche utile après coup. Le modèle jouet doit lui-même démontrer sa valeur, et toute revendication de nouveauté doit être vérifiée par une recherche bibliographique ciblée.
+
+## Un arbre de décision explicite
+
+1. **L'utilité pratique est-elle démontrée ?** Si oui, continuer vers les comparaisons et validations indépendantes. Si c'est incertain, construire le test discriminant le moins coûteux. Si elle est réfutée pour le cas étudié, ne pas poursuivre l'extension applicative sans nouvelle justification.
+2. **Une question théorique précise subsiste-t-elle ?** Isoler une définition mathématique, une propriété ou un contre-exemple susceptible d'être étudié rigoureusement.
+3. **Le résultat est-il déjà connu ?** Examiner la littérature avant de revendiquer une contribution originale.
+4. **Quelle est la valeur finale ?** Contribution théorique si un résultat nouveau est établi ; ressource pédagogique si le modèle illustre rigoureusement une idée connue ; arrêt si aucun objectif pertinent ne subsiste.
+
+## Candidat : transport unidimensionnel et temps de parcours dirigé
+
+Soit un intervalle (x\in[0,L]) et un champ de vitesse strictement positif (u(x)>0). Le temps de parcours dans le sens croissant est :
+
+\[
+T_+(a,b)=\int_a^b \frac{1}{u(x)}\,dx,\qquad a\le b.
+\]
+
+Pour le trajet inverse, il faut définir la dynamique de retour. On ne peut pas inverser les bornes d'intégration et obtenir un temps négatif. Si une vitesse de retour (u_-(x)>0) est définie, alors :
+
+\[
+T_-(b,a)=\int_b^a \frac{1}{u_-(x)}\,dx.
+\]
+
+Si (u_-=u), le temps le long du même chemin est positif dans les deux sens et cette construction ne suffit pas à produire une asymétrie. Une asymétrie doit venir d'une dynamique directionnelle explicitement définie. De même, un coût dirigé ne mérite le nom de métrique asymétrique ou de quasi-distance que si les propriétés mathématiques correspondantes sont établies.
+
+Cette observation constitue une question de travail intéressante, mais ne garantit ni nouveauté ni applicabilité à la dispersion atmosphérique.
+
+## Ce qu'il faudrait établir
+
+- Définitions exactes, unités, domaine et hypothèses.
+- Propriétés démontrées : positivité, séparation éventuelle, inégalité triangulaire dirigée et conditions d'asymétrie.
+- Exemples calculables et contre-exemples.
+- Tests numériques comparés à des expressions analytiques.
+- Recherche bibliographique ciblée pour déterminer ce qui est déjà connu.
+- Limites explicites : ce que le modèle ne permet pas de conclure sur les turbulences, la dispersion atmosphérique ou la dérive réelle.
+
+## Autres formes possibles de modèle jouet
+
+| Piste | Résultat possible | Ce que cela ne prouve pas |
+|---|---|---|
+| Noyau anisotrope minimal | Étude analytique et visuelle de l'effet d'une géométrie dirigée | Une supériorité sur les modèles physiques |
+| Cas de conservation et de positivité | Contre-exemples à des formulations naïves | Une nouvelle méthode générale |
+| Problème inverse minimal | Conditions d'identifiabilité et exemples non identifiables | La faisabilité de l'identification sur données réelles |
+| Comparaison de modèles simples | Domaine où une approximation échoue ou réussit | Une généralisation à d'autres régimes |
+
+## Critères de réussite
+
+Un fallback satisfaisant produit une définition non ambiguë, une preuve ou une analyse mathématique rigoureuse, des contre-exemples, un code minimal reproductible lorsque nécessaire, des références pertinentes et une section sur les limites. Il n'a pas besoin d'une API, d'un plugin QGIS ni d'une interface applicative.
+
+**Principe de gouvernance :** l'échec d'une hypothèse pratique n'est pas un échec du projet si une question théorique bien délimitée reste intéressante. Mais l'échec pratique ne constitue pas, à lui seul, une preuve de nouveauté théorique.
+
+## Document détaillé
+
+Le protocole de décision, les critères d'acceptation et le plan d'exécution sont décrits dans [docs/09-fallback-modele-jouet.md](../../docs/09-fallback-modele-jouet.md). Voir également le [cadre d'utilité et de preuve](utilite-scientifique.qmd) et la [feuille de route](roadmap.qmd).
