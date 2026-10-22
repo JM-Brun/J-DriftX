@@ -129,13 +129,13 @@ Le risque le plus immédiat n'est pas simplement que « Zermelo existe déjà »
 
 L'audit de la fonction `jdriftx.metric.temps_transport` révèle un verrou supplémentaire : elle calcule \(\sum_i |L_i|/\|\mathbf u_i\|\) sur une polyligne fournie. Elle ne calcule pas les caractéristiques du champ, n'effectue pas la projection \(B^\perp\), et ne dépend que de la norme des vecteurs vitesse. Les tests précédents nommaient à tort certains cas « non-symétrie », alors qu'ils démontraient soit l'égalité sous inversion, soit l'effet de la longueur du chemin.
 
-La PR corrige maintenant les docstrings et les noms de tests pour que les tests décrivent la primitive réellement implémentée. Le calcul numérique lui-même n'est pas remplacé par une pseudo-distance historique : celle-ci exige une définition explicite des caractéristiques, des projections, des cas non uniques et de l'accessibilité. Cette séparation évite de présenter un simple coût de polyligne comme une reproduction de l'algorithme publié.
+La PR corrige les docstrings et les noms de tests pour que les tests décrivent la primitive réellement implémentée. Elle ajoute aussi `pseudo_distance_uniforme`, une référence analytique limitée aux champs uniformes 2D, avec tests de projection longitudinale, coût nul transversal, coût infini en amont, rotation et vitesse nulle. Cette fonction n'est pas une implémentation générale : elle ne résout pas les caractéristiques d'un champ variable et ne reproduit pas les approximations numériques de 2008.
 
 ## 6. Registre des incertitudes après cette lecture
 
 | Point | État après lecture du rapport 2006 | Ce qui reste nécessaire pour le lever |
 |---|---|---|
-| Implémentation Python actuelle | **Écart désormais explicite** : la fonction est un coût de polyligne qui ignore l'orientation et la projection historique | Décider si la prochaine étape implémente une reproduction de référence distincte, sans casser silencieusement l'API existante |
+| Implémentation Python actuelle | **Écart désormais explicite** : la fonction est un coût de polyligne qui ignore l'orientation et la projection historique | Étendre la référence seulement après avoir spécifié les caractéristiques et cas limites des champs variables; conserver la primitive de polyligne comme API distincte |
 | Définition historique | **Partiellement levé** : la projection \(B\mapsto B^\perp\) et le statut de pseudo-distance sont explicités au §3 | Lire la thèse et le chapitre de 2008 pour vérifier la cohérence des variantes et les extensions proposées |
 | Domaine de validité | **Partiellement levé** : l'article suppose une caractéristique unique et écarte sources/puits | Définir précisément le traitement des séparatrices, stagnations, caractéristiques multiples et limites du domaine |
 | Séparation des points | **Levé pour la construction publiée** : la source reconnaît que \(d(A,B)=0\) n'implique pas \(A=B\) | Ajouter un test analytique de reproduction; ne pas présenter cette propriété comme un défaut nouvellement découvert |
