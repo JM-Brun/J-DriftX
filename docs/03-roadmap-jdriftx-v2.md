@@ -77,6 +77,12 @@ Aucune de ces hypothèses ne doit être présentée comme un résultat acquis av
 | Dépendance à une seule campagne ou un cas synthétique | Ajouter analyses de sensibilité et validation indépendante avant généralisation |
 | Fonctionnalités applicatives prématurées | Garder QGIS, API et interopérabilité après la validation du noyau |
 
+## Fallback si l'utilité pratique n'est pas démontrée
+
+Un résultat négatif sur l'utilité applicative ne justifie ni de masquer les résultats ni de prolonger l'architecture cible sans motif. Si une question mathématique précise subsiste, le projet peut se réduire à un **modèle jouet** : définitions, propriétés démontrées, contre-exemples, cas analytiques et code minimal reproductible. Le candidat initial est un transport unidimensionnel avec temps de parcours dirigé, sous réserve de vérifier les définitions et l'état de l'art. Ce fallback ne doit pas être présenté comme une contribution originale avant d'avoir établi la nouveauté.
+
+Le protocole et les critères d'acceptation sont décrits dans [docs/09-fallback-modele-jouet.md](09-fallback-modele-jouet.md), avec une [page de synthèse publique](../site/projet/modele-jouet.qmd).
+
 ## Prochaines actions
 
 1. **G0 — Rédiger la fiche de décision d'utilité** pour le far-field de dérive de pulvérisation : problème, utilisateur, décision, contraintes, limites documentées des alternatives, bénéfice supposé, baselines, données accessibles et critères d'abandon.
