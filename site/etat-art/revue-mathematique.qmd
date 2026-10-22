@@ -52,7 +52,7 @@ Ainsi \(d(A,C)>d(A,B)+d(B,C)=1.1\). La construction peut donc violer l'inégalit
 
 ## Écart avec le code Python actuel
 
-La fonction \`jdriftx.metric.temps_transport\` calcule une somme de longueurs de segments divisées par la norme des vitesses fournies. Elle ne calcule pas de caractéristiques ni la projection historique \(B^\perp\), et le signe des vecteurs vitesse n'affecte pas le résultat. Les anciens noms de tests laissaient entendre une non-symétrie qui n'était pas réellement testée; ils ont été corrigés dans la PR.
+La fonction `jdriftx.metric.temps_transport` calcule une somme de longueurs de segments divisées par la norme des vitesses fournies. Elle ne calcule pas de caractéristiques ni la projection historique \(B^\perp\), et le signe des vecteurs vitesse n'affecte pas le résultat. Les anciens noms de tests laissaient entendre une non-symétrie qui n'était pas réellement testée; ils ont été corrigés dans la PR.
 
 Le code est désormais documenté comme **primitive provisoire de coût sur une polyligne**, pas comme implémentation validée de la pseudo-distance de 2006. Une fonction séparée `pseudo_distance_uniforme` et des tests analytiques couvrent maintenant le cas uniforme 2D; l'extension aux champs variables reste bloquée par la définition des caractéristiques et des projections.
 
