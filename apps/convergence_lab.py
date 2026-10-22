@@ -105,12 +105,13 @@ figure.update_layout(
 )
 st.plotly_chart(figure, use_container_width=True)
 
-metrics = st.columns(5)
+metrics = st.columns(6)
 metrics[0].metric("Erreur L2 RK4", f"{l2_error:.3e}")
-metrics[1].metric("Erreur L2 Euler amont", f"{upwind_error:.3e}")
-metrics[2].metric("Écart entre schémas", f"{cross_method_error:.3e}")
-metrics[3].metric("Masse RK4", f"{mass_numerical:.8f}")
-metrics[4].metric("Pas temporel effectif", f"{actual_dt:.3e}")
+metrics[1].metric("Erreur max RK4", f"{linf_error:.3e}")
+metrics[2].metric("Erreur L2 Euler amont", f"{upwind_error:.3e}")
+metrics[3].metric("Écart entre schémas", f"{cross_method_error:.3e}")
+metrics[4].metric("Masse RK4", f"{mass_numerical:.8f}")
+metrics[5].metric("Pas temporel effectif", f"{actual_dt:.3e}")
 st.caption(
     f"Référence de masse : {mass_expected:.8f}. Les deux schémas conservent la moyenne "
     "périodique à l'arrondi près ; leur écart fournit un contrôle croisé indépendant. "
