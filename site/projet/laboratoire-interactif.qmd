@@ -76,9 +76,9 @@ L'application complémentaire `apps/convergence_lab.py` vérifie une équation d
 c(x,t)=\bar c+A e^{-K(2\pi/L)^2t}\sin\left(\frac{2\pi}{L}(x-ut)\right).
 \]
 
-Le solveur utilise des différences finies centrées en espace et RK4 en temps, avec contrôle de stabilité linéaire pour le pas demandé. L'interface affiche l'erreur (L^2), l'erreur maximale, la conservation de la moyenne et deux études de convergence :
+Le solveur utilise des différences finies centrées en espace et RK4 en temps, avec contrôle de stabilité linéaire pour le pas demandé. L'interface affiche l'erreur $L^2$, l'erreur maximale, la conservation de la moyenne et deux études de convergence :
 
-- **Convergence spatiale** : le maillage est raffiné et le pas temporel réduit comme (Delta x^2), afin de limiter la contamination de l'estimation par l'erreur temporelle.
+- **Convergence spatiale** : le maillage est raffiné et le pas temporel réduit comme $\Delta x^2$, afin de limiter la contamination de l'estimation par l'erreur temporelle.
 - **Convergence temporelle** : le maillage reste fixe et les solutions sont comparées à un calcul de référence utilisant le même opérateur spatial avec un pas de temps beaucoup plus fin.
 
 L'ordre ajusté est un indicateur empirique sur la plage de paramètres choisie, pas une preuve générale. La référence temporelle fine n'est pas exacte ; le test spatial contre la solution analytique fournit un contrôle complémentaire.
