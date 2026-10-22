@@ -21,6 +21,8 @@ La priorité reste le noyau mathématique et sa validation, avant l’ajout de f
 
 ## 3. Rendre la revue reproductible
 
+Le choix méthodologique est documenté dans [docs/06-choix-methode-revue-systematique.md](06-choix-methode-revue-systematique.md). Il explique pourquoi PRISMA 2020 est retenu comme standard de reporting, comment il se combine avec une phase exploratoire, le snowballing, une cartographie systématique et une évaluation critique, et pourquoi ces éléments ne doivent pas être confondus avec la revue bibliographique effective.
+
 Le document actuel est une **revue structurée de l’état de l’art**, mais les informations disponibles ne suffisent pas encore à qualifier le processus de revue systématique entièrement reproductible. Avant d’employer cette qualification, consigner :
 
 1. Les bases et moteurs interrogés, avec la date de chaque recherche.
@@ -98,3 +100,4 @@ Les comparaisons POD/ML ne doivent pas être présentées comme une opposition g
 - [Revue de l’état de l’art](02-revue-etat-art-2026.md)
 - [Feuille de route J-DriftX v2](03-roadmap-jdriftx-v2.md)
 - [Références bibliographiques](references.md)
+- [Choix de la méthode de revue systématique](06-choix-methode-revue-systematique.md)
