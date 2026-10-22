@@ -41,6 +41,8 @@ website:
             text: "G0 — preuves externes"
           - href: projet/catalogue-donnees.qmd
             text: "Catalogue de données"
+          - href: projet/mvp-scientifique.qmd
+            text: "MVP scientifique minimal"
           - href: projet/modele-jouet.qmd
             text: "Fallback théorique"
           - href: projet/validation-scientifique.qmd
