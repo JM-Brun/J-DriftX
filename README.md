@@ -42,6 +42,10 @@ raw/                  # Sources primaires et documents bruts
 .github/workflows/    # CI et publication du site
 ~~~
 
+## Statut de l'implémentation mathématique
+
+La fonction Python `jdriftx.metric.temps_transport` calcule actuellement une somme `longueur / norme(vitesse)` sur une polyligne fournie par l'appelant. Elle ne calcule pas les caractéristiques du champ, ne projette pas le point cible sur une caractéristique et ignore le signe des vecteurs vitesse. Elle **n'est donc pas encore une implémentation de la pseudo-distance historique de 2006** et ne doit pas être interprétée comme une métrique non symétrique validée. Voir la [revue mathématique ciblée](https://jm-brun.github.io/J-DriftX/etat-art/revue-mathematique.html).
+
 ## Développement
 
 Le dépôt utilise [uv](https://docs.astral.sh/uv/), pyproject.toml, [Ruff](https://docs.astral.sh/ruff/), [pre-commit](https://pre-commit.com) et [pytest](https://pytest.org).
