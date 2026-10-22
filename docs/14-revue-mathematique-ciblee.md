@@ -24,6 +24,33 @@ La question préalable n'est pas « cette idée est-elle nouvelle ? », mais **q
 
 Ces trois objets peuvent se ressembler mais ne sont pas interchangeables. Une intégrale le long d'une ligne de courant n'est pas automatiquement le temps minimal entre deux points, et le temps minimal d'un navigateur n'est pas le temps d'un traceur passif purement advecté.
 
+## 2.1 Lecture de la source primaire de 2006 : une clarification importante
+
+La note de Mohammadi & Brun, *Similitude généralisée et modélisation géométrique à complexité réduite* (2006, §3, pp. 635–636, [DOI](https://doi.org/10.1016/j.crme.2006.06.007)), est accessible en texte intégral. Elle permet de préciser l'objet historique plus nettement que la seule formule intégrale donnée dans les pages actuelles du dépôt.
+
+La construction historique ne définit pas simplement le temps d'une trajectoire jusqu'au point cible (B). Pour un point (A), elle considère la caractéristique passant par (A), projette (B) sur cette caractéristique en un point (B^\perp), puis définit le coût dirigé comme le temps de migration de (A) vers (B^\perp). Elle suppose la caractéristique unique et écarte les sources et puits; les cas où la projection n'est pas unique sont traités heuristiquement par un critère lié à (\mathbf u\cdot\nabla c).
+
+La source appelle explicitement cette construction une **pseudo-distance** et précise qu'elle ne satisfait pas en général les propriétés d'une distance : elle peut vérifier (d(A,B)=0) sans (A=B), elle est non symétrique, et l'inégalité triangulaire peut échouer. Ces échecs ne sont donc pas simplement des lacunes de documentation dans la reprise : au moins pour la séparation et la triangulation, ils sont annoncés dans la formulation historique elle-même.
+
+### Contre-exemple analytique minimal : champ uniforme
+
+Prenons le champ 2D uniforme (\mathbf u=(U,0)), avec (U>0), et les points (A=(x_A,y_A)), (B=(x_B,y_B)). La caractéristique passant par (A) est horizontale. La projection normale décrite dans l'article donne (B^\perp=(x_B,y_A)). Pour (x_B\ge x_A), le coût historique devient
+
+\[
+d(A,B)=\frac{x_B-x_A}{U}.
+\]
+
+Le coût ne dépend pas de (y_B-y_A). Ainsi, pour (B=(x_A,y_B)) avec (y_B\ne y_A), on obtient (d(A,B)=0) alors que (A\ne B). Ce n'est pas un paradoxe : la construction mesure un avancement le long de la caractéristique de (A), et non une distance complète jusqu'à (B).
+
+Pour ce champ uniforme, cette expression satisfait l'inégalité triangulaire dans la direction admissible lorsque les abscisses sont ordonnées, mais cela ne prouve pas la propriété pour des champs non uniformes avec projections multiples ou géométrie plus complexe. L'article avertit explicitement que la triangulation peut être mise en défaut dans la construction générale.
+
+### Conséquence pour le vocabulaire et le MVP
+
+- Conserver le terme historique **pseudo-distance de transport** lorsque l'on parle de la construction de 2006.
+- Ne pas la confondre avec le simple temps d'arrivée à (B), ni avec une distance de navigation obtenue par minimisation.
+- Distinguer le temps le long de la caractéristique, la projection (B^\perp), le coût étendu en cas d'inaccessibilité et le modèle de concentration construit ensuite.
+- Le premier test 1D/2D doit reproduire cette définition historique avant de tester une variante plus intuitive. Sinon, il teste un nouveau modèle et non la formulation publiée.
+
 ## 3. Ce que les définitions actuelles permettent — et ne permettent pas — d'affirmer
 
 ### 3.1 La non-uniformité du champ ne suffit pas à établir la non-symétrie
@@ -62,7 +89,7 @@ La conservation de masse ne découle pas de la seule définition de \(\tau\). El
 | Contreras & Kachroo (2020), [*The Viscosity Solution for Hamilton Jacobi Travel Time Dynamics*](https://doi.org/10.1109/TITS.2019.2946109) | Équation de temps de parcours de type Hamilton–Jacobi et solution de viscosité | Application au trafic/LWR : analogue méthodologique, pas la même dynamique physique |
 | Sethian & Vladimirsky (2001), [*Ordered upwind methods for static Hamilton–Jacobi equations*](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/) | Problèmes de temps minimal anisotrope et équations Hamilton–Jacobi–Bellman | Pertinent si le temps est un minimum sur un ensemble de directions et si un solveur de front est envisagé |
 
-Cette liste établit que le voisinage conceptuel est riche; elle **n'établit pas** que la contribution historique de Drift-X est redondante. Pour le savoir, il faut comparer ses équations et théorèmes précis aux sources originales, notamment la thèse de Brun (2006), le rapport CR Mécanique (2006) et le chapitre de Brun (2008) déjà cités dans la bibliographie du projet.
+Cette liste établit que le voisinage conceptuel est riche; elle **n'établit pas** que la contribution historique de Drift-X est redondante. Le texte intégral du rapport CR Mécanique (2006) a maintenant été lu pour le §3 et la définition de pseudo-distance. Il reste à comparer cette construction aux détails de la thèse de Brun (2007, et non 2006 dans la référence bibliographique du rapport) et du chapitre de 2008; cette lecture n'est pas encore achevée.
 
 ## 5. Décision scientifique pour le MVP
 
@@ -81,9 +108,9 @@ Ordre recommandé :
 Le risque le plus immédiat n'est pas simplement que « Zermelo existe déjà ». C'est que le dépôt emploie le même vocabulaire de temps de parcours pour des objets différents : intégrale advective le long d'une caractéristique, coût asymétrique sur des paires de points, et temps minimal de navigation. Leur relation doit être démontrée plutôt que supposée.
 
 À ce stade :
-- **résultat établi par la revue** : plusieurs familles mathématiques voisines sont clairement pertinentes et la définition du dépôt exige une clarification;
+- **résultat établi par la revue** : le texte primaire de 2006 définit une pseudo-distance fondée sur la projection sur une caractéristique, et annonce explicitement la perte de séparation et l'échec possible de l'inégalité triangulaire; plusieurs familles mathématiques voisines sont pertinentes;
 - **non établi** : originalité de Drift-X, validité générale des propriétés annoncées, conservation exacte sous les hypothèses réellement implémentées, valeur applicative;
-- **prochaine action discriminante** : retrouver les équations sources historiques et formaliser un modèle 1D qui correspond exactement à l'objet revendiqué.
+- **prochaine action discriminante** : lire la thèse de 2007 et le chapitre de 2008, puis implémenter un test de référence du champ uniforme reproduisant la projection (B^\perp), avec tests sur (d(A,B)=0) pour des points distincts et sur l'accessibilité orientée.
 
 ## Références web consultées
 
