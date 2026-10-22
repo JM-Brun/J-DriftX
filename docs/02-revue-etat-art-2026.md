@@ -38,7 +38,7 @@ Angles de recherche : (a) modèles opérationnels et réglementaires de dispersi
 
 ### 3. ROM et apprentissage : maturité méthodologique, mais toujours a posteriori
 
-- Les ROM de dispersion urbaine se sont standardisées : Arnoldi (2015, facteur ~2500 vs CFD), POD+RBF sur 144 km² (Pékin, 2021), ROM physique POD-NN (Bologne, 2024, avec vent réel pour le monitoring temps réel), POD-GPR avec ~50 snapshots LES (2024), ROM + assimilation de données (2023).
+- Les ROM de dispersion urbaine comprennent plusieurs familles : Arnoldi (2015, facteur ~2500 vs CFD selon l'étude), ROM physique POD-NN (Bologne, 2024), POD-GPR (~50 snapshots LES selon la source), et ROM avec assimilation de données (2023). Une référence auparavant attribuée à un ROM POD+RBF sur 144 km² à Pékin (PII S2666449621000372) n'a pas encore été confirmée et n'est donc pas utilisée ici comme preuve.
 - Les surrogate neuronaux montent en gamme : FNO pour panaches radioactifs (2024), architectures masquage/correction 3D (CEA, 2024, priors physiques + opérateurs neuronaux), surrogates ML d'émissions industrielles, et prévision d'accidents de type Seveso (publication en ligne en 2022, volume 2023).
 - Certaines approches recensées utilisent des simulations haute-fidélité et des snapshots ; ce n'est pas une propriété universelle de toutes les ROM et méthodes de substitution. Leurs performances d'interpolation et d'extrapolation dépendent de la méthode, des données et du régime étudié. Le coût, la généralisation et le besoin d'entraînement de J-DriftX doivent être mesurés et comparés ; une extrapolation correcte n'est pas garantie par la seule construction analytique. Une architecture hybride reste une hypothèse à évaluer, pas un positionnement déjà justifié.
 
