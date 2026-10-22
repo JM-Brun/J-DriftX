@@ -1,0 +1,117 @@
+---
+title: "Équation de Burgers : lien avec J-DriftX"
+---
+
+# Équation de Burgers : lien avec J-DriftX
+
+## Conclusion en bref
+
+**Il existe un lien mathématique indirect, mais aucune équivalence physique avec le modèle de dispersion de J-DriftX n'est établie à ce stade.**
+
+L'équation de Burgers est un modèle canonique d'advection non linéaire régularisée par diffusion. Elle peut aider à étudier des propriétés générales des équations de transport et à construire des tests numériques. En revanche, elle ne constitue pas, sans dérivation supplémentaire, une équation de dispersion atmosphérique de gouttelettes ou de concentration.
+
+Cette page distingue trois niveaux qu'il ne faut pas confondre :
+
+1. **Analogie mathématique** : transport, flux, diffusion et conservation sont des notions communes.
+2. **Outil de test** : Burgers peut fournir un cas d'étude supplémentaire pour un solveur ou une méthode numérique.
+3. **Modèle physique** : utiliser Burgers pour décrire effectivement la dérive demanderait une justification des variables, des termes et des hypothèses. Cette justification n'est pas disponible ici.
+
+## 1. L'équation de Burgers
+
+Dans sa forme visqueuse scalaire en une dimension :
+
+$$
+\partial_t u + u\,\partial_x u = \nu\,\partial_{xx}u,
+$$
+
+où :
+
+- $u(x,t)$ est le champ inconnu (souvent interprété comme une vitesse dans les modèles qui motivent cette équation) ;
+- $u\,\partial_x u$ décrit une **advection non linéaire** : le champ $u$ transporte sa propre valeur ;
+- $\nu \ge 0$ est le coefficient de viscosité/diffusion dans ce modèle ;
+- $\nu\,\partial_{xx}u$ lisse les gradients.
+
+La même équation s'écrit sous forme conservative :
+
+$$
+\partial_t u + \partial_x\!\left(\frac{u^2}{2}\right)
+= \nu\,\partial_{xx}u.
+$$
+
+Cette écriture rend explicite le flux non linéaire $F(u)=u^2/2$. Dans le cas inviscide ($\nu=0$), des gradients peuvent se raidir jusqu'à former des chocs; pour $\nu>0$, la diffusion régularise ces transitions. Burgers est donc utile pour étudier advection non linéaire, flux et comportement numérique, mais sa simplicité ne la rend pas universellement représentative des écoulements atmosphériques.
+
+Référence de mise en œuvre pédagogique : [démo Burgers de Firedrake](https://www.firedrakeproject.org/firedrake/demos/burgers.py.html).
+
+## 2. Comparaison avec le transport atmosphérique
+
+Une équation usuelle d'advection-diffusion pour une concentration $c(\mathbf{x},t)$ transportée par un vent $\mathbf{v}$ s'écrit, en l'absence de source, de puits et de réaction :
+
+$$
+\partial_t c + \nabla\cdot(\mathbf{v}c)
+= \nabla\cdot(\mathbf{K}\nabla c),
+$$
+
+où $\mathbf{K}$ est un tenseur de dispersion/diffusion effective. La forme exacte dépend notamment de la compressibilité du champ, des fermetures turbulentes, des conditions aux limites et des processus représentés.
+
+| Élément | Burgers scalaire | Transport de concentration |
+|---|---|---|
+| Inconnue | $u$ | $c$ |
+| Champ qui transporte | $u$ lui-même | Le vent $\mathbf{v}$, généralement prescrit ou calculé séparément |
+| Terme d'advection | $\partial_x(u^2/2)$ | $\nabla\cdot(\mathbf{v}c)$ |
+| Diffusion | $\nu\partial_{xx}u$ | $\nabla\cdot(\mathbf{K}\nabla c)$ |
+| Interprétation physique | Dépend du problème modélisé | Concentration d'un traceur, sous hypothèses explicites |
+
+La différence essentielle est la suivante : dans Burgers, **l'inconnue transporte elle-même sa propre valeur**. Dans un modèle passif de dispersion, la concentration est transportée par le vent; elle ne détermine pas automatiquement ce vent. Identifier $u$ à $c$ ou $\nu$ à une diffusivité atmosphérique sans dérivation serait donc une erreur de modélisation.
+
+## 3. Quel rapport avec J-DriftX ?
+
+J-DriftX explore une réduction de complexité pour la dispersion atmosphérique, en s'appuyant notamment sur le temps de transport et des solutions de similitude généralisées. Le modèle direct et les contraintes physiques sont décrits dans les pages [Modèle direct](modele-direct.qmd), [Métrique travel-time](metrique-travel-time.qmd) et [Contraintes physiques](contraintes-physiques.qmd).
+
+### Lien raisonnablement établi
+
+- Les deux sujets appartiennent au paysage plus large des équations aux dérivées partielles de transport.
+- La forme conservative de Burgers illustre comment un flux peut être explicité et comment une formulation différentielle peut être reliée à un bilan intégral, sous des conditions aux limites adaptées.
+- Burgers peut constituer un **cas numérique complémentaire** pour éprouver un code général d'advection-diffusion face à la non-linéarité et aux gradients raides.
+
+### Ce qui n'est pas établi
+
+- Burgers ne dérive pas, à elle seule, l'équation de concentration utilisée dans la dispersion atmosphérique.
+- Elle ne justifie pas la métrique de temps de parcours dirigé étudiée par J-DriftX.
+- Elle ne prouve ni la validité d'une solution de similitude généralisée, ni la conservation de la masse de gouttelettes sur les surfaces iso-temps.
+- Une barrière végétale ou topographique n'introduit pas automatiquement un flux de Burgers. Son effet doit être représenté par un champ de vent, une paramétrisation, des conditions aux limites ou un modèle physique approprié.
+
+En particulier, le champ $u$ de Burgers ne doit pas être confondu avec la concentration $C$, le vent atmosphérique, ni le débit d'émission $Q$ de J-DriftX.
+
+## 4. Une connexion dans la littérature : Burgers et diffusion passive
+
+Garbaczewski, Kondrat et Olkiewicz étudient une interprétation de certains écoulements de Burgers comme processus de diffusion markoviens, avec un lien conceptuel à la dispersion de contaminants passifs [@garbaczewski1997burgers].
+
+Cette publication est plus proche du thème de J-DriftX qu'un simple exemple de solveur : elle examine une relation entre dynamique de Burgers et descriptions stochastiques de diffusion. Elle ne suffit toutefois pas à conclure que le modèle Drift-X ou la construction travel-time de J-DriftX est une équation de Burgers, ou en découle. Il faudrait vérifier précisément les variables, transformations, hypothèses et résultats du texte intégral avant d'en tirer une correspondance mathématique.
+
+## 5. Comment l'utiliser sans brouiller les niveaux de preuve ?
+
+| Usage envisagé | Pertinence actuelle | Conditions pour aller plus loin |
+|---|---|---|
+| Référence pédagogique sur advection non linéaire et diffusion | Élevée | Citer une source fiable et expliciter le rôle des termes |
+| Cas-test supplémentaire pour un solveur générique | Possible | Choisir une solution de référence, des conditions initiales/aux limites et des métriques d'erreur |
+| Comparaison de propriétés conservatives | Possible, mais limitée | Comparer les bilans du bon observable; ne pas appeler $u$ « masse de gouttelettes » |
+| Justification de la métrique travel-time ou des solutions de similitude | Non démontrée | Fournir une dérivation et préciser les hypothèses |
+| Remplacement du modèle de dispersion par Burgers | Non justifié | Établir un modèle physique, ses paramètres et une validation indépendante |
+
+### Proposition de test futur, si une question numérique le justifie
+
+Comparer sur des cas distincts :
+
+1. une équation d'advection-diffusion linéaire avec vitesse prescrite ;
+2. l'équation de Burgers visqueuse avec solution analytique ou de référence adaptée ;
+3. le modèle réduit J-DriftX dans son domaine d'application explicitement défini.
+
+Pour chaque cas, préciser l'inconnue, les unités, les conditions initiales et aux limites, le flux conservé, les critères de positivité pertinents, l'erreur numérique et les limites de comparaison. Ces cas ne sont pas interchangeables : ils testent des propriétés différentes. Ce benchmark n'est pas implémenté ni validé par la présente page.
+
+## 6. Références et niveau de preuve
+
+- Burgers comme équation canonique d'advection-diffusion non linéaire : documentation de [Firedrake](https://www.firedrakeproject.org/firedrake/demos/burgers.py.html).
+- Lien conceptuel entre écoulements de Burgers et processus de diffusion markoviens : Garbaczewski et al. (1997), référence bibliographique ci-dessous.
+- Fondements de dispersion réduite et de similitude généralisée dans J-DriftX : [Brun & Mohammadi (2008)](../references.qmd) et [Mohammadi & Brun (2006)](../references.qmd).
+
+**État de conclusion :** analogie mathématique documentée; intérêt comme cas-test plausible; lien de dérivation physique avec J-DriftX non établi. Aucune revendication de validation, d'équivalence ou d'originalité n'est formulée.

@@ -67,6 +67,8 @@ website:
             text: "Métriques non riemanniennes"
           - href: theorie/contraintes-physiques.qmd
             text: "Contraintes physiques"
+          - href: theorie/burgers-et-jdriftx.qmd
+            text: "Équation de Burgers et J-DriftX"
           - href: theorie/assimilation-identification.qmd
             text: "Assimilation & identification"
           - href: theorie/comparaison-complexites.qmd
