@@ -37,7 +37,7 @@ Aucun délai fixe ni objectif de performance ne doit être considéré comme acq
 
 - core/similitude : solutions de similitude, sous hypothèses explicites.
 - core/metric : métrique de temps de transport et propriétés à démontrer.
-- core/constraints : propriétés physiques garanties dans le domaine de validité.
+- core/constraints : propriétés physiques à formaliser et démontrer dans un domaine de validité explicite.
 - benchmarks/reference et benchmarks/baselines : priorité dès que le problème G0 est défini.
 - assim/calibration, assim/ste, méthodes POD/ROM et approches apprises : à comparer ou développer si elles répondent à une question utile.
 - io/, bindings/qgis, API et interfaces : après validation d'un noyau pertinent.
@@ -55,4 +55,4 @@ La documentation complète se trouve dans [docs/03-roadmap-jdriftx-v2.md](../../
 
 ## Résultat de la recherche externe G0
 
-Le jeu CAPRIV est ouvert mais décrit la dérive de proximité, pas le far-field à plusieurs kilomètres. Il ne doit pas servir de validation du cas far-field. La fiche [G0 — preuves externes](preuves-g0.qmd) conclut que G0 reste bloqué tant que l'utilisateur, la décision, l'observable, le régime physique et les données indépendantes ne sont pas définis.
+Le jeu CAPRIV est ouvert mais décrit la dérive de proximité, pas le far-field à plusieurs kilomètres. Il ne doit pas servir de validation du cas far-field. La fiche [G0 — preuves externes](preuves-g0.qmd) documente maintenant G0 franchi au niveau documentaire. G0-A (utilité applicative) reste non démontré ; l'audit des fichiers bruts et des licences est requis en G1 avant tout benchmark.

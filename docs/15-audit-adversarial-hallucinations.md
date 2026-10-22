@@ -245,7 +245,7 @@ Réserves : les effectifs de CAPRIV (« 3 792 observations / 38 variables », `d
 ## 7. Modifications réalisées dans la PR de suivi
 
 Cette PR de suivi ne se limite donc plus au registre initial. Elle :
-- ajoute le registre d'audit et conserve les constats A-01 à A-14 ainsi que B-01 à B-21 avec leur niveau de preuve ;
+- ajoute le registre d'audit et conserve les constats A-01 à A-14 ainsi que B-01 à B-28 avec leur niveau de preuve ;
 - corrige des affirmations excessives dans la revue d'état de l'art et distingue les hypothèses J-DriftX des résultats établis ;
 - corrige la relation DATEM/ETEX dans le catalogue de données et clarifie le statut G0 par rapport aux prérequis G1 ;
 - corrige les métadonnées Turbelin et al. (2014), Bozon & Mohammadi (2009), Arcucci et al. (2023) et la date de la ressource Zenodo (2026) ;
@@ -368,3 +368,63 @@ Les changements n'établissent pas encore la validité de chaque référence du 
 - **Source :** [Isakov et al. (2009), DOI 10.3155/1047-3289.59.4.461](https://doi.org/10.3155/1047-3289.59.4.461).
 - **Correction effectuée :** la phrase est attribuée à cette lignée précise et ne présente plus le travail comme une revue récente d'AERMOD.
 - **Preuve de clôture :** si une autre source est destinée à soutenir une tendance plus récente, l'ajouter explicitement et vérifier le passage exact.
+
+### B-22 — Verdict global de validité/originalité et garanties physiques trop catégoriques
+
+- **Statut :** formulations trop fortes, corrigées dans les documents de synthèse et de lecture.
+- **Emplacements :** `docs/01-audit-heritage-driftx.md`, `site/projet/audit.qmd`, `docs/04-revues-papiers-sources.md`, `raw/fiches/2009-bozon-sinfort-mohammadi-driftx-hal.md`.
+- **Constat 1 — verdict scientifique :** la conclusion « cœur scientifique sain, original et toujours différenciant » dépassait les preuves disponibles. Une revue ciblée, quelques articles historiques et l'absence de benchmarks modernes indépendants ne suffisent pas à établir la validité mathématique, la nouveauté exhaustive ou l'avantage actuel. Les lacunes portent donc aussi sur la formalisation et la validation, pas seulement sur le code.
+- **Constat 2 — invariants :** le manuscrit Bozon, Sinfort & Mohammadi (2009) affirme que sa restriction multi-niveaux préserve la divergence nulle **si** le champ précédent vérifie cette propriété, et que la restriction de concentration satisfait le bilan de masse entrant. Les fiches résumaient cela comme des garanties inconditionnelles et transférables à une réimplémentation. Le texte source rapporte une propriété sous construction/hypothèses ; il ne valide pas automatiquement les calculs numériques, les données, ni un nouveau code.
+- **Sources internes primaires :** extraction du manuscrit HAL `raw/extracts/2009-bozon-sinfort-mohammadi-driftx-hal.txt`, autour des équations [2]–[4] (notamment les lignes extraites autour de 461–505) ; fiche documentaire [HAL hal-00468863](https://hal.science/hal-00468863).
+- **Corrections effectuées :** le verdict global est remplacé par une hypothèse méthodologique à tester ; les propriétés multi-niveaux sont explicitement attribuées aux auteurs et conditionnées à leurs hypothèses ; les fiches demandent une dérivation et des tests avant de les traiter comme garanties d'une implémentation moderne. Les absences de publication de synthèse sont également formulées comme « non identifiée dans les recherches consignées ».
+- **Tests requis avant clôture :** (1) écrire les hypothèses et la définition précise de la divergence pour le champ utilisé ; (2) vérifier symboliquement que l'interpolation par fonctions de forme conserve les conditions aux limites revendiquées ; (3) vérifier le bilan de masse par intégration de flux sur des cas analytiques ; (4) tester les erreurs discrètes sur plusieurs grilles, géométries et niveaux ; (5) distinguer propriété continue, propriété de l'algorithme discret et résultat observé dans le prototype historique.
+
+### B-23 — Page « Contraintes physiques » : couverture CI exagérée et garanties non implémentées
+
+- **Statut :** affirmation directement contredite par le code et les tests actuels ; corrigée.
+- **Emplacements :** `site/theorie/contraintes-physiques.qmd`, docstring de `src/jdriftx/constraints.py`.
+- **Constat :** l'ancienne page affirmait que quatre contraintes (conservation, positivité, linéarité et divergence nulle) étaient « vérifiées en continu par la CI ». Or le module de contraintes ne contient que des helpers de positivité et de superposition ; il n'implémente pas de vérification de divergence. La conservation est testée séparément sur un seul panache gaussien, avec une grille finie et une tolérance de 2 %. Les tests de positivité et de linéarité couvrent eux aussi des configurations ciblées, pas toutes les extensions possibles. La page appelait en outre la concentration une « densité de probabilité », ce qui confond deux grandeurs différentes, et affirmait sans comparaison sourcée que les surrogates ML ne garantissent aucune propriété physique.
+- **Preuves de code :** `src/jdriftx/constraints.py` (seuls les helpers `positivite` et `linearite`) ; `tests/test_constraints.py` ; `tests/test_similitude.py::test_conservation_masse_panache` (grille `y ∈ [-500,500]`, `z ∈ [0,400]`, cas unique, tolérance relative 2 %).
+- **Correction effectuée :** la page expose maintenant un tableau propriété/test/limite, précise que la divergence n'est pas testée, borne le résultat de conservation au cas numérique testé, corrige la distinction concentration/probabilité et remplace l'opposition générale aux modèles ML par une comparaison empirique des garanties et erreurs.
+- **Preuve de clôture :** ajouter séparément les tests/proofs nécessaires à chaque invariant et préciser leur domaine de validité ; tant que le champ de vent historique n'est pas implémenté, ne pas revendiquer la vérification de sa divergence.
+
+### B-24 — Pages théoriques : garanties, complexités et gradients présentés comme acquis
+
+- **Statut :** plusieurs généralisations et avantages non démontrés corrigés.
+- **Emplacements :** `site/theorie/reduction-a-priori.qmd`, `assimilation-identification.qmd`, `modele-direct.qmd`, `comparaison-complexites.qmd`.
+- **Constats :** les pages présentaient la consistance physique comme « garantie par contraintes » alors que le champ de vent historique n'est pas implémenté ; les méthodes POD étaient décrites comme exigeant toutes des snapshots CFD/LES et comme fragiles hors domaine ; l'optimisation était dite triviale grâce à un coût d'évaluation quasi nul ; les gradients/adjoints J-DriftX étaient dits exacts, gratuits et disponibles par construction ; la comparaison affirmait que les surrogates ML ne respectent pas les contraintes physiques et que les modèles CFD repartent toujours de zéro pour chaque scénario. Ces propositions sont trop générales ou contredites par l'état du code.
+- **Correction effectuée :** les pages distinguent les objectifs historiques des capacités du prototype actuel ; elles conditionnent les propriétés aux formulations et aux tests, séparent coût d'évaluation et coût total de calibration, décrivent les gradients comme non établis pour la métrique complète et reconnaissent que certaines méthodes ROM/ML peuvent intégrer des contraintes physiques. Les coûts CFD et particulaires sont décrits comme dépendants du workflow et de l'observable. Une clé bibliographique périmée `renormalization2016` a aussi été remplacée par `renormalization2014`.
+- **Preuve de clôture :** toute comparaison quantitative devra utiliser un protocole commun (observable, précision, régime, coûts de préparation/calibration/inférence, mémoire et incertitude) ; toute affirmation de gradient/adjoint devra être rattachée à une dérivation ou à une implémentation testée.
+
+### B-25 — Page d'utilité scientifique en contradiction avec le statut G0 courant
+
+- **Statut :** contradiction documentaire confirmée et corrigée.
+- **Emplacements :** `site/projet/utilite-scientifique.qmd` et `site/projet/preuves-g0.qmd`, conclusions de page.
+- **Constat :** la page affirmait encore « G0 non franchi », alors que `docs/13-fiche-g0-cadrage-besoin.md` et `docs/15-audit-corpus-g0-resultats.md` enregistrent une décision G0 franchie le 22 octobre 2026 sur la base du cadrage et d'un audit documentaire des corpus. La contradiction risquait de faire confondre le statut du jalon documentaire et l'absence de validation scientifique/applicative.
+- **Correction effectuée :** les deux pages indiquent désormais que G0 est franchi au niveau documentaire, mais que G1, la validation des fichiers bruts et le benchmark restent en attente ; elles rappellent que ce statut ne prouve ni l'utilité prédictive ni l'adéquation scientifique du modèle.
+- **Preuve de clôture :** maintenir un statut unique et cohérent entre fiche G0, audit de corpus, page publique et roadmap ; ne faire évoluer G1 qu'après contrôle des fichiers et licences.
+
+### B-26 — Page qualité : tests inexistants cités et portée de la CI exagérée
+
+- **Statut :** erreurs de documentation directement vérifiables, corrigées.
+- **Emplacement :** `site/projet/qualite.qmd`.
+- **Constat :** la page citait `test_non_symetrie_champ_non_uniforme`, absent de la suite de tests, et présentait plusieurs tests comme s'ils validaient simultanément plusieurs propriétés (par exemple la superposition et la positivité). Elle annonçait aussi « pytest + coverage », alors que la commande CI exécute pytest sans rapport de couverture. Le slogan « l'oracle des tests est la physique elle-même » et l'idée que chaque test indique nécessairement une propriété physique violée étaient trop catégoriques.
+- **Preuves :** `tests/test_metric.py`, `tests/test_constraints.py`, `tests/test_similitude.py`, `.github/workflows/ci.yml` et `pyproject.toml`.
+- **Correction effectuée :** la page énumère les tests existants par nom, explique ce qu'ils testent et ce qu'ils ne testent pas, retire le test fictif et la mention de couverture non exécutée, et distingue tests ciblés, preuve mathématique et validation physique. Elle précise que la divergence n'est pas testée parce que le champ de vent multi-niveaux n'est pas implémenté.
+- **Preuve de clôture :** garder cette page synchronisée avec les fichiers de tests et le workflow CI ; toute nouvelle affirmation de couverture doit pointer vers un test existant et décrire sa portée.
+
+### B-27 — Synthèse publique de l'héritage : coût nul, transférabilité et disponibilité des données sur-généralisés
+
+- **Statut :** formulations trop fortes, corrigées dans la synthèse web et la note de fond.
+- **Emplacements :** `site/projet/audit.qmd` et `docs/01-audit-heritage-driftx.md`.
+- **Constats :** l'ancienne synthèse décrivait la métrique comme « originale et transposable », le coût comme indépendant du domaine ou nul par évaluation, et les données modernes comme ayant remplacé la rareté de 2006. Elle présentait également l'absence de comparaison STE comme un fait général. Ces affirmations dépassaient les éléments documentés : une évaluation ponctuelle ne supprime pas les coûts de préparation, de caractéristique et de calibration ; l'accès aux données reste soumis à la couverture, à la résolution, à la qualité et aux droits ; une revue ciblée ne suffit pas à conclure à la nouveauté ou à l'absence exhaustive de comparateurs.
+- **Correction effectuée :** les deux synthèses parlent désormais d'hypothèses historiques et de contexte ayant évolué, sans affirmer que les coûts sont nuls, que la nouveauté est établie ou que les contraintes d'accès aux données ont disparu.
+- **Preuve de clôture :** comparer les coûts complets et la transférabilité sur un protocole reproductible ; documenter la couverture et les licences des données réellement utilisées ; formaliser le protocole de recherche bibliographique avant toute conclusion d'originalité.
+
+### B-28 — Roadmap et revue G0 : statut de porte obsolète après la décision documentaire
+
+- **Statut :** contradiction de statut corrigée.
+- **Emplacements :** `site/projet/roadmap.qmd`, `docs/10-revue-adversariale-g0.md`.
+- **Constat :** après la décision du 22 octobre 2026, qui a fait franchir G0 au niveau documentaire sur la base du cadrage et de l'audit de corpus, certaines pages continuaient à dire que G0 « reste bloqué » ou à présenter le prochain test comme conditionné à un franchissement futur de G0. Cela confondait le jalon documentaire G0 avec G0-A (utilité applicative) et G1 (audit des fichiers/licences).
+- **Correction effectuée :** les pages précisent désormais que G0 documentaire est franchi, que G0-A reste non démontré et que G1/benchmark restent bloqués jusqu'à la vérification des fichiers bruts et des licences.
+- **Preuve de clôture :** garder les statuts synchronisés dans la roadmap, la fiche G0, l'audit des corpus et les pages publiques ; ne pas traiter le franchissement documentaire comme une autorisation de benchmark.

@@ -4,7 +4,7 @@ title: "G0 — preuves externes et décision"
 
 # G0 — Ce que les preuves externes permettent de conclure
 
-> **Conclusion provisoire : G0 n'est pas franchi.** Les sources attestent de décisions concrètes liées à la dérive de pulvérisation, mais elles ne démontrent pas que J-DriftX constitue une réponse adaptée.
+> **Statut actualisé : G0 est franchi au niveau documentaire depuis le 22 octobre 2026.** Le cadrage et les corpus candidats sont documentés ; cela ne démontre pas que J-DriftX constitue une réponse adaptée, et G1/benchmark restent bloqués jusqu'à l'audit des fichiers bruts et licences.
 
 ## Ce que l'on sait
 
@@ -36,7 +36,7 @@ Ce catalogue est un pré-tri documentaire : les fichiers bruts, licences, variab
 
 ## Décision actuelle
 
-**Ne pas lancer de benchmark far-field à partir de CAPRIV.** Avant tout benchmark, il faut :
+**Ne pas lancer de benchmark far-field à partir de CAPRIV.** G0 documentaire est franchi, mais avant tout benchmark G1 il faut :
 
 1. identifier l'utilisateur, la décision et l'observable primaire ;
 2. définir le régime physique : gouttelettes, phase vapeur ou scalaire passif ;

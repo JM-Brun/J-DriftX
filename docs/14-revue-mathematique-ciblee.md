@@ -1,6 +1,6 @@
 # Revue mathématique ciblée — temps de parcours de Drift-X
 
-> **Statut :** revue mathématique ciblée, non exhaustive. Les passages pertinents de l'article de 2006 et du chapitre de 2008 ont été consultés; la thèse reste à examiner. Cette note distingue les définitions rapportées par les sources, les déductions analytiques vérifiables et les questions physiques ou numériques encore ouvertes. Elle ne certifie ni l'originalité de la formulation historique ni sa validité applicative.
+> **Statut :** revue mathématique ciblée, non exhaustive. Les passages pertinents de l'article de 2006 et du chapitre de 2008 ont été consultés ; la thèse n'est pas disponible dans le projet et sera examinée après son ajout ultérieur par l'utilisateur. Cette note distingue les définitions rapportées par les sources, les déductions analytiques vérifiables et les questions physiques ou numériques encore ouvertes. Elle ne certifie ni l'originalité de la formulation historique ni sa validité applicative.
 
 > **Guide de lecture.** Une *définition* fixe l'objet étudié; une *hypothèse* précise quand il est défini; une *proposition démontrée* découle de ces éléments; une *illustration* aide à l'interpréter sans constituer une validation physique.
 
@@ -168,7 +168,7 @@ Le risque le plus immédiat n'est pas simplement que « Zermelo existe déjà »
 À ce stade :
 - **résultat établi par la revue** : le texte primaire de 2006 définit une pseudo-distance fondée sur la projection sur une caractéristique, et annonce explicitement la perte de séparation et l'échec possible de l'inégalité triangulaire; plusieurs familles mathématiques voisines sont pertinentes;
 - **non établi** : originalité de Drift-X, validité générale des propriétés annoncées, conservation exacte sous les hypothèses réellement implémentées, valeur applicative;
-- **prochaine action discriminante** : lire la thèse pour vérifier les variantes et les hypothèses, traduire le contre-exemple de triangulation en test de référence et formaliser la preuve de conservation; le cas uniforme analytique est déjà implémenté et testé.
+- **prochaine action discriminante hors thèse** : traduire le contre-exemple de triangulation en test de référence lorsque l'API de champ variable sera spécifiée et formaliser la preuve de conservation à partir des sources déjà disponibles. L'examen de la thèse est différé jusqu'à son ajout ultérieur par l'utilisateur ; le cas uniforme analytique est déjà implémenté et testé.
 
 ### Écart entre la source historique et le code actuel
 
@@ -211,7 +211,7 @@ De même, \(\nabla\cdot\mathbf u=0\) contraint la cinématique du champ, mais la
 
 ### Prochaine action à plus forte valeur
 
-Ne pas lancer encore un solveur 2D. Reproduire d'abord la pseudo-distance historique dans le champ uniforme, avec cas de test calculés à la main. En parallèle, obtenir et lire la thèse de Brun et le chapitre de 2008 pour formaliser la conservation de masse et vérifier si les sources développent ou modifient la définition du rapport de 2006. Si la source primaire complète n'est pas accessible, documenter cette limite plutôt que combler les lacunes par inférence.
+Ne pas lancer encore un solveur 2D. Reproduire d'abord la pseudo-distance historique dans le champ uniforme, avec cas de test calculés à la main. En parallèle, formaliser la conservation de masse à partir des sources déjà disponibles. L'examen de la thèse de Brun est différé jusqu'à son ajout ultérieur au projet ; le chapitre de 2008 reste une source complémentaire à consulter au-delà des pages déjà extraites. Si la source primaire complète n'est pas accessible, documenter cette limite plutôt que combler les lacunes par inférence.
 
 ## Références web consultées
 
