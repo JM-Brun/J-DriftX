@@ -63,13 +63,13 @@ def test_spatial_refinement_reduces_error() -> None:
 
 def test_temporal_refinement_converges_to_fine_step_reference() -> None:
     n_cells = 48
-    _, reference, _ = _solve(n_cells, 0.000025)
+    _, reference, _ = _solve(n_cells, 0.0003125)
     errors = []
-    for dt in (0.0004, 0.0002, 0.0001):
+    for dt in (0.02, 0.01, 0.005):
         _, actual, _ = _solve(n_cells, dt)
         errors.append(float(np.sqrt(np.mean((actual - reference) ** 2))))
     assert errors[2] < errors[1] < errors[0]
-    observed_order = float(np.polyfit(np.log([0.0004, 0.0002, 0.0001]), np.log(errors), 1)[0])
+    observed_order = float(np.polyfit(np.log([0.02, 0.01, 0.005]), np.log(errors), 1)[0])
     assert 3.5 < observed_order < 4.5
 
 
