@@ -51,7 +51,7 @@ Le nombre de cellules est dicté par les échelles à résoudre : le décimètre
 - **Positivité et conservation** : un schéma naïf peut produire des concentrations négatives ou des oscillations numériques ; il faut des schémas upwind, des limiteurs de pente.
 - **Diffusion numérique** : le schéma lui-même disperse artificiellement le panache ; l'erreur se maîtrise par des études de convergence en maillage.
 
-Ces exigences sont exactement celles que la page [Contraintes physiques](contraintes-physiques.qmd) impose au modèle réduit — conservation, positivité. La différence : dans la modélisation complète, elles sont obtenues par le schéma numérique **au prix du calcul** ; dans J-DriftX, elles sont garanties **par construction analytique**.
+Ces exigences sont exactement celles que la page [Contraintes physiques](contraintes-physiques.qmd) impose au modèle réduit — conservation, positivité. La différence : dans la modélisation complète, elles sont obtenues par le schéma numérique **au prix du calcul** ; dans J-DriftX, l'objectif est de les obtenir **par construction analytique** — leur état de preuve (formulée, testée, démontrée) est suivi sur la page [Contraintes physiques](contraintes-physiques.qmd).
 
 ## Le coût
 

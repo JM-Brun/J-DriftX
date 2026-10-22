@@ -49,27 +49,29 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 ## Similitude et métrique
 
-**Solution de similitude.** Une forme **déjà connue** de la physique pour les jets et panaches : le profil de concentration suit des lois universelles (l'épaisseur croît paraboliquement pour un jet laminaire, linéairement en turbulent). Plutôt que de tout recalculer, on **part de ces formes**. *Origine* : mécanique des fluides des jets et panaches, fondée sur l'auto-similarité des profils transversaux. → [Solutions de similitude](theorie/similitude.qmd)
+**Solution de similitude.** Une forme **déjà connue** de la physique pour les jets et panaches : le profil de concentration suit des lois universelles (l'épaisseur suit des lois de croissance en puissance, différentes selon le régime, laminaire ou turbulent). Plutôt que de tout recalculer, on **part de ces formes**. *Origine* : mécanique des fluides des jets et panaches, fondée sur l'auto-similarité des profils transversaux. → [Solutions de similitude](theorie/similitude.qmd)
 
-**Métrique des temps de transport (τ).** L'idée centrale de Drift-X. La distance naturelle n'est pas « x mètres » mais « le temps τ qu'il faut au vent pour aller de la source à ce point ». Avec un vent variable, τ dépend du chemin — c'est une **métrique non symétrique** : aller de A à B ne prend pas le même temps que de B à A. *Origine* : corpus Drift-X (C. R. Mécanique 2006, chapitre Springer 2008). → [Métrique travel-time](theorie/metrique-travel-time.qmd)
+**Métrique des temps de transport (τ).** L'idée centrale de Drift-X. La distance naturelle n'est pas « x mètres » mais « le temps τ qu'il faut au vent pour aller de la source à ce point ». Avec un vent variable, τ dépend du chemin — la construction historique (une **pseudo-distance**) la veut **non symétrique** : le retour ne coûte pas l'aller. Les conventions et les propriétés non encore établies sont précisées par la [revue mathématique](etat-art/revue-mathematique.qmd). *Origine* : corpus Drift-X (C. R. Mécanique 2006, chapitre Springer 2008). → [Métrique travel-time](theorie/metrique-travel-time.qmd)
 
-**Non-symétrie.** Propriété clé de τ : les vents cisaillés et la topographie rendent le transport irréversible. Concrètement : si A est en amont de B, le temps de A vers B est fini, mais celui de B vers A est infini (on ne remonte pas le vent). C'est ce que teste le test unitaire « non-symétrie de la métrique ».
+**Non-symétrie.** Propriété **visée** de τ : le transport par le vent est orienté, et vents cisaillés et topographie le rendent irréversible — si A est en amont de B, le temps de A vers B est fini, celui de B vers A **infini par convention** (on ne remonte pas le vent). La [revue mathématique](etat-art/revue-mathematique.qmd) précise que cette asymétrie exige une convention explicite et qu'elle n'est pas implémentée ni testée dans le code actuel.
 
 **Métrique riemannienne.** La façon « classique » de mesurer les longueurs dans un espace courbe : au voisinage de chaque point, une règle (produit scalaire) **symétrique et réversible**. La distance euclidienne en est le cas plat : la boule unité est un cercle. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd)
 
-**Métrique non riemannienne.** Toute métrique qui abandonne un axiome du cadre riemannien : la symétrie (**quasi-métrique** : aller ≠ revenir), l'indépendance directionnelle (**Finsler** : la longueur dépend du sens de parcours), ou le plan lui-même (**distance-temps** mesurée sur un réseau). La métrique τ de Drift-X cumule ces ruptures. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd)
+**Métrique non riemannienne.** Toute métrique qui abandonne un axiome du cadre riemannien : la symétrie (**quasi-métrique** : aller ≠ revenir), l'indépendance directionnelle (**Finsler** : la longueur dépend du sens de parcours), ou le plan lui-même (**distance-temps** mesurée sur un réseau). La construction visée pour τ cumule ces ruptures — son statut exact (pseudo-distance, quasi-distance) est suivi par la [revue mathématique](etat-art/revue-mathematique.qmd). → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd)
 
 **Distance-temps.** Distance mesurée en **temps de parcours** — sur un réseau de transport (géographie humaine, Muller 1979) ou dans un champ de vent (Drift-X). C'est la distance « vécue » par le voyageur ou le polluant, pas celle mesurée au sol. *Origine* : cartographie des distances-temps en géographie [@muller1979persee]. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd)
 
 **Isochrone.** Courbe reliant les points à temps de parcours égal d'une source ; les courbes **iso-τ** du modèle en sont l'analogue advectif. Les cartes en isochrones et les anamorphoses déforment la carte pour respecter la métrique.
 
-**Finsler / Zermelo.** La **navigation de Zermelo** est le problème du chemin le plus rapide pour un mobile naviguant dans un **courant** ; la métrique qui en résulte dépend de la direction de parcours. La **géométrie de Finsler** (thèse de Paul Finsler, 1918) généralise les longueurs riemanniennes en les rendant dépendantes de la direction ; la **métrique de Randers** (1941) est le cas particulier issu de la navigation — asymétrique. Un polluant dans le vent vit dans un tel espace — la non-symétrie devient le cœur du modèle. *Origine* : géométrie différentielle et calcul des variations. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) et [Revue mathématique](etat-art/revue-mathematique.qmd)
+**Finsler / Zermelo.** La **navigation de Zermelo** est le problème du chemin le plus rapide pour un mobile navigant dans un **courant** ; la métrique qui en résulte dépend de la direction de parcours. La **géométrie de Finsler** (thèse de Paul Finsler, 1918) généralise les longueurs riemanniennes en les rendant dépendantes de la direction ; la **métrique de Randers** (1941) est le cas particulier issu de la navigation — asymétrique. Un polluant dans le vent vit dans un tel espace — la non-symétrie devient le cœur du modèle. *Origine* : géométrie différentielle et calcul des variations. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) et [Revue mathématique](etat-art/revue-mathematique.qmd)
 
 **Classes de Pasquill.** Six classes de stabilité atmosphérique, de A (très instable) à F (très stable), qui pilotent la croissance des $\sigma_y$, $\sigma_z$ avec la distance. *Origine* : F. Pasquill (1961), complétées par les courbes de Gifford et les formules de Briggs (1973) utilisées par les modèles réglementaires. → [Similitude](theorie/similitude.qmd)
 
 **Topographie et MNT (DEM).** Le modèle numérique de terrain : l'altitude du sol en chaque point. Le MNT donne la normale au sol, utilisée pour « coller » le panache au relief. Le multi-niveaux permet de charger le MNT à la bonne résolution : grossière au loin, fine près des zones d'intérêt.
 
 ## Réduction de complexité
+
+Cette section décrit l'**approche visée** ; l'état réel de l'implémentation (socle gaussien en vent uniforme, primitive de polyligne pour le coût) est consigné dans le README du dépôt et sur la page [Qualité & tests](projet/qualite.qmd).
 
 **Réduction a priori.** Construire l'espace des solutions possibles **à partir de la physique** (similitude) avant tout calcul — par opposition aux approches a posteriori. → [Réduction a priori](theorie/reduction-a-priori.qmd)
 
@@ -85,23 +87,23 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 **Sans EDP, sans maillage.** Le modèle n'estime pas la solution d'équations aux dérivées partielles sur un maillage (grille de calcul) ; il **évalue une formule** en chaque point demandé. → [Modèle direct](theorie/modele-direct.qmd) et [EDP & maillage](theorie/edp-et-maillage.qmd)
 
-**Évaluation ponctuelle.** Capacité à donner la concentration en **un seul point**, sans calculer le champ entier. C'est ce qui rend le coût marginal quasi nul — et Monte Carlo massif abordable. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
+**Évaluation ponctuelle.** Capacité visée : donner la concentration en **un seul point**, sans calculer le champ entier. C'est ce qui rendrait le coût marginal quasi nul — et Monte Carlo massif abordable. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
 
-**Multi-niveaux.** Domaines rectangulaires emboîtés (typiquement 3, de ~10 km² à ~10 m²), chaque niveau affinant le précédent par interpolation aux 4 coins. La construction garantit divergence nulle du vent et conservation de la masse. → [Réduction a priori](theorie/reduction-a-priori.qmd)
+**Multi-niveaux.** Domaines rectangulaires emboîtés (typiquement 3, de ~10 km² à ~10 m²), chaque niveau affinant le précédent par interpolation aux 4 coins. La construction **historique** garantissait divergence nulle du vent et conservation de la masse ; la reprise doit la reconstruire et la tester ([Contraintes physiques](theorie/contraintes-physiques.qmd)). → [Réduction a priori](theorie/reduction-a-priori.qmd)
 
 ## Contraintes et calibration
 
-**Contraintes physiques.** Le contrat de confiance du modèle : conservation de la masse, positivité des concentrations, superposition (linéarité), divergence nulle du vent généré. Le modèle approché doit rester solution du modèle direct. → [Contraintes physiques](theorie/contraintes-physiques.qmd)
+**Contraintes physiques.** Le contrat de confiance du modèle : conservation de la masse, positivité des concentrations, superposition (linéarité), divergence nulle du vent généré. Le modèle approché doit rester solution du modèle direct ; la page dédiée distingue ce qui est **formulé**, **testé** ou **démontré**. → [Contraintes physiques](theorie/contraintes-physiques.qmd)
 
-**Divergence nulle.** Le vent généré ne « crée » ni ne « détruit » d'air : c'est la condition d'incompressibilité, conservée par construction à chaque niveau du multi-niveaux.
+**Divergence nulle.** Le vent généré ne « crée » ni ne « détruit » d'air : c'est la condition d'incompressibilité, conservée par construction dans le prototype historique multi-niveaux ; non implémentée ni testée dans la reprise ([Contraintes physiques](theorie/contraintes-physiques.qmd)).
 
 **Assimilation de données.** Régler les paramètres du modèle (a, b, …) sur les **mesures disponibles, même partielles** — quelques points de mesure suffisent, pas besoin d'un champ complet. *Origine* : géophysique prévisionniste — météorologie et océanographie (filtre de Kalman, méthodes variationnelles de type 4D-Var). → [Assimilation & identification](theorie/assimilation-identification.qmd)
 
-**Analyse de sensibilité.** Mesurer comment la sortie varie quand un paramètre bouge. Ici l'adjoint est **analytique, donc gratuit** : double usage, analyse de risque et identification de source. → [Assimilation & identification](theorie/assimilation-identification.qmd)
+**Analyse de sensibilité.** Mesurer comment la sortie varie quand un paramètre bouge. Dans l'objectif Drift-X, l'adjoint serait **analytique, donc quasi gratuit** : double usage, analyse de risque et identification de source — capacité non encore établie. → [Assimilation & identification](theorie/assimilation-identification.qmd)
 
 **Identification de source (problème inverse).** À partir de concentrations mesurées, retrouver **d'où vient** la pollution : position, intensité, date de la source. L'autre face de l'analyse de sensibilité.
 
-**Adjoint.** Outil mathématique donnant la sensibilité de la sortie à tous les paramètres d'un coup. Dans Drift-X historique, il était construit par différentiation automatique (l'outil INRIA Tapenade) à coût indépendant du nombre de paramètres ; dans J-DriftX, la dérivation de la formule le rend analytique — sans simulation supplémentaire.
+**Adjoint.** Outil mathématique donnant la sensibilité de la sortie à tous les paramètres d'un coup. Dans Drift-X historique, il était construit par différentiation automatique (l'outil INRIA Tapenade) à coût indépendant du nombre de paramètres ; la reprise vise un adjoint analytique, dérivé de la formule fermée — capacité non encore établie.
 
 ## Outils et logiciel
 
@@ -109,7 +111,7 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 **GDAL.** Bibliothèque open source de traitement des données géographiques — extraction du MNT, interpolation en raster. Le prototype l'utilisait déjà ; la future couche SIG de J-DriftX s'appuiera sur ses équivalents modernes.
 
-**AGDISP.** Modèle de référence de la dérive de pulvérisation aux États-Unis, utilisé par les régulateurs ; son extension gaussienne couvre le far-field. Sa réécriture open source (**AGDISP Modernization Project**, 2023–2026), portée par l'industrie agricole, laisse le far-field réaliste en jachère — la cible historique de Drift-X. → [Panorama](etat-art/panorama.qmd)
+**AGDISP.** Modèle de référence de la dérive de pulvérisation aux États-Unis, utilisé par les régulateurs ; son extension gaussienne couvre le far-field. Sa réécriture open source (**AGDISP Modernization Project**, 2023–2026), portée par l'industrie agricole, porte l'effort sur le near-field et le 3D ; le far-field réaliste — cible historique de Drift-X — n'est pas l'objet annoncé (le [panorama](etat-art/panorama.qmd) nuance ce constat). → [Panorama](etat-art/panorama.qmd)
 
 **Benchmark gaussien.** Le premier jalon de validation (M1 de la feuille de route) : comparer J-DriftX au modèle gaussien classique, la référence de la discipline. → [Qualité & tests](projet/qualite.qmd)
 
