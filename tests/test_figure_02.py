@@ -11,7 +11,7 @@ def test_figure_02_svg_is_well_formed_enough_for_a_static_asset() -> None:
     assert svg.startswith('<svg xmlns="http://www.w3.org/2000/svg"')
     assert svg.rstrip().endswith("</svg>")
     assert svg.count("<text ") == svg.count("</text>")
-    assert "aria-labelledby=\"title desc\"" in svg
+    assert 'aria-labelledby="title desc"' in svg
 
 
 def test_figure_02_explains_both_geometries_and_scope() -> None:
