@@ -9,7 +9,7 @@ pyodide:
 
 # Expériences interactives et vérification numérique
 
-Cette page exécute du **Python dans le navigateur** grâce à Quarto Live et Pyodide. Le calcul scientifique est délégué au paquet `jdriftx` existant ; le code JavaScript n'implémente pas les équations du modèle.
+Cette page exécute du **Python dans le navigateur** grâce à Quarto Live et Pyodide. Le calcul scientifique est délégué au paquet `jdriftx` existant ; les blocs OJS ne gèrent que les contrôles d'interface et l'affichage, sans réimplémenter les équations.
 
 ::: {.callout-note}
 **Périmètre scientifique.** L'expérience expose `pseudo_distance_uniforme`, une référence analytique limitée à un champ de vent uniforme. Elle ne calcule pas les caractéristiques d'un champ variable, ne simule pas la dispersion atmosphérique et ne valide pas le modèle complet. Le coût ignore l'écart transversal et retourne l'infini lorsque le point cible est en amont selon la convention documentée par la fonction.
@@ -17,7 +17,7 @@ Cette page exécute du **Python dans le navigateur** grâce à Quarto Live et Py
 
 ## Explorer le coût de parcours en vent uniforme
 
-Choisissez la position du point cible (B=(x,y)) relativement au point de départ (A=(0,0)), ainsi que le vent uniforme (mathbf{u}=(u_x,u_y)). Les coordonnées sont en mètres et les vitesses en mètres par seconde ; le temps retourné est donc en secondes.
+Choisissez la position du point cible $B=(x,y)$ relativement au point de départ $A=(0,0)$, ainsi que le vent uniforme $\mathbf{u}=(u_x,u_y)$. Les coordonnées sont en mètres et les vitesses en mètres par seconde ; le temps retourné est donc en secondes.
 
 ```{pyodide}
 #| edit: false
@@ -82,7 +82,7 @@ html`<p><strong>Coût calculé par <code>jdriftx.pseudo_distance_uniforme</code>
 
 - Le coût dépend de la projection du déplacement sur la direction du vent, et non de la distance euclidienne.
 - Un déplacement transversal pur peut donc avoir un coût nul dans cette référence analytique. Ce comportement est une limite connue de la définition, pas une affirmation physique sur le transport atmosphérique.
-- Un déplacement longitudinal en amont renvoie (+infty) selon la convention explicite de la fonction.
+- Un déplacement longitudinal en amont renvoie $+\infty$ selon la convention explicite de la fonction.
 - Le noyau Python est la source de vérité ; les contrôles OJS ne font que transmettre les paramètres et afficher le résultat.
 
 Les tests automatisés du paquet Python restent exécutés dans l'environnement Python normal de la CI. Le navigateur ne remplace pas ces tests et ne constitue pas, à lui seul, une validation scientifique.
