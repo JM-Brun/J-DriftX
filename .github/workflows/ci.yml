@@ -52,4 +52,4 @@ jobs:
           fi
 
       - name: Tests (pytest)
-        run: uv run pytest --cov=jdriftx --cov-report=term-missing
+        run: uv run pytest --cov=jdriftx --cov-report=term-missing --cov-fail-under=85

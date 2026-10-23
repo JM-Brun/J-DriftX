@@ -8,7 +8,7 @@ Ce dépôt est un projet de recherche : **la rigueur scientifique et la qualité
 2. Faire **un** changement cohérent par pull request, avec un objectif clair.
 3. Ouvrir une PR vers `main` ; ne jamais committer directement sur `main`.
 4. Expliquer dans la PR l'objectif, la validation effectuée et les incertitudes.
-5. La CI doit être verte avant fusion : `ruff check` + `ruff format --check`, `mypy --strict`, `pytest --cov=jdriftx`, rendu du site Quarto.
+5. La CI doit être verte avant fusion : `ruff check` + `ruff format --check`, `mypy --strict`, `pytest --cov=jdriftx --cov-fail-under=85`, rendu du site Quarto.
 
 ## Qualité du code
 
@@ -22,7 +22,7 @@ Ce dépôt est un projet de recherche : **la rigueur scientifique et la qualité
 
 - **TDD** : écrire d'abord le test (cas analytique, propriété mathématique, cas limite), puis l'implémentation, puis refactorer. Une figure seule ne valide rien.
 - **Structure Given / When / Then** : chaque test sépare visiblement la donnée d'entrée (`# Given`), l'action testée (`# When`) et l'assertion (`# Then`). Les tests existants convergent progressivement vers ce format ; tout nouveau test le suit.
-- **Couverture** : la CI mesure la couverture (`pytest --cov=jdriftx --cov-report=term-missing`). Viser une couverture élevée sur le cœur, sans écrire de tests creux pour le score ; un seuil `--cov-fail-under` sera fixé (issue #16) une fois la ligne de base mesurée.
+- **Couverture** : la CI mesure la couverture et applique un seuil bloquant `--cov-fail-under=85` (ligne de base mesurée le 23 octobre 2026 : 88 %, issue #16). Viser une couverture élevée sur le cœur, sans écrire de tests creux pour le score ; le seuil sera relevé au fil des itérations.
 - **Régression** : conserver des sorties de référence légères (tableaux numériques versionnés, tolérances documentées) ; comparer des champs et des métriques, jamais des captures d'écran.
 - Les tests de propriétés mathématiques et physiques ne valident que **sous les hypothèses qui les garantissent** (cf. README) ; un test de propriété ne démontre ni l'exactitude empirique ni l'utilité applicative du modèle.
 
