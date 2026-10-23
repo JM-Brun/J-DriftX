@@ -31,7 +31,7 @@ def render_figure_02_svg() -> str:
         'aria-labelledby="title desc">',
         '<title id="title">Distance euclidienne et temps de transport dirigé</title>',
         '<desc id="desc">Deux schémas comparant la distance géométrique symétrique '
-        'au coût longitudinal orienté par un vent uniforme.</desc>',
+        "au coût longitudinal orienté par un vent uniforme.</desc>",
         '<rect width="100%" height="100%" fill="#ffffff"/>',
         _text(32, 38, "Figure 2 — Deux notions de distance", size=25, weight="bold"),
         '<line x1="550" y1="65" x2="550" y2="485" stroke="#d5dbe3" stroke-width="2"/>',
@@ -70,6 +70,6 @@ def render_figure_02_svg() -> str:
             "ni une reproduction quantitative.",
             size=13,
         ),
-        '</svg>',
+        "</svg>",
     ]
     return "\n".join(elements) + "\n"
