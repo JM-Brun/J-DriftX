@@ -32,7 +32,7 @@ def test_longueur_non_positive_est_rejetee() -> None:
 
 
 def test_les_vitesses_sont_les_derivees_de_la_fonction_de_courant() -> None:
-    """u = ∂ψ/∂y et v = −∂ψ/∂x pour le champ cellulaire sinusoïdal."""
+    """u = ∂ψ/∂y et v = -∂ψ/∂x pour le champ cellulaire sinusoïdal."""
     # Given — un point du champ où k·x = k·y = π/4.
     x = y = CHAMP.longueur / 8
     # When — la fonction de courant et les vitesses sont évaluées.

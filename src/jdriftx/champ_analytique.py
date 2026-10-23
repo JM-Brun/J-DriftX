@@ -1,7 +1,7 @@
 """Champ plan incompressible à fonction de courant (phase 2, Fig. 1).
 
 Un champ défini par une fonction de courant ψ est incompressible par
-construction : u = ∂ψ/∂y et v = −∂ψ/∂x donnent ∇·u = 0 pour toute ψ
+construction : u = ∂ψ/∂y et v = -∂ψ/∂x donnent ∇·u = 0 pour toute ψ
 suffisamment régulière. Ce module fournit le champ cellulaire sinusoïdal
 utilisé comme cas analytique pour vérifier l'intégration des trajectoires
 (phase 2 du document d'architecture, Fig. 1 du chapitre de 2008). En champ
@@ -55,7 +55,7 @@ class ChampFonctionCourant:
         return self.amplitude * math.sin(k * x) * math.sin(k * y)
 
     def vitesse(self, x: float, y: float) -> tuple[float, float]:
-        """Évalue (u, v) = (∂ψ/∂y, −∂ψ/∂x) en m s⁻¹, divergence nulle par construction."""
+        """Évalue (u, v) = (∂ψ/∂y, -∂ψ/∂x) en m s⁻¹, divergence nulle par construction."""
         k = self.nombre_donde
         u = self.amplitude * k * math.sin(k * x) * math.cos(k * y)
         v = -self.amplitude * k * math.cos(k * x) * math.sin(k * y)
