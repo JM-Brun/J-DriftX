@@ -100,7 +100,8 @@ Un score faible n'invalide pas le projet ; il indique ce que l'expérience suiva
 
 ## Sources de travail du projet
 
-- [Décision G0-S / G0-A et MVP scientifique](13-mvp-scientifique-et-g0.md)
+- [Question scientifique G0-S](https://github.com/JM-Brun/J-DriftX/issues/41)
+- [Cadrage applicatif G0-A](https://github.com/JM-Brun/J-DriftX/issues/43)
 - [Cadre de décision, utilité et preuve](08-decision-utilite-et-preuve.md)
 - [Catalogue de données de transport et dispersion](12-catalogue-donnees-transport-dispersion.md)
 - [Gibbons et al. (2009), Zermelo–Randers–Finsler geometry](https://doi.org/10.1103/PhysRevD.79.044022)
