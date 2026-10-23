@@ -1,10 +1,11 @@
 ---
 title: "Démonstration navigateur : coût en vent uniforme"
-format: live-html
-pyodide:
-  packages:
-    - numpy
-    - https://jm-brun.github.io/J-DriftX/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
+format:
+  live-html:
+    pyodide:
+      packages:
+        - numpy
+        - https://jm-brun.github.io/J-DriftX/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
 ---
 
 # Démonstration navigateur : coût en vent uniforme
@@ -17,7 +18,7 @@ Cette page propose une seule expérience calculée dans le navigateur. Elle char
 
 ## Explorer le coût
 
-Le point de départ est fixé à $A=(0,0)$ ; les curseurs définissent le point cible $B=(x,y)$ et le vent uniforme $\mathbf{u}=(u_x,u_y)$. Les coordonnées sont en mètres, les vitesses en mètres par seconde et le résultat en secondes.
+Le point de départ est fixé à $A=(0,0)$ ; les curseurs définissent le point cible $B=(x,y)$ et le vent uniforme $\\mathbf{u}=(u_x,u_y)$. Les coordonnées sont en mètres, les vitesses en mètres par seconde et le résultat en secondes.
 
 ```{ojs}
 viewof targetX = Inputs.range([-500, 500], {
@@ -74,13 +75,13 @@ Le bloc Python est relié aux curseurs par l'option `input` native de Quarto Liv
 
 ## Résultats de référence indépendants de l'interface
 
-Avec un vent fixé à $\mathbf{u}=(2,0)$ m/s :
+Avec un vent fixé à $\\mathbf{u}=(2,0)$ m/s :
 
 | Point cible $B$ | Résultat attendu | Interprétation |
 |---|---:|---|
 | $(100,0)$ m | $50$ s | Déplacement longitudinal vers l'aval |
 | $(0,100)$ m | $0$ s | Déplacement purement transversal, non pénalisé par cette définition |
-| $(-100,0)$ m | $+\infty$ | Point cible en amont selon la convention de la fonction |
+| $(-100,0)$ m | $+\\infty$ | Point cible en amont selon la convention de la fonction |
 
 Ces valeurs sont des vérifications analytiques de la fonction, pas des résultats d'une simulation atmosphérique.
 
@@ -88,7 +89,7 @@ Ces valeurs sont des vérifications analytiques de la fonction, pas des résulta
 
 - Le calcul est délégué à `jdriftx.pseudo_distance_uniforme`, fonction Python testée dans le dépôt.
 - Le coût est déterminé par la projection du déplacement sur la direction du vent ; l'écart transversal n'est pas pénalisé.
-- Un déplacement longitudinal en amont renvoie $+\infty$ selon la convention explicite de cette implémentation.
+- Un déplacement longitudinal en amont renvoie $+\\infty$ selon la convention explicite de cette implémentation.
 - Un vent nul est signalé explicitement et ne provoque pas d'exception non traitée.
 - Le calcul est limité à un champ uniforme non nul. Il ne résout pas les caractéristiques d'un champ variable, ne calcule pas une concentration et ne valide pas un modèle de dispersion.
 
