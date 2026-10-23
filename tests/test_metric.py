@@ -144,3 +144,74 @@ def test_uniform_pseudodistance_rejects_non_finite_inputs(
 ) -> None:
     with pytest.raises(ValueError, match=message):
         pseudo_distance_uniforme(a, b, vent)
+
+
+@pytest.mark.parametrize(
+    ("a", "b", "vent"),
+    [
+        ((0.0, 0.0), (12.0, 7.0), (3.0, 4.0)),
+        ((-5.0, 2.0), (8.0, -1.0), (0.0, 2.5)),
+        ((1.0, -9.0), (4.0, 6.0), (-2.0, 1.0)),
+    ],
+)
+def test_uniform_pseudodistance_matches_projection_formula(
+    a: tuple[float, float],
+    b: tuple[float, float],
+    vent: tuple[float, float],
+) -> None:
+    """The uniform-field result equals the non-negative longitudinal projection."""
+    displacement = np.asarray(b) - np.asarray(a)
+    velocity = np.asarray(vent, dtype=float)
+    expected = max(0.0, float(np.dot(displacement, velocity))) / float(
+        np.dot(velocity, velocity)
+    )
+
+    assert pseudo_distance_uniforme(a, b, vent) == pytest.approx(expected)
+
+
+def test_uniform_pseudodistance_is_translation_invariant() -> None:
+    """Translating both points leaves their displacement and cost unchanged."""
+    a = np.array([-3.0, 2.0])
+    b = np.array([9.0, 8.0])
+    translation = np.array([100.0, -45.0])
+    vent = np.array([4.0, 3.0])
+
+    original = pseudo_distance_uniforme(a, b, vent)
+    translated = pseudo_distance_uniforme(a + translation, b + translation, vent)
+
+    assert translated == pytest.approx(original)
+
+
+def test_uniform_pseudodistance_scales_inversely_with_wind_magnitude() -> None:
+    """Multiplying a nonzero wind by a positive factor divides the travel time."""
+    a = np.array([0.0, 0.0])
+    b = np.array([12.0, 9.0])
+    vent = np.array([4.0, 3.0])
+    factor = 2.5
+
+    original = pseudo_distance_uniforme(a, b, vent)
+    faster_wind = pseudo_distance_uniforme(a, b, factor * vent)
+
+    assert faster_wind == pytest.approx(original / factor)
+
+
+def test_uniform_pseudodistance_is_invariant_to_transverse_displacement() -> None:
+    """Adding a displacement orthogonal to the wind does not change longitudinal cost."""
+    a = np.array([0.0, 0.0])
+    vent = np.array([3.0, 4.0])
+    downstream = np.array([6.0, 8.0])
+    transverse = np.array([-8.0, 6.0])
+
+    baseline = pseudo_distance_uniforme(a, downstream, vent)
+    shifted = pseudo_distance_uniforme(a, downstream + transverse, vent)
+
+    assert shifted == pytest.approx(baseline)
+
+
+def test_uniform_pseudodistance_is_zero_for_upwind_boundary() -> None:
+    """A target with zero longitudinal displacement has zero cost by convention."""
+    a = np.array([2.0, -1.0])
+    vent = np.array([3.0, 4.0])
+    transverse = np.array([-4.0, 3.0])
+
+    assert pseudo_distance_uniforme(a, a + transverse, vent) == pytest.approx(0.0)
