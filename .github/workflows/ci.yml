@@ -31,6 +31,9 @@ jobs:
       - name: Rendu du site Quarto
         run: quarto render site
 
+      - name: Vérifier la présence du paquet Python publié
+        run: test -s site/_site/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
+
       - name: Lint (ruff)
         run: uv run ruff check . --output-format=github
 
