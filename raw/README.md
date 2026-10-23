@@ -32,7 +32,7 @@ Les fiches Markdown décrivant les liens scientifiques entre les références et
 | <code>extracts/2006-mohammadi-brun-crmeca.txt</code> | Texte intégral du C. R. Mécanique 2006 (5 pages) | [Archive ouverte de l'Académie des sciences](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) |
 | <code>extracts/2009-bozon-sinfort-mohammadi-driftx-hal.txt</code> | Texte intégral du manuscrit auteur Drift-X (17 pages) | [HAL hal-00468863](https://hal.science/hal-00468863) via relais ResearchGate |
 
-À compléter : extraction du rapport InVS 2009 (binaire volumineux, 4 Mo) et du chapitre 14 depuis le recueil Glowinski & Neittaanmäki ajouté le 23 octobre 2026 (extraction prioritaire, avec en-tête documentaire et mention du copyright Springer).
+À compléter : extraction du rapport InVS 2009 (binaire volumineux, 4 Mo). Pour le chapitre 14 du recueil Glowinski & Neittaanmäki, une extraction analytique est disponible dans `extracts/2008-brun-mohammadi-springer-chap14-notes.txt`. Elle ne remplace pas une transcription OCR intégrale vérifiée ; les équations, légendes et figures doivent être contrôlées sur le PDF original.
 
 ## PDF encore attendus
 
