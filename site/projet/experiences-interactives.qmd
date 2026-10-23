@@ -1,5 +1,5 @@
 ---
-title: "Expériences interactives et vérification numérique"
+title: "Démonstration navigateur : coût en vent uniforme"
 format: live-html
 pyodide:
   packages:
@@ -7,17 +7,17 @@ pyodide:
     - https://jm-brun.github.io/J-DriftX/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
 ---
 
-# Expériences interactives et vérification numérique
+# Démonstration navigateur : coût en vent uniforme
 
-Cette page exécute du **Python dans le navigateur** grâce à Quarto Live et Pyodide. Le calcul scientifique est délégué au paquet `jdriftx` existant ; les blocs OJS ne gèrent que les contrôles d'interface et l'affichage, sans réimplémenter les équations.
+Cette page propose une seule expérience calculée dans le navigateur. Elle charge le paquet Python public `jdriftx` avec Quarto Live et Pyodide. Les curseurs et l'affichage sont gérés par Observable JavaScript (OJS) ; le calcul est effectué par la fonction Python existante.
 
-::: {.callout-note}
-**Périmètre scientifique.** L'expérience expose `pseudo_distance_uniforme`, une référence analytique limitée à un champ de vent uniforme. Elle ne calcule pas les caractéristiques d'un champ variable, ne simule pas la dispersion atmosphérique et ne valide pas le modèle complet. Le coût ignore l'écart transversal et retourne l'infini lorsque le point cible est en amont selon la convention documentée par la fonction.
+::: {.callout-warning}
+**Chargement initial.** Le navigateur doit télécharger le runtime WebAssembly, NumPy et la roue Python de J-DriftX. Le premier affichage peut prendre un moment. Si les contrôles restent inactifs ou si une erreur apparaît dans la zone de chargement, consultez les résultats analytiques de référence plus bas : ils restent disponibles même si l'exécution interactive échoue.
 :::
 
-## Explorer le coût de parcours en vent uniforme
+## Explorer le coût
 
-Choisissez la position du point cible $B=(x,y)$ relativement au point de départ $A=(0,0)$, ainsi que le vent uniforme $\mathbf{u}=(u_x,u_y)$. Les coordonnées sont en mètres et les vitesses en mètres par seconde ; le temps retourné est donc en secondes.
+Le point de départ est fixé à $A=(0,0)$ ; les curseurs définissent le point cible $B=(x,y)$ et le vent uniforme $\mathbf{u}=(u_x,u_y)$. Les coordonnées sont en mètres, les vitesses en mètres par seconde et le résultat en secondes.
 
 ```{pyodide}
 #| edit: false
@@ -27,7 +27,7 @@ Choisissez la position du point cible $B=(x,y)$ relativement au point de départ
 from jdriftx import pseudo_distance_uniforme
 
 def evaluate_travel_cost(x, y, ux, uy):
-    """Evaluate the existing J-DriftX uniform-wind reference implementation."""
+    """Call the tested Python reference implementation."""
     return pseudo_distance_uniforme([0.0, 0.0], [x, y], [ux, uy])
 ```
 
@@ -57,29 +57,33 @@ viewof windY = Inputs.range([-2, 2], {
 })
 ```
 
-```{pyodide}
-#| edit: false
-#| output: false
-#| input:
-#|   - targetX
-#|   - targetY
-#|   - windX
-#|   - windY
-#| define:
-#|   - travelCost
-travelCost = evaluate_travel_cost(targetX, targetY, windX, windY)
-travelCost
-```
-
 ```{ojs}
-html`<p><strong>Coût calculé par <code>jdriftx.pseudo_distance_uniforme</code> :</strong> ${Number.isFinite(travelCost) ? travelCost.toFixed(2) + " s" : "∞ — point cible en amont"}</p>`
+{
+  const cost = evaluate_travel_cost(targetX, targetY, windX, windY);
+  const result = Number.isFinite(cost)
+    ? `${cost.toFixed(2)} s`
+    : "∞ — point cible en amont";
+  return html`<p><strong>Coût calculé par <code>jdriftx.pseudo_distance_uniforme</code> :</strong> ${result}</p>`;
+}
 ```
 
-## Interprétation et limites
+## Résultats de référence indépendants de l'interface
 
-- Le coût dépend de la projection du déplacement sur la direction du vent, et non de la distance euclidienne.
-- Un déplacement transversal pur peut donc avoir un coût nul dans cette référence analytique. Ce comportement est une limite connue de la définition, pas une affirmation physique sur le transport atmosphérique.
-- Un déplacement longitudinal en amont renvoie $+\infty$ selon la convention explicite de la fonction.
-- Le noyau Python est la source de vérité ; les contrôles OJS ne font que transmettre les paramètres et afficher le résultat.
+Avec un vent fixé à $\mathbf{u}=(2,0)$ m/s :
 
-Les tests automatisés du paquet Python restent exécutés dans l'environnement Python normal de la CI. Le navigateur ne remplace pas ces tests et ne constitue pas, à lui seul, une validation scientifique.
+| Point cible $B$ | Résultat attendu | Interprétation |
+|---|---:|---|
+| $(100,0)$ m | $50$ s | Déplacement longitudinal vers l'aval |
+| $(0,100)$ m | $0$ s | Déplacement purement transversal, non pénalisé par cette définition |
+| $(-100,0)$ m | $+\infty$ | Point cible en amont selon la convention de la fonction |
+
+Ces valeurs sont des vérifications analytiques de la fonction, pas des résultats d'une simulation atmosphérique.
+
+## Ce que cette expérience démontre — et ne démontre pas
+
+- Le calcul est délégué à `jdriftx.pseudo_distance_uniforme`, fonction Python testée dans le dépôt.
+- Le coût est déterminé par la projection du déplacement sur la direction du vent ; l'écart transversal n'est pas pénalisé.
+- Un déplacement longitudinal en amont renvoie $+\infty$ selon la convention explicite de cette implémentation.
+- Le calcul est limité à un champ uniforme non nul. Il ne résout pas les caractéristiques d'un champ variable, ne calcule pas une concentration et ne valide pas un modèle de dispersion.
+
+Pour le catalogue des autres expériences, les commandes de lancement local et les tests associés, consulter le [catalogue du laboratoire numérique](laboratoire-interactif.qmd). Pour le niveau de preuve requis, voir la page de [validation scientifique](validation-scientifique.qmd).
