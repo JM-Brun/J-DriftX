@@ -16,7 +16,7 @@ Le corpus Drift-X compte sept publications (2006–2009). Cette page relit chaqu
 
 La thèse n'a jamais été numérisée ni déposée : elle est introuvable en ligne. On ne peut donc pas encore la relire. On sait seulement, par les bibliographies des autres papiers, qu'elle existe sous ce titre exact — et le résumé de l'article de 2006 ci-dessous en décrit le contenu scientifique contemporain.
 
-**Ce que J-DriftX en attend :** tout. C'est le document le plus complet sur le modèle ; le déposer sur HAL est l'action M0 de la [feuille de route](roadmap.qmd).
+**Ce que J-DriftX en attend :** tout. C'est le document le plus complet sur le modèle ; la vérification de son accès et de son dépôt est suivie dans l'[issue bibliographique M0](https://github.com/JM-Brun/J-DriftX/issues/44).
 
 ## L'article de 2006 (C. R. Mécanique) — le cœur mathématique, relu intégralement
 
