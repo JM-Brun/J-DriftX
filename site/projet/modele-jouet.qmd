@@ -61,4 +61,4 @@ Un fallback satisfaisant produit une définition non ambiguë, une preuve ou une
 
 ## Document détaillé
 
-Le protocole de décision, les critères d'acceptation et le plan d'exécution sont décrits dans [docs/09-fallback-modele-jouet.md](../../docs/09-fallback-modele-jouet.md). Voir également le [cadre d'utilité et de preuve](utilite-scientifique.qmd) et la [feuille de route](roadmap.qmd).
+Le protocole de décision, les critères d'acceptation et les limites sont décrits dans cette page et le [cadre d'utilité et de preuve](utilite-scientifique.qmd). Le suivi des questions ouvertes est disponible dans les [issues publiques](https://github.com/JM-Brun/J-DriftX/issues).

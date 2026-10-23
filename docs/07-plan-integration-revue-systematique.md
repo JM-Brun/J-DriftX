@@ -92,5 +92,5 @@ La [bibliographie annotée J-DriftX](bibliographie-annotee-jdriftx.md) fournit d
 - [Revue structurée actuelle](02-revue-etat-art-2026.md)
 - [Choix de la méthode de revue systématique](06-choix-methode-revue-systematique.md)
 - [Plan d'intégration scientifique et de validation](05-plan-validation-et-integration.md)
-- [Feuille de route J-DriftX v2](03-roadmap-jdriftx-v2.md)
+- [Questions scientifiques et techniques ouvertes](https://github.com/JM-Brun/J-DriftX/issues)
 - [Sources primaires et documents bruts](../raw/README.md)

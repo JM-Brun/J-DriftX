@@ -35,7 +35,7 @@ Une preuve à un niveau ne vaut pas preuve aux niveaux suivants.
 - **G1 — cohérence théorique : à poursuivre sur un problème précisément borné.** Expliciter variables, unités, hypothèses, conditions aux limites et preuves.
 - **G2–G4 — comparaison, validation indépendante et pertinence applicative : conditionnels.** Ne pas démarrer de benchmark applicatif coûteux ni revendiquer un bénéfice avant de disposer d'un protocole réfutable et de données adaptées.
 
-Voir le [cadre de décision et de preuve](08-decision-utilite-et-preuve.md), la [revue adversariale G0](10-revue-adversariale-g0.md) et la [feuille de route](03-roadmap-jdriftx-v2.md).
+Voir le [cadre de décision et de preuve](08-decision-utilite-et-preuve.md), les [limites et domaines de validité](../site/hypotheses/limites.qmd) et les [issues publiques](https://github.com/JM-Brun/J-DriftX/issues).
 
 ## 4. Comment lire les laboratoires
 
@@ -66,9 +66,9 @@ Ces cas sont utiles pour détecter des erreurs de code et clarifier les méthode
 
 ## Sources de référence dans le dépôt
 
-- [Feuille de route](03-roadmap-jdriftx-v2.md)
+- [Questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues)
 - [Cadre de décision et de preuve](08-decision-utilite-et-preuve.md)
-- [Revue adversariale G0](10-revue-adversariale-g0.md)
-- [MVP scientifique minimal et G0](13-mvp-scientifique-et-g0.md)
+- [Limites et domaines de validité](../site/hypotheses/limites.qmd)
+- [Investigation mathématique sur le temps de parcours](https://github.com/JM-Brun/J-DriftX/issues/41)
 - [Spécification des laboratoires](17-laboratoire-interactif.md)
 - [Page de qualité et tests](../site/projet/qualite.qmd)

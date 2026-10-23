@@ -122,7 +122,7 @@ Il n'existe pas de seuil universel d'amélioration. Il doit être motivé par le
 
 ### G0 — Cadrage documentaire du besoin (franchi le 22 octobre 2026)
 
-Le **jalon G0 documentaire** est franchi : le besoin scientifique, l’observable cible, les baselines candidates, les critères de succès/arrêt et les corpus candidats ont été cadrés et documentés dans la [fiche G0](13-fiche-g0-cadrage-besoin.md) et l’[audit des corpus](15-audit-corpus-g0-resultats.md).
+Le **jalon G0 documentaire** est franchi : le besoin scientifique, l’observable cible, les baselines candidates, les critères de succès/arrêt et les corpus candidats ont été cadrés et documentés dans la [issue publique de cadrage G0-A](https://github.com/JM-Brun/J-DriftX/issues/43) et l’[audit des corpus](15-audit-corpus-g0-resultats.md).
 
 Ce verdict est volontairement limité. Il ne signifie pas que l’utilité applicative est démontrée, que les fichiers bruts sont utilisables sous licence compatible, que le modèle est valide ou qu’un avantage sur les baselines a été observé.
 
@@ -219,7 +219,7 @@ Si les fichiers bruts ne sont pas utilisables ou si le protocole ne permet pas u
 
 - [Audit de l'héritage Drift-X](01-audit-heritage-driftx.md)
 - [Revue de l'état de l'art 2026](02-revue-etat-art-2026.md)
-- [Feuille de route J-DriftX v2](03-roadmap-jdriftx-v2.md)
+- [Suivi public des questions G0-A](https://github.com/JM-Brun/J-DriftX/issues/43)
 - [Plan d'intégration scientifique et de validation](05-plan-validation-et-integration.md)
 - [Choix de la méthode de revue systématique](06-choix-methode-revue-systematique.md)
 
@@ -231,6 +231,6 @@ Le projet distingue maintenant :
 - **G0-S — valeur scientifique exploratoire :** autorise un modèle jouet mathématique précisément défini, avec preuves, contre-exemples et tests. Il peut avancer sans jeu de données réel, car il ne prétend pas valider une prédiction physique.
 - **G0-A — utilité applicative :** reste obligatoire avant toute revendication de valeur applicative, benchmark réel, sélection de domaine industriel ou développement d'une chaîne opérationnelle.
 
-Cette séparation ne doit pas être confondue avec le statut documentaire de G0 : le cadrage documentaire a été franchi le 22 octobre 2026, tandis que G0-A (utilité applicative) reste non démontré. Elle permet de produire un résultat scientifique de portée limitée sans prétendre avoir résolu le besoin utilisateur. Le [MVP scientifique minimal et la trajectoire maximale](13-mvp-scientifique-et-g0.md) définissent le périmètre autorisé et les portes d'extension.
+Cette séparation ne doit pas être confondue avec le statut documentaire de G0 : le cadrage documentaire a été franchi le 22 octobre 2026, tandis que G0-A (utilité applicative) reste non démontré. Elle permet de produire un résultat scientifique de portée limitée sans prétendre avoir résolu le besoin utilisateur. Le périmètre public de l'investigation mathématique est décrit dans la [page sur la métrique travel-time](https://jm-brun.github.io/J-DriftX/theorie/metrique-travel-time.html) ; le cadrage applicatif est suivi dans l'[issue G0-A](https://github.com/JM-Brun/J-DriftX/issues/43).
 
 Le MVP ne peut conclure qu'à des propriétés mathématiques ou à une valeur pédagogique. Toute conclusion sur concentration, dépôt, exposition, coût applicatif ou utilité décisionnelle requiert une formulation physique et une validation distinctes.

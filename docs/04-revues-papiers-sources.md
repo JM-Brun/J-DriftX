@@ -3,7 +3,7 @@
 > Document établi en octobre 2026. Objectif : relire **papier par papier** le corpus historique de Drift-X, extraire un maximum d'information vérifiable de chaque source, et expliciter ce que J-DriftX reprend de chacune.
 > Méthode : chaque fiche distingue clairement (i) le contenu **extrait** de la source (résumés verbatim, équations, détails techniques, issus des pages accessibles ou du chapitre fourni par l'auteur), (ii) le **statut d'accès** de la source, et (iii) les apports pour J-DriftX. Rien n'est affirmé qui ne soit pas vérifiable dans une source citée.
 > Les sources primaires (PDF et extractions texte brutes) sont archivées dans <code>raw/</code> du dépôt.
-> Fichier complémentaire du dossier de travail : les autres documents sont <code>01-audit-heritage-driftx.md</code>, <code>02-revue-etat-art-2026.md</code>, <code>03-roadmap-jdriftx-v2.md</code>, <code>references.md</code>.
+> Fichier complémentaire du dossier de travail : les autres documents sont <code>01-audit-heritage-driftx.md</code>, <code>02-revue-etat-art-2026.md</code>, <code>references.md</code>.
 
 ## 0. Vue d'ensemble et accès aux sources
 

@@ -29,7 +29,7 @@ Une source historique établit ce qu'un article a publié ; un test vérifie un 
 - **G0-A : utilité applicative non démontrée** — le besoin, l'utilisateur, la décision et le bénéfice doivent être établis indépendamment de la méthode.
 - **G1 : cohérence théorique à poursuivre** sur un problème borné ; **G2–G4** restent conditionnels aux résultats.
 
-Le franchissement de G0 documentaire ne valide donc ni le modèle ni le cas d'usage. Voir le [cadre de décision](utilite-scientifique.qmd), la [revue adversariale G0](revue-adversariale-g0.qmd) (annexe) et la [feuille de route](roadmap.qmd) (annexe).
+Le franchissement de G0 documentaire ne valide donc ni le modèle ni le cas d'usage. Voir le [cadre de décision](utilite-scientifique.qmd), les [limites et domaines de validité](../hypotheses/limites.qmd) et les [issues publiques de suivi](https://github.com/JM-Brun/J-DriftX/issues).
 
 ## Ce que montrent les laboratoires
 
@@ -41,9 +41,9 @@ Ces expériences servent à la **vérification numérique**, non à la validatio
 
 1. [Héritage Drift-X](heritage.qmd) et les [Lectures des sources](lectures.qmd) (annexe) — établir la base documentaire.
 2. [Fondements théoriques : modèle direct](../theorie/modele-direct.qmd), [Solutions de similitude](../theorie/similitude.qmd) et [Métrique travel-time](../theorie/metrique-travel-time.qmd) — préciser les objets mathématiques.
-3. Le [MVP scientifique minimal](mvp-scientifique.qmd) (annexe) — borner les premières expériences admissibles.
+3. L'[investigation mathématique sur le temps de parcours](https://github.com/JM-Brun/J-DriftX/issues/41) — borner les premières expériences admissibles.
 4. [Laboratoire interactif](laboratoire-interactif.qmd) et [Qualité & tests](qualite.qmd) — lire les résultats numériques avec leurs limites.
-5. La [revue adversariale G0](revue-adversariale-g0.qmd) et la [feuille de route](roadmap.qmd) (annexes) — décider de la suite selon les preuves.
+5. Les [questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues) — décider de la suite selon les preuves.
 
 ## Suivi des travaux
 
