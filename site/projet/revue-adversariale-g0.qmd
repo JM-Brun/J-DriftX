@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Revue adversariale — porte G0"
 ---
 
