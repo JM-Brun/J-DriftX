@@ -25,6 +25,9 @@ jobs:
         with:
           version: 1.6.43
 
+      - name: Construire le paquet Python pour Pyodide
+        run: uv build --wheel --out-dir site/resources/wheels
+
       - name: Rendu du site Quarto
         run: quarto render site
 
