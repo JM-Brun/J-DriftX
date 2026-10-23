@@ -62,6 +62,8 @@ uv run pre-commit run --all-files
 
 Les tests doivent vérifier les propriétés mathématiques et physiques uniquement sous les hypothèses qui les garantissent. Un test de propriété ne démontre pas, à lui seul, l'exactitude empirique ni l'utilité applicative du modèle.
 
+La charte qualité détaillée — code orienté objet avec responsabilités séparées, typage strict, structures typées plutôt que `dict`/DataFrame, TDD Given/When/Then, couverture, choix raisonné des dépendances — est dans [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Statut et prochaine décision
 
 **État des portes :** le cadrage documentaire G0 a été franchi le 22 octobre 2026 ; G0-S autorise une exploration mathématique minimale, tandis que G0-A (utilité applicative) reste non démontrée. Le cas far-field de dérive de pulvérisation demeure un candidat, pas une cible validée. Voir la [carte d'articulation scientifique](docs/18-carte-articulation-scientifique.md), le [cadre de décision et de preuve](docs/08-decision-utilite-et-preuve.md), les [questions scientifiques ouvertes](https://github.com/JM-Brun/J-DriftX/issues) et les [limites connues](https://jm-brun.github.io/J-DriftX/hypotheses/limites.html).
