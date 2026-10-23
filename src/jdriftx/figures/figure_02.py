@@ -63,7 +63,12 @@ def render_figure_02_svg() -> str:
         _text(665, 375, "τ(A, B) = Δx / U (aval) ; +∞ (amont)", size=16),
         _text(580, 411, "Le décalage transversal n'est pas pénalisé dans ce cas jouet.", size=15),
         _text(580, 438, "Une cible en amont reçoit +∞ selon la convention retenue.", size=15),
-        _text(32, 487, "Schéma original, champ uniforme 2D ; pas une métrique au sens strict ni une reproduction quantitative.", size=13),
+        _text(
+            32,
+            487,
+            "Schéma original, champ uniforme 2D ; pas une métrique au sens strict ni une reproduction quantitative.",
+            size=13,
+        ),
         '</svg>',
     ]
     return "\n".join(elements) + "\n"
