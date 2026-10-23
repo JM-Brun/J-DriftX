@@ -22,6 +22,15 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: pyproject.toml
+
+      - name: Construire le paquet Python pour Pyodide
+        run: uv build --wheel --out-dir site/resources/wheels
+
       - uses: quarto-dev/quarto-actions/setup@v2
 
       - uses: quarto-dev/quarto-actions/render@v2
