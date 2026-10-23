@@ -52,7 +52,7 @@ Version longue du travail (fournie par l'auteur), c'est la source la plus compl�
 - **Un contrat de confiance** : les solutions approchées doivent rester solutions du modèle direct — divergence nulle du vent, conservation, positivité, linéarité.
 - **Positionnement anti-snapshots** : là où les modèles d'ordre réduits classiques projettent sur des solutions précalculées coûteuses d'une CFD, Drift-X vise à « supprimer le calcul de ces snapshots » en construisant l'espace de recherche à partir de la physique.
 
-**Ce que J-DriftX en reprend :** le cahier des charges du noyau — multi-niveaux, contraintes physiques, sensibilité analytique pour l'identification de source. Les exemples numériques (pages suivantes, à extraire) serviront de jeux de validation.
+**Ce que J-DriftX en reprend :** le cahier des charges du noyau — multi-niveaux, contraintes physiques, sensibilité analytique pour l'identification de source. Les exemples numériques (pages suivantes, à extraire du recueil complet Glowinski & Neittaanmäki désormais archivé dans <code>raw/</code>) serviront de jeux de validation.
 
 ## L'article e-sta de 2008 — le chaînon manquant
 
@@ -99,7 +99,7 @@ La version la plus courte, utile pour situer le projet en une lecture : modèle 
 | Priorité | Action | Verrou |
 |---|---|---|
 | Clôturée | Thèse 2006 : pas de dépôt HAL (décision du 23/10/2026) — ajout ultérieur au corpus, puis relecture | Document en possession de l’auteur |
-| Haute | Extraire la suite du chapitre 2008 (exemples numériques, sensibilité) | Chapitre fourni — OCR à poursuivre |
+| Haute | Extraire la suite du chapitre 2008 (exemples numériques, sensibilité) | Recueil complet Glowinski & Neittaanmäki archivé dans <code>raw/</code> — OCR à poursuivre |
 | Clôturée | e-sta 2008 : pas de dépôt HAL (décision du 23/10/2026) | Métadonnées attestées (vol. 5, n° 2, p. 182–192) = référence bibliographique complète |
 | Moyenne | Localiser le recueil Springer 2006 (Mohammadi–Brun–Pironneau) | Introuvable en accès ouvert |
 | Moyenne | Textes intégraux CR 2006 et Applied Geomatics 2009 | Abonnements / tirés-à-part |
