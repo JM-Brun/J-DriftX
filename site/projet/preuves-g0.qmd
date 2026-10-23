@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "G0 — preuves externes et décision"
 ---
 
