@@ -40,7 +40,7 @@ def render_figure_02_svg() -> str:
         '<line x1="130" y1="300" x2="420" y2="190" stroke="#2864a5" stroke-width="4"/>',
         '<circle cx="130" cy="300" r="8" fill="#2864a5"/>',
         '<circle cx="420" cy="190" r="8" fill="#c45132"/>',
-        _text(108, 326, "A" , size=20, weight="bold"),
+        _text(108, 326, "A", size=20, weight="bold"),
         _text(430, 190, "B", size=20, weight="bold"),
         _text(200, 224, "segment direct", size=16),
         _text(34, 430, "La longueur ne dépend pas du sens de parcours.", size=16),
