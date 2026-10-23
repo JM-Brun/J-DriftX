@@ -66,7 +66,8 @@ def render_figure_02_svg() -> str:
         _text(
             32,
             487,
-            "Schéma original, champ uniforme 2D ; pas une métrique au sens strict ni une reproduction quantitative.",
+            "Schéma original, champ uniforme 2D ; pas une métrique au sens strict "
+            "ni une reproduction quantitative.",
             size=13,
         ),
         '</svg>',
