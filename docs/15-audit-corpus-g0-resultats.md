@@ -10,7 +10,7 @@
 | NOAA DATEM | Far-field traceur | **V** | Campagnes anciennes (années 1980) ; ETEX absent de l'archive DATEM |
 | ETEX (JRC) | Far-field continental | **V** | Deux lâchers indépendants seulement ; l'un doit être réservé comme test final (G3) |
 
-**Décision : le critère (e) est renseigné et sourcé ; les critères (a)–(g) sont complets. G0 est franchi le 22 octobre 2026** ([fiche G0](13-fiche-g0-cadrage-besoin.md)).
+**Décision : le critère (e) est renseigné et sourcé ; les critères (a)–(g) sont complets. G0 est franchi le 22 octobre 2026** ([issue publique de cadrage G0-A](https://github.com/JM-Brun/J-DriftX/issues/43)).
 
 ## 1. DIFLU — traceur hélium contrôlé, Beuvry (France)
 
