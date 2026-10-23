@@ -67,7 +67,7 @@
 
 - cas analytiques exacts (gaussienne : masse et variance ; sinusoïde périodique ; cercle en rotation) ;
 - **ordres de convergence mesurés et bornés** : spatial 1.8–2.2, temporel 3.5–4.5 pour centré/RK4, comparaison croisée centré-RK4 < amont-Euler ;
-- conservation de la moyenne périodique à 1e-12 près, flux integrated du panache restituant le débit (2 %) ;
+- conservation de la moyenne périodique à 1e-12 près, flux intégré du panache restituant le débit (2 %) ;
 - rejets systématiques des entrées invalides (paramètres non finis, pas nuls, classes inconnues, instabilité détectée avant intégration).
 
 **Écarts à la charte.**
