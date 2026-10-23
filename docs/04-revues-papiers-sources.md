@@ -71,6 +71,8 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 
 **Statut d'accès.** Version longue de référence, fournie par l'auteur. Les pages 245–246 ont été océrisées pour cette revue (résumé, introduction, début de la section 2). Relais public du chapitre : page ResearchGate (PDF téléchargeable après connexion) — https://www.researchgate.net/publication/226478979_Reduced-Order_Modelling_of_Dispersion . Affiliations : J.-M. Brun, Cemagref/ITAP, Montpellier ; B. Mohammadi, I3M, Université Montpellier II.
 
+**Mise à jour (23 octobre 2026).** Le recueil complet *Partial Differential Equations: Modelling and Numerical Simulation* (Glowinski, R. & Neittaanmäki, P. eds, Springer 2008, CSM vol. 16, DOI 10.1007/978-1-4020-8758-5) contenant ce chapitre a été ajouté dans <code>raw/</code> (fiche : <code>raw/fiches/2008-glowinski-neittaanmaki-recueil-springer.md</code>) : le texte intégral du chapitre est désormais disponible localement pour l'OCR ; la présente fiche reste fondée sur les pages 245–246 océrisées.
+
 **Résumé verbatim (extrait).** « We present low complexity models for the transport of passive scalars for environmental applications. Multi-level analysis has been used with a reduction in dimension of the solution space at each level. Similitude solutions are used in a non-symmetric metric for the transport over long distances. Model parameters identification is based on data assimilation. The approach does not require the solution of any PDE and, therefore, is mesh free. The model also permits to access the solution in one point without computing the solution over the whole domain. Sensitivity analysis is used for risk analysis and also for the identification of the sources of an observed pollution. » Mots-clés : Reduced order modelling, source identification, risk analysis by sensitivity, non-symmetric geometry.
 
 **Contenu extrait des pages 245–246 (OCR).**
@@ -149,7 +151,7 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 | Priorité | Action | Verrou |
 |---|---|---|
 | Clôturée | Thèse : pas de dépôt HAL (décision du 23/10/2026) — ajout ultérieur au corpus par l’auteur, année à arbitrer sur la page de titre à cette occasion | Document en possession de l’auteur ; relecture après ajout |
-| Haute | Récupérer le texte intégral du chapitre 2008 au-delà des pages 245–246 (exemples numériques, analyse de sensibilité, identification de source) | Chapitre fourni par l'auteur — OCR à poursuivre |
+| Haute | Extraire le texte intégral du chapitre 2008 au-delà des pages 245–246 (exemples numériques, analyse de sensibilité, identification de source) | Recueil complet Glowinski & Neittaanmäki 2008 ajouté dans <code>raw/</code> (23 octobre 2026) — OCR à poursuivre |
 | Clôturée | e-sta 2008 : pas de dépôt HAL (décision du 23/10/2026) ; métadonnées attestées (vol. 5, n° 2, p. 182–192) = référence bibliographique complète | Texte intégral introuvable en ligne — état définitif (section 10) |
 | Moyenne | Localiser le recueil Springer 2006 du chapitre Mohammadi–Brun–Pironneau | Recueil introuvable en accès ouvert |
 | ~~Moyenne~~ | ~~Obtenir le texte intégral CR Mécanique 2006~~ — **fait** (archive ouverte Académie) | Reste Applied Geomatics 2009 (abonnement / tiré-à-part auteur) |
