@@ -8,6 +8,8 @@
 
 La distance euclidienne est symétrique. Le coût dirigé dépend du sens du vent : pour le cas uniforme retenu, seule la projection longitudinale positive est facturée et la séparation transversale est ignorée. Selon la convention documentée par `pseudo_distance_uniforme`, une cible située en amont reçoit un coût infini. Le coût peut aussi être nul pour deux points distincts partageant la même coordonnée longitudinale : il ne s'agit donc pas d'une métrique au sens strict.
 
+Les valeurs affichées par le schéma (distance euclidienne, coût dirigé aval et coût amont infini) sont calculées par `pseudo_distance_uniforme` sur un scénario jouet documenté dans `figure_02.py` (vent uniforme selon +x, cible en aval avec un écart transversal) : la figure ne duplique pas la formule et ne peut pas diverger silencieusement de l'implémentation testée.
+
 La formule schématisée est limitée à un champ constant non nul :
 
 \[
@@ -21,7 +23,7 @@ Ici \(\hat{u}=u/\|u\|\). Les unités sont cohérentes si les coordonnées sont e
 
 ## Génération et tests
 
-Le SVG est généré par `jdriftx.figures.figure_02.render_figure_02_svg`, sans dépendance de rendu externe. Les tests vérifient la stabilité du générateur et la présence des qualifications scientifiques. Pour régénérer localement :
+Le SVG est généré par `jdriftx.figures.figure_02.render_figure_02_svg`, sans dépendance de rendu externe ; les coûts affichés sont calculés par `pseudo_distance_uniforme` sur le scénario jouet documenté dans le module. Les tests vérifient la stabilité du générateur, la présence des qualifications scientifiques et la cohérence des valeurs affichées avec l'implémentation partagée. Pour régénérer localement :
 
 ```bash
 uv run python -c 'from pathlib import Path; from jdriftx.figures.figure_02 import render_figure_02_svg; Path("site/images/figure-02-geometries.svg").write_text(render_figure_02_svg(), encoding="utf-8")'

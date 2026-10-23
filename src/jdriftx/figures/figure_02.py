@@ -5,14 +5,27 @@ Springer's artwork or a quantitative validation of the historical algorithm.
 It uses a uniform, non-zero wind and the convention implemented by
 ``pseudo_distance_uniforme``: only the positive longitudinal displacement is
 charged; a target upstream receives an infinite cost.
+
+The costs displayed in the figure are computed by ``pseudo_distance_uniforme``
+on the documented toy scenario below, so the figure cannot silently diverge
+from the tested implementation.
 """
 
 from __future__ import annotations
 
+import math
 from html import escape
+
+from jdriftx.metric import pseudo_distance_uniforme
 
 SVG_WIDTH = 1100
 SVG_HEIGHT = 520
+
+# Scénario jouet (coordonnées en mètres, vitesse en m/s, coût en secondes) :
+# vent uniforme selon +x, cible en aval avec un écart transversal.
+VENT_UNIFORME = (2.0, 0.0)
+POINT_A = (0.0, 0.0)
+POINT_B = (300.0, 65.0)
 
 
 def _text(x: int, y: int, value: str, *, size: int = 17, weight: str = "normal") -> str:
@@ -24,7 +37,14 @@ def _text(x: int, y: int, value: str, *, size: int = 17, weight: str = "normal")
 
 
 def render_figure_02_svg() -> str:
-    """Return a deterministic, dependency-free SVG explanatory figure."""
+    """Return a deterministic SVG explanatory figure using the shared cost."""
+    tau_ab = pseudo_distance_uniforme(POINT_A, POINT_B, VENT_UNIFORME)
+    tau_ba = pseudo_distance_uniforme(POINT_B, POINT_A, VENT_UNIFORME)
+    if not math.isinf(tau_ba):
+        msg = "Le scénario jouet exige une cible en amont pour la direction inverse."
+        raise ValueError(msg)
+    distance_euclidienne = math.hypot(POINT_B[0] - POINT_A[0], POINT_B[1] - POINT_A[1])
+    ecart_transversal = abs(POINT_B[1] - POINT_A[1])
     elements = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{SVG_WIDTH}" '
         f'height="{SVG_HEIGHT}" viewBox="0 0 {SVG_WIDTH} {SVG_HEIGHT}" role="img" '
@@ -36,7 +56,12 @@ def render_figure_02_svg() -> str:
         _text(32, 38, "Figure 2 — Deux notions de distance", size=25, weight="bold"),
         '<line x1="550" y1="65" x2="550" y2="485" stroke="#d5dbe3" stroke-width="2"/>',
         _text(34, 82, "A. Distance euclidienne", size=21, weight="bold"),
-        _text(34, 110, "Symétrique : dE(A, B) = dE(B, A)", size=16),
+        _text(
+            34,
+            110,
+            f"Symétrique : dE(A, B) = dE(B, A) = {distance_euclidienne:.0f} m",
+            size=16,
+        ),
         '<line x1="130" y1="300" x2="420" y2="190" stroke="#2864a5" stroke-width="4"/>',
         '<circle cx="130" cy="300" r="8" fill="#2864a5"/>',
         '<circle cx="420" cy="190" r="8" fill="#c45132"/>',
@@ -45,7 +70,7 @@ def render_figure_02_svg() -> str:
         _text(200, 224, "segment direct", size=16),
         _text(34, 430, "La longueur ne dépend pas du sens de parcours.", size=16),
         _text(580, 82, "B. Coût de migration dirigé", size=21, weight="bold"),
-        _text(580, 110, "Vent uniforme vers +x : u = (U, 0), U > 0", size=16),
+        _text(580, 110, f"Vent uniforme vers +x : U = {VENT_UNIFORME[0]:.0f} m/s", size=16),
         '<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" '
         'orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#2c7a55"/></marker></defs>',
         '<line x1="610" y1="155" x2="1010" y2="155" stroke="#2c7a55" '
@@ -60,8 +85,19 @@ def render_figure_02_svg() -> str:
         _text(628, 338, "A", size=20, weight="bold"),
         _text(960, 245, "B", size=20, weight="bold"),
         _text(795, 294, "projection B⊥", size=15),
-        _text(665, 375, "τ(A, B) = Δx / U (aval) ; +∞ (amont)", size=16),
-        _text(580, 411, "Le décalage transversal n'est pas pénalisé dans ce cas jouet.", size=15),
+        _text(
+            665,
+            375,
+            f"τ(A, B) = {tau_ab:.0f} s (aval) ; τ(B, A) = +∞ (amont)",
+            size=16,
+        ),
+        _text(
+            580,
+            411,
+            f"Le décalage transversal ({ecart_transversal:.0f} m) n'est pas pénalisé "
+            "dans ce cas jouet.",
+            size=15,
+        ),
         _text(580, 438, "Une cible en amont reçoit +∞ selon la convention retenue.", size=15),
         _text(
             32,
