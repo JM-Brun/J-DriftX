@@ -159,7 +159,7 @@ def test_uniform_pseudodistance_matches_projection_formula(
     b: tuple[float, float],
     vent: tuple[float, float],
 ) -> None:
-    """The uniform-field result equals the non-negative longitudinal projection."""
+    """Check the uniform-field result against the non-negative longitudinal projection."""
     displacement = np.asarray(b) - np.asarray(a)
     velocity = np.asarray(vent, dtype=float)
     expected = max(0.0, float(np.dot(displacement, velocity))) / float(
@@ -170,7 +170,7 @@ def test_uniform_pseudodistance_matches_projection_formula(
 
 
 def test_uniform_pseudodistance_is_translation_invariant() -> None:
-    """Translating both points leaves their displacement and cost unchanged."""
+    """Verify that translating both points preserves their displacement and cost."""
     a = np.array([-3.0, 2.0])
     b = np.array([9.0, 8.0])
     translation = np.array([100.0, -45.0])
@@ -183,7 +183,7 @@ def test_uniform_pseudodistance_is_translation_invariant() -> None:
 
 
 def test_uniform_pseudodistance_scales_inversely_with_wind_magnitude() -> None:
-    """Multiplying a nonzero wind by a positive factor divides the travel time."""
+    """Verify inverse travel-time scaling for a positively scaled nonzero wind."""
     a = np.array([0.0, 0.0])
     b = np.array([12.0, 9.0])
     vent = np.array([4.0, 3.0])
@@ -196,7 +196,7 @@ def test_uniform_pseudodistance_scales_inversely_with_wind_magnitude() -> None:
 
 
 def test_uniform_pseudodistance_is_invariant_to_transverse_displacement() -> None:
-    """Adding a displacement orthogonal to the wind does not change longitudinal cost."""
+    """Verify that an orthogonal displacement leaves longitudinal cost unchanged."""
     a = np.array([0.0, 0.0])
     vent = np.array([3.0, 4.0])
     downstream = np.array([6.0, 8.0])
@@ -209,7 +209,7 @@ def test_uniform_pseudodistance_is_invariant_to_transverse_displacement() -> Non
 
 
 def test_uniform_pseudodistance_is_zero_for_upwind_boundary() -> None:
-    """A target with zero longitudinal displacement has zero cost by convention."""
+    """Verify the zero-cost convention at the zero-longitudinal-displacement boundary."""
     a = np.array([2.0, -1.0])
     vent = np.array([3.0, 4.0])
     transverse = np.array([-4.0, 3.0])
