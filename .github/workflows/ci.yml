@@ -53,3 +53,8 @@ jobs:
 
       - name: Tests (pytest)
         run: uv run pytest --cov=jdriftx --cov-report=term-missing
+
+      - name: Mesure de la ligne de base (temporaire)
+        run: |
+          total=$(uv run coverage report | awk '/^TOTAL/ {print $4}')
+          echo "::warning title=Couverture ligne de base::TOTAL ${total}"
