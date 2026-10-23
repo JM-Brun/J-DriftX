@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expérience interactive — advection-diffusion gaussienne</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { margin: 0; padding: 1rem; line-height: 1.45; }
+    h2 { font-size: 1.15rem; margin: 0 0 .4rem; }
+    p { margin: .4rem 0 .8rem; }
+    .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: .75rem 1rem; }
+    label { display: grid; grid-template-columns: 1fr auto; gap: .3rem .7rem; font-size: .95rem; }
+    input { grid-column: 1 / -1; width: 100%; }
+    output { font-variant-numeric: tabular-nums; font-weight: 600; }
+    canvas { display: block; width: 100%; height: 300px; margin-top: .8rem; }
+    .legend { display: flex; flex-wrap: wrap; gap: 1rem; font-size: .9rem; }
+    .swatch { display: inline-block; width: 1.3rem; border-top: 3px solid; margin-right: .35rem; vertical-align: middle; }
+    .metrics { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; font-variant-numeric: tabular-nums; }
+    .note { font-size: .88rem; opacity: .85; }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h2>Advection-diffusion d’un profil gaussien</h2>
+    <p>Modifiez les paramètres : le profil se déplace à la vitesse <i>u</i> et s’élargit sous l’effet de la diffusivité <i>K</i>.</p>
+    <div class="controls">
+      <label for="time">Temps <output id="time-value">1.0</output><input id="time" type="range" min="0" max="5" step="0.1" value="1"></label>
+      <label for="velocity">Vitesse u <output id="velocity-value">0.5</output><input id="velocity" type="range" min="-2" max="2" step="0.1" value="0.5"></label>
+      <label for="diffusivity">Diffusivité K <output id="diffusivity-value">0.1</output><input id="diffusivity" type="range" min="0" max="0.8" step="0.02" value="0.1"></label>
+      <label for="sigma">Écart-type initial σ₀ <output id="sigma-value">0.5</output><input id="sigma" type="range" min="0.2" max="1.5" step="0.05" value="0.5"></label>
+    </div>
+    <div class="metrics" aria-live="polite">
+      <span>Centre : <strong id="center">0.50</strong></span>
+      <span>Écart-type : <strong id="width">0.67</strong></span>
+      <span>Masse théorique : <strong>1</strong></span>
+    </div>
+    <canvas id="plot" role="img" aria-label="Graphique comparant le profil gaussien initial au profil après advection et diffusion."></canvas>
+    <div class="legend">
+      <span><i class="swatch" style="border-color:#64748b"></i>Profil initial</span>
+      <span><i class="swatch" style="border-color:#0d9488"></i>Profil au temps choisi</span>
+    </div>
+    <p class="note">Solution analytique sur la droite réelle, avec vitesse et diffusivité constantes. Le graphique utilise une fenêtre spatiale finie : les queues peuvent être coupées visuellement. Ce cas pédagogique n’est pas une simulation météorologique ni une validation de J-DriftX.</p>
+  </main>
+  <script>
+    (() => {
+      const ids = ["time", "velocity", "diffusivity", "sigma"];
+      const el = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
+      const canvas = document.getElementById("plot");
+      const ctx = canvas.getContext("2d");
+      const colors = { initial: "#64748b", current: "#0d9488", grid: "#94a3b8", text: getComputedStyle(document.body).color };
+      const fmt = n => Number(n).toFixed(2);
+      function draw() {
+        const t = Number(el.time.value), u = Number(el.velocity.value);
+        const K = Number(el.diffusivity.value), s0 = Number(el.sigma.value);
+        const s = Math.sqrt(s0 * s0 + 2 * K * t), center = u * t;
+        document.getElementById("time-value").textContent = fmt(t);
+        document.getElementById("velocity-value").textContent = fmt(u);
+        document.getElementById("diffusivity-value").textContent = fmt(K);
+        document.getElementById("sigma-value").textContent = fmt(s0);
+        document.getElementById("center").textContent = fmt(center);
+        document.getElementById("width").textContent = fmt(s);
+        const dpr = window.devicePixelRatio || 1, rect = canvas.getBoundingClientRect();
+        canvas.width = Math.max(320, Math.round(rect.width * dpr));
+        canvas.height = Math.round(300 * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const w = canvas.width / dpr, h = canvas.height / dpr;
+        const pad = {l: 44, r: 14, t: 16, b: 34}, pw = w-pad.l-pad.r, ph = h-pad.t-pad.b;
+        const xmin = -5, xmax = 5, ymax = 1.15 / (Math.sqrt(2*Math.PI) * Math.min(s0, s));
+        const X = x => pad.l + (x-xmin)/(xmax-xmin)*pw;
+        const Y = y => pad.t + ph - y/ymax*ph;
+        ctx.clearRect(0, 0, w, h);
+        ctx.font = "12px system-ui, sans-serif"; ctx.fillStyle = colors.text; ctx.strokeStyle = colors.grid; ctx.lineWidth = 1;
+        for (let x=-4; x<=4; x+=2) {
+          ctx.beginPath(); ctx.moveTo(X(x),pad.t); ctx.lineTo(X(x),pad.t+ph); ctx.stroke();
+          ctx.textAlign="center"; ctx.fillText(String(x),X(x),h-10);
+        }
+        for (let i=0;i<=4;i++) {
+          const y=ymax*i/4; ctx.beginPath(); ctx.moveTo(pad.l,Y(y)); ctx.lineTo(w-pad.r,Y(y)); ctx.stroke();
+          ctx.textAlign="right"; ctx.fillText(y.toFixed(2),pad.l-7,Y(y)+4);
+        }
+        const gaussian = (x,mu,sigma) => Math.exp(-0.5*((x-mu)/sigma)**2)/(Math.sqrt(2*Math.PI)*sigma);
+        function curve(fn,color) {
+          ctx.beginPath();
+          for (let i=0;i<=500;i++) { const x=xmin+(xmax-xmin)*i/500; const px=X(x), py=Y(fn(x)); if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py); }
+          ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.stroke();
+        }
+        curve(x=>gaussian(x,0,s0),colors.initial);
+        curve(x=>gaussian(x,center,s),colors.current);
+        ctx.fillStyle=colors.text; ctx.textAlign="center"; ctx.fillText("Position x",pad.l+pw/2,h-1);
+      }
+      ids.forEach(id => el[id].addEventListener("input", draw));
+      window.addEventListener("resize", draw);
+      draw();
+    })();
+  </script>
+</body>
+</html>
