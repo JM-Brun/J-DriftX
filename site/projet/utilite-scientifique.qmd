@@ -1,87 +1,42 @@
 ---
-title: "Utilité scientifique : que faut-il démontrer ?"
+title: "Utilité scientifique : question et niveau de preuve"
 ---
 
-# Commencer par l'utilité, pas par l'implémentation
+# Quelle valeur J-DriftX doit-il démontrer ?
 
-> **Question directrice :** pour quel problème concret J-DriftX apporte-t-il une valeur mesurable que les méthodes existantes ne fournissent pas suffisamment bien ?
+J-DriftX est une hypothèse de recherche, pas une solution dont les avantages seraient établis. Une formulation mathématique intéressante, une implémentation fonctionnelle ou une différence par rapport à l'état de l'art ne prouvent pas en elles-mêmes une utilité scientifique ou applicative.
 
-Le fait qu'une approche soit mathématiquement intéressante, implémentable ou différente de l'état de l'art ne prouve pas qu'elle soit utile. J-DriftX doit donc être traité comme une hypothèse de recherche à évaluer, et non comme une solution dont les avantages seraient déjà établis.
+## Trois niveaux de contribution
 
-Le [cadre détaillé de décision et de validation](https://github.com/JM-Brun/J-DriftX/blob/main/docs/08-decision-utilite-et-preuve.md) décrit les hypothèses, le protocole expérimental et les critères de décision.
+1. **Scientifique :** la formulation permet-elle d'établir une propriété, une explication ou une représentation nouvelle et vérifiable ?
+2. **Méthodologique :** sur un problème précisément défini, apporte-t-elle un compromis mesurable entre précision, coût, stabilité, interprétabilité et données requises ?
+3. **Applicatif :** améliore-t-elle une décision ou une analyse réelle dans un domaine de validité explicite ?
 
-## Trois formes d'utilité à distinguer
+Une contribution peut être utile à un niveau sans l'être aux autres. Les résultats doivent donc être annoncés au niveau effectivement démontré.
 
-1. **Scientifique :** la formulation apporte-t-elle une explication, une propriété ou une représentation nouvelle et vérifiable ?
-2. **Méthodologique :** apporte-t-elle une combinaison avantageuse de précision, de coût, de stabilité, d'interprétabilité ou de données requises sur un problème défini ?
-3. **Applicative :** améliore-t-elle une décision ou une analyse réelle dans un domaine de validité explicite ?
+## Ordre de preuve
 
-Une contribution peut être utile à l'un de ces niveaux sans l'être aux autres.
+1. Définir le phénomène, l'observable, les unités, les hypothèses et le domaine de validité.
+2. Identifier les méthodes de référence et les limites étayées par la littérature.
+3. Choisir un cas analytique ou contrôlé avec une référence indépendante.
+4. Fixer les métriques, la baseline et les critères d'arrêt avant d'examiner les résultats.
+5. Isoler les composants par des ablations et mesurer précision, coût total, robustesse et incertitude selon le problème.
+6. Confirmer les conclusions sur des données ou simulations indépendantes, puis expliciter les limites et les résultats négatifs.
 
-## G0 — Vérifier le besoin et la valeur potentielle
+Une absence de référence trouvée ne prouve pas l'absence de concurrent. De même, un gain de vitesse ne suffit pas si la précision devient inacceptable, et une propriété mathématique ne garantit pas une prédiction empirique exacte.
 
-Avant de développer davantage le noyau, documenter :
+## Statut actuel
 
-- le phénomène et la quantité à prédire ;
-- l'utilisateur et la décision qui dépend du résultat ;
-- les limites documentées des solutions existantes ;
-- les contraintes de précision, de coût, de données et d'incertitude ;
-- le bénéfice attendu et les conditions dans lesquelles il ne serait pas utile.
+Le cadrage documentaire G0 a été déclaré franchi le 22 octobre 2026 : le besoin candidat, l'observable envisagé, les baselines et les corpus à examiner ont été documentés. **Ce jalon documentaire n'est pas une validation du modèle.** La cohérence théorique, l'audit des fichiers bruts, la comparabilité physique des corpus, le gain prédictif et l'utilité applicative restent à démontrer.
 
-Le *far-field* de la dérive de pulvérisation est un cas candidat compte tenu de l'héritage de Drift-X ; il ne doit pas être considéré comme le meilleur cas d'usage sans comparaison argumentée avec les besoins alternatifs plausibles.
+Le far-field de dérive de pulvérisation reste un candidat, pas une cible validée. Les mesures de dépôt de gouttelettes à courte distance ne sont pas automatiquement équivalentes au transport d'un scalaire passif ; des données de traceur à longue distance ne sont comparables qu'après vérification de leurs observables, unités, conditions expérimentales et partitions.
 
-**Porte de décision G0 :** poursuivre si un besoin étayé et un bénéfice testable sont identifiés. Sinon, reformuler le problème avant d'investir davantage dans l'implémentation.
+Le suivi des questions ouvertes est public dans les [issues GitHub](https://github.com/JM-Brun/J-DriftX/issues), notamment l'[audit des données candidates](https://github.com/JM-Brun/J-DriftX/issues/13) et le [cadrage de l'utilité applicative](https://github.com/JM-Brun/J-DriftX/issues/43).
 
-## Comment apporter une preuve ?
+## Pages pour approfondir
 
-### 1. Établir des références
-
-Identifier les méthodes concurrentes pertinentes, les cas d'usage documentés et les limites réellement démontrées par la littérature. Une absence de référence trouvée ne prouve pas l'absence de concurrent.
-
-### 2. Choisir un test discriminant
-
-Commencer par un cas analytique ou contrôlé où des résultats de référence sont disponibles. Fixer les métriques, la baseline, les seuils de succès et les conditions d'abandon avant de regarder les résultats.
-
-### 3. Isoler les mécanismes
-
-Comparer des variantes du modèle pour déterminer si la similitude généralisée, la métrique de temps de transport ou la calibration apportent chacune une valeur mesurable. Éviter d'attribuer à une composante un gain obtenu par un autre mécanisme.
-
-### 4. Mesurer la valeur à plusieurs dimensions
-
-Évaluer, selon le problème, l'erreur prédictive, les contraintes physiques, le coût total de calcul, la robustesse, la généralisation et l'incertitude. Un gain de vitesse ne suffit pas si la précision devient inacceptable ; une propriété physique respectée ne garantit pas une prédiction exacte.
-
-### 5. Valider indépendamment
-
-Après les tests contrôlés, confronter la méthode à des données ou simulations indépendantes, non utilisées pour concevoir, sélectionner ou calibrer la méthode. Documenter les échecs et le domaine de validité.
-
-## Jalons conditionnels
-
-| Jalon | Question de décision | Résultat attendu |
-|---|---|---|
-| G0 — Besoin | Le problème est-il réel et mal couvert ? | Fiche de problème et critères de succès |
-| G1 — Faisabilité | La formulation est-elle cohérente pour ce problème ? | Hypothèses explicites et cas analytique |
-| G2 — Valeur différentielle | Quelle composante améliore quoi par rapport aux baselines ? | Benchmark reproductible et ablations |
-| G3 — Validité indépendante | Le bénéfice se maintient-il sur des données non utilisées pendant le développement ? | Évaluation indépendante et incertitudes |
-| G4 — Pertinence d'usage | Le bénéfice change-t-il réellement une décision ou ouvre-t-il une capacité scientifique utile ? | Rapport, publication ou décision de réorientation |
-
-Chaque porte peut conduire à poursuivre, restreindre, réviser ou arrêter une piste. Les résultats négatifs sont des résultats utiles : ils empêchent de construire une architecture coûteuse autour d'une hypothèse non soutenue.
-
-## Conséquence sur la feuille de route
-
-Les benchmarks et les baselines doivent être prioritaires, et non ajoutés en fin de développement. Les modules de calibration, les approches apprises, l'intégration SIG et les interfaces ne doivent être développés que lorsqu'ils répondent à une question scientifique ou applicative précise.
-
-La cible est une contribution reproductible dont la valeur, les limites et les conditions d'emploi sont démontrées — pas seulement un logiciel fonctionnel.
-
-## Résultat du cadrage externe G0
-
-La décision de cadrage G0 a été **franchie le 22 octobre 2026 au niveau documentaire** : besoin, observable et corpus candidats sont définis et sourcés ([résultats de l'audit G0](https://github.com/JM-Brun/J-DriftX/blob/main/docs/15-audit-corpus-g0-resultats.md)). Cela ne valide pas encore l'adéquation scientifique de J-DriftX. CAPRIV reste limité à des essais de dérive proche et les dépôts de gouttelettes ne sont pas automatiquement équivalents au transport d'un scalaire passif ; DATEM/ETEX apportent des données de traceur pour étudier le far-field, mais les fichiers bruts, unités, licences et partitions restent à vérifier en G1. **G0 franchi ne signifie ni G1 franchi, ni benchmark validé, ni utilité prédictive démontrée.**
-
-Le cadrage applicatif et les questions restant ouvertes sont suivis dans l'[issue G0-A](https://github.com/JM-Brun/J-DriftX/issues/43).
-
-## Documents de référence
-
-- [Cadre détaillé : décision d'utilité et protocole de preuve](https://github.com/JM-Brun/J-DriftX/blob/main/docs/08-decision-utilite-et-preuve.md)
-- [Questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues)
-- [Validation scientifique](validation-scientifique.qmd)
+- [Validation scientifique et protocole de preuve](validation-scientifique.qmd)
+- [Catalogue des données candidates](catalogue-donnees.qmd)
 - [Panorama de l'état de l'art](../etat-art/panorama.qmd)
 - [Positionnement de J-DriftX](../etat-art/positionnement.qmd)
+- [Catalogue du laboratoire numérique](laboratoire-interactif.qmd)
