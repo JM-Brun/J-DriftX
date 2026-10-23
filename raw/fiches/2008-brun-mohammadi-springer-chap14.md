@@ -3,7 +3,7 @@
 ## Fichier
 
 - Actuel : <code>PDF.js viewer.pdf</code> → renommage recommandé : <code>2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf</code>
-- Attention : **extrait de 2 pages seulement** (p. 245–246), généré depuis un visualiseur PDF ; le chapitre complet reste à ajouter sous <code>2008-brun-mohammadi-springer-chap14.pdf</code>
+- Attention : **extrait de 2 pages seulement** (p. 245–246), généré depuis un visualiseur PDF ; le chapitre complet est désormais disponible via le recueil Glowinski & Neittaanmäki 2008 ajouté dans <code>raw/</code> le 23 octobre 2026 (fiche : <code>fiches/2008-glowinski-neittaanmaki-recueil-springer.md</code>)
 - Extraction texte : pages océrisées (résumé, introduction, début de la section 2) ; revue intégrée dans cette fiche et dans la fiche 4 de <code>docs/04-revues-papiers-sources.md</code>
 
 ## Référence
@@ -12,7 +12,7 @@ Brun, J.-M. & Mohammadi, B. (2008). « Reduced-Order Modelling of Dispersion ».
 
 ## Revue — pages 245–246 (extrait disponible)
 
-- **Résumé** : transport de scalaire passif à faible complexité ; analyse multi-niveaux avec réduction de dimension de l'espace des solutions à chaque niveau ; solutions de similitude dans une métrique non symétrique pour le transport longue distance ; identification des paramètres par assimilation de données ; sans EDP donc sans maillage ; évaluation ponctuelle sans calculer partout ; analyse de sensibilité pour l'analyse de risque et l'identification de sources d'une pollution observée.
+- **Résumé** : transport de scalaire passif à faible complexité ; analyse multi-niveaux avec réduction de dimension de l'espace des solutions à chaque niveau ; solutions de similitude dans une métrique non symétrique pour le transport longue distance ; identification des paramètres par assimilation de données ; sans EDP donc sans maillage ; évaluation ponctuelle sans calculer partout ; analyse de sensibilité pour l'analyse de risque et l'identification des sources d'une pollution observée.
 - **Objectif chiffré implicite** : un coût de calcul si bas que « assimilation-simulation » et analyse de risque statistique par simulations Monte Carlo deviennent réalistes.
 - **Multi-niveaux** : « a given level provides the inlet condition for the level above » — chaque niveau fournit la condition d'entrée du niveau supérieur.
 - **Champ proche** : construit à partir d'observations expérimentales ; la quantité d'espèce quittant la sous-couche atmosphérique est ensuite estimée et devient candidate au transport longue distance (similitude couches de mélange et panaches [Sim97], connues en métrique cartésienne).
@@ -23,7 +23,7 @@ Brun, J.-M. & Mohammadi, B. (2008). « Reduced-Order Modelling of Dispersion ».
 
 ## Valeur pour J-DriftX
 
-Cahier des charges scientifique du noyau : multi-niveaux avec entrée/sortie de sous-couche, métrique τ non symétrique, quatre contraintes physiques (deux déjà testées dans le socle : conservation, non-symétrie), sensibilité/identification de source. Les pages restantes (exemples numériques, analyse de sensibilité) sont la prochaine extraction à faire sur le chapitre complet.
+Cahier des charges scientifique du noyau : multi-niveaux avec entrée/sortie de sous-couche, métrique τ non symétrique, quatre contraintes physiques (deux déjà testées dans le socle : conservation, non-symétrie), sensibilité/identification de source. Les pages restantes (exemples numériques, analyse de sensibilité) sont la prochaine extraction à faire — désormais possible depuis le recueil complet ajouté dans <code>raw/</code> (voir la fiche du recueil).
 
 ## Pour aller plus loin
 
