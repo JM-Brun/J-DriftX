@@ -1,123 +1,88 @@
 ---
 title: "Expériences interactives et vérification numérique"
+format: live-html
+pyodide:
+  packages:
+    - numpy
+    - https://jm-brun.github.io/J-DriftX/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
 ---
 
 # Expériences interactives et vérification numérique
 
-Cette section rassemble les expériences numériques du dépôt, leurs hypothèses, les propriétés vérifiées automatiquement et les limites de ce que l'on peut en conclure. Elle est conçue pour être consultable sur GitHub Pages sans exécuter de code Python dans le navigateur.
+Cette page exécute du **Python dans le navigateur** grâce à Quarto Live et Pyodide. Le calcul scientifique est délégué au paquet `jdriftx` existant ; le code JavaScript n'implémente pas les équations du modèle.
 
 ::: {.callout-note}
-**Rôle de Streamlit.** Les applications Streamlit sont des outils de développement et d'exploration locale. Elles ne sont pas déployées publiquement pour le moment. Les pages Quarto documentent les expériences, les équations et les résultats attendus ; GitHub Pages ne lance pas les applications Python et ne recalcule pas leurs résultats à la demande.
+**Périmètre scientifique.** L'expérience expose `pseudo_distance_uniforme`, une référence analytique limitée à un champ de vent uniforme. Elle ne calcule pas les caractéristiques d'un champ variable, ne simule pas la dispersion atmosphérique et ne valide pas le modèle complet. Le coût ignore l'écart transversal et retourne l'infini lorsque le point cible est en amont selon la convention documentée par la fonction.
 :::
 
-## Expérience interactive : advection-diffusion gaussienne
+## Explorer le coût de parcours en vent uniforme
 
-Modifiez les paramètres directement dans cette page, sans installer Python ni lancer une application. Le graphique est recalculé localement dans votre navigateur à partir de la solution analytique ; aucun serveur de calcul n'est requis.
+Choisissez la position du point cible (B=(x,y)) relativement au point de départ (A=(0,0)), ainsi que le vent uniforme (mathbf{u}=(u_x,u_y)). Les coordonnées sont en mètres et les vitesses en mètres par seconde ; le temps retourné est donc en secondes.
 
-<iframe src="../experiences/gaussian-advection-diffusion.html" title="Expérience interactive d'advection-diffusion gaussienne" width="100%" height="620" style="border: 1px solid #cbd5e1; border-radius: 0.5rem;" loading="lazy"></iframe>
+```{pyodide}
+#| edit: false
+#| output: false
+#| define:
+#|   - evaluate_travel_cost
+from jdriftx import pseudo_distance_uniforme
 
-Le modèle utilisé est l'équation unidimensionnelle
-\\[
-\\frac{\\partial c}{\\partial t}+u\\frac{\\partial c}{\\partial x}
-=K\\frac{\\partial^2 c}{\\partial x^2}.
-\\]
-Pour une condition initiale gaussienne, une vitesse constante \\(u\\) et une diffusivité constante \\(K\\), le centre se déplace de \\(ut\\) et la variance devient \\(\\sigma_0^2+2Kt\\). Cette expérience illustre cette solution exacte sur la droite réelle ; elle ne simule ni le vent réel ni le modèle J-DriftX complet.
-
-## Architecture : un cœur de calcul partagé, deux usages distincts
-
-```{mermaid}
-flowchart TD
-    CORE["Cœur Python\nsrc/jdriftx/"]
-    TESTS["Tests automatisés\ntests/"]
-    APP1["Streamlit local\napps/"]
-    DOCS["Pages Quarto\nsite/"]
-    CORE --> TESTS
-    CORE --> APP1
-    DOCS -. "décrit les hypothèses,\nles méthodes et les limites" .-> CORE
-    APP1 -. "exploration interactive\npendant le développement" .-> CORE
+def evaluate_travel_cost(x, y, ux, uy):
+    """Evaluate the existing J-DriftX uniform-wind reference implementation."""
+    return pseudo_distance_uniforme([0.0, 0.0], [x, y], [ux, uy])
 ```
 
-Les calculs ne sont pas dupliqués dans les interfaces : les applications importent les fonctions du paquet `jdriftx`, et les tests ciblent ce même cœur de calcul. Les pages Quarto constituent une couche documentaire statique. Les figures éventuellement publiées dans le site sont des résultats pré-calculés ou des visualisations côté navigateur ; elles ne donnent pas accès à une session Python persistante.
+```{ojs}
+viewof targetX = Inputs.range([-500, 500], {
+  value: 100,
+  step: 10,
+  label: "Position x de B (m)"
+})
 
-## Catalogue des expériences
+viewof targetY = Inputs.range([-500, 500], {
+  value: 100,
+  step: 10,
+  label: "Position y de B (m)"
+})
 
-| Expérience | Code principal | Ce qui est étudié | Ce que l'expérience ne démontre pas |
-|---|---|---|---|
-| Champs de vecteurs synthétiques | `src/jdriftx/fields.py`, `apps/interactive_lab.py` | Composantes d'un champ uniforme, d'un cisaillement et d'un champ radial ; estimations numériques de divergence et de rotationnel sur une grille | Réalisme d'un champ de vent, divergence nulle dans un modèle atmosphérique ou validité d'une méthode de dispersion |
-| Reliefs synthétiques | `src/jdriftx/terrain.py`, `apps/interactive_lab.py` | Relief plat, colline, vallée et crête ; pente calculée sur grille | Couplage entre topographie et écoulement, ni effet orographique sur le vent |
-| Trajectoires et intégrateurs | `src/jdriftx/trajectories.py`, `apps/scientific_validation.py` | Intégration cinématique par Euler explicite et RK4, comparaison à un champ constant ou à un champ rotationnel exact | Inertie, turbulence, sédimentation, dépôt ou rétroaction des particules |
-| Advection-diffusion gaussienne | `src/jdriftx/advection_diffusion.py`, `apps/scientific_validation.py` | Translation et élargissement d'un profil gaussien avec vitesse et diffusivité constantes | Sources continues, coefficients variables, frontières finies ou dispersion atmosphérique réelle |
-| Convergence sur domaine périodique | `src/jdriftx/periodic_transport.py`, `apps/convergence_lab.py` | Advection-diffusion d'une sinusoïde, erreur spatiale et temporelle, conservation de la moyenne, comparaison de deux schémas | Validité sur un domaine ouvert, pour des fronts discontinus, des sources localisées ou la dynamique des gouttelettes |
+viewof windX = Inputs.range([0.5, 5], {
+  value: 2,
+  step: 0.1,
+  label: "Vent uₓ (m/s)"
+})
 
-## Traçabilité des propriétés mathématiques
-
-La matrice ci-dessous relie une propriété à son hypothèse, à un test automatisé et à l'interprétation correcte. Un test donne une vérification exécutable sur un cas précis ; il ne constitue pas, à lui seul, une démonstration générale.
-
-| Propriété ou contrat | Hypothèses / cas de test | Test automatisé | Interprétation |
-|---|---|---|---|
-| Champ uniforme constant | Angle de 90° et vitesse imposée | `tests/test_fields.py::test_uniform_field_has_constant_components` | Vérifie les composantes sur une grille test |
-| Cisaillement linéaire | Dépendance linéaire de la composante horizontale en y | `tests/test_fields.py::test_shear_field_changes_horizontal_velocity_with_y` | Vérifie la formule implémentée, pas un profil atmosphérique |
-| Champ radial nul à l'origine et linéaire | Champ radial synthétique | `tests/test_fields.py::test_radial_field_is_zero_at_origin_and_scales_linearly` | Vérifie le comportement du champ défini dans le code |
-| Relief plat, symétrie de la colline, vallée opposée à la colline, crête constante le long de x | Formes synthétiques et largeur positive | Tests de `tests/test_terrain.py` | Vérifie les propriétés géométriques des fonctions de relief |
-| Vitesse constante intégrée exactement à l'arrondi près | Trajectoire cinématique et pas final raccourci si nécessaire | `tests/test_trajectories.py::test_constant_velocity_is_integrated_exactly_by_both_methods` | Contrôle un cas polynomial simple |
-| RK4 plus précis qu'Euler sur un champ rotationnel au pas choisi | Champ `u=-y, v=x`, solution exacte trigonométrique | `tests/test_trajectories.py::test_rk4_is_more_accurate_than_euler_for_rotational_field` | Comparaison ponctuelle ; ne prouve pas un ordre de convergence général |
-| Translation sans diffusion | Diffusivité nulle, vitesse constante | `tests/test_advection_diffusion.py::test_zero_diffusivity_is_translated_initial_gaussian` | Vérifie la limite purement advective de la solution analytique |
-| Intégrale numérique proche de la masse prescrite pour la solution gaussienne analytique | Domaine fini assez large pour capturer les queues, quadrature trapézoïdale fine | `tests/test_advection_diffusion.py::test_mass_is_conserved_on_a_domain_capturing_gaussian_tails` | Vérifie l'évaluation et l'intégration numérique d'une solution analytique ; ce n'est pas un test de conservation d'un solveur temporel |
-| Variance gaussienne évolue comme σ₀² + 2Kt | Diffusivité constante et domaine assez large | `tests/test_advection_diffusion.py::test_diffusion_increases_variance` | Vérifie une conséquence de la solution analytique |
-| Accord avec une solution périodique analytique | Sinusoïde, vitesse et diffusivité constantes, grille raffinée | `tests/test_periodic_transport.py::test_numerical_solver_matches_exact_solution_on_refined_grid` | Vérification numérique d'un problème périodique lisse |
-| Conservation de la moyenne discrète | Domaine périodique et opérateur implémenté | `tests/test_periodic_transport.py::test_periodic_solver_conserves_discrete_mean` et `test_independent_upwind_euler_solver_matches_exact_solution` | Invariant discret attendu sous ces conditions aux limites |
-| Convergence spatiale observée d'ordre proche de 2 | Raffinement de grille et pas temporel contrôlé | `tests/test_periodic_transport.py::test_spatial_refinement_reduces_error` | Ordre observé sur cette plage de paramètres, pas théorème universel |
-| Convergence temporelle observée d'ordre proche de 4 | Grille fixe, référence numérique calculée avec un pas plus fin | `tests/test_periodic_transport.py::test_temporal_refinement_converges_to_fine_step_reference` | La référence est approchée ; elle n'est pas une solution exacte indépendante |
-| Rejet de paramètres invalides ou de pas instables | Contrats d'entrée et critères de stabilité codés | Tests `test_invalid_*`, `test_*rejects_unstable_time_step` dans les fichiers concernés | Vérifie les garde-fous implémentés, non la stabilité de tout régime physique |
-
-### Ce qui n'est pas encore prouvé
-
-Les tests listés ci-dessus ne constituent pas une suite de preuves pour les propriétés ambitieuses du modèle J-DriftX. En particulier, la **non-symétrie d'une métrique de temps de transport**, la **divergence nulle d'un champ de vent**, la **conservation physique de masse dans le modèle cible**, la **superposition dans la formulation complète** et l'existence ou le coût d'un **adjoint analytique** exigent des définitions précises et des preuves ou expériences dédiées. Ils ne doivent pas être considérés comme validés par les laboratoires synthétiques actuels.
-
-## Études de convergence : comment les lire
-
-Le laboratoire périodique résout
-\[
-\frac{\partial c}{\partial t}+u\frac{\partial c}{\partial x}
-=K\frac{\partial^2 c}{\partial x^2}
-\]
-sur un domaine périodique de longueur \(L\), avec une condition initiale sinusoïdale. Pour une vitesse \(u\) et une diffusivité \(K\) constantes, la solution exacte est
-\[
-c(x,t)=\bar c+A\exp\!\left[-K\left(\frac{2\pi}{L}\right)^2t\right]
-\sin\!\left(\frac{2\pi}{L}(x-ut)\right).
-\]
-
-- **Étude spatiale** : le nombre de cellules augmente et le pas de temps est réduit comme \(\Delta x^2\), afin de limiter l'effet de l'erreur temporelle.
-- **Étude temporelle** : le maillage est fixe ; les calculs sont comparés à une référence obtenue avec le même opérateur spatial et un pas temporel beaucoup plus fin. Cette référence est numérique, non exacte.
-- **Comparaison des schémas** : différences centrées en espace avec RK4, face à un schéma amont conservatif avec Euler explicite. Le schéma amont est d'ordre un en espace et généralement plus diffusif sur ce cas.
-
-Les erreurs \(L^2\) et maximales, la moyenne discrète et les critères de stabilité permettent de détecter des défauts sur le cas choisi. Les résultats dépendent des paramètres, du régime d'erreur et des arrondis.
-
-## Reproduire localement
-
-Depuis la racine du dépôt, avec Python 3.12 et uv :
-
-```bash
-uv sync --group app
-uv run streamlit run apps/interactive_lab.py
-uv run streamlit run apps/scientific_validation.py
-uv run streamlit run apps/convergence_lab.py
+viewof windY = Inputs.range([-2, 2], {
+  value: 0,
+  step: 0.1,
+  label: "Vent uᵧ (m/s)"
+})
 ```
 
-Pour vérifier les tests associés :
-
-```bash
-uv run pytest tests/test_fields.py tests/test_terrain.py tests/test_trajectories.py tests/test_advection_diffusion.py tests/test_periodic_transport.py
+```{pyodide}
+#| edit: false
+#| output: false
+#| input:
+#|   - targetX
+#|   - targetY
+#|   - windX
+#|   - windY
+#| define:
+#|   - travelCost
+travelCost = evaluate_travel_cost(targetX, targetY, windX, windY)
+travelCost
 ```
 
-Pour le détail des expériences, voir la [spécification du laboratoire](https://github.com/JM-Brun/J-DriftX/blob/main/docs/17-laboratoire-interactif.md), la [carte d'articulation](carte-articulation.qmd) et la page [Qualité & tests](qualite.qmd).
+```{ojs}
+const formattedCost = Number.isFinite(travelCost)
+  ? `${travelCost.toFixed(2)} s`
+  : "∞ — point cible en amont";
+html`<p><strong>Coût calculé par <code>jdriftx.pseudo_distance_uniforme</code> :</strong> ${formattedCost}</p>`
+```
 
-## Limites et étapes suivantes
+## Interprétation et limites
 
-1. Conserver les applications Streamlit comme outils de développement local ; aucune URL publique ni iframe n'est nécessaire à ce stade.
-2. Maintenir les pages Quarto autonomes et lisibles sans exécution Python.
-3. Pour chaque propriété nouvelle, ajouter ensemble : définition et hypothèses, justification analytique, test automatisé, cas limite ou contre-exemple, et limites d'interprétation.
-4. Séparer explicitement les propriétés génériques des solveurs des propriétés qui devront être démontrées pour la formulation propre à J-DriftX.
-5. Avant d'annoncer une validation physique, ajouter des données de référence indépendantes, un protocole reproductible, des baselines pertinentes et une analyse d'incertitude.
+- Le coût dépend de la projection du déplacement sur la direction du vent, et non de la distance euclidienne.
+- Un déplacement transversal pur peut donc avoir un coût nul dans cette référence analytique. Ce comportement est une limite connue de la définition, pas une affirmation physique sur le transport atmosphérique.
+- Un déplacement longitudinal en amont renvoie (+infty) selon la convention explicite de la fonction.
+- Le noyau Python est la source de vérité ; les contrôles OJS ne font que transmettre les paramètres et afficher le résultat.
 
-Les expériences actuelles sont un socle de vérification logicielle et numérique. Elles ne valident ni une simulation météorologique, ni l'utilité applicative, ni la formulation complète de J-DriftX.
+Les tests automatisés du paquet Python restent exécutés dans l'environnement Python normal de la CI. Le navigateur ne remplace pas ces tests et ne constitue pas, à lui seul, une validation scientifique.
