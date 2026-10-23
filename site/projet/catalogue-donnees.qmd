@@ -41,4 +41,4 @@ Pour chaque jeu, vérifier l'accès aux fichiers, la licence, le terme source, l
 
 **Critère d'arrêt :** si l'observable ne correspond pas aux équations de J-DriftX, si le terme source ou les conditions de transport ne sont pas reconstructibles, ou si l'évaluation indépendante n'est pas possible, classer le jeu comme référence bibliographique seulement.
 
-La [fiche détaillée de cadrage G0](https://github.com/JM-Brun/J-DriftX/blob/main/docs/11-g0-evidence-externe.md) et le [catalogue détaillé des jeux de données](https://github.com/JM-Brun/J-DriftX/blob/main/docs/12-catalogue-donnees-transport-dispersion.md) documentent les limites et les sources.
+Le présent catalogue résume les données candidates et leurs limites. Les tâches de vérification des fichiers, des licences et de l'indépendance des essais sont suivies dans l'[issue publique d'audit des données](https://github.com/JM-Brun/J-DriftX/issues/13).
