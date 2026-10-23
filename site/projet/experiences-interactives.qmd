@@ -21,7 +21,7 @@ Cette page propose une seule expérience calculée dans le navigateur. Elle char
 Le point de départ est fixé à $A=(0,0)$ ; les curseurs définissent le point cible $B=(x,y)$ et le vent uniforme $\\mathbf{u}=(u_x,u_y)$. Les coordonnées sont en mètres, les vitesses en mètres par seconde et le résultat en secondes.
 
 ```{ojs}
-#| echo: false
+//| echo: false
 
 viewof targetX = Inputs.range([-500, 500], {
   value: 100,
