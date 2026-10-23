@@ -40,6 +40,9 @@ jobs:
         with:
           path: site
 
+      - name: Vérifier la présence du paquet Python publié
+        run: test -s site/_site/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/_site
