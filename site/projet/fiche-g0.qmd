@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Fiche G0 — cadrage du besoin"
 ---
 
