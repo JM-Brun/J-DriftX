@@ -55,15 +55,19 @@ viewof windY = Inputs.range([-5, 5], {
 #|   - windY
 from jdriftx import pseudo_distance_uniforme
 
-cost = pseudo_distance_uniforme(
-    [0.0, 0.0],
-    [float(targetX), float(targetY)],
-    [float(windX), float(windY)],
-)
-if cost == float("inf"):
-    print("Coût calculé : +∞ s — point cible en amont")
+vent = [float(windX), float(windY)]
+if vent == [0.0, 0.0]:
+    print("Vent nul : le coût n'est pas défini.")
 else:
-    print(f"Coût calculé : {cost:.2f} s")
+    cost = pseudo_distance_uniforme(
+        [0.0, 0.0],
+        [float(targetX), float(targetY)],
+        vent,
+    )
+    if cost == float("inf"):
+        print("Coût calculé : +∞ s — point cible en amont")
+    else:
+        print(f"Coût calculé : {cost:.2f} s")
 ```
 
 Le bloc Python est relié aux curseurs par l'option `input` native de Quarto Live. Il est réévalué quand une valeur change ; il n'y a pas de fonction Python exportée à appeler depuis JavaScript.
@@ -85,7 +89,7 @@ Ces valeurs sont des vérifications analytiques de la fonction, pas des résulta
 - Le calcul est délégué à `jdriftx.pseudo_distance_uniforme`, fonction Python testée dans le dépôt.
 - Le coût est déterminé par la projection du déplacement sur la direction du vent ; l'écart transversal n'est pas pénalisé.
 - Un déplacement longitudinal en amont renvoie $+\infty$ selon la convention explicite de cette implémentation.
-- Un vent nul est invalide pour cette fonction ; le curseur permet de l'observer et le bloc Python affiche l'erreur si cette valeur est sélectionnée.
+- Un vent nul est signalé explicitement et ne provoque pas d'exception non traitée.
 - Le calcul est limité à un champ uniforme non nul. Il ne résout pas les caractéristiques d'un champ variable, ne calcule pas une concentration et ne valide pas un modèle de dispersion.
 
 Pour le catalogue des autres expériences, les commandes de lancement local et les tests associés, consulter le [catalogue du laboratoire numérique](laboratoire-interactif.qmd). Pour le niveau de preuve requis, voir la page de [validation scientifique](validation-scientifique.qmd).
