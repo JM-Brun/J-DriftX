@@ -13,7 +13,7 @@
 | 2 | Mohammadi & Brun 2006 (C. R. Mécanique) | **Papier relu intégralement** (PDF libre, archive ouverte Académie des sciences) | Résumés verbatim, définition complète de la pseudo-distance, benchmark de coût 10³–10⁴, adjoint Tapenade, références internes |
 | 3 | Mohammadi, Brun & Pironneau 2006 (chapitre) | Non localisé | Citation exacte via bibliographie du papier n° 7 |
 | 4 | Brun & Mohammadi 2008 (Springer, chap. 14) | Chapitre fourni par l'auteur ; relais public ResearchGate | Résumé + pages 245–246 (OCR) : introduction et début de la section ROM |
-| 5 | Bozon, Mohammadi & Sinfort 2008 (e-sta) | Non localisé (archives introuvables) | Citation exacte via bibliographie des papiers n° 6 et 7 |
+| 5 | Bozon, Mohammadi & Sinfort 2008 (e-sta) | Non localisé (archives introuvables) ; métadonnées attestées : vol. 5, n° 2, p. 182–192 | Citation exacte via bibliographie des papiers n° 6 et 7 |
 | 6 | Bozon, Sinfort & Mohammadi 2009 (STIC & Env. / HAL) + version journal JESA 2010 | Manuscrit auteur relu intégralement (HAL via relais ResearchGate) ; DOI JESA valide (accès réservé) ; texte brut dans <code>raw/extracts/</code> | Quasi-intégralité : équations, multi-niveaux, correction topographique, architecture logicielle |
 | 7 | Bozon & Mohammadi 2009 (Applied Geomatics) | Résumé libre ; texte intégral sur abonnement | Résumé verbatim, extraits d'introduction et bibliographie |
 
@@ -88,7 +88,7 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 
 **Référence.** Bozon, N., Mohammadi, B. & Sinfort, C. (2008). « Similitude and non symmetric geometry for dispersion modelling ». e-sta, vol. 5, numéro spécial STIC et Environnement'07.
 
-**Statut d'accès.** Non localisé en ligne : les archives du périodique e-sta (revue de la SEE) n'ont pas été trouvées en accès ouvert. La référence exacte (revue, volume, numéro spécial, année) est confirmée par la bibliographie du papier Drift-X (source n° 6), qui cite : « N. Bozon, B. Mohammadi and C. Sinfort, Similitude and non symmetric geometry for dispersion modelling, Special issue STIC and Environnement'07, e-sta vol. 5, 2008 ».
+**Statut d’accès (mis à jour le 22 octobre 2026, issue #44).** Toujours non localisé en accès ouvert : les archives du périodique e-sta (revue de la SEE) restent introuvables en ligne, et l’annonce de la SEE « e-STA 2008-2 » (numéro spécial STIC et Environnement’07) repérée lors des recherches a depuis été supprimée. En revanche, les **métadonnées de l’article sont désormais attestées** par deux dépôts HAL tiers indépendants du corpus : [hal-00825458](https://hal.science/hal-00825458) (Bonicelli et al., actes CIGR-AgEng 2012) et [tel-02808689](https://hal.science/tel-02808689) (thèse mobilisant la lignée pesticides) référencent tous deux « e-STA Sciences et Techniques de l’Automatique », vol. 5, n° 2, p. 182–192 (2008). Divergence relevée : ces attestations citent l’ordre d’auteurs Mohammadi/Sinfort/Bozon, tandis que la bibliographie du papier Drift-X (source n° 6) donne « N. Bozon, B. Mohammadi and C. Sinfort, Similitude and non symmetric geometry for dispersion modelling, Special issue STIC and Environnement’07, e-sta vol. 5, 2008 » — l’ordre Bozon/Mohammadi/Sinfort est conservé dans ce dépôt. L’autodépôt HAL du texte intégral reste une action auteur (voir section 10).
 
 **Lecture (par recoupement).** C'est le **chaînon manquant** entre le cœur mathématique 2006 (sources 2–4) et la plateforme SIG 2009 (source 6) : première publication avec N. Bozon et C. Sinfort (ITAP), titre centré sur « similitude et géométrie non symétrique » — soit l'introduction de la topographie/non-symétrie géométrique dans le modèle, avant le couplage SIG complet. Le contenu exact ne peut pas être affirmé sans le document.
 
@@ -150,12 +150,28 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 |---|---|---|
 | Haute | Vérifier la page de titre de la thèse de Brun, puis envisager son dépôt HAL (action M0) | Document indiqué comme étant en possession de l'auteur ; année officielle à confirmer |
 | Haute | Récupérer le texte intégral du chapitre 2008 au-delà des pages 245–246 (exemples numériques, analyse de sensibilité, identification de source) | Chapitre fourni par l'auteur — OCR à poursuivre |
-| Moyenne | Localiser l'article e-sta 2008 (archives SEE) | Introuvable en ligne — contacter la SEE ou les auteurs |
+| Haute | Déposer sur HAL l’article e-sta 2008 (métadonnées attestées : vol. 5, n° 2, p. 182–192) | Introuvable en ligne — autodépôt par les auteurs (action M0) |
 | Moyenne | Localiser le recueil Springer 2006 du chapitre Mohammadi–Brun–Pironneau | Recueil introuvable en accès ouvert |
 | ~~Moyenne~~ | ~~Obtenir le texte intégral CR Mécanique 2006~~ — **fait** (archive ouverte Académie) | Reste Applied Geomatics 2009 (abonnement / tiré-à-part auteur) |
 | Moyenne | Statut de la soumission IJNMF 2006 (« Reduced-order geometrical modelling of dispersion ») | Publication non retrouvée — mémoire d'auteur |
 | Moyenne | Ajouter les PDF originaux dans <code>raw/</code> (voir <code>raw/README.md</code>) | Manuscrits auteurs en possession de l'auteur |
 | Basse | Obtenir l'exemplaire JESA 2010 de la source n° 6 pour vérifier les éventuelles évolutions vs le manuscrit HAL | Accès réservé |
+
+## 10. M0 — état des lieux des dépôts ouverts (22 octobre 2026, issue #44)
+
+Objectif de l’issue #44 : vérifier, source par source, si le corpus historique est archivé en accès ouvert (HAL en priorité) et documenter les actions restantes. **Limite de méthode :** l’absence de résultat dans HAL, theses.fr, Sudoc ou les moteurs généraux n’est pas une preuve d’absence de dépôt ; les autodépôts listés ne peuvent être effectués que par les auteurs (versions définitives et droits).
+
+| Source | Dépôt ouvert | État (oct. 2026) et action restante |
+|---|---|---|
+| Mohammadi & Brun 2006 (*C. R. Mécanique*) | HAL : non | PDF en accès libre et pérenne sur l’archive ouverte de l’Académie des sciences (§2) ; archivage satisfaisant, dépôt HAL optionnel |
+| Brun & Mohammadi 2008 (chapitre Springer) | HAL : non | Chapitre fourni par l’auteur ; vérifier la politique d’autodépôt Springer puis déposer la version auteur si le contrat le permet |
+| Bozon, Mohammadi & Sinfort 2008 (e-sta) | HAL : non | **Prioritaire.** Métadonnées attestées (vol. 5, n° 2, p. 182–192 — fiche 5) mais texte introuvable ; autodépôt par les auteurs |
+| Bozon, Sinfort & Mohammadi 2009 (plateforme STIC & Env.) | **HAL : oui** — [hal-00468863](https://hal.science/hal-00468863) | Rien à faire : manuscrit auteur déposé et relu intégralement (fiche 6) |
+| Bozon & Mohammadi 2009 (*Applied Geomatics*) | HAL : non | Autodépôt de la version auteur selon la politique Springer ; texte intégral encore sur abonnement |
+| Bozon, Sinfort & Mohammadi 2010 (*JESA*) | HAL : non | DOI 10.3166/jesa.44.445-461 valide mais accès réservé ; autodépôt selon la politique Lavoisier, sinon le manuscrit HAL 2009 sert d’archive ouverte |
+| Thèse Brun (2006/2007, §1) | HAL : non (introuvable aussi sur theses.fr et Sudoc) | Année discordante à arbitrer sur la page de titre ; document en possession de l’auteur — **le dépôt HAL est le prérequis de sa relecture** |
+
+Bilan : sur sept sources, une seule est déposée sur HAL (la plus réutilisée, la plateforme 2009) ; l’article e-sta 2008 et la thèse sont les deux autodépôts à plus fort effet de levier documentaire.
 
 ---
 

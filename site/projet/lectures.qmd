@@ -58,7 +58,7 @@ Version longue du travail (fournie par l'auteur), c'est la source la plus compl�
 
 **Bozon, N., Mohammadi, B. & Sinfort, C., « Similitude and non symmetric geometry for dispersion modelling ».**
 
-Premier papier avec N. Bozon et C. Sinfort (ITAP), donc la transition vers le monde viticole/SIG. Son titre (« similitude et géométrie non symétrique ») suggère qu'il introduit la **topographie** dans le modèle — mais il est introuvable en ligne (archives de la revue e-sta inaccessibles). À localiser auprès de la SEE ou des auteurs ; citation exacte conservée dans les fiches.
+Premier papier avec N. Bozon et C. Sinfort (ITAP), donc la transition vers le monde viticole/SIG. Son titre (« similitude et géométrie non symétrique ») suggère qu’il introduit la **topographie** dans le modèle. **Mise à jour (octobre 2026) :** le texte intégral reste introuvable en ligne (archives de la revue e-sta inaccessibles), mais ses métadonnées sont désormais attestées par deux dépôts HAL tiers : *e-sta* vol. 5, n° 2, p. 182–192 (numéro spécial STIC et Environnement’07). Reste à faire : l’autodépôt sur HAL, qui ne peut venir que des auteurs — verrou M0 prioritaire.
 
 ## Le papier plateforme (2009) — le plus riche de tous
 
@@ -100,7 +100,7 @@ La version la plus courte, utile pour situer le projet en une lecture : modèle 
 |---|---|---|
 | Haute | Déposer la thèse 2006 sur HAL (M0), puis la relire | Document en possession de l'auteur |
 | Haute | Extraire la suite du chapitre 2008 (exemples numériques, sensibilité) | Chapitre fourni — OCR à poursuivre |
-| Moyenne | Localiser l'article e-sta 2008 | Archives SEE introuvables en ligne |
+| Haute | Déposer sur HAL l’article e-sta 2008 (métadonnées attestées : vol. 5, n° 2, p. 182–192) | Archives SEE introuvables ; autodépôt par les auteurs |
 | Moyenne | Localiser le recueil Springer 2006 (Mohammadi–Brun–Pironneau) | Introuvable en accès ouvert |
 | Moyenne | Textes intégraux CR 2006 et Applied Geomatics 2009 | Abonnements / tirés-à-part |
 
