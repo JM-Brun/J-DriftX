@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "G0 — MVP scientifique minimal et trajectoire maximale"
 ---
 
