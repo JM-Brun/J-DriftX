@@ -7,18 +7,32 @@ pseudo-distance historique ni un modèle de dispersion validé.
 """
 
 from jdriftx.constraints import linearite, positivite
+from jdriftx.experiences.uniforme import (
+    ChampUniforme,
+    ManifesteScenario,
+    ResultatDirige,
+    ScenarioUniforme,
+    construire_manifeste,
+    resoudre_scenario,
+)
 from jdriftx.metric import pseudo_distance_uniforme, temps_transport
 from jdriftx.similitude import concentration_panache, concentration_puff, sigma_y, sigma_z
 
 __version__ = "0.1.0"
 
 __all__ = [
+    "ChampUniforme",
+    "ManifesteScenario",
+    "ResultatDirige",
+    "ScenarioUniforme",
     "__version__",
     "concentration_panache",
     "concentration_puff",
+    "construire_manifeste",
     "linearite",
     "positivite",
     "pseudo_distance_uniforme",
+    "resoudre_scenario",
     "sigma_y",
     "sigma_z",
     "temps_transport",

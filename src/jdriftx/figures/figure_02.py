@@ -6,9 +6,10 @@ It uses a uniform, non-zero wind and the convention implemented by
 ``pseudo_distance_uniforme``: only the positive longitudinal displacement is
 charged; a target upstream receives an infinite cost.
 
-The costs displayed in the figure are computed by ``pseudo_distance_uniforme``
-on the documented toy scenario below, so the figure cannot silently diverge
-from the tested implementation.
+The toy scenario and every displayed number come from the typed vertical
+slice ``jdriftx.experiences.uniforme`` (configuration -> uniform field ->
+directed cost -> results -> manifest): the figure renders computed results
+and cannot silently diverge from the tested implementation.
 """
 
 from __future__ import annotations
@@ -16,16 +17,10 @@ from __future__ import annotations
 import math
 from html import escape
 
-from jdriftx.metric import pseudo_distance_uniforme
+from jdriftx.experiences.uniforme import SCENARIO_DEFAUT, resoudre_scenario
 
 SVG_WIDTH = 1100
 SVG_HEIGHT = 520
-
-# Scénario jouet (coordonnées en mètres, vitesse en m/s, coût en secondes) :
-# vent uniforme selon +x, cible en aval avec un écart transversal.
-VENT_UNIFORME = (2.0, 0.0)
-POINT_A = (0.0, 0.0)
-POINT_B = (300.0, 65.0)
 
 
 def _text(x: int, y: int, value: str, *, size: int = 17, weight: str = "normal") -> str:
@@ -38,13 +33,15 @@ def _text(x: int, y: int, value: str, *, size: int = 17, weight: str = "normal")
 
 def render_figure_02_svg() -> str:
     """Return a deterministic SVG explanatory figure using the shared cost."""
-    tau_ab = pseudo_distance_uniforme(POINT_A, POINT_B, VENT_UNIFORME)
-    tau_ba = pseudo_distance_uniforme(POINT_B, POINT_A, VENT_UNIFORME)
+    resultat = resoudre_scenario(SCENARIO_DEFAUT)
+    tau_ab = resultat.tau_origine_cible
+    tau_ba = resultat.tau_cible_origine
     if not math.isinf(tau_ba):
         msg = "Le scénario jouet exige une cible en amont pour la direction inverse."
         raise ValueError(msg)
-    distance_euclidienne = math.hypot(POINT_B[0] - POINT_A[0], POINT_B[1] - POINT_A[1])
-    ecart_transversal = abs(POINT_B[1] - POINT_A[1])
+    distance_euclidienne = resultat.distance_euclidienne
+    ecart_transversal = resultat.ecart_transversal
+    vent = SCENARIO_DEFAUT.champ.vent
     elements = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{SVG_WIDTH}" '
         f'height="{SVG_HEIGHT}" viewBox="0 0 {SVG_WIDTH} {SVG_HEIGHT}" role="img" '
@@ -70,7 +67,7 @@ def render_figure_02_svg() -> str:
         _text(200, 224, "segment direct", size=16),
         _text(34, 430, "La longueur ne dépend pas du sens de parcours.", size=16),
         _text(580, 82, "B. Coût de migration dirigé", size=21, weight="bold"),
-        _text(580, 110, f"Vent uniforme vers +x : U = {VENT_UNIFORME[0]:.0f} m/s", size=16),
+        _text(580, 110, f"Vent uniforme vers +x : U = {vent[0]:.0f} m/s", size=16),
         '<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" '
         'orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#2c7a55"/></marker></defs>',
         '<line x1="610" y1="155" x2="1010" y2="155" stroke="#2c7a55" '

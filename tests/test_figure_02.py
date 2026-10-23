@@ -3,18 +3,16 @@
 import math
 from pathlib import Path
 
-from jdriftx.figures.figure_02 import (
-    POINT_A,
-    POINT_B,
-    VENT_UNIFORME,
-    render_figure_02_svg,
-)
-from jdriftx.metric import pseudo_distance_uniforme
+from jdriftx.experiences.uniforme import SCENARIO_DEFAUT, resoudre_scenario
+from jdriftx.figures.figure_02 import render_figure_02_svg
 
 
 def test_figure_02_svg_is_well_formed_enough_for_a_static_asset() -> None:
     """The generated asset has a stable SVG root and closes its elements."""
+    # Given — the deterministic generator.
+    # When — the figure is rendered.
     svg = render_figure_02_svg()
+    # Then — the SVG root and structure are stable.
     assert svg.startswith('<svg xmlns="http://www.w3.org/2000/svg"')
     assert svg.rstrip().endswith("</svg>")
     assert svg.count("<text ") == svg.count("</text>")
@@ -23,7 +21,9 @@ def test_figure_02_svg_is_well_formed_enough_for_a_static_asset() -> None:
 
 def test_figure_02_explains_both_geometries_and_scope() -> None:
     """Labels state the key mathematical distinction and schematic status."""
+    # Given — the rendered figure.
     svg = render_figure_02_svg()
+    # Then — the scientific qualifications are displayed.
     assert "Distance euclidienne" in svg
     assert "Coût de migration dirigé" in svg
     assert "Symétrique" in svg
@@ -31,23 +31,30 @@ def test_figure_02_explains_both_geometries_and_scope() -> None:
     assert "pas une métrique au sens strict" in svg
 
 
-def test_figure_02_displayed_costs_come_from_the_shared_implementation() -> None:
-    """Displayed values are computed by pseudo_distance_uniforme, not duplicated."""
+def test_figure_02_displayed_costs_come_from_the_typed_experiment() -> None:
+    """Displayed values come from the vertical slice, not a duplicated formula."""
+    # Given — the default scenario resolved by the shared implementation.
+    resultat = resoudre_scenario(SCENARIO_DEFAUT)
+    # When — the figure is rendered.
     svg = render_figure_02_svg()
-    tau_ab = pseudo_distance_uniforme(POINT_A, POINT_B, VENT_UNIFORME)
-    tau_ba = pseudo_distance_uniforme(POINT_B, POINT_A, VENT_UNIFORME)
-    distance_euclidienne = math.hypot(POINT_B[0] - POINT_A[0], POINT_B[1] - POINT_A[1])
-    assert math.isinf(tau_ba)
-    assert f"τ(A, B) = {tau_ab:.0f} s (aval) ; τ(B, A) = +∞ (amont)" in svg
-    assert f"dE(A, B) = dE(B, A) = {distance_euclidienne:.0f} m" in svg
+    # Then — the figure displays exactly those computed values.
+    assert math.isinf(resultat.tau_cible_origine)
+    assert f"τ(A, B) = {resultat.tau_origine_cible:.0f} s (aval) ; τ(B, A) = +∞ (amont)" in svg
+    assert f"dE(A, B) = dE(B, A) = {resultat.distance_euclidienne:.0f} m" in svg
 
 
 def test_versioned_svg_matches_the_generator() -> None:
     """The committed SVG stays exactly reproducible from its source code."""
+    # Given — the versioned asset and the generator.
     asset = Path("site/images/figure-02-geometries.svg").read_text(encoding="utf-8")
-    assert asset == render_figure_02_svg()
+    # When — the figure is rendered.
+    svg = render_figure_02_svg()
+    # Then — both are byte-identical.
+    assert asset == svg
 
 
 def test_figure_02_svg_generation_is_deterministic() -> None:
     """Re-running the generator produces byte-identical SVG text."""
+    # Given / When — two consecutive renders.
+    # Then — the outputs are identical.
     assert render_figure_02_svg() == render_figure_02_svg()
