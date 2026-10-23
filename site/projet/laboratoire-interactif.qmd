@@ -97,4 +97,4 @@ Ce cas périodique lisse ne teste pas les conditions aux limites ouvertes, les s
 - La solution gaussienne de l'équation d'advection-diffusion découle de la translation à vitesse constante et de l'évolution de la variance sous diffusion constante.
 - Les tests automatisés portent sur ces hypothèses restreintes ; ils ne valident pas à eux seuls une formulation de dispersion atmosphérique.
 
-Voir aussi la [spécification détaillée du laboratoire](../../docs/17-laboratoire-interactif.md).
+Voir aussi la [spécification détaillée du laboratoire sur GitHub](https://github.com/JM-Brun/J-DriftX/blob/main/docs/17-laboratoire-interactif.md).

@@ -38,7 +38,7 @@ Les calculs ne sont pas dupliqués dans les interfaces : les applications import
 
 ## Traçabilité des propriétés mathématiques
 
-La matrice ci-dessous relie une propriété à son hypothèse, à un test automatisé et à l'interprétation correcte. Un test donne une preuve exécutable sur un cas précis ; il ne constitue pas, à lui seul, une démonstration générale.
+La matrice ci-dessous relie une propriété à son hypothèse, à un test automatisé et à l'interprétation correcte. Un test donne une vérification exécutable sur un cas précis ; il ne constitue pas, à lui seul, une démonstration générale.
 
 | Propriété ou contrat | Hypothèses / cas de test | Test automatisé | Interprétation |
 |---|---|---|---|
@@ -49,7 +49,7 @@ La matrice ci-dessous relie une propriété à son hypothèse, à un test automa
 | Vitesse constante intégrée exactement à l'arrondi près | Trajectoire cinématique et pas final raccourci si nécessaire | `tests/test_trajectories.py::test_constant_velocity_is_integrated_exactly_by_both_methods` | Contrôle un cas polynomial simple |
 | RK4 plus précis qu'Euler sur un champ rotationnel au pas choisi | Champ `u=-y, v=x`, solution exacte trigonométrique | `tests/test_trajectories.py::test_rk4_is_more_accurate_than_euler_for_rotational_field` | Comparaison ponctuelle ; ne prouve pas un ordre de convergence général |
 | Translation sans diffusion | Diffusivité nulle, vitesse constante | `tests/test_advection_diffusion.py::test_zero_diffusivity_is_translated_initial_gaussian` | Vérifie la limite purement advective de la solution analytique |
-| Masse gaussienne conservée numériquement sur une fenêtre large | Domaine fini assez large pour capturer les queues | `tests/test_advection_diffusion.py::test_mass_is_conserved_on_a_domain_capturing_gaussian_tails` | Approximation numérique de l'intégrale sur la droite réelle |
+| Intégrale numérique proche de la masse prescrite pour la solution gaussienne analytique | Domaine fini assez large pour capturer les queues, quadrature trapézoïdale fine | `tests/test_advection_diffusion.py::test_mass_is_conserved_on_a_domain_capturing_gaussian_tails` | Vérifie l'évaluation et l'intégration numérique d'une solution analytique ; ce n'est pas un test de conservation d'un solveur temporel |
 | Variance gaussienne évolue comme σ₀² + 2Kt | Diffusivité constante et domaine assez large | `tests/test_advection_diffusion.py::test_diffusion_increases_variance` | Vérifie une conséquence de la solution analytique |
 | Accord avec une solution périodique analytique | Sinusoïde, vitesse et diffusivité constantes, grille raffinée | `tests/test_periodic_transport.py::test_numerical_solver_matches_exact_solution_on_refined_grid` | Vérification numérique d'un problème périodique lisse |
 | Conservation de la moyenne discrète | Domaine périodique et opérateur implémenté | `tests/test_periodic_transport.py::test_periodic_solver_conserves_discrete_mean` et `test_independent_upwind_euler_solver_matches_exact_solution` | Invariant discret attendu sous ces conditions aux limites |
