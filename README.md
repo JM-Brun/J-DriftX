@@ -54,7 +54,7 @@ Le dépôt utilise [uv](https://docs.astral.sh/uv/), pyproject.toml, [Ruff](http
 
 ~~~bash
 uv sync
-uv run pytest
+uv run pytest --cov=jdriftx
 uv run ruff check .
 uv run ruff format --check .
 uv run pre-commit run --all-files
