@@ -15,7 +15,7 @@ La priorité reste le noyau mathématique et sa validation, avant l’ajout de f
 | docs/02-revue-etat-art-2026.md | Synthèse documentaire détaillée | Distinguer faits sourcés, interprétations et hypothèses ; compléter la méthode de recherche |
 | site/etat-art/panorama.qmd | Synthèse publique | Afficher les limites de couverture et renvoyer au protocole |
 | site/etat-art/positionnement.qmd | Positionnement scientifique | Présenter les différenciateurs comme des hypothèses à tester, non comme des avantages acquis |
-| docs/03-roadmap-jdriftx-v2.md | Plan d’exécution | Faire dépendre chaque jalon d’un livrable vérifiable et d’un critère d’acceptation |
+| Issues publiques | Suivi des questions ouvertes | Faire dépendre chaque étape d’un livrable vérifiable et d’un critère d’acceptation |
 | docs/references.md et site/references.bib | Traçabilité bibliographique | Vérifier les métadonnées, DOI, liens, dates et correspondance citations/bibliographie |
 | site/projet/qualite.qmd et tests | Preuves techniques | Relier les affirmations de conservation, positivité et symétrie à des tests ou preuves explicites |
 
@@ -98,6 +98,6 @@ Les comparaisons POD/ML ne doivent pas être présentées comme une opposition g
 ## Références internes
 
 - [Revue de l’état de l’art](02-revue-etat-art-2026.md)
-- [Feuille de route J-DriftX v2](03-roadmap-jdriftx-v2.md)
+- [Questions scientifiques et techniques ouvertes](https://github.com/JM-Brun/J-DriftX/issues)
 - [Références bibliographiques](references.md)
 - [Choix de la méthode de revue systématique](06-choix-methode-revue-systematique.md)
