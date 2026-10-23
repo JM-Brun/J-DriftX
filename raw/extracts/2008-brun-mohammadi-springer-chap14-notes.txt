@@ -1,0 +1,157 @@
+J-DriftX — extraction analytique du chapitre 14 du recueil Springer (2008)
+===============================================================================
+
+Source
+------
+Brun, J.-M. & Mohammadi, B. (2008), “Reduced-Order Modelling of Dispersion”,
+in R. Glowinski & P. Neittaanmäki (eds), Partial Differential Equations:
+Modelling and Numerical Simulation, Computational Methods in Applied Sciences,
+vol. 16, Springer, pp. 245–256.
+DOI du chapitre : https://doi.org/10.1007/978-1-4020-8758-5_14
+DOI du livre : https://doi.org/10.1007/978-1-4020-8758-5
+
+Document status
+---------------
+This is an analytical extraction in original wording, not a verbatim OCR
+transcript of the copyrighted chapter. It records the chapter structure,
+mathematical objects, assumptions, numerical examples, and limitations for
+research traceability. Equations and figures must be checked against the PDF
+before implementation. Source pagination below refers to the printed pages
+245–256, not the PDF viewer's zero-based page index.
+
+Abstract and objective (printed pp. 245–246)
+--------------------------------------------
+The chapter proposes low-complexity models for passive-scalar transport in
+environmental applications. The solution space is reduced at successive
+levels. Similarity profiles are generalized to a non-symmetric travel-time
+geometry for long-range transport. Parameters are identified through data
+assimilation. The approach is intended to avoid solving a PDE online and to
+evaluate concentration at a point without computing a full-domain solution.
+Sensitivity analysis is proposed for risk analysis and source identification.
+
+The motivation is pesticide transport in atmospheric flows, where measurements
+are incomplete and variable while the number of parameters is large. Each
+level provides an inlet condition for the next and uses prior physical
+knowledge to restrict the admissible solution family.
+
+Section 2 — Reduced-order modelling (printed pp. 246–247)
+---------------------------------------------------------
+The authors distinguish their approach from snapshot-based projection methods:
+they seek to avoid computing full-model snapshots. Instead, a simpler
+parameterized map approximates the direct model, with a local validation domain
+rather than a claim of uniform validity over all parameter values.
+
+Section 2.1 — Near-field solution (printed pp. 247–248)
+-------------------------------------------------------
+A parameterized local velocity field and passive-scalar concentration describe
+the injection device and nearby vegetation. Radial and angular profiles and
+functions representing vegetation effects are fitted or informed by
+experimental data and device characteristics.
+
+A key scale-separation assumption is that injection velocity is much larger
+than the motion speed of the source. The local injection flow is treated as
+instantaneous and assumed not to alter the overall atmospheric circulation.
+The local model is mainly used to estimate the amount of pollutant that leaves
+the near-ground layer and can contribute to long-range transport. The authors
+explicitly characterize these assumptions as strong.
+
+The admissible local fields are constrained to be compatible with the direct
+physics, including:
+* divergence-free velocity;
+* passive-scalar conservation;
+* compatibility with the advection equation;
+* a prescribed total scalar quantity.
+
+The exact formulae and integration domains should be transcribed from the PDF
+if they are needed in code; this note deliberately does not substitute an
+approximate transcription for the source equations.
+
+Section 2.2 — Long-range transport and non-symmetric geometry
+(printed pp. 248–251)
+-------------------------------------------------------------
+The scalar quantity leaving the near-ground layer becomes the input to a
+long-range model. The starting point is a similarity-profile representation
+for a plume in a uniform flow. The chapter generalizes the representation to
+a spatially varying wind by defining distance using migration time along a
+wind characteristic.
+
+The transport distance is directional. If A is upstream of B, the travel time
+from A toward B is finite under the model, whereas the reverse distance is
+defined as infinite. This is not a symmetric metric in the usual mathematical
+sense. A transverse Euclidean distance is also used to describe spread away
+from the characteristic.
+
+The construction assumes a unique relevant characteristic and addresses
+non-uniqueness by a stated projection-selection rule. This restricts its
+applicability: sources, attraction points, complicated characteristic topology,
+and recirculation may violate or complicate the assumptions.
+
+For numerical construction, the authors approximate characteristics by
+polynomial curves and estimate migration time along those curves. The text
+notes a geometric approximation in which the target point is treated as lying
+on the characteristic, then introduces a correction factor. The transverse
+distance is also approximated. The authors report satisfactory behaviour for
+smooth atmospheric fields in the intended application regime; this is not a
+general guarantee for arbitrary velocity fields.
+
+Ground/topography effects are introduced using a terrain representation.
+The chapter notes the difficulty of obtaining sufficiently detailed terrain
+and atmospheric observations for a full direct simulation.
+
+Data assimilation and flow construction (printed pp. 250–252)
+--------------------------------------------------------------
+The atmospheric flow is reconstructed from sparse measurements under physical
+constraints. The point is not that sparse observations uniquely determine an
+arbitrary flow field, but that a restricted parameterized family is fitted to
+available data. The validity of the resulting field therefore depends on the
+parameterization, observation placement, and assumptions used to constrain it.
+
+Numerical results (printed pp. 252–255)
+---------------------------------------
+The chapter presents illustrative configurations for a small treated field
+within a much larger calculation region. It shows:
+* a reconstructed divergence-free flow field using sparse wind measurements;
+* a comparison between the generalized similarity solution and a direct
+  transport-diffusion PDE simulation for the same wind, evaluated on the
+  reference mesh nodes;
+* mono-source and multi-source cases;
+* the influence of terrain;
+* a source-identification example using sensitivity to an observed pollution.
+
+These are demonstrations of feasibility on selected cases, not a comprehensive
+benchmark across weather regimes, terrain, source configurations, or
+measurement noise. The figures contain information not recoverable from this
+text note; consult the PDF for quantitative interpretation.
+
+Conclusions and stated outlook (printed pp. 255–256)
+----------------------------------------------------
+The authors present low-complexity passive-scalar dispersion modelling based
+on prior physical information, a travel-time-based non-symmetric geometry,
+data assimilation, and sensitivity analysis. Stochastic analysis and regional
+parametric risk maps via Monte Carlo simulation are described as future work
+enabled by the intended low computational cost; they should not be reported as
+validated results of this chapter.
+
+Implications and limitations for J-DriftX
+-----------------------------------------
+1. Preserve the multi-level coupling explicitly: define the variables passed
+   from the near-field model to the long-range model.
+2. Treat the travel-time distance as directed and domain-dependent; do not
+   silently replace it with Euclidean distance or a symmetric metric.
+3. Turn physical constraints into executable checks (divergence, scalar mass,
+   non-negativity, and transport compatibility), with tolerances documented.
+4. Track observation coverage and parameter identifiability. Sensitivity maps
+   indicate compatibility/influence; they do not by themselves establish a
+   unique source or a calibrated probability distribution.
+5. Keep the domain-of-validity statement close to any implementation or result.
+   Smooth-flow assumptions and characteristic uniqueness are material limits.
+6. Reproduce the published comparison and figures before claiming numerical
+   agreement. Record mesh, boundary conditions, parameter values, error norms,
+   and whether the comparison uses the same reconstructed wind.
+
+Source and rights note
+----------------------
+The source PDF is the publisher's complete edited volume and carries Springer
+copyright. This file is an analytical research note, not a substitute for the
+chapter or a redistribution of its text. Bibliographic record and access:
+https://link.springer.com/book/10.1007/978-1-4020-8758-5

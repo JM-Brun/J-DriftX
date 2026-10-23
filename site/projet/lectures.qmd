@@ -10,13 +10,13 @@ Le corpus Drift-X compte sept publications (2006–2009). Cette page relit chaqu
 **Un principe de lecture honnête.** Chaque fiche ci-dessous distingue ce qui est **extrait du papier** (résumé, équations, architecture) de ce qui n'est **pas encore accessible** (thèse non déposée, articles introuvables). Rien n'est inventé pour combler les trous.
 :::
 
-## La thèse (2006) — le document fondateur, à déposer
+## La thèse (2006) — le document fondateur, à ajouter
 
 **Brun, J.-M., *Modélisation à complexité réduite de la dérive*, Université Montpellier II.**
 
 La thèse n'a jamais été numérisée ni déposée : elle est introuvable en ligne. On ne peut donc pas encore la relire. On sait seulement, par les bibliographies des autres papiers, qu'elle existe sous ce titre exact — et le résumé de l'article de 2006 ci-dessous en décrit le contenu scientifique contemporain.
 
-**Ce que J-DriftX en attend :** tout. C'est le document le plus complet sur le modèle ; la vérification de son accès et de son dépôt est suivie dans l'[issue bibliographique M0](https://github.com/JM-Brun/J-DriftX/issues/44).
+**Ce que J-DriftX en attend :** tout. C'est le document le plus complet sur le modèle ; la vérification de son accès est suivie dans l'[issue bibliographique M0](https://github.com/JM-Brun/J-DriftX/issues/44). **Décision (23 octobre 2026) : pas de dépôt HAL — la thèse sera ajoutée ultérieurement au corpus par l’auteur, l’année (2006/2007) étant à arbitrer sur la page de titre à cette occasion.**
 
 ## L'article de 2006 (C. R. Mécanique) — le cœur mathématique, relu intégralement
 
@@ -52,13 +52,13 @@ Version longue du travail (fournie par l'auteur), c'est la source la plus compl�
 - **Un contrat de confiance** : les solutions approchées doivent rester solutions du modèle direct — divergence nulle du vent, conservation, positivité, linéarité.
 - **Positionnement anti-snapshots** : là où les modèles d'ordre réduits classiques projettent sur des solutions précalculées coûteuses d'une CFD, Drift-X vise à « supprimer le calcul de ces snapshots » en construisant l'espace de recherche à partir de la physique.
 
-**Ce que J-DriftX en reprend :** le cahier des charges du noyau — multi-niveaux, contraintes physiques, sensibilité analytique pour l'identification de source. Les exemples numériques (pages suivantes, à extraire) serviront de jeux de validation.
+**Ce que J-DriftX en reprend :** le cahier des charges du noyau — multi-niveaux, contraintes physiques, sensibilité analytique pour l'identification de source. Les exemples numériques (pages suivantes, à extraire du recueil complet Glowinski & Neittaanmäki désormais archivé dans <code>raw/</code>) serviront de jeux de validation.
 
 ## L'article e-sta de 2008 — le chaînon manquant
 
 **Bozon, N., Mohammadi, B. & Sinfort, C., « Similitude and non symmetric geometry for dispersion modelling ».**
 
-Premier papier avec N. Bozon et C. Sinfort (ITAP), donc la transition vers le monde viticole/SIG. Son titre (« similitude et géométrie non symétrique ») suggère qu’il introduit la **topographie** dans le modèle. **Mise à jour (octobre 2026) :** le texte intégral reste introuvable en ligne (archives de la revue e-sta inaccessibles), mais ses métadonnées sont désormais attestées par deux dépôts HAL tiers : *e-sta* vol. 5, n° 2, p. 182–192 (numéro spécial STIC et Environnement’07). Reste à faire : l’autodépôt sur HAL, qui ne peut venir que des auteurs — verrou M0 prioritaire.
+Premier papier avec N. Bozon et C. Sinfort (ITAP), donc la transition vers le monde viticole/SIG. Son titre (« similitude et géométrie non symétrique ») suggère qu’il introduit la **topographie** dans le modèle. **Mise à jour (octobre 2026) :** le texte intégral reste introuvable en ligne (archives de la revue e-sta inaccessibles), mais ses métadonnées sont désormais attestées par deux dépôts HAL tiers : *e-sta* vol. 5, n° 2, p. 182–192 (numéro spécial STIC et Environnement’07). Décision (23 octobre 2026) : aucun autodépôt HAL ne sera effectué — les métadonnées attestées servent de référence bibliographique complète et le texte intégral reste introuvable en ligne.
 
 ## Le papier plateforme (2009) — le plus riche de tous
 
@@ -98,9 +98,9 @@ La version la plus courte, utile pour situer le projet en une lecture : modèle 
 
 | Priorité | Action | Verrou |
 |---|---|---|
-| Haute | Déposer la thèse 2006 sur HAL (M0), puis la relire | Document en possession de l'auteur |
-| Haute | Extraire la suite du chapitre 2008 (exemples numériques, sensibilité) | Chapitre fourni — OCR à poursuivre |
-| Haute | Déposer sur HAL l’article e-sta 2008 (métadonnées attestées : vol. 5, n° 2, p. 182–192) | Archives SEE introuvables ; autodépôt par les auteurs |
+| Clôturée | Thèse 2006 : pas de dépôt HAL (décision du 23/10/2026) — ajout ultérieur au corpus, puis relecture | Document en possession de l’auteur |
+| Haute | Extraire la suite du chapitre 2008 (exemples numériques, sensibilité) | Recueil complet Glowinski & Neittaanmäki archivé dans <code>raw/</code> — OCR à poursuivre |
+| Clôturée | e-sta 2008 : pas de dépôt HAL (décision du 23/10/2026) | Métadonnées attestées (vol. 5, n° 2, p. 182–192) = référence bibliographique complète |
 | Moyenne | Localiser le recueil Springer 2006 (Mohammadi–Brun–Pironneau) | Introuvable en accès ouvert |
 | Moyenne | Textes intégraux CR 2006 et Applied Geomatics 2009 | Abonnements / tirés-à-part |
 

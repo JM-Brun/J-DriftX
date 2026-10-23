@@ -21,3 +21,4 @@ site/.quarto/
 .vscode/
 .idea/
 .DS_Store
+/.serena/
