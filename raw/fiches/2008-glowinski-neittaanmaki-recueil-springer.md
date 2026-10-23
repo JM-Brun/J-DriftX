@@ -2,10 +2,10 @@
 
 ## Identification du fichier
 
-- **Fichier présent dans `raw/`** : `Partial Differential Equations - Modelling and Numerical Simulation - R. Glowinski, P. Neittaanmaki (Springer, 2008) WW.pdf` (environ 6,4 Mo).
-- **Nom canonique recommandé** : `2008-glowinski-neittaanmaki-recueil-springer.pdf` (convention `AAAA-auteur-sujet.pdf`; le suffixe « WW » provient du nom de diffusion et n'est pas une donnée bibliographique).
+- **Fichier intégral dans le dépôt public** : aucun. Le PDF complet du recueil n'est pas distribué par ce dépôt ; la référence bibliographique et le DOI sont conservés.
 - **Nature** : recueil éditorial complet, et non tiré-à-part du seul chapitre utile au projet.
-- **Contrôle documentaire** : le PDF consultable publiquement sous le même nom a été examiné pour contrôler la page de titre, l'ISBN, la table des matières et le texte du chapitre 14. Cela confirme l'identité bibliographique et permet une première lecture scientifique du chapitre. La vérification visuelle exhaustive de chaque page du binaire versionné dans Git reste distincte de ce contrôle textuel.
+- **Contrôle documentaire** : une copie consultée antérieurement a servi à contrôler la page de titre, l'ISBN, la table des matières et le texte du chapitre 14. Cela étaye l'identification bibliographique et la lecture scientifique initiale, mais ne signifie pas que le PDF intégral est redistribuable.
+- **Matériaux conservés** : voir l'extrait identifié séparément dans `raw/` et les notes d'extraction. Ils ne remplacent pas le chapitre original et leurs propres conditions de réutilisation doivent être respectées.
 
 ## Référence bibliographique
 
