@@ -1,5 +1,7 @@
 """Tests for the original chapter-figure-2 schematic."""
 
+from pathlib import Path
+
 from jdriftx.figures.figure_02 import render_figure_02_svg
 
 
@@ -20,6 +22,12 @@ def test_figure_02_explains_both_geometries_and_scope() -> None:
     assert "Symétrique" in svg
     assert "cible en amont" in svg
     assert "pas une métrique au sens strict" in svg
+
+
+def test_versioned_svg_matches_the_generator() -> None:
+    """The committed SVG stays exactly reproducible from its source code."""
+    asset = Path("site/images/figure-02-geometries.svg").read_text(encoding="utf-8")
+    assert asset == render_figure_02_svg()
 
 
 def test_figure_02_svg_generation_is_deterministic() -> None:
