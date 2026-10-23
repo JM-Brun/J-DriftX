@@ -25,8 +25,14 @@ jobs:
         with:
           version: 1.6.43
 
+      - name: Construire le paquet Python pour Pyodide
+        run: uv build --wheel --out-dir site/resources/wheels
+
       - name: Rendu du site Quarto
         run: quarto render site
+
+      - name: Vérifier la présence du paquet Python publié
+        run: test -s site/_site/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
 
       - name: Lint (ruff)
         run: uv run ruff check . --output-format=github

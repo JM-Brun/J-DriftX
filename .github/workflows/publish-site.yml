@@ -22,11 +22,26 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: pyproject.toml
+
+      - name: Installer l'environnement Python et Jupyter
+        run: uv sync
+
+      - name: Construire le paquet Python pour Pyodide
+        run: uv build --wheel --out-dir site/resources/wheels
+
       - uses: quarto-dev/quarto-actions/setup@v2
 
       - uses: quarto-dev/quarto-actions/render@v2
         with:
           path: site
+
+      - name: Vérifier la présence du paquet Python publié
+        run: test -s site/_site/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
 
       - uses: actions/upload-pages-artifact@v3
         with:
