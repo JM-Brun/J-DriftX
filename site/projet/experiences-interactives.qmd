@@ -72,10 +72,7 @@ travelCost
 ```
 
 ```{ojs}
-const formattedCost = Number.isFinite(travelCost)
-  ? `${travelCost.toFixed(2)} s`
-  : "∞ — point cible en amont";
-html`<p><strong>Coût calculé par <code>jdriftx.pseudo_distance_uniforme</code> :</strong> ${formattedCost}</p>`
+html`<p><strong>Coût calculé par <code>jdriftx.pseudo_distance_uniforme</code> :</strong> ${Number.isFinite(travelCost) ? travelCost.toFixed(2) + " s" : "∞ — point cible en amont"}</p>`
 ```
 
 ## Interprétation et limites
