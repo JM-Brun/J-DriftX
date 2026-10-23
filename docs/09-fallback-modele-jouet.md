@@ -107,4 +107,5 @@ Il n'est pas nécessaire de développer une API, un plugin SIG, un système de c
 ## Documents liés
 
 - [Décider de l'utilité de J-DriftX et construire une preuve](08-decision-utilite-et-preuve.md)
-- [Feuille de route J-DriftX v2](03-roadmap-jdriftx-v2.md)
+- [Métrique travel-time — fondements et limites](https://jm-brun.github.io/J-DriftX/theorie/metrique-travel-time.html)
+- [Issue de l'investigation mathématique](https://github.com/JM-Brun/J-DriftX/issues/41)
