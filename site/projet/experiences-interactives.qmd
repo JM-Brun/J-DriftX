@@ -9,7 +9,7 @@ pyodide:
 
 # Démonstration navigateur : coût en vent uniforme
 
-Cette page propose une seule expérience calculée dans le navigateur. Elle charge le paquet Python public `jdriftx` avec Quarto Live et Pyodide. Les curseurs et l'affichage sont gérés par Observable JavaScript (OJS) ; le calcul est effectué par la fonction Python existante.
+Cette page propose une seule expérience calculée dans le navigateur. Elle charge le paquet Python public `jdriftx` avec Quarto Live et Pyodide. Les curseurs sont gérés par Observable JavaScript (OJS) ; le calcul est effectué par la fonction Python existante.
 
 ::: {.callout-warning}
 **Chargement initial.** Le navigateur doit télécharger le runtime WebAssembly, NumPy et la roue Python de J-DriftX. Le premier affichage peut prendre un moment. Si les contrôles restent inactifs ou si une erreur apparaît dans la zone de chargement, consultez les résultats analytiques de référence plus bas : ils restent disponibles même si l'exécution interactive échoue.
@@ -18,18 +18,6 @@ Cette page propose une seule expérience calculée dans le navigateur. Elle char
 ## Explorer le coût
 
 Le point de départ est fixé à $A=(0,0)$ ; les curseurs définissent le point cible $B=(x,y)$ et le vent uniforme $\mathbf{u}=(u_x,u_y)$. Les coordonnées sont en mètres, les vitesses en mètres par seconde et le résultat en secondes.
-
-```{pyodide}
-#| edit: false
-#| output: false
-#| define:
-#|   - evaluate_travel_cost
-from jdriftx import pseudo_distance_uniforme
-
-def evaluate_travel_cost(x, y, ux, uy):
-    """Call the tested Python reference implementation."""
-    return pseudo_distance_uniforme([0.0, 0.0], [x, y], [ux, uy])
-```
 
 ```{ojs}
 viewof targetX = Inputs.range([-500, 500], {
@@ -44,28 +32,45 @@ viewof targetY = Inputs.range([-500, 500], {
   label: "Position y de B (m)"
 })
 
-viewof windX = Inputs.range([0.5, 5], {
+viewof windX = Inputs.range([-5, 5], {
   value: 2,
   step: 0.1,
   label: "Vent uₓ (m/s)"
 })
 
-viewof windY = Inputs.range([-2, 2], {
+viewof windY = Inputs.range([-5, 5], {
   value: 0,
   step: 0.1,
   label: "Vent uᵧ (m/s)"
 })
 ```
 
-```{ojs}
-{
-  const cost = evaluate_travel_cost(targetX, targetY, windX, windY);
-  const result = Number.isFinite(cost)
-    ? `${cost.toFixed(2)} s`
-    : "∞ — point cible en amont";
-  return html`<p><strong>Coût calculé par <code>jdriftx.pseudo_distance_uniforme</code> :</strong> ${result}</p>`;
-}
+```{pyodide}
+#| edit: false
+#| output: true
+#| input:
+#|   - targetX
+#|   - targetY
+#|   - windX
+#|   - windY
+from jdriftx import pseudo_distance_uniforme
+
+vent = [float(windX), float(windY)]
+if vent == [0.0, 0.0]:
+    print("Vent nul : le coût n'est pas défini.")
+else:
+    cost = pseudo_distance_uniforme(
+        [0.0, 0.0],
+        [float(targetX), float(targetY)],
+        vent,
+    )
+    if cost == float("inf"):
+        print("Coût calculé : +∞ s — point cible en amont")
+    else:
+        print(f"Coût calculé : {cost:.2f} s")
 ```
+
+Le bloc Python est relié aux curseurs par l'option `input` native de Quarto Live. Il est réévalué quand une valeur change ; il n'y a pas de fonction Python exportée à appeler depuis JavaScript.
 
 ## Résultats de référence indépendants de l'interface
 
@@ -84,6 +89,7 @@ Ces valeurs sont des vérifications analytiques de la fonction, pas des résulta
 - Le calcul est délégué à `jdriftx.pseudo_distance_uniforme`, fonction Python testée dans le dépôt.
 - Le coût est déterminé par la projection du déplacement sur la direction du vent ; l'écart transversal n'est pas pénalisé.
 - Un déplacement longitudinal en amont renvoie $+\infty$ selon la convention explicite de cette implémentation.
+- Un vent nul est signalé explicitement et ne provoque pas d'exception non traitée.
 - Le calcul est limité à un champ uniforme non nul. Il ne résout pas les caractéristiques d'un champ variable, ne calcule pas une concentration et ne valide pas un modèle de dispersion.
 
 Pour le catalogue des autres expériences, les commandes de lancement local et les tests associés, consulter le [catalogue du laboratoire numérique](laboratoire-interactif.qmd). Pour le niveau de preuve requis, voir la page de [validation scientifique](validation-scientifique.qmd).
