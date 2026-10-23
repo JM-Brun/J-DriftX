@@ -64,8 +64,9 @@ def test_les_trajectoires_conservent_la_fonction_de_courant() -> None:
     # Given — une particule lâchée dans une cellule de recirculation.
     x0 = y0 = CHAMP.longueur / 8
     psi0 = CHAMP.fonction_courant(x0, y0)
-    # When — la trajectoire est intégrée avec RK4.
-    _, x, y = integrate_trajectory(_vitesse_stationnaire, x0, y0, 0.0, 2.0, 0.01, "rk4")
+    # When — la trajectoire est intégrée avec RK4 ; l'erreur de phase résiduelle
+    # de RK4 décroît en dt⁴, d'où un pas assez fin pour ~13 tours d'orbite.
+    _, x, y = integrate_trajectory(_vitesse_stationnaire, x0, y0, 0.0, 2.0, 0.0025, "rk4")
     # Then — la ligne de courant ψ = psi0 est suivie.
     assert CHAMP.fonction_courant(x[-1], y[-1]) == pytest.approx(psi0, abs=1e-5)
 
