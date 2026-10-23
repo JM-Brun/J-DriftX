@@ -38,9 +38,9 @@ website:
               - href: projet/qualite.qmd
                 text: "Qualité & tests"
               - href: projet/laboratoire-interactif.qmd
-                text: "Laboratoire interactif"
+                text: "Catalogue du laboratoire"
               - href: projet/experiences-interactives.qmd
-                text: "Expériences interactives"
+                text: "Démo navigateur : vent uniforme"
               - href: projet/catalogue-donnees.qmd
                 text: "Catalogue de données"
       - section: "Théorie"
