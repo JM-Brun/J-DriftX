@@ -21,11 +21,11 @@ from jdriftx.similitude import concentration_panache, concentration_puff, sigma_
 __version__ = "0.1.0"
 
 __all__ = [
-    "__version__",
     "ChampUniforme",
     "ManifesteScenario",
     "ResultatDirige",
     "ScenarioUniforme",
+    "__version__",
     "concentration_panache",
     "concentration_puff",
     "construire_manifeste",

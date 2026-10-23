@@ -26,6 +26,13 @@ from jdriftx.metric import pseudo_distance_uniforme
 NiveauFidelite = Literal["R0", "R1", "R2"]
 
 
+def _valide_point(nom: str, point: tuple[float, float]) -> None:
+    """Lève ValueError si le point n'est pas un couple de coordonnées finies."""
+    if len(tuple(point)) != 2 or not all(math.isfinite(c) for c in tuple(point)):
+        msg = f"Le point {nom} doit être un couple (x, y) de coordonnées finies."
+        raise ValueError(msg)
+
+
 @dataclass(frozen=True)
 class ChampUniforme:
     """Champ de vitesse constant 2D ; invariant : vecteur fini et non nul.
@@ -37,7 +44,7 @@ class ChampUniforme:
     vent: tuple[float, float]
 
     def __post_init__(self) -> None:
-        """Valide l'invariant : couple de composantes finies, norme strictement positive."""
+        """Valide l'invariant : composantes finies et norme strictement positive."""
         vent = tuple(self.vent)
         if len(vent) != 2 or not all(math.isfinite(composante) for composante in vent):
             msg = "Le vent doit être un couple (ux, uy) de composantes finies."
@@ -68,12 +75,8 @@ class ScenarioUniforme:
 
     def __post_init__(self) -> None:
         """Valide les points : couples de coordonnées finies."""
-        for nom, point in (("origine", self.origine), ("cible", self.cible)):
-            if len(tuple(point)) != 2 or not all(
-                math.isfinite(coordonnee) for coordonnee in tuple(point)
-            ):
-                msg = f"Le point {nom} doit être un couple (x, y) de coordonnées finies."
-                raise ValueError(msg)
+        _valide_point("origine", self.origine)
+        _valide_point("cible", self.cible)
 
 
 @dataclass(frozen=True)
@@ -111,22 +114,13 @@ def resoudre_scenario(scenario: ScenarioUniforme) -> ResultatDirige:
         l'écart transversal (produit vectoriel divisé par la norme du vent).
     """
     champ = scenario.champ
+    dx = scenario.cible[0] - scenario.origine[0]
+    dy = scenario.cible[1] - scenario.origine[1]
     return ResultatDirige(
-        tau_origine_cible=pseudo_distance_uniforme(
-            scenario.origine, scenario.cible, champ.vent
-        ),
-        tau_cible_origine=pseudo_distance_uniforme(
-            scenario.cible, scenario.origine, champ.vent
-        ),
-        distance_euclidienne=math.hypot(
-            scenario.cible[0] - scenario.origine[0],
-            scenario.cible[1] - scenario.origine[1],
-        ),
-        ecart_transversal=abs(
-            (scenario.cible[0] - scenario.origine[0]) * champ.vent[1]
-            - (scenario.cible[1] - scenario.origine[1]) * champ.vent[0]
-        )
-        / champ.norme,
+        tau_origine_cible=pseudo_distance_uniforme(scenario.origine, scenario.cible, champ.vent),
+        tau_cible_origine=pseudo_distance_uniforme(scenario.cible, scenario.origine, champ.vent),
+        distance_euclidienne=math.hypot(dx, dy),
+        ecart_transversal=abs(dx * champ.vent[1] - dy * champ.vent[0]) / champ.norme,
     )
 
 
