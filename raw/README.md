@@ -16,7 +16,7 @@ Les fichiers du corpus historique utilisent déjà la convention `AAAA-auteur-su
 |---|---|---|
 | `2006-mohammadi-brun-crmeca.pdf` | Mohammadi & Brun, *C. R. Mécanique* (2006), DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007) | Texte intégral et extraction texte disponibles |
 | `2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf` | Brun & Mohammadi, chapitre Springer (2008), extrait p. 245–246 | Extrait seulement ; chapitre complet désormais couvert par le recueil ci-dessous |
-| `Partial Differential Equations - Modelling and Numerical Simulation - R. Glowinski, P. Neittaanmaki (Springer, 2008) WW.pdf` — renommage recommandé : `2008-glowinski-neittaanmaki-recueil-springer.pdf` | Glowinski, R. & Neittaanmäki (eds) (2008), *Partial Differential Equations: Modelling and Numerical Simulation*, Computational Methods in Applied Sciences vol. 16, Springer, Dordrecht, DOI [10.1007/978-1-4020-8758-5](https://doi.org/10.1007/978-1-4020-8758-5) — recueil contenant le chapitre 14 du corpus (Brun & Mohammadi, p. 245–256) | Recueil complet (version éditeur Springer, 6,4 Mo) ajouté le 23 octobre 2026 ; fiche disponible ; extraction du chapitre 14 à compléter |
+| — | Glowinski, R. & Neittaanmäki (eds) (2008), *Partial Differential Equations: Modelling and Numerical Simulation*, Computational Methods in Applied Sciences vol. 16, Springer, DOI [10.1007/978-1-4020-8758-5](https://doi.org/10.1007/978-1-4020-8758-5) | Recueil complet non distribué dans ce dépôt ; accès via DOI/publisher. Les notes et l'extrait autorisé du chapitre 14 restent référencés séparément |
 | `2009-bozon-sinfort-mohammadi-driftx-hal.pdf` | Bozon, Sinfort & Mohammadi, manuscrit Drift-X (2009), [HAL hal-00468863](https://hal.science/hal-00468863) | Manuscrit auteur et extraction texte disponibles |
 | `2009-invs-exposition-aerienne-pesticides-herault.pdf` | InVS / Santé publique France (2009), mesures d'exposition aux pesticides dans l'Hérault | Rapport d'agence ; données détaillées à vérifier |
 | `2026-rapport-derive-conceptuelle-positionnement-jdriftx.pdf` | Rapport de travail sur la dérive conceptuelle et le positionnement (2026) | Document de travail, pas une source primaire scientifique |
@@ -61,13 +61,14 @@ git push origin feat/images-metriques
 
 Ou via l'interface GitHub : onglet **Add file → Upload files** sur ce dossier, en sélectionnant la branche de la PR en cours.
 
-## Note de prudence (copyright)
+## Politique de réutilisation et copyright
 
-- Les **manuscrits auteurs** (thèse, HAL, tirés-à-part acceptés) peuvent être versionnés et déposés sur HAL sans difficulté : c'est la voie propre pour l'archivage public (action M0).
-- Les **versions éditeurs** (Académie des sciences/Elsevier, Springer, Lavoisier, Persée) restent sous le copyright de l'éditeur même quand elles sont librement téléchargeables : ce dossier est une archive de travail du projet ; en cas de doute, ne versionner que les manuscrits auteurs et laisser les liens ci-dessus faire le travail d'accès.
-- Le **recueil Glowinski & Neittaanmäki (2008)** ajouté le 23 octobre 2026 est une version éditeur Springer du **recueil complet** (chapitres d'autres auteurs inclus) : la règle ci-dessus s'applique pleinement — archive de travail du projet, ne pas diffuser au-delà du dépôt.
-- Le **rapport InVS / Santé publique France** est un document public d'agence sanitaire : diffusion libre avec citation de la source.
-- Les extractions texte de <code>extracts/</code> sont des extraits attribués destinés à l'analyse (recherche/text mining), avec mention complète du copyright dans leur en-tête.
+- Ne versionner que les documents dont la licence ou les droits de redistribution sont établis. Un téléchargement libre ne signifie pas que le dépôt public est autorisé.
+- Pour les versions éditeurs, conserver la référence bibliographique et le DOI/lien éditeur plutôt que le PDF intégral, sauf autorisation explicite de redistribution.
+- Préférer les manuscrits auteurs déposés légalement en archive ouverte, en vérifiant la version et les conditions applicables.
+- Vérifier la licence et la provenance des jeux de données, figures et extractions avant de les redistribuer ou de les utiliser dans un benchmark public.
+- Le recueil Glowinski & Neittaanmäki (2008) n'est pas distribué dans ce dépôt ; accès via le DOI ci-dessus. L'extrait et les notes du chapitre 14 ne remplacent pas le texte original.
+- Les extractions texte de <code>extracts/</code> restent des matériaux attribués destinés à l'analyse ; leur redistribution doit être évaluée au cas par cas, sans supposer qu'une mention du copyright suffit à autoriser la republication.
 
 
 ## Revue de l'état de l'art et traçabilité
