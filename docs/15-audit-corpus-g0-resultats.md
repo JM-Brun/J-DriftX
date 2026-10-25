@@ -6,7 +6,7 @@
 
 | Corpus | Piste | Verdict | Réserve principale |
 |---|---|---|---|
-| DIFLU | Champ proche (< 500 m) | **V** | Licence à confirmer ; 19 lâchers annoncés par le catalogue contre 15 décrits dans le papier associé — à trancher sur fichiers |
+| DIFLU | Champ proche (< 500 m) | **V** | La fiche actuelle du dépôt affiche la Licence Ouverte Etalab 2.0 ; vérifier la notice et trancher 19 lâchers catalogue vs 15 expériences du papier sur les fichiers |
 | NOAA DATEM | Far-field traceur | **V** | Campagnes anciennes (années 1980) ; ETEX absent de l'archive DATEM |
 | ETEX (JRC) | Far-field continental | **V** | Deux lâchers indépendants seulement ; l'un doit être réservé comme test final (G3) |
 
@@ -16,7 +16,7 @@
 
 | Point | Vérification | Résultat |
 |---|---|---|
-| 1. Accès et licence | DOI [10.57745/A9YC3C](https://doi.org/10.57745/A9YC3C), Recherche Data Gouv, publié en 2026 ; producteur ASNR (LERTA, ex-IRSN) ; plus de 110 sous-DOIs (`HasPart`) ; fichiers d'environ 381 Mo selon le [catalogue](12-catalogue-donnees-transport-dispersion.md) | Accès documenté et public ; **licence non lisible dans les métadonnées récupérées et page du dépôt momentanément inaccessible** — à confirmer (bloquant avant usage, pas pour G0) |
+| 1. Accès et licence | DOI [10.57745/A9YC3C](https://doi.org/10.57745/A9YC3C), [fiche actuelle Recherche Data Gouv](https://entrepot.recherche.data.gouv.fr/dataset.xhtml?persistentId=doi%3A10.57745%2FA9YC3C), producteur ASNR (LERTA, ex-IRSN), plus de 110 sous-DOIs et environ 381 Mo selon le [catalogue](12-catalogue-donnees-transport-dispersion.md) | Accès public ; la fiche du dépôt affiche **Licence Ouverte Etalab 2.0**. DataCite a toujours un `rightsList` vide : conserver une copie de la fiche et vérifier les métadonnées associées aux fichiers lors du téléchargement |
 | 2. Terme source | Hélium libéré à débit massique contrôlé dans le flux d'air sortant de la cheminée du cyclotron hospitalier de Beuvry (description Datacite) ; site : 50,51404° N, 2,67255° E | Oui, contrôlé et documenté |
 | 3. Coordonnées et temps | Campagnes octobre (14–18) et décembre (9–13) 2019 ; mesures à moins de 500 m de la source | Dates et site documentés ; horodatage des mesures à vérifier sur fichiers |
 | 4. Météorologie | Micrométéorologie, anémomètres, lidar Doppler ([catalogue](12-catalogue-donnees-transport-dispersion.md)) | Oui, météo co-localisée |
@@ -26,7 +26,7 @@
 | 8. Essais indépendants | Regroupement par lâcher obligatoire ; **19 lâchers annoncés par le catalogue, 15 expériences décrites dans le papier associé** (atmosphère instable, vent < 5 m s⁻¹) | Structure identifiable ; décompte exact à trancher sur fichiers |
 | 9. Reproductibilité des entrées | Terme source contrôlé + météo co-localisée + site documenté | Oui, en principe |
 
-**Verdict : V** (conditionnel à la confirmation de la licence). Contexte : le papier associé compare déjà des panaches gaussiens (Doury, Briggs) aux mesures — utile pour la baseline gaussien simple du test discriminant.
+**Verdict : V** (Licence Ouverte Etalab 2.0 affichée sur la fiche actuelle du dépôt ; conserver la preuve de licence avec l'inventaire). Le décompte des lâchers (19 au catalogue contre 15 dans le papier associé), les unités et les limites de détection restent à vérifier sur fichiers. Contexte : le papier associé compare déjà des panaches gaussiens (Doury, Briggs) aux mesures — utile pour la baseline gaussien simple du test discriminant.
 
 ## 2. NOAA DATEM — archive longue distance
 
