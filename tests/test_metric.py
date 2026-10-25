@@ -41,41 +41,41 @@ def test_longer_path_takes_longer_time_at_same_speed() -> None:
     assert cout_detour > cout_direct
 
 
-def test_historical_uniform_pseudodistance_uses_longitudinal_projection() -> None:
-    """Le coût historique uniforme ignore l'écart transversal."""
+def test_uniform_pseudodistance_uses_longitudinal_projection() -> None:
+    """Le coût uniforme défini ici ignore l'écart transversal."""
     a = np.array([0.0, 0.0])
     b = np.array([10.0, 5.0])
     assert pseudo_distance_uniforme(a, b, np.array([2.0, 0.0])) == pytest.approx(5.0)
 
 
-def test_historical_uniform_pseudodistance_can_be_zero_for_distinct_points() -> None:
-    """Même abscisse : la projection du point cible tombe sur le point de départ."""
+def test_uniform_pseudodistance_can_be_zero_for_distinct_points() -> None:
+    """La projection longitudinale nulle donne un coût nul, même pour deux points distincts."""
     a = np.array([0.0, 0.0])
     b = np.array([0.0, 5.0])
     assert a.tolist() != b.tolist()
     assert pseudo_distance_uniforme(a, b, np.array([2.0, 0.0])) == pytest.approx(0.0)
 
 
-def test_historical_uniform_pseudodistance_is_infinite_upwind() -> None:
-    """Un point en amont reçoit un coût infini selon la convention historique."""
+def test_uniform_pseudodistance_is_infinite_upwind() -> None:
+    """Un point en amont reçoit un coût infini selon la convention explicite de cette fonction."""
     a = np.array([10.0, 0.0])
     b = np.array([0.0, 3.0])
     assert np.isinf(pseudo_distance_uniforme(a, b, np.array([2.0, 0.0])))
 
 
-def test_historical_uniform_pseudodistance_is_rotation_invariant() -> None:
+def test_uniform_pseudodistance_is_rotation_invariant() -> None:
     """La formule utilise la projection sur la direction du vent uniforme."""
     a = np.array([0.0, 0.0])
     b = np.array([5.0, 10.0])
     assert pseudo_distance_uniforme(a, b, np.array([0.0, 2.0])) == pytest.approx(5.0)
 
 
-def test_historical_uniform_pseudodistance_rejects_zero_wind() -> None:
+def test_uniform_pseudodistance_rejects_zero_wind() -> None:
     with pytest.raises(ValueError, match="non nulle"):
         pseudo_distance_uniforme(np.zeros(2), np.ones(2), np.zeros(2))
 
 
-def test_historical_uniform_pseudodistance_rejects_invalid_shapes() -> None:
+def test_uniform_pseudodistance_rejects_invalid_shapes() -> None:
     with pytest.raises(ValueError, match="forme"):
         pseudo_distance_uniforme(np.zeros(3), np.ones(2), np.array([1.0, 0.0]))
 
