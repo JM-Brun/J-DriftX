@@ -125,7 +125,7 @@ class ScenarioReconstruction:
             if not self.parcelle.contient(point):
                 msg = "Les points de la trajectoire doivent être dans la parcelle."
                 raise ValueError(msg)
-        for avant, apres in zip(self.trajectoire, self.trajectoire[1:], strict=True):
+        for avant, apres in zip(self.trajectoire, self.trajectoire[1:], strict=False):
             if avant == apres:
                 msg = "Deux points consécutifs de la trajectoire doivent être distincts."
                 raise ValueError(msg)
@@ -212,7 +212,7 @@ def resoudre_scenario(scenario: ScenarioReconstruction) -> ResultatReconstructio
         u_2, v_2 = scenario.champ_choix_2.vitesse(*point)
         ecart = max(ecart, math.hypot(u_1 - u_2, v_1 - v_2))
     longueur = 0.0
-    for avant, apres in zip(scenario.trajectoire, scenario.trajectoire[1:], strict=True):
+    for avant, apres in zip(scenario.trajectoire, scenario.trajectoire[1:], strict=False):
         longueur += math.hypot(apres[0] - avant[0], apres[1] - avant[1])
     return ResultatReconstruction(
         vent_mesure_1=vent_mesure_1,
