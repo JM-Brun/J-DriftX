@@ -8,6 +8,7 @@ from jdriftx.trajectories import integrate_trajectory
 
 def test_constant_velocity_is_integrated_exactly_by_both_methods() -> None:
     """À vitesse constante, Euler et RK4 intègrent exactement l'intervalle."""
+
     # Given — un champ de vitesse constant (2, -1) m/s.
     def velocity(_t: float, _x: float, _y: float) -> tuple[float, float]:
         return (2.0, -1.0)
@@ -23,6 +24,7 @@ def test_constant_velocity_is_integrated_exactly_by_both_methods() -> None:
 
 def test_rk4_is_more_accurate_than_euler_for_rotational_field() -> None:
     """Sur champ rotationnel, RK4 est plus précis qu'Euler."""
+
     # Given — un champ en rotation solide et les deux méthodes au même pas.
     def velocity(_t: float, x: float, y: float) -> tuple[float, float]:
         return (-y, x)
