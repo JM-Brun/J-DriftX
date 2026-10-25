@@ -7,7 +7,7 @@
 | Corpus | Piste | Verdict | Réserve principale |
 |---|---|---|---|
 | DIFLU | Champ proche (< 500 m) | **V** | La fiche actuelle du dépôt affiche la Licence Ouverte Etalab 2.0 ; vérifier la notice et trancher 19 lâchers catalogue vs 15 expériences du papier sur les fichiers |
-| NOAA DATEM | Far-field traceur | **V** | Campagnes anciennes (années 1980) ; ETEX absent de l'archive DATEM |
+| NOAA DATEM | Far-field traceur | **V** | Campagnes anciennes et hétérogènes ; ETEX figure dans l'archive générale, mais est exclu de l'évaluation approfondie HYSPLIT |
 | ETEX (JRC) | Far-field continental | **V** | Deux lâchers indépendants seulement ; l'un doit être réservé comme test final (G3) |
 
 **Décision : le critère (e) est renseigné et sourcé ; les critères (a)–(g) sont complets. G0 est franchi le 22 octobre 2026** ([issue publique de cadrage G0-A](https://github.com/JM-Brun/J-DriftX/issues/43)).
@@ -40,7 +40,7 @@
 | 8. Essais indépendants | Expériences distinctes (l'archive documente chaque campagne) | Regroupement par expérience |
 | 9. Reproductibilité | Termes source et météo documentés par expérience | Oui |
 
-**Verdict : V.** Réserves : campagnes anciennes (années 1980, type CAPTEX/ANATEX) ; **ETEX n'est pas inclus dans l'archive DATEM** (document officiel de l'archive) — la piste ETEX passe par le JRC.
+**Verdict : V.** Réserves : campagnes anciennes (années 1980, type CAPTEX/ANATEX). L'archive DATEM actuelle liste également **ETEX** (lâcher de Rennes, octobre 1994), mais cette expérience est exclue de l'évaluation approfondie HYSPLIT (hors Amérique du Nord ou antérieure à 1980). Les données ETEX sont aussi accessibles via le portail JRC, qui reste la source dédiée à ses deux lâchers.
 
 ## 3. ETEX (JRC) — traceur continental
 
