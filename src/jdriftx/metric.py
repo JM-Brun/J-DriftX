@@ -54,9 +54,10 @@ def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
         raise ValueError(msg)
     if deplacement == 0.0:
         return 0.0
-    if vitesse == 0.0 or deplacement * vitesse < 0.0:
+    if vitesse == 0.0 or ((deplacement > 0.0) != (vitesse > 0.0)):
         return float("inf")
     return abs(deplacement / vitesse)
+
 
 def temps_transport(
     ligne: ArrayLike,
