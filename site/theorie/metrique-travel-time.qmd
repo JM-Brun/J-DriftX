@@ -37,6 +37,20 @@ Le chapitre de 2008 distingue implicitement deux objets qu'il faut garder sépar
 
 Ces deux étapes ne doivent pas être confondues. Le MVP doit d'abord reproduire la définition, puis mesurer séparément l'effet de l'approximation numérique et de sa correction.
 
+## Correspondance avec le code actuel
+
+Les trois définitions précédentes ne correspondent pas à trois algorithmes déjà disponibles. Le dépôt contient deux primitives distinctes, dont les contrats sont visibles dans [`src/jdriftx/metric.py`](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/metric.py) et dont les comportements sont caractérisés par [`tests/test_metric.py`](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py).
+
+| Objet mathématique | Statut dans le code | Conséquence et tests pertinents |
+|---|---|---|
+| Intégrale du temps le long d'une trajectoire/caractéristique spécifiée, (T_\gamma(A,B)=\int_\gamma ds/\lVert\mathbf u\rVert) | `temps_transport(ligne, vent)` calcule une somme discrète longueur/norme de vitesse sur une polyligne **fournie par l'appelant**. Elle ne calcule ni la caractéristique du champ, ni une projection de (B). | Le coût est invariant par inversion du signe du vent et par renversement de la polyligne : voir `test_polyline_cost_is_invariant_to_path_reversal_and_wind_sign`. Ce test confirme justement que cette primitive n'est pas un temps de transport advectif dirigé. |
+| Temps minimal de navigation (minimum sur les trajectoires admissibles) | **Non implémenté.** Aucun optimiseur de trajectoire ni solveur de temps de première arrivée n'est fourni par ces fonctions. | Les propriétés démontrées analytiquement pour la variante de première arrivée dans [l'investigation G0-S](../../docs/19-investigation-g0s-temps-de-parcours.md) ne doivent pas être attribuées à `temps_transport` ou à `pseudo_distance_uniforme`. |
+| Pseudo-distance projetée historique : projeter (B) sur la caractéristique issue de (A), puis intégrer jusqu'à (B^\perp) | `pseudo_distance_uniforme(a, b, vent)` est une **référence analytique en champ uniforme 2D**. Elle utilise la projection longitudinale sur la direction du vent, ignore l'écart transversal et renvoie (+\infty) si la projection longitudinale est négative. | `test_uniform_pseudodistance_uses_longitudinal_projection`, `test_uniform_pseudodistance_is_zero_for_distinct_points`, `test_uniform_pseudodistance_is_infinite_upwind` et les tests de formule fermée caractérisent cette convention locale. Ils ne démontrent pas une reproduction complète de la construction historique. |
+
+Deux contre-exemples sont donc visibles directement dans les tests du code : (1) `temps_transport` ne change pas si l'on inverse le vent, contrairement à ce qu'exigerait une représentation dirigée de l'advection ; (2) `pseudo_distance_uniforme` vaut zéro pour des points distincts séparés uniquement transversalement. Le second comportement est une dégénérescence attendue de la projection, pas une erreur numérique.
+
+**Limite de preuve :** ces tests vérifient les contrats des fonctions implémentées dans le cas uniforme et sur polyligne. Ils ne valident ni l'intégration d'une caractéristique dans un champ variable, ni l'optimisation d'un temps de première arrivée, ni la fidélité de la fonction de référence à chaque détail historique de Drift-X. Ces trois points doivent rester séparés dans les issues MVP-S et état de l'art.
+
 ## Lien avec la mécanique des fluides
 
 Pour un traceur passif de concentration \(c\), l'équation conservative d'advection avec source \(s\) est \(\partial_t c+\nabla\cdot(c\mathbf u)=s\). Si \(\nabla\cdot\mathbf u=0\), elle devient \(\partial_t c+\mathbf u\cdot\nabla c=s\). Les caractéristiques suivent la vitesse du fluide et permettent de décrire le transport advectif. Cette interprétation est une passerelle physique, pas une preuve que la pseudo-distance projetée suffit à reconstruire la concentration.
