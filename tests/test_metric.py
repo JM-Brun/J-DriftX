@@ -159,61 +159,76 @@ def test_uniform_pseudodistance_matches_projection_formula(
     b: tuple[float, float],
     vent: tuple[float, float],
 ) -> None:
-    """Check the uniform-field result against the non-negative longitudinal projection."""
-    displacement = np.asarray(b) - np.asarray(a)
-    velocity = np.asarray(vent, dtype=float)
-    longitudinal_projection = float(np.dot(displacement, velocity))
-    if longitudinal_projection < 0.0:
-        expected = float("inf")
+    """Le résultat coïncide avec la formule fermée, ou +inf si b est en amont."""
+    # Given — le déplacement et le vent, et la formule fermée indépendante :
+    # projection longitudinale sur le vent divisée par le carré de sa norme,
+    # avec la convention +inf pour une cible en amont.
+    deplacement = np.asarray(b) - np.asarray(a)
+    vitesse = np.asarray(vent, dtype=float)
+    projection_longitudinale = float(np.dot(deplacement, vitesse))
+    if projection_longitudinale < 0.0:
+        attendu = float("inf")
     else:
-        expected = longitudinal_projection / float(np.dot(velocity, velocity))
-
-    assert pseudo_distance_uniforme(a, b, vent) == pytest.approx(expected)
+        attendu = projection_longitudinale / float(np.dot(vitesse, vitesse))
+    # When — la pseudo-distance uniforme est évaluée par l'implémentation.
+    obtenu = pseudo_distance_uniforme(a, b, vent)
+    # Then — l'implémentation restitue la formule fermée.
+    assert obtenu == pytest.approx(attendu)
 
 
 def test_uniform_pseudodistance_is_translation_invariant() -> None:
-    """Verify that translating both points preserves their displacement and cost."""
+    """Translater les deux points ensemble préserve le déplacement et le coût."""
+    # Given — un couple de points, une translation quelconque et un vent.
     a = np.array([-3.0, 2.0])
     b = np.array([9.0, 8.0])
     translation = np.array([100.0, -45.0])
     vent = np.array([4.0, 3.0])
-
+    # When — le coût est évalué avant et après translation des deux points.
     original = pseudo_distance_uniforme(a, b, vent)
-    translated = pseudo_distance_uniforme(a + translation, b + translation, vent)
-
-    assert translated == pytest.approx(original)
+    translate = pseudo_distance_uniforme(a + translation, b + translation, vent)
+    # Then — le coût est inchangé.
+    assert translate == pytest.approx(original)
 
 
 def test_uniform_pseudodistance_scales_inversely_with_wind_magnitude() -> None:
-    """Verify inverse travel-time scaling for a positively scaled nonzero wind."""
+    """Pour un facteur positif, le coût décroît comme l'inverse du facteur."""
+    # Given — un couple de points en aval et un vent non nul, avec un
+    # facteur d'échelle strictement positif (hypothèse : l'amont/aval est
+    # préservé, un facteur négatif inverserait la convention +inf).
     a = np.array([0.0, 0.0])
     b = np.array([12.0, 9.0])
     vent = np.array([4.0, 3.0])
-    factor = 2.5
-
+    facteur = 2.5
+    # When — le coût est évalué pour le vent et pour le vent renforcé.
     original = pseudo_distance_uniforme(a, b, vent)
-    faster_wind = pseudo_distance_uniforme(a, b, factor * vent)
-
-    assert faster_wind == pytest.approx(original / factor)
+    vent_renforce = pseudo_distance_uniforme(a, b, facteur * vent)
+    # Then — le coût est divisé par le facteur.
+    assert vent_renforce == pytest.approx(original / facteur)
 
 
 def test_uniform_pseudodistance_is_invariant_to_transverse_displacement() -> None:
-    """Verify that an orthogonal displacement leaves longitudinal cost unchanged."""
+    """Un déplacement orthogonal au vent ne change pas le coût longitudinal."""
+    # Given — une cible en aval et un déplacement transversal exactement
+    # orthogonal au vent.
     a = np.array([0.0, 0.0])
     vent = np.array([3.0, 4.0])
-    downstream = np.array([6.0, 8.0])
-    transverse = np.array([-8.0, 6.0])
-
-    baseline = pseudo_distance_uniforme(a, downstream, vent)
-    shifted = pseudo_distance_uniforme(a, downstream + transverse, vent)
-
-    assert shifted == pytest.approx(baseline)
+    aval = np.array([6.0, 8.0])
+    transversal = np.array([-8.0, 6.0])
+    # When — le coût est évalué pour la cible et pour la cible décalée.
+    reference = pseudo_distance_uniforme(a, aval, vent)
+    decalee = pseudo_distance_uniforme(a, aval + transversal, vent)
+    # Then — le coût est inchangé.
+    assert decalee == pytest.approx(reference)
 
 
 def test_uniform_pseudodistance_is_zero_for_upwind_boundary() -> None:
-    """Verify the zero-cost convention at the zero-longitudinal-displacement boundary."""
+    """Un déplacement purement transversal reçoit le coût nul (borne amont)."""
+    # Given — un point et un déplacement transversal exactement orthogonal
+    # au vent (avance longitudinale nulle, pas strictement négative).
     a = np.array([2.0, -1.0])
     vent = np.array([3.0, 4.0])
-    transverse = np.array([-4.0, 3.0])
-
-    assert pseudo_distance_uniforme(a, a + transverse, vent) == pytest.approx(0.0)
+    transversal = np.array([-4.0, 3.0])
+    # When — la pseudo-distance est évaluée sur la borne amont.
+    obtenu = pseudo_distance_uniforme(a, a + transversal, vent)
+    # Then — le coût est nul selon la convention documentée.
+    assert obtenu == pytest.approx(0.0)
