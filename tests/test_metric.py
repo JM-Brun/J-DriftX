@@ -8,94 +8,136 @@ from jdriftx.metric import pseudo_distance_uniforme, temps_transport
 
 def test_uniform_speed_time_is_length_over_speed() -> None:
     """À vitesse constante, le coût vaut longueur divisée par la vitesse."""
+    # Given — un segment de 300 m parcouru à 3 m/s.
     ligne = np.array([[0.0, 0.0], [300.0, 0.0]])
     vent = np.array([[3.0, 0.0]])
-    assert temps_transport(ligne, vent) == pytest.approx(100.0)
+    # When — le coût de parcours est évalué.
+    cout = temps_transport(ligne, vent)
+    # Then — le coût vaut 100 s.
+    assert cout == pytest.approx(100.0)
 
 
 def test_polyline_cost_is_invariant_to_path_reversal_and_wind_sign() -> None:
     """La primitive sur polyligne utilise la norme, pas l'orientation."""
+    # Given — un même trajet parcouru dans les deux sens, avec un vent
+    # portant puis opposé.
     a_vers_b = np.array([[0.0, 0.0], [100.0, 0.0]])
     b_vers_a = a_vers_b[::-1]
     vent_portant = np.array([[5.0, 0.0]])
     vent_oppose = -vent_portant
 
+    # When — les coûts sont évalués pour les trois combinaisons.
     cout_ab = temps_transport(a_vers_b, vent_portant)
     cout_ba_meme_vecteur = temps_transport(b_vers_a, vent_portant)
     cout_ba_vecteur_oppose = temps_transport(b_vers_a, vent_oppose)
 
+    # Then — les trois coûts sont identiques : seule la norme compte.
     assert cout_ab == pytest.approx(cout_ba_meme_vecteur)
     assert cout_ab == pytest.approx(cout_ba_vecteur_oppose)
 
 
 def test_longer_path_takes_longer_time_at_same_speed() -> None:
     """À vitesse identique, un détour plus long a un coût plus élevé."""
+    # Given — un trajet direct et un détour strictement plus long, à la
+    # même vitesse.
     ligne_directe = np.array([[0.0, 0.0], [100.0, 0.0]])
     ligne_detour = np.array([[0.0, 0.0], [50.0, 50.0], [100.0, 0.0]])
     vitesse = np.array([[10.0, 0.0]])
     vitesse_detour = np.array([[10.0, 0.0], [10.0, 0.0]])
 
+    # When — les deux coûts sont évalués.
     cout_direct = temps_transport(ligne_directe, vitesse)
     cout_detour = temps_transport(ligne_detour, vitesse_detour)
 
+    # Then — le détour coûte plus cher.
     assert cout_detour > cout_direct
 
 
 def test_historical_uniform_pseudodistance_uses_longitudinal_projection() -> None:
     """Le coût historique uniforme ignore l'écart transversal."""
+    # Given — un vent selon +x et une cible décalée transversalement.
     a = np.array([0.0, 0.0])
     b = np.array([10.0, 5.0])
-    assert pseudo_distance_uniforme(a, b, np.array([2.0, 0.0])) == pytest.approx(5.0)
+    # When — la pseudo-distance uniforme est évaluée.
+    cout = pseudo_distance_uniforme(a, b, np.array([2.0, 0.0]))
+    # Then — seul le déplacement longitudinal (10 m à 2 m/s) compte.
+    assert cout == pytest.approx(5.0)
 
 
 def test_historical_uniform_pseudodistance_can_be_zero_for_distinct_points() -> None:
     """Même abscisse : la projection du point cible tombe sur le point de départ."""
+    # Given — une cible exactement transversale à l'origine.
     a = np.array([0.0, 0.0])
     b = np.array([0.0, 5.0])
+    # When / Then — pour des points distincts, le coût est nul.
     assert a.tolist() != b.tolist()
     assert pseudo_distance_uniforme(a, b, np.array([2.0, 0.0])) == pytest.approx(0.0)
 
 
 def test_historical_uniform_pseudodistance_is_infinite_upwind() -> None:
     """Un point en amont reçoit un coût infini selon la convention historique."""
+    # Given — une cible située en amont de l'origine.
     a = np.array([10.0, 0.0])
     b = np.array([0.0, 3.0])
-    assert np.isinf(pseudo_distance_uniforme(a, b, np.array([2.0, 0.0])))
+    # When — la pseudo-distance est évaluée vers l'amont.
+    cout = pseudo_distance_uniforme(a, b, np.array([2.0, 0.0]))
+    # Then — le coût est infini.
+    assert np.isinf(cout)
 
 
 def test_historical_uniform_pseudodistance_is_rotation_invariant() -> None:
     """La formule utilise la projection sur la direction du vent uniforme."""
+    # Given — le cas de référence tourné : même géométrie relative, vent
+    # selon +y au lieu de +x.
     a = np.array([0.0, 0.0])
     b = np.array([5.0, 10.0])
-    assert pseudo_distance_uniforme(a, b, np.array([0.0, 2.0])) == pytest.approx(5.0)
+    # When — la pseudo-distance est évaluée avec le vent tourné.
+    cout = pseudo_distance_uniforme(a, b, np.array([0.0, 2.0]))
+    # Then — le coût est identique au cas selon +x (5 s).
+    assert cout == pytest.approx(5.0)
 
 
 def test_historical_uniform_pseudodistance_rejects_zero_wind() -> None:
+    """Un vent rigoureusement nul est refusé : le coût n'est pas défini."""
+    # Given — un vecteur vitesse nul.
+    # When / Then — l'évaluation est refusée.
     with pytest.raises(ValueError, match="non nulle"):
         pseudo_distance_uniforme(np.zeros(2), np.ones(2), np.zeros(2))
 
 
 def test_historical_uniform_pseudodistance_rejects_invalid_shapes() -> None:
+    """Des points mal formés sont refusés avant tout calcul."""
+    # Given — un point à trois coordonnées.
+    # When / Then — l'évaluation est refusée.
     with pytest.raises(ValueError, match="forme"):
         pseudo_distance_uniforme(np.zeros(3), np.ones(2), np.array([1.0, 0.0]))
 
 
 def test_inconsistent_polyline_shapes_raise_value_error() -> None:
+    """Une polyligne réduite à un point est refusée."""
+    # Given — une « polyligne » d'un seul point et un vent non aligné.
+    # When / Then — l'évaluation est refusée.
     with pytest.raises(ValueError, match="doit etre un tableau"):
         temps_transport(np.zeros((1, 2)), np.zeros((1, 2)))
 
 
 def test_polyline_speed_below_minimum_raises_value_error() -> None:
+    """Une vitesse sous le seuil umin est refusée."""
+    # Given — un segment et un vent sous le seuil umin par défaut.
     ligne = np.array([[0.0, 0.0], [10.0, 0.0]])
     vent = np.array([[0.05, 0.0]])
+    # When / Then — l'évaluation est refusée.
     with pytest.raises(ValueError, match="umin"):
         temps_transport(ligne, vent)
 
 
 @pytest.mark.parametrize("umin", [0.0, -1.0, float("inf"), float("nan")])
 def test_polyline_cost_rejects_invalid_speed_threshold(umin: float) -> None:
+    """Un seuil umin non fini ou non positif est refusé."""
+    # Given — un seuil umin invalide (nul, négatif, infini ou NaN).
     ligne = np.array([[0.0, 0.0], [1.0, 0.0]])
     vent = np.array([[1.0, 0.0]])
+    # When / Then — l'évaluation est refusée.
     with pytest.raises(ValueError, match="umin"):
         temps_transport(ligne, vent, umin=umin)
 
@@ -118,6 +160,9 @@ def test_polyline_cost_rejects_invalid_speed_threshold(umin: float) -> None:
 def test_polyline_cost_rejects_non_finite_inputs(
     ligne: np.ndarray, vent: np.ndarray, message: str
 ) -> None:
+    """Des coordonnées ou des vitesses non finies sont refusées."""
+    # Given — une ligne ou un vent contenant une valeur non finie.
+    # When / Then — l'évaluation est refusée.
     with pytest.raises(ValueError, match=message):
         temps_transport(ligne, vent)
 
@@ -142,6 +187,9 @@ def test_polyline_cost_rejects_non_finite_inputs(
 def test_uniform_pseudodistance_rejects_non_finite_inputs(
     a: np.ndarray, b: np.ndarray, vent: np.ndarray, message: str
 ) -> None:
+    """Des coordonnées ou un vent non finis sont refusés."""
+    # Given — une coordonnée ou une composante de vent non finie.
+    # When / Then — l'évaluation est refusée.
     with pytest.raises(ValueError, match=message):
         pseudo_distance_uniforme(a, b, vent)
 
