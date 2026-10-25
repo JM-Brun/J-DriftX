@@ -144,3 +144,91 @@ def test_uniform_pseudodistance_rejects_non_finite_inputs(
 ) -> None:
     with pytest.raises(ValueError, match=message):
         pseudo_distance_uniforme(a, b, vent)
+
+
+@pytest.mark.parametrize(
+    ("a", "b", "vent"),
+    [
+        ((0.0, 0.0), (12.0, 7.0), (3.0, 4.0)),
+        ((-5.0, 2.0), (8.0, -1.0), (0.0, 2.5)),
+        ((1.0, -9.0), (4.0, 6.0), (-2.0, 1.0)),
+    ],
+)
+def test_uniform_pseudodistance_matches_projection_formula(
+    a: tuple[float, float],
+    b: tuple[float, float],
+    vent: tuple[float, float],
+) -> None:
+    """Le résultat coïncide avec la formule fermée, ou +inf si b est en amont."""
+    # Given — le déplacement et le vent, et la formule fermée indépendante :
+    # projection longitudinale sur le vent divisée par le carré de sa norme,
+    # avec la convention +inf pour une cible en amont.
+    deplacement = np.asarray(b) - np.asarray(a)
+    vitesse = np.asarray(vent, dtype=float)
+    projection_longitudinale = float(np.dot(deplacement, vitesse))
+    if projection_longitudinale < 0.0:
+        attendu = float("inf")
+    else:
+        attendu = projection_longitudinale / float(np.dot(vitesse, vitesse))
+    # When — la pseudo-distance uniforme est évaluée par l'implémentation.
+    obtenu = pseudo_distance_uniforme(a, b, vent)
+    # Then — l'implémentation restitue la formule fermée.
+    assert obtenu == pytest.approx(attendu)
+
+
+def test_uniform_pseudodistance_is_translation_invariant() -> None:
+    """Translater les deux points ensemble préserve le déplacement et le coût."""
+    # Given — un couple de points, une translation quelconque et un vent.
+    a = np.array([-3.0, 2.0])
+    b = np.array([9.0, 8.0])
+    translation = np.array([100.0, -45.0])
+    vent = np.array([4.0, 3.0])
+    # When — le coût est évalué avant et après translation des deux points.
+    original = pseudo_distance_uniforme(a, b, vent)
+    translate = pseudo_distance_uniforme(a + translation, b + translation, vent)
+    # Then — le coût est inchangé.
+    assert translate == pytest.approx(original)
+
+
+def test_uniform_pseudodistance_scales_inversely_with_wind_magnitude() -> None:
+    """Pour un facteur positif, le coût décroît comme l'inverse du facteur."""
+    # Given — un couple de points en aval et un vent non nul, avec un
+    # facteur d'échelle strictement positif (hypothèse : l'amont/aval est
+    # préservé, un facteur négatif inverserait la convention +inf).
+    a = np.array([0.0, 0.0])
+    b = np.array([12.0, 9.0])
+    vent = np.array([4.0, 3.0])
+    facteur = 2.5
+    # When — le coût est évalué pour le vent et pour le vent renforcé.
+    original = pseudo_distance_uniforme(a, b, vent)
+    vent_renforce = pseudo_distance_uniforme(a, b, facteur * vent)
+    # Then — le coût est divisé par le facteur.
+    assert vent_renforce == pytest.approx(original / facteur)
+
+
+def test_uniform_pseudodistance_is_invariant_to_transverse_displacement() -> None:
+    """Un déplacement orthogonal au vent ne change pas le coût longitudinal."""
+    # Given — une cible en aval et un déplacement transversal exactement
+    # orthogonal au vent.
+    a = np.array([0.0, 0.0])
+    vent = np.array([3.0, 4.0])
+    aval = np.array([6.0, 8.0])
+    transversal = np.array([-8.0, 6.0])
+    # When — le coût est évalué pour la cible et pour la cible décalée.
+    reference = pseudo_distance_uniforme(a, aval, vent)
+    decalee = pseudo_distance_uniforme(a, aval + transversal, vent)
+    # Then — le coût est inchangé.
+    assert decalee == pytest.approx(reference)
+
+
+def test_uniform_pseudodistance_is_zero_for_upwind_boundary() -> None:
+    """Un déplacement purement transversal reçoit le coût nul (borne amont)."""
+    # Given — un point et un déplacement transversal exactement orthogonal
+    # au vent (avance longitudinale nulle, pas strictement négative).
+    a = np.array([2.0, -1.0])
+    vent = np.array([3.0, 4.0])
+    transversal = np.array([-4.0, 3.0])
+    # When — la pseudo-distance est évaluée sur la borne amont.
+    obtenu = pseudo_distance_uniforme(a, a + transversal, vent)
+    # Then — le coût est nul selon la convention documentée.
+    assert obtenu == pytest.approx(0.0)
