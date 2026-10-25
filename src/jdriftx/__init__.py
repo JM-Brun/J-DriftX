@@ -6,12 +6,16 @@ un coût sur une polyligne fournie; elle ne reproduit pas encore la
 pseudo-distance historique ni un modèle de dispersion validé.
 """
 
-from jdriftx.champ_analytique import ChampFonctionCourant
+from jdriftx.champ_analytique import ChampFonctionCourant, ChampPlan, SuperpositionChamps
 from jdriftx.constraints import linearite, positivite
-from jdriftx.experiences.uniforme import (
+from jdriftx.experiences import (
     ChampUniforme,
+    ManifesteReconstruction,
     ManifesteScenario,
+    Rectangle,
     ResultatDirige,
+    ResultatReconstruction,
+    ScenarioReconstruction,
     ScenarioUniforme,
     construire_manifeste,
     resoudre_scenario,
@@ -23,10 +27,16 @@ __version__ = "0.1.0"
 
 __all__ = [
     "ChampFonctionCourant",
+    "ChampPlan",
     "ChampUniforme",
+    "ManifesteReconstruction",
     "ManifesteScenario",
+    "Rectangle",
     "ResultatDirige",
+    "ResultatReconstruction",
+    "ScenarioReconstruction",
     "ScenarioUniforme",
+    "SuperpositionChamps",
     "__version__",
     "concentration_panache",
     "concentration_puff",

@@ -8,15 +8,36 @@ utilisé comme cas analytique pour vérifier l'intégration des trajectoires
 stationnaire, les trajectoires suivent les lignes de courant : ψ est conservé
 le long d'une trajectoire exacte, ce qui fournit la référence de vérification.
 
-Ce champ est un objet mathématique de vérification, pas une reconstruction
-météorologique : un champ réel n'est pas déterminé par deux mesures, et ce
-module ne simule ni relief, ni turbulence, ni couche limite.
+La superposition de tels champs (classe ``SuperpositionChamps``) fournit un
+second champ incompressible : deux champs très différents peuvent coïncider
+en des points choisis, ce qui est le coeur de la reconstruction du vent à
+deux mesures. Ce champ est un objet mathématique de vérification, pas une
+reconstruction météorologique : un champ réel n'est pas déterminé par deux
+mesures, et ce module ne simule ni relief, ni turbulence, ni couche limite.
 """
 
 from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from typing import Protocol
+
+
+class ChampPlan(Protocol):
+    """Interface structurelle d'un champ plan stationnaire à fonction de courant.
+
+    Tout objet fournissant ``fonction_courant`` et ``vitesse`` avec ces
+    signatures satisfait le protocole (typage structurel) : c'est le contrat
+    partagé par les champs simples et leurs superpositions.
+    """
+
+    def fonction_courant(self, x: float, y: float) -> float:
+        """Évalue la fonction de courant ψ(x, y) en m² s⁻¹."""
+        ...
+
+    def vitesse(self, x: float, y: float) -> tuple[float, float]:
+        """Évalue les composantes (u, v) du champ en m s⁻¹."""
+        ...
 
 
 @dataclass(frozen=True)
@@ -59,4 +80,42 @@ class ChampFonctionCourant:
         k = self.nombre_donde
         u = self.amplitude * k * math.sin(k * x) * math.cos(k * y)
         v = -self.amplitude * k * math.cos(k * x) * math.sin(k * y)
+        return u, v
+
+
+@dataclass(frozen=True)
+class SuperpositionChamps:
+    """Superposition linéaire immuable de champs à fonction de courant.
+
+    La superposition de champs incompressibles reste incompressible : les
+    fonctions de courant s'additionnent, tout comme les composantes de
+    vitesse. L'invariant est simplement la présence d'au moins un champ.
+
+    Attributes:
+        champs: tuple non vide de champs superposés.
+    """
+
+    champs: tuple[ChampFonctionCourant, ...]
+
+    def __post_init__(self) -> None:
+        """Valide l'invariant : au moins un champ dans la superposition."""
+        if not self.champs:
+            msg = "La superposition exige au moins un champ."
+            raise ValueError(msg)
+
+    def fonction_courant(self, x: float, y: float) -> float:
+        """Évalue la somme des fonctions de courant au point (x, y)."""
+        total = 0.0
+        for champ in self.champs:
+            total += champ.fonction_courant(x, y)
+        return total
+
+    def vitesse(self, x: float, y: float) -> tuple[float, float]:
+        """Évalue la somme des composantes de vitesse au point (x, y)."""
+        u = 0.0
+        v = 0.0
+        for champ in self.champs:
+            du, dv = champ.vitesse(x, y)
+            u += du
+            v += dv
         return u, v

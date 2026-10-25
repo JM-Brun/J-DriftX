@@ -52,4 +52,10 @@ jobs:
           fi
 
       - name: Tests (pytest)
-        run: uv run pytest --cov=jdriftx --cov-report=term-missing --cov-fail-under=85
+        run: |
+          uv run pytest --cov=jdriftx --cov-report=term-missing --cov-fail-under=85 2>&1 | tee pytest-output.txt
+          code=${PIPESTATUS[0]}
+          if [ "$code" -ne 0 ]; then
+            echo "::error title=pytest (exit $code)::$(tail -n 80 pytest-output.txt | tr '\n' ' ' | head -c 2500)"
+            exit 1
+          fi
