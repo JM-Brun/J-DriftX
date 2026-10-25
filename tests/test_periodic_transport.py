@@ -2,6 +2,7 @@
 
 import numpy as np
 import pytest
+from numpy.typing import NDArray
 
 from jdriftx.periodic_transport import (
     periodic_sine_solution,
@@ -10,7 +11,10 @@ from jdriftx.periodic_transport import (
 )
 
 
-def _solve(n_cells: int, dt: float, end_time: float = 0.4):
+def _solve(
+    n_cells: int, dt: float, end_time: float = 0.4
+) -> tuple[NDArray[np.float64], NDArray[np.float64], float]:
+    """Résout le cas de référence commun aux tests du solveur centré/RK4."""
     return solve_periodic_sine_transport(
         n_cells=n_cells,
         length=1.0,
