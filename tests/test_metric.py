@@ -162,7 +162,11 @@ def test_uniform_pseudodistance_matches_projection_formula(
     """Check the uniform-field result against the non-negative longitudinal projection."""
     displacement = np.asarray(b) - np.asarray(a)
     velocity = np.asarray(vent, dtype=float)
-    expected = max(0.0, float(np.dot(displacement, velocity))) / float(np.dot(velocity, velocity))
+    longitudinal_projection = float(np.dot(displacement, velocity))
+    if longitudinal_projection < 0.0:
+        expected = float("inf")
+    else:
+        expected = longitudinal_projection / float(np.dot(velocity, velocity))
 
     assert pseudo_distance_uniforme(a, b, vent) == pytest.approx(expected)
 
