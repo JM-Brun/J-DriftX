@@ -1,8 +1,8 @@
 """Tests for the independent periodic advection-diffusion solver."""
 
 import numpy as np
-from numpy.typing import NDArray
 import pytest
+from numpy.typing import NDArray
 
 from jdriftx.periodic_transport import (
     periodic_sine_solution,
