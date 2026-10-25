@@ -313,9 +313,7 @@ def test_1d_first_arrival_constant_velocity(
         (0.0, 1.0, float("-inf")),
     ],
 )
-def test_1d_first_arrival_rejects_non_finite_inputs(
-    a: float, b: float, vitesse: float
-) -> None:
+def test_1d_first_arrival_rejects_non_finite_inputs(a: float, b: float, vitesse: float) -> None:
     """Les entrées non finies sont rejetées explicitement."""
     with pytest.raises(ValueError, match="finis"):
         temps_premiere_arrivee_1d(a, b, vitesse)
