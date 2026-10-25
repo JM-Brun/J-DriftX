@@ -285,3 +285,13 @@ Sauf mention contraire, références déjà auditées dans le dépôt ([15-audit
   - Pollock, D. W. (1988), formulation des lignes de courant en termes de time-of-flight, *Ground Water* — attestation : « Pollock's method is simple, analytical, and is formulated in terms of time-of-flight (TOF) » (extraits des forums internationaux sur la simulation de réservoir, streamsim.com/papers/rsf2001.pdf et rsf2005.pdf) ; pagination exacte non recontrôlée dans cette passe, à confirmer avant usage en publication.
   - Batycky, R., Blunt, M. & Thiele, M. (1997). A 3D field-scale streamline-based reservoir simulator. *SPE Reservoir Engineering* 12, 246 — attestation via la bibliographie d'un article *Transport in Porous Media* (Springer, DOI 10.1007/s11242-015-0520-y) et le même extrait : « The time of flight describes the travel time needed by a non-reactive particle to arrive at a particular point in the reservoir given the velocity field ».
   - Datta-Gupta, A. & King, M. J. (2007). *Streamline Simulation: Theory and Practice*. Society of Petroleum Engineers — attestation via la même bibliographie Springer ; le TOF y est décrit comme coordonnée naturelle le long des lignes de courant.
+
+## Annexe B — référence exécutable exacte en 1D uniforme
+
+Pour l'EDO stationnaire dx/dt = u, avec u constant signé, la première arrivée est exacte :
+
+- si b = a, T(a,b) = 0 ;
+- si (b-a)u > 0, T(a,b) = |b-a|/|u| ;
+- si u = 0 et b != a, ou si (b-a)u < 0, T(a,b) = +inf.
+
+La fonction `temps_premiere_arrivee_1d` dans `src/jdriftx/metric.py` implémente cette référence et ses tests sont dans `tests/test_metric.py`. Elle rend le cas 1D de V1 exécutable ; elle ne résout pas un champ variable, ne représente pas la projection V2 en 2D et ne valide aucune application physique.
