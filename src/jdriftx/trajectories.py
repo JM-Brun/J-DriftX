@@ -43,18 +43,18 @@ def integrate_trajectory(
     if method not in ("euler", "rk4"):
         raise ValueError(f"Unknown integration method: {method!r}.")
 
+    def rhs(time: float, px: float, py: float) -> tuple[float, float]:
+        result = velocity(time, px, py)
+        if len(result) != 2 or not all(np.isfinite(value) for value in result):
+            raise ValueError("velocity must return two finite components.")
+        return float(result[0]), float(result[1])
+
     times = [float(t0)]
     xs = [float(x0)]
     ys = [float(y0)]
     while times[-1] < t_end:
         t, x, y = times[-1], xs[-1], ys[-1]
         step = min(dt, t_end - t)
-
-        def rhs(time: float, px: float, py: float) -> tuple[float, float]:
-            result = velocity(time, px, py)
-            if len(result) != 2 or not all(np.isfinite(value) for value in result):
-                raise ValueError("velocity must return two finite components.")
-            return float(result[0]), float(result[1])
 
         if method == "euler":
             ux, uy = rhs(t, x, y)

@@ -15,6 +15,43 @@ from numpy.typing import NDArray
 _FLOAT_EPS: Final[float] = 1e-10
 
 
+def _validate_periodic_parameters(
+    n_cells: int,
+    length: float,
+    end_time: float,
+    dt: float,
+    mean_concentration: float,
+    amplitude: float,
+    velocity: float,
+    diffusivity: float,
+) -> None:
+    """Validate the parameters shared by both periodic solvers.
+
+    The checks and error messages are common to the centered/RK4 and
+    upwind/Euler schemes; the scheme-specific stability conditions remain
+    in each solver.
+
+    Raises:
+        ValueError: If any parameter is non-finite or out of range, the grid
+            is too coarse, or the concentration profile would be negative.
+    """
+    parameters = (length, end_time, dt, mean_concentration, amplitude, velocity, diffusivity)
+    if not all(np.isfinite(value) for value in parameters):
+        raise ValueError("Parameters must be finite.")
+    if not isinstance(n_cells, int) or n_cells < 8:
+        raise ValueError("n_cells must be an integer greater than or equal to 8.")
+    if length <= 0:
+        raise ValueError("length must be strictly positive.")
+    if end_time < 0:
+        raise ValueError("end_time must be non-negative.")
+    if dt <= 0:
+        raise ValueError("dt must be strictly positive.")
+    if mean_concentration < 0 or amplitude < 0 or mean_concentration < amplitude:
+        raise ValueError("Concentration must remain non-negative: mean >= amplitude >= 0.")
+    if diffusivity < 0:
+        raise ValueError("diffusivity must be non-negative.")
+
+
 def periodic_sine_solution(
     x: NDArray[np.floating],
     time: float,
@@ -74,21 +111,16 @@ def solve_periodic_sine_transport(
         ValueError: For invalid parameters or a time step outside the RK4
             stability region for the discrete spatial operator.
     """
-    parameters = (length, end_time, dt, mean_concentration, amplitude, velocity, diffusivity)
-    if not all(np.isfinite(value) for value in parameters):
-        raise ValueError("Parameters must be finite.")
-    if not isinstance(n_cells, int) or n_cells < 8:
-        raise ValueError("n_cells must be an integer greater than or equal to 8.")
-    if length <= 0:
-        raise ValueError("length must be strictly positive.")
-    if end_time < 0:
-        raise ValueError("end_time must be non-negative.")
-    if dt <= 0:
-        raise ValueError("dt must be strictly positive.")
-    if mean_concentration < 0 or amplitude < 0 or mean_concentration < amplitude:
-        raise ValueError("Concentration must remain non-negative: mean >= amplitude >= 0.")
-    if diffusivity < 0:
-        raise ValueError("diffusivity must be non-negative.")
+    _validate_periodic_parameters(
+        n_cells=n_cells,
+        length=length,
+        end_time=end_time,
+        dt=dt,
+        mean_concentration=mean_concentration,
+        amplitude=amplitude,
+        velocity=velocity,
+        diffusivity=diffusivity,
+    )
 
     dx = length / n_cells
     x = np.arange(n_cells, dtype=float) * dx
@@ -153,21 +185,16 @@ def solve_periodic_upwind_euler(
     This first-order conservative scheme is an independent cross-check against
     the centered-space/RK4 solver. It requires |u|*dt/dx + 2*K*dt/dx**2 <= 1.
     """
-    parameters = (length, end_time, dt, mean_concentration, amplitude, velocity, diffusivity)
-    if not all(np.isfinite(value) for value in parameters):
-        raise ValueError("Parameters must be finite.")
-    if not isinstance(n_cells, int) or n_cells < 8:
-        raise ValueError("n_cells must be an integer greater than or equal to 8.")
-    if length <= 0:
-        raise ValueError("length must be strictly positive.")
-    if end_time < 0:
-        raise ValueError("end_time must be non-negative.")
-    if dt <= 0:
-        raise ValueError("dt must be strictly positive.")
-    if mean_concentration < 0 or amplitude < 0 or mean_concentration < amplitude:
-        raise ValueError("Concentration must remain non-negative: mean >= amplitude >= 0.")
-    if diffusivity < 0:
-        raise ValueError("diffusivity must be non-negative.")
+    _validate_periodic_parameters(
+        n_cells=n_cells,
+        length=length,
+        end_time=end_time,
+        dt=dt,
+        mean_concentration=mean_concentration,
+        amplitude=amplitude,
+        velocity=velocity,
+        diffusivity=diffusivity,
+    )
 
     dx = length / n_cells
     x = np.arange(n_cells, dtype=float) * dx
