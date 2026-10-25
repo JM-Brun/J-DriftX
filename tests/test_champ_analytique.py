@@ -5,7 +5,7 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
-from jdriftx.champ_analytique import ChampFonctionCourant
+from jdriftx.champ_analytique import ChampFonctionCourant, SuperpositionChamps
 from jdriftx.trajectories import integrate_trajectory
 
 CHAMP = ChampFonctionCourant(amplitude=1.0, longueur=1.0)
@@ -119,3 +119,28 @@ def test_le_champ_est_immuable() -> None:
     # When / Then — toute mutation est refusée.
     with pytest.raises(FrozenInstanceError):
         CHAMP.amplitude = 2.0
+
+
+def test_la_superposition_vide_est_rejetee() -> None:
+    """L'invariant « au moins un champ » est vérifié à la construction."""
+    # Given — un tuple de champs vide.
+    # When / Then — la construction est refusée.
+    with pytest.raises(ValueError, match="au moins un champ"):
+        SuperpositionChamps(())
+
+
+def test_la_superposition_est_la_somme_exacte_des_champs() -> None:
+    """Fonction de courant et vitesses d'une superposition : sommes exactes."""
+    # Given — deux champs d'échelles différentes et un point quelconque.
+    champ_1 = ChampFonctionCourant(amplitude=800.0, longueur=1000.0)
+    champ_2 = ChampFonctionCourant(amplitude=400.0, longueur=500.0)
+    superposition = SuperpositionChamps((champ_1, champ_2))
+    x, y = 137.0, 643.0
+    # When — la superposition est évaluée au point.
+    psi = superposition.fonction_courant(x, y)
+    u, v = superposition.vitesse(x, y)
+    u_1, v_1 = champ_1.vitesse(x, y)
+    u_2, v_2 = champ_2.vitesse(x, y)
+    # Then — les valeurs sont exactement les sommes accumulées champ par champ.
+    assert psi == champ_1.fonction_courant(x, y) + champ_2.fonction_courant(x, y)
+    assert (u, v) == (u_1 + u_2, v_1 + v_2)
