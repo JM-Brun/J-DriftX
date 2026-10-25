@@ -80,10 +80,10 @@ def pseudo_distance_uniforme(
 
     Le champ est constant et non nul. Le coût est le temps longitudinal entre
     les projections de a et b sur une ligne de courant parallèle au vent.
-    L'écart transversal n'est pas pénalisé. Cette API attribue +inf aux points en
-    amont comme convention de coût étendu; cette règle doit être distinguée
-    une vérification exhaustive du traitement des points inaccessibles dans
-    la formulation historique.
+    L'écart transversal n'est pas pénalisé. La convention +inf pour les points
+    en amont est une convention locale explicite ; elle ne permet pas, à elle
+    seule, d'établir le traitement des points inaccessibles dans la formulation
+    historique.
 
     Cette fonction est une référence analytique limitée au champ uniforme,
     pas une implémentation générale des caractéristiques d'un champ variable.
