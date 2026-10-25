@@ -62,7 +62,7 @@
 1. Le critère (e) de la [fiche G0](13-fiche-g0-cadrage-besoin.md) est renseigné et sourcé ; G0 est **franchi**.
 2. **Corpus principal du test discriminant : DIFLU** (champ proche, terme source contrôlé, météo co-localisée, observable conforme). **DATEM/ETEX** sont retenus en far-field pour la généralisation (G3).
 3. Prérequis G1 avant tout benchmark, sans entraînement de modèle :
-   - télécharger DIFLU et confirmer sa licence ;
+   - télécharger DIFLU, conserver la fiche indiquant la Licence Ouverte Etalab 2.0 et vérifier les métadonnées des fichiers ;
    - trancher le décompte des lâchers (19 annoncés vs 15 décrits) et documenter unités, limites de détection, données manquantes ;
    - fixer la partition calibrage/évaluation par lâcher (jamais par point de mesure isolé) ;
    - réserver un lâcher ETEX (ou un sous-ensemble disjoint) comme test final jamais utilisé pour le calibrage.
