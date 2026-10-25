@@ -94,7 +94,7 @@ La page officielle (snapshot du 8 juin 2026) précise le périmètre de l'archiv
 
 | Priorité | Action | Verrou |
 |---|---|---|
-| Bloquante | Télécharger DIFLU (accès humain via le portail Recherche Data Gouv) et **confirmer sa licence** | Licence absente des métadonnées — usage impossible avant confirmation |
+| Bloquante | Télécharger DIFLU depuis la fiche Recherche Data Gouv, conserver la notice Etalab 2.0 et vérifier l'intégrité, les unités et les métadonnées par fichier | Fichiers bruts non inspectés ; 19 lâchers au catalogue contre 15 expériences dans le papier associé |
 | Haute | Trancher le décompte des lâchers (19 catalogue vs 15 papier) et documenter unités, limites de détection, données manquantes | Nécessite les fichiers |
 | Haute | Télécharger les fichiers DATEM (texte délimité) et vérifier unités et cohérence par expérience | Site NOAA en 403 pour les outils — téléchargement manuel |
 | Haute | Télécharger les quatre archives ETEX, vérifier la licence effective et l'horodatage | Fichiers non inspectés |
