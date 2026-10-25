@@ -53,8 +53,8 @@ def test_longer_path_takes_longer_time_at_same_speed() -> None:
     assert cout_detour > cout_direct
 
 
-def test_historical_uniform_pseudodistance_uses_longitudinal_projection() -> None:
-    """Le coût historique uniforme ignore l'écart transversal."""
+def test_uniform_pseudodistance_uses_longitudinal_projection() -> None:
+    """Le coût uniforme défini ici ignore l'écart transversal."""
     # Given — un vent selon +x et une cible décalée transversalement.
     a = np.array([0.0, 0.0])
     b = np.array([10.0, 5.0])
@@ -64,8 +64,8 @@ def test_historical_uniform_pseudodistance_uses_longitudinal_projection() -> Non
     assert cout == pytest.approx(5.0)
 
 
-def test_historical_uniform_pseudodistance_can_be_zero_for_distinct_points() -> None:
-    """Même abscisse : la projection du point cible tombe sur le point de départ."""
+def test_uniform_pseudodistance_can_be_zero_for_distinct_points() -> None:
+    """La projection longitudinale nulle donne un coût nul, même pour deux points distincts."""
     # Given — une cible exactement transversale à l'origine.
     a = np.array([0.0, 0.0])
     b = np.array([0.0, 5.0])
@@ -74,8 +74,8 @@ def test_historical_uniform_pseudodistance_can_be_zero_for_distinct_points() -> 
     assert pseudo_distance_uniforme(a, b, np.array([2.0, 0.0])) == pytest.approx(0.0)
 
 
-def test_historical_uniform_pseudodistance_is_infinite_upwind() -> None:
-    """Un point en amont reçoit un coût infini selon la convention historique."""
+def test_uniform_pseudodistance_is_infinite_upwind() -> None:
+    """Un point en amont reçoit un coût infini selon la convention explicite de cette fonction."""
     # Given — une cible située en amont de l'origine.
     a = np.array([10.0, 0.0])
     b = np.array([0.0, 3.0])
@@ -85,7 +85,7 @@ def test_historical_uniform_pseudodistance_is_infinite_upwind() -> None:
     assert np.isinf(cout)
 
 
-def test_historical_uniform_pseudodistance_is_rotation_invariant() -> None:
+def test_uniform_pseudodistance_is_rotation_invariant() -> None:
     """La formule utilise la projection sur la direction du vent uniforme."""
     # Given — le cas de référence tourné : même géométrie relative, vent
     # selon +y au lieu de +x.
@@ -97,7 +97,7 @@ def test_historical_uniform_pseudodistance_is_rotation_invariant() -> None:
     assert cout == pytest.approx(5.0)
 
 
-def test_historical_uniform_pseudodistance_rejects_zero_wind() -> None:
+def test_uniform_pseudodistance_rejects_zero_wind() -> None:
     """Un vent rigoureusement nul est refusé : le coût n'est pas défini."""
     # Given — un vecteur vitesse nul.
     # When / Then — l'évaluation est refusée.
@@ -105,7 +105,7 @@ def test_historical_uniform_pseudodistance_rejects_zero_wind() -> None:
         pseudo_distance_uniforme(np.zeros(2), np.ones(2), np.zeros(2))
 
 
-def test_historical_uniform_pseudodistance_rejects_invalid_shapes() -> None:
+def test_uniform_pseudodistance_rejects_invalid_shapes() -> None:
     """Des points mal formés sont refusés avant tout calcul."""
     # Given — un point à trois coordonnées.
     # When / Then — l'évaluation est refusée.
