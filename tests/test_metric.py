@@ -3,7 +3,11 @@
 import numpy as np
 import pytest
 
-from jdriftx.metric import pseudo_distance_uniforme, temps_transport
+from jdriftx.metric import (
+    pseudo_distance_uniforme,
+    temps_premiere_arrivee_1d,
+    temps_transport,
+)
 
 
 def test_uniform_speed_time_is_length_over_speed() -> None:
@@ -280,3 +284,38 @@ def test_uniform_pseudodistance_is_zero_for_upwind_boundary() -> None:
     obtenu = pseudo_distance_uniforme(a, a + transversal, vent)
     # Then — le coût est nul selon la convention documentée.
     assert obtenu == pytest.approx(0.0)
+
+
+@pytest.mark.parametrize(
+    ("a", "b", "vitesse", "attendu"),
+    [
+        (0.0, 10.0, 2.0, 5.0),
+        (10.0, 0.0, -2.0, 5.0),
+        (3.0, 3.0, 2.0, 0.0),
+        (3.0, 3.0, 0.0, 0.0),
+        (0.0, 10.0, -2.0, float("inf")),
+        (10.0, 0.0, 2.0, float("inf")),
+        (0.0, 10.0, 0.0, float("inf")),
+    ],
+)
+def test_1d_first_arrival_constant_velocity(
+    a: float, b: float, vitesse: float, attendu: float
+) -> None:
+    """Le temps de première arrivée suit le sens du champ constant 1D."""
+    assert temps_premiere_arrivee_1d(a, b, vitesse) == pytest.approx(attendu)
+
+
+@pytest.mark.parametrize(
+    ("a", "b", "vitesse"),
+    [
+        (float("nan"), 1.0, 1.0),
+        (0.0, float("inf"), 1.0),
+        (0.0, 1.0, float("-inf")),
+    ],
+)
+def test_1d_first_arrival_rejects_non_finite_inputs(
+    a: float, b: float, vitesse: float
+) -> None:
+    """Les entrées non finies sont rejetées explicitement."""
+    with pytest.raises(ValueError, match="finis"):
+        temps_premiere_arrivee_1d(a, b, vitesse)
