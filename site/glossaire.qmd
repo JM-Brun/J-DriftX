@@ -77,7 +77,18 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 **Finsler / Zermelo.** Le problème de navigation de **Zermelo** cherche le trajet le plus rapide d'un mobile qui peut choisir sa commande dans un courant ; sous des hypothèses précises, ce problème peut être représenté par une métrique de type Randers, dans le cadre plus général de la géométrie de Finsler. Cela ne rend pas automatiquement ce problème équivalent au transport d'un traceur passif soumis à un champ de vitesse prescrit : la dynamique et les trajectoires admissibles diffèrent. Finsler/Zermelo constitue donc un antécédent mathématique à comparer, pas à lui seul une justification de la métrique de Drift-X. *Origine* : géométrie différentielle et calcul des variations. → [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) et [Revue mathématique](etat-art/revue-mathematique.qmd)
 
-**Classes de Pasquill.** Six classes de stabilité atmosphérique, de A (très instable) à F (très stable), qui pilotent la croissance des $\sigma_y$, $\sigma_z$ avec la distance. *Origine* : F. Pasquill (1961), complétées par les courbes de Gifford et les formules de Briggs (1973) utilisées par les modèles réglementaires. → [Similitude](theorie/similitude.qmd)
+**Classes de Pasquill.** Six classes de stabilité atmosphérique, de A (très instable) à F (stable), qui pilotent la croissance des $\sigma_y$, $\sigma_z$ avec la distance. *Origine* : F. Pasquill (1961), complétées par les courbes de Gifford et les formules de Briggs (1973) utilisées par les modèles réglementaires. *Dans le code* : chaque classe est un objet `ClasseStabilite` qui porte son régime, ses conditions typiques et ses coefficients de Briggs (module `stabilite`).
+
+| Classe | Régime | Conditions typiques | $\sigma_z$ (Briggs, site rural) |
+|---|---|---|---|
+| A | très instable | jour, insolation forte, vent < 2 m/s | linéaire |
+| B | modérément instable | jour, insolation modérée ou vent 2 à 3 m/s | linéaire |
+| C | faiblement instable | jour nuageux, ou vent 3 à 5 m/s | racine |
+| D | neutre | couvert dense jour et nuit, ou vent > 6 m/s | racine |
+| E | faiblement stable | nuit, vent 3 à 5 m/s ou ciel partiellement couvert | inverse |
+| F | stable | nuit claire, vent < 3 m/s (inversion nocturne) | inverse |
+
+Les caractéristiques complètes par classe sont détaillées dans la [fiche docs/24](https://github.com/JM-Brun/J-DriftX/blob/main/docs/24-classes-stabilite-pasquill-objet.md). → [Similitude](theorie/similitude.qmd)
 
 **Champ stationnaire.** Un champ de vitesse qui ne dépend pas du temps : $\mathbf u(\mathbf x)$, et non $\mathbf u(\mathbf x, t)$. La ligne de courant issue d'un point est alors une courbe fixe, et la particule lâchée en ce point la suit : ligne de courant et trajectoire coïncident. *Quasi-stationnaire* (hypothèse [H3](hypotheses/catalogue.qmd)) : le champ est traité comme stationnaire pendant la durée d'un transport, même s'il évolue ensuite. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
 
