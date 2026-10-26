@@ -164,6 +164,54 @@ def test_conservation_masse_superposition_deux_panaches() -> None:
     assert flux == pytest.approx(debit1 + debit2, rel=1e-3)
 
 
+@pytest.mark.parametrize(
+    ("classe1", "classe2", "h1", "h2"),
+    [
+        ("C", "F", 0.0, 40.0),
+        ("A", "E", 0.0, 50.0),
+        ("B", "D", 0.0, 25.0),
+    ],
+)
+def test_conservation_masse_superposition_classes_differentes(
+    classe1: str, classe2: str, h1: float, h2: float
+) -> None:
+    """Le flux d'une superposition de panaches de classes differentes est la somme des debits."""
+    # Given — deux panaches de classes de stabilite et de hauteurs differentes.
+    debit1, debit2, u, x = 1.0, 0.5, 4.0, 1000.0
+    sy_max = max(float(sigma_y(x, classe1)), float(sigma_y(x, classe2)))
+    sz_max = max(float(sigma_z(x, classe1)), float(sigma_z(x, classe2)))
+    y = np.linspace(-4.0 * sy_max, 4.0 * sy_max, 241)
+    z = np.linspace(0.0, max(h1, h2) + 4.0 * sz_max, 161)
+    yy, zz = np.meshgrid(y, z, indexing="ij")
+    # When — la superposition des deux panaches est integree sur la section commune.
+    c = concentration_panache(x, yy, zz, debit=debit1, u=u, classe=classe1, hauteur=h1)
+    c += concentration_panache(x, yy, zz, debit=debit2, u=u, classe=classe2, hauteur=h2)
+    flux = u * np.trapezoid(np.trapezoid(c, y, axis=0), z)
+    # Then — la somme des debits emis est restituee a 0,1 % relatif.
+    assert flux == pytest.approx(debit1 + debit2, rel=1e-3)
+
+
+def test_conservation_masse_superposition_deux_puffs() -> None:
+    """L'integrale d'une superposition de deux puffs restitue la somme des masses."""
+    # Given — deux puffs de masses et classes differentes apres 500 s de transport.
+    masse1, masse2, u, t = 10.0, 4.0, 3.0, 500.0
+    classe1, classe2 = "C", "F"
+    distance = u * t
+    s_max = max(float(sigma_y(distance, classe1)), float(sigma_y(distance, classe2)))
+    sz_max = max(float(sigma_z(distance, classe1)), float(sigma_z(distance, classe2)))
+    n = 81
+    x = np.linspace(distance - 4.0 * s_max, distance + 4.0 * s_max, n)
+    y = np.linspace(-4.0 * s_max, 4.0 * s_max, n)
+    z = np.linspace(-4.0 * sz_max, 4.0 * sz_max, n)
+    xx, yy, zz = np.meshgrid(x, y, z, indexing="ij")
+    # When — la superposition des deux puffs est integree sur le volume commun.
+    c = concentration_puff(xx, yy, zz, t=t, masse=masse1, u=u, classe=classe1)
+    c += concentration_puff(xx, yy, zz, t=t, masse=masse2, u=u, classe=classe2)
+    integrale = np.trapezoid(np.trapezoid(np.trapezoid(c, x, axis=0), y, axis=0), z)
+    # Then — la somme des masses emises est restituee a 0,1 % relatif.
+    assert integrale == pytest.approx(masse1 + masse2, rel=1e-3)
+
+
 def test_convergence_elargissement_grille() -> None:
     """L'erreur relative du bilan de masse decroit quand la grille s'elargit."""
     # Given — un panache de classe D a x = 1000 m et trois etendues de grille.
