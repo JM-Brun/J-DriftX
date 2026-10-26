@@ -47,7 +47,7 @@ La solution de \(\dot x=u\) est \(x(t)=a+ut\). Pour \(a=0\), \(b=10\), \(u=2\), 
 
 Pour \(a=(0,0)\), \(b=(12,9)\), \(u=(4,3)\), on a \(u\cdot u=25\) et \((b-a)\cdot u=12\cdot4+9\cdot3=75\). Le coût est donc \(75/25=3\) s dans le sens aval ; au retour, le produit scalaire vaut \(-75\), donc la convention donne \(+\infty\).
 
-Pour un déplacement transverse \(w=(-8,6)\) et le même vent \(u=(3,4)\), \(w\cdot u=-24+24=0\). La projection longitudinale est nulle : le coût est \(0\) malgré le déplacement non nul. C'est un contre-exemple direct à la séparation.
+Pour un déplacement transverse \(w=(-8,6)\) et un vent \(u=(3,4)\), \(w\cdot u=-24+24=0\). La projection longitudinale est nulle : le coût est \(0\) malgré le déplacement non nul. C'est un contre-exemple direct à la séparation.
 
 ### Champ de cisaillement — contre-exemple à la triangulation
 
