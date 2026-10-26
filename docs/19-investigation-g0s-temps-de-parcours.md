@@ -58,9 +58,9 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 
 ## 3. V1 : ce qui découle de la seule définition
 
-**Lemme 3.1 (le temps de première arrivée est atteint).** Si \(T(A,B) < +\infty\), alors \(X(T(A,B); A) = B\).
+**Lemme 3.1 (le temps de première arrivée est atteint).** Si l'ensemble des temps d'atteinte \(H_{A,B}=\{t\ge0:X(t;A)=B\}\) est non vide, alors son infimum est atteint.
 
-*Preuve.* L'ensemble \(H = \{t \ge 0 : X(t;A) = B\}\) est fermé (image réciproque du fermé \(\{B\}\) par l'application continue \(t \mapsto X(t;A)\), intersecté avec \([0,+\infty[\)) et non vide ; son infimum est limite d'une suite d'éléments de \(H\), donc appartient à \(H\). ∎
+*Preuve.* Choisissons \(t_0\in H_{A,B}\). La solution existe et est continue sur \([0,t_0]\). L'ensemble \(H_{A,B}\cap[0,t_0]\) est donc fermé dans le compact \([0,t_0]\), non vide, et possède un minimum \(t_*\). Comme \(t_0\) est lui-même un temps d'atteinte, ce minimum est aussi l'infimum de \(H_{A,B}\) sur tous les temps positifs. Ainsi \(X(t_*;A)=B\) et \(t_*=T(A,B)\). ∎
 
 **Proposition 3.2 (positivité et séparation).** V1 vérifie (D1), (D2) et (D4).
 
@@ -82,7 +82,9 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 
 *Preuve.* L'orbite est parcourue entièrement en une période : le premier passage en \(B\) existe dans \(]0, p]\), noté \(t_1\), avec \(X(t_1;A) = B\). Les temps d'atteinte d'un point d'une orbite fermée depuis un autre point de la même orbite forment une progression arithmétique de raison \(p\) ; ceux de \(A\) depuis \(B\) sont donc \((p - t_1) + k p\), \(k \ge 0\), dont le plus petit est \(p - t_1\). ∎
 
-**Proposition 3.8 (stabilité locale).** Si \(X(t^*; A_0) = B\) avec \(\mathbf u(B) \ne 0\), alors chaque temps d'atteinte isolé de \(B\) dépend de façon \(C^1\) de \(A\) au voisinage de \(A_0\) (théorème des fonctions implicites appliqué à \((t,A) \mapsto X(t;A) - B\), dont la dérivée partielle en \(t\) vaut \(\mathbf u(B) \ne 0\)) ; si en outre \(t^*\) est l'unique temps d'atteinte (trajectoire non périodique), \(T(\cdot, B)\) est \(C^1\) au voisinage de \(A_0\). La stabilité se perd aux cibles stagnantes (§ 6.4). (Preuve : esquisse standard par fonctions implicites et unicité locale.)
+**Proposition 3.8 (régularité locale en dimension 1 uniquement).** Supposons \(d=1\), \(u\in C^1(\Omega)\), \(X(t^*;a_0)=b\) et \(u(b)\ne0\). Pour la branche locale de temps d'atteinte, la fonction \(F(t,a)=X(t;a)-b\) est scalaire et vérifie \(F(t^*,a_0)=0\), \(\partial_tF(t^*,a_0)=u(b)\ne0\). Le théorème des fonctions implicites donne donc un temps local d'atteinte de classe \(C^1\) en fonction de \(a\). Pour conclure que le temps de **première** arrivée \(T(\cdot,b)\) est lui-même \(C^1\), il faut en outre que cette branche reste la première localement (pas de changement de branche dû à une autre atteinte plus précoce).
+
+Cette affirmation n'est pas établie ici en dimension \(d\ge2\) : l'équation \(X(t;a)=b\) impose alors \(d\) contraintes avec un seul paramètre temporel ; une trajectoire issue d'un point initial voisin ne passe généralement pas par le même point \(b\). Pour parler de temps de franchissement en dimension supérieure, il faut définir une cible comme une hypersurface et vérifier une condition de transversalité. La stabilité peut aussi échouer aux cibles stagnantes (§ 6.4).
 
 **Tableau 3.9 (V1, récapitulatif).**
 
