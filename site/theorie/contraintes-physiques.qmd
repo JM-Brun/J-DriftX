@@ -10,7 +10,7 @@ Les publications historiques de Drift-X décrivent des propriétés physiques so
 2. **Test numérique ciblé** : un calcul vérifie cette propriété pour une fonction, un jeu de paramètres, une grille et une tolérance donnés.
 3. **Propriété démontrée du modèle** : une preuve analytique, ou une validation numérique avec domaine de validité explicite, justifie la conclusion recherchée.
 
-La CI verte ne suffit pas à passer du niveau 2 au niveau 3. Le code actuel est un socle de panache/puff gaussien en vent uniforme et une primitive géométrique provisoire ; il ne reconstruit pas encore le champ de vent multi-niveaux historique.
+La CI verte ne suffit pas à passer du niveau 2 au niveau 3. Le code actuel est un socle de panache/puff gaussien en vent uniforme et trois primitives de métrique de portée limitée (coût de polyligne, temps de première arrivée 1D, référence uniforme) ; il ne reconstruit pas encore le champ de vent multi-niveaux historique.
 
 ## État des tests dans le dépôt
 
@@ -20,6 +20,7 @@ La CI verte ne suffit pas à passer du niveau 2 au niveau 3. Le code actuel est 
 | Linéarité en débit | `tests/test_constraints.py::test_superposition_panache` | Superposition à un point et pour les paramètres du test, à la tolérance numérique du helper | Validité pour toute extension du modèle, tout couplage non linéaire ou toute chaîne d'assimilation |
 | Bilan de masse du panache | `tests/test_similitude.py::test_conservation_masse_panache` | Le flux numérique intégré sur une grille finie `y ∈ [-500, 500] m`, `z ∈ [0, 400] m`, à `x = 1000 m`, pour la classe D et le débit testé, est proche du débit émis à 2 % près | Conservation exacte sur toute surface iso-temps, pour toute géométrie, toute classe, tout vent ou toute discrétisation |
 | Divergence du vent | Aucun test dédié ; aucun champ de vent multi-niveaux n'est actuellement reconstruit par le noyau | Rien à ce stade | `∇ · u = 0` pour un champ généré, sa compatibilité entre niveaux ou l'absence de sources/puits artificiels |
+| Non-symétrie de la référence uniforme | `tests/test_metric.py::test_uniform_pseudodistance_is_asymmetric_along_the_wind`, `test_uniform_pseudodistance_symmetric_on_transverse_boundary` | Coût fini vers l’aval et \(+\infty\) vers l’amont pour la référence uniforme 2D ; coût nul dans les deux sens sur la borne transversale | La non-symétrie de la pseudo-distance historique en champ variable ; toute propriété de `temps_transport`, symétrique par conception |
 
 ## 1. Conservation : ne pas généraliser le test de grille
 
@@ -54,6 +55,14 @@ Le test existant vérifie cette relation en un point pour le panache gaussien et
 \]
 
 est une contrainte cinématique importante dans un modèle incompressible de densité constante, mais le dépôt ne génère pas encore le champ de vent multi-niveaux historique auquel cette contrainte s'appliquerait. Il serait donc incorrect d'affirmer que la CI la vérifie. Avant d'implémenter ce champ, il faudra préciser la définition continue, les conditions aux limites et les sources/puits ; puis tester la divergence analytique et discrète, la compatibilité entre niveaux et la sensibilité au maillage.
+
+## 5. Non-symétrie : propriété visée, testée seulement sur la référence uniforme
+
+La métrique visée par le projet est non symétrique : le temps de transport dépend du sens de parcours — on ne remonte pas le vent. L’état des preuves distingue trois objets :
+
+- **Référence uniforme** (`pseudo_distance_uniforme`) : la convention \(+\infty\) pour une cible en amont rend le coût non symétrique dès qu’un couple de points a une composante longitudinale non nulle — fini vers l’aval, infini vers l’amont. Un test ciblé le vérifie ; un second délimite la propriété : un déplacement purement transversal coûte zéro dans les deux sens, la convention ne créant pas d’asymétrie sur cette dégénérescence.
+- **Primitive polyligne** (`temps_transport`) : symétrique par conception, puisqu’elle n’utilise que la norme des vitesses segmentaires — le test d’invariance au renversement du chemin et au signe du vent le prouve. Elle ne doit pas être décrite comme une métrique non symétrique.
+- **Pseudo-distance historique** (Mohammadi & Brun, 2006) : la non-symétrie en champ variable reste à établir à partir de la définition et des sources primaires ; aucun test du dépôt ne la couvre. Les conditions précises sont discutées dans [Métrique travel-time](metrique-travel-time.qmd).
 
 ## Une différence scientifique à démontrer, pas à présumer
 
