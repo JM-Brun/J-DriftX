@@ -76,9 +76,7 @@ class ClasseStabilite(StrEnum):
         diagnostic automatique a partir de mesures.
         """
         if self is ClasseStabilite.A:
-            return (
-                "jour, insolation forte et vent faible (moins de 2 m/s) ; convection vigoureuse"
-            )
+            return "jour, insolation forte et vent faible (moins de 2 m/s) ; convection vigoureuse"
         if self is ClasseStabilite.B:
             return "jour, insolation moderee ou vent de 2 a 3 m/s"
         if self is ClasseStabilite.C:
