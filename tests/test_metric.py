@@ -374,7 +374,7 @@ def test_1d_first_arrival_rejects_infinite_displacement() -> None:
 def test_uniform_pseudodistance_is_adjoint_vector_dot_displacement(
     a: tuple[float, float], b: tuple[float, float], vent: tuple[float, float]
 ) -> None:
-    """Le cout dirige uniforme est le produit scalaire de l'adjoint et du deplacement."""
+    """Le coût dirigé uniforme est le produit scalaire de l'adjoint et du déplacement."""
     # Given — le vecteur adjoint exact du champ uniforme, dérivé
     # indépendamment : lambda = u/(u.u), et l'identité tau = lambda.(b - a).
     vitesse = np.asarray(vent, dtype=float)
