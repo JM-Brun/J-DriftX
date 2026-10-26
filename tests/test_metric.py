@@ -304,11 +304,12 @@ def test_uniform_pseudodistance_is_asymmetric_along_the_wind() -> None:
 
 def test_uniform_pseudodistance_symmetric_on_transverse_boundary() -> None:
     """La non-symétrie n'est pas globale : la borne transversale coûte zéro dans les deux sens."""
-    # Given — un déplacement exactement orthogonal au vent, sans composante
-    # longitudinale.
+    # Given — un déplacement exactement orthogonal au vent. Le vent selon +y
+    # donne une direction exacte en virgule flottante : la projection est
+    # nulle des deux côtés, sans bruit d'arrondi à la borne.
     a = np.array([2.0, -1.0])
-    vent = np.array([3.0, 4.0])
-    transversal = np.array([-4.0, 3.0])
+    vent = np.array([0.0, 5.0])
+    transversal = np.array([4.0, 0.0])
     b = a + transversal
     # When — la pseudo-distance est évaluée dans les deux sens.
     aller = pseudo_distance_uniforme(a, b, vent)
