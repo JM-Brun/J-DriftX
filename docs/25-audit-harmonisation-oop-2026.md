@@ -120,7 +120,7 @@ Second volet : les deux solveurs retournent le tuple
 `(x, concentration, actual_dt)`. Une dataclass frozen
 `ResultatPeriodique` serait plus harmonieuse avec `ResultatDirige` et
 `ResultatReconstruction`, mais **cassante** pour tous les tests qui
-déballe nt le tuple. Arbitrage : le changement de signature est-il accepté ?
+déballent le tuple. Arbitrage : le changement de signature est-il accepté ?
 
 ## 6. Constat P2 — Langues mixtes dans `src/`
 
