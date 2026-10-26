@@ -1,103 +1,69 @@
-# Plan d’intégration scientifique et de validation — J-DriftX
+# Protocole public de validation scientifique — J-DriftX
 
-> Statut : plan de travail proposé à la revue du projet. Ce document traduit l’audit de l’état de l’art en décisions vérifiables ; il ne constitue pas une validation scientifique des hypothèses du modèle.
+> **Statut :** protocole de validation, pas validation acquise. La cohérence mathématique, la fidélité physique, la performance prédictive et l'utilité applicative sont des niveaux de preuve distincts. Aucun avantage applicatif n'est établi par le présent document.
 
-## 1. Décision générale
+## 1. Principes
 
-La revue de l’état de l’art justifie de poursuivre l’investigation de J-DriftX, mais elle ne démontre pas à elle seule la nouveauté, la supériorité prédictive ni la conformité réglementaire du modèle. Les conclusions comparatives sont des **hypothèses de recherche** tant qu’elles ne sont pas étayées par des sources suffisamment examinées et des benchmarks reproductibles.
+1. Formuler chaque affirmation avec son domaine de validité, ses hypothèses, ses unités et son niveau de preuve.
+2. Distinguer les résultats analytiques, les expériences numériques synthétiques, les validations sur données physiques et les conclusions d'utilité décisionnelle.
+3. Comparer les méthodes sur le même problème, les mêmes observations, le même découpage des données et un budget de calcul explicite.
+4. Conserver les résultats négatifs, les incertitudes et les contre-exemples. Une propriété qui n'est pas démontrée doit être présentée comme hypothèse ou objectif, non comme garantie.
+5. Ne pas employer le terme « revue systématique reproductible » tant que les bases, dates, requêtes, critères de sélection, dédoublonnage et décomptes ne sont pas documentés.
 
-La priorité reste le noyau mathématique et sa validation, avant l’ajout de fonctionnalités applicatives. Le cadrage G0 documentaire a été franchi le 22 octobre 2026 : il fixe la question scientifique sur la dispersion d’un scalaire passif et retient DIFLU comme premier corpus candidat au test discriminant. Ce verdict documentaire ne valide ni l’utilité applicative (G0-A), ni la disponibilité exploitable des fichiers bruts, ni la performance du modèle. La dérive de pulvérisation en champ lointain reste une piste applicative possible, non le cas d’usage prioritaire établi.
+## 2. Étape A — définitions et cas analytiques
 
-## 2. Intégration dans le dépôt
+Pour chaque objet mathématique du modèle direct et de la métrique de temps de transport :
 
-| Élément | Rôle | Action attendue |
-|---|---|---|
-| docs/02-revue-etat-art-2026.md | Synthèse documentaire détaillée | Distinguer faits sourcés, interprétations et hypothèses ; compléter la méthode de recherche |
-| site/etat-art/panorama.qmd | Synthèse publique | Afficher les limites de couverture et renvoyer au protocole |
-| site/etat-art/positionnement.qmd | Positionnement scientifique | Présenter les différenciateurs comme des hypothèses à tester, non comme des avantages acquis |
-| Issues publiques | Suivi des questions ouvertes | Faire dépendre chaque étape d’un livrable vérifiable et d’un critère d’acceptation |
-| docs/references.md et site/references.bib | Traçabilité bibliographique | Vérifier les métadonnées, DOI, liens, dates et correspondance citations/bibliographie |
-| site/projet/qualite.qmd et tests | Preuves techniques | Relier les affirmations de conservation, positivité et symétrie à des tests ou preuves explicites |
+- définir les entrées, sorties, unités, hypothèses, conditions aux limites et domaine de validité ;
+- tester les cas limites, les invariants et les contre-exemples attendus ;
+- comparer les calculs du code à des solutions analytiques indépendantes ;
+- expliciter quelles propriétés découlent de la définition, lesquelles exigent des hypothèses supplémentaires et lesquelles ne sont pas encore établies.
 
-## 3. Rendre la revue reproductible
+Le MVP-S 1D sert de premier cas de référence contrôlable. Sa réussite ne démontre ni la validité d'un champ de vent 2D variable, ni la conservation de masse d'un modèle de dispersion complet, ni la nouveauté scientifique.
 
-Le choix méthodologique est documenté dans [docs/06-choix-methode-revue-systematique.md](06-choix-methode-revue-systematique.md). Il explique pourquoi PRISMA 2020 est retenu comme standard de reporting, comment il se combine avec une phase exploratoire, le snowballing, une cartographie systématique et une évaluation critique, et pourquoi ces éléments ne doivent pas être confondus avec la revue bibliographique effective.
+Références de travail public : [revue mathématique ciblée](14-revue-mathematique-ciblee.md), [bilan du MVP-S 1D](21-bilan-mvp-s-1d.md), [modèle jouet et limites](09-fallback-modele-jouet.md).
 
-Le document actuel est une **revue structurée de l’état de l’art**, mais les informations disponibles ne suffisent pas encore à qualifier le processus de revue systématique entièrement reproductible. Avant d’employer cette qualification, consigner :
+## 3. Étape B — vérification numérique et implémentation
 
-1. Les bases et moteurs interrogés, avec la date de chaque recherche.
-2. Les chaînes de recherche exactes, filtres et plages temporelles.
-3. Les critères d’inclusion et d’exclusion (langue, type de publication, pertinence applicative, accès au texte).
-4. Le nombre de références trouvées, dédoublonnées, examinées sur titre/résumé, examinées en texte intégral et retenues.
-5. La manière dont la qualité et le niveau de preuve de chaque source ont été évalués.
-6. Les limites d’accès au texte intégral et les affirmations reposant seulement sur une notice, un résumé ou une source secondaire.
+- Relier chaque propriété annoncée à une preuve mathématique, un test automatisé ou une expérience de vérification identifiée.
+- Couvrir les unités, les cas limites, les comportements dégénérés, la stabilité numérique et la convergence lorsque ces notions s'appliquent.
+- Distinguer les tests unitaires du code des validations indépendantes du modèle.
+- Documenter versions, paramètres, graines aléatoires, scripts de génération, métriques et tolérances.
+- Ne pas inférer une propriété globale à partir de quelques tests ponctuels.
 
-Pour chaque affirmation structurante, indiquer si elle relève d’un fait directement sourcé, d’une interprétation de la littérature ou d’une hypothèse propre à J-DriftX. Les affirmations absolues telles que « aucun modèle concurrent » doivent être bornées par le corpus effectivement examiné.
+Le code et les tests du dépôt constituent des éléments vérifiables, mais ne prouvent pas à eux seuls la fidélité empirique ni l'utilité applicative.
 
-## 4. Programme de validation scientifique
+## 4. Étape C — données et benchmark indépendant
 
-### M1 — Noyau et cas de référence
+Avant tout benchmark sur données observées, vérifier et documenter :
 
-- Formaliser les hypothèses, le domaine de validité et les conditions aux limites des solutions de similitude et de la métrique *travel-time*.
-- Établir un cas gaussien de référence reproductible, avec paramètres et données publiés.
-- Tester la convergence numérique, les unités, les cas limites, la symétrie lorsque celle-ci est attendue, la superposition si elle est théoriquement applicable, ainsi que la conservation de masse et la positivité lorsque le modèle les garantit.
-- Mesurer erreur absolue et relative, temps de calcul, mémoire et stabilité ; enregistrer les versions du code et les paramètres.
+- la source canonique, la licence et les conditions de réutilisation ;
+- la structure des observations, les unités, les limites de détection, les valeurs manquantes et les métadonnées ;
+- la correspondance entre chaque observation et son contexte physique ;
+- l'indépendance entre données de calibration, choix de modèle/hyperparamètres et évaluation finale ;
+- les risques de fuite d'information, de doublons et de dépendance entre observations d'une même campagne.
 
-**Critère d’acceptation :** tests automatisés reproductibles en CI, benchmark documenté et écarts expliqués. Toute propriété non démontrée doit être présentée comme objectif, pas comme garantie.
+Définir les baselines, les métriques, les critères d'acceptation et l'analyse d'incertitude avant d'interpréter les résultats. L'absence de fichiers bruts vérifiés ou de partition indépendante bloque toute conclusion de performance.
 
-### M2 — Calibration et problème inverse
+Références : [protocole d'audit du corpus](14-protocole-audit-corpus-g0.md), [audit technique des jeux de données](20-audit-technique-jeux-donnees.md), [catalogue des données](12-catalogue-donnees-transport-dispersion.md).
 
-- Définir un jeu de données de calibration et un jeu de validation indépendant.
-- Comparer aux méthodes de référence sur le même cas, les mêmes observations et le même budget de calcul.
-- Tester la sensibilité au bruit, aux observations manquantes, à l’identifiabilité des paramètres et à la régularisation.
-- Séparer explicitement l’ajustement des paramètres de l’évaluation hors échantillon.
+## 5. Étape D — utilité et limites applicatives
 
-**Critère d’acceptation :** protocole, données ou script de génération, métriques et limites documentés ; aucune conclusion de robustesse sans comparaison hors échantillon.
+Une méthode peut être mathématiquement cohérente et correctement implémentée sans être utile en pratique. L'utilité doit être évaluée pour un problème et une décision explicitement définis, face à des solutions de référence pertinentes, avec une précision et un coût comparables.
 
-### M3 — Terrain et application
+Ne pas présenter la dérive de pulvérisation en champ lointain comme un cas d'usage validé avant d'avoir vérifié les données, les conditions expérimentales, les baselines et les critères de succès. Une revue bibliographique ou un résultat synthétique ne constitue pas une validation physique.
 
-- Identifier en amont des campagnes de mesure publiées, documenter les licences et les métadonnées, puis réserver des observations à une validation indépendante.
-- Comparer J-DriftX aux modèles de référence pertinents sans supposer qu’une différence de résultat signifie une amélioration.
-- Tester séparément l’effet du vent non uniforme, du relief et des barrières végétales, en indiquant les conditions dans lesquelles chaque comparaison est valide.
+Le cadre public de décision et de preuve est détaillé dans [Décider de l'utilité de J-DriftX](08-decision-utilite-et-preuve.md).
 
-**Critère d’acceptation :** résultats traçables sur données indépendantes, analyse d’incertitude et description des limites de généralisation.
+## 6. Critères de publication des résultats
 
-### M4 — Publication
+Toute conclusion publique substantielle doit permettre au lecteur de retrouver :
 
-Préparer un article seulement après obtention de résultats vérifiables. Le manuscrit devra décrire la méthode, les hypothèses, les données, les baselines, les métriques, les résultats négatifs et les limites ; la revue de littérature seule ne suffit pas à revendiquer une supériorité du modèle.
+- l'affirmation exacte et le niveau de preuve revendiqué ;
+- les hypothèses et le domaine de validité ;
+- les données, sources et licences, ou la procédure de génération synthétique ;
+- le protocole, les baselines et les métriques ;
+- les résultats positifs et négatifs, les incertitudes et les limites ;
+- le code, les tests ou les références permettant une vérification indépendante.
 
-## 5. Protocole de benchmark minimal
-
-Pour chaque cas, publier :
-
-- description physique, hypothèses, unités, paramètres et provenance des données ;
-- version/commit du code et instructions de reproduction ;
-- baselines et réglages identiques autant que possible ;
-- erreur absolue et relative, conservation de masse et positivité si pertinentes ;
-- temps de calcul, mémoire, sensibilité aux paramètres et incertitude ;
-- domaine de validité, échecs observés et écarts non expliqués.
-
-Les comparaisons POD/ML ne doivent pas être présentées comme une opposition générale : comparer des méthodes sur un problème, un jeu de données et un budget explicitement définis.
-
-## 6. Gouvernance des affirmations et cohérence documentaire
-
-- Employer « hypothèse », « objectif » ou « à valider » pour les propriétés qui n’ont pas encore de preuve ou de test.
-- Ne pas qualifier J-DriftX de modèle réglementaire, ni annoncer une conformité réglementaire, avant une procédure d’évaluation adaptée.
-- Maintenir un statut de jalon unique entre les pages du site et la feuille de route.
-- Vérifier que les citations Quarto, les références bibliographiques et les fiches de lecture concordent.
-- Construire le site Quarto et exécuter la CI avant fusion ; le déclenchement d’un workflow de publication ne prouve pas à lui seul que le déploiement a réussi.
-
-## 7. Questions restant ouvertes
-
-1. Le dépôt de la thèse et du chapitre historique est-il possible et autorisé ?
-2. Quelles données de terrain peuvent être redistribuées et utilisées pour une validation indépendante ?
-3. Quelle licence est compatible avec les droits sur le code historique et les documents ?
-4. Quels tests théoriques établissent précisément les propriétés annoncées pour la métrique et les solutions généralisées ?
-5. Quel cas d’usage et quelle baseline constituent le test le plus discriminant pour M1 ?
-
-## Références internes
-
-- [Revue de l’état de l’art](02-revue-etat-art-2026.md)
-- [Questions scientifiques et techniques ouvertes](https://github.com/JM-Brun/J-DriftX/issues)
-- [Références bibliographiques](references.md)
-- [Choix de la méthode de revue systématique](06-choix-methode-revue-systematique.md)
+Les jalons de planification, les arbitrages internes, les comptes rendus de séance et le suivi opérationnel sont conservés dans les notes privées associées. Ce document public ne remplace pas les résultats ni les preuves : il décrit les conditions minimales pour les produire et les présenter.

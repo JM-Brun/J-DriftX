@@ -19,7 +19,6 @@ Les fichiers du corpus historique utilisent déjà la convention `AAAA-auteur-su
 | `Partial Differential Equations - Modelling and Numerical Simulation - R. Glowinski, P. Neittaanmaki (Springer, 2008) WW.pdf` — renommage recommandé : `2008-glowinski-neittaanmaki-recueil-springer.pdf` | Glowinski, R. & Neittaanmäki (eds) (2008), *Partial Differential Equations: Modelling and Numerical Simulation*, Computational Methods in Applied Sciences vol. 16, Springer, Dordrecht, DOI [10.1007/978-1-4020-8758-5](https://doi.org/10.1007/978-1-4020-8758-5) — recueil contenant le chapitre 14 du corpus (Brun & Mohammadi, p. 245–256) | Recueil complet (version éditeur Springer, 6,4 Mo) ajouté le 23 octobre 2026 ; fiche disponible ; extraction du chapitre 14 à compléter |
 | `2009-bozon-sinfort-mohammadi-driftx-hal.pdf` | Bozon, Sinfort & Mohammadi, manuscrit Drift-X (2009), [HAL hal-00468863](https://hal.science/hal-00468863) | Manuscrit auteur et extraction texte disponibles |
 | `2009-invs-exposition-aerienne-pesticides-herault.pdf` | InVS / Santé publique France (2009), mesures d'exposition aux pesticides dans l'Hérault | Rapport d'agence ; données détaillées à vérifier |
-| `2026-rapport-derive-conceptuelle-positionnement-jdriftx.pdf` | Rapport de travail sur la dérive conceptuelle et le positionnement (2026) | Document de travail, pas une source primaire scientifique |
 | `reviews/2026-revue-systematique-jdriftx-resume-executif-partie-1.pdf` | Résumé exécutif de la revue, partie 1 | Synthèse PDF ; voir la cartographie éditable |
 | `reviews/2026-revue-systematique-jdriftx-resume-executif-partie-2.pdf` | Résumé exécutif de la revue, partie 2 | Synthèse PDF ; voir la cartographie éditable |
 
@@ -74,11 +73,11 @@ Ou via l'interface GitHub : onglet **Add file → Upload files** sur ce dossier,
 
 Les deux résumés exécutifs de la revue sont conservés dans `raw/reviews/`. Ils ne remplacent pas les articles scientifiques primaires qu'ils citent. Leurs références sont organisées en Markdown éditable dans [la bibliographie annotée](../docs/bibliographie-annotee-jdriftx.md), avec une fiche par famille de méthodes.
 
-Les décisions qui découlent de la revue doivent être synthétisées dans [`docs/07-plan-integration-revue-systematique.md`](../docs/07-plan-integration-revue-systematique.md), en reliant chaque décision aux sections de la revue, aux sources vérifiées, aux limites de preuve et aux critères d'acceptation associés. Les PDF bruts sont conservés sans modification de contenu.
+Les synthèses publiques des résultats de la revue se trouvent dans `docs/02-revue-etat-art-2026.md`, `docs/04-revues-papiers-sources.md` et la [bibliographie annotée](../docs/bibliographie-annotee-jdriftx.md). Le plan d'intégration détaillé est conservé dans les notes privées associées au projet. Les PDF sources sont conservés sans modification de contenu.
 
 Ne pas confondre une synthèse de revue avec une source primaire ni compter comme indépendantes deux versions d'un même travail sans vérifier leurs différences.
 
 
-Le rapport final de revue systématique sera ajouté par le mainteneur dans ce dossier. Son fichier exact sera indiqué ici après dépôt. Le rapport est une source de travail ; les décisions qui en découlent doivent être synthétisées séparément dans docs/07-plan-integration-revue-systematique.md, avec les références vérifiées, les limites de preuve et les critères d'acceptation associés.
+Le rapport final de revue systématique sera ajouté par le mainteneur dans ce dossier. Son fichier exact sera indiqué ici après dépôt. Le rapport est une source de travail ; les résultats utiles à la compréhension publique doivent être synthétisés dans les documents scientifiques publics, avec les références vérifiées et les limites de preuve. Le suivi opérationnel des décisions reste dans les notes privées associées.
 
 Ne pas remplacer les PDF historiques ni confondre le rapport de revue avec les sources primaires qu'il cite. Si le rapport contient des exports bibliographiques ou des données de sélection, les conserver avec leur provenance et leur format d'origine.

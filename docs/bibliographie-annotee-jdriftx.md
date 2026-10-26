@@ -37,7 +37,7 @@ Les fichiers PDF sont conservés comme documents de synthèse. Les fiches ci-des
 4. Relation précise avec J-DriftX et ce qui est **similaire / différent**.
 5. Limites, résultats négatifs et incertitudes.
 6. Conséquence testable : théorie, baseline, jeu de données, test, benchmark, ou décision de ne pas intégrer.
-7. Emplacement dans le rapport de revue (page/section) et statut de décision dans [le plan d'intégration](07-plan-integration-revue-systematique.md).
+7. Emplacement dans le rapport de revue (page/section) et statut de décision dans les notes internes de suivi (dépôt privé).
 
 ## Garde-fous
 
