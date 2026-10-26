@@ -37,6 +37,7 @@ $\tau = \int ds / |\mathbf{u}|$ néglige la diffusion dans le temps d'arrivée ;
 ::: {.callout-note}
 ### H5 — Homogénéité horizontale par morceaux
 La couche de surface est homogène par morceaux : chaque segment de la trajectoire porte ses paramètres (stabilité, rugosité), assemblés par la métrique.
+*Justification* : les solutions de similitude sont établies sur terrain homogène ; l'assemblage par morceaux étend leur portée aux paysages réels. *Conséquence* : le coût de la métrique reste celui d'une addition de segments ; *limite* : les transitions brusques (lisières, falaises, côtes) sont traitées grossièrement, sans zone de transition dédiée.
 :::
 
 ::: {.callout-note}
