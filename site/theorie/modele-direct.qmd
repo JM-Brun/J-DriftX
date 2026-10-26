@@ -40,7 +40,7 @@ donne la forme usuelle
 
 **Advection** désigne le transport par le mouvement moyen local de l'air ; **diffusion** désigne le mélange représenté par un flux proportionnel à un gradient dans ce modèle. Ces mécanismes sont distincts. Dans une atmosphère turbulente, le transport turbulent n'est pas, à l'échelle instantanée, simplement une diffusion moléculaire : le terme de diffusion turbulente apparaît après moyennage et fermeture (section 3).
 
-Cette équation ne définit pas à elle seule un problème bien posé. Il faut aussi spécifier le domaine spatial, les conditions initiales, les conditions aux limites (sol, limites latérales et supérieures), la source et ses unités, ainsi que les propriétés du champ de vitesse. La négligence du dépôt, de la chimie ou de la diffusion longitudinale est une hypothèse de modèle, pas une identité mathématique.
+Cette équation ne définit pas à elle seule un problème bien posé. Il faut aussi spécifier le domaine spatial, les conditions initiales, les conditions aux limites (sol, limites latérales et supérieures), la source et ses unités, ainsi que les propriétés du champ de vitesse. La négligence du dépôt, de la chimie ou de la diffusion longitudinale est une hypothèse de modèle, pas une identité mathématique. Par exemple, pour le panache gaussien idéalisé au-dessus d'un sol imperméable, une condition de flux vertical nul au sol est satisfaite par la méthode des images ; sa dérivation et ses limites sont explicitées dans [Solutions de similitude](similitude.qmd#étape-6-réflexion-au-sol-par-la-méthode-des-images).
 
 ## 3. Moyennage de Reynolds : d'où vient le flux turbulent ?
 
@@ -117,7 +117,7 @@ Le tenseur ne se déduit pas du seul nom « turbulence ». Il doit être prescri
 
 ## 5. Régime, stabilité atmosphérique et classes de Pasquill
 
-**Régime** désigne ici le type de comportement temporel et physique supposé pour le problème ; le mot doit toujours être qualifié. Un régime **transitoire** dépend du temps ; un régime **stationnaire** satisfait \(\partial C/\partial t=0\) pour l'état modélisé ; un régime **établi** signifie que les statistiques ou le profil considéré ne changent plus dans le cadre d'observation choisi. « Stationnaire » et « établi » sont souvent associés mais ne sont pas interchangeables sans préciser ce qui est stationnaire (le vent, la source, les statistiques ou la concentration). Les régimes **laminaire** et **turbulent** qualifient plutôt la dynamique de l'écoulement ; ils ne sont pas synonymes de transitoire et stationnaire.
+**Régime** désigne ici le type de comportement temporel et physique supposé pour le problème ; le mot doit toujours être qualifié. Un régime **transitoire** dépend du temps ; un régime **stationnaire** satisfait \(\partial C/\partial t=0\) pour l'état modélisé ; un régime **établi** signifie que les statistiques ou le profil considéré ne changent plus dans le cadre d'observation choisi. « Stationnaire » et « établi » sont souvent associés mais ne sont pas interchangeables sans préciser ce qui est stationnaire (le vent, la source, les statistiques ou la concentration). Les régimes **laminaire** et **turbulent** qualifient plutôt la dynamique de l'écoulement ; ils ne sont pas synonymes de transitoire et stationnaire. Le [glossaire](../glossaire.qmd) donne aussi la définition courte du champ stationnaire et de la quasi-stationnarité ; celle-ci ne dispense pas de préciser ici l'objet dont le temps est écarté.
 
 La **stabilité atmosphérique** décrit notamment la façon dont la stratification thermique favorise ou freine les déplacements verticaux turbulents. Les classes empiriques de Pasquill (souvent notées A à F, de conditions très instables à très stables) résument des conditions météorologiques à partir d'indicateurs tels que le rayonnement solaire, la couverture nuageuse et le vent, selon la variante de classification. Les définitions opérationnelles et les courbes associées doivent être consultées dans la [page Solutions de similitude](similitude.qmd) et dans l'entrée « Classes de Pasquill » du [glossaire](../glossaire.qmd). Elles servent dans certains modèles de dispersion à choisir des paramètres ou courbes empiriques. Elles ne constituent ni une loi universelle de turbulence, ni une mesure directe de tous les coefficients de \(\mathbf K\). Les variantes réglementaires et les domaines d'application doivent être cités lorsqu'une paramétrisation précise est utilisée.
 
@@ -130,7 +130,7 @@ Le lien entre \(\mathbf K\) et les \(\sigma\) dépend des hypothèses du modèle
 \sigma_y^2=2K_y t'=\frac{2K_y x}{U},\qquad
 \sigma_z^2=2K_z t'=\frac{2K_z x}{U},
 \]
-avant prise en compte de la condition de sol et d'autres effets. Cette relation est une conséquence de ce **cas simplifié**, pas une formule universelle de dispersion atmosphérique.
+avant prise en compte de la condition de sol et d'autres effets. Cette relation est une conséquence de ce **cas simplifié**, pas une formule universelle de dispersion atmosphérique. Elle relève de la limite diffusive classique attribuée à Taylor (1921), dont le rôle dans le passage vers les lois de dispersion empiriques est rappelé dans [Solutions de similitude](similitude.qmd).
 
 Les formules empiriques de Pasquill–Gifford/Briggs fournissent des courbes ou relations pour estimer \(\sigma_y(x)\) et \(\sigma_z(x)\) dans des contextes spécifiés. Elles ne sont pas « produites automatiquement » par toute fermeture gradient : il faut ajouter les hypothèses, la géométrie, les conditions aux limites et la paramétrisation. La dérivation détaillée du cas gaussien et ses limites sont données dans [Solutions de similitude](similitude.qmd).
 
@@ -174,7 +174,7 @@ La chaîne de raisonnement est la suivante :
 5. Les modèles empiriques de dispersion paramètrent ces largeurs pour certaines classes de conditions ; le choix de formule et son domaine de validité doivent être explicites.
 6. Drift-X/J-DriftX étudie si des solutions de similitude et une représentation géométrique des temps de transport peuvent former un modèle approché moins coûteux. Cette réduction reste une hypothèse à valider, et non une conséquence automatique des étapes précédentes.
 
-Le coût du modèle direct dépend du domaine, du schéma, du maillage, du régime, des tolérances et des ressources. Il doit être comparé à une baseline pertinente. De même, les propriétés physiques — conservation, positivité, superposition, divergence — doivent être définies avec leurs hypothèses et testées séparément ; les tests actuels ne prouvent pas toutes ces propriétés pour le modèle historique général.
+Le coût du modèle direct dépend du domaine, du schéma, du maillage, du régime, des tolérances et des ressources. Il doit être comparé à une baseline pertinente ; les composantes et compromis de cette résolution maillée sont détaillés dans [EDP & maillage](edp-et-maillage.qmd). De même, les propriétés physiques — conservation, positivité, superposition, divergence — doivent être définies avec leurs hypothèses et testées séparément ; les tests actuels ne prouvent pas toutes ces propriétés pour le modèle historique général.
 
 ## 11. Articulation avec les autres pages : qui définit quoi ?
 
