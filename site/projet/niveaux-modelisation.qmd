@@ -111,5 +111,5 @@ Une CI verte est un signal sur le code et les documents testés ; elle n'établi
 - [Modèle direct](../theorie/modele-direct.qmd) — équation de transport et fermeture.
 - [Solutions de similitude](../theorie/similitude.qmd) — hypothèses qui produisent les profils de concentration.
 - [Métrique travel-time](../theorie/metrique-travel-time.qmd) — chemins, temps et portée des primitives de code.
-- [Catalogue des hypothèses](../hypotheses/catalogue.qmd) — énoncé, justification, conséquence et limite.
+- [Catalogue des hypothèses](../hypotheses/catalogue.qmd) — énoncé, traduction mathématique, justification, limite et ancrage dans le code.
 - [Glossaire](../glossaire.qmd) — notations et définitions accessibles.
