@@ -28,3 +28,22 @@ Cahier des charges scientifique du noyau : multi-niveaux avec entrée/sortie de 
 ## Pour aller plus loin
 
 Fiche détaillée : <code>docs/04-revues-papiers-sources.md</code>, section 4.
+
+
+## Complément d'analyse — sens de la hiérarchie multi-niveaux
+
+La phrase du chapitre « a given level provides the inlet condition for the level above » décrit un **couplage de régimes physiques** : le modèle de champ proche, qui représente l'émission et la distribution initiale près du dispositif, fournit une quantité d'entrée au modèle de transport à longue distance. Chaque niveau réduit l'espace des solutions en s'appuyant sur une famille paramétrée et sur des connaissances physiques a priori. L'assimilation de données sert à identifier des paramètres de cette représentation.
+
+Cette hiérarchie ne doit pas être confondue avec les **niveaux spatiaux emboîtés** `Ω = ω₀, ωᵢ` du manuscrit Drift-X 2009. Dans ce second cas, les niveaux correspondent à des emprises spatiales et à des résolutions différentes, utilisées pour raffiner le champ de vent et corriger les effets du relief. Les deux mécanismes peuvent se combiner conceptuellement, mais ils répondent à des questions distinctes : *quel régime physique alimente le suivant ?* versus *à quelle résolution spatiale le champ est-il représenté ?*
+
+### Hypothèses et conséquences à garder explicites
+
+- Le champ proche est paramétré à partir de caractéristiques du dispositif, de la végétation et d'observations expérimentales ; ce n'est pas un champ CFD détaillé garanti.
+- La séparation d'échelles suppose notamment que la vitesse d'injection domine le déplacement du dispositif et que l'écoulement local ne modifie pas la circulation atmosphérique globale. La note analytique du chapitre signale que les auteurs eux-mêmes qualifient ces hypothèses de fortes.
+- La quantité de scalaire quittant la couche proche du sol devient une entrée du modèle lointain : cette interface impose de préciser unités, bilan de masse, convention d'intégration et domaine de validité.
+- Le modèle lointain généralise les profils de similitude à une géométrie dirigée par le temps de migration le long d'une caractéristique. Cela suppose une caractéristique pertinente et une règle de sélection en cas de non-unicité ; les champs avec recirculation ou topologie complexe peuvent invalider ou compliquer cette construction.
+- Les figures numériques du chapitre sont des démonstrations sur des configurations sélectionnées, pas un benchmark exhaustif de tous les régimes météorologiques, terrains, sources et niveaux de bruit.
+
+La note conservée dans [l'extraction analytique du chapitre](../extracts/2008-brun-mohammadi-springer-chap14-notes.txt) complète l'extrait des pages 245–246 ; elle ne remplace pas la vérification des équations et figures sur le PDF éditeur.
+
+Lien avec la reprise : [carte N0–N6](../../site/projet/niveaux-modelisation.qmd), [revue croisée des architectures multi-niveaux](../../docs/04-revues-papiers-sources.md), [fiche source de la plateforme Drift-X 2009](2009-bozon-sinfort-mohammadi-driftx-hal.md).
