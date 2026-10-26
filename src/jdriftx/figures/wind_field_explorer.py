@@ -432,3 +432,126 @@ def render_wind_field_explorer_html(config: WindFieldExplorerConfig) -> str:
         + descriptions[config.kind]
         + " Les diagnostics sont estimés sur la grille par NumPy.</p>"
     )
+
+
+@dataclass(frozen=True)
+class WindFieldScenario:
+    """Cas pédagogique pré-calculé à partir du noyau Python partagé."""
+
+    title: str
+    summary: str
+    config: WindFieldExplorerConfig
+
+
+def default_wind_field_scenarios() -> tuple[WindFieldScenario, ...]:
+    """Retourne des expériences contrôlées pour l'exploration statique du site.
+
+    Chaque figure est calculée durant le rendu Quarto par ``vector_field``. Le
+    navigateur n'exécute ensuite aucune approximation ou équation du modèle.
+    """
+    return (
+        WindFieldScenario(
+            title="Référence uniforme",
+            summary="Même vecteur en tout point : base de comparaison.",
+            config=WindFieldExplorerConfig(
+                family="Uniforme",
+                speed=2.0,
+                angle_deg=0.0,
+                shear=0.0,
+                radial_strength=0.0,
+                probe_x=2.0,
+                probe_y=1.0,
+            ),
+        ),
+        WindFieldScenario(
+            title="Cisaillement linéaire",
+            summary="La vitesse horizontale varie avec la position verticale.",
+            config=WindFieldExplorerConfig(
+                family="Cisaillement linéaire",
+                speed=2.0,
+                angle_deg=0.0,
+                shear=0.35,
+                radial_strength=0.0,
+                probe_x=2.0,
+                probe_y=1.0,
+            ),
+        ),
+        WindFieldScenario(
+            title="Source radiale",
+            summary="Cas contrôlé où les vecteurs divergent depuis l'origine.",
+            config=WindFieldExplorerConfig(
+                family="Radial (source / puits)",
+                speed=0.0,
+                angle_deg=0.0,
+                shear=0.0,
+                radial_strength=0.35,
+                probe_x=2.0,
+                probe_y=1.0,
+            ),
+        ),
+        WindFieldScenario(
+            title="Puits radial",
+            summary="Même loi avec signe opposé : les vecteurs convergent.",
+            config=WindFieldExplorerConfig(
+                family="Radial (source / puits)",
+                speed=0.0,
+                angle_deg=0.0,
+                shear=0.0,
+                radial_strength=-0.35,
+                probe_x=2.0,
+                probe_y=1.0,
+            ),
+        ),
+    )
+
+
+def render_wind_field_scenario_gallery_html(
+    scenarios: tuple[WindFieldScenario, ...],
+) -> str:
+    """Rend une galerie HTML native de scénarios calculés lors du build.
+
+    ``details`` fournit une interaction sans moteur Python côté navigateur :
+    l'utilisateur ouvre le cas qui l'intéresse, alors que les cartes SVG ont
+    déjà été produites par l'API Python du projet.
+    """
+    if not scenarios:
+        msg = "Au moins un scénario de champ de vent est requis."
+        raise ValueError(msg)
+    panels = []
+    for index, scenario in enumerate(scenarios):
+        open_attribute = " open" if index == 0 else ""
+        panels.append(
+            '<details class="wind-field-scenario"'
+            + open_attribute
+            + "><summary><strong>"
+            + escape(scenario.title)
+            + "</strong><span>"
+            + escape(scenario.summary)
+            + "</span></summary>"
+            + render_wind_field_explorer_html(scenario.config)
+            + "</details>"
+        )
+    style = """
+<style>
+.wind-field-gallery { margin: 1.25rem 0; }
+.wind-field-scenario {
+  border: 1px solid #cbd8e1;
+  border-radius: .55rem;
+  margin: .75rem 0;
+  overflow: hidden;
+}
+.wind-field-scenario > summary {
+  cursor: pointer;
+  padding: .8rem 1rem;
+  background: #f5f8fa;
+}
+.wind-field-scenario > summary span {
+  display: block;
+  color: #486581;
+  margin-top: .2rem;
+}
+.wind-field-scenario > :not(summary) { margin-left: 1rem; margin-right: 1rem; }
+</style>
+"""
+    gallery = '<section class="wind-field-gallery" aria-label="Scénarios de champ de vent">'
+    return style + gallery + "".join(panels) + "</section>" + "</section>"

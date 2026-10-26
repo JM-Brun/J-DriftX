@@ -31,17 +31,21 @@ jobs:
       - name: Installer l'environnement Python et Jupyter
         run: uv sync
 
-      - name: Construire le paquet Python pour Pyodide
-        run: uv build --wheel --out-dir site/resources/wheels
-
       - uses: quarto-dev/quarto-actions/setup@v2
 
-      - uses: quarto-dev/quarto-actions/render@v2
-        with:
-          path: site
+      - name: Rendu du site Quarto
+        env:
+          QUARTO_PYTHON: ${{ github.workspace }}/.venv/bin/python
+        run: quarto render site
 
-      - name: Vérifier la présence du paquet Python publié
-        run: test -s site/_site/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
+      - name: Vérifier l'explorateur rendu
+        run: |
+          page="site/_site/projet/experiences-interactives.html"
+          test "$(grep -o '<svg' "$page" | wc -l)" -eq 4
+          if grep -qiE 'pyodide|Downloading Pyodide' "$page"; then
+            echo "::error title=Explorateur statique::le rendu dépend encore de Pyodide"
+            exit 1
+          fi
 
       - uses: actions/upload-pages-artifact@v3
         with:
