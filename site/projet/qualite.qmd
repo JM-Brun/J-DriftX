@@ -18,7 +18,7 @@ Les tests automatisés vérifient des propriétés définies pour des fonctions 
 | `test_symetrie_laterale` | Symétrie latérale attendue du panache gaussien en vent uniforme | Propriété de cette formule et de ce régime, pas d'un champ atmosphérique général |
 | Tests de `pseudo_distance_uniforme` | Projection longitudinale, coût nul pour certains points distincts, coût infini en amont, invariance par rotation et gestion du vent nul/formes invalides | Référence analytique limitée au vent uniforme ; ne reproduit pas la métrique historique dans un champ variable |
 | `test_polyline_cost_is_invariant_to_path_reversal_and_wind_sign` | Confirme que la primitive de polyligne utilise la norme de la vitesse et ignore son orientation | Ce test montre précisément que cette primitive n'est pas la pseudo-distance historique orientée |
-| Divergence du champ de vent | Tests ciblés sur les champs analytiques à fonction de courant (différences finies, superposition) et sur la reconstruction à deux mesures (grille, \(< 10^{-12}\ \mathrm{s}^{-1}\)) | Ces tests couvrent des champs de vérification analytiques ; le champ de vent multi-niveaux historique n'est pas implémenté dans le noyau actuel |
+| Divergence du champ de vent | Tests ciblés sur les champs analytiques à fonction de courant (différences finies, superposition) et sur la reconstruction à deux mesures (grille, $< 10^{-12}\ \mathrm{s}^{-1}$) | Ces tests couvrent des champs de vérification analytiques ; le champ de vent multi-niveaux historique n'est pas implémenté dans le noyau actuel |
 
 ## Given / When / Then
 
