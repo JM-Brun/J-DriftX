@@ -157,12 +157,12 @@ def test_la_superposition_est_aussi_a_divergence_nulle() -> None:
     # When — la divergence numérique maximale est estimée par différences centrées.
     divergence_max = 0.0
     for x, y in points:
-        du_dx = (
-            superposition.vitesse(x + h, y)[0] - superposition.vitesse(x - h, y)[0]
-        ) / (2.0 * h)
-        dv_dy = (
-            superposition.vitesse(x, y + h)[1] - superposition.vitesse(x, y - h)[1]
-        ) / (2.0 * h)
+        du_dx = (superposition.vitesse(x + h, y)[0] - superposition.vitesse(x - h, y)[0]) / (
+            2.0 * h
+        )
+        dv_dy = (superposition.vitesse(x, y + h)[1] - superposition.vitesse(x, y - h)[1]) / (
+            2.0 * h
+        )
         divergence_max = max(divergence_max, abs(du_dx + dv_dy))
     # Then — elle est nulle à la précision de différenciation près.
     assert divergence_max < 1e-6
