@@ -23,6 +23,12 @@
 | **Navigation minimale** | Nécessiterait un ensemble de chemins admissibles, un coût, un domaine et des conditions aux limites/obstacles. | Aucun résultat de minimisation ou d'existence d'un minimiseur n'est établi par le code actuel. | Non implémentée dans `metric.py`. | Aucun test de solveur de navigation minimale identifié. | Hors périmètre du MVP-S actuel. Un coût sur un chemin donné n'est pas un optimum sur tous les chemins. |
 | **Conservation de masse, positivité de concentration, validité atmosphérique** | Nécessitent une équation physique de transport/dispersion, variables, sources/puits, conditions initiales et de bord et méthode numérique explicites. | Ces propriétés ne découlent pas des définitions de temps de parcours ci-dessus. | Non établi par les primitives de métrique. | Les tests de `test_metric.py` ne valident pas ces propriétés physiques. | Non établi ; aucune revendication physique ne doit être déduite de cette matrice ou d'une CI verte. |
 
+## Autres corrections de portée relevées lors de la revue
+
+- **Orbite périodique (proposition 3.7 de l'investigation G0-S).** Pour \(B\ne A\), le premier temps \(T(A,B)\) est strictement inférieur à la période \(p\), et non simplement inférieur ou égal. Le texte a été resserré à \(T(A,B)\in(0,p)\) et \(T(B,A)=p-T(A,B)\in(0,p)\).
+- **Champ de cisaillement (lemme 5.4).** L'équivalence de triangulation exige \(x_B<x_C\), car la preuve divise par \(x_C-x_B\). Si \(x_B=x_C\), le coût longitudinal du segment \(BC\) est nul et l'inégalité est une égalité indépendamment de \(v(y_B)\). L'hypothèse stricte a été ajoutée.
+- **Lemme 3.1.** La preuve utilise maintenant un temps d'atteinte existant \(t_0\), puis la compacité de \([0,t_0]\), plutôt que de déclarer fermé sans préciser le domaine maximal de la trajectoire l'ensemble de tous les temps d'atteinte.
+
 ## Revue analytique indépendante : correction apportée
 
 La proposition 3.8 de l'investigation G0-S a été restreinte : l'application directe du théorème des fonctions implicites à \(X(t;a)-b=0\) est justifiée telle quelle en dimension 1, mais pas pour un point cible fixe en dimension 2 ou plus. Le temps local de première arrivée en 1D requiert en outre que la branche locale reste la première. La preuve du lemme 3.1 a également été reformulée en utilisant un temps d'atteinte \(t_0\) et le compact \([0,t_0]\), afin de rendre explicite le domaine où la trajectoire existe.
