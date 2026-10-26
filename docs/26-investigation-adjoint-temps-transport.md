@@ -29,10 +29,78 @@ Trois acceptions du mot « adjoint » existent dans la littérature et doivent
    (produit scalaire d'une perturbation d'état et de la sortie adjointe).
    Les solveurs périodiques du dépôt en sont les candidats futurs.
 
-Ce document et les tests associés couvrent l'acception 2 uniquement. La
+Ce document et les tests associés couvrent l'acception 2 uniquement ; l'ancrage
+historique (section 2.1) confirme que c'est la bonne acception pour J-DriftX :
+le corpus Drift-X employait l'acception 2 quant à l'usage, construite par
+différentiation automatique en mode inverse (acception 3). La
 « rigueur » d'un adjoint n'est pas une propriété physique comme la
 conservation : c'est l'exactitude du gradient fourni, qui doit coïncider avec
 la dérivée réelle de la fonction coût.
+
+### 2.1 Ancrage dans le corpus historique
+
+Les sources primaires du corpus sont archivées dans le dépôt (extractions
+texte brutes grep-ables dans raw/extracts ; revues détaillées dans
+docs/04-revues-papiers-sources.md). Elles tranchent la définition :
+
+**C. R. Mécanique 2006** (Mohammadi & Brun, « Similitude généralisée et
+modélisation géométrique à complexité réduite », C. R. Mécanique 334(10),
+634-638, DOI 10.1016/j.crme.2006.06.007 ; texte intégral relu, extraction
+dans raw/extracts/2006-mohammadi-brun-crmeca.txt). La section 4, « Calcul de
+gradient et identification des sources d'une pollution », énonce :
+
+> « On utilise la différentiation automatique en mode inverse par Tapenade
+> pour construire le code adjoint et accéder au gradient avec un coût
+> indépendant du nombre des paramètres de contrôle. Ce gradient est aussi
+> utilisé pour la résolution de (1). »
+
+où (1) est le problème d'assimilation : min sur p de J(p) = |u(p) - u_obs| +
+|c(p, u(p)) - c_obs|, p regroupant toutes les variables indépendantes du
+modèle (domaine, topographie, météo, sources, buses). La figure 5 montre la
+« sensibilité (gradient) d'une pollution observée [...] par rapport à la
+position de la source » : l'identification de sources est l'usage dual du
+même gradient.
+
+**Chapitre Springer 2008** (Brun & Mohammadi, « Reduced-Order Modelling of
+Dispersion », p. 245-256, DOI 10.1007/978-1-4020-8758-5_14 ; résumé verbatim
+et notes analytiques). Résumé : « Model parameters identification is based on
+data assimilation. [...] Sensitivity analysis is used for risk analysis and
+also for the identification of the sources of an observed pollution. » Le
+chapitre mobilise en outre la sensibilité dite incomplète (lignée Mohammadi &
+Pironneau) : la linéarisation porte sur le modèle approché, pas sur l'équation
+d'état directe.
+
+**HAL 2009** (Bozon, Sinfort & Mohammadi, plateforme Drift-X/SIG, texte
+intégral dans raw/extracts/) : aucune occurrence d'« adjoint », « gradient »
+ou « sensibilité » — ce papier, dédié au couplage SIG, ne développe pas
+l'adjoint. Absence documentée, pas contradiction.
+
+**Verdict.** L'adjoint historique de Drift-X est défini sans ambiguïté par
+son usage et sa construction :
+
+- quant à l'usage : l'acception 2 (gradient, fonction d'influence) — le
+  gradient de la fonction coût d'assimilation J et la sensibilité d'une
+  pollution observée par rapport à la position des sources ;
+- quant à la construction : l'acception 3 — l'adjoint du code du modèle
+  réduit, produit par différentiation automatique en mode inverse
+  (Tapenade), avec la propriété économique caractéristique du mode inverse :
+  un coût du gradient indépendant du nombre de paramètres de contrôle ;
+- l'acception 1 au sens strict (état adjoint d'une EDP) est structurellement
+  exclue : le modèle revendique explicitement de ne résoudre aucune EDP
+  (« The approach does not require the solution of any PDE »), et la
+  sensibilité est dite incomplète, portant sur le modèle approché.
+
+Conséquence pour J-DriftX : les gradients exacts testés dans cette PR
+(vecteur adjoint constant de la référence uniforme, gradient 1D) sont du
+même nature que l'usage historique (fonction d'influence pour
+l'assimilation et l'identification), à deux différences près, toutes deux
+documentées : (i) la construction historique était automatique (AD inverse
+du code entier), la nôtre est analytique et fermée sur des primitives
+exactes — plus rigoureuse localement, mais limitée aux cas exacts
+disponibles ; (ii) le gradient historique portait sur la fonction
+d'assimilation J (paramètres p du modèle complet), pas sur la seule métrique
+dirigée — couvrir J suppose la chaîne complète c(p, u(p)), dont seul le
+maillon tau est vérifié ici.
 
 ## 3. Référence uniforme : adjoint exact fermé
 
@@ -132,7 +200,9 @@ comparaison.
 
 - **État adjoint en champ variable** : la métrique historique de Drift-X
   est définie sur un champ multi-niveaux non reconstruit à ce jour ; son
-  adjoint (acception 1) suivra la reconstruction.
+  gradient (au sens historique : différentiation automatique inverse du code,
+  section 2.1) suivra la reconstruction. L'acception 1 (état adjoint d'EDP)
+  est structurellement hors du périmètre du modèle, qui ne résout pas d'EDP.
 - **Adjoint d'un schéma numérique** : les solveurs périodiques (centré/RK4,
   amont/Euler) pourraient recevoir une transcription rétrograde avec test
   croisé adjoint-direct ; arbitrage futur, non lié à l'issue #42.
@@ -146,6 +216,9 @@ comparaison.
 - Ils ne constituent pas un état adjoint au sens du contrôle optimal
   (acception 1) : seul le gradient d'une référence analytique discrète est
   couvert.
+- Ils ne couvrent pas non plus le gradient de la fonction d'assimilation J
+  du corpus (métrique + concentration + paramètres complets) : seul le
+  maillon métrique tau est vérifié.
 - Ils ne couvrent pas la sensibilité de la métrique historique en champ
   variable, ni celle du panache gaussien.
 - Ils n'établissent pas la dérivabilité à la borne transversale
@@ -159,7 +232,9 @@ comparaison.
 Le jalon M3 (assimilation) présuppose une métrique dirigée différentiable :
 toute assimilation de paramètres de vent par méthode de gradient a besoin du
 gradient exact du coût. Le vecteur adjoint constant de la référence uniforme
-en est le premier maillon vérifié. Le MVP-S hérite du gradient 1D exact
+en est le premier maillon vérifié ; l'usage historique du gradient — résoudre
+le problème d'assimilation et identifier les sources d'une pollution observée
+(section 2.1) — en donne la finalité exacte. Le MVP-S hérite du gradient 1D exact
 (section 4). La cartographie de ces résultats est tenue à jour dans
 site/theorie/contraintes-physiques.qmd (section 6) et
 site/projet/qualite.qmd.
