@@ -78,9 +78,9 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 
 *Preuve de (ii).* Si \(X(t^*;A) = B\), alors \(s \mapsto X(t^*-s; A)\) est une trajectoire de \(-\mathbf u\) issue de \(B\) qui atteint \(A\) en \(s = t^*\) : \(T_{-\mathbf u}(B,A) \le T_{\mathbf u}(A,B)\). En appliquant le même argument à \(-\mathbf u\), l'inégalité inverse. ∎
 
-**Proposition 3.7 (les orbites fermées restaurent l'accessibilité bilatérale).** Si la trajectoire issue de \(A\) est périodique de période \(p\) et si \(B \in \gamma_A\), \(B \ne A\), alors \(T(A,B) \in\, ]0, p]\) et \(T(B,A) = p - T(A,B) < +\infty\). Sur une orbite fermée, tout couple de points est accessible dans les deux sens : l'« asymétrie » y disparaît.
+**Proposition 3.7 (les orbites fermées restaurent l'accessibilité bilatérale).** Si la trajectoire issue de \(A\) est périodique de période \(p\) et si \(B \in \gamma_A\), \(B \ne A\), alors \(T(A,B) \in ]0,p[\) et \(T(B,A)=p-T(A,B)\in ]0,p[\). Sur une orbite fermée, tout couple de points distincts est accessible dans les deux sens : l'« asymétrie » y disparaît.
 
-*Preuve.* L'orbite est parcourue entièrement en une période : le premier passage en \(B\) existe dans \(]0, p]\), noté \(t_1\), avec \(X(t_1;A) = B\). Les temps d'atteinte d'un point d'une orbite fermée depuis un autre point de la même orbite forment une progression arithmétique de raison \(p\) ; ceux de \(A\) depuis \(B\) sont donc \((p - t_1) + k p\), \(k \ge 0\), dont le plus petit est \(p - t_1\). ∎
+*Preuve.* L'orbite est parcourue entièrement en une période. Puisque \(B\ne A\), le premier passage en \(B\) a lieu à un temps \(t_1\in]0,p[\), avec \(X(t_1;A)=B\). Par périodicité, les temps d'atteinte de \(A\) depuis \(B\) sont \(p-t_1+kp\), \(k\ge0\), et le plus petit vaut \(p-t_1\in]0,p[\). ∎
 
 **Proposition 3.8 (régularité locale en dimension 1 uniquement).** Supposons \(d=1\), \(u\in C^1(\Omega)\), \(X(t^*;a_0)=b\) et \(u(b)\ne0\). Pour la branche locale de temps d'atteinte, la fonction \(F(t,a)=X(t;a)-b\) est scalaire et vérifie \(F(t^*,a_0)=0\), \(\partial_tF(t^*,a_0)=u(b)\ne0\). Le théorème des fonctions implicites donne donc un temps local d'atteinte de classe \(C^1\) en fonction de \(a\). Pour conclure que le temps de **première** arrivée \(T(\cdot,b)\) est lui-même \(C^1\), il faut en outre que cette branche reste la première localement (pas de changement de branche dû à une autre atteinte plus précoce).
 
@@ -158,13 +158,13 @@ d(A,B) = \frac{x_B - x_A}{U} \text{ si } x_B \ge x_A, \qquad +\infty \text{ sino
 d(A,B) = \frac{x_B - x_A}{v(y_A)} \text{ si } x_B \ge x_A, \qquad +\infty \text{ sinon.}
 \]
 
-**Lemme 5.4 (caractérisation exacte de la triangulation en cisaillement).** Pour \(x_A \le x_B \le x_C\) :
+**Lemme 5.4 (caractérisation exacte de la triangulation en cisaillement).** Pour \(x_A \le x_B < x_C\) :
 
 \[
 d(A,C) \le d(A,B) + d(B,C) \iff v(y_B) \le v(y_A).
 \]
 
-*Preuve.* En développant, puis en soustrayant \((x_B - x_A)/v(y_A)\) et en divisant par \(x_C - x_B > 0\) : l'inégalité équivaut à \(1/v(y_A) \le 1/v(y_B)\), soit \(v(y_B) \le v(y_A)\). ∎
+*Preuve.* En développant, puis en soustrayant \((x_B-x_A)/v(y_A)\) et en divisant par \(x_C-x_B>0\), l'inégalité équivaut à \(1/v(y_A)\le1/v(y_B)\), soit \(v(y_B)\le v(y_A)\). La condition stricte \(x_B<x_C\) est nécessaire pour cette équivalence ; si \(x_B=x_C\), le segment \(BC\) a un déplacement longitudinal nul et l'inégalité devient une égalité indépendamment de \(v(y_B)\).
 
 Interprétation : la triangulation dirigée échoue **exactement** lorsque le point intermédiaire \(B\) est porté par une caractéristique plus rapide que celle de \(A\).
 
