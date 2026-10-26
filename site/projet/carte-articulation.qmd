@@ -10,7 +10,7 @@ Cette page relie l'héritage scientifique, l'hypothèse de recherche, le code ac
 
 J-DriftX explore si des solutions de similitude généralisées dans une représentation dirigée par les temps de transport peuvent aider à traiter certains problèmes de dispersion à coût réduit. Cette proposition est une **hypothèse de recherche**, pas une méthode prédictive validée.
 
-Une source historique établit ce qu'un article a publié ; un test vérifie un comportement du code dans un cas précis ; une convergence numérique vérifie un schéma sur un problème contrôlé. Aucun de ces éléments ne démontre, à lui seul, l'utilité pratique du modèle.
+Une source historique établit ce qu'un article a publié ; un test vérifie un comportement du code dans un cas précis ; une convergence numérique vérifie un schéma sur un problème contrôlé. Aucun de ces éléments ne démontre, à lui seul, l'utilité pratique du modèle.\n\nCette carte distingue les **niveaux de preuve**. Pour distinguer les **niveaux de modélisation** — champ de vent, chemins, temps de transport, dispersion et concentration — et leurs dépendances, consulter la [carte des niveaux de modélisation](niveaux-modelisation.qmd).
 
 ## Les cinq niveaux
 
