@@ -39,7 +39,7 @@ Les notes de pilotage (feuille de route détaillée, revue adversariale et arbit
 site/                 # Site Quarto
 src/jdriftx/          # Cœur Python
 tests/                # Tests unitaires et propriétés physiques
-docs/                 # Audit, revues, roadmap, bibliographie et décisions
+docs/                 # Synthèses scientifiques, bibliographie et bilans reproductibles
 raw/                  # Sources primaires et documents bruts
 .github/workflows/    # CI et publication du site
 ~~~
