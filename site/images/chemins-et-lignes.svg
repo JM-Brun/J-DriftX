@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
-<title id="title">Quatre notions de chemin : ligne de courant, caractéristique, polyligne, temps de première arrivée</title>
-<desc id="desc">Quatre panneaux. 1. Ligne de courant : trois courbes tangentes au champ de vent, flèches de vent posées sur la courbe centrale. 2. Caractéristique : une particule lâchée en A suit la ligne de courant jusqu'à B ; tau est le temps du voyage. 3. Polyligne : des points d'étape choisis (P1, P2) reliés par des segments droits, à comparer au chemin du vent en pointillés. 4. Temps de première arrivée : trois chemins emboîtés de A à B ; le plus plat (28 s) est le plus rapide, les arcs plus hauts sont plus lents (40 s, 65 s).</desc>
+<title id="title">Quatre notions de chemin : ligne de courant, caractéristique, polyligne, temps minimal de navigation</title>
+<desc id="desc">Quatre panneaux. 1. Ligne de courant : trois courbes tangentes au champ de vent, flèches de vent posées sur la courbe centrale. 2. Caractéristique : une particule lâchée en A suit la ligne de courant jusqu'à B ; tau est le temps du voyage. 3. Polyligne : des points d'étape choisis (P1, P2) reliés par des segments droits, à comparer au chemin du vent en pointillés. 4. Temps minimal de navigation : trois chemins emboîtés de A à B ; le plus plat (28 s) est le plus rapide, les arcs plus hauts sont plus lents (40 s, 65 s).</desc>
 <defs>
   <marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2c7a55"/></marker>
   <style>
@@ -65,8 +65,8 @@
 <text class="small" x="66" y="690">des segments droits : le tracé ne suit pas le vent.</text>
 
 <rect class="panel" x="610" y="394" width="552" height="316" rx="14"/>
-<text class="heading" x="638" y="432">4. Première arrivée</text>
-<text class="sub" x="638" y="458">le plus rapide des chemins de A à B</text>
+<text class="heading" x="638" y="432">4. Navigation minimale</text>
+<text class="sub" x="638" y="458">le chemin admissible de coût minimal</text>
 <path class="gray" d="M 660,630 C 800,500 920,500 1060,630"/>
 <path class="gray" d="M 660,630 C 770,555 950,555 1060,630"/>
 <path class="blue" d="M 660,630 Q 860,565 1060,630"/>
@@ -77,6 +77,6 @@
 <text class="small" x="818" y="522">65 s</text>
 <text class="small" x="838" y="556">40 s</text>
 <text class="label" x="752" y="640" fill="#2367a8">28 s : première arrivée</text>
-<text class="small" x="638" y="668">De tous les chemins de A à B, la métrique retient le plus</text>
-<text class="small" x="638" y="690">rapide — exact seulement en 1D, à vitesse constante.</text>
+<text class="small" x="638" y="668">Parmi les chemins admissibles, on minimise le coût de</text>
+<text class="small" x="638" y="690">parcours — problème d'optimisation, distinct d'une trajectoire imposée.</text>
 </svg>
