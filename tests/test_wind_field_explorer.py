@@ -6,7 +6,9 @@ import pytest
 
 from jdriftx.figures.wind_field_explorer import (
     WindFieldExplorerConfig,
+    default_wind_field_scenarios,
     render_wind_field_explorer_html,
+    render_wind_field_scenario_gallery_html,
 )
 
 
@@ -69,3 +71,24 @@ def test_explorer_refuses_non_finite_parameter() -> None:
             probe_x=0.0,
             probe_y=0.0,
         )
+
+
+def test_default_scenarios_are_python_rendered_in_native_details() -> None:
+    """La galerie évite un moteur Python WebAssembly à télécharger par le lecteur."""
+    scenarios = default_wind_field_scenarios()
+
+    html = render_wind_field_scenario_gallery_html(scenarios)
+
+    assert len(scenarios) == 4
+    assert html.count("<svg") == 4
+    assert html.count('class="wind-field-scenario"') == 4
+    assert html.count("<details") == 4
+    assert "Référence uniforme" in html
+    assert "Source radiale" in html
+    assert "Puits radial" in html
+
+
+def test_gallery_refuses_an_empty_scenario_set() -> None:
+    """Une page sans expérience est invalide plutôt que silencieusement vide."""
+    with pytest.raises(ValueError, match="Au moins un"):
+        render_wind_field_scenario_gallery_html(())

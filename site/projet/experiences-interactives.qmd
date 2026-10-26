@@ -1,100 +1,36 @@
 ---
 title: "Explorer des champs de vent 2D"
-format:
-  live-html:
-    pyodide:
-      packages:
-        - numpy
-        - https://jm-brun.github.io/J-DriftX/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
+format: html
+execute:
+  echo: false
 ---
 
 La formulation correcte est volontairement plus étroite que « simuler le vent » : J-DriftX sait aujourd'hui évaluer et visualiser des champs vectoriels 2D **synthétiques**. Cette page rend ces objets lisibles ; elle ne produit ni prévision météorologique, ni champ corrigé par le relief.
 
 ::: {.callout-warning}
-**Limite scientifique.** Les trois familles ci-dessous sont des cas mathématiques contrôlés définis dans le module Python **jdriftx.fields.vector_field**. Elles ne sont alimentées par aucune observation, ne représentent ni turbulence ni couche limite, et ne sont pas encore modifiées par le relief, la topologie ou les obstacles.
+**Limite scientifique.** Les familles ci-dessous sont des cas mathématiques contrôlés définis dans le module Python **jdriftx.fields.vector_field**. Elles ne sont alimentées par aucune observation, ne représentent ni turbulence ni couche limite, et ne sont pas encore modifiées par le relief, la topologie ou les obstacles.
 :::
 
-## Manipuler un champ vectoriel 2D
+## Explorer des scénarios de champs vectoriels 2D
 
-Choisir une famille, puis faire varier ses paramètres. OJS ne gère que les contrôles ; à chaque modification, Pyodide importe l'API Python `jdriftx.figures.wind_field_explorer`. Cette API appelle `jdriftx.fields.vector_field`, calcule les diagnostics et rend le SVG. Les coordonnées sont sans dimension et les unités de vitesse sont arbitraires.
+Ouvrir un scénario pour comparer un champ uniforme, un cisaillement et les deux signes d'un champ radial. Chaque grille, vecteur local et diagnostic est calculé par l'API Python du projet pendant le rendu du site ; le navigateur ne recalcule aucune équation.
 
 ::: {.callout-note}
-**Architecture et chargement initial.** Le premier calcul télécharge Pyodide, NumPy et la roue Python du projet. La cellule Quarto ne contient aucune formule, boucle de grille ni génération SVG : elle construit une configuration et appelle l'API testée du paquet. Les interactions suivantes réévaluent ce code Python unique.
+**Architecture et disponibilité.** GitHub Pages est un hébergement statique. Le précédent interpréteur Python WebAssembly restait bloqué au téléchargement et empêchait d'afficher une figure. La page intègre donc des expériences **pré-calculées par Python** : elles sont visibles immédiatement, sans CDN d'interpréteur ni copie du modèle en JavaScript. L'interaction consiste à ouvrir et comparer les cas contrôlés.
 :::
 
-L'implémentation est isolée dans `src/jdriftx/figures/wind_field_explorer.py` ; ses tests sont dans `tests/test_wind_field_explorer.py`. La page conserve seulement son rôle de documentation et d'adaptateur d'interface.
+L'implémentation est isolée dans `src/jdriftx/figures/wind_field_explorer.py` ; ses tests sont dans `tests/test_wind_field_explorer.py`. La page conserve seulement son rôle de documentation et d'import de l'API de présentation.
 
-```{ojs}
-//| echo: false
-
-viewof fieldKind = Inputs.radio(
-  ["Uniforme", "Cisaillement linéaire", "Radial (source / puits)"],
-  {label: "Famille de champ", value: "Uniforme"}
-)
-
-viewof baseSpeed = Inputs.range([0.1, 5], {
-  label: "Vitesse de base U",
-  value: 2,
-  step: 0.1
-})
-
-viewof angleDeg = Inputs.range([-180, 180], {
-  label: "Direction θ (degrés)",
-  value: 0,
-  step: 5
-})
-
-viewof shear = Inputs.range([-1, 1], {
-  label: "Cisaillement γ",
-  value: 0.25,
-  step: 0.05
-})
-
-viewof radialStrength = Inputs.range([-1, 1], {
-  label: "Intensité radiale α",
-  value: 0.35,
-  step: 0.05
-})
-
-viewof probeX = Inputs.range([-5, 5], {
-  label: "Point de lecture x",
-  value: 2,
-  step: 0.5
-})
-
-viewof probeY = Inputs.range([-5, 5], {
-  label: "Point de lecture y",
-  value: 1,
-  step: 0.5
-})
-```
-
-```{pyodide}
-#| echo: false
+```{python}
 #| output: asis
-#| input:
-#|   - fieldKind
-#|   - baseSpeed
-#|   - angleDeg
-#|   - shear
-#|   - radialStrength
-#|   - probeX
-#|   - probeY
+from IPython.display import HTML, display
+
 from jdriftx.figures.wind_field_explorer import (
-    WindFieldExplorerConfig,
-    render_wind_field_explorer_html,
+    default_wind_field_scenarios,
+    render_wind_field_scenario_gallery_html,
 )
 
-config = WindFieldExplorerConfig(
-    family=str(fieldKind),
-    speed=float(baseSpeed),
-    angle_deg=float(angleDeg),
-    shear=float(shear),
-    radial_strength=float(radialStrength),
-    probe_x=float(probeX),
-    probe_y=float(probeY),
-)
-print(render_wind_field_explorer_html(config))
+display(HTML(render_wind_field_scenario_gallery_html(default_wind_field_scenarios())))
 ```
 
 Les flèches donnent direction et sens locaux ; leur longueur et leur couleur indiquent la norme relative sur la grille affichée. La croix noire est le point de lecture.
