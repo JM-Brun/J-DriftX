@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
 <title id="title">Quatre notions de chemin : ligne de courant, caractéristique, polyligne, temps minimal de navigation</title>
-<desc id="desc">Quatre panneaux. 1. Ligne de courant : trois courbes tangentes au champ de vent, flèches de vent posées sur la courbe centrale. 2. Caractéristique : une particule lâchée en A suit la ligne de courant jusqu'à B ; tau est le temps du voyage. 3. Polyligne : des points d'étape choisis (P1, P2) reliés par des segments droits, à comparer au chemin du vent en pointillés. 4. Temps minimal de navigation : trois chemins emboîtés de A à B ; le plus plat (28 s) est le plus rapide, les arcs plus hauts sont plus lents (40 s, 65 s).</desc>
+<desc id="desc">Quatre panneaux. 1. Ligne de courant : trois courbes tangentes au champ de vent, flèches de vent posées sur la courbe centrale. 2. Caractéristique : une particule lâchée en A suit la ligne de courant jusqu'à B ; tau est le temps du voyage. 3. Polyligne : des points d'étape choisis (P1, P2) reliés par des segments droits, à comparer au chemin du vent en pointillés. 4. Temps minimal de navigation : trois chemins emboîtés de A à B ; le plus plat (28 s) a le coût le plus faible, les arcs plus hauts sont plus lents (40 s, 65 s).</desc>
 <defs>
   <marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2c7a55"/></marker>
   <style>
@@ -76,7 +76,7 @@
 <text class="label" x="1073" y="618">B</text>
 <text class="small" x="818" y="522">65 s</text>
 <text class="small" x="838" y="556">40 s</text>
-<text class="label" x="752" y="640" fill="#2367a8">28 s : première arrivée</text>
+<text class="label" x="752" y="640" fill="#2367a8">28 s : minimum</text>
 <text class="small" x="638" y="668">Parmi les chemins admissibles, on minimise le coût de</text>
 <text class="small" x="638" y="690">parcours — problème d'optimisation, distinct d'une trajectoire imposée.</text>
 </svg>
