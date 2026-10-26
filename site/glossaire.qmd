@@ -33,11 +33,11 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 ## Dispersion et pollution
 
-**Moyennage de Reynolds.** Décomposition d'une grandeur turbulente en moyenne et fluctuation, par exemple $C=\\overline C+C'$, avec $\\overline{C'}=0$. Le moyennage du flux advectif fait apparaître la corrélation $\\overline{\\mathbf u'C'}$, qui n'est pas déterminée par l'équation de concentration moyenne seule. → [Modèle direct](theorie/modele-direct.qmd)
+**Moyennage de Reynolds.** Décomposition d'une grandeur turbulente en moyenne et fluctuation, par exemple $C=\overline C+C'$, avec $\overline{C'}=0$. Le moyennage du flux advectif fait apparaître la corrélation $\overline{\mathbf u'C'}$, qui n'est pas déterminée par l'équation de concentration moyenne seule. → [Modèle direct](theorie/modele-direct.qmd)
 
-**Fermeture turbulente.** Hypothèse constitutive utilisée pour exprimer un flux inconnu en fonction de grandeurs résolues. La fermeture gradient pose $\\overline{\\mathbf u'C'}=-\\mathbf K\\nabla\\overline C$ ; c'est un modèle, pas une identité issue du moyennage. → [Modèle direct](theorie/modele-direct.qmd)
+**Fermeture turbulente.** Hypothèse constitutive utilisée pour exprimer un flux inconnu en fonction de grandeurs résolues. La fermeture gradient pose $\overline{\mathbf u'C'}=-\mathbf K\nabla\overline C$ ; c'est un modèle, pas une identité issue du moyennage. → [Modèle direct](theorie/modele-direct.qmd)
 
-**Tenseur de diffusivité turbulente $\\mathbf K$.** Tenseur d'ordre deux dont les composantes ont l'unité m²/s et qui relie le gradient de concentration moyenne au flux turbulent dans la fermeture gradient. Il peut être anisotrope ; sa paramétrisation et son domaine de validité doivent être précisés. Ne pas le confondre avec les largeurs $\\sigma_y,\\sigma_z$. → [Modèle direct](theorie/modele-direct.qmd)
+**Tenseur de diffusivité turbulente $\mathbf K$.** Tenseur d'ordre deux dont les composantes ont l'unité m²/s et qui relie le gradient de concentration moyenne au flux turbulent dans la fermeture gradient. Il peut être anisotrope ; sa paramétrisation et son domaine de validité doivent être précisés. Ne pas le confondre avec les largeurs $\sigma_y,\sigma_z$. → [Modèle direct](theorie/modele-direct.qmd)
 
 **Analyse Monte Carlo.** Propagation numérique d'incertitudes par répétition d'un calcul pour des réalisations tirées de distributions spécifiées. Les résultats dépendent des distributions, des dépendances entre paramètres et du nombre de tirages ; le coût total doit être mesuré. → [Modèle direct](theorie/modele-direct.qmd), [Assimilation & identification](theorie/assimilation-identification.qmd)
 
@@ -129,7 +129,7 @@ Cette section décrit l'**approche visée** ; l'état réel de l'implémentation
 
 **Contraintes physiques.** Le contrat de confiance du modèle : conservation de la masse, positivité des concentrations, superposition (linéarité), divergence nulle du vent généré. Le modèle approché doit rester solution du modèle direct ; la page dédiée distingue ce qui est **formulé**, **testé** ou **démontré**. → [Contraintes physiques](theorie/contraintes-physiques.qmd)
 
-**Divergence nulle.** La condition $\\nabla\\cdot\\mathbf u=0$ exprime l'incompressibilité cinématique dans un modèle à densité constante. Elle doit être démontrée pour la construction du champ considéré ; elle n'est ni garantie par une simple interpolation ni implémentée/testée pour un champ multi-niveaux dans le code actuel. → [Modèle direct](theorie/modele-direct.qmd), [Contraintes physiques](theorie/contraintes-physiques.qmd).
+**Divergence nulle.** La condition $\nabla\cdot\mathbf u=0$ exprime l'incompressibilité cinématique dans un modèle à densité constante. Elle doit être démontrée pour la construction du champ considéré ; elle n'est ni garantie par une simple interpolation ni implémentée/testée pour un champ multi-niveaux dans le code actuel. → [Modèle direct](theorie/modele-direct.qmd), [Contraintes physiques](theorie/contraintes-physiques.qmd).
 
 **Assimilation de données.** Régler les paramètres du modèle (a, b, …) sur les **mesures disponibles, même partielles** — quelques points de mesure suffisent, pas besoin d'un champ complet. *Origine* : géophysique prévisionniste — météorologie et océanographie (filtre de Kalman, méthodes variationnelles de type 4D-Var). → [Assimilation & identification](theorie/assimilation-identification.qmd)
 
