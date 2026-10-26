@@ -21,6 +21,7 @@ La CI verte ne suffit pas à passer du niveau 2 au niveau 3. Le code actuel est 
 | Bilan de masse (panache, puff, superposition) | `tests/test_similitude.py::test_conservation_masse_panache` et tests étendus (`_toutes_classes`, `_hauteur_non_nulle`, `test_conservation_masse_puff`, `test_convergence_elargissement_grille`, `test_conservation_masse_superposition_deux_panaches`, `test_conservation_masse_superposition_classes_differentes`, `test_conservation_masse_superposition_deux_puffs`) | Le flux $u C$ restitue le débit émis à 0,1 % relatif sur des grilles adaptées à quatre écarts-types : six classes de Pasquill à $x = 1000$ m, classe D à 200 et 5000 m, source en hauteur avec réflexion au sol ; l’intégrale volumique du puff restitue la masse ; les superpositions restituent la somme des débits ou des masses — deux panaches, puis deux panaches de classes différentes, puis deux puffs de classes différentes ; l’erreur décroît avec l’élargissement de la grille | Conservation exacte sur toute surface iso-temps, en champ variable, pour toute discrétisation ou tout terme de dépôt ou de chimie ; le raffinement du pas de grille n’a pas de test dédié (l’erreur est dominée par la troncature du domaine) |
 | Divergence du vent | `tests/test_champ_analytique.py::test_la_divergence_est_nulle_par_construction` et `test_la_superposition_est_aussi_a_divergence_nulle` (différences finies) ; `tests/test_reconstruction_vent.py::test_les_divergences_numeriques_sont_negligeables` (grille) | Divergence estimée nulle à la précision de différenciation près pour les champs analytiques à fonction de courant — champ simple et superposition — et sous $10^{-12}\ \mathrm{s}^{-1}$ sur grille pour les deux champs de la reconstruction à deux mesures | `∇ · u = 0` pour le champ de vent multi-niveaux historique (non reconstruit à ce jour), sa compatibilité entre niveaux, ses conditions aux limites ou sa sensibilité au maillage |
 | Non-symétrie de la référence uniforme | `tests/test_metric.py::test_uniform_pseudodistance_is_asymmetric_along_the_wind`, `test_uniform_pseudodistance_symmetric_on_transverse_boundary` | Coût fini vers l’aval et $+\infty$ vers l’amont pour la référence uniforme 2D ; coût nul dans les deux sens sur la borne transversale | La non-symétrie de la pseudo-distance historique en champ variable ; toute propriété de `temps_transport`, symétrique par conception |
+| Adjoint (sensibilité du coût dirigé) | `tests/test_metric.py::test_uniform_pseudodistance_is_adjoint_vector_dot_displacement`, `test_uniform_pseudodistance_gradient_wrt_wind_matches_analytic`, `test_uniform_pseudodistance_gradient_wrt_points_is_adjoint_vector`, `test_1d_first_arrival_gradient_matches_closed_form` | Gradient exact de la référence uniforme : vecteur adjoint $\lambda = \mathbf{u}/\|\mathbf{u}\|^2$ avec $\tau = \lambda\cdot(\mathbf{b}-\mathbf{a})$, gradients par rapport au vent et aux points validés par différences finies ; gradient exact du cas 1D | Un état adjoint en champ variable (modèle historique non reconstruit), la sensibilité du panache gaussien, la dérivabilité à la borne transversale |
 
 ## 1. Conservation : ne pas généraliser le test de grille
 
@@ -68,6 +69,25 @@ La métrique visée par le projet est non symétrique : le temps de transport d�
 - **Primitive polyligne** (`temps_transport`) : symétrique par conception, puisqu’elle n’utilise que la norme des vitesses segmentaires — le test d’invariance au renversement du chemin et au signe du vent le prouve. Elle ne doit pas être décrite comme une métrique non symétrique.
 - **Pseudo-distance historique** (Mohammadi & Brun, 2006) : la non-symétrie en champ variable reste à établir à partir de la définition et des sources primaires ; aucun test du dépôt ne la couvre. Les conditions précises sont discutées dans [Métrique travel-time](metrique-travel-time.qmd).
 
+## 6. Adjoint : gradient exact de la référence uniforme, pas un état adjoint général
+
+L’adjoint visé par le projet est un outil de sensibilité : le gradient du coût de transport $\tau$ par rapport aux paramètres (champ de vent, positions source et cible). Pour la référence uniforme, ce gradient est fermé :
+
+$
+\tau(\mathbf{a},\mathbf{b},\mathbf{u}) = \lambda\cdot(\mathbf{b}-\mathbf{a}), \qquad \lambda = \frac{\mathbf{u}}{\|\mathbf{u}\|^2}.
+$
+
+Le vecteur adjoint $\lambda$, constant dans un champ uniforme, mesure la sensibilité exacte : déplacer la cible de $\delta\mathbf{b}$ change le coût d’exactement $\lambda\cdot\delta\mathbf{b}$. Les gradients par rapport aux trois entrées sont fermés :
+
+$
+\frac{\partial\tau}{\partial\mathbf{b}} = \lambda, \qquad \frac{\partial\tau}{\partial\mathbf{a}} = -\lambda, \qquad \nabla_{\mathbf{u}}\tau = \frac{\mathbf{d}}{\|\mathbf{u}\|^2} - 2\,\frac{(\mathbf{d}\cdot\mathbf{u})\,\mathbf{u}}{\|\mathbf{u}\|^4},
+$
+
+avec $\mathbf{d} = \mathbf{b}-\mathbf{a}$. Ces formules valent sur le demi-plan aval ouvert $\mathbf{d}\cdot\mathbf{u} > 0$ : la borne transversale (coût nul) n’est pas un point de dérivabilité, le coût sautant à $+\infty$ dès l’amont.
+
+Quatre tests ciblés dans `tests/test_metric.py` vérifient l’implémentation contre ces formules par différences finies centrées (tolérance $10^{-6}$, erreur maximale mesurée $2{,}5\times 10^{-9}$ en préparation) : identité $\tau = \lambda\cdot\mathbf{d}$, gradients par rapport au vent et aux points, et gradient exact du cas 1D. Ce qui n’est **pas** couvert : un état adjoint en champ variable (le modèle historique multi-niveaux n’est pas reconstruit), la sensibilité du panache gaussien à ses paramètres, la dérivabilité à la borne transversale, et l’adjoint d’un schéma numérique. La distinction entre les acceptions du mot « adjoint » (état adjoint d’un contrôle optimal, fonction d’influence, transcription rétrograde d’un schéma) et la dérivation complète sont dans [docs/26](../../docs/26-investigation-adjoint-temps-transport.md).
+
+
 ## Une différence scientifique à démontrer, pas à présumer
 
 Les méthodes analytiques, numériques et d'apprentissage peuvent toutes être conçues avec des contraintes physiques, selon leur formulation et leur entraînement. Il serait donc trop fort d'affirmer que les surrogates ML ne garantissent **aucune** de ces propriétés. La comparaison pertinente doit examiner les garanties mathématiques, les pénalités ou contraintes d'entraînement, les erreurs de conservation et de positivité hors domaine, le coût total et la robustesse de chaque méthode.
@@ -81,5 +101,6 @@ De même, interprétabilité et auditabilité peuvent être des avantages recher
 3. La superposition est testée en plusieurs configurations (classes différentes, panaches et puffs) ; restent des tests de positivité sur des grilles et des configurations plus variées.
 4. La divergence est testée sur les champs analytiques à fonction de courant ; le reste porte sur le champ multi-niveaux historique : le définir, l'implémenter, puis comparer divergence analytique et discrète, compatibilité entre niveaux et sensibilité au maillage.
 5. Pour chaque propriété, consigner l'équation, les hypothèses, le domaine de validité, la tolérance numérique et les contre-exemples recherchés.
+6. L’adjoint de la référence uniforme et du cas 1D est testé (gradients exacts par différences finies) ; l’état adjoint du champ multi-niveaux historique reste à définir avec le champ lui-même.
 
 Les tests manquants et l'avancement de chaque propriété sont suivis dans l'issue [#42](https://github.com/JM-Brun/J-DriftX/issues/42).
