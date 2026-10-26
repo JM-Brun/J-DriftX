@@ -24,3 +24,25 @@ Source riche en détails d'implémentation historique : forme de panache, restri
 ## Pour aller plus loin
 
 Fiche détaillée : <code>docs/04-revues-papiers-sources.md</code>, section 6.
+
+
+## Analyse approfondie — signification des niveaux et propriétés à préserver
+
+Le terme « multi-niveaux » recouvre ici un **raffinement spatial emboîté**, distinct de la hiérarchie champ proche → transport lointain décrite par Brun & Mohammadi (2008).
+
+- **Domaines** : `ω₀ = Ω` désigne le domaine global ; les `ωᵢ` sont des sous-domaines imbriqués, de taille décroissante. Le nombre de niveaux et leurs emprises sont choisis par l'utilisateur. Le manuscrit illustre une construction à trois niveaux, d'un domaine de l'ordre de 10 km² vers un domaine local de l'ordre de 10 m² ; les ordres de grandeur et les notations doivent être revérifiés sur la figure et les équations du PDF, l'extraction OCR étant imparfaite.
+- **Passage du vent grossier au vent fin** : le champ du niveau précédent est prolongé/restrictionné dans le sous-domaine à partir de données aux quatre coins, avec une partition de l'unité. Les auteurs annoncent la préservation de la divergence nulle et la compatibilité du champ global, sous les conditions formulées dans le papier.
+- **Passage de la concentration** : la concentration du niveau fin est construite avec une contrainte sur le flux / la masse entrant dans le sous-domaine. La conservation est donc une propriété d'interface à formuler et à vérifier, pas seulement une propriété locale de la formule gaussienne.
+- **Relief** : une correction de vitesse dépendant de la topographie est ajoutée à chaque niveau ; les paramètres de dispersion sont ensuite corrigés sous contrainte de conservation. La topographie modifie aussi la symétrie de la dispersion transverse.
+- **Sens des dépendances** : la méthode décrite est grossier-vers-fin, sans rétroaction générale du niveau fin vers le grossier. Une erreur au niveau grossier peut donc se propager vers les niveaux locaux.
+
+### Traduction en exigences vérifiables pour une reprise
+
+1. Définir précisément `Ω`, `ωᵢ`, leurs frontières, les opérateurs de restriction/prolongement et la convention de recouvrement.
+2. Énoncer les hypothèses mathématiques nécessaires à la préservation de `∇·u = 0` et prouver la propriété pour l'opérateur retenu.
+3. Définir le flux normal entrant à chaque interface et tester le bilan de masse, avec tolérances, pour terrain plat puis relief variable.
+4. Mesurer l'erreur d'interpolation du vent, la sensibilité au nombre de niveaux et le coût induit par les raffinements.
+5. Comparer séparément la construction spatiale et le couplage champ proche / transport lointain : elles répondent à des questions différentes.
+6. Associer chaque propriété au code réellement existant. La présente fiche décrit l'architecture historique ; elle n'affirme pas que la réimplémentation Python actuelle la reproduit.
+
+Voir aussi la [revue du corpus](../../docs/04-revues-papiers-sources.md#complment-danalyse--deux-sens-distincts-de-multi-niveaux) et la [carte conceptuelle N0–N6](../../site/projet/niveaux-modelisation.qmd).
