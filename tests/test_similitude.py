@@ -185,6 +185,7 @@ def test_convergence_elargissement_grille() -> None:
     assert erreurs[0] > erreurs[1] > erreurs[2]
     assert erreurs[2] < 1e-3
 
+
 def test_positivite_puff() -> None:
     """Le puff gaussien est strictement positif au point évalué."""
     # Given / When — un puff est évalué en un point du domaine.
