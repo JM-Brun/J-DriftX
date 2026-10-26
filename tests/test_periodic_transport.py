@@ -158,3 +158,145 @@ def test_upwind_euler_rejects_unstable_time_step() -> None:
     # refus avant toute intégration.
     with pytest.raises(ValueError, match="stability condition"):
         solve_periodic_upwind_euler(n_cells=64, length=1.0, end_time=0.4, dt=1.0)
+
+
+@pytest.mark.parametrize(
+    ("modification", "message"),
+    [
+        ({"length": 0.0}, "strictly positive"),
+        ({"length": float("nan")}, "finite"),
+        ({"end_time": -0.1}, "non-negative"),
+        ({"dt": 0.0}, "strictly positive"),
+        ({"mean_concentration": 0.2, "amplitude": 0.3}, "non-negative"),
+        ({"amplitude": -0.1}, "non-negative"),
+        ({"n_cells": 16.0}, "greater than or equal to 8"),
+    ],
+)
+def test_shared_validation_rejects_out_of_range_parameters(
+    modification: dict[str, float], message: str
+) -> None:
+    """La validation partagée refuse chaque paramètre hors de son domaine."""
+    # Given — le cas de référence et une seule modification invalide.
+    parametres: dict[str, float] = {
+        "n_cells": 16,
+        "length": 1.0,
+        "end_time": 0.1,
+        "dt": 0.001,
+        "mean_concentration": 1.0,
+        "amplitude": 0.3,
+        "velocity": 0.4,
+        "diffusivity": 0.01,
+    }
+    parametres.update(modification)
+    # When / Then — le solveur centré/RK4 refuse la configuration avant tout calcul.
+    with pytest.raises(ValueError, match=message):
+        solve_periodic_sine_transport(**parametres)
+
+
+@pytest.mark.parametrize(
+    ("modification", "message"),
+    [
+        ({"time": -0.5}, "non-negative"),
+        ({"length": 0.0}, "strictly positive"),
+        ({"length": float("inf")}, "finite"),
+        ({"mean_concentration": 0.2, "amplitude": 0.3}, "non-negative"),
+        ({"diffusivity": -1.0}, "non-negative"),
+    ],
+)
+def test_exact_solution_rejects_invalid_parameters(
+    modification: dict[str, float], message: str
+) -> None:
+    """La solution exacte refuse les paramètres hors de son domaine de définition."""
+    # Given — une grille valide et une seule modification invalide.
+    grille = np.linspace(0.0, 1.0, 8)
+    parametres: dict[str, float] = {
+        "time": 0.0,
+        "length": 1.0,
+        "mean_concentration": 1.0,
+        "amplitude": 0.3,
+        "velocity": 0.4,
+        "diffusivity": 0.01,
+    }
+    parametres.update(modification)
+    # When / Then — l'évaluation de la solution exacte est refusée.
+    with pytest.raises(ValueError, match=message):
+        periodic_sine_solution(grille, **parametres)
+
+
+def test_exact_solution_rejects_non_finite_coordinates() -> None:
+    """Une coordonnée non finie est refusée avant l'évaluation."""
+    # Given — une grille contenant une valeur NaN, des paramètres valides.
+    grille = np.array([0.0, 0.25, float("nan"), 0.75])
+    # When / Then — l'évaluation est refusée.
+    with pytest.raises(ValueError, match="finite"):
+        periodic_sine_solution(
+            grille,
+            0.0,
+            length=1.0,
+            mean_concentration=1.0,
+            amplitude=0.3,
+            velocity=0.4,
+            diffusivity=0.01,
+        )
+
+
+def test_solvers_at_end_time_zero_return_the_initial_state() -> None:
+    """À instant final nul, chaque solveur restitue l'état initial sans intégrer."""
+    # Given — le cas de référence arrêté à t = 0.
+    parametres = {
+        "n_cells": 16,
+        "length": 1.0,
+        "end_time": 0.0,
+        "dt": 0.001,
+        "mean_concentration": 1.0,
+        "amplitude": 0.3,
+        "velocity": 0.4,
+        "diffusivity": 0.01,
+    }
+    # When — les deux solveurs indépendants sont appelés.
+    x_centre, c_centre, dt_centre = solve_periodic_sine_transport(**parametres)
+    x_amont, c_amont, dt_amont = solve_periodic_upwind_euler(**parametres)
+    initial = periodic_sine_solution(
+        x_centre,
+        0.0,
+        length=1.0,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=0.4,
+        diffusivity=0.01,
+    )
+    # Then — l'état initial est restitué à l'identique et le pas effectif est nul.
+    assert dt_centre == 0.0
+    assert dt_amont == 0.0
+    assert np.array_equal(c_centre, initial)
+    assert np.array_equal(c_amont, initial)
+    assert np.array_equal(x_centre, x_amont)
+
+
+def test_upwind_euler_handles_negative_velocity() -> None:
+    """Le schéma amont/Euler traite aussi un vent négatif (advection selon -x)."""
+    # Given — le cas de référence avec une vitesse négative.
+    x, actual, _ = solve_periodic_upwind_euler(
+        n_cells=128,
+        length=1.0,
+        end_time=0.4,
+        dt=0.0001,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=-0.4,
+        diffusivity=0.01,
+    )
+    # When — l'erreur RMS est mesurée contre la solution exacte correspondante.
+    exact = periodic_sine_solution(
+        x,
+        0.4,
+        length=1.0,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=-0.4,
+        diffusivity=0.01,
+    )
+    erreur = float(np.sqrt(np.mean((actual - exact) ** 2)))
+    # Then — l'erreur reste du même ordre que le cas de référence à vent positif.
+    assert erreur < 5e-3
+    assert float(np.mean(actual)) == pytest.approx(1.0, abs=1e-12)
