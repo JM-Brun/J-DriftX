@@ -12,7 +12,7 @@ Les tests automatisés vérifient des propriétés définies pour des fonctions 
 
 | Test existant | Vérification effectuée | Limite à ne pas oublier |
 |---|---|---|
-| `test_conservation_masse_panache` | Flux `u C` intégré sur une grille finie pour un panache gaussien de classe D ; tolérance relative de 2 % | Un cas, une grille et une tolérance ; ne prouve pas la conservation exacte pour toute surface ou tout modèle |
+| Tests de bilan de masse (panache, puff, superposition) | Flux $u C$ ou intégrale volumique restitués à 0,1 % : six classes de Pasquill, plusieurs distances sous le vent, source en hauteur, puff 3D, superposition de deux panaches ; convergence vérifiée à l’élargissement de la grille | Familles gaussienne et à champ uniforme uniquement ; pas une preuve de conservation exacte, ni en champ variable, ni pour toute surface |
 | `test_positivite_panache` et `test_positivite_puff` | Concentrations non négatives dans les configurations testées | Ne couvre pas tous les paramètres, toutes les interpolations ou des extensions futures |
 | `test_superposition_panache` | Superposition du panache à un point et pour deux débits choisis | Ne valide pas tous les couplages ou toutes les extensions multi-sources |
 | `test_symetrie_laterale` | Symétrie latérale attendue du panache gaussien en vent uniforme | Propriété de cette formule et de ce régime, pas d'un champ atmosphérique général |
@@ -38,13 +38,13 @@ Le projet ne doit donc pas annoncer une propriété comme « vérifiée systéma
 
 - **positivité :** quelques cas numériques testés ;
 - **superposition :** test ponctuel du panache gaussien ;
-- **conservation :** intégrale numérique sur une grille finie, tolérance 2 %, un scénario ;
+- **conservation :** intégrales numériques du panache (six classes, plusieurs distances, hauteur non nulle), du puff et d’une superposition, tolérance 0,1 % sur grilles adaptées à quatre écarts-types ; convergence testée à l’élargissement ;
 - **divergence nulle :** testée par des tests ciblés sur les champs analytiques à fonction de courant et sur la reconstruction à deux mesures ; le champ de vent multi-niveaux historique, lui, n'est pas implémenté ;
 - **métrique historique :** seule une référence analytique de champ uniforme est testée ; la fonction générale de temps de transport sur polyligne est une primitive distincte.
 
 ## Priorités qualité avant le benchmark
 
-1. Étendre le test de conservation en faisant varier l'étendue et le raffinement de la grille, les classes de stabilité, les hauteurs et les débits.
+1. Conservation étendue (classes, distances, hauteur, puff, superposition, élargissement de grille) : couverte ; restent le raffinement du pas et la conservation en champ variable.
 2. Ajouter des tests de convergence et des cas limites indépendants des formules de production.
 3. Formaliser la métrique historique et séparer explicitement son API de la primitive de polyligne.
 4. Les tests de divergence existants couvrent les champs analytiques à fonction de courant ; pour le champ de vent multi-niveaux historique, ne créer les tests qu'après l'avoir défini et implémenté.

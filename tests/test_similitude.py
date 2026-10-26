@@ -81,6 +81,110 @@ def test_conservation_masse_panache(grille: tuple[np.ndarray, np.ndarray]) -> No
     assert flux == pytest.approx(debit, rel=0.02)
 
 
+@pytest.mark.parametrize(
+    ("classe", "x"),
+    [
+        ("A", 1000.0),
+        ("B", 1000.0),
+        ("C", 1000.0),
+        ("D", 1000.0),
+        ("E", 1000.0),
+        ("F", 1000.0),
+        ("D", 200.0),
+        ("D", 5000.0),
+    ],
+)
+def test_conservation_masse_panache_toutes_classes(classe: str, x: float) -> None:
+    """Le flux integre restitue le debit emis pour six classes et plusieurs distances."""
+    # Given — un panache de debit 1,5 kg/s dans un vent de 4 m/s, grille adaptee a 4 sigma.
+    debit, u = 1.5, 4.0
+    sy = float(sigma_y(x, classe))
+    sz = float(sigma_z(x, classe))
+    y = np.linspace(-4.0 * sy, 4.0 * sy, 241)
+    z = np.linspace(0.0, 4.0 * sz, 121)
+    yy, zz = np.meshgrid(y, z, indexing="ij")
+    # When — le flux u*C est integre sur la section transversale.
+    c = concentration_panache(x, yy, zz, debit=debit, u=u, classe=classe)
+    flux = u * np.trapezoid(np.trapezoid(c, y, axis=0), z)
+    # Then — le debit emis est restitue a 0,1 % relatif.
+    assert flux == pytest.approx(debit, rel=1e-3)
+
+
+def test_conservation_masse_panache_hauteur_non_nulle() -> None:
+    """Une source en hauteur avec reflexion au sol conserve le debit emis."""
+    # Given — un panache de classe D emis a 30 m de hauteur, x = 1000 m.
+    debit, u, h = 2.0, 4.0, 30.0
+    x, classe = 1000.0, "D"
+    sy = float(sigma_y(x, classe))
+    sz = float(sigma_z(x, classe))
+    y = np.linspace(-4.0 * sy, 4.0 * sy, 241)
+    z = np.linspace(0.0, h + 4.0 * sz, 161)
+    yy, zz = np.meshgrid(y, z, indexing="ij")
+    # When — le flux est integre sur la section avec le terme de reflexion.
+    c = concentration_panache(x, yy, zz, debit=debit, u=u, classe=classe, hauteur=h)
+    flux = u * np.trapezoid(np.trapezoid(c, y, axis=0), z)
+    # Then — le debit emis est restitue a 0,1 % relatif.
+    assert flux == pytest.approx(debit, rel=1e-3)
+
+
+def test_conservation_masse_puff() -> None:
+    """L'integrale volumique du puff restitue la masse emise."""
+    # Given — un puff de 10 kg apres 500 s de transport (classe C, vent 3 m/s).
+    masse, u, t, classe = 10.0, 3.0, 500.0, "C"
+    distance = u * t
+    s = float(sigma_y(distance, classe))
+    sz = float(sigma_z(distance, classe))
+    n = 81
+    x = np.linspace(distance - 4.0 * s, distance + 4.0 * s, n)
+    y = np.linspace(-4.0 * s, 4.0 * s, n)
+    z = np.linspace(-4.0 * sz, 4.0 * sz, n)
+    xx, yy, zz = np.meshgrid(x, y, z, indexing="ij")
+    # When — la concentration est integree sur le volume.
+    c = concentration_puff(xx, yy, zz, t=t, masse=masse, u=u, classe=classe)
+    integrale = np.trapezoid(np.trapezoid(np.trapezoid(c, x, axis=0), y, axis=0), z)
+    # Then — la masse emise est restituee a 0,1 % relatif.
+    assert integrale == pytest.approx(masse, rel=1e-3)
+
+
+def test_conservation_masse_superposition_deux_panaches() -> None:
+    """Le flux d'une superposition de deux panaches est la somme des debits."""
+    # Given — deux panaches de classe D, debits et hauteurs differents.
+    debit1, debit2, u, x, classe = 1.2, 0.8, 4.0, 1000.0, "D"
+    h1, h2 = 0.0, 30.0
+    sy = float(sigma_y(x, classe))
+    sz = float(sigma_z(x, classe))
+    y = np.linspace(-4.0 * sy, 4.0 * sy, 241)
+    z = np.linspace(0.0, h2 + 4.0 * sz, 161)
+    yy, zz = np.meshgrid(y, z, indexing="ij")
+    # When — la superposition des deux panaches est integree sur la section.
+    c = concentration_panache(x, yy, zz, debit=debit1, u=u, classe=classe, hauteur=h1)
+    c += concentration_panache(x, yy, zz, debit=debit2, u=u, classe=classe, hauteur=h2)
+    flux = u * np.trapezoid(np.trapezoid(c, y, axis=0), z)
+    # Then — la somme des debits emis est restituee a 0,1 % relatif.
+    assert flux == pytest.approx(debit1 + debit2, rel=1e-3)
+
+
+def test_convergence_elargissement_grille() -> None:
+    """L'erreur relative du bilan de masse decroit quand la grille s'elargit."""
+    # Given — un panache de classe D a x = 1000 m et trois etendues de grille.
+    debit, u, x, classe = 1.5, 4.0, 1000.0, "D"
+    sy = float(sigma_y(x, classe))
+    sz = float(sigma_z(x, classe))
+    erreurs = []
+    for k in (2.0, 3.0, 4.0):
+        y = np.linspace(-k * sy, k * sy, 241)
+        z = np.linspace(0.0, k * sz, 121)
+        yy, zz = np.meshgrid(y, z, indexing="ij")
+        # When — le flux est integre pour chaque etendue k * sigma.
+        c = concentration_panache(x, yy, zz, debit=debit, u=u, classe=classe)
+        flux = u * np.trapezoid(np.trapezoid(c, y, axis=0), z)
+        erreurs.append(abs(flux - debit) / debit)
+    # Then — l'erreur decroit strictement avec l'elargissement et reste sous
+    # 0,1 % a quatre sigma : elle est dominee par la troncature du domaine,
+    # pas par le pas de discretisation.
+    assert erreurs[0] > erreurs[1] > erreurs[2]
+    assert erreurs[2] < 1e-3
+
 def test_positivite_puff() -> None:
     """Le puff gaussien est strictement positif au point évalué."""
     # Given / When — un puff est évalué en un point du domaine.
