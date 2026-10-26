@@ -35,6 +35,28 @@ La proposition 3.8 de l'investigation G0-S a été restreinte : l'application di
 
 Cette correction est documentaire et analytique ; elle ne nécessite pas de test logiciel supplémentaire. Elle ne doit pas être présentée comme une validation de tous les résultats de l'investigation : les autres propositions et contre-exemples restent à relire séparément.
 
+## Contrôles analytiques calculés séparément
+
+Ces calculs explicites servent de cas de référence lisibles à la main. Ils ne remplacent pas une revue indépendante par une seconde personne.
+
+### V1 — vitesse constante 1D
+
+La solution de \(\dot x=u\) est \(x(t)=a+ut\). Pour \(a=0\), \(b=10\), \(u=2\), l'équation \(10=0+2t\) donne \(T=5\) s. Pour le trajet inverse avec \(u=-2\), \(0=10-2t\) donne aussi \(T=5\) s. Avec le même déplacement mais \(u=-2\), la cible \(b=10\) n'est pas atteinte pour \(t\ge0\) et la convention donne \(+\infty\). Si \(a=b\), le premier temps est \(0\), même lorsque \(u=0\).
+
+### V2 — champ uniforme 2D
+
+Pour \(a=(0,0)\), \(b=(12,9)\), \(u=(4,3)\), on a \(u\cdot u=25\) et \((b-a)\cdot u=12\cdot4+9\cdot3=75\). Le coût est donc \(75/25=3\) s dans le sens aval ; au retour, le produit scalaire vaut \(-75\), donc la convention donne \(+\infty\).
+
+Pour un déplacement transverse \(w=(-8,6)\) et le même vent \(u=(3,4)\), \(w\cdot u=-24+24=0\). La projection longitudinale est nulle : le coût est \(0\) malgré le déplacement non nul. C'est un contre-exemple direct à la séparation.
+
+### Champ de cisaillement — contre-exemple à la triangulation
+
+Pour \(v(y)=1+9y\), \(A=(0,0)\), \(B=(1,1)\), \(C=(2,0)\), les caractéristiques sont horizontales et le coût longitudinal donne \(d(A,C)=2/1=2\), \(d(A,B)=1/1=1\), \(d(B,C)=1/10=0.1\). Ainsi \(2>1+0.1=1.1\) : l'inégalité triangulaire échoue pour ce champ de cisaillement lisse, positif et de divergence nulle.
+
+### Orbite périodique — triangulation stricte pour V1
+
+Pour \(u(x,y)=(-y,x)\), la trajectoire issue de \(A=(1,0)\) est \((\cos t,\sin t)\). Avec \(B=(-1,0)\) et \(C=(0,1)\), \(T(A,B)=\pi\), \(T(B,C)=3\pi/2\), tandis que \(T(A,C)=\pi/2\). Donc \(T(A,C)<T(A,B)+T(B,C)\). Cela confirme que l'inégalité triangulaire dirigée de V1 n'implique pas toujours l'additivité.
+
 ## Limites et lecture correcte
 
 1. **Un test n'est pas une preuve universelle.** Il peut vérifier un exemple, une famille finie de cas ou détecter un contre-exemple.
