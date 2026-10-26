@@ -287,7 +287,7 @@ def test_uniform_pseudodistance_is_zero_for_upwind_boundary() -> None:
 
 
 def test_uniform_pseudodistance_is_asymmetric_along_the_wind() -> None:
-    """La référence uniforme n’est pas symétrique : finie vers l’aval, infinie vers l’amont."""
+    """La référence uniforme n'est pas symétrique : finie vers l'aval, infinie vers l'amont."""
     # Given — deux points alignés avec le vent, b en aval de a, dans un
     # repère quelconque (vent non aligné sur un axe).
     a = np.array([0.0, 0.0])
@@ -296,14 +296,14 @@ def test_uniform_pseudodistance_is_asymmetric_along_the_wind() -> None:
     # When — la pseudo-distance est évaluée dans les deux sens.
     aller = pseudo_distance_uniforme(a, b, vent)
     retour = pseudo_distance_uniforme(b, a, vent)
-    # Then — l’aller est fini (15 m de projection à 5 m/s) et le retour est
-    # infini selon la convention documentée : la référence n’est pas symétrique.
+    # Then — l'aller est fini (15 m de projection à 5 m/s) et le retour est
+    # infini selon la convention documentée : la référence n'est pas symétrique.
     assert aller == pytest.approx(3.0)
     assert np.isinf(retour)
 
 
 def test_uniform_pseudodistance_symmetric_on_transverse_boundary() -> None:
-    """La non-symétrie n’est pas globale : la borne transversale coûte zéro dans les deux sens."""
+    """La non-symétrie n'est pas globale : la borne transversale coûte zéro dans les deux sens."""
     # Given — un déplacement exactement orthogonal au vent, sans composante
     # longitudinale.
     a = np.array([2.0, -1.0])
@@ -314,7 +314,7 @@ def test_uniform_pseudodistance_symmetric_on_transverse_boundary() -> None:
     aller = pseudo_distance_uniforme(a, b, vent)
     retour = pseudo_distance_uniforme(b, a, vent)
     # Then — les deux directions reçoivent le coût nul de la borne amont :
-    # l’asymétrie de la convention +inf ne s’étend pas à cette dégénérescence.
+    # l'asymétrie de la convention +inf ne s'étend pas à cette dégénérescence.
     assert aller == pytest.approx(0.0)
     assert retour == pytest.approx(0.0)
 
