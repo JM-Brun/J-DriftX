@@ -295,3 +295,8 @@ Pour l'EDO stationnaire dx/dt = u, avec u constant signé, la première arrivée
 - si u = 0 et b != a, ou si (b-a)u < 0, T(a,b) = +inf.
 
 La fonction `temps_premiere_arrivee_1d` dans `src/jdriftx/metric.py` implémente cette référence et ses tests sont dans `tests/test_metric.py`. Elle rend le cas 1D de V1 exécutable ; elle ne résout pas un champ variable, ne représente pas la projection V2 en 2D et ne valide aucune application physique.
+
+
+## Annexe C — Bilan de reproductibilité et état des preuves
+
+Le bilan opérationnel, la commande de reproduction et la séparation des statuts de preuve sont consignés dans [docs/21-bilan-mvp-s-1d.md](21-bilan-mvp-s-1d.md). Cette note distingue l'implémentation du cas constant 1D, les tests exécutés en CI, la démonstration analytique de propriétés sous hypothèses, et les questions non résolues (revue des antécédents, utilité applicative et validation indépendante). La réussite de la CI ne prononce pas à elle seule la sortie du MVP-S.
