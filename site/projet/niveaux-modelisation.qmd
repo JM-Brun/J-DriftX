@@ -41,17 +41,48 @@ Ce diagramme montre les dépendances conceptuelles principales, pas un graphe d'
 
 | Niveau | Objet / question | Entrées et hypothèses | Sortie | État dans J-DriftX |
 |---|---|---|---|---|
-| **P0 — contexte physique** | Quelle atmosphère, quel terrain, quelle source ? | Régime météorologique, relief, rugosité, stabilité, émissions | Données et domaine d'application | Domaine d'application à préciser ; ne pas confondre données candidates et données validées |
-| **P1 — champ de vent** | Quelle vitesse locale et dans quelle direction ? | `u(x,t)`, stationnarité éventuelle, régularité, conditions aux limites, cohérence avec le terrain | Vecteur vitesse en chaque point | Des champs analytiques synthétiques existent pour les expériences ; pas de reconstruction météorologique générale |
-| **P2 — dynamique et chemins** | Comment un point transporté se déplace-t-il ? | Champ de vent et loi de mouvement, par exemple `dX/dt = u(X,t)` | Trajectoire / caractéristique, si elle est définie et calculée | Pas de solveur général de caractéristiques dans les primitives de métrique décrites ici |
-| **P3 — métrique / temps de transport** | Quelle durée associer à un déplacement ? | Champ, notion de chemin, orientation, règle d'accessibilité et convention aux stagnations | Temps sur chemin imposé, temps de première arrivée ou pseudo-distance projetée — objets distincts | Trois primitives de portée limitée ; aucune ne réalise à elle seule toute la métrique historique généralisée |
-| **P4 — dispersion** | Comment la substance s'étale-t-elle autour du transport ? | Modèle de dispersion, stabilité, paramètres `σy`, `σz`, hypothèses de similitude et de diffusion | Largeurs et profils de dispersion | Les solutions analytiques et leur domaine d'hypothèses sont documentés ; leur généralisation à la métrique cible reste à établir |
-| **P5 — concentration** | Quelle quantité de substance est présente au point demandé ? | Transport, dispersion, source, débit/masse, hauteur, conditions aux limites, dépôt/réactions si retenus | Concentration `C(x,y,z,t)` | Le modèle direct et le socle gaussien existent ; la chaîne complète avec champ et métrique généralisés n'est pas validée |
-| **P6 — calibration / décision** | Les paramètres sont-ils identifiables et la prédiction utile ? | Observations représentatives, protocole de calibration, baseline, incertitudes et décision visée | Paramètres estimés, erreurs et bénéfice mesuré | Assimilation, identification de source et utilité applicative restent conditionnelles / non démontrées |
+| **N0 — contexte physique** | Quelle atmosphère, quel terrain, quelle source ? | Régime météorologique, relief, rugosité, stabilité, émissions | Données et domaine d'application | Domaine d'application à préciser ; ne pas confondre données candidates et données validées |
+| **N1 — champ de vent** | Quelle vitesse locale et dans quelle direction ? | `u(x,t)`, stationnarité éventuelle, régularité, conditions aux limites, cohérence avec le terrain | Vecteur vitesse en chaque point | Des champs analytiques synthétiques existent pour les expériences ; pas de reconstruction météorologique générale |
+| **N2 — dynamique et chemins** | Comment un point transporté se déplace-t-il ? | Champ de vent et loi de mouvement, par exemple `dX/dt = u(X,t)` | Trajectoire / caractéristique, si elle est définie et calculée | Pas de solveur général de caractéristiques dans les primitives de métrique décrites ici |
+| **N3 — métrique / temps de transport** | Quelle durée associer à un déplacement ? | Champ, notion de chemin, orientation, règle d'accessibilité et convention aux stagnations | Temps sur chemin imposé, temps de première arrivée ou pseudo-distance projetée — objets distincts | Trois primitives de portée limitée ; aucune ne réalise à elle seule toute la métrique historique généralisée |
+| **N4 — dispersion** | Comment la substance s'étale-t-elle autour du transport ? | Modèle de dispersion, stabilité, paramètres `σy`, `σz`, hypothèses de similitude et de diffusion | Largeurs et profils de dispersion | Les solutions analytiques et leur domaine d'hypothèses sont documentés ; leur généralisation à la métrique cible reste à établir |
+| **N5 — concentration** | Quelle quantité de substance est présente au point demandé ? | Transport, dispersion, source, débit/masse, hauteur, conditions aux limites, dépôt/réactions si retenus | Concentration `C(x,y,z,t)` | Le modèle direct et le socle gaussien existent ; la chaîne complète avec champ et métrique généralisés n'est pas validée |
+| **N6 — calibration / décision** | Les paramètres sont-ils identifiables et la prédiction utile ? | Observations représentatives, protocole de calibration, baseline, incertitudes et décision visée | Paramètres estimés, erreurs et bénéfice mesuré | Assimilation, identification de source et utilité applicative restent conditionnelles / non démontrées |
 
-Les niveaux P0–P6 sont une **décomposition de raisonnement**, pas nécessairement des modules logiciels ou des phases chronologiques strictes.
+Les niveaux N0–N6 sont une **décomposition de raisonnement**, pas nécessairement des modules logiciels ou des phases chronologiques strictes.
 
-## 3. Trois notions à ne pas confondre
+## 3. L'analyse multi-niveaux historique : une autre carte
+
+Le corpus historique emploie aussi « multi-level » dans un sens plus précis que cette chaîne N0–N6. Il faut conserver cette distinction au lieu de forcer une correspondance un-à-un.
+
+### A. Couplage des régimes physiques — chapitre de 2008
+
+Brun et Mohammadi décrivent une succession où le modèle de **champ proche** (émission et distribution initiale) fournit l'entrée du modèle de **transport à longue distance**. Chaque niveau réduit l'espace des solutions en mobilisant des connaissances physiques a priori. Les paramètres sont ensuite identifiés par assimilation. Il s'agit d'un couplage entre régimes et sous-modèles physiques, pas d'une hiérarchie de modules logiciels déjà reproduite dans J-DriftX.
+
+### B. Niveaux spatiaux emboîtés — plateforme Drift-X, manuscrit de 2009
+
+Le manuscrit de Bozon, Sinfort et Mohammadi décrit une construction de domaines rectangulaires emboîtés : le domaine global `Ω = ω₀` contient des sous-domaines `ωᵢ` de plus en plus fins. Les niveaux servent à raffiner localement la représentation du champ de vent et à introduire les effets du relief à différentes résolutions du MNT.
+
+- **Restriction du vent** : le champ au niveau plus fin est construit à partir de l'information du niveau précédent, notamment des valeurs aux quatre coins du sous-domaine et d'une fonction de pondération. Les auteurs affirment que leur construction préserve la divergence nulle et la compatibilité avec le champ global sous les hypothèses décrites dans l'article.
+- **Correction topographique** : une correction locale du vent dépend du relief et des normales au terrain ; les fonctions du modèle gaussien sont ensuite corrigées sous contrainte de conservation de la masse entrante.
+- **Sens de la dépendance** : la construction est coarse-to-fine, sans rétroaction générale du niveau fin vers le niveau grossier. Le nombre et l'étendue des niveaux sont paramétrés par l'utilisateur.
+- **Limites de preuve** : ce sont des propriétés et choix rapportés dans la publication historique. Ils ne démontrent pas que le code Python actuel les implémente, ni qu'une réimplémentation les préserverait sans tests analytiques et numériques. Les détails des équations et de la correction doivent être contrôlés sur le manuscrit source, car l'extraction texte a perdu une partie de la mise en page et des équations.
+
+Sources : [fiche détaillée du manuscrit Drift-X](../../raw/fiches/2009-bozon-sinfort-mohammadi-driftx-hal.md), [revue du corpus](../../docs/04-revues-papiers-sources.md#6-fiche--n-bozon-c-sinfort--b-mohammadi-2009-plateforme-drift-x--la-fiche-la-plus-riche), [extraction texte brute](../../raw/extracts/2009-bozon-sinfort-mohammadi-driftx-hal.txt), [chapitre Springer 2008 — fiche et notes analytiques](../../raw/fiches/2008-brun-mohammadi-springer-chap14.md).
+
+### C. Comment les deux cartes s'articulent
+
+| Carte | Question | Objets / niveaux | Ce qu'elle ne remplace pas |
+|---|---|---|---|
+| N0–N6, carte J-DriftX | Quelles grandeurs physiques et mathématiques s'enchaînent pour décrire la dispersion ? | Contexte, vent, chemins, temps de transport, dispersion, concentration, calibration | Les détails de la méthode historique de restriction multi-résolution |
+| Couplage historique des régimes | Comment l'émission et le champ proche alimentent-ils le transport lointain ? | Champ proche → entrée du modèle long-courrier → dispersion à longue distance | La hiérarchie de résolution spatiale du vent et du relief |
+| Niveaux spatiaux historiques `ωᵢ` | Comment raffiner localement le champ de vent et les corrections de relief ? | Domaines emboîtés, restrictions, corrections topographiques et conservation | La chaîne complète de concentration, la calibration et les niveaux de preuve |
+
+Les liens aux hypothèses sont **transversaux**, et non un niveau = une hypothèse : la quasi-stationnarité et la définition du transport concernent le champ et les chemins ([H3](../hypotheses/catalogue.qmd#h3--quasi-stationnarit-du-vent), [H4](../hypotheses/catalogue.qmd#h4--transport-advectif-dominant-dans-la-mtrique)); l'homogénéité par morceaux et le domaine de validité concernent les choix de raffinement et les transitions de régime ([H5](../hypotheses/catalogue.qmd#h5--homognit-horizontale-par-morceaux), [H6](../hypotheses/catalogue.qmd#h6--domaine-de-validit-local-du-modle-rduit)); la conservation de masse et la superposition des sources concernent la construction de concentration ([H1](../hypotheses/catalogue.qmd#h1--scalaire-passif), [H8](../hypotheses/catalogue.qmd#h8--superposition-des-sources)). Ces liens indiquent des sujets à vérifier, pas une validation automatique de chaque propriété historique.
+
+Pour chaque éventuelle réimplémentation, il faudra documenter séparément : (1) hypothèses mathématiques de la restriction et conditions de régularité ; (2) preuve de conservation de la divergence et du flux de masse ; (3) erreurs d'interpolation et sensibilité au nombre/à l'étendue des niveaux ; (4) code et tests qui portent effectivement ces propriétés. Voir aussi la [carte d'articulation scientifique](carte-articulation.qmd), qui distingue héritage documentaire, hypothèses, vérification, validation et utilité.
+
+## 4. Trois notions à ne pas confondre
 
 ### Champ de vent
 
@@ -71,7 +102,7 @@ Ces objets ne sont pas interchangeables. Voir la [définition mathématique et l
 
 La concentration est une grandeur différente du temps de transport. Dans le modèle direct, elle est reliée au champ de vent par une équation d'advection–diffusion, avec un terme source et un tenseur de diffusion. Une solution gaussienne requiert des hypothèses supplémentaires (régime, géométrie, fermeture, coefficients de dispersion, conditions au sol, etc.). On ne peut donc pas déduire une concentration du seul fait qu'un temps de transport a été calculé.
 
-## 4. Hypothèses physiques et hypothèses mathématiques
+## 5. Hypothèses physiques et hypothèses mathématiques
 
 Une **hypothèse physique** simplifie le phénomène représenté : scalaire passif, advection dominante, turbulence décrite par une fermeture, terrain homogène par morceaux, vent quasi-stationnaire.
 
@@ -81,7 +112,7 @@ Une **convention algorithmique** choisit le comportement du programme lorsqu'il 
 
 Ces catégories interagissent, mais il faut les documenter séparément. Par exemple, le seuil `umin` de la primitive de polyligne évite un calcul avec une vitesse trop faible ; il ne modélise pas à lui seul la physique d'un régime de stagnation.
 
-## 5. Ce qui peut être étudié séparément — et ce qui dépend du reste
+## 6. Ce qui peut être étudié séparément — et ce qui dépend du reste
 
 | Composant | Peut être vérifié isolément si… | Dépendances à réintroduire ensuite |
 |---|---|---|
@@ -95,7 +126,7 @@ Ces catégories interagissent, mais il faut les documenter séparément. Par exe
 
 L'indépendance est donc **locale** : un composant peut être vérifié avec des entrées contrôlées sans que le système complet soit validé. La composition des composants exige ensuite des tests d'intégration et une validation du modèle couplé.
 
-## 6. Lire correctement les preuves
+## 7. Lire correctement les preuves
 
 Il faut distinguer au minimum quatre niveaux de preuve :
 
