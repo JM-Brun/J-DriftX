@@ -69,6 +69,20 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 **Topographie et MNT (DEM).** Le modèle numérique de terrain : l'altitude du sol en chaque point. Le MNT donne la normale au sol, utilisée pour « coller » le panache au relief. Le multi-niveaux permet de charger le MNT à la bonne résolution : grossière au loin, fine près des zones d'intérêt.
 
+## Les objets du code de référence
+
+Les notions concrètes manipulées par le code Python du dépôt. Chacune est définie en français simple avec sa **raison d'être** (*pourquoi*) et sa *limite* ; les contrats exacts sont dans [src/jdriftx/metric.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/metric.py) et caractérisés par [tests/test_metric.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py).
+
+**Polyligne.** Une ligne brisée : des points consécutifs reliés par des segments droits, comme un itinéraire décrit par ses étapes. Dans le code, `temps_transport(ligne, vent)` reçoit une polyligne **choisie par l'appelant** et additionne, segment par segment, la longueur divisée par la norme de la vitesse. *Pourquoi* : offrir le coût de transport discret le plus simple possible, calculable et testable sans aucun solveur. *Conséquence* : le résultat dépend du tracé fourni et ignore le signe du vent — ce n'est ni le temps minimal de parcours, ni la construction historique. → [Correspondance avec le code](theorie/metrique-travel-time.qmd#correspondance-avec-le-code-actuel)
+
+**Ligne de courant.** Courbe partout tangente au champ de vent, à un instant donné : le « rail » le long duquel l'air s'écoule. La construction historique suit la ligne de courant issue de la source et y projette le point cible ($B^\perp$). *Limite* : elle ne coïncide avec la trajectoire d'une particule que si le champ est stationnaire. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
+
+**Caractéristique.** La courbe de transport d'une particule dans le champ — ici, la ligne de courant suivie depuis le point de départ. La définition historique de $\tau$ intègre le temps **le long de cette courbe** ; le code actuel ne la calcule pas (aucun solveur de caractéristiques). *Pourquoi cette distinction* : la formule intégrale suppose la courbe déjà connue — l'écrire ne dispense pas de la trouver. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
+
+**Temps de première arrivée.** Le temps **minimal** pour atteindre une cible quand la trajectoire peut être choisie — par opposition au temps mesuré sur un chemin imposé. En 1D à vitesse constante signée, il admet une formule exacte, implémentée par `temps_premiere_arrivee_1d` (cible dans le sens contraire du mouvement : $+\infty$ ; vitesse nulle : cible inaccessible sauf au point de départ). *Pourquoi* : rendre exécutable et testable le cas le plus simple de l'objet visé par la métrique, comme référence exacte. *Limite* : exact seulement en 1D à vitesse constante ; rien pour un champ variable. → [Investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) et [Métrique travel-time](theorie/metrique-travel-time.qmd)
+
+**Fonction de courant.** Une construction où le champ de vent s'écrit à partir d'une fonction $\psi$ par $u=\partial\psi/\partial y$, $v=-\partial\psi/\partial x$. Tout champ ainsi construit est à **divergence nulle par construction** : l'incompressibilité est garantie avant tout calcul, pas vérifiée après coup. *Pourquoi* : les expériences de reconstruction du vent (figure 1) exigent des champs synthétiques exactement incompressibles. → [Laboratoire interactif](projet/laboratoire-interactif.qmd) et [expérience figure 1](https://github.com/JM-Brun/J-DriftX/blob/main/docs/23-figure-01-reconstruction-vent.md)
+
 ## Réduction de complexité
 
 Cette section décrit l'**approche visée** ; l'état réel de l'implémentation (socle gaussien en vent uniforme, primitive de polyligne pour le coût) est consigné dans le README du dépôt et sur la page [Qualité & tests](projet/qualite.qmd).
