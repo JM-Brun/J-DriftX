@@ -25,7 +25,7 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 | $\sigma_y(x)$, $\sigma_z(x)$ | écarts-types de dispersion latérale et verticale du panache, fonctions de la distance sous le vent et de la classe de stabilité | m | [Similitude](theorie/similitude.qmd) |
 | $\mathbf K$ | tenseur de diffusion turbulente (fermeture gradient, « K-théorie ») | m²/s | [Modèle direct](theorie/modele-direct.qmd) |
 | $\nabla\cdot\mathbf u = 0$ | divergence nulle du vent : incompressibilité, héritée par le modèle réduit | — | [Contraintes physiques](theorie/contraintes-physiques.qmd) |
-| $\Sigma_\tau$ | surface iso-temps de transport, traversée par le flux conservé $Q$ | — | [Contraintes physiques](theorie/contraintes-physiques.qmd) |
+| $\Sigma_\tau$ | surface de niveau constant du temps de transport ; la conservation du flux à travers cette surface est un résultat à dériver sous des hypothèses explicites, pas une propriété automatique de toute définition de $\tau$ | — | [Métrique travel-time](theorie/metrique-travel-time.qmd), [Contraintes physiques](theorie/contraintes-physiques.qmd) |
 | $(\tau, n_1, n_2)$ | coordonnées travel-time : temps de transport et deux coordonnées normales | s, m | [Métrique travel-time](theorie/metrique-travel-time.qmd) |
 | $B^\perp$ | projection du point cible $B$ sur la ligne de courant issue de $A$ (pseudo-distance historique) | — | [Métrique travel-time](theorie/metrique-travel-time.qmd) |
 | $\theta$ | vecteur des paramètres libres du modèle approché, calibrés par assimilation | — | [Assimilation & identification](theorie/assimilation-identification.qmd) |
