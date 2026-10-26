@@ -31,7 +31,7 @@ Cette extension permet de comparer le projet aux méthodes d'estimation de terme
 
 Si la formule retenue est différentiable et ses dérivées sont disponibles, on peut calculer $\partial v / \partial \theta$ analytiquement ou par différentiation automatique. Leur coût n'est pas nul et la validité du gradient dépend du modèle et de son implémentation. Drift-X les exploite dans deux directions :
 
-**Analyse de risque.** Propager les incertitudes (vent, émission, stabilité) par Monte Carlo massif — rendu possible par le coût d'évaluation ponctuelle.
+**Analyse de risque.** Propager les incertitudes (vent, émission, stabilité) par Monte Carlo. Une évaluation ponctuelle peu coûteuse peut rendre cette stratégie envisageable, mais ne suffit pas à l'établir : il faut préciser les distributions et dépendances, le nombre de tirages, les calculs de référence et le coût total. Voir la définition et les limites dans [Modèle direct](modele-direct.qmd).
 
 **Identification de source.** Inverser la question : une pollution est observée aux capteurs ; de quelle source provient-elle ? La sensibilité $\partial C(\mathbf{x}_i) / \partial Q_j$ à chaque source candidate $j$ forme le système inverse. La disponibilité d'un gradient ou d'un adjoint pour la formulation travel-time actuelle n'est pas démontrée par le seul fait que certaines composantes soient analytiques. Il faut dériver l'objet exact, vérifier les points non réguliers et comparer le coût total à des méthodes numériques.
 
