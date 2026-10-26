@@ -73,19 +73,19 @@ La métrique visée par le projet est non symétrique : le temps de transport d�
 
 L’adjoint visé par le projet est un outil de sensibilité : le gradient du coût de transport $\tau$ par rapport aux paramètres (champ de vent, positions source et cible). Pour la référence uniforme, ce gradient est fermé :
 
-$
+$$
 \tau(\mathbf{a},\mathbf{b},\mathbf{u}) = \lambda\cdot(\mathbf{b}-\mathbf{a}), \qquad \lambda = \frac{\mathbf{u}}{\|\mathbf{u}\|^2}.
-$
+$$
 
 Le vecteur adjoint $\lambda$, constant dans un champ uniforme, mesure la sensibilité exacte : déplacer la cible de $\delta\mathbf{b}$ change le coût d’exactement $\lambda\cdot\delta\mathbf{b}$. Les gradients par rapport aux trois entrées sont fermés :
 
-$
+$$
 \frac{\partial\tau}{\partial\mathbf{b}} = \lambda, \qquad \frac{\partial\tau}{\partial\mathbf{a}} = -\lambda, \qquad \nabla_{\mathbf{u}}\tau = \frac{\mathbf{d}}{\|\mathbf{u}\|^2} - 2\,\frac{(\mathbf{d}\cdot\mathbf{u})\,\mathbf{u}}{\|\mathbf{u}\|^4},
-$
+$$
 
 avec $\mathbf{d} = \mathbf{b}-\mathbf{a}$. Ces formules valent sur le demi-plan aval ouvert $\mathbf{d}\cdot\mathbf{u} > 0$ : la borne transversale (coût nul) n’est pas un point de dérivabilité, le coût sautant à $+\infty$ dès l’amont.
 
-Quatre tests ciblés dans `tests/test_metric.py` vérifient l’implémentation contre ces formules par différences finies centrées (tolérance $10^{-6}$, erreur maximale mesurée $2{,}5\times 10^{-9}$ en préparation) : identité $\tau = \lambda\cdot\mathbf{d}$, gradients par rapport au vent et aux points, et gradient exact du cas 1D. Ce qui n’est **pas** couvert : un état adjoint en champ variable (le modèle historique multi-niveaux n’est pas reconstruit), la sensibilité du panache gaussien à ses paramètres, la dérivabilité à la borne transversale, et l’adjoint d’un schéma numérique. La distinction entre les acceptions du mot « adjoint » (état adjoint d’un contrôle optimal, fonction d’influence, transcription rétrograde d’un schéma) L'acception historique est documentée : le C. R. Mécanique 2006 (section 4) construit le code adjoint par différentiation automatique en mode inverse (Tapenade) pour accéder au gradient de la fonction coût d'assimilation et identifier les sources d'une pollution observée — l'adjoint de Drift-X est un gradient (fonction d'influence), pas un état adjoint d'EDP, que le modèle évite précisément de résoudre. La distinction entre les acceptions, la dérivation complète et l'ancrage dans le corpus sont dans [docs/26](../../docs/26-investigation-adjoint-temps-transport.md).
+Quatre tests ciblés dans `tests/test_metric.py` vérifient l’implémentation contre ces formules par différences finies centrées (tolérance $10^{-6}$, erreur maximale mesurée $2{,}5\times 10^{-9}$ en préparation) : identité $\tau = \lambda\cdot\mathbf{d}$, gradients par rapport au vent et aux points, et gradient exact du cas 1D. Ce qui n’est **pas** couvert : un état adjoint en champ variable (le modèle historique multi-niveaux n’est pas reconstruit), la sensibilité du panache gaussien à ses paramètres, la dérivabilité à la borne transversale, et l’adjoint d’un schéma numérique. L'acception historique est documentée : le C. R. Mécanique 2006 (section 4) construit le code adjoint par différentiation automatique en mode inverse (Tapenade) pour accéder au gradient de la fonction coût d'assimilation et identifier les sources d'une pollution observée — l'adjoint de Drift-X est un gradient (fonction d'influence), pas un état adjoint d'EDP, que le modèle évite précisément de résoudre. La distinction entre les acceptions du mot « adjoint » (état adjoint d'un contrôle optimal, fonction d'influence, transcription rétrograde d'un schéma), la dérivation complète et l'ancrage dans le corpus sont dans [docs/26](../../docs/26-investigation-adjoint-temps-transport.md).
 
 
 ## Une différence scientifique à démontrer, pas à présumer
