@@ -85,81 +85,81 @@ Quatre tests Given/When/Then ajoutés à tests/test_metric.py (aucune ligne
 de code de production modifiée) :
 
 1. test_uniform_pseudodistance_is_adjoint_vector_dot_displacement
-   (paramétré, 3 configurations) : l'identite tau = lambda . d est
-   restituée à la precision machine pres ;
+   (paramétré, 3 configurations) : l'identité tau = lambda . d est
+   restituée à la précision machine près ;
 2. test_uniform_pseudodistance_gradient_wrt_wind_matches_analytic
-   (paramétré, 3 configurations) : differences finies centrees contre la
-   formule fermee grad_u tau ;
+   (paramétré, 3 configurations) : différences finies centrées contre la
+   formule fermée grad_u tau ;
 3. test_uniform_pseudodistance_gradient_wrt_points_is_adjoint_vector :
-   d(tau)/db = lambda et d(tau)/da = -lambda par differences finies ;
+   d(tau)/db = lambda et d(tau)/da = -lambda par différences finies ;
 4. test_1d_first_arrival_gradient_matches_closed_form : gradient exact du
    cas 1D (section 4).
 
-Calibration (effectuee avant l'ecriture des tests, sur les memes
-configurations) : pas central h = 1e-5 ; erreur maximale mesuree entre
-differences finies et formules analytiques : 2,5e-9 en absolu (erreur de
-troncature O(h^2) et d'annulation epsilon_machine . tau / h). Tolerances
-retenues : 1e-6 (absolu et relatif), marge superieure a x400. Les
-configurations couvrent un vent aligne sur un axe (4,3) tourne, un vent
-exactement selon +x et un vent quelconque non aligne.
+Calibration (effectuée avant l'écriture des tests, sur les mêmes
+configurations) : pas central h = 1e-5 ; erreur maximale mesurée entre
+différences finies et formules analytiques : 2,5e-9 en absolu (erreur de
+troncature O(h^2) et d'annulation epsilon_machine . tau / h). Tolérances
+retenues : 1e-6 (absolu et relatif), marge supérieure à x400. Les
+configurations couvrent un vent (4, 3) tourné, un vent exactement selon +x
+et un vent quelconque non aligné.
 
 ## 4. Cas 1D exact
 
 temps_premiere_arrivee_1d donne tau = |b - a| / |v| sur le quadrant aval
-(b > a, v > 0). Les derivees sont fermees et triviales :
+(b > a, v > 0). Les dérivées sont fermées et triviales :
 
 d(tau)/dv = -tau / v ;  d(tau)/db = 1 / v ;  d(tau)/da = -1 / v.
 
-Le test 4 de la section 3.3 les verifie par differences finies. Ce cas
-documente la sensibilite du cas d'ecole du MVP-S : doubler la vitesse divise
-le temps par deux, et la derivee est proportionnelle au temps lui-meme.
+Le test 4 de la section 3.3 les vérifie par différences finies. Ce cas
+documente la sensibilité du cas d'école du MVP-S : doubler la vitesse divise
+le temps par deux, et la dérivée est proportionnelle au temps lui-même.
 
-## 5. Primitive polyligne : gradient derivable, non teste
+## 5. Primitive polyligne : gradient dérivable, non testé
 
 temps_transport calcule tau = somme(|ds_k| / |u_k|), lisse hors des
-singularites (segment nul, norme egale a umin). Le gradient par rapport au
-vent segmentaire est ferme :
+singularités (segment nul, norme égale à umin). Le gradient par rapport au
+vent segmentaire est fermé :
 
 grad_{u_k} tau = -|ds_k| u_k / |u_k|^3.
 
-Il n'est pas teste dans cette PR : cette primitive est symetrique par
-conception et n'est pas la metrique visee par la propriete « adjoint » de
-l'issue #42 ; le test n'apporterait pas d'information sur la metrique
-dirigee. A reconsiderer si cette primitive sert un jour d'oracle de
+Il n'est pas testé dans cette PR : cette primitive est symétrique par
+conception et n'est pas la métrique visée par la propriété « adjoint » de
+l'issue #42 ; le test n'apporterait pas d'information sur la métrique
+dirigée. À reconsidérer si cette primitive sert un jour d'oracle de
 comparaison.
 
 ## 6. Ce qui reste non implémenté
 
-- **Etat adjoint en champ variable** : la metrique historique de Drift-X
-  est definie sur un champ multi-niveaux non reconstruit a ce jour ; son
+- **État adjoint en champ variable** : la métrique historique de Drift-X
+  est définie sur un champ multi-niveaux non reconstruit à ce jour ; son
   adjoint (acception 1) suivra la reconstruction.
-- **Adjoint d'un schema numerique** : les solveurs periodiques (centre/RK4,
-  amont/Euler) pourraient recevoir une transcription retrograde avec test
-  croise adjoint-direct ; arbitrage futur, non lie a l'issue #42.
-- **Sensibilite du panache gaussien** : les derivees de C par rapport a
-  (u, classe, hauteur, sigma_y, sigma_z) sont derivables analytiquement ;
-  utiles pour l'assimilation (jalon M3), a deriver quand le besoin
+- **Adjoint d'un schéma numérique** : les solveurs périodiques (centré/RK4,
+  amont/Euler) pourraient recevoir une transcription rétrograde avec test
+  croisé adjoint-direct ; arbitrage futur, non lié à l'issue #42.
+- **Sensibilité du panache gaussien** : les dérivées de C par rapport à
+  (u, classe, hauteur, sigma_y, sigma_z) sont dérivables analytiquement ;
+  utiles pour l'assimilation (jalon M3), à dériver quand le besoin
   apparaît.
 
 ## 7. Ce que les tests n'établissent pas
 
-- Ils ne constituent pas un etat adjoint au sens du controle optimal
-  (acception 1) : seul le gradient d'une reference analytique discrete est
+- Ils ne constituent pas un état adjoint au sens du contrôle optimal
+  (acception 1) : seul le gradient d'une référence analytique discrète est
   couvert.
-- Ils ne couvrent pas la sensibilite de la metrique historique en champ
+- Ils ne couvrent pas la sensibilité de la métrique historique en champ
   variable, ni celle du panache gaussien.
-- Ils n'etablissent pas la derivabilite a la borne transversale
-  (section 3.2) : il n'y a rien a tester, le gradient n'existe pas la.
-- Les differences finies valident l'implementation aux points testes
-  contre les formules fermees ; la preuve generale est la derivation de la
+- Ils n'établissent pas la dérivabilité à la borne transversale
+  (section 3.2) : il n'y a rien à tester, le gradient n'existe pas là.
+- Les différences finies valident l'implémentation aux points testés
+  contre les formules fermées ; la preuve générale est la dérivation de la
   section 3.1, pas les tests.
 
 ## 8. Lien avec la feuille de route
 
-Le jalon M3 (assimilation) presuppose une metrique dirigee differentiable :
-toute assimilation de parametres de vent par methode de gradient a besoin du
-gradient exact du cout. Le vecteur adjoint constant de la reference uniforme
-en est le premier maillon verifie. Le MVP-S herite du gradient 1D exact
-(section 4). La cartographie de ces resultats est tenue a jour dans
+Le jalon M3 (assimilation) présuppose une métrique dirigée différentiable :
+toute assimilation de paramètres de vent par méthode de gradient a besoin du
+gradient exact du coût. Le vecteur adjoint constant de la référence uniforme
+en est le premier maillon vérifié. Le MVP-S hérite du gradient 1D exact
+(section 4). La cartographie de ces résultats est tenue à jour dans
 site/theorie/contraintes-physiques.qmd (section 6) et
 site/projet/qualite.qmd.
