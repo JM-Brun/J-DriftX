@@ -75,7 +75,7 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 Quatre notions géométriques pour comprendre la métrique $\tau$, puis deux outils de calcul. **Le code Python du dépôt n'est pas la définition** : il implémente certains de ces concepts, partiellement — chaque fonction citée indique seulement quel concept elle réalise.
 
-![Quatre notions de chemin : ligne de courant (courbe tangente au champ de vitesse), caractéristique (le voyage d'une particule), polyligne (points d'étape reliés par des segments droits), temps de première arrivée (le plus rapide des chemins).](images/chemins-et-lignes.svg)
+![Quatre notions : ligne de courant (courbe tangente au champ de vitesse), caractéristique (le voyage d'une particule), polyligne (points d'étape reliés par des segments droits), navigation minimale (coût minimal parmi les chemins admissibles).](images/chemins-et-lignes.svg)
 
 **Ligne de courant.** Une courbe qui, en chacun de ses points, est **tangente au champ de vitesse**, prise à un instant fixé : la direction locale du vent, dessinée partout dans le domaine. C'est le chemin naturel du transport — la construction historique suit la ligne de courant issue de la source et y projette le point cible ($B^\perp$). *Limite* : elle est définie à un instant fixé ; elle ne devient le trajet d'une particule que si le champ ne change pas pendant le voyage. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
 
