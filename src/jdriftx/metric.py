@@ -17,10 +17,46 @@ avec la définition historique devra être décidée séparément avant le jalon
 
 from __future__ import annotations
 
+from math import isfinite
+
 import numpy as np
 from numpy.typing import ArrayLike
 
 UMIN_PAR_DEFAUT = 0.1
+
+
+def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
+    """Calcule le temps de première arrivée pour une vitesse constante en 1D.
+
+    Le modèle est l'EDO stationnaire dx/dt = vitesse sur la droite réelle.
+    Une cible inaccessible reçoit +inf ; si vitesse vaut zéro, seule la
+    source elle-même est atteinte, au temps zéro.
+
+    Args:
+        a: position initiale (m).
+        b: position cible (m).
+        vitesse: vitesse signée constante (m s^-1).
+
+    Returns:
+        Temps de première arrivée en secondes, ou +inf si la cible est
+        inaccessible sous la dynamique constante spécifiée.
+
+    Raises:
+        ValueError: si une entrée est non finie.
+    """
+    if not all(isfinite(value) for value in (a, b, vitesse)):
+        msg = "a, b et vitesse doivent etre finis."
+        raise ValueError(msg)
+
+    deplacement = b - a
+    if not isfinite(deplacement):
+        msg = "Le deplacement b - a doit etre fini."
+        raise ValueError(msg)
+    if deplacement == 0.0:
+        return 0.0
+    if vitesse == 0.0 or ((deplacement > 0.0) != (vitesse > 0.0)):
+        return float("inf")
+    return abs(deplacement / vitesse)
 
 
 def temps_transport(
