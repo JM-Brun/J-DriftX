@@ -39,9 +39,9 @@ Le panache suit les solutions de similitude : profils gaussiens, croissance de $
 
 *Justification* : invariance d'échelle des panaches turbulents — une fois adimensionnés par leurs largeurs locales, les profils se superposent d'une station à l'autre (voir [Similitude](../theorie/similitude.qmd), section « Pourquoi le mot “similitude” »).
 
-*Limite* : le champ proche non établi est traité séparément (niveau 1 de la hiérarchie multi-niveaux, décrite dans [Similitude](../theorie/similitude.qmd)) ; de même les régimes sans équilibre établi, comme le sillage immédiat d'un bâtiment — un objet du niveau N1 (champ de vent) de la [carte des niveaux](../projet/niveaux-modelisation.qmd).
+*Limite* : le champ proche non établi est traité séparément dans la hiérarchie physique historique (champ proche → transport à longue distance, décrite dans [Similitude](../theorie/similitude.qmd)) ; de même les régimes sans équilibre établi, comme le sillage immédiat d'un bâtiment — un objet du niveau N1 (champ de vent) de la [carte des niveaux](../projet/niveaux-modelisation.qmd).
 
-*Ancrage dans le code* : les solutions de similitude (profils gaussiens, croissance de $\sigma$ par les tables de Briggs selon la classe de Pasquill) sont implémentées et testées (benchmarks gaussiens) ; le champ proche (niveau 1) n'est pas implémenté.
+*Ancrage dans le code* : les solutions de similitude (profils gaussiens, croissance de $\sigma$ par les tables de Briggs selon la classe de Pasquill) sont implémentées et testées (benchmarks gaussiens) ; le sous-modèle historique de champ proche n'est pas implémenté.
 :::
 
 ::: {.callout-note}
