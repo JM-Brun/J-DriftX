@@ -54,7 +54,7 @@ Le champ de vent $\mathbf u(\mathbf x)$ ne dépend pas du temps pendant la duré
 
 *Ce que cela permet* : remplacer « le trajet dépend du vent à chaque instant » par « le trajet dépend d'un seul champ de vent, mesuré ou estimé une fois pour tout le trajet ».
 
-*Justification* : sur la durée des transports visés, le champ de vent évolue peu ; une succession de périodes quasi-stationnaires couvre la plupart des situations météorologiques.
+*Justification / statut* : c'est une approximation de modélisation plausible lorsque le temps caractéristique du transport est court devant le temps caractéristique d'évolution du vent. Cette séparation de temps doit être évaluée pour le domaine d'application visé ; une succession de champs quasi-stationnaires est une stratégie possible, pas une garantie de représentativité de la plupart des situations météorologiques.
 
 *Limite* : si le champ change pendant le transport (rafales, fronts, inversions), le trajet réel n'est plus la ligne de courant initiale et $\tau$ ne le décrit plus — candidats à une discrétisation en sous-périodes.
 
@@ -71,7 +71,7 @@ $\tau = \int ds / |\mathbf{u}|$ néglige la diffusion dans le temps d'arrivée ;
 
 *Ce que cela permet* : calculer $\tau$ sans résoudre l'équation de diffusion — une intégrale le long d'un chemin, à coût quasi nul ; en champ uniforme, la pseudo-distance se calcule même par formule fermée (définition : [glossaire](../glossaire.qmd)).
 
-*Justification* : quand l'advection domine, l'arrivée du panache est portée par le vent ; la diffusion étale le panache, mais son effet sur le temps d'arrivée est du second ordre.
+*Justification / statut* : la métrique choisit de représenter le transport longitudinal par l'advection et de réserver l'étalement à la fermeture de dispersion. Dire que l'effet de la diffusion sur le temps d'arrivée est négligeable exige une analyse d'échelle ou une comparaison au modèle d'advection–diffusion dans le régime visé ; ce n'est pas une conséquence générale du seul fait que l'advection domine.
 
 *Limite* : lorsque le vent devient très faible, diffusion et advection deviennent comparables et $\tau$ tend vers l'infini (singularité en vitesse nulle) — régimes de stagnation. Le code les borne par la garde $u_{min}$, une convention algorithmique (voir [Niveaux de modélisation](../projet/niveaux-modelisation.qmd), section 5), pas une physique de stagnation.
 
