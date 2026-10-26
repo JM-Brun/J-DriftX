@@ -61,6 +61,7 @@ Chaque affirmation de haut niveau a sa page de détail — dérivation, justific
 | Que disent réellement les sources historiques ? | [Héritage](projet/heritage.qmd) · [Lectures des sources](projet/lectures.qmd) · [Audit de l'héritage](projet/audit.qmd) |
 | Pourquoi une métrique de temps de transport, et quels objets mathématiques voisins ? | [Métrique travel-time](theorie/metrique-travel-time.qmd) · [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) · [Revue mathématique](etat-art/revue-mathematique.qmd) |
 | Comment les solutions de similitude sont-elles dérivées ? | [Solutions de similitude](theorie/similitude.qmd) |
+| Comment les niveaux physiques, mathématiques et numériques s'articulent-ils ? | [Niveaux de modélisation](projet/niveaux-modelisation.qmd) · [Carte d'articulation](projet/carte-articulation.qmd) |
 | Que fait exactement le code aujourd'hui — objets, contrats, et pourquoi ? | [Correspondance avec le code](theorie/metrique-travel-time.qmd#correspondance-avec-le-code-actuel) · [Glossaire](glossaire.qmd) · [Qualité & tests](projet/qualite.qmd) |
 | Que garantit le modèle, et avec quelles preuves ? | [Contraintes physiques](theorie/contraintes-physiques.qmd) · [Catalogue des hypothèses](hypotheses/catalogue.qmd) · [Limites](hypotheses/limites.qmd) |
 | Que coûterait une modélisation complète ? | [EDP & maillage](theorie/edp-et-maillage.qmd) · [Comparaison des complexités](theorie/comparaison-complexites.qmd) |
@@ -72,6 +73,7 @@ Chaque affirmation de haut niveau a sa page de détail — dérivation, justific
 | Entrée | Contenu |
 |---|---|
 | [Carte d'articulation](projet/carte-articulation.qmd) | Parcours de lecture, niveaux de preuve, état des portes et limites des laboratoires |
+| [Niveaux de modélisation](projet/niveaux-modelisation.qmd) | Champ de vent, chemins, temps de transport, dispersion, concentration ; dépendances, hypothèses et état d'implémentation |
 | [Le projet](projet/heritage.qmd) | Héritage Drift-X (2006–2009), [objectifs](projet/objectifs.qmd) et [utilité scientifique](projet/utilite-scientifique.qmd) |
 | [Fondements théoriques](theorie/modele-direct.qmd) | Modèle direct, réduction a priori, similitude, métrique, contraintes, assimilation — avec les théories mathématiques |
 | [EDP & maillage](theorie/edp-et-maillage.qmd) | Ce que serait une modélisation complète du problème : EDP, fermeture de la turbulence, CFD, maillage, schémas numériques, coût |
