@@ -1,5 +1,5 @@
 ---
-title: "Démonstration navigateur : coût en vent uniforme"
+title: "Explorer des champs de vent 2D"
 format:
   live-html:
     pyodide:
@@ -8,91 +8,116 @@ format:
         - https://jm-brun.github.io/J-DriftX/resources/wheels/jdriftx-0.1.0-py3-none-any.whl
 ---
 
-# Démonstration navigateur : coût en vent uniforme
-
-Cette page propose une seule expérience calculée dans le navigateur. Elle charge le paquet Python public `jdriftx` avec Quarto Live et Pyodide. Les curseurs sont gérés par Observable JavaScript (OJS) ; le calcul est effectué par la fonction Python existante.
+La formulation correcte est volontairement plus étroite que « simuler le vent » : J-DriftX sait aujourd'hui évaluer et visualiser des champs vectoriels 2D **synthétiques**. Cette page rend ces objets lisibles ; elle ne produit ni prévision météorologique, ni champ corrigé par le relief.
 
 ::: {.callout-warning}
-**Chargement initial.** Le navigateur doit télécharger le runtime WebAssembly, NumPy et la roue Python de J-DriftX. Le premier affichage peut prendre un moment. Si les contrôles restent inactifs ou si une erreur apparaît dans la zone de chargement, consultez les résultats analytiques de référence plus bas : ils restent disponibles même si l'exécution interactive échoue.
+**Limite scientifique.** Les trois familles ci-dessous sont des cas mathématiques contrôlés définis dans le module Python **jdriftx.fields.vector_field**. Elles ne sont alimentées par aucune observation, ne représentent ni turbulence ni couche limite, et ne sont pas encore modifiées par le relief, la topologie ou les obstacles.
 :::
 
-## Explorer le coût
+## Manipuler un champ vectoriel 2D
 
-Le point de départ est fixé à $A=(0,0)$ ; les curseurs définissent le point cible $B=(x,y)$ et le vent uniforme $\\mathbf{u}=(u_x,u_y)$. Les coordonnées sont en mètres, les vitesses en mètres par seconde et le résultat en secondes.
+Choisir une famille, puis faire varier ses paramètres. OJS ne gère que les contrôles ; à chaque modification, Pyodide importe l'API Python `jdriftx.figures.wind_field_explorer`. Cette API appelle `jdriftx.fields.vector_field`, calcule les diagnostics et rend le SVG. Les coordonnées sont sans dimension et les unités de vitesse sont arbitraires.
+
+::: {.callout-note}
+**Architecture et chargement initial.** Le premier calcul télécharge Pyodide, NumPy et la roue Python du projet. La cellule Quarto ne contient aucune formule, boucle de grille ni génération SVG : elle construit une configuration et appelle l'API testée du paquet. Les interactions suivantes réévaluent ce code Python unique.
+:::
+
+L'implémentation est isolée dans `src/jdriftx/figures/wind_field_explorer.py` ; ses tests sont dans `tests/test_wind_field_explorer.py`. La page conserve seulement son rôle de documentation et d'adaptateur d'interface.
 
 ```{ojs}
 //| echo: false
 
-viewof targetX = Inputs.range([-500, 500], {
-  value: 100,
-  step: 10,
-  label: "Position x de B (m)"
-})
+viewof fieldKind = Inputs.radio(
+  ["Uniforme", "Cisaillement linéaire", "Radial (source / puits)"],
+  {label: "Famille de champ", value: "Uniforme"}
+)
 
-viewof targetY = Inputs.range([-500, 500], {
-  value: 100,
-  step: 10,
-  label: "Position y de B (m)"
-})
-
-viewof windX = Inputs.range([-5, 5], {
+viewof baseSpeed = Inputs.range([0.1, 5], {
+  label: "Vitesse de base U",
   value: 2,
-  step: 0.1,
-  label: "Vent uₓ (m/s)"
+  step: 0.1
 })
 
-viewof windY = Inputs.range([-5, 5], {
+viewof angleDeg = Inputs.range([-180, 180], {
+  label: "Direction θ (degrés)",
   value: 0,
-  step: 0.1,
-  label: "Vent uᵧ (m/s)"
+  step: 5
+})
+
+viewof shear = Inputs.range([-1, 1], {
+  label: "Cisaillement γ",
+  value: 0.25,
+  step: 0.05
+})
+
+viewof radialStrength = Inputs.range([-1, 1], {
+  label: "Intensité radiale α",
+  value: 0.35,
+  step: 0.05
+})
+
+viewof probeX = Inputs.range([-5, 5], {
+  label: "Point de lecture x",
+  value: 2,
+  step: 0.5
+})
+
+viewof probeY = Inputs.range([-5, 5], {
+  label: "Point de lecture y",
+  value: 1,
+  step: 0.5
 })
 ```
 
 ```{pyodide}
-#| edit: false
-#| output: true
+#| echo: false
+#| output: asis
 #| input:
-#|   - targetX
-#|   - targetY
-#|   - windX
-#|   - windY
-from jdriftx import pseudo_distance_uniforme
+#|   - fieldKind
+#|   - baseSpeed
+#|   - angleDeg
+#|   - shear
+#|   - radialStrength
+#|   - probeX
+#|   - probeY
+from jdriftx.figures.wind_field_explorer import (
+    WindFieldExplorerConfig,
+    render_wind_field_explorer_html,
+)
 
-vent = [float(windX), float(windY)]
-if vent == [0.0, 0.0]:
-    print("Vent nul : le coût n'est pas défini.")
-else:
-    cost = pseudo_distance_uniforme(
-        [0.0, 0.0],
-        [float(targetX), float(targetY)],
-        vent,
-    )
-    if cost == float("inf"):
-        print("Coût calculé : +∞ s — point cible en amont")
-    else:
-        print(f"Coût calculé : {cost:.2f} s")
+config = WindFieldExplorerConfig(
+    family=str(fieldKind),
+    speed=float(baseSpeed),
+    angle_deg=float(angleDeg),
+    shear=float(shear),
+    radial_strength=float(radialStrength),
+    probe_x=float(probeX),
+    probe_y=float(probeY),
+)
+print(render_wind_field_explorer_html(config))
 ```
 
-Le bloc Python est relié aux curseurs par l'option `input` native de Quarto Live. Il est réévalué quand une valeur change ; il n'y a pas de fonction Python exportée à appeler depuis JavaScript.
+Les flèches donnent direction et sens locaux ; leur longueur et leur couleur indiquent la norme relative sur la grille affichée. La croix noire est le point de lecture.
 
-## Résultats de référence indépendants de l'interface
+## Ce que cette exploration établit
 
-Avec un vent fixé à $\\mathbf{u}=(2,0)$ m/s :
+- **Champ uniforme.** Référence la plus simple : même vitesse en tout point ; divergence et rotationnel analytiques nuls.
+- **Cisaillement linéaire.** La vitesse horizontale varie avec la position verticale. Le champ reste à divergence nulle, mais son rotationnel vaut −γ.
+- **Champ radial.** Cas de contrôle mathématique : divergence égale à 2α et rotationnel nul. Une source ou un puits radial n'est pas une description atmosphérique réaliste.
 
-| Point cible $B$ | Résultat attendu | Interprétation |
-|---|---:|---|
-| $(100,0)$ m | $50$ s | Déplacement longitudinal vers l'aval |
-| $(0,100)$ m | $0$ s | Déplacement purement transversal, non pénalisé par cette définition |
-| $(-100,0)$ m | $+\\infty$ | Point cible en amont selon la convention de la fonction |
+Les équations et les valeurs locales ici exposées correspondent aux trois branches testées dans **src/jdriftx/fields.py** et **tests/test_fields.py**. L'explorateur ne remplace pas ces tests : il rend leurs comportements attendus inspectables.
 
-Ces valeurs sont des vérifications analytiques de la fonction, pas des résultats d'une simulation atmosphérique.
+## Vers des champs influencés par le territoire
 
-## Ce que cette expérience démontre — et ne démontre pas
+La progression souhaitée est pertinente, mais elle n'est pas encore présente dans le code. La chaîne scientifique doit rester explicite :
 
-- Le calcul est délégué à `jdriftx.pseudo_distance_uniforme`, fonction Python testée dans le dépôt.
-- Le coût est déterminé par la projection du déplacement sur la direction du vent ; l'écart transversal n'est pas pénalisé.
-- Un déplacement longitudinal en amont renvoie $+\\infty$ selon la convention explicite de cette implémentation.
-- Un vent nul est signalé explicitement et ne provoque pas d'exception non traitée.
-- Le calcul est limité à un champ uniforme non nul. Il ne résout pas les caractéristiques d'un champ variable, ne calcule pas une concentration et ne valide pas un modèle de dispersion.
+| Étape | État actuel | Condition avant revendication physique |
+|---|---|---|
+| Champ de référence 2D synthétique | Implémenté et visualisé ici | Vérifications analytiques déjà ciblées |
+| Relief, topologie, végétation ou obstacles | Non implémenté dans le calcul du vent | Définir les mécanismes, unités, paramètres et conditions aux limites |
+| Champ corrigé par le territoire | Non implémenté | Calibrer et confronter à des observations indépendantes |
+| Trajectoire, coût ou dispersion avec ce champ corrigé | Outils séparés, pas de chaîne couplée | Vérifier le couplage, puis valider sur des données hors échantillon |
 
-Pour le catalogue des autres expériences, les commandes de lancement local et les tests associés, consulter le [catalogue du laboratoire numérique](laboratoire-interactif.qmd). Pour le niveau de preuve requis, voir la page de [validation scientifique](validation-scientifique.qmd).
+Cette séparation évite un raccourci trompeur : dessiner un relief à côté de flèches ne constitue pas une modélisation de son effet sur le vent. Les expériences de relief synthétique restent disponibles dans le [catalogue du laboratoire numérique](laboratoire-interactif.qmd), avec la même limite.
+
+Pour les hypothèses et le niveau de preuve requis avant une affirmation de performance, voir la [validation scientifique](validation-scientifique.qmd) et le [catalogue des hypothèses](../hypotheses/catalogue.qmd).

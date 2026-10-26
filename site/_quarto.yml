@@ -40,7 +40,7 @@ website:
               - href: projet/laboratoire-interactif.qmd
                 text: "Catalogue du laboratoire"
               - href: projet/experiences-interactives.qmd
-                text: "Démo navigateur : vent uniforme"
+                text: "Explorer les champs de vent 2D"
               - href: projet/catalogue-donnees.qmd
                 text: "Catalogue de données"
       - section: "Théorie"

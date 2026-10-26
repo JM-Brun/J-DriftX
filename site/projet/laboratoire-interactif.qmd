@@ -13,9 +13,9 @@ Les champs et équations synthétiques ci-dessous sont des cas de vérification 
 
 ## Expérience disponible dans le navigateur
 
-La [démonstration du coût de parcours en vent uniforme](experiences-interactives.qmd) exécute une fonction du paquet Python `jdriftx` dans le navigateur avec Quarto Live/Pyodide. C'est une référence analytique limitée : le coût ignore l'écart transversal et renvoie l'infini en amont selon la convention documentée.
+L'[explorateur de champs de vent 2D](experiences-interactives.qmd) rend visibles les trois champs synthétiques définis dans `jdriftx.fields.vector_field` : uniforme, cisaillement linéaire et radial. Les contrôles donnent accès aux paramètres des formules et à la vitesse locale ; l'affichage est instantané dans le navigateur.
 
-Le premier chargement nécessite le téléchargement d'un runtime WebAssembly et du paquet Python. Une table de résultats analytiques est fournie sur la page de démonstration pour que les valeurs de référence restent consultables si le navigateur ne peut pas exécuter le code.
+Cette page est une visualisation pédagogique des objets testés dans le paquet, pas une simulation météorologique. Aucun champ n'est encore modifié par un relief, la topologie, la végétation ou des obstacles ; ces couplages exigent des mécanismes, paramètres et données de validation dédiés.
 
 ## Applications Python à lancer localement
 
