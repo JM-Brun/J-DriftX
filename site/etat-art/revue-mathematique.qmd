@@ -106,4 +106,4 @@ La revendication de conservation du flux sur les surfaces iso-\(\tau\) exige une
 
 La revue montre que le dépôt doit clarifier l'objet mathématique avant d'implémenter un solveur ou de revendiquer une nouveauté. Elle ne prouve pas que l'approche historique est redondante. La définition de pseudo-distance de l'article de 2006 et l'approximation numérique décrite en 2008 ont été vérifiées. La thèse de Brun reste à examiner; la conservation exacte sur les surfaces iso-\(\tau\) n'est pas encore démontrée dans cette reprise.
 
-Voir la [note détaillée dans le dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/14-revue-mathematique-ciblee.md), le [MVP scientifique](../projet/mvp-scientifique.qmd) (annexe) et la [page travel-time actuelle](../theorie/metrique-travel-time.qmd).
+Voir la [note détaillée dans le dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/14-revue-mathematique-ciblee.md), le [bilan MVP-S 1D](https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-bilan-mvp-s-1d.md) et la [page travel-time actuelle](../theorie/metrique-travel-time.qmd).

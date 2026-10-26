@@ -4,44 +4,217 @@ title: "Modèle direct"
 
 # Le modèle direct : transport d'un scalaire passif
 
-Le point de départ de J-DriftX est le modèle *direct* complet qu'il s'agit d'approcher sans le résoudre : le transport d'un scalaire passif (un pesticide, un traceur) dans un écoulement atmosphérique turbulent.
+Cette page définit le problème physique de référence avant toute réduction. Elle distingue (i) l'équation de transport, (ii) les approximations qui conduisent à une équation moyenne fermée, (iii) les paramètres empiriques de dispersion, et (iv) les propriétés qui ne sont **pas encore établies** dans le code J-DriftX.
 
-## Équation de transport
+Le modèle direct est ici un **problème de référence conceptuel**, pas l'affirmation que J-DriftX résout déjà cette équation générale. Le noyau actuel implémente notamment un panache/puff gaussien dans des cas limités ; il ne reconstruit pas le champ de vent multi-niveaux historique. Voir [Niveaux de modélisation](../projet/niveaux-modelisation.qmd) pour situer cette chaîne dans N0–N6, [Catalogue des hypothèses](../hypotheses/catalogue.qmd) pour les hypothèses traçables, [Contraintes physiques](contraintes-physiques.qmd) pour le statut des preuves et [Solutions de similitude](similitude.qmd) pour la dérivation du panache gaussien.
 
-La concentration $C(\mathbf{x}, t)$ d'un scalaire passif obéit à l'équation d'advection–diffusion :
+## 1. Problème, variables et unités
 
-$$
-\frac{\partial C}{\partial t} + \mathbf{u} \cdot \nabla C
-= 
-\nabla \cdot \left( \mathbf{K} \, \nabla C \right) + S,
-$$
+On considère un scalaire passif, par exemple un traceur ou une substance transportée par l'air, dont la concentration volumique est notée
+\[
+C(\mathbf{x},t) \quad [\mathrm{kg\,m^{-3}}],
+\]
+où \(\mathbf{x}=(x,y,z)\) est la position (m) et \(t\) le temps (s). « Passif » signifie que la substance ne modifie pas le champ de vitesse et que l'on néglige ici les réactions chimiques, les effets thermiques et les rétroactions sur l'écoulement. Cela ne signifie pas que dépôt, dégradation ou absorption sont toujours négligeables : ils doivent être ajoutés comme termes spécifiques si le problème l'exige.
 
-où $\mathbf{u}$ est le champ de vent, $\mathbf{K}$ le tenseur de diffusion turbulente et $S$ le terme source. La résolution numérique de ce modèle peut devenir coûteuse pour des balayages de paramètres, de nombreuses évaluations SIG ou des analyses Monte Carlo. Le coût réel dépend toutefois du domaine, du schéma, du maillage, du régime et des ressources ; il doit être mesuré contre une baseline pertinente plutôt que qualifié de rédhibitoire a priori.
+Le champ de vitesse de l'air est \(\mathbf{u}(\mathbf{x},t)\), en \(\mathrm{m\,s^{-1}}\). Une source volumique \(S(\mathbf{x},t)\) a pour unité \(\mathrm{kg\,m^{-3}\,s^{-1}}\). Pour une source ponctuelle, on représente idéalement la source par une distribution de Dirac ; son intensité intégrée est alors un débit massique \(Q\) en \(\mathrm{kg\,s^{-1}}\). Les unités concrètes doivent être adaptées si le scalaire est une fraction volumique ou si l'on utilise une autre convention de concentration.
 
-## Moyennage et fermeture
+## 2. Équation de conservation et équation d'advection–diffusion
 
-Le vent atmosphérique est turbulent : $\mathbf{u} = \overline{\mathbf{u}} + \mathbf{u}'$. Après moyennage de Reynolds, l'équation s'écrit sur $\overline{C}$, avec le flux turbulent $\overline{\mathbf{u}' C'}$ qu'il faut fermer. La fermeture gradient (K-théorie) :
+La forme conservative générale, pour un milieu à densité constante et une vitesse incompressible, s'écrit
+\[
+\frac{\partial C}{\partial t}
++ \nabla\!\cdot(\mathbf{u}C)
+= \nabla\!\cdot(D_m\nabla C)+S,
+\]
+où \(D_m\) est la diffusivité moléculaire (\(\mathrm{m^2\,s^{-1}}\)). Si \(\nabla\cdot\mathbf{u}=0\), l'identité
+\[
+\nabla\cdot(\mathbf{u}C)
+= \mathbf{u}\cdot\nabla C + C\,\nabla\cdot\mathbf{u}
+= \mathbf{u}\cdot\nabla C
+\]
+donne la forme usuelle
+\[
+\frac{\partial C}{\partial t}+\mathbf{u}\cdot\nabla C
+=\nabla\cdot(D_m\nabla C)+S.
+\]
 
-$$
-\overline{\mathbf{u}' C'} = -\mathbf{K} \, \nabla \overline{C},
-$$
+**Advection** désigne le transport par le mouvement moyen local de l'air ; **diffusion** désigne le mélange représenté par un flux proportionnel à un gradient dans ce modèle. Ces mécanismes sont distincts. Dans une atmosphère turbulente, le transport turbulent n'est pas, à l'échelle instantanée, simplement une diffusion moléculaire : le terme de diffusion turbulente apparaît après moyennage et fermeture (section 3).
 
-où $\mathbf{K}$ dépend de la stabilité (classes de Pasquill) et de la hauteur. C'est cette fermeture qui produit les coefficients de dispersion $\sigma_y, \sigma_z$ des solutions de similitude.
+Cette équation ne définit pas à elle seule un problème bien posé. Il faut aussi spécifier le domaine spatial, les conditions initiales, les conditions aux limites (sol, limites latérales et supérieures), la source et ses unités, ainsi que les propriétés du champ de vitesse. La négligence du dépôt, de la chimie ou de la diffusion longitudinale est une hypothèse de modèle, pas une identité mathématique. Par exemple, pour le panache gaussien idéalisé au-dessus d'un sol imperméable, une condition de flux vertical nul au sol est satisfaite par la méthode des images ; sa dérivation et ses limites sont explicitées dans [Solutions de similitude](similitude.qmd#étape-6-réflexion-au-sol-par-la-méthode-des-images).
 
-## Vent incompressible
+## 3. Moyennage de Reynolds : d'où vient le flux turbulent ?
 
-Sur les échelles visées, le vent est incompressible :
+### 3.1 Décomposition moyenne + fluctuation
 
-$$
-\nabla \cdot \mathbf{u} = 0.
-$$
+Pour une grandeur turbulente \(\phi\), on introduit une moyenne de Reynolds \(\overline{\phi}\) et une fluctuation \(\phi'\) :
+\[
+\phi=\overline{\phi}+\phi',\qquad \overline{\phi'}=0.
+\]
+On applique cette décomposition à la vitesse et à la concentration :
+\[
+\mathbf{u}=\overline{\mathbf{u}}+\mathbf{u}',\qquad
+C=\overline C+C'.
+\]
+La barre peut représenter une moyenne d'ensemble ou, sous des hypothèses de stationnarité/ergodicité appropriées, une moyenne temporelle. Ce choix doit être explicité dans une application. On suppose ici que le moyennage commute avec les dérivées et que la densité est constante ; ces hypothèses peuvent échouer ou demander une formulation différente dans des écoulements fortement stratifiés ou compressibles.
 
-La formulation historique cherche à préserver la divergence nulle dans la construction du champ de vent [@brun2008]. Le code actuel ne génère pas ce champ multi-niveaux ; cette propriété n'est donc pas encore démontrée ni testée dans J-DriftX. Voir [Contraintes physiques](contraintes-physiques.qmd).
+### 3.2 Équation moyenne
 
-## Ce que J-DriftX refuse de faire
+Le flux advectif moyen contient un terme supplémentaire :
+\[
+\overline{\mathbf{u}C}
+=\overline{\mathbf{u}}\,\overline C
++\overline{\mathbf{u}'C'}.
+\]
+En moyennant l'équation conservative et en utilisant cette identité, on obtient
+\[
+\frac{\partial\overline C}{\partial t}
++\nabla\cdot(\overline{\mathbf{u}}\,\overline C)
+=\nabla\cdot(D_m\nabla\overline C)
+-\nabla\cdot\overline{\mathbf{u}'C'}
++\overline S.
+\]
+Le vecteur
+\[
+\mathbf{F}_t:=\overline{\mathbf{u}'C'}
+\]
+est le **flux turbulent de scalaire**. Son unité est \(\mathrm{kg\,m^{-2}\,s^{-1}}\). Il décrit la corrélation entre fluctuations de vitesse et de concentration. L'équation moyenne contient donc une nouvelle inconnue, \(\mathbf F_t\), qui n'est pas déterminée par la seule équation de \(\overline C\). C'est le **problème de fermeture**.
 
-- Résoudre l'EDP sur un maillage du domaine (voir [EDP & maillage](edp-et-maillage.qmd)) : incompatible avec l'évaluation ponctuelle.
-- Faire de l'apprentissage sur snapshots CFD/LES le point de départ par défaut : ce n'est pas l'option privilégiée dans l'hypothèse historique. Le coût, les données nécessaires et la généralisation des alternatives doivent néanmoins être comparés au cas par cas.
-- Abandonner les propriétés physiques comme critères de validation : conservation, positivité, superposition et divergence doivent être formulées précisément et testées là où elles s'appliquent. Elles ne sont pas toutes démontrées dans le code actuel.
+## 4. Fermeture gradient et tenseur turbulent \(\mathbf K\)
 
-La réponse à ces trois refus est la [réduction *a priori*](reduction-a-priori.qmd).
+### 4.1 Hypothèse de fermeture
+
+La fermeture gradient (ou *K-théorie*) **modélise** le flux turbulent par une loi constitutive :
+\[
+\boxed{\mathbf F_t=-\mathbf K\nabla\overline C.}
+\]
+Le signe moins signifie que, dans cette approximation, le flux turbulent est dirigé à l'opposé du gradient moyen de concentration. Cette relation est une hypothèse de fermeture, non une conséquence exacte du moyennage de Reynolds. Elle peut être inadéquate en présence de non-localité, de mémoire, de forte hétérogénéité ou de flux dirigés contre le gradient local.
+
+Le tenseur \(\mathbf K(\mathbf x,t)\) est une matrice de diffusivité turbulente, de dimension \(\mathrm{m^2\,s^{-1}}\). En trois dimensions :
+\[
+\mathbf K=
+\begin{pmatrix}
+K_{xx}&K_{xy}&K_{xz}\\
+K_{yx}&K_{yy}&K_{yz}\\
+K_{zx}&K_{zy}&K_{zz}
+\end{pmatrix}.
+\]
+Les termes diagonaux représentent les diffusivités dans les directions coordonnées ; les termes hors diagonale couplent les composantes du gradient aux composantes du flux. Dans un modèle simplifié à axes principaux, on prend souvent \(\mathbf K=\operatorname{diag}(K_x,K_y,K_z)\). L'isotropie supplémentaire \(\mathbf K=K\mathbf I\) est une hypothèse encore plus restrictive et n'est pas automatique dans une couche limite atmosphérique.
+
+Pour une fermeture diffusive dissipative classique, on choisit généralement \(\mathbf K\) symétrique semi-définie positive, de sorte que le terme diffusif ne crée pas artificiellement de variance à l'échelle modélisée. Cette condition est une contrainte de conception à préciser pour la fermeture retenue ; elle ne suffit pas à garantir la validité empirique de celle-ci.
+
+En substituant la fermeture dans l'équation moyenne, on obtient
+\[
+\frac{\partial\overline C}{\partial t}
++\nabla\cdot(\overline{\mathbf u}\,\overline C)
+=\nabla\cdot\big[(D_m\mathbf I+\mathbf K)\nabla\overline C\big]
++\overline S.
+\]
+Dans les modèles atmosphériques usuels, la diffusion moléculaire est souvent négligeable devant le mélange turbulent aux échelles d'intérêt ; on pose alors, explicitement, \(D_m\mathbf I+\mathbf K\simeq\mathbf K\). C'est dans ce sens réduit que l'équation d'advection–diffusion écrite au début du projet utilise \(\mathbf K\).
+
+### 4.2 Ce qui détermine \(\mathbf K\) ?
+
+Le tenseur ne se déduit pas du seul nom « turbulence ». Il doit être prescrit par une paramétrisation, estimé à partir de mesures ou de simulations, ou déterminé par un modèle de turbulence avec ses propres équations et hypothèses. Il peut dépendre de la hauteur, de la rugosité, de la stabilité thermique, de la vitesse du vent et de la direction. Une classe de stabilité n'est donc pas, à elle seule, une formule complète de \(\mathbf K\).
+
+## 5. Régime, stabilité atmosphérique et classes de Pasquill
+
+**Régime** désigne ici le type de comportement temporel et physique supposé pour le problème ; le mot doit toujours être qualifié. Un régime **transitoire** dépend du temps ; un régime **stationnaire** satisfait \(\partial C/\partial t=0\) pour l'état modélisé ; un régime **établi** signifie que les statistiques ou le profil considéré ne changent plus dans le cadre d'observation choisi. « Stationnaire » et « établi » sont souvent associés mais ne sont pas interchangeables sans préciser ce qui est stationnaire (le vent, la source, les statistiques ou la concentration). Les régimes **laminaire** et **turbulent** qualifient plutôt la dynamique de l'écoulement ; ils ne sont pas synonymes de transitoire et stationnaire. Le [glossaire](../glossaire.qmd) donne aussi la définition courte du champ stationnaire et de la quasi-stationnarité ; celle-ci ne dispense pas de préciser ici l'objet dont le temps est écarté.
+
+La **stabilité atmosphérique** décrit notamment la façon dont la stratification thermique favorise ou freine les déplacements verticaux turbulents. Les classes empiriques de Pasquill (souvent notées A à F, de conditions très instables à très stables) résument des conditions météorologiques à partir d'indicateurs tels que le rayonnement solaire, la couverture nuageuse et le vent, selon la variante de classification. Les définitions opérationnelles et les courbes associées doivent être consultées dans la [page Solutions de similitude](similitude.qmd) et dans l'entrée « Classes de Pasquill » du [glossaire](../glossaire.qmd). Elles servent dans certains modèles de dispersion à choisir des paramètres ou courbes empiriques. Elles ne constituent ni une loi universelle de turbulence, ni une mesure directe de tous les coefficients de \(\mathbf K\). Les variantes réglementaires et les domaines d'application doivent être cités lorsqu'une paramétrisation précise est utilisée.
+
+## 6. Coefficients de dispersion \(\sigma_y\) et \(\sigma_z\)
+
+Dans un modèle de panache gaussien, \(\sigma_y\) et \(\sigma_z\) sont les écarts-types des profils de concentration dans les directions transversale et verticale. Ils ont l'unité d'une longueur (m) et décrivent la largeur du panache ; ce ne sont **pas** les composantes du tenseur \(\mathbf K\), ni des diffusivités. Ils peuvent être exprimés en fonction de la distance sous le vent, de la classe de stabilité et de paramètres empiriques.
+
+Le lien entre \(\mathbf K\) et les \(\sigma\) dépend des hypothèses du modèle. Dans l'exemple idéalisé d'un vent uniforme \(U>0\), de diffusivités transversales constantes \(K_y,K_z\), et d'une équation réduite sans diffusion longitudinale, le temps de transport est \(t'=x/U\). Pour la diffusion d'une impulsion, les variances satisfont
+\[
+\sigma_y^2=2K_y t'=\frac{2K_y x}{U},\qquad
+\sigma_z^2=2K_z t'=\frac{2K_z x}{U},
+\]
+avant prise en compte de la condition de sol et d'autres effets. Cette relation est une conséquence de ce **cas simplifié**, pas une formule universelle de dispersion atmosphérique. Elle relève de la limite diffusive classique attribuée à Taylor (1921), dont le rôle dans le passage vers les lois de dispersion empiriques est rappelé dans [Solutions de similitude](similitude.qmd).
+
+Les formules empiriques de Pasquill–Gifford/Briggs fournissent des courbes ou relations pour estimer \(\sigma_y(x)\) et \(\sigma_z(x)\) dans des contextes spécifiés. Elles ne sont pas « produites automatiquement » par toute fermeture gradient : il faut ajouter les hypothèses, la géométrie, les conditions aux limites et la paramétrisation. La dérivation détaillée du cas gaussien et ses limites sont données dans [Solutions de similitude](similitude.qmd).
+
+## 7. Champ de vent incompressible et divergence nulle
+
+La divergence d'un champ de vitesse est
+\[
+\nabla\cdot\mathbf u
+=\frac{\partial u_x}{\partial x}
++\frac{\partial u_y}{\partial y}
++\frac{\partial u_z}{\partial z}.
+\]
+Elle mesure localement le taux volumique d'expansion d'un élément fluide. L'hypothèse
+\[
+\nabla\cdot\mathbf u=0
+\]
+signifie que le champ est solénoïdal. Pour un fluide à densité constante, elle correspond à l'incompressibilité cinématique. Dans l'atmosphère réelle, la densité varie avec l'altitude ; traiter le vent comme à divergence nulle est donc une approximation de modèle qui doit être justifiée par l'échelle et la formulation utilisées. Dans un modèle compressible, la conservation de masse porte plutôt sur \(\partial_t\rho+\nabla\cdot(\rho\mathbf u)=0\).
+
+Une interpolation de composantes de vitesse mesurées à plusieurs hauteurs ne garantit pas, par elle-même, \(\nabla\cdot\mathbf u=0\). La propriété doit être démontrée analytiquement pour la construction choisie ou contrôlée numériquement avec une définition de divergence discrète, une résolution et une tolérance explicites.
+
+## 8. Que signifie « champ multi-niveaux » ?
+
+Dans le contexte historique du projet, un **champ multi-niveaux** désigne une représentation du vent construite à partir de données ou de profils associés à plusieurs niveaux verticaux, et éventuellement couplée au relief/MNT. Ce terme ne spécifie pas à lui seul un algorithme d'interpolation, une continuité entre couches, des conditions aux limites ou une garantie de divergence nulle. Ces éléments doivent être définis séparément.
+
+Le code actuel ne génère pas encore le champ de vent multi-niveaux historique. En conséquence, la propriété de divergence nulle de ce champ n'est ni démontrée ni testée dans J-DriftX. La formulation historique vise à préserver cette contrainte [@brun2008] ; cela ne constitue pas une preuve sur l'implémentation actuelle. Voir [Niveaux de modélisation](../projet/niveaux-modelisation.qmd), qui distingue la carte N0–N6 des deux architectures historiques multi-niveaux, ainsi que [Contraintes physiques](contraintes-physiques.qmd).
+
+## 9. Pourquoi des analyses Monte Carlo ?
+
+Une **analyse Monte Carlo** est une procédure numérique qui répète un calcul pour des réalisations tirées d'une distribution de probabilités afin d'estimer une quantité telle qu'une moyenne, une variance, un quantile ou une probabilité d'événement. Le protocole d'incertitude et son usage pour l'analyse de risque sont discutés dans [Assimilation & identification](assimilation-identification.qmd). Pour la dispersion, les tirages peuvent représenter des incertitudes sur le débit source, la direction/vitesse du vent, la stabilité ou d'autres paramètres, à condition de spécifier leurs distributions et leurs dépendances.
+
+Si une évaluation du modèle coûte \(c\) et que l'on effectue \(N\) réalisations, le coût de calcul brut est de l'ordre de \(Nc\), auquel s'ajoutent la préparation des données, les éventuels calculs de référence et l'analyse des résultats. Ce coût peut motiver l'étude d'un modèle réduit, mais ne prouve pas que le modèle direct soit impraticable ni que J-DriftX soit plus rapide. Une comparaison doit mesurer le coût total et l'erreur sur le même ensemble de cas, avec une baseline et un protocole définis. Les balayages paramétriques et les évaluations SIG sont d'autres usages possibles ; ils ne sont pas synonymes de Monte Carlo.
+
+## 10. Du modèle direct à la réduction : chaîne logique et limites
+
+La chaîne de raisonnement est la suivante :
+
+1. La conservation du scalaire conduit à une équation de transport si le champ, les sources et les flux sont définis.
+2. Le moyennage de Reynolds introduit un flux turbulent inconnu.
+3. Une fermeture, telle que la fermeture gradient, modélise ce flux avec un tenseur \(\mathbf K\).
+4. Sous des hypothèses supplémentaires, des équations simplifiées admettent des profils de panache gaussiens caractérisés par \(\sigma_y\) et \(\sigma_z\).
+5. Les modèles empiriques de dispersion paramètrent ces largeurs pour certaines classes de conditions ; le choix de formule et son domaine de validité doivent être explicites.
+6. Drift-X/J-DriftX étudie si des solutions de similitude et une représentation géométrique des temps de transport peuvent former un modèle approché moins coûteux. Cette réduction reste une hypothèse à valider, et non une conséquence automatique des étapes précédentes.
+
+Le coût du modèle direct dépend du domaine, du schéma, du maillage, du régime, des tolérances et des ressources. Il doit être comparé à une baseline pertinente ; les composantes et compromis de cette résolution maillée sont détaillés dans [EDP & maillage](edp-et-maillage.qmd). De même, les propriétés physiques — conservation, positivité, superposition, divergence — doivent être définies avec leurs hypothèses et testées séparément ; les tests actuels ne prouvent pas toutes ces propriétés pour le modèle historique général.
+
+## 11. Articulation avec les autres pages : qui définit quoi ?
+
+La documentation sépare volontairement les définitions fondamentales, les hypothèses de la réduction, les objets de la métrique et le statut des preuves. Pour éviter les définitions contradictoires, utiliser les pages selon le rôle suivant :
+
+| Question | Page de référence | Contrat de lecture |
+|---|---|---|
+| Quelles grandeurs et équations gouvernent le transport ? | Cette page, **Modèle direct** | Définitions des variables, unités, conservation, moyennage et fermeture ; ne présume pas que le modèle général est implémenté |
+| À quels étages conceptuels rattacher une notion ? | [Niveaux de modélisation](../projet/niveaux-modelisation.qmd) | N0–N6 est une carte de raisonnement, pas la liste de modules logiciels ni l'architecture historique multi-niveaux |
+| Quelles simplifications sont admises et avec quelles limites ? | [Catalogue des hypothèses](../hypotheses/catalogue.qmd) et [Limites](../hypotheses/limites.qmd) | Chaque hypothèse est traçable ; un lien vers H1–H8 ne signifie pas que l'hypothèse est validée |
+| Sous quelles hypothèses obtient-on un panache ou un puff gaussien ? | [Solutions de similitude](similitude.qmd) | Dérivation des cas idéalisés, conditions au sol, lien entre diffusivité constante et largeur ; les formules empiriques de dispersion sont distinctes de la fermeture |
+| Comment définir le chemin, la projection et le temps de transport ? | [Métrique travel-time](metrique-travel-time.qmd) et [Métriques non riemanniennes](metriques-non-riemanniennes.qmd) | Ne pas confondre trajectoire, ligne de courant, temps de parcours sur un chemin imposé, première arrivée et pseudo-distance projetée |
+| Quelles propriétés sont effectivement testées ? | [Contraintes physiques](contraintes-physiques.qmd) et [Qualité & tests](../projet/qualite.qmd) | Un test ciblé ne constitue pas une preuve générale ni une validation applicative |
+| Comment les paramètres sont-ils identifiés et les incertitudes propagées ? | [Assimilation & identification](assimilation-identification.qmd) | La calibration, la sensibilité et Monte Carlo sont des procédures distinctes ; leur coût total et leur validité doivent être mesurés |
+| Où retrouver une définition courte ? | [Glossaire](../glossaire.qmd) | Index des symboles et définitions brèves ; en cas de désaccord, la page spécialisée doit expliciter les hypothèses et la dérivation |
+
+### Ordre logique de lecture
+
+La dépendance conceptuelle cible est :
+
+\[
+\text{conservation}
+\;\longrightarrow\;
+\text{moyennage de Reynolds}
+\;\longrightarrow\;
+\text{fermeture turbulente}
+\;\longrightarrow\;
+\text{modèle de dispersion}
+\;\longrightarrow\;
+\text{concentration}
+\;\longrightarrow\;
+\text{calibration / décision}.
+\]
+
+La métrique des temps de transport est une autre chaîne, liée au champ de vent et aux hypothèses d'advection dominante ; elle ne découle pas du seul modèle d'advection–diffusion. La réduction historique combine ces objets, mais leur articulation mathématique complète et leur implémentation doivent être établies séparément.
+
+## Références et pages associées
+
+- [Solutions de similitude](similitude.qmd) : dérivation du panache gaussien et hypothèses simplificatrices.
+- [Contraintes physiques](contraintes-physiques.qmd) : état des tests et des preuves, en particulier pour la conservation et la divergence.
+- [Réduction a priori](reduction-a-priori.qmd) : hypothèse de réduction et distinction entre modèle direct et modèle approché.
+- [Glossaire](../glossaire.qmd) : index des symboles et termes.
+- Brun et Mohammadi (2008), « Reduced-Order Modelling of Dispersion », chapitre 14, *Partial Differential Equations: Modelling and Numerical Simulation*, DOI: 10.1007/978-1-4020-8758-5_14.
