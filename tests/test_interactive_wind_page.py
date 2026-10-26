@@ -31,7 +31,11 @@ def test_interactive_page_uses_python_vector_field(field_kind: str, expected_vec
     """La page délègue chaque famille au code Python testé du paquet."""
     page = PAGE_PATH.read_text(encoding="utf-8")
 
-    assert "from jdriftx.fields import vector_field" in page
+    assert "from jdriftx.figures.wind_field_explorer import" in page
+    assert "render_wind_field_explorer_html" in page
+    assert "vector_field(" not in page
+    assert "np." not in page
+    assert "<svg" not in page
     assert "Math." not in page
 
     namespace = {
