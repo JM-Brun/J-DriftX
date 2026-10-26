@@ -33,6 +33,8 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 ## Dispersion et pollution
 
+**Régime stationnaire / transitoire.** Un champ ou une solution est stationnaire si l'objet considéré ne dépend pas du temps ; il est transitoire si son évolution temporelle est conservée. Il faut préciser si l'on parle du vent, de la source, des statistiques turbulentes ou de la concentration. Cette distinction ne doit pas être confondue avec laminaire/turbulent, qui qualifie l'écoulement. → [Modèle direct](theorie/modele-direct.qmd)
+
 **Moyennage de Reynolds.** Décomposition d'une grandeur turbulente en moyenne et fluctuation, par exemple $C=\overline C+C'$, avec $\overline{C'}=0$. Le moyennage du flux advectif fait apparaître la corrélation $\overline{\mathbf u'C'}$, qui n'est pas déterminée par l'équation de concentration moyenne seule. → [Modèle direct](theorie/modele-direct.qmd)
 
 **Fermeture turbulente.** Hypothèse constitutive utilisée pour exprimer un flux inconnu en fonction de grandeurs résolues. La fermeture gradient pose $\overline{\mathbf u'C'}=-\mathbf K\nabla\overline C$ ; c'est un modèle, pas une identité issue du moyennage. → [Modèle direct](theorie/modele-direct.qmd)
