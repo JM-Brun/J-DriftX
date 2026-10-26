@@ -71,7 +71,7 @@ La métrique visée par le projet est non symétrique : le temps de transport d�
 
 ## 6. Adjoint : gradient exact de la référence uniforme, pas un état adjoint général
 
-L’adjoint visé par le projet est un outil de sensibilité : le gradient du coût de transport $\tau$ par rapport aux paramètres (champ de vent, positions source et cible). Pour la référence uniforme, ce gradient est fermé :
+L’adjoint visé par le projet est un outil de sensibilité : le gradient du coût de transport $\tau$ par rapport aux paramètres (champ de vent, positions source et cible). Formellement, le gradient d’une sortie scalaire $\tau$ en une entrée $\mathbf{x}$ est l’unique vecteur $\mathbf{g}$ tel que $\tau(\mathbf{x}+\delta\mathbf{x}) = \tau(\mathbf{x}) + \mathbf{g}\cdot\delta\mathbf{x} + o(|\delta\mathbf{x}|)$ ; par « vecteur adjoint », on entend ce gradient — le vocabulaire de la différentiation automatique en mode inverse appliqué à la sensibilité. Pour la référence uniforme, ce gradient est fermé, et l’expression évaluée par le code, $(\mathbf{d}\cdot\hat{\mathbf{u}})/\|\mathbf{u}\|$, est identiquement égale au produit scalaire $\lambda\cdot(\mathbf{b}-\mathbf{a})$ ci-dessous :
 
 $$
 \tau(\mathbf{a},\mathbf{b},\mathbf{u}) = \lambda\cdot(\mathbf{b}-\mathbf{a}), \qquad \lambda = \frac{\mathbf{u}}{\|\mathbf{u}\|^2}.
