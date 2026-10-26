@@ -74,11 +74,11 @@ Ou via l'interface GitHub : onglet **Add file → Upload files** sur ce dossier,
 
 Les deux résumés exécutifs de la revue sont conservés dans `raw/reviews/`. Ils ne remplacent pas les articles scientifiques primaires qu'ils citent. Leurs références sont organisées en Markdown éditable dans [la bibliographie annotée](../docs/bibliographie-annotee-jdriftx.md), avec une fiche par famille de méthodes.
 
-Les décisions qui découlent de la revue doivent être synthétisées dans [`docs/07-plan-integration-revue-systematique.md`](../docs/07-plan-integration-revue-systematique.md), en reliant chaque décision aux sections de la revue, aux sources vérifiées, aux limites de preuve et aux critères d'acceptation associés. Les PDF bruts sont conservés sans modification de contenu.
+Les synthèses publiques des résultats de la revue se trouvent dans `docs/02-revue-etat-art-2026.md`, `docs/04-revues-papiers-sources.md` et la [bibliographie annotée](../docs/bibliographie-annotee-jdriftx.md). Le plan d'intégration détaillé est conservé dans les notes privées associées au projet. Les PDF sources sont conservés sans modification de contenu.
 
 Ne pas confondre une synthèse de revue avec une source primaire ni compter comme indépendantes deux versions d'un même travail sans vérifier leurs différences.
 
 
-Le rapport final de revue systématique sera ajouté par le mainteneur dans ce dossier. Son fichier exact sera indiqué ici après dépôt. Le rapport est une source de travail ; les décisions qui en découlent doivent être synthétisées séparément dans docs/07-plan-integration-revue-systematique.md, avec les références vérifiées, les limites de preuve et les critères d'acceptation associés.
+Le rapport final de revue systématique sera ajouté par le mainteneur dans ce dossier. Son fichier exact sera indiqué ici après dépôt. Le rapport est une source de travail ; les résultats utiles à la compréhension publique doivent être synthétisés dans les documents scientifiques publics, avec les références vérifiées et les limites de preuve. Le suivi opérationnel des décisions reste dans les notes privées associées.
 
 Ne pas remplacer les PDF historiques ni confondre le rapport de revue avec les sources primaires qu'il cite. Si le rapport contient des exports bibliographiques ou des données de sélection, les conserver avec leur provenance et leur format d'origine.
