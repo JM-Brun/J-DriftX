@@ -19,7 +19,7 @@ La CI verte ne suffit pas à passer du niveau 2 au niveau 3. Le code actuel est 
 | Positivité | `tests/test_similitude.py::test_positivite_panache`, `test_positivite_puff` ; tests du helper dans `tests/test_constraints.py` | Valeurs non négatives pour les configurations évaluées, et comportement du prédicat sur des tableaux de test | Positivité analytique pour tout point, tout paramètre, toute interpolation ou tout modèle futur |
 | Linéarité en débit | `tests/test_constraints.py::test_superposition_panache` | Superposition à un point et pour les paramètres du test, à la tolérance numérique du helper | Validité pour toute extension du modèle, tout couplage non linéaire ou toute chaîne d'assimilation |
 | Bilan de masse du panache | `tests/test_similitude.py::test_conservation_masse_panache` | Le flux numérique intégré sur une grille finie `y ∈ [-500, 500] m`, `z ∈ [0, 400] m`, à `x = 1000 m`, pour la classe D et le débit testé, est proche du débit émis à 2 % près | Conservation exacte sur toute surface iso-temps, pour toute géométrie, toute classe, tout vent ou toute discrétisation |
-| Divergence du vent | Aucun test dédié ; aucun champ de vent multi-niveaux n'est actuellement reconstruit par le noyau | Rien à ce stade | `∇ · u = 0` pour un champ généré, sa compatibilité entre niveaux ou l'absence de sources/puits artificiels |
+| Divergence du vent | `tests/test_champ_analytique.py::test_la_divergence_est_nulle_par_construction` et `test_la_superposition_est_aussi_a_divergence_nulle` (différences finies) ; `tests/test_reconstruction_vent.py::test_les_divergences_numeriques_sont_negligeables` (grille) | Divergence estimée nulle à la précision de différenciation près pour les champs analytiques à fonction de courant — champ simple et superposition — et sous \(10^{-12}\ \mathrm{s}^{-1}\) sur grille pour les deux champs de la reconstruction à deux mesures | `∇ · u = 0` pour le champ de vent multi-niveaux historique (non reconstruit à ce jour), sa compatibilité entre niveaux, ses conditions aux limites ou sa sensibilité au maillage |
 | Non-symétrie de la référence uniforme | `tests/test_metric.py::test_uniform_pseudodistance_is_asymmetric_along_the_wind`, `test_uniform_pseudodistance_symmetric_on_transverse_boundary` | Coût fini vers l’aval et \(+\infty\) vers l’amont pour la référence uniforme 2D ; coût nul dans les deux sens sur la borne transversale | La non-symétrie de la pseudo-distance historique en champ variable ; toute propriété de `temps_transport`, symétrique par conception |
 
 ## 1. Conservation : ne pas généraliser le test de grille
@@ -48,13 +48,17 @@ C_{Q_1+Q_2} = C_{Q_1} + C_{Q_2}.
 
 Le test existant vérifie cette relation en un point pour le panache gaussien et les valeurs choisies. La propriété ne doit pas être étendue sans examen à des modèles avec chimie, dépôt non linéaire, saturation, couplage à la source ou paramètres qui changent avec le débit.
 
-## 4. Divergence nulle : propriété non testée dans le code actuel
+## 4. Divergence nulle : testée sur les champs analytiques, pas sur le champ multi-niveaux historique
 
 \[
 \nabla\cdot\mathbf{u}=0
 \]
 
-est une contrainte cinématique importante dans un modèle incompressible de densité constante, mais le dépôt ne génère pas encore le champ de vent multi-niveaux historique auquel cette contrainte s'appliquerait. Il serait donc incorrect d'affirmer que la CI la vérifie. Avant d'implémenter ce champ, il faudra préciser la définition continue, les conditions aux limites et les sources/puits ; puis tester la divergence analytique et discrète, la compatibilité entre niveaux et la sensibilité au maillage.
+est une contrainte cinématique importante dans un modèle incompressible de densité constante. L'état des preuves distingue trois objets :
+
+- **Champs analytiques à fonction de courant** (`champ_analytique.py`) : la construction \(u = \partial\psi/\partial y\), \(v = -\partial\psi/\partial x\) donne une divergence identiquement nulle pour toute fonction de courant régulière. Les tests l'estiment par différences finies centrées pour le champ cellulaire simple puis pour la superposition de deux champs d'échelles différentes : la superposition de champs incompressibles reste incompressible. Ce sont des tests ciblés — une construction, une famille de points, une précision de différenciation — pas une preuve pour des champs quelconques.
+- **Reconstruction du vent à deux mesures** (`experiences/reconstruction_vent.py`) : les deux champs candidats coïncident aux mesures mais diffèrent ailleurs ; leurs divergences estimées sur grille restent sous \(10^{-12}\ \mathrm{s}^{-1}\).
+- **Champ de vent multi-niveaux historique** : non reconstruit à ce jour ; la contrainte historique, divergence nulle comprise entre niveaux, reste non testée pour cet objet et il serait incorrect d'affirmer que la CI la vérifie. Avant de l'implémenter, il faudra préciser la définition continue, les conditions aux limites et les sources/puits ; puis comparer divergence analytique et discrète, tester la compatibilité entre niveaux et la sensibilité au maillage.
 
 ## 5. Non-symétrie : propriété visée, testée seulement sur la référence uniforme
 
@@ -75,7 +79,7 @@ De même, interprétabilité et auditabilité peuvent être des avantages recher
 1. Garder les tests actuels comme **tests ciblés du panache gaussien**, sans les présenter comme certification générale.
 2. Ajouter des tests de convergence de l'intégrale de masse lorsque la grille s'élargit et se raffine ; tester plusieurs classes, hauteurs et débits.
 3. Définir des tests de positivité et de superposition sur des grilles et des configurations plus variées.
-4. Avant toute affirmation sur la divergence, définir puis implémenter le champ de vent concerné ; comparer divergence analytique et discrète.
+4. La divergence est testée sur les champs analytiques à fonction de courant ; le reste porte sur le champ multi-niveaux historique : le définir, l'implémenter, puis comparer divergence analytique et discrète, compatibilité entre niveaux et sensibilité au maillage.
 5. Pour chaque propriété, consigner l'équation, les hypothèses, le domaine de validité, la tolérance numérique et les contre-exemples recherchés.
 
 Les tests manquants et l'avancement de chaque propriété sont suivis dans l'issue [#42](https://github.com/JM-Brun/J-DriftX/issues/42).
