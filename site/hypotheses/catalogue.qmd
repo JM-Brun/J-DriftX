@@ -67,7 +67,7 @@ $\tau = \int ds / |\mathbf{u}|$ néglige la diffusion dans le temps d'arrivée ;
 
 *Où elle s'applique* : niveau N3 (métrique / temps de transport) ; définitions et correspondance avec le code : [Métrique travel-time](../theorie/metrique-travel-time.qmd).
 
-*Traduction mathématique* : $\tau = \int_\gamma ds/\|\mathbf u\|$ — une intégrale le long d'un chemin $\gamma$ : le temps d'une particule portée par le vent (advection seule). La diffusion est absente de $\tau$ : elle agit sur les largeurs $\sigma_y$, $\sigma_z$ du panache (H2), pas sur le temps d'arrivée.
+*Traduction mathématique* : $\tau_\gamma = \int_\gamma ds/\|\mathbf u\|$. Cette intégrale représente le temps d'une particule **si** $\gamma$ est une caractéristique du champ et si la vitesse ne s'annule pas le long du trajet. Sur une polyligne arbitraire fournie par l'appelant, la même somme est seulement un coût géométrique, pas nécessairement le temps physique d'une particule. La diffusion est absente de cette définition advective de $\tau$ ; elle agit sur l'étalement du panache (H2), tandis que l'approximation du temps d'arrivée par l'advection seule reste une hypothèse du modèle.
 
 *Ce que cela permet* : calculer $\tau$ sans résoudre l'équation de diffusion — une intégrale le long d'un chemin, à coût quasi nul ; en champ uniforme, la pseudo-distance se calcule même par formule fermée (définition : [glossaire](../glossaire.qmd)).
 
@@ -75,7 +75,7 @@ $\tau = \int ds / |\mathbf{u}|$ néglige la diffusion dans le temps d'arrivée ;
 
 *Limite* : lorsque le vent devient très faible, diffusion et advection deviennent comparables et $\tau$ tend vers l'infini (singularité en vitesse nulle) — régimes de stagnation. Le code les borne par la garde $u_{min}$, une convention algorithmique (voir [Niveaux de modélisation](../projet/niveaux-modelisation.qmd), section 5), pas une physique de stagnation.
 
-*Ancrage dans le code* : `temps_transport` (module `metric`) réalise exactement cette intégrale sur une polyligne ; la garde `umin` borne la division quand $\|\mathbf u\|$ s'annule.
+*Ancrage dans le code* : `temps_transport` (module `metric`) additionne longueur de segment / norme de la vitesse segmentaire fournie. C'est une approximation discrète du coût le long de la polyligne choisie ; la fonction ne vérifie pas que celle-ci suit le champ de vent et ne calcule donc pas nécessairement le temps d'une trajectoire physique. La garde `umin` rejette les vitesses sous le seuil algorithmique, sans modéliser la physique d'une stagnation.
 :::
 
 ## Hypothèses structurelles
