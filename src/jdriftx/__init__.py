@@ -22,6 +22,7 @@ from jdriftx.experiences import (
 )
 from jdriftx.metric import pseudo_distance_uniforme, temps_transport
 from jdriftx.similitude import concentration_panache, concentration_puff, sigma_y, sigma_z
+from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
 __version__ = "0.1.0"
 
@@ -29,6 +30,8 @@ __all__ = [
     "ChampFonctionCourant",
     "ChampPlan",
     "ChampUniforme",
+    "ClasseStabilite",
+    "FormeSigmaZ",
     "ManifesteReconstruction",
     "ManifesteScenario",
     "Rectangle",

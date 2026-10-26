@@ -3,7 +3,9 @@
 Ce module implemente les solutions classiques de similitude (metrique
 cartesienne, vent uniforme) qui forment l'espace de recherche du modele
 J-DriftX. Les ecarts-types de dispersion suivent les formules de Briggs
-(site rural), indicices par classe de stabilite de Pasquill.
+(site rural), indicices par classe de stabilite de Pasquill ; les classes,
+leurs caracteristiques et leurs coefficients sont definis comme objets dans
+`jdriftx.stabilite`, source unique de verite.
 
 References : chapitre "Reduced-Order Modelling of Dispersion" (Brun &
 Mohammadi, 2008) ; formules de Briggs reprises par Martin (1976).
@@ -14,58 +16,42 @@ from __future__ import annotations
 import numpy as np
 from numpy.typing import ArrayLike
 
-CLASSES = ("A", "B", "C", "D", "E", "F")
+from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
-# sigma_y = a * x / sqrt(1 + d * x)  (Briggs, site rural)
-_BRIGGS_SY: dict[str, tuple[float, float]] = {
-    "A": (0.22, 0.0001),
-    "B": (0.16, 0.0001),
-    "C": (0.11, 0.0001),
-    "D": (0.08, 0.0001),
-    "E": (0.06, 0.0001),
-    "F": (0.04, 0.0001),
-}
-
-# sigma_z : formes lineaire (A, B), en racine (C, D) ou inverse (E, F)
-_BRIGGS_SZ: dict[str, tuple[str, float, float]] = {
-    "A": ("lin", 0.20, 0.0),
-    "B": ("lin", 0.12, 0.0),
-    "C": ("sqrt", 0.08, 0.0002),
-    "D": ("sqrt", 0.06, 0.0015),
-    "E": ("inv", 0.03, 0.0003),
-    "F": ("inv", 0.016, 0.0003),
-}
+CLASSES: tuple[str, ...] = tuple(classe.value for classe in ClasseStabilite)
 
 
-def _valide_classe(classe: str) -> None:
-    """Leve une ValueError si la classe de stabilite est inconnue."""
-    if classe not in CLASSES:
+def _valide_classe(classe: str) -> ClasseStabilite:
+    """Retourne la classe de stabilite correspondante ou leve une ValueError."""
+    try:
+        return ClasseStabilite(classe)
+    except ValueError as err:
         msg = f"Classe de stabilite inconnue : {classe!r} (attendu : {CLASSES})"
-        raise ValueError(msg)
+        raise ValueError(msg) from err
 
 
 def sigma_y(x: ArrayLike, classe: str) -> np.ndarray:
     """Ecart-type horizontal du panache (m) a la distance sous le vent x (m)."""
-    _valide_classe(classe)
+    classe_stable = _valide_classe(classe)
     x_arr = np.asarray(x, dtype=float)
     if np.any(x_arr < 0.0):
         msg = "La distance sous le vent doit etre positive ou nulle."
         raise ValueError(msg)
-    a, d = _BRIGGS_SY[classe]
+    a, d = classe_stable.coeff_sigma_y
     return a * x_arr / np.sqrt(1.0 + d * x_arr)
 
 
 def sigma_z(x: ArrayLike, classe: str) -> np.ndarray:
     """Ecart-type vertical du panache (m) a la distance sous le vent x (m)."""
-    _valide_classe(classe)
+    classe_stable = _valide_classe(classe)
     x_arr = np.asarray(x, dtype=float)
     if np.any(x_arr < 0.0):
         msg = "La distance sous le vent doit etre positive ou nulle."
         raise ValueError(msg)
-    forme, b, d = _BRIGGS_SZ[classe]
-    if forme == "lin":
+    forme, b, d = classe_stable.coeff_sigma_z
+    if forme is FormeSigmaZ.LINEAIRE:
         return b * x_arr
-    if forme == "sqrt":
+    if forme is FormeSigmaZ.RACINE:
         return b * x_arr / np.sqrt(1.0 + d * x_arr)
     return b * x_arr / (1.0 + d * x_arr)
 
