@@ -17,7 +17,7 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 | $\tau$ | notation générique à préciser selon la définition retenue : temps sur un chemin imposé, temps de première arrivée, ou temps jusqu'à une projection dans la construction historique. Ces objets peuvent différer ; le symbole seul ne définit pas l'algorithme. | s pour les variantes temporelles | [Métrique travel-time](theorie/metrique-travel-time.qmd) |
 | $\tau(A\to B)$ | temps de parcours dirigé selon une construction précisée ; l'intégrale sur une trajectoire fixée, le temps minimal et la pseudo-distance projetée sont des objets distincts, avec des statuts d'implémentation différents | s (si temps) | [Définitions et correspondance avec le code](theorie/metrique-travel-time.qmd#correspondance-avec-le-code-actuel) |
 | iso-$\tau$ | courbes ou surfaces reliant les points à temps de transport égal depuis la source | — | [Métrique travel-time](theorie/metrique-travel-time.qmd) |
-| $Q$ | débit d'émission de la source continue ; la conservation de la masse impose au panache de le restituer à travers toute surface iso-$\tau$ | kg/s | [Similitude](theorie/similitude.qmd), [Contraintes physiques](theorie/contraintes-physiques.qmd) |
+| $Q$ | débit massique de la source continue | kg/s | [Modèle direct](theorie/modele-direct.qmd), [Similitude](theorie/similitude.qmd) |
 | $h$ | hauteur de la source au-dessus du sol ; les termes $(z-h)$ et $(z+h)$ encodent la réflexion au sol | m | [Similitude](theorie/similitude.qmd) |
 | $M$ | masse totale émise par un puff (rejet instantané) | kg | [Similitude](theorie/similitude.qmd) |
 | $\mathbf u$, $u(z)$ | champ de vent ; $u(z)$ désigne son profil vertical (cisaillé) | m/s | [Modèle direct](theorie/modele-direct.qmd) |
