@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">Quatre notions de chemin : ligne de courant, caractéristique, polyligne, temps de première arrivée</title>
+<desc id="desc">Quatre panneaux. 1. Ligne de courant : courbes tangentes au vent, avec flèches de vent. 2. Caractéristique : une particule lâchée en A suit la ligne de courant jusqu'à B, tau est le temps du voyage. 3. Polyligne : des points choisis reliés par des segments droits, à côté du chemin du vent. 4. Temps de première arrivée : plusieurs chemins de A à B, le plus rapide est retenu.</desc>
+<defs>
+  <marker id="arrowBlue" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2367a8"/></marker>
+  <marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2c7a55"/></marker>
+  <marker id="arrowOrange" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#c45b18"/></marker>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif;fill:#20252b}
+    .panel{fill:#fbfcfe;stroke:#c8d1dc;stroke-width:2}
+    .heading{font-size:25px;font-weight:700}
+    .sub{font-size:18px;font-style:italic;fill:#4d5a68}
+    .label{font-size:20px}
+    .small{font-size:17px}
+    .blue{stroke:#2367a8;fill:none;stroke-width:4}
+    .lightblue{stroke:#9db8d2;fill:none;stroke-width:3}
+    .orange{stroke:#c45b18;fill:none;stroke-width:4}
+    .gray{stroke:#8a97a5;fill:none;stroke-width:3}
+    .dash{stroke:#687582;stroke-width:2;stroke-dasharray:8 7;fill:none}
+  </style>
+</defs>
+<rect x="18" y="18" width="1164" height="724" rx="18" fill="#ffffff" stroke="#d7dde5"/>
+
+<rect class="panel" x="38" y="38" width="552" height="316" rx="14"/>
+<text class="heading" x="66" y="76">1. Ligne de courant</text>
+<text class="sub" x="66" y="102">le « rail » du vent, à un instant donné</text>
+<path class="lightblue" d="M 90,195 Q 300,105 540,195"/>
+<path class="blue" d="M 90,248 Q 300,158 540,248"/>
+<path class="lightblue" d="M 90,301 Q 300,231 540,301"/>
+<line x1="197" y1="214" x2="241" y2="205" stroke="#2c7a55" stroke-width="3" marker-end="url(#arrowGreen)"/>
+<line x1="307" y1="203" x2="352" y2="203" stroke="#2c7a55" stroke-width="3" marker-end="url(#arrowGreen)"/>
+<line x1="422" y1="214" x2="466" y2="223" stroke="#2c7a55" stroke-width="3" marker-end="url(#arrowGreen)"/>
+<text class="small" x="66" y="336">La courbe suit la direction du vent en chaque point :</text>
+<text class="small" x="66" y="336" dy="22" >une photographie du champ, pas encore un voyage.</text>
+
+<rect class="panel" x="610" y="38" width="552" height="316" rx="14"/>
+<text class="heading" x="638" y="76">2. Caractéristique</text>
+<text class="sub" x="638" y="102">le voyage d'une particule lâchée en A</text>
+<path class="blue" d="M 660,262 Q 870,172 1080,262"/>
+<line x1="856" y1="195" x2="901" y2="195" stroke="#2c7a55" stroke-width="3" marker-end="url(#arrowGreen)"/>
+<text class="small" x="700" y="152">τ = le temps du voyage de A à B</text>
+<circle cx="660" cy="262" r="8" fill="#2367a8"/>
+<circle cx="786" cy="224" r="4" fill="#2367a8"/>
+<circle cx="891" cy="217" r="4" fill="#2367a8"/>
+<circle cx="975" cy="228" r="4" fill="#2367a8"/>
+<circle cx="1080" cy="262" r="9" fill="#c45b18"/>
+<text class="label" x="641" y="296">A</text>
+<text class="label" x="1093" y="296">B</text>
+<text class="small" x="638" y="336">Si le vent ne change pas en route, la particule suit la ligne :</text>
+<text class="small" x="638" y="336" dy="22">c'est la caractéristique de A — et B doit être sur la ligne.</text>
+
+<rect class="panel" x="38" y="394" width="552" height="316" rx="14"/>
+<text class="heading" x="66" y="432">3. Polyligne</text>
+<text class="sub" x="66" y="458">un chemin en segments droits, choisi</text>
+<path class="dash" d="M 90,655 Q 300,565 540,655"/>
+<text class="small" x="80" y="700">chemin du vent (pour comparaison)</text>
+<polyline class="orange" points="90,655 240,570 410,660 540,570"/>
+<circle cx="90" cy="655" r="8" fill="#2367a8"/>
+<circle cx="240" cy="570" r="7" fill="#ffffff" stroke="#c45b18" stroke-width="3"/>
+<circle cx="410" cy="660" r="7" fill="#ffffff" stroke="#c45b18" stroke-width="3"/>
+<circle cx="540" cy="570" r="9" fill="#c45b18"/>
+<text class="label" x="74" y="690">A</text>
+<text class="label" x="228" y="556">P₁</text>
+<text class="label" x="398" y="690">P₂</text>
+<text class="label" x="554" y="564">B</text>
+<text class="small" x="66" y="692" dy="-64">Des étapes choisies (P₁, P₂), reliées par des segments</text>
+<text class="small" x="66" y="692" dy="-42">droits : le tracé approxime le chemin, il ne suit pas</text>
+<text class="small" x="66" y="692" dy="-20">le vent. Deux jeux de points : deux temps différents.</text>
+
+<rect class="panel" x="610" y="394" width="552" height="316" rx="14"/>
+<text class="heading" x="638" y="432">4. Première arrivée</text>
+<text class="sub" x="638" y="458">le meilleur des chemins de A à B</text>
+<path class="gray" d="M 660,640 C 730,540 800,700 880,590 S 990,700 1060,640"/>
+<path class="gray" d="M 660,640 C 760,600 960,680 1060,640"/>
+<path class="blue" d="M 660,640 Q 860,570 1060,640"/>
+<circle cx="660" cy="640" r="8" fill="#2367a8"/>
+<circle cx="1060" cy="640" r="9" fill="#c45b18"/>
+<text class="label" x="641" y="674">A</text>
+<text class="label" x="1073" y="674">B</text>
+<text class="small" x="810" y="545">65 s</text>
+<text class="small" x="950" y="640" fill="#4d5a68">40 s</text>
+<text class="label" x="850" y="560" fill="#2367a8">28 s : première arrivée</text>
+<text class="small" x="638" y="700">Parmi tous les chemins possibles, on retient le plus</text>
+<text class="small" x="638" y="700" dy="22">rapide. Calculable exactement : seulement en 1D, à vitesse constante.</text>
+</svg>
