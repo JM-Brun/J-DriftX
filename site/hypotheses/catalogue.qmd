@@ -4,9 +4,9 @@ title: "Catalogue des hypothèses"
 
 # Catalogue des hypothèses du modèle
 
-Toute modélisation à complexité réduite vit de ses hypothèses. J-DriftX les rend **explicites, numérotées et traçables** : chaque hypothèse porte sa justification, sa conséquence et le point de la documentation où elle opère.
+Toute modélisation à complexité réduite vit de ses hypothèses. J-DriftX les rend **explicites, numérotées et traçables** : chaque hypothèse porte sa justification, sa conséquence, le point de la documentation où elle opère, et ce que le code en implémente aujourd'hui.
 
-Chaque entrée se lit de la même façon : l'**énoncé**, puis ce que l'hypothèse **permet concrètement** (ce qu'on gagne à la faire), sa **justification** (pourquoi on la croit raisonnable) et sa **limite** (ce qu'elle exclut — les situations où elle cesse d'être valable).
+Chaque entrée suit la même chaîne : l'**énoncé** (physique), sa **traduction mathématique** (l'objet qu'elle fait exister), **ce qu'elle permet concrètement**, sa **justification**, sa **limite** — et enfin son **ancrage dans le code** : une hypothèse non implémentée reste un principe de construction, pas une capacité vérifiée. Les jalons cités (M1, M2, M3) sont définis dans le [glossaire](../glossaire.qmd).
 
 ## Hypothèses physiques
 
@@ -14,88 +14,122 @@ Chaque entrée se lit de la même façon : l'**énoncé**, puis ce que l'hypoth�
 ### H1 — Scalaire passif
 La substance transportée ne réagit pas chimiquement, ne se dépose pas significativement sur les temps de transport étudiés, et n'influence pas l'écoulement.
 
-*Ce que cela permet* : doubler l'émission double la concentration partout ; simuler $N$ sources revient à faire $N$ évaluations qu'on additionne ; on peut recalculer une source isolée sans revoir les autres.
+*Traduction mathématique* : l'équation de transport de la concentration $c$ est **linéaire en $c$** — pas de terme de réaction, pas de terme de dépôt, pas de couplage retour de $c$ vers le champ de vent $\mathbf u$. La concentration produite par une émission $Q$ est exactement proportionnelle à $Q$.
 
-*Justification* : c'est elle qui rend le modèle linéaire — donc superposable (H8) et évaluable source par source.
+*Ce que cela permet* : doubler l'émission double la concentration partout ; simuler $N$ sources revient à faire $N$ évaluations qu'on additionne (H8) ; recalculer une source isolée sans revoir les autres.
+
+*Justification* : sur les temps de transport étudiés, le panache est dominé par le transport ; réactions, dépôts et volatilisation sont lents devant lui — leurs effets sont consignés parmi les limites, pas niés.
 
 *Limite* : les dépôts secs/humides, la volatilisation et les réactions chimiques ne sont pas modélisés (voir [Limites](limites.qmd)).
+
+*Ancrage dans le code* : aucun module de chimie ou de dépôt n'existe ; la linéarité est une [contrainte physique](../theorie/contraintes-physiques.qmd), vérifiée par un test ciblé (un point d'évaluation, précision machine).
 :::
 
 ::: {.callout-note}
 ### H2 — Régime auto-similaire établi
 Le panache suit les solutions de similitude : profils gaussiens, croissance de $\sigma(x)$ par classe de stabilité.
 
-*Ce que cela permet* : décrire tout le panache par quelques nombres ($\sigma_y$, $\sigma_z$, amortissement) au lieu d'un champ de concentration entier — d'où l'évaluation ponctuelle, sans maillage.
+*Traduction mathématique* : la solution est cherchée dans la famille des panaches gaussiens des solutions de similitude — quelques paramètres ($\sigma_y(x)$, $\sigma_z(x)$, amortissement) décrivent le champ de concentration entier, au lieu d'une fonction de trois variables sur un maillage.
 
-*Justification* : invariance d'échelle des panaches turbulents.
+*Ce que cela permet* : une évaluation ponctuelle par formule fermée, sans maillage ni calcul de champ complet (voir [Similitude](../theorie/similitude.qmd)).
 
-*Limite* : le champ proche non établi est traité séparément (niveau 1 de la hiérarchie) ; de même les régimes sans équilibre, comme le sillage immédiat d'un bâtiment.
+*Justification* : invariance d'échelle des panaches turbulents — le panache grandit en conservant sa forme (profils dont la largeur $\sigma$ croît par classe de stabilité, tables de Pasquill et Briggs).
+
+*Limite* : le champ proche non établi est traité séparément (niveau 1 de la hiérarchie) ; de même les régimes sans équilibre établi, comme le sillage immédiat d'un bâtiment.
+
+*Ancrage dans le code* : les solutions de similitude (profils gaussiens, croissance de $\sigma$ par les tables de Briggs) sont implémentées et testées (benchmarks gaussiens) ; le champ proche (niveau 1) n'est pas implémenté.
 :::
 
 ::: {.callout-note}
 ### H3 — Quasi-stationnarité du vent
-Le champ de vent est constant au cours d'un temps de transport $\tau$.
+Le champ de vent $\mathbf u(\mathbf x)$ ne dépend pas du temps pendant la durée d'un transport : il est le même du départ à l'arrivée.
 
-*Ce que cela permet* : $\tau$ a un sens — calculé une fois avec un champ figé, il décrit tout le trajet ; une seule image du vent suffit.
+*Traduction mathématique* : $\mathbf u = \mathbf u(\mathbf x)$, sans variable temporelle. Alors la ligne de courant issue de $A$ est une courbe fixe, la particule lâchée en $A$ la suit exactement (c'est la caractéristique), et $\tau = \int ds / \|\mathbf u\|$ se calcule sur un champ déterminé une seule fois — sans connaître le vent à l'heure exacte du passage de la particule.
 
-*Justification* : sur les temps de transport étudiés, le vent change peu.
+*Ce que cela permet* : remplacer « le trajet dépend du vent à chaque instant » par « le trajet dépend d'un seul champ de vent, mesuré ou estimé une fois pour tout le trajet ».
 
-*Limite* : si le vent tourne ou change en cours de transport (rafales, fronts, inversions), $\tau$ ne décrit plus le trajet réel — candidats à une discrétisation en sous-périodes.
+*Justification* : sur la durée des transports visés, le champ de vent évolue peu ; une succession de périodes quasi-stationnaires couvre la plupart des situations météorologiques.
+
+*Limite* : si le champ change pendant le transport (rafales, fronts, inversions), le trajet réel n'est plus la ligne de courant initiale et $\tau$ ne le décrit plus — candidats à une discrétisation en sous-périodes.
+
+*Ancrage dans le code* : tous les champs de vitesse du code sont stationnaires (`ChampUniforme`, `ChampFonctionCourant`) ; aucune série temporelle de vent n'est consommée. Voir [Métrique travel-time](../theorie/metrique-travel-time.qmd).
 :::
 
 ::: {.callout-note}
 ### H4 — Transport advectif dominant dans la métrique
 $\tau = \int ds / |\mathbf{u}|$ néglige la diffusion dans le temps d'arrivée ; la diffusion agit transversalement (via $\sigma$), pas longitudinalement dans $\tau$.
 
-*Ce que cela permet* : $\tau$ reste une intégrale simple le long d'un chemin — calculable sans résoudre la diffusion, à coût quasi nul.
+*Traduction mathématique* : seul le terme advectif compte dans le temps d'arrivée — celui d'une particule portée par le vent. La diffusion n'y apparaît pas : elle agit sur l'étalement du panache ($\sigma_y$, $\sigma_z$ de H2), pas sur la vitesse d'arrivée.
 
-*Justification* : le temps d'arrivée est porté par le vent ; la diffusion, elle, étale le panache surtout transversalement.
+*Ce que cela permet* : calculer $\tau$ sans résoudre l'équation de diffusion — une intégrale le long d'un chemin, à coût quasi nul.
 
-*Limite* : par grand calme, diffusion et advection deviennent comparables et $\tau$ explose (singularité en vitesse nulle) — régimes de stagnation, où la garde $u_{min}$ du code borne le calcul.
+*Justification* : quand l'advection domine, l'arrivée du panache est portée par le vent ; la diffusion étale le panache mais son effet sur le temps d'arrivée est du second ordre.
+
+*Limite* : lorsque le vent devient très faible, diffusion et advection deviennent comparables et $\tau$ tend vers l'infini (singularité en vitesse nulle) — régimes de stagnation, bornés dans le code par la garde $u_{min}$.
+
+*Ancrage dans le code* : `temps_transport` (module `metric`) réalise exactement cette intégrale sur une polyligne ; la garde `umin` borne la division quand $\|\mathbf u\|$ s'annule. Voir [Métrique travel-time](../theorie/metrique-travel-time.qmd).
 :::
 
 ## Hypothèses structurelles
 
 ::: {.callout-note}
 ### H5 — Homogénéité horizontale par morceaux
-La couche de surface est homogène par morceaux : chaque segment de la trajectoire porte ses paramètres (stabilité, rugosité), assemblés par la métrique.
+La couche de surface est homogène par morceaux : chaque segment de la trajectoire porte ses paramètres (stabilité, rugosité), assemblés par la métrique. Un **terrain homogène** désigne ici un tronçon où les paramètres qui pilotent la similitude — classe de stabilité, rugosité, vent moyen — sont constants ; les solutions de similitude sont établies dans ce cadre.
 
-*Ce que cela permet* : traiter un trajet qui traverse successivement plusieurs terrains (champ, puis lisière, puis village) comme une suite de segments, chacun avec ses paramètres.
+*Traduction mathématique* : les paramètres sont des fonctions constantes par morceaux le long du trajet ; le coût total est la somme des coûts des segments, $\tau = \sum_k \tau_k$, chaque $\tau_k$ calculé avec les paramètres du segment $k$.
 
-*Justification* : les solutions de similitude sont établies sur terrain homogène ; l'assemblage par morceaux étend leur portée aux paysages réels. *Conséquence* : le coût de la métrique reste celui d'une addition de segments ; *limite* : les transitions brusques (lisières, falaises, côtes) sont traitées grossièrement, sans zone de transition dédiée.
+*Ce que cela permet* : traiter un trajet qui traverse successivement plusieurs terrains (champ, puis lisière, puis village) sans re-dériver de solutions — chaque segment réutilise la similitude établie sur terrain homogène.
+
+*Justification* : les solutions de similitude sont établies sur terrain homogène ; l'assemblage par morceaux étend leur portée aux paysages réels.
+
+*Limite* : les transitions brusques (lisières, falaises, côtes) sont traitées grossièrement, sans zone de transition dédiée ; le coût reste celui d'une addition de segments.
+
+*Ancrage dans le code* : le mécanisme d'assemblage existe — `temps_transport` additionne les durées des segments d'une polyligne — mais l'affectation de paramètres différents par segment (changement de classe de stabilité en route) n'est pas encore implémentée.
 :::
 
 ::: {.callout-note}
 ### H6 — Domaine de validité local du modèle réduit
 Le modèle approché n'est valable que dans un domaine des paramètres ; on change de modèle réduit selon la zone (approche multi-niveaux), au lieu d'exiger un modèle global.
 
+*Traduction mathématique* : le modèle approché $v(p)$ (voir [Réduction a priori](../theorie/reduction-a-priori.qmd)) n'est défini que sur un sous-ensemble $D$ de l'espace des paramètres ; en dehors de $D$, son écart au modèle direct n'est pas borné.
+
 *Ce que cela permet* : garder chaque modèle réduit petit et précis dans sa zone, et changer de modèle d'une zone à l'autre — au lieu d'entraîner un modèle unique couvrant tous les régimes.
 
 *Justification* : un modèle global couvrant tous les régimes serait presque aussi coûteux que le problème complet, ce qui ruinerait l'intérêt de la réduction.
 
-*Limite* : prédire hors du domaine calibré n'a pas de garantie ; c'est pourquoi cette hypothèse exige un contrôle explicite du domaine — l'objet de l'estimateur d'erreur du jalon M2.
+*Limite* : prédire hors du domaine calibré n'a pas de garantie ; c'est pourquoi cette hypothèse exige un contrôle explicite du domaine — un estimateur d'erreur (jalon M2, voir [glossaire](../glossaire.qmd)).
+
+*Ancrage dans le code* : aucun estimateur d'erreur n'est implémenté ; l'hypothèse est pour l'instant un principe de construction, pas une capacité vérifiée.
 :::
 
 ::: {.callout-note}
 ### H7 — Données d'assimilation représentatives
-Les observations partielles assimilées échantillonnent correctement le domaine d'intérêt.
+Les observations disponibles (capteurs, campagnes, mesures de déposition) couvrent assez bien la zone et les situations qu'on veut prédire : elles contraignent le modèle là où il doit être juste.
+
+*Traduction mathématique* : la calibration résout un problème aux moindres carrés, $\hat{\theta} = \arg\min_{\theta} \sum_i [v(\mathbf{x}_i; \theta) - y_i]^2$ (voir [Assimilation & identification](../theorie/assimilation-identification.qmd)) ; l'hypothèse dit que les points de mesure $\mathbf{x}_i$ contraignent la solution dans tout le domaine d'intérêt, pas seulement autour des capteurs.
 
 *Ce que cela permet* : calibrer avec peu de capteurs, pourvu qu'ils soient bien placés ; recalibrer simplement à l'arrivée de nouvelles mesures.
 
 *Justification* : en pratique les capteurs sont clairsemés ; l'assimilation doit fonctionner avec ce qui est disponible.
 
-*Limite* : si les capteurs sont mal placés, le modèle apprend un panache déformé (biais d'échantillonnage) ; parade prévue en v2 : quantification bayésienne des incertitudes (M3).
+*Limite* : si les capteurs sont mal placés, le modèle apprend un panache déformé (biais d'échantillonnage) ; parade prévue en v2 : calibration bayésienne quantifiant les incertitudes (jalon M3).
+
+*Ancrage dans le code* : aucun module d'assimilation n'est implémenté ; seule la formulation mathématique est documentée (page Assimilation & identification).
 :::
 
 ::: {.callout-note}
 ### H8 — Superposition des sources
 Les émissions se composent linéairement (dérivée de H1) — conséquence de la construction analytique.
 
+*Traduction mathématique* : la linéarité de H1 rend la concentration d'un mélange égale à la somme des concentrations individuelles, $C_{total}(\mathbf{x}) = \sum_j C_j(\mathbf{x})$ — exact dans la construction analytique.
+
 *Ce que cela permet* : composer cheminées, pulvérisations et fond ambiant en sommant les contributions ; tester chaque source isolément.
 
-*Justification* : la linéarité de H1 rend la concentration d'un mélange égale à la somme des concentrations individuelles.
+*Justification* : c'est H1 appliquée aux sources multiples ; la construction analytique l'établit par écrit.
 
 *Limite* : n'exclut rien de plus que H1. État de preuve : vérifiée en CI par un test ciblé (un point d'évaluation, précision machine) — pas une preuve générale (contrainte 3).
+
+*Ancrage dans le code* : test de superposition ciblé en CI ; la [contrainte physique](../theorie/contraintes-physiques.qmd) correspondante distingue ce qui est testé de ce qui est démontré.
 :::
 
 ## Traçabilité
@@ -105,7 +139,7 @@ Les émissions se composent linéairement (dérivée de H1) — conséquence de 
 | H1 | [Modèle direct](../theorie/modele-direct.qmd), contraintes | linéarité (test ciblé : un point, précision machine) |
 | H2 | [Similitude](../theorie/similitude.qmd) | benchmarks gaussiens |
 | H3, H4 | [Métrique](../theorie/metrique-travel-time.qmd) | garde umin (implémentée) ; divergence nulle : hypothèse historique, non testée |
-| H5 | Métrique, multi-niveaux | plan M2 |
-| H6 | [Réduction a priori](../theorie/reduction-a-priori.qmd) | estimateur d'erreur (M2) |
-| H7 | [Assimilation](../theorie/assimilation-identification.qmd) | calibration bayésienne (M3) |
+| H5 | Métrique, multi-niveaux | assemblage par segments (mécanisme implémenté), paramètres par morceaux : à venir (jalon M2) |
+| H6 | [Réduction a priori](../theorie/reduction-a-priori.qmd) | estimateur d'erreur (jalon M2) |
+| H7 | [Assimilation](../theorie/assimilation-identification.qmd) | calibration bayésienne (jalon M3) |
 | H8 | [Contraintes](../theorie/contraintes-physiques.qmd) | superposition (test ciblé : un point) |
