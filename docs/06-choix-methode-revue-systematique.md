@@ -146,6 +146,6 @@ Ces références justifient des composantes de la méthode ; elles ne remplacent
 
 ## 9. Liens internes
 
-- [Plan d’intégration scientifique et de validation](05-plan-validation-et-integration.md)
+- [Protocole public de validation scientifique](05-plan-validation-et-integration.md)
 - [Revue de l’état de l’art](02-revue-etat-art-2026.md)
 - [Références bibliographiques du projet](references.md)

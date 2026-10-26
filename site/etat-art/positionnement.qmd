@@ -33,4 +33,4 @@ Le projet ne revendique actuellement ni nouveauté, ni supériorité prédictive
 - Des résultats négatifs, limites et coûts complets publiés.
 - Une validation indépendante avant toute revendication applicative.
 
-Voir l'[audit adversarial](https://github.com/JM-Brun/J-DriftX/blob/main/docs/15-audit-adversarial-hallucinations.md), l'[état des jalons](../projet/carte-articulation.qmd), le [cadre de décision et de preuve](https://github.com/JM-Brun/J-DriftX/blob/main/docs/08-decision-utilite-et-preuve.md) et le [plan d'intégration de la revue](https://github.com/JM-Brun/J-DriftX/blob/main/docs/07-plan-integration-revue-systematique.md) dans le dépôt.
+Voir l'[audit adversarial](https://github.com/JM-Brun/J-DriftX/blob/main/docs/15-audit-adversarial-hallucinations.md), l'[état des jalons](../projet/carte-articulation.qmd), le [cadre de décision et de preuve](https://github.com/JM-Brun/J-DriftX/blob/main/docs/08-decision-utilite-et-preuve.md) dans le dépôt.

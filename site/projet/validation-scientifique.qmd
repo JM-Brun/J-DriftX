@@ -34,4 +34,4 @@ Les conclusions de positionnement — notamment l’absence de concurrents utili
 - Présenter J-DriftX comme un prototype de recherche en validation, non comme un substitut réglementaire qualifié.
 - Garder le statut des jalons cohérent entre cette page, les objectifs et la feuille de route.
 
-Le protocole détaillé est maintenu dans [docs/05-plan-validation-et-integration.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/05-plan-validation-et-integration.md).
+Le protocole public de validation est maintenu dans [docs/05-plan-validation-et-integration.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/05-plan-validation-et-integration.md). Les plans de travail détaillés et le suivi opérationnel des décisions restent dans les notes privées du projet.

@@ -220,7 +220,7 @@ Si les fichiers bruts ne sont pas utilisables ou si le protocole ne permet pas u
 - [Audit de l'héritage Drift-X](01-audit-heritage-driftx.md)
 - [Revue de l'état de l'art 2026](02-revue-etat-art-2026.md)
 - [Suivi public des questions G0-A](https://github.com/JM-Brun/J-DriftX/issues/43)
-- [Plan d'intégration scientifique et de validation](05-plan-validation-et-integration.md)
+- [Protocole public de validation scientifique](05-plan-validation-et-integration.md)
 - [Choix de la méthode de revue systématique](06-choix-methode-revue-systematique.md)
 
 
