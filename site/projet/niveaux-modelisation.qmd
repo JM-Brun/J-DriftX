@@ -1,0 +1,115 @@
+---
+title: "Niveaux de modélisation"
+---
+
+# Les niveaux de modélisation de J-DriftX
+
+Cette page est la carte des objets physiques, mathématiques et numériques du projet. Son objectif est d'éviter qu'une hypothèse formulée à un niveau soit prise pour un résultat établi à un autre niveau.
+
+**Statut général :** J-DriftX est un projet de recherche. La chaîne complète décrite ci-dessous est la cible conceptuelle, pas une chaîne déjà implémentée et validée de bout en bout. Le [README du dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/README.md) et la [correspondance entre théorie et code](../theorie/metrique-travel-time.qmd#correspondance-avec-le-code-actuel) décrivent l'état effectif du code.
+
+## 1. La chaîne conceptuelle
+
+```text
+Atmosphère et terrain
+        │ hypothèses physiques + données
+        ▼
+Champ de vent u(x,t) ────────────────┐
+        │                            │
+        │ dynamique du transport      │ propriétés du champ
+        ▼                            │
+Chemins / caractéristiques           │
+        │                            │
+        ▼                            │
+Temps de transport τ                 │
+        │                            │
+        ├──────────────┐             │
+        ▼              ▼             │
+Géométrie du panache   Paramètres de dispersion
+        │              │
+        └───────┬──────┘
+                ▼
+       Concentration C(x,t)
+                ▲
+                │
+   Source, débit, hauteur, conditions
+```
+
+Ce diagramme montre les dépendances conceptuelles principales, pas un graphe d'appels logiciels existant. En particulier, le temps de transport et la dispersion ne sont pas deux noms pour le même phénomène : le premier décrit un aspect du déplacement advectif ; la seconde décrit l'étalement du scalaire.
+
+## 2. Les niveaux, leurs entrées et leurs sorties
+
+| Niveau | Objet / question | Entrées et hypothèses | Sortie | État dans J-DriftX |
+|---|---|---|---|---|
+| **P0 — contexte physique** | Quelle atmosphère, quel terrain, quelle source ? | Régime météorologique, relief, rugosité, stabilité, émissions | Données et domaine d'application | Domaine d'application à préciser ; ne pas confondre données candidates et données validées |
+| **P1 — champ de vent** | Quelle vitesse locale et dans quelle direction ? | `u(x,t)`, stationnarité éventuelle, régularité, conditions aux limites, cohérence avec le terrain | Vecteur vitesse en chaque point | Des champs analytiques synthétiques existent pour les expériences ; pas de reconstruction météorologique générale |
+| **P2 — dynamique et chemins** | Comment un point transporté se déplace-t-il ? | Champ de vent et loi de mouvement, par exemple `dX/dt = u(X,t)` | Trajectoire / caractéristique, si elle est définie et calculée | Pas de solveur général de caractéristiques dans les primitives de métrique décrites ici |
+| **P3 — métrique / temps de transport** | Quelle durée associer à un déplacement ? | Champ, notion de chemin, orientation, règle d'accessibilité et convention aux stagnations | Temps sur chemin imposé, temps de première arrivée ou pseudo-distance projetée — objets distincts | Trois primitives de portée limitée ; aucune ne réalise à elle seule toute la métrique historique généralisée |
+| **P4 — dispersion** | Comment la substance s'étale-t-elle autour du transport ? | Modèle de dispersion, stabilité, paramètres `σy`, `σz`, hypothèses de similitude et de diffusion | Largeurs et profils de dispersion | Les solutions analytiques et leur domaine d'hypothèses sont documentés ; leur généralisation à la métrique cible reste à établir |
+| **P5 — concentration** | Quelle quantité de substance est présente au point demandé ? | Transport, dispersion, source, débit/masse, hauteur, conditions aux limites, dépôt/réactions si retenus | Concentration `C(x,y,z,t)` | Le modèle direct et le socle gaussien existent ; la chaîne complète avec champ et métrique généralisés n'est pas validée |
+| **P6 — calibration / décision** | Les paramètres sont-ils identifiables et la prédiction utile ? | Observations représentatives, protocole de calibration, baseline, incertitudes et décision visée | Paramètres estimés, erreurs et bénéfice mesuré | Assimilation, identification de source et utilité applicative restent conditionnelles / non démontrées |
+
+Les niveaux P0–P6 sont une **décomposition de raisonnement**, pas nécessairement des modules logiciels ou des phases chronologiques strictes.
+
+## 3. Trois notions à ne pas confondre
+
+### Champ de vent
+
+Le champ `u(x,t)` associe une vitesse à une position et éventuellement à un instant. Il décrit la dynamique de l'air, pas la concentration d'un polluant. Un champ synthétique peut servir à vérifier un algorithme sans être une estimation réaliste du vent.
+
+### Temps de transport
+
+Une fois le champ et la définition du chemin précisés, on peut définir différentes quantités :
+
+- **Temps sur un chemin donné** : on connaît déjà la courbe et on intègre la durée le long de celle-ci.
+- **Temps de première arrivée** : on cherche le premier instant où la dynamique atteint la cible ; certains points peuvent être inaccessibles.
+- **Pseudo-distance projetée historique** : on projette la cible sur une caractéristique issue du départ puis on mesure le temps jusqu'à la projection. La projection peut ignorer l'écart transversal et perdre des propriétés usuelles d'une distance.
+
+Ces objets ne sont pas interchangeables. Voir la [définition mathématique et la correspondance avec le code](../theorie/metrique-travel-time.qmd).
+
+### Concentration
+
+La concentration est une grandeur différente du temps de transport. Dans le modèle direct, elle est reliée au champ de vent par une équation d'advection–diffusion, avec un terme source et un tenseur de diffusion. Une solution gaussienne requiert des hypothèses supplémentaires (régime, géométrie, fermeture, coefficients de dispersion, conditions au sol, etc.). On ne peut donc pas déduire une concentration du seul fait qu'un temps de transport a été calculé.
+
+## 4. Hypothèses physiques et hypothèses mathématiques
+
+Une **hypothèse physique** simplifie le phénomène représenté : scalaire passif, advection dominante, turbulence décrite par une fermeture, terrain homogène par morceaux, vent quasi-stationnaire.
+
+Une **hypothèse mathématique** rend un objet ou un résultat définissable et analysable : champ suffisamment régulier pour assurer l'existence/unicité d'une trajectoire, vitesse non nulle sur un chemin pour intégrer `ds/|u|`, projection bien définie, domaine et conditions aux limites précisés.
+
+Une **convention algorithmique** choisit le comportement du programme lorsqu'il faut trancher : valeur `+∞` pour un point inaccessible, seuil minimal de vitesse, tolérance numérique, discrétisation d'un chemin. Une convention du code n'est pas automatiquement une loi physique ni une conséquence mathématique.
+
+Ces catégories interagissent, mais il faut les documenter séparément. Par exemple, le seuil `umin` de la primitive de polyligne évite un calcul avec une vitesse trop faible ; il ne modélise pas à lui seul la physique d'un régime de stagnation.
+
+## 5. Ce qui peut être étudié séparément — et ce qui dépend du reste
+
+| Composant | Peut être vérifié isolément si… | Dépendances à réintroduire ensuite |
+|---|---|---|
+| Champ analytique synthétique | Sa formule et ses invariants sont connus (par exemple divergence nulle par construction) | Représentativité météorologique, terrain et données |
+| Intégrateur de trajectoire | Un champ régulier et une solution de référence sont disponibles | Qualité du champ, stagnations, frontières et régime instationnaire |
+| Primitive de temps sur polyligne | La polyligne et les vitesses de segment sont données | Construction du chemin, orientation du vent, définition de la métrique cible |
+| Temps de première arrivée 1D | Vitesse constante signée sur la droite réelle | Champ spatialement variable, dimensions supérieures, contraintes de domaine |
+| Solution gaussienne de référence | Les hypothèses analytiques de sa dérivation sont respectées | Validité de la fermeture et des paramètres de dispersion dans le cas visé |
+| Calcul de concentration complet | Sources, champ, dispersion et conditions sont spécifiés | Données indépendantes, incertitudes, comparaison à une baseline et utilité |
+| Calibration | Les observations identifient les paramètres et le protocole évite les fuites | Représentativité, identifiabilité, incertitudes et validation externe |
+
+L'indépendance est donc **locale** : un composant peut être vérifié avec des entrées contrôlées sans que le système complet soit validé. La composition des composants exige ensuite des tests d'intégration et une validation du modèle couplé.
+
+## 6. Lire correctement les preuves
+
+Il faut distinguer au minimum quatre niveaux de preuve :
+
+1. **Définition** : l'objet mathématique est spécifié sans ambiguïté.
+2. **Vérification analytique ou logicielle** : une formule ou un programme satisfait des propriétés sur des cas précis.
+3. **Validation physique** : le modèle représente suffisamment bien les observations pour un domaine d'emploi explicite.
+4. **Utilité applicative** : le modèle apporte un bénéfice mesuré par rapport à une référence pertinente et change une décision.
+
+Une CI verte est un signal sur le code et les documents testés ; elle n'établit pas les niveaux 3 ou 4. Voir [Qualité & tests](qualite.qmd), les [hypothèses](../hypotheses/catalogue.qmd) et la [carte d'articulation scientifique](carte-articulation.qmd).
+
+## Pages de référence
+
+- [Modèle direct](../theorie/modele-direct.qmd) — équation de transport et fermeture.
+- [Solutions de similitude](../theorie/similitude.qmd) — hypothèses qui produisent les profils de concentration.
+- [Métrique travel-time](../theorie/metrique-travel-time.qmd) — chemins, temps et portée des primitives de code.
+- [Catalogue des hypothèses](../hypotheses/catalogue.qmd) — énoncé, justification, conséquence et limite.
+- [Glossaire](../glossaire.qmd) — notations et définitions accessibles.
