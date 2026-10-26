@@ -144,3 +144,25 @@ def test_la_superposition_est_la_somme_exacte_des_champs() -> None:
     # Then — les valeurs sont exactement les sommes accumulées champ par champ.
     assert psi == champ_1.fonction_courant(x, y) + champ_2.fonction_courant(x, y)
     assert (u, v) == (u_1 + u_2, v_1 + v_2)
+
+
+def test_la_superposition_est_aussi_a_divergence_nulle() -> None:
+    """La superposition de champs incompressibles reste incompressible (∇·u = 0)."""
+    # Given — deux champs d'échelles différentes superposés, des points dispersés.
+    champ_1 = ChampFonctionCourant(amplitude=800.0, longueur=1000.0)
+    champ_2 = ChampFonctionCourant(amplitude=400.0, longueur=500.0)
+    superposition = SuperpositionChamps((champ_1, champ_2))
+    h = 1e-6
+    points = [(137.0, 643.0), (500.0, 250.0), (-320.0, 90.0), (750.0, 125.0)]
+    # When — la divergence numérique maximale est estimée par différences centrées.
+    divergence_max = 0.0
+    for x, y in points:
+        du_dx = (
+            superposition.vitesse(x + h, y)[0] - superposition.vitesse(x - h, y)[0]
+        ) / (2.0 * h)
+        dv_dy = (
+            superposition.vitesse(x, y + h)[1] - superposition.vitesse(x, y - h)[1]
+        ) / (2.0 * h)
+        divergence_max = max(divergence_max, abs(du_dx + dv_dy))
+    # Then — elle est nulle à la précision de différenciation près.
+    assert divergence_max < 1e-6
