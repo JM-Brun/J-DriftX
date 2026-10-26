@@ -18,9 +18,9 @@ décrit un temps de parcours le long d'une trajectoire donnée. Il faut distingu
 
 ## Lire les termes de mécanique des fluides
 
-Un **champ de vitesse** \(\mathbf u\) associe une vitesse à chaque position. Une **ligne de courant** est tangente au champ à un instant donné; une **trajectoire de particule** est le chemin suivi au cours du temps. Pour un champ stationnaire suffisamment régulier, lignes de courant et trajectoires spatiales coïncident; dans un champ instationnaire, elles peuvent différer. Une **caractéristique** est la courbe qui transporte l'information d'une équation différentielle de transport et doit être définie à partir de la dynamique étudiée. La notation \(\mathbf u\cdot\nabla c\) désigne la dérivée directionnelle de la concentration le long de la vitesse locale; son apparition dans la source historique ne doit pas être interprétée comme un critère complet sans reprendre les hypothèses et le contexte de l'article.
+Un **champ de vitesse** $\mathbf u$ associe une vitesse à chaque position. Une **ligne de courant** est tangente au champ à un instant donné; une **trajectoire de particule** est le chemin suivi au cours du temps. Pour un champ stationnaire suffisamment régulier, lignes de courant et trajectoires spatiales coïncident; dans un champ instationnaire, elles peuvent différer. Une **caractéristique** est la courbe qui transporte l'information d'une équation différentielle de transport et doit être définie à partir de la dynamique étudiée. La notation $\mathbf u\cdot\nabla c$ désigne la dérivée directionnelle de la concentration le long de la vitesse locale; son apparition dans la source historique ne doit pas être interprétée comme un critère complet sans reprendre les hypothèses et le contexte de l'article.
 
-La **divergence** \(\nabla\cdot\mathbf u\) caractérise la dilatation locale du champ. Une divergence nulle est cohérente avec un écoulement incompressible à densité constante, mais ne prouve pas à elle seule la conservation du flux à travers toute surface. Les sources de fluide, les sources de polluant et les points singuliers du champ sont trois cas distincts.
+La **divergence** $\nabla\cdot\mathbf u$ caractérise la dilatation locale du champ. Une divergence nulle est cohérente avec un écoulement incompressible à densité constante, mais ne prouve pas à elle seule la conservation du flux à travers toute surface. Les sources de fluide, les sources de polluant et les points singuliers du champ sont trois cas distincts.
 
 ## Trois objets à ne pas confondre
 
@@ -34,33 +34,33 @@ Le problème de Zermelo et les géométries de Randers/Finsler sont des antécé
 
 ## Définition idéale et algorithme approché (2008)
 
-Le chapitre de [Brun & Mohammadi (2008, §2.2, pp. 248–250)](https://doi.org/10.1007/978-1-4020-8758-5_14) confirme la projection \(B\mapsto B^\perp\), mais précise que la méthode numérique approxime ensuite \(B^\perp\approx B\), approximation décrite comme généralement peu probable au sens géométrique exact. Il applique en champ uniforme un facteur correctif \(2/\pi\) (moyenne cosinus stochastique) et limite les résultats satisfaisants aux champs atmosphériques lisses visés par l'étude.
+Le chapitre de [Brun & Mohammadi (2008, §2.2, pp. 248–250)](https://doi.org/10.1007/978-1-4020-8758-5_14) confirme la projection $B\mapsto B^\perp$, mais précise que la méthode numérique approxime ensuite $B^\perp\approx B$, approximation décrite comme généralement peu probable au sens géométrique exact. Il applique en champ uniforme un facteur correctif $2/\pi$ (moyenne cosinus stochastique) et limite les résultats satisfaisants aux champs atmosphériques lisses visés par l'étude.
 
-Il faut donc distinguer la **définition géométrique** de la **procédure numérique approchée**. Les contraintes de conservation énoncées pour le modèle réduit ne constituent pas, à elles seules, une preuve que le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\).
+Il faut donc distinguer la **définition géométrique** de la **procédure numérique approchée**. Les contraintes de conservation énoncées pour le modèle réduit ne constituent pas, à elles seules, une preuve que le flux sur chaque surface iso-$\tau$ restitue exactement $Q$.
 
 ![À gauche, projection de B sur la caractéristique de A. À droite, B⊥ et C⊥ sont les projections utilisées pour calculer d(A,B) et d(B,C); les flèches sont schématiques, pas une simulation.](../images/pseudo-distance-projection-et-triangulation.svg)
 
 ## Contre-exemple à l'inégalité triangulaire
 
-Considérons le champ lisse, stationnaire et divergence nulle \(\mathbf u(x,y)=(1+9y,0)\) sur \(y\in[0,1]\). Les coordonnées et la vitesse sont adimensionnées; ce champ est un contre-exemple mathématique, pas un champ atmosphérique calibré. Les caractéristiques sont horizontales, et le coût projeté vers l'aval vaut \(d(A,B)=(x_B-x_A)/(1+9y_A)\). Pour \(A=(0,0)\), \(B=(1,1)\), \(C=(2,0)\),
+Considérons le champ lisse, stationnaire et divergence nulle $\mathbf u(x,y)=(1+9y,0)$ sur $y\in[0,1]$. Les coordonnées et la vitesse sont adimensionnées; ce champ est un contre-exemple mathématique, pas un champ atmosphérique calibré. Les caractéristiques sont horizontales, et le coût projeté vers l'aval vaut $d(A,B)=(x_B-x_A)/(1+9y_A)$. Pour $A=(0,0)$, $B=(1,1)$, $C=(2,0)$,
 
-\[
+$$
 d(A,C)=2,\qquad d(A,B)=1,\qquad d(B,C)=0.1.
-\]
+$$
 
-Ainsi \(d(A,C)>d(A,B)+d(B,C)=1.1\). La construction peut donc violer l'inégalité triangulaire même dans un champ lisse, divergence nulle et sans stagnation. Ce cas analytique est documenté dans la note détaillée; il reste à l'intégrer comme test lorsque l'API de pseudo-distance sur champ variable sera spécifiée.
+Ainsi $d(A,C)>d(A,B)+d(B,C)=1.1$. La construction peut donc violer l'inégalité triangulaire même dans un champ lisse, divergence nulle et sans stagnation. Ce cas analytique est documenté dans la note détaillée; il reste à l'intégrer comme test lorsque l'API de pseudo-distance sur champ variable sera spécifiée.
 
 ## Écart avec le code Python actuel
 
-La fonction `jdriftx.metric.temps_transport` calcule une somme de longueurs de segments divisées par la norme des vitesses fournies. Elle ne calcule pas de caractéristiques ni la projection historique \(B^\perp\), et le signe des vecteurs vitesse n'affecte pas le résultat. Les anciens noms de tests laissaient entendre une non-symétrie qui n'était pas réellement testée; ils ont été corrigés dans la PR.
+La fonction `jdriftx.metric.temps_transport` calcule une somme de longueurs de segments divisées par la norme des vitesses fournies. Elle ne calcule pas de caractéristiques ni la projection historique $B^\perp$, et le signe des vecteurs vitesse n'affecte pas le résultat. Les anciens noms de tests laissaient entendre une non-symétrie qui n'était pas réellement testée; ils ont été corrigés dans la PR.
 
 Le code est désormais documenté comme **primitive provisoire de coût sur une polyligne**, pas comme implémentation validée de la pseudo-distance de 2006. Une fonction séparée `pseudo_distance_uniforme` et des tests analytiques couvrent maintenant le cas uniforme 2D; l'extension aux champs variables reste bloquée par la définition des caractéristiques et des projections.
 
 ## Précaution sur la non-symétrie
 
-**Un champ spatialement non uniforme ne suffit pas, à lui seul, à rendre asymétrique une intégrale de \(ds/v(s)\) sur une même courbe parcourue dans les deux sens.** Dans l'advection, l'asymétrie peut venir de la direction imposée par la dynamique et de l'inaccessibilité du parcours inverse. Cette convention doit être explicite.
+**Un champ spatialement non uniforme ne suffit pas, à lui seul, à rendre asymétrique une intégrale de $ds/v(s)$ sur une même courbe parcourue dans les deux sens.** Dans l'advection, l'asymétrie peut venir de la direction imposée par la dynamique et de l'inaccessibilité du parcours inverse. Cette convention doit être explicite.
 
-De même, une singularité de \(1/|\mathbf u|\) près d'une stagnation ne prouve pas automatiquement que toute intégrale diverge; le comportement local doit être analysé. Et la conservation de masse demande une dérivation à partir de l'équation de transport, pas seulement la définition de \(\tau\).
+De même, une singularité de $1/|\mathbf u|$ près d'une stagnation ne prouve pas automatiquement que toute intégrale diverge; le comportement local doit être analysé. Et la conservation de masse demande une dérivation à partir de l'équation de transport, pas seulement la définition de $\tau$.
 
 ## Antécédents à lire : références et portée
 
@@ -75,15 +75,15 @@ De même, une singularité de \(1/|\mathbf u|\) près d'une stagnation ne prouve
 
 ## Ce que dit effectivement la source historique de 2006
 
-La note de [Mohammadi & Brun (2006, §3, pp. 635–636)](https://doi.org/10.1016/j.crme.2006.06.007) ([texte intégral en accès libre](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf)) ne définit pas simplement le temps jusqu'au point cible \(B\). Elle projette \(B\) sur la caractéristique passant par \(A\), en \(B^\perp\), puis intègre le temps de migration de \(A\) à \(B^\perp\). La source nomme explicitement cette construction une **pseudo-distance** et indique qu'elle peut perdre la séparation des points et que l'inégalité triangulaire peut échouer.
+La note de [Mohammadi & Brun (2006, §3, pp. 635–636)](https://doi.org/10.1016/j.crme.2006.06.007) ([texte intégral en accès libre](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf)) ne définit pas simplement le temps jusqu'au point cible $B$. Elle projette $B$ sur la caractéristique passant par $A$, en $B^\perp$, puis intègre le temps de migration de $A$ à $B^\perp$. La source nomme explicitement cette construction une **pseudo-distance** et indique qu'elle peut perdre la séparation des points et que l'inégalité triangulaire peut échouer.
 
-Dans un champ uniforme \(\mathbf u=(U,0)\), \(U>0\), la formule devient, pour \(x_B\ge x_A\),
+Dans un champ uniforme $\mathbf u=(U,0)$, $U>0$, la formule devient, pour $x_B\ge x_A$,
 
-\[
+$$
 d(A,B)=\frac{x_B-x_A}{U}.
-\]
+$$
 
-Elle ne dépend pas de la différence transversale \(y_B-y_A\). Deux points distincts ayant la même abscisse peuvent donc avoir un coût nul. C'est une propriété de la construction historique, pas une distance géométrique ordinaire.
+Elle ne dépend pas de la différence transversale $y_B-y_A$. Deux points distincts ayant la même abscisse peuvent donc avoir un coût nul. C'est une propriété de la construction historique, pas une distance géométrique ordinaire.
 
 ## Références citées : quoi vérifier dans chacune
 
@@ -98,12 +98,12 @@ Les trois dernières références sont des comparateurs conceptuels : elles ne d
 
 ## Le lien avec l'équation de transport
 
-Pour une concentration passive \(c\), l'équation conservative d'advection avec source \(s\) est \(\partial_t c+\nabla\cdot(c\mathbf u)=s\). Si la divergence du champ est nulle, elle se réduit à \(\partial_t c+\mathbf u\cdot\nabla c=s\). Cette forme explique pourquoi les caractéristiques sont utiles : elles suivent le transport de l'information. Mais la pseudo-distance projetée est un objet géométrique construit à partir de ces caractéristiques; elle n'est pas, par elle-même, une solution de l'équation de concentration et ne modélise pas automatiquement la diffusion, la turbulence ou le dépôt.
+Pour une concentration passive $c$, l'équation conservative d'advection avec source $s$ est $\partial_t c+\nabla\cdot(c\mathbf u)=s$. Si la divergence du champ est nulle, elle se réduit à $\partial_t c+\mathbf u\cdot\nabla c=s$. Cette forme explique pourquoi les caractéristiques sont utiles : elles suivent le transport de l'information. Mais la pseudo-distance projetée est un objet géométrique construit à partir de ces caractéristiques; elle n'est pas, par elle-même, une solution de l'équation de concentration et ne modélise pas automatiquement la diffusion, la turbulence ou le dépôt.
 
-La revendication de conservation du flux sur les surfaces iso-\(\tau\) exige une dérivation séparée du changement de variables, du jacobien et des conditions aux limites. La condition \(\nabla\cdot\mathbf u=0\) seule ne suffit pas à établir ce résultat précis.
+La revendication de conservation du flux sur les surfaces iso-$\tau$ exige une dérivation séparée du changement de variables, du jacobien et des conditions aux limites. La condition $\nabla\cdot\mathbf u=0$ seule ne suffit pas à établir ce résultat précis.
 
 ## Conclusion provisoire
 
-La revue montre que le dépôt doit clarifier l'objet mathématique avant d'implémenter un solveur ou de revendiquer une nouveauté. Elle ne prouve pas que l'approche historique est redondante. La définition de pseudo-distance de l'article de 2006 et l'approximation numérique décrite en 2008 ont été vérifiées. La thèse de Brun reste à examiner; la conservation exacte sur les surfaces iso-\(\tau\) n'est pas encore démontrée dans cette reprise.
+La revue montre que le dépôt doit clarifier l'objet mathématique avant d'implémenter un solveur ou de revendiquer une nouveauté. Elle ne prouve pas que l'approche historique est redondante. La définition de pseudo-distance de l'article de 2006 et l'approximation numérique décrite en 2008 ont été vérifiées. La thèse de Brun reste à examiner; la conservation exacte sur les surfaces iso-$\tau$ n'est pas encore démontrée dans cette reprise.
 
 Voir la [note détaillée dans le dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/14-revue-mathematique-ciblee.md), le [bilan MVP-S 1D](https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-bilan-mvp-s-1d.md) et la [page travel-time actuelle](../theorie/metrique-travel-time.qmd).

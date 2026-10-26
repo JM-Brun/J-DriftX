@@ -19,19 +19,19 @@ Ce fallback n'est pas un moyen de déclarer l'approche utile après coup. Le mod
 
 ## Candidat : transport unidimensionnel et temps de parcours dirigé
 
-Soit un intervalle (x\in[0,L]) et un champ de vitesse strictement positif (u(x)>0). Le temps de parcours dans le sens croissant est :
+Soit un intervalle $x\in[0,L]$ et un champ de vitesse strictement positif $u(x)>0$. Le temps de parcours dans le sens croissant est :
 
-\[
+$$
 T_+(a,b)=\int_a^b \frac{1}{u(x)}\,dx,\qquad a\le b.
-\]
+$$
 
-Pour le trajet inverse, il faut définir la dynamique de retour. On ne peut pas inverser les bornes d'intégration et obtenir un temps négatif. Si une vitesse de retour (u_-(x)>0) est définie, alors :
+Pour le trajet inverse, il faut définir la dynamique de retour. On ne peut pas inverser les bornes d'intégration et obtenir un temps négatif. Si une vitesse de retour $u_-(x)>0$ est définie, alors :
 
-\[
+$$
 T_-(b,a)=\int_b^a \frac{1}{u_-(x)}\,dx.
-\]
+$$
 
-Si (u_-=u), le temps le long du même chemin est positif dans les deux sens et cette construction ne suffit pas à produire une asymétrie. Une asymétrie doit venir d'une dynamique directionnelle explicitement définie. De même, un coût dirigé ne mérite le nom de métrique asymétrique ou de quasi-distance que si les propriétés mathématiques correspondantes sont établies.
+Si $u_-=u$, le temps le long du même chemin est positif dans les deux sens et cette construction ne suffit pas à produire une asymétrie. Une asymétrie doit venir d'une dynamique directionnelle explicitement définie. De même, un coût dirigé ne mérite le nom de métrique asymétrique ou de quasi-distance que si les propriétés mathématiques correspondantes sont établies.
 
 Cette observation constitue une question de travail intéressante, mais ne garantit ni nouveauté ni applicabilité à la dispersion atmosphérique.
 
