@@ -6,7 +6,7 @@
   </defs>
   <rect width="900" height="450" fill="#ffffff"/>
   <text x="30" y="34" font-size="20" font-weight="bold" fill="#202124">J-DriftX — du rang de vigne au bassin versant</text>
-  <text x="30" y="56" font-size="13" fill="#5f6368">Champ proche et champ lointain couplés par la même métrique τ ; multi-niveaux emboîtés, évaluation ponctuelle, couche SIG.</text>
+  <text x="30" y="56" font-size="13" fill="#5f6368">Deux architectures distinctes : couplage champ proche → champ lointain ; raffinement spatial par domaines emboîtés. Évaluation ponctuelle et couche SIG.</text>
   <rect x="30" y="80" width="270" height="270" fill="#f8faf9" stroke="#dadce0" rx="8"/>
   <text x="165" y="104" font-size="15" font-weight="bold" fill="#188038" text-anchor="middle">Champ proche — parcelle (1 ha)</text>
   <line x1="50" y1="290" x2="280" y2="290" stroke="#9aa0a6" stroke-width="2"/>

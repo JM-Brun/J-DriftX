@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">Quatre notions de chemin : ligne de courant, caractéristique, polyligne, temps minimal de navigation</title>
+<desc id="desc">Quatre panneaux. 1. Ligne de courant : trois courbes tangentes au champ de vent, flèches de vent posées sur la courbe centrale. 2. Caractéristique : une particule lâchée en A suit la ligne de courant jusqu'à B ; tau est le temps du voyage. 3. Polyligne : des points d'étape choisis (P1, P2) reliés par des segments droits, à comparer au chemin du vent en pointillés. 4. Temps minimal de navigation : trois chemins emboîtés de A à B ; le plus plat (28 s) a le coût le plus faible, les arcs plus hauts sont plus lents (40 s, 65 s).</desc>
+<defs>
+  <marker id="arrowGreen" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#2c7a55"/></marker>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif;fill:#20252b}
+    .panel{fill:#fbfcfe;stroke:#c8d1dc;stroke-width:2}
+    .heading{font-size:25px;font-weight:700}
+    .sub{font-size:18px;font-style:italic;fill:#4d5a68}
+    .label{font-size:20px}
+    .small{font-size:17px}
+    .blue{stroke:#2367a8;fill:none;stroke-width:4}
+    .lightblue{stroke:#9db8d2;fill:none;stroke-width:3}
+    .orange{stroke:#c45b18;fill:none;stroke-width:4}
+    .gray{stroke:#8a97a5;fill:none;stroke-width:3}
+    .dash{stroke:#687582;stroke-width:2;stroke-dasharray:8 7;fill:none}
+  </style>
+</defs>
+<rect x="18" y="18" width="1164" height="724" rx="18" fill="#ffffff" stroke="#d7dde5"/>
+
+<rect class="panel" x="38" y="38" width="552" height="316" rx="14"/>
+<text class="heading" x="66" y="76">1. Ligne de courant</text>
+<text class="sub" x="66" y="102">courbe tangente au vent en tout point</text>
+<path class="lightblue" d="M 90,185 Q 300,115 540,185"/>
+<path class="blue" d="M 90,245 Q 300,175 540,245"/>
+<path class="lightblue" d="M 90,285 Q 300,235 540,285"/>
+<line x1="197" y1="219" x2="243" y2="213" stroke="#2c7a55" stroke-width="3" marker-end="url(#arrowGreen)"/>
+<line x1="333" y1="210" x2="379" y2="212" stroke="#2c7a55" stroke-width="3" marker-end="url(#arrowGreen)"/>
+<line x1="436" y1="221" x2="482" y2="229" stroke="#2c7a55" stroke-width="3" marker-end="url(#arrowGreen)"/>
+<text class="small" x="66" y="322">Une courbe tangente au champ de vitesse en chaque point,</text>
+<text class="small" x="66" y="344">définie à un instant fixé : pas encore un voyage.</text>
+
+<rect class="panel" x="610" y="38" width="552" height="316" rx="14"/>
+<text class="heading" x="638" y="76">2. Caractéristique</text>
+<text class="sub" x="638" y="102">le voyage d'une particule lâchée en A</text>
+<text class="small" x="690" y="150">τ = le temps du voyage de A à B</text>
+<path class="blue" d="M 660,255 Q 870,175 1080,255"/>
+<line x1="790" y1="221" x2="834" y2="216" stroke="#2c7a55" stroke-width="3" marker-end="url(#arrowGreen)"/>
+<circle cx="660" cy="255" r="8" fill="#2367a8"/>
+<circle cx="765" cy="225" r="4" fill="#2367a8"/>
+<circle cx="870" cy="215" r="4" fill="#2367a8"/>
+<circle cx="975" cy="225" r="4" fill="#2367a8"/>
+<circle cx="1080" cy="255" r="9" fill="#c45b18"/>
+<text class="label" x="641" y="289">A</text>
+<text class="label" x="1093" y="289">B</text>
+<text class="small" x="638" y="322">Si le vent ne change pas en route, la particule lâchée en A</text>
+<text class="small" x="638" y="344">reste sur cette ligne et atteint B au temps τ.</text>
+
+<rect class="panel" x="38" y="394" width="552" height="316" rx="14"/>
+<text class="heading" x="66" y="432">3. Polyligne</text>
+<text class="sub" x="66" y="458">un tracé en segments droits, choisi</text>
+<path class="dash" d="M 90,585 Q 300,520 540,585"/>
+<polyline class="orange" points="90,560 240,490 410,610 540,500"/>
+<circle cx="90" cy="560" r="8" fill="#2367a8"/>
+<circle cx="240" cy="490" r="7" fill="#ffffff" stroke="#c45b18" stroke-width="3"/>
+<circle cx="410" cy="610" r="7" fill="#ffffff" stroke="#c45b18" stroke-width="3"/>
+<circle cx="540" cy="500" r="9" fill="#c45b18"/>
+<text class="label" x="64" y="548">A</text>
+<text class="label" x="208" y="480">P₁</text>
+<text class="label" x="392" y="642">P₂</text>
+<text class="label" x="556" y="494">B</text>
+<text class="small" x="95" y="630">chemin du vent (pour comparaison)</text>
+<text class="small" x="66" y="668">Les points d'étape (P₁, P₂) sont choisis, puis reliés par</text>
+<text class="small" x="66" y="690">des segments droits : le tracé ne suit pas le vent.</text>
+
+<rect class="panel" x="610" y="394" width="552" height="316" rx="14"/>
+<text class="heading" x="638" y="432">4. Navigation minimale</text>
+<text class="sub" x="638" y="458">le chemin admissible de coût minimal</text>
+<path class="gray" d="M 660,630 C 800,500 920,500 1060,630"/>
+<path class="gray" d="M 660,630 C 770,555 950,555 1060,630"/>
+<path class="blue" d="M 660,630 Q 860,565 1060,630"/>
+<circle cx="660" cy="630" r="8" fill="#2367a8"/>
+<circle cx="1060" cy="630" r="9" fill="#c45b18"/>
+<text class="label" x="641" y="618">A</text>
+<text class="label" x="1073" y="618">B</text>
+<text class="small" x="818" y="522">65 s</text>
+<text class="small" x="838" y="556">40 s</text>
+<text class="label" x="752" y="640" fill="#2367a8">28 s : minimum</text>
+<text class="small" x="638" y="668">Parmi les chemins admissibles, on minimise le coût de</text>
+<text class="small" x="638" y="690">parcours — problème d'optimisation, distinct d'une trajectoire imposée.</text>
+</svg>

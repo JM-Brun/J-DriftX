@@ -12,6 +12,12 @@ J-DriftX explore si des solutions de similitude généralisées dans une représ
 
 Une source historique établit ce qu'un article a publié ; un test vérifie un comportement du code dans un cas précis ; une convergence numérique vérifie un schéma sur un problème contrôlé. Aucun de ces éléments ne démontre, à lui seul, l'utilité pratique du modèle.
 
+Cette carte distingue les **niveaux de preuve**. Pour distinguer les **niveaux de modélisation** — champ de vent, chemins, temps de transport, dispersion et concentration — et leurs dépendances, consulter la [carte des niveaux de modélisation](niveaux-modelisation.qmd).
+
+## Deux architectures historiques multi-niveaux à distinguer
+
+Les sources Drift-X emploient « multi-niveaux » dans deux sens complémentaires mais non interchangeables : le couplage physique **champ proche → transport à longue distance** décrit par Brun & Mohammadi (2008), et le raffinement spatial du vent/relief par domaines emboîtés `Ω = ω₀, ωᵢ` décrit par Bozon, Sinfort & Mohammadi (2009). La carte conceptuelle N0–N6 — détaillée dans la [carte des niveaux de modélisation](niveaux-modelisation.qmd) — ne remplace aucune de ces deux architectures historiques. Voir la [revue des sources](https://github.com/JM-Brun/J-DriftX/blob/main/docs/04-revues-papiers-sources.md), la [fiche du chapitre Springer 2008](https://github.com/JM-Brun/J-DriftX/blob/main/raw/fiches/2008-brun-mohammadi-springer-chap14.md) et la [fiche de la plateforme Drift-X 2009](https://github.com/JM-Brun/J-DriftX/blob/main/raw/fiches/2009-bozon-sinfort-mohammadi-driftx-hal.md).
+
 ## Les cinq niveaux
 
 | Niveau | Statut actuel | Question à laquelle il répond |
