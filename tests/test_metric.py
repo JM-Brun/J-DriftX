@@ -317,3 +317,13 @@ def test_1d_first_arrival_rejects_non_finite_inputs(a: float, b: float, vitesse:
     """Les entrées non finies sont rejetées explicitement."""
     with pytest.raises(ValueError, match="finis"):
         temps_premiere_arrivee_1d(a, b, vitesse)
+
+
+def test_1d_first_arrival_rejects_infinite_displacement() -> None:
+    """Un déplacement b - a non fini (débordement flottant) est refusé explicitement."""
+    # Given — deux positions finies dont la différence déborde le format flottant.
+    a = -1.0e308
+    b = 1.0e308
+    # When / Then — l'évaluation est refusée avant tout calcul de temps.
+    with pytest.raises(ValueError, match="deplacement"):
+        temps_premiere_arrivee_1d(a, b, 1.0)

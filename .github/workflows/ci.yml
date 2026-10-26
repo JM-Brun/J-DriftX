@@ -53,8 +53,9 @@ jobs:
 
       - name: Tests (pytest)
         run: |
-          uv run pytest --cov=jdriftx --cov-report=term-missing --cov-fail-under=85 2>&1 | tee pytest-output.txt
+          uv run pytest --cov=jdriftx --cov-report=term-missing --cov-fail-under=91 2>&1 | tee pytest-output.txt
           code=${PIPESTATUS[0]}
+          echo "::notice title=Couverture totale::$(grep TOTAL pytest-output.txt | tail -n 1 | awk '{print $4}')"
           if [ "$code" -ne 0 ]; then
             echo "::error title=pytest (exit $code)::$(tail -n 80 pytest-output.txt | tr '\n' ' ' | head -c 2500)"
             exit 1

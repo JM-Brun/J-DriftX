@@ -2,9 +2,11 @@
 
 import math
 from dataclasses import FrozenInstanceError
+from importlib import metadata
 
 import pytest
 
+import jdriftx.experiences.uniforme as module_uniforme
 from jdriftx.experiences.uniforme import (
     SCENARIO_DEFAUT,
     ChampUniforme,
@@ -141,3 +143,19 @@ def test_le_manifeste_exporte_un_dict_pour_la_frontiere_json() -> None:
     assert isinstance(export["limites"], list)
     for valeur in export.values():
         assert not isinstance(valeur, (ChampUniforme, ScenarioUniforme, ResultatDirige))
+
+
+def test_le_manifeste_signale_une_version_non_installee(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Si le paquet n'est pas installé, le manifeste le dit au lieu d'échouer."""
+    # Given — un environnement où importlib.metadata ne trouve pas « jdriftx ».
+
+    def _version_introuvable(nom: str) -> str:
+        raise metadata.PackageNotFoundError(nom)
+
+    monkeypatch.setattr(module_uniforme.metadata, "version", _version_introuvable)
+    # When — le manifeste est construit dans cet environnement.
+    manifeste = construire_manifeste(SCENARIO_DEFAUT, resoudre_scenario(SCENARIO_DEFAUT))
+    # Then — la version est explicitement marquée « non-installe ».
+    assert manifeste.version_code == "non-installe"

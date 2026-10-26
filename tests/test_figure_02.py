@@ -3,7 +3,15 @@
 import math
 from pathlib import Path
 
-from jdriftx.experiences.uniforme import SCENARIO_DEFAUT, resoudre_scenario
+import pytest
+
+from jdriftx.experiences.uniforme import (
+    SCENARIO_DEFAUT,
+    ChampUniforme,
+    ScenarioUniforme,
+    resoudre_scenario,
+)
+from jdriftx.figures import figure_02
 from jdriftx.figures.figure_02 import render_figure_02_svg
 
 
@@ -58,3 +66,20 @@ def test_figure_02_svg_generation_is_deterministic() -> None:
     # Given / When — two consecutive renders.
     # Then — the outputs are identical.
     assert render_figure_02_svg() == render_figure_02_svg()
+
+
+def test_figure_02_rejects_a_scenario_without_upstream_return(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The generator refuses a scenario whose reverse directed cost is finite."""
+    # Given — a scenario with coincident origin and target: the reverse
+    # cost is 0 (finite), which violates the figure's upstream assumption.
+    scenario = ScenarioUniforme(
+        champ=ChampUniforme(vent=(2.0, 0.0)),
+        origine=(0.0, 0.0),
+        cible=(0.0, 0.0),
+    )
+    monkeypatch.setattr(figure_02, "SCENARIO_DEFAUT", scenario)
+    # When / Then — the render is refused before any output is produced.
+    with pytest.raises(ValueError, match="amont"):
+        render_figure_02_svg()
