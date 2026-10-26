@@ -143,9 +143,9 @@ Les émissions se composent linéairement (dérivée de H1) — conséquence de 
 
 *Justification* : c'est H1 appliquée aux sources multiples ; la construction analytique l'établit par écrit.
 
-*Limite* : n'exclut rien de plus que H1. État de preuve : vérifiée en CI par un test ciblé (un point d'évaluation, précision machine) — pas une preuve générale (contrainte 3).
+*Limite* : n’exclut rien de plus que H1. État de preuve : vérifiée en CI par un test ciblé (un point d’évaluation, précision machine) et par le bilan de masse d’une superposition de deux panaches (somme des débits restituée à 0,1 %) — pas une preuve générale (contrainte 3).
 
-*Ancrage dans le code* : test de superposition ciblé en CI ; la [contrainte physique](../theorie/contraintes-physiques.qmd) correspondante distingue ce qui est testé de ce qui est démontré.
+*Ancrage dans le code* : tests de superposition en CI (point d’évaluation ; bilan de masse de la superposition) ; la [contrainte physique](../theorie/contraintes-physiques.qmd) correspondante distingue ce qui est testé de ce qui est démontré.
 :::
 
 ## Traçabilité
@@ -160,4 +160,4 @@ Le tableau récapitule les points d'application et les tests ; la [carte des niv
 | H5 | Métrique, multi-niveaux | assemblage par segments (mécanisme implémenté), paramètres par morceaux : à venir (jalon M2) |
 | H6 | [Réduction a priori](../theorie/reduction-a-priori.qmd) | estimateur d'erreur (jalon M2) |
 | H7 | [Assimilation](../theorie/assimilation-identification.qmd) | calibration bayésienne (jalon M3) |
-| H8 | [Contraintes](../theorie/contraintes-physiques.qmd) | superposition (test ciblé : un point) |
+| H8 | [Contraintes](../theorie/contraintes-physiques.qmd) | superposition (test ciblé : un point ; bilan de masse de la superposition à 0,1 %) |
