@@ -67,6 +67,8 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 **Classes de Pasquill.** Six classes de stabilité atmosphérique, de A (très instable) à F (très stable), qui pilotent la croissance des $\sigma_y$, $\sigma_z$ avec la distance. *Origine* : F. Pasquill (1961), complétées par les courbes de Gifford et les formules de Briggs (1973) utilisées par les modèles réglementaires. → [Similitude](theorie/similitude.qmd)
 
+**Champ stationnaire.** Un champ de vitesse qui ne dépend pas du temps : $\mathbf u(\mathbf x)$, et non $\mathbf u(\mathbf x, t)$. La ligne de courant issue d'un point est alors une courbe fixe, et la particule lâchée en ce point la suit : ligne de courant et trajectoire coïncident. *Quasi-stationnaire* (hypothèse [H3](../hypotheses/catalogue.qmd)) : le champ est traité comme stationnaire pendant la durée d'un transport, même s'il évolue ensuite. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
+
 **Topographie et MNT (DEM).** Le modèle numérique de terrain : l'altitude du sol en chaque point. Le MNT donne la normale au sol, utilisée pour « coller » le panache au relief. Le multi-niveaux permet de charger le MNT à la bonne résolution : grossière au loin, fine près des zones d'intérêt.
 
 ## Chemins, lignes et temps de transport
