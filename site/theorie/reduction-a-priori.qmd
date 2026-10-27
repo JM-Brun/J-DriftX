@@ -8,7 +8,7 @@ L'idée fondatrice attribuée à Drift-X [@brun2008] est de construire *a priori
 
 ## Place dans la chaîne et contrat de lecture
 
-Cette page prend comme entrées le [modèle direct](modele-direct.qmd) et la famille gaussienne dérivée dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli), en particulier sous les hypothèses explicites de l'équation parabolique de panache. Elle ne redérive ni l'équation de transport ni le profil gaussien : elle précise le statut de cette famille comme **approximation candidate** d'un problème plus général et les mesures nécessaires pour évaluer la réduction.
+Cette page prend comme entrées (i) le problème générique de transport et (ii) l'équation parabolique obtenue par hypothèses successives dans [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache), puis la famille gaussienne dérivée dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli). Elle ne redérive ni l'équation générique, ni les hypothèses de réduction, ni le profil gaussien : elle précise le statut de cette famille comme **approximation candidate** d'un problème plus général et les mesures nécessaires pour évaluer la réduction.
 
 - **Prérequis :** connaître le problème de référence, les hypothèses conduisant au panache gaussien et les paramètres de la famille candidate.
 - **Résultat traité ici :** distinguer le modèle direct $V(p)$, le modèle approché $v(p)$, leur domaine de validité et le coût total à mesurer.
