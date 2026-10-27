@@ -11,7 +11,7 @@ Chaque entrée suit la même chaîne : l'**énoncé**, **où elle s'applique** �
 ## Hypothèses physiques
 
 ::: {.callout-note}
-### H1 — Scalaire passif
+### H1 — Scalaire passif {#h1-scalaire-passif}
 La substance transportée ne réagit pas chimiquement, ne se dépose pas significativement sur les temps de transport étudiés, et n'influence pas l'écoulement.
 
 *Où elle s'applique* : niveaux N4–N5 (dispersion, concentration) de la [carte des niveaux](../projet/niveaux-modelisation.qmd) ; formalisée dans le [modèle direct](../theorie/modele-direct.qmd) (équation de transport), gardée par les [contraintes physiques](../theorie/contraintes-physiques.qmd).
@@ -45,7 +45,7 @@ Le panache suit les solutions de similitude : profils gaussiens, croissance de $
 :::
 
 ::: {.callout-note}
-### H3 — Quasi-stationnarité du vent
+### H3 — Quasi-stationnarité du vent {#h3-quasi-stationnarite-du-vent}
 Le champ de vent $\mathbf u(\mathbf x)$ ne dépend pas du temps pendant la durée d'un transport : il est le même du départ à l'arrivée.
 
 *Où elle s'applique* : niveaux N1 (champ de vent) à N3 (temps de transport) ; pages [Niveaux de modélisation](../projet/niveaux-modelisation.qmd) (notion de champ) et [Métrique travel-time](../theorie/metrique-travel-time.qmd).
@@ -62,7 +62,7 @@ Le champ de vent $\mathbf u(\mathbf x)$ ne dépend pas du temps pendant la duré
 :::
 
 ::: {.callout-note}
-### H4 — Transport advectif dominant dans la métrique
+### H4 — Transport advectif dominant dans la métrique {#h4-transport-advectif-dominant-dans-la-metrique}
 $\tau = \int ds / |\mathbf{u}|$ néglige la diffusion dans le temps d'arrivée ; la diffusion agit transversalement (via $\sigma$), pas longitudinalement dans $\tau$.
 
 *Où elle s'applique* : niveau N3 (métrique / temps de transport) ; définitions et correspondance avec le code : [Métrique travel-time](../theorie/metrique-travel-time.qmd).
@@ -81,7 +81,7 @@ $\tau = \int ds / |\mathbf{u}|$ néglige la diffusion dans le temps d'arrivée ;
 ## Hypothèses structurelles
 
 ::: {.callout-note}
-### H5 — Homogénéité horizontale par morceaux
+### H5 — Homogénéité horizontale par morceaux {#h5-homogeneite-horizontale-par-morceaux}
 La couche de surface est homogène par morceaux : chaque segment de la trajectoire porte ses paramètres, assemblés par la métrique. Un **terrain homogène** désigne ici un tronçon où les paramètres qui pilotent la similitude sont constants — les solutions de similitude sont établies dans ce cadre.
 
 *Où elle s'applique* : niveaux N0–N1 (contexte physique, terrain et champ de vent) et N3 (métrique) ; pages [Niveaux de modélisation](../projet/niveaux-modelisation.qmd) et [Similitude](../theorie/similitude.qmd).
@@ -98,7 +98,7 @@ La couche de surface est homogène par morceaux : chaque segment de la trajectoi
 :::
 
 ::: {.callout-note}
-### H6 — Domaine de validité local du modèle réduit
+### H6 — Domaine de validité local du modèle réduit {#h6-domaine-de-validite-local-du-modele-reduit}
 Le modèle approché n'est valable que dans un domaine des paramètres ; on change de modèle réduit selon la zone (approche multi-niveaux), au lieu d'exiger un modèle global.
 
 *Où elle s'applique* : niveaux N4–N5 (modèle approché, concentration) ; page [Réduction a priori](../theorie/reduction-a-priori.qmd).
@@ -132,7 +132,7 @@ Les observations disponibles (capteurs, campagnes, mesures de déposition) couvr
 :::
 
 ::: {.callout-note}
-### H8 — Superposition des sources
+### H8 — Superposition des sources {#h8-superposition-des-sources}
 Les émissions se composent linéairement (dérivée de H1) — conséquence de la construction analytique.
 
 *Où elle s'applique* : niveaux N5–N6 (concentration, décision) ; pages [Contraintes physiques](../theorie/contraintes-physiques.qmd) et [Modèle direct](../theorie/modele-direct.qmd).
