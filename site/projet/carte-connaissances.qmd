@@ -13,11 +13,26 @@ Le graphe n'est pas dessiné à la main. Il est généré depuis un registre typ
 - **Liens cliquables** : chaque nœud renvoie vers la page, le fichier ou la référence qui le documente.
 - **Citations vérifiées** : la table finale indique où chaque référence est réellement citée dans le site ; une référence jamais citée est signalée plutôt que masquée.
 
-::: {.callout warning}
+::: {.callout-warning}
 ## Structure n'est pas validité
 
 Une arête affirme un lien documenté (implémentation, test, citation), jamais une validité physique. Le niveau de preuve de chaque affirmation reste celui de la page de destination : catalogue des hypothèses, contraintes physiques, catalogue de données.
 :::
+
+## Extraction automatique et registre sémantique
+
+Le graphe s'appuie désormais sur deux couches complémentaires :
+
+- **Inventaire extrait** : `src/jdriftx/extraction_graphe.py` relève les symboles Python, fonctions de test, pages et titres Quarto, citations et liens, avec leurs lignes sources. L'export est reproductible et peut être consommé par un futur résolveur.
+- **Registre sémantique revu** : `site/data/graphe-connaissances.toml` conserve les concepts, hypothèses, relations et vues interprétées. L'extraction ne crée pas automatiquement de relations « implémente », « prouve », « valide » ou « dépend de ».
+
+Pour examiner l'inventaire extrait sans modifier la carte publiée :
+
+```{.bash}
+uv run python -m jdriftx.extraction_graphe > /tmp/graphe-extrait.json
+```
+
+Cette séparation évite de confondre une coïncidence de noms ou un lien documentaire avec une relation scientifique. La prochaine étape éventuelle sera une résolution explicite des faits extraits vers les nœuds du registre, avec signalement des écarts et validation humaine des relations sémantiques.
 
 ## Étendre la carte
 

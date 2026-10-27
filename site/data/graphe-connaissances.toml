@@ -423,6 +423,12 @@ type = "module"
 libelle = "graphe_connaissances.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/graphe_connaissances.py"
 
+[[noeuds]]
+id = "extraction_graphe"
+type = "module"
+libelle = "extraction_graphe.py"
+lien = "src/jdriftx/extraction_graphe.py"
+
 # ---------- Nœuds : tests ----------
 
 [[noeuds]]
@@ -526,6 +532,12 @@ id = "t-graphe"
 type = "test"
 libelle = "test_graphe_connaissances.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_graphe_connaissances.py"
+
+[[noeuds]]
+id = "t-extraction"
+type = "test"
+libelle = "test_extraction_graphe.py"
+lien = "tests/test_extraction_graphe.py"
 
 # ---------- Nœuds : références (clés de site/references.bib) ----------
 
@@ -1316,6 +1328,11 @@ de = "d-knapsack"
 vers = "n6"
 relation = "candidat-pour"
 
+[[aretes]]
+de = "t-extraction"
+vers = "extraction_graphe"
+relation = "couvre"
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1369,7 +1386,8 @@ noeuds = [
   "t-metric", "t-similitude", "t-constraints", "t-champ", "t-recon",
   "t-uniforme", "t-advection", "t-fields", "t-periodic", "t-stabilite",
   "t-terrain", "t-trajectories", "t-figure-01", "t-figure-02",
-  "t-wind-field", "t-interactif", "graphe_connaissances", "t-graphe",
+  "t-wind-field", "t-interactif", "graphe_connaissances", "extraction_graphe",
+  "t-graphe", "t-extraction",
 ]
 
   [[graphes.groupes]]
@@ -1401,7 +1419,7 @@ noeuds = [
   [[graphes.groupes]]
   id = "carte"
   titre = "Carte des connaissances"
-  noeuds = ["graphe_connaissances", "t-graphe"]
+  noeuds = ["graphe_connaissances", "extraction_graphe", "t-graphe", "t-extraction"]
 
   [[graphes.groupes]]
   id = "prp"
