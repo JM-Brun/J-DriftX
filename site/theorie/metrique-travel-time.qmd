@@ -2,11 +2,15 @@
 title: "Métrique travel-time"
 ---
 
-# La métrique non symétrique des temps de transport
+# Les temps de transport dirigés : définitions et limites
 
 Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les solutions de similitude qui supposent un vent **uniforme** (métrique cartésienne) sont envisagées dans une coordonnée naturelle liée au **temps de transport** pour traiter des champs non uniformes. La validité et la portée de cette généralisation doivent être établies à partir des hypothèses et dérivations des sources primaires.
 
 ## Vocabulaire et hypothèses
+
+Pour une présentation synthétique des notions et contre-exemples, voir le [schéma des temps de parcours dirigés](../visuels-g0s/glossaire-g0s.svg) ci-dessous. Il est illustratif : les définitions, hypothèses et preuves restent dans cette page et dans le [glossaire mathématique autonome du dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/30-glossaire-mathematique-autonome-g0s.md).
+
+![Schéma pédagogique : propriété de semi-groupe, temps dirigé sur une orbite périodique, solutions non uniques et perte de séparation par projection en 2D. Les panneaux sont des exemples illustratifs, pas des preuves.](../visuels-g0s/glossaire-g0s.svg)
 
 Un schéma différenciant ligne de courant, caractéristique, polyligne et navigation minimale est proposé dans le [glossaire](../glossaire.qmd#chemins-lignes-et-temps-de-transport). Le glossaire distingue aussi la navigation minimale du temps de première arrivée sous une dynamique imposée. Le champ de vitesse $\mathbf u$ donne la vitesse locale du fluide. Une ligne de courant est tangente au champ à un instant fixé; une trajectoire de particule suit $\dot X=\mathbf u(X,t)$. Elles coïncident spatialement seulement pour un champ stationnaire (et sous les conditions de régularité appropriées). La définition historique s'appuie sur une caractéristique d'un champ considéré comme stationnaire; son extension à un champ instationnaire ne doit pas être supposée automatique.
 

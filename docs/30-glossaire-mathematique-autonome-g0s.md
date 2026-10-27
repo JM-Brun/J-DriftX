@@ -1,14 +1,14 @@
 ---
-title: "Glossaire mathématique autonome pour G0-S"
+title: "Notions mathématiques des temps de parcours dirigés"
 date: 2026-10-27
 status: working
 ---
 
-# Glossaire mathématique autonome pour G0-S
+# Notions mathématiques des temps de parcours dirigés
 
-Cette page fait partie du dépôt public **J-DriftX**. Elle contient les définitions dont le lecteur a besoin pour comprendre l'étude des temps de parcours, sans devoir consulter un wiki privé ou un autre dépôt. Elle complète l'investigation [G0-S — temps de parcours dirigé](19-investigation-g0s-temps-de-parcours.md) ; elle ne la remplace pas.
+Cette page fait partie du dépôt public **J-DriftX**. Elle rassemble les définitions nécessaires pour comprendre les temps de première arrivée et les propriétés mathématiques étudiées dans le « socle mathématique des temps de parcours dirigés » (nom de travail G0-S). Elle complète l’[investigation sur les temps de parcours dirigés](19-investigation-g0s-temps-de-parcours.md) ; elle ne la remplace pas.
 
-**Comment lire le nom « G0-S ».** « G0-S » n'est pas une notion mathématique : c'est le repère d'un chantier dans la feuille de route du projet, à lire « G zéro S ». **G0** désigne le premier jalon de cadrage ; le suffixe **S** désigne l'axe **scientifique**, par opposition à l'axe applicatif **G0-A**, dont l'objet — l'utilité pratique — reste non démontré (détail dans la [carte d’articulation scientifique](18-carte-articulation-scientifique.md), section 3). En clair, « G0-S » désigne ici l'**étude des temps de parcours dirigés** : dans un vent donné, combien de temps faut-il pour aller d'un point $A$ à un point $B$ en suivant le courant, et quelles propriétés ce temps vérifie-t-il ? Dans toute la page, ce nom de code peut se lire comme « l'étude des temps de parcours dirigés ».
+**Comment lire le nom « G0-S ».** « G0-S » n'est pas une notion mathématique : c'est le repère d'un chantier dans la feuille de route du projet, à lire « G zéro S ». **G0** désigne le premier jalon de cadrage ; le suffixe **S** désigne l'axe **scientifique**, par opposition à l'axe applicatif **G0-A**, dont l'objet — l'utilité pratique — reste non démontré (détail dans la [carte d'articulation scientifique](18-carte-articulation-scientifique.md), section 3). En clair, « G0-S » désigne ici l'**étude des temps de parcours dirigés** : dans un vent donné, combien de temps faut-il pour aller d'un point $A$ à un point $B$ en suivant le courant, et quelles propriétés ce temps vérifie-t-il ? Dans toute la page, ce nom de code peut se lire comme « l'étude des temps de parcours dirigés ».
 
 ## 1. Distance, métrique et variantes
 
@@ -24,20 +24,20 @@ Soit $E$ un ensemble. Une fonction $d:E\times E\to[0,+\infty[$ est une **métriq
 
 Le terme **distance** désigne parfois, de manière informelle, une mesure d'écart qui ne vérifie pas tous ces axiomes. Pour éviter cette ambiguïté, J-DriftX précise les axiomes vérifiés au lieu de déduire le mot « métrique » de la seule interprétation physique.
 
-### Variantes utiles dans J-DriftX
+### Comparer les notions par leurs axiomes
 
-- Une **pseudo-métrique** vérifie la non-négativité, la diagonale nulle, la symétrie et l'inégalité triangulaire, mais la séparation peut échouer : deux points distincts peuvent être à distance nulle.
-- Une **quasi-métrique dirigée** (convention de terminologie variable selon les sources) autorise l'échec de la symétrie. Selon la convention, la séparation et l'inégalité triangulaire restent exigées.
-- Une **quasi-distance étendue dirigée**, au sens utilisé ici pour V1, prend ses valeurs dans $[0,+\infty]$ et vérifie la diagonale nulle, la non-négativité, la séparation et l'inégalité triangulaire dirigée. Elle peut valoir $+\infty$ lorsque la cible n'est pas atteinte et elle n'est pas nécessairement symétrique. Ce n'est donc pas une métrique au sens strict.
+Le tableau explicite les recouvrements : chaque notion reprend les axiomes indiqués, et se distingue par les propriétés qu’elle n’exige pas. Les conventions de « quasi-métrique » varient selon les ouvrages ; la colonne correspond à la convention retenue ici, sauf mention contraire.
 
-Le tableau suivant récapitule, axiome par axiome, ce qui rapproche et ce qui distingue ces notions. Les quatre partagent la non-négativité et la diagonale nulle ; elles se séparent sur la séparation, la symétrie, l'inégalité triangulaire et l'admission de la valeur $+\infty$.
+| Notion | Valeurs | Non-négativité | Diagonale nulle | Séparation | Symétrie | Triangle | Commentaire |
+|---|---|---:|---:|---:|---:|---:|---|
+| **Métrique** | $[0,+\infty[$ | Oui | Oui | Oui | Oui | Oui | Notion de référence ; tous les axiomes sont requis. |
+| **Pseudo-métrique** | $[0,+\infty[$ | Oui | Oui | **Non** | Oui | Oui | Peut attribuer une distance nulle à deux points distincts. |
+| **Quasi-métrique dirigée** | $[0,+\infty[$ | Oui | Oui | Oui selon la convention stricte | **Non** | Oui, dans le sens dirigé | Le terme est polysémique ; vérifier la définition de chaque source. |
+| **Quasi-distance étendue dirigée (V1 ici)** | $[0,+\infty]$ | Oui | Oui | Oui dans le cadre retenu | **Non exigée** | Oui, dans le sens dirigé | Autorise $+\infty$ pour une cible non atteinte. |
+| **V2 après projection** | $[0,+\infty]$ selon la convention | Oui si le temps projeté est défini | Oui si la projection de $A$ est bien définie | **Pas garantie en 2D** | Pas garantie | Pas garantie en général | Construction particulière, pas une classe métrique standard. |
 
-| Notion | Non-négativité | Diagonale nulle | Séparation | Symétrie | Inégalité triangulaire | Valeurs possibles |
-|---|---|---|---|---|---|---|
-| Métrique | Oui | Oui | Oui | Oui | Oui | $[0,+\infty[$ |
-| Pseudo-métrique | Oui | Oui | Peut échouer | Oui | Oui | $[0,+\infty[$ |
-| Quasi-métrique dirigée | Oui | Oui | Exigée selon la convention | Peut échouer | Dirigée ; exigée selon la convention | $[0,+\infty[$ |
-| Quasi-distance étendue dirigée (V1) | Oui | Oui | Oui | Peut échouer | Oui, dirigée | $[0,+\infty]$ |
+La pseudo-métrique abandonne précisément l’axiome de séparation. Une quasi-distance dirigée abandonne la symétrie, et la version étendue autorise en plus la valeur infinie. V2 peut perdre la séparation parce que la projection ignore un décalage transversal.
+
 
 Pour V1, la convention $T(A,B)=+\infty$ en l'absence d'arrivée est utile pour représenter l'inaccessibilité dans le sens du flot. Elle doit toutefois être distinguée d'une non-existence de la trajectoire dans le domaine : ce dernier cas relève du temps maximal de solution et des conventions de sortie de domaine.
 
@@ -56,7 +56,7 @@ Une propriété ne découle pas du fait qu'une quantité soit positive, exprimé
 
 Ce tableau est un résumé des résultats du document d'investigation, pas une preuve autonome. Les conditions exactes et les contre-exemples sont détaillés dans [l'investigation G0-S](19-investigation-g0s-temps-de-parcours.md), notamment ses sections 3 à 6.
 
-## 3. Champ lipschitzien : définition et rôle
+## 3. Champ lipschitzien, solution et flot
 
 Soit $u:E\to\mathbb R^d$, où $E\subseteq\mathbb R^d$. Le champ $u$ est **lipschitzien** sur $E$ s'il existe une constante $L\geq0$ telle que, pour tous $x,y\in E$,
 $$
@@ -72,7 +72,11 @@ $$
 $$
 la continuité du champ assure notamment l'existence locale d'au moins une solution (théorème de Peano), mais **ne garantit pas à elle seule son unicité**. Une hypothèse locale de Lipschitz est une condition suffisante standard pour l'existence et l'unicité locales (théorème de Cauchy–Lipschitz/Picard–Lindelöf). Elle permet de définir un flot $X(t;A)$ non ambigu, puis d'utiliser sa propriété de semi-groupe pour démontrer l'inégalité triangulaire de V1.
 
-Un **flot** désigne la famille complète des trajectoires du champ, vue comme une seule application $(t,A)\mapsto X(t;A)$ : à un point de départ $A$ et un temps $t$, elle associe la position $X(t;A)$ atteinte à l'instant $t$ par la solution de $\dot X=u(X)$ issue de $A$. L'image est celle d'un transport : de même qu'un courant porte une particule de $A$ vers l'aval, le champ transporte chaque point, et le flot rassemble tous ces transports en un objet unique. Ce mot n'a de sens que si chaque point de départ $A$ détermine une seule trajectoire : c'est l'unicité qui permet d'écrire $X(t;A)$ sans ambiguïté — d'où le rôle central de cette hypothèse dans la suite.
+**Définition du flot.** Une *solution* est une fonction $X(t)$ qui satisfait l’équation différentielle et la condition initiale sur un intervalle donné. Lorsque la solution est unique, l’*application d’évolution* $\Phi_t(A)$ désigne l’état atteint au temps $t$ depuis l’état initial $A$, tant que la solution existe. Un *flot autonome* est la famille de ces applications, compatible avec le passage du temps et vérifiant la propriété de semi-groupe
+$$
+\Phi_{s+t}(A)=\Phi_t(\Phi_s(A)),
+$$
+à condition que les deux côtés soient définis. Le terme « flot » ne désigne donc pas une solution arbitraire lorsque plusieurs solutions partent du même état. Cette propriété de composition est précisément celle utilisée pour démontrer l’inégalité triangulaire de V1. L'image est celle d'un transport : de même qu'un courant porte une particule de $A$ vers l'aval, le champ transporte chaque point, et le flot rassemble tous ces transports en un objet unique.
 
 Il faut distinguer les implications :
 - $u\in C^1\Rightarrow u$ localement lipschitzien $\Rightarrow$ unicité locale ;
@@ -97,9 +101,9 @@ est également une solution : après le délai, sa dérivée vaut $(t-\tau)/2=\s
 
 **Conséquence pour le temps de parcours :** la formule obtenue sur une branche mobile ne suffit pas à définir un temps unique si l'équation ne détermine pas une trajectoire unique.
 
-## 4. Temps de première arrivée (hitting time)
+## 4. Temps de première arrivée
 
-Dans le cadre retenu par G0-S — l'étude des temps de parcours dirigés, explicitée en tête de page —, $u:\Omega\to\mathbb R^d$ est un champ stationnaire suffisamment régulier pour que la solution maximale $X(t;A)$ issue de $A$ soit unique. Son intervalle maximal d'existence est noté $I_A$, avec $0\in I_A$.
+Dans le cadre retenu par G0-S — l’étude des temps de parcours dirigés, explicitée en tête de page —, $u:\Omega\to\mathbb R^d$ est un champ stationnaire suffisamment régulier pour que la solution maximale $X(t;A)$ issue de $A$ soit unique. Son intervalle maximal d'existence est noté $I_A$, avec $0\in I_A$.
 
 Le **temps de première arrivée** de $B$ depuis $A$ est
 $$
@@ -119,13 +123,13 @@ Ces deux fins d'existence ne disent pas la même chose qu'une cible inaccessible
 
 Si $B$ n'appartient pas à l'orbite positive de $A$, la convention donne $T(A,B)=+\infty$. Si la trajectoire quitte le domaine avant d'atteindre $B$, il faut signaler cette sortie comme telle plutôt que confondre automatiquement les causes d'inaccessibilité.
 
-## 5. Composante connexe sans stagnation en dimension 1
+## 5. Intervalles sans point de stagnation en dimension 1
 
 En dimension 1, soit $u:I\to\mathbb R$ un champ continu sur un intervalle $I$. Un **point de stagnation** est un point $x^*$ où $u(x^*)=0$. L'ensemble
 $$
 I\setminus\{x\in I:u(x)=0\}
 $$
-est l'ensemble des points non stagnants. Une **composante connexe** de cet ensemble est un sous-ensemble connexe maximal ; sur la droite réelle, chaque composante est un intervalle.
+est l'ensemble des points non stagnants. Une **composante connexe** de cet ensemble est un sous-ensemble connexe maximal ; sur la droite réelle, chaque composante est un intervalle. En langage courant, il s’agit d’un « intervalle maximal où le champ ne s’annule pas » : on ne peut pas l’agrandir sans rencontrer un point de stagnation ou la frontière du domaine.
 
 Sur une telle composante, $u$ ne s'annule pas et, par continuité, conserve un signe constant. La trajectoire y est donc monotone tant qu'elle y reste. Cela ne signifie pas qu'elle visite les points dans les deux sens : elle avance seulement dans le sens indiqué par le signe de $u$.
 
@@ -135,7 +139,7 @@ T(a,b)=\int_a^b\frac{dx}{u(x)},
 $$
 tandis que $b<a$ n'est pas atteint dans le temps positif et $T(a,b)=+\infty$ selon la convention de V1.
 
-## 6. Orbite périodique et asymétrie
+## 6. Trajectoire périodique et temps de parcours dirigé
 
 Une trajectoire $X(t;A)$ est **périodique** s'il existe $p>0$ tel que $X(t+p;A)=X(t;A)$ pour tout temps où l'expression est définie. La **période minimale** est le plus petit $p>0$ satisfaisant cette propriété, lorsqu'il existe. L'orbite géométrique est l'ensemble des points parcourus par cette trajectoire.
 
