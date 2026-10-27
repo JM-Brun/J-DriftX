@@ -121,43 +121,43 @@ On restreint maintenant le domaine physique au demi-espace $z\geq 0$, avec un so
 
 La méthode des images la satisfait en ajoutant à la source réelle située à la hauteur $h$ une **source virtuelle de même signe** située à la hauteur $-h$. En notant $g(z;a)=\exp[-(z-a)^2/(2\sigma_z^2)]$, le facteur vertical devient $g(z;h)+g(z;-h)$. À la paroi,
 
-$
+$$
 \left.\frac{\partial}{\partial z}\big[g(z;h)+g(z;-h)\big]\right|_{z=0}
 =\frac{h}{\sigma_z^2}e^{-h^2/(2\sigma_z^2)}
 -\frac{h}{\sigma_z^2}e^{-h^2/(2\sigma_z^2)}
 =0.
-$
+$$
 
 La condition de flux nul est ainsi vérifiée exactement pour cette solution et ces hypothèses. À $z=0$, les deux contributions sont égales : la concentration au sol est le double de celle qu'aurait le terme de la source réelle seul. La source image est un artifice mathématique, pas une émission physique supplémentaire.
 
 **Vérification de la conservation sur le demi-espace.** Avec la normalisation de l'étape 4, le panache réfléchi s'écrit
 
-$
+$$
 C(x,y,z)=\frac{Q}{2\pi U\sigma_y\sigma_z}
 e^{-y^2/(2\sigma_y^2)}
 \left[
 e^{-(z-h)^2/(2\sigma_z^2)}
 +e^{-(z+h)^2/(2\sigma_z^2)}
 \right],\qquad z\geq0.
-$
+$$
 
 Les deux intégrales verticales se complètent :
 
-$
+$$
 \int_0^{\infty}\!\left[
 e^{-(z-h)^2/(2\sigma_z^2)}
 +e^{-(z+h)^2/(2\sigma_z^2)}
 \right]\,\mathrm dz
 =\int_{-\infty}^{\infty}e^{-u^2/(2\sigma_z^2)}\,\mathrm du
 =\sqrt{2\pi}\,\sigma_z.
-$
+$$
 
 En utilisant aussi $\int_{-\infty}^{\infty}e^{-y^2/(2\sigma_y^2)}\,\mathrm dy=\sqrt{2\pi}\,\sigma_y$, on obtient
 
-$
+$$
 U\int_{-\infty}^{\infty}\!\int_0^{\infty}C(x,y,z)\,\mathrm dz\,\mathrm dy=Q,
 \qquad x>0.
-$
+$$
 
 La méthode des images conserve donc le débit massique sur le demi-espace : le flux advectif intégré vaut $Q$. Ce résultat est analytique, sous les hypothèses du modèle parabolique à coefficients constants ; il est distinct des tests numériques sur grille décrits à l'étape 5.
 
