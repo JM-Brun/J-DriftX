@@ -36,11 +36,7 @@ def diagnostiquer(racine: Path) -> dict[str, object]:
     racine = racine.resolve()
     registre = charger(racine / "site/data/graphe-connaissances.toml")
     faits = extraire_faits(racine)
-    fichiers = {
-        fait.path: fait
-        for fait in faits
-        if fait.kind in KINDS_FICHIER
-    }
+    fichiers = {fait.path: fait for fait in faits if fait.kind in KINDS_FICHIER}
 
     liens_registre: dict[str, list[str]] = {}
     localisateurs_non_extraits: list[dict[str, str]] = []
@@ -89,12 +85,15 @@ def diagnostiquer(racine: Path) -> dict[str, object]:
 
 def serialiser_diagnostic(racine: Path) -> str:
     """Produit un JSON stable pour inspection locale ou CI."""
-    return json.dumps(
-        diagnostiquer(racine),
-        ensure_ascii=False,
-        indent=2,
-        sort_keys=True,
-    ) + "\n"
+    return (
+        json.dumps(
+            diagnostiquer(racine),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    )
 
 
 def main(argv: Sequence[str] | None = None) -> int:
