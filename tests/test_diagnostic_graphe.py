@@ -14,11 +14,21 @@ def _depot_minimal(racine: Path) -> Path:
     (racine / "tests").mkdir()
     (racine / "site/data").mkdir(parents=True)
     (racine / "site/theorie").mkdir()
-    (racine / "src/jdriftx/noyau.py").write_text("def calculer() -> int:\\n    return 1\\n", encoding="utf-8")
-    (racine / "tests/test_noyau.py").write_text("def test_calculer() -> None:\\n    assert True\\n", encoding="utf-8")
-    (racine / "site/theorie/modele.qmd").write_text("---\\ntitle: \\"Modèle\\"\\n---\\n# Hypothèses\\n", encoding="utf-8")
-    (racine / "site/theorie/orphelin.qmd").write_text("# Page non référencée\\n", encoding="utf-8")
-    (racine / "site/references.bib").write_text("@article{demo,\\n title = {Démo},\\n}\\n", encoding="utf-8")
+    (racine / "src/jdriftx/noyau.py").write_text(
+        "def calculer() -> int:\n    return 1\n", encoding="utf-8"
+    )
+    (racine / "tests/test_noyau.py").write_text(
+        "def test_calculer() -> None:\n    assert True\n", encoding="utf-8"
+    )
+    (racine / "site/theorie/modele.qmd").write_text(
+        '---\ntitle: "Modèle"\n---\n# Hypothèses\n', encoding="utf-8"
+    )
+    (racine / "site/theorie/orphelin.qmd").write_text(
+        "# Page non référencée\n", encoding="utf-8"
+    )
+    (racine / "site/references.bib").write_text(
+        "@article{demo,\n title = {Démo},\n}\n", encoding="utf-8"
+    )
     (racine / "site/data/graphe-connaissances.toml").write_text(
         """
 [types.concept]
@@ -76,7 +86,8 @@ noeuds = ["modele", "noyau", "test-noyau", "page-perimee"]
   id = "tous"
   titre = "Tous"
   noeuds = ["modele", "noyau", "test-noyau", "page-perimee"]
-""".strip() + "\\n",
+""".strip()
+        + "\n",
         encoding="utf-8",
     )
     return racine
