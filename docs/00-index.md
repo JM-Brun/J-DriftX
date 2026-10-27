@@ -11,8 +11,8 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 31 (le 30 est en cours d'ajout par la
-PR #109).
+Prochain numéro libre sur main : 31 (la note 30, ajoutée par la PR #109
+fusionnée, est désormais sur main).
 
 ## Numéros en double
 
@@ -52,8 +52,10 @@ PR #109).
 | `27-matrice-tracabilite-mvp-s.md` | Matrice de traçabilité MVP-S |
 | `28-revue-ciblage-graphe-2026-10-27.md` | Revue du ciblage du graphe de connaissances (27/10/2026) |
 | `29-audit-tracabilite-mvp-s-2026-10-27.md` | Audit de la traçabilité MVP-S (27/10/2026) |
+| `30-glossaire-mathematique-autonome-g0s.md` | Glossaire mathématique autonome G0-S |
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
 | `bibliographie/` | Dossier bibliographique |
+| `visuels-g0s/` | Visuels G0-S (SVG source et générés) |
 
 Les notes numérotées en double figurent dans le tableau dédié ci-dessus.
