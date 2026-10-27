@@ -417,6 +417,12 @@ type = "module"
 libelle = "figures/wind_field_explorer.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/wind_field_explorer.py"
 
+[[noeuds]]
+id = "graphe_connaissances"
+type = "module"
+libelle = "graphe_connaissances.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/graphe_connaissances.py"
+
 # ---------- Nœuds : tests ----------
 
 [[noeuds]]
@@ -514,6 +520,12 @@ id = "t-interactif"
 type = "test"
 libelle = "test_interactive_wind_page.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_interactive_wind_page.py"
+
+[[noeuds]]
+id = "t-graphe"
+type = "test"
+libelle = "test_graphe_connaissances.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_graphe_connaissances.py"
 
 # ---------- Nœuds : références (clés de site/references.bib) ----------
 
@@ -1120,6 +1132,11 @@ de = "t-interactif"
 vers = "figures/wind_field_explorer"
 relation = "couvre"
 
+[[aretes]]
+de = "t-graphe"
+vers = "graphe_connaissances"
+relation = "couvre"
+
 # ---------- Arêtes : vue références ----------
 
 [[aretes]]
@@ -1352,7 +1369,7 @@ noeuds = [
   "t-metric", "t-similitude", "t-constraints", "t-champ", "t-recon",
   "t-uniforme", "t-advection", "t-fields", "t-periodic", "t-stabilite",
   "t-terrain", "t-trajectories", "t-figure-01", "t-figure-02",
-  "t-wind-field", "t-interactif",
+  "t-wind-field", "t-interactif", "graphe_connaissances", "t-graphe",
 ]
 
   [[graphes.groupes]]
@@ -1380,6 +1397,11 @@ noeuds = [
   id = "rfs"
   titre = "Solveurs de référence"
   noeuds = ["periodic_transport", "advection_diffusion", "c-transport"]
+
+  [[graphes.groupes]]
+  id = "carte"
+  titre = "Carte des connaissances"
+  noeuds = ["graphe_connaissances", "t-graphe"]
 
   [[graphes.groupes]]
   id = "prp"
