@@ -45,13 +45,6 @@ Ces expériences servent à la **vérification numérique**, non à la validatio
 
 ## Parcours de lecture conseillé
 
-1. [Héritage Drift-X](heritage.qmd) et les [Lectures des sources](lectures.qmd) (annexe) — établir la base documentaire.
-2. [Fondements théoriques : modèle direct](../theorie/modele-direct.qmd), [Solutions de similitude](../theorie/similitude.qmd) et [Métrique travel-time](../theorie/metrique-travel-time.qmd) — préciser les objets mathématiques.
-3. L'[investigation mathématique sur le temps de parcours](https://github.com/JM-Brun/J-DriftX/issues/41) — borner les premières expériences admissibles.
-4. [Laboratoire interactif](laboratoire-interactif.qmd) et [Qualité & tests](qualite.qmd) — lire les résultats numériques avec leurs limites.
-5. Les [questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues) — décider de la suite selon les preuves.
-## Parcours de lecture conseillé
-
 Commencer par l'[héritage Drift-X](heritage.qmd) et les [lectures des sources](lectures.qmd) pour établir ce que les publications historiques affirment réellement. Puis suivre l'une des deux chaînes théoriques ci-dessous. Elles se rejoignent dans l'évaluation de la réduction, mais leurs résultats ne doivent pas être confondus.
 
 ### Chaîne physique — du modèle à la famille candidate
@@ -68,7 +61,7 @@ Commencer par l'[héritage Drift-X](heritage.qmd) et les [lectures des sources](
 2. [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) — comparer les axiomes et les familles voisines sans inférer d'équivalence par analogie.
 3. [Investigation mathématique G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) — consulter les hypothèses, preuves et contre-exemples détaillés.
 
-**Point de jonction :** la transformation $x/U$ est justifiée dans le cadre du vent uniforme considéré par la chaîne physique. L'utiliser comme un temps $\\tau$ dans un champ variable est une nouvelle construction à dériver, pas une conséquence automatique de la chaîne géométrique.
+**Point de jonction :** la transformation $x/U$ est justifiée dans le cadre du vent uniforme considéré par la chaîne physique. L'utiliser comme un temps $\tau$ dans un champ variable est une nouvelle construction à dériver, pas une conséquence automatique de la chaîne géométrique.
 
 ### Vérification et décision
 
