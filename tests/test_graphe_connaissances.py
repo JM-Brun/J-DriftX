@@ -144,7 +144,7 @@ def test_depot_minimal_valide(tmp_path: Path) -> None:
         (
             'noeuds = ["c-demo", "noyau", "cle2000", "c-nu"]',
             'noeuds = ["noyau", "cle2000", "c-nu"]',
-            "absent de toutes les vues",
+            "absents de toutes les vues",
         ),
         (
             'noeuds = ["c-demo", "noyau", "cle2000", "c-nu"]',
@@ -162,7 +162,7 @@ def test_depot_minimal_valide(tmp_path: Path) -> None:
         (
             'noeuds = ["noyau", "c-demo", "cle2000", "c-nu"]',
             'noeuds = ["noyau", "c-demo", "cle2000"]',
-            "absent des groupes",
+            "absents des groupes",
         ),
     ],
 )
