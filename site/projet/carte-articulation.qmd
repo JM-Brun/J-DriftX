@@ -65,3 +65,5 @@ Voir aussi [#13](https://github.com/JM-Brun/J-DriftX/issues/13) (audit des jeux 
 ## Référence éditoriale
 
 La version opérationnelle et détaillée de cette carte se trouve dans [docs/18-carte-articulation-scientifique.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/18-carte-articulation-scientifique.md). Elle précise l'état de chaque niveau, les limites des laboratoires et l'ordre de travail recommandé.
+
+Pour la correspondance vérifiable entre définitions, hypothèses, dérivations, code, tests et limites, utiliser la [matrice publique de traçabilité MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md). Cette matrice complète la carte de navigation ; elle ne transforme pas les liens du graphe en preuves.
