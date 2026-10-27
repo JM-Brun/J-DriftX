@@ -25,8 +25,7 @@ def _depot_minimal(racine: Path) -> Path:
         encoding="utf-8",
     )
     (racine / "tests/test_noyau.py").write_text(
-        "def test_resultat() -> None:\n    assert True\n"
-        "\ndef helper() -> None:\n    pass\n",
+        "def test_resultat() -> None:\n    assert True\n\ndef helper() -> None:\n    pass\n",
         encoding="utf-8",
     )
     (racine / "site/theorie/modele.qmd").write_text(
@@ -103,9 +102,7 @@ def test_serialisation_est_deterministe_et_ne_deduit_pas_de_semantique(
     assert donnees["facts"]
 
 
-def test_main_ecrit_sur_stdout_et_dans_un_fichier(
-    tmp_path: Path, capsys: object
-) -> None:
+def test_main_ecrit_sur_stdout_et_dans_un_fichier(tmp_path: Path, capsys: object) -> None:
     """La commande peut alimenter un pipeline ou produire un artefact JSON."""
     racine = _depot_minimal(tmp_path / "depot")
 
