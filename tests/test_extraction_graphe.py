@@ -35,7 +35,11 @@ def _depot_minimal(racine: Path) -> Path:
         "---\n"
         "# Cadre général\n"
         "Une affirmation [documentée](../references.qmd) cite [@Auteur2026].\n"
-        "## Limites\n",
+        "## Limites\n"
+        "```python\n"
+        "# Fausse section\n"
+        "citation [@FausseCle] [lien](faux.qmd)\n"
+        "```\n",
         encoding="utf-8",
     )
     (racine / "site/sans-titre.qmd").write_text(
@@ -70,13 +74,15 @@ def test_extrait_pages_titres_citations_et_liens(tmp_path: Path) -> None:
     par_id = {fait.id: fait for fait in faits}
 
     assert par_id["quarto_page:site/theorie/modele.qmd"].label == "Modèle de transport"
-    assert par_id["quarto_heading:site/theorie/modele.qmd#cadre-général:4"].label == (
+    assert par_id["quarto_heading:site/theorie/modele.qmd#cadre-general:4"].label == (
         "Cadre général"
     )
     assert par_id["citation:site/theorie/modele.qmd:5:Auteur2026"].kind == "citation_occurrence"
     lien = par_id["markdown_link:site/theorie/modele.qmd:5:16"]
     assert lien.label == "documentée -> ../references.qmd"
     assert par_id["quarto_page:site/sans-titre.qmd"].label == "sans-titre"
+    assert "citation:site/theorie/modele.qmd:9:FausseCle" not in par_id
+    assert all("Fausse section" != fait.label for fait in faits)
     assert all(fait.origin_kind == "extracted" for fait in faits)
 
 
