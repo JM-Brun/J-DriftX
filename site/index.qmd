@@ -34,7 +34,7 @@ Conservation, positivité, superposition et compatibilité avec un champ de vent
 
 ### Calibration par données
 
-L'assimilation de données partielles identifie les paramètres ; l'analyse de sensibilité fournit le risque et l'identification de source — l'adjoint visé est analytique, donc quasi gratuit (capacité conditionnelle, non validée).
+L'assimilation de données partielles peut identifier des paramètres ; l'analyse de sensibilité peut contribuer à l'identification de source et à l'étude des incertitudes. Des gradients analytiques sont envisageables pour certaines formulations, mais leur disponibilité, leur coût et leur validité dépendent du modèle et ne sont pas encore établis pour le cas général.
 
 :::
 
