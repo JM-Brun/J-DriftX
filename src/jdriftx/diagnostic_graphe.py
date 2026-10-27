@@ -17,11 +17,21 @@ from jdriftx.extraction_graphe import extraire_faits
 from jdriftx.graphe_connaissances import charger
 
 KINDS_FICHIER = {"python_module", "test_file", "quarto_page"}
+
+
 def _est_extractible(chemin: str) -> bool:
     """Indique si le chemin appartient à une catégorie couverte par l'extracteur."""
     return (
-        (chemin.startswith("src/jdriftx/") and chemin.endswith(".py") and not chemin.endswith("/__init__.py"))
-        or (chemin.startswith("tests/") and Path(chemin).name.startswith("test_") and chemin.endswith(".py"))
+        (
+            chemin.startswith("src/jdriftx/")
+            and chemin.endswith(".py")
+            and not chemin.endswith("/__init__.py")
+        )
+        or (
+            chemin.startswith("tests/")
+            and Path(chemin).name.startswith("test_")
+            and chemin.endswith(".py")
+        )
         or (chemin.startswith("site/") and chemin.endswith(".qmd"))
     )
 
