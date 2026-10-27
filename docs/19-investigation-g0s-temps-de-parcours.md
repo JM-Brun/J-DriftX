@@ -2,6 +2,8 @@
 
 > **Statut (22 octobre 2026).** Document de travail G0-S, réponse à l'[issue #41](https://github.com/JM-Brun/J-DriftX/issues/41). Périmètre strict, conforme à [13-mvp-scientifique-et-g0.md](13-mvp-scientifique-et-g0.md) : aucune prédiction de dépôt ou de concentration, aucun benchmark applicatif, aucune revendication de supériorité ou d'originalité. Tous les résultats ci-dessous sont établis analytiquement et calculables à la main ; les contrôles numériques indépendants (annexe A) vérifient les calculs, ils ne sont pas des benchmarks.
 
+> **Lecture autonome des notions.** Pour les définitions explicites de métrique/quasi-distance, champ lipschitzien, temps de première arrivée, composante connexe sans stagnation, orbite périodique et contre-exemples élémentaires, voir le [glossaire mathématique autonome G0-S](30-glossaire-mathematique-autonome-g0s.md). Ce glossaire est maintenu dans le présent dépôt public ; aucun accès à un wiki externe n'est requis.
+
 ## 1. Objet et réponse courte
 
 La question de l'issue #41 est : **quelles propriétés possède une fonction de temps de parcours dirigé définie par une dynamique explicite, et lesquelles ne découlent pas de sa seule définition ?**
