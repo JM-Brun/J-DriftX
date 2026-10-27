@@ -22,7 +22,8 @@ def test_check_site_links_accepts_existing_files_and_fragments(tmp_path: Path) -
         encoding="utf-8",
     )
     (root / "guide/page.html").write_text(
-        '<main id="details"><a name="legacy-anchor"></a></main>',
+        '<h2 data-anchor-id="details">Details</h2>'
+        '<a name="legacy-anchor"></a>',
         encoding="utf-8",
     )
     (root / "assets/figure.svg").write_text("<svg></svg>", encoding="utf-8")
