@@ -18,7 +18,7 @@ class _PageParser(HTMLParser):
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
-        for name in ("id",):
+        for name in ("id", "data-anchor-id"):
             value = attributes.get(name)
             if value:
                 self.identifiers.add(value)
