@@ -46,9 +46,7 @@ def _identite_github(racine: Path) -> tuple[str, str] | None:
     return morceaux[0].casefold(), morceaux[1].casefold()
 
 
-def _chemin_local(
-    lien: str | None, identite_github: tuple[str, str] | None = None
-) -> str | None:
+def _chemin_local(lien: str | None, identite_github: tuple[str, str] | None = None) -> str | None:
     """Retourne un chemin repo-relatif pour un lien local ou GitHub du même dépôt."""
     if not lien:
         return None
