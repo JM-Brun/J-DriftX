@@ -2,6 +2,8 @@
 
 > **État :** audit documentaire du 26 octobre 2026. Cette matrice relie les définitions, leurs hypothèses, le code et les tests. Elle ne remplace pas les preuves analytiques et ne vaut pas validation physique. Les tests doivent être lus comme des vérifications finies. Le contrôle croisé du code et des tests au 27 octobre est consigné dans [l’audit de traçabilité MVP-S](29-audit-tracabilite-mvp-s-2026-10-27.md).
 
+**Note de portée ajoutée le 27 octobre 2026 :** l'investigation distingue désormais explicitement le cadre de base (champ stationnaire \(C^1\) sur un ouvert) des extensions unidimensionnelles de la section 4, qui incluent des champs non lipschitziens et des endpoints. Les résultats d'une extension ne doivent pas être présentés comme s'ils satisfaisaient automatiquement les hypothèses du cadre de base. La matrice décrit les hypothèses propres à chaque résultat.
+
 ## Statuts utilisés
 
 - **Démontré analytiquement** : une dérivation ou une preuve explicite est donnée sous des hypothèses précisées.
@@ -32,6 +34,8 @@
 ## Revue analytique indépendante : correction apportée
 
 La proposition 3.8 de l'investigation G0-S a été restreinte : l'application directe du théorème des fonctions implicites à \(X(t;a)-b=0\) est justifiée telle quelle en dimension 1, mais pas pour un point cible fixe en dimension 2 ou plus. Le temps local de première arrivée en 1D requiert en outre que la branche locale reste la première. La preuve du lemme 3.1 a également été reformulée en utilisant un temps d'atteinte \(t_0\) et le compact \([0,t_0]\), afin de rendre explicite le domaine où la trajectoire existe.
+
+La relecture suivante a identifié deux précisions de portée : (i) V2 conserve la non-négativité et la diagonale nulle lorsque la projection propre est définie, mais peut violer séparation et triangulation ; (ii) les exemples de stagnation en section 4 utilisent parfois des champs non \(C^1\) et des domaines unilatéraux, hors du cadre de base de section 2.1. Ces distinctions sont consignées dans l'investigation source.
 
 Cette correction est documentaire et analytique ; elle ne nécessite pas de test logiciel supplémentaire. Elle ne doit pas être présentée comme une validation de tous les résultats de l'investigation : les autres propositions et contre-exemples restent à relire séparément.
 
