@@ -148,7 +148,16 @@ $$
 - les $\sigma$ croissent avec le temps de parcours ($\sigma^2 = 2 K t$ à $K$ constant) ;
 - une source en hauteur s'obtient par translation, et la réflexion au sol par images, comme à l'étape 6.
 
-**Lien avec le panache établi : une distinction nécessaire.** La superposition des rejets instantanés est bien un principe de linéarité, mais elle ne suffit pas à conclure que toute intégration de puffs redonne la formule parabolique précédente. La formule de puff écrite ci-dessus inclut une diffusion longitudinale, avec $\sigma_x^2=2K_x t$ si $K_x$ est constant. En intégrant ces puffs sur les dates d'émission, on obtient la solution stationnaire associée à l'équation qui conserve cette diffusion longitudinale ; ce n'est, en général, **pas exactement** la solution de l'équation parabolique $U\partial_x C=K_y\partial_{yy}C+K_z\partial_{zz}C$, qui a précisément négligé ce terme.
+**Lien avec le panache établi : une distinction nécessaire.** La superposition des rejets instantanés est bien un principe de linéarité, mais elle ne suffit pas à conclure que toute intégration de puffs redonne la formule parabolique précédente. La formule de puff écrite ci-dessus inclut une diffusion longitudinale, avec $\sigma_x^2=2K_x t$ si $K_x$ est constant. En intégrant ces puffs sur les dates d'émission, on obtient la solution stationnaire associée à l'équation qui conserve cette diffusion longitudinale, soit, hors de la source et pour des coefficients constants,
+
+$
+U\frac{\partial C}{\partial x}
+=K_x\frac{\partial^2 C}{\partial x^2}
++K_y\frac{\partial^2 C}{\partial y^2}
++K_z\frac{\partial^2 C}{\partial z^2}.
+$
+
+Ce n'est, en général, **pas exactement** la solution de l'équation parabolique $U\partial_x C=K_y\partial_{yy}C+K_z\partial_{zz}C$, qui a précisément négligé le terme longitudinal $K_x\partial_{xx}C$.
 
 L'équivalence exacte avec le panache parabolique demande donc de prendre la limite d'advection longitudinale dominante, où la diffusion longitudinale est négligée (formellement $K_x\to0$), et de conserver les mêmes hypothèses transversales, la même source et les mêmes conditions aux limites. Dans cette limite, la position longitudinale du puff est déterminée par l'advection, et la coordonnée $t'=x/U$ fixe l'âge de transport associé à la station $x$. Si $K_x$ reste non nul, la superposition demeure valide pour le modèle complet correspondant, mais elle ne doit pas être présentée comme une identité avec la formule parabolique.
 
