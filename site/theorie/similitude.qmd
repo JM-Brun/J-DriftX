@@ -145,7 +145,7 @@ C(x, y, z, t) = \frac{M}{(2\pi)^{3/2} \sigma_x \sigma_y \sigma_z}
 $$
 
 - le **centroïde** suit le vent ($x_0 + U t$) ;
-- les $\sigma$ croissent avec le temps de parcours ($\sigma^2 = 2 K t$ à $K$ constant) ;
+- pour des diffusivités effectives constantes et diagonales, chaque variance suit $\sigma_i^2(t)=2D_i t$ pour $i\in\{x,y,z\}$ ;
 - une source en hauteur s'obtient par translation, et la réflexion au sol par images, comme à l'étape 6.
 
 **Lien avec le panache établi : une distinction nécessaire.** La superposition des rejets instantanés est bien un principe de linéarité, mais elle ne suffit pas à conclure que toute intégration de puffs redonne la formule parabolique précédente. La formule de puff écrite ci-dessus inclut une diffusion longitudinale, avec $\sigma_x^2=2K_x t$ si $K_x$ est constant. En intégrant ces puffs sur les dates d'émission, on obtient la solution stationnaire associée à l'équation qui conserve cette diffusion longitudinale, soit, hors de la source et pour des coefficients constants,
