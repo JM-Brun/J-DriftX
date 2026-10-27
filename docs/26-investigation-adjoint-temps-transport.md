@@ -110,8 +110,8 @@ même nature que l'usage historique (fonction d'influence pour
 l'assimilation et l'identification), à deux différences près, toutes deux
 documentées : (i) la construction historique était automatique (AD inverse
 du code entier), la nôtre est analytique et fermée sur des primitives
-exactes — plus rigoureuse localement, mais limitée aux cas exacts
-disponibles ; (ii) le gradient historique portait sur la fonction
+exactes — directement vérifiables analytiquement sur ces cas, sans
+établir une supériorité générale sur la différentiation automatique ; (ii) le gradient historique portait sur la fonction
 d'assimilation J (paramètres p du modèle complet), pas sur la seule métrique
 dirigée — couvrir J suppose la chaîne complète c(p, u(p)), dont seul le
 maillon tau est vérifié ici.
@@ -380,11 +380,14 @@ reconsidérer si cette primitive sert un jour d'oracle de comparaison.
 
 ## 7. Ce qui reste non implémenté
 
-- **État adjoint en champ variable** : la métrique historique de Drift-X
-  est définie sur un champ multi-niveaux non reconstruit à ce jour ; son
-  gradient (au sens historique : différentiation automatique inverse du code,
-  section 2.1) suivra la reconstruction. L'acception 1 (état adjoint d'EDP)
-  est structurellement hors du périmètre du modèle, qui ne résout pas d'EDP.
+- **Gradient historique en champ variable** : la métrique historique de
+  Drift-X est définie sur un champ multi-niveaux non reconstruit à ce jour ;
+  le gradient au sens historique (différentiation automatique inverse du code,
+  section 2.1) ne pourra être reproduit qu'après reconstruction des éléments
+  nécessaires du modèle. Les sources examinées ne décrivent pas d'état adjoint
+  de l'EDP directe ; aucun état adjoint d'EDP n'est implémenté dans J-DriftX.
+  Cette limite de périmètre ne signifie pas qu'une formulation adjointe d'un
+  modèle réduit ou d'un système discret soit impossible en général.
 - **Adjoint d'un schéma numérique** : les solveurs périodiques (centré/RK4,
   amont/Euler) pourraient recevoir une transcription rétrograde avec test
   croisé adjoint-direct ; arbitrage futur, non lié à l'issue #42.
