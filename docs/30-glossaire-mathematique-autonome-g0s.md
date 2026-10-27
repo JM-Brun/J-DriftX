@@ -70,6 +70,12 @@ $$
 $$
 la continuité du champ assure notamment l'existence locale d'au moins une solution (théorème de Peano), mais **ne garantit pas à elle seule son unicité**. Une hypothèse locale de Lipschitz est une condition suffisante standard pour l'existence et l'unicité locales (théorème de Cauchy–Lipschitz/Picard–Lindelöf). Elle permet de définir un flot $X(t;A)$ non ambigu, puis d'utiliser sa propriété de semi-groupe pour démontrer l'inégalité triangulaire de V1.
 
+**Définition du flot.** Une *solution* est une fonction $X(t)$ qui satisfait l’équation différentielle et la condition initiale sur un intervalle donné. Lorsque la solution est unique, l’*application d’évolution* $\Phi_t(A)$ désigne l’état atteint au temps $t$ depuis l’état initial $A$, tant que la solution existe. Un *flot autonome* est la famille de ces applications, compatible avec le passage du temps et vérifiant la propriété de semi-groupe
+$$
+\Phi_{s+t}(A)=\Phi_t(\Phi_s(A)),
+$$
+à condition que les deux côtés soient définis. Le terme « flot » ne désigne donc pas une solution arbitraire lorsque plusieurs solutions partent du même état. Cette propriété de composition est précisément celle utilisée pour démontrer l’inégalité triangulaire de V1.
+
 Il faut distinguer les implications :
 - $u\in C^1\Rightarrow u$ localement lipschitzien $\Rightarrow$ unicité locale ;
 - $u$ seulement continu $\Rightarrow$ existence locale sous les hypothèses usuelles, mais pas nécessairement unicité ;
