@@ -56,7 +56,7 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 ### 2.5 Conventions et axiomes de référence
 
 - **(C1)** \(+\infty\) désigne l'inaccessibilité dans le sens de l'écoulement : un choix de modélisation, pas une propriété démontrée.
-- **(C2)** Le **temps de sortie** \(\sigma(A) = \inf\{t \ge 0 : X(t; A) \notin \Omega\}\) distingue un troisième état : si \(\sigma(A) < T(A,B)\), le point \(B\) est inaccessible **par sortie de domaine** — « n'existe pas » au sens strict, à ne pas confondre avec le \(+\infty\) d'orientation.
+- **(C2)** Le **temps de sortie du domaine** \(\sigma(A)\) est l'extrémité droite de l'intervalle maximal positif sur lequel la solution issue de \(A\) existe et reste dans \(\Omega\). Autrement dit, \(\sigma(A)=\sup\{t\ge0: X(s;A)\text{ est définie et appartient à }\Omega\text{ pour tout }s\in[0,t[\}\), avec \(\sigma(A)=+\infty\) si la trajectoire reste dans \(\Omega\) pour tout temps positif. Cette définition n'évalue pas \(X\) après la fin de son intervalle maximal. Si \(\sigma(A)<T(A,B)\), alors la cible n'est pas atteinte avant la sortie du domaine ; cela se distingue de l'inaccessibilité par orientation, même si les deux cas donnent \(T(A,B)=+\infty\) dans la convention étendue.
 - **(C3)** \(t = 0\) est admis dans l'infimum : \(T(A,A) = 0\). Le « temps de retour » sur une orbite fermée est une autre grandeur (§ 6.3).
 - **Axiomes.** (D1) \(T(x,x)=0\) ; (D2) \(T(x,y) \ge 0\) ; (D3) inégalité triangulaire dirigée \(T(x,z) \le T(x,y) + T(y,z)\) au sens étendu ; (D4) séparation : \(T(x,y) = 0 \Rightarrow x = y\). Une **quasi-distance étendue** vérifie (D1)–(D4) ; une distance vérifie en outre la symétrie et la finitude.
 
@@ -138,7 +138,7 @@ Ce critère tranche la question de convergence de l'intégrale : la singularité
 
 **Contre-exemple 4.6 (nécessité de l'unicité du flot — la régularité n'est pas décorative).** \(\dot x = \sqrt{x}\), \(x(0) = 0\) : \(x(t) \equiv 0\) et \(x(t) = (t/2)^2\) sont deux solutions (vérification : \(\frac{d}{dt}(t/2)^2 = t/2 = \sqrt{(t/2)^2}\)). Le « temps de parcours de 0 vers \(b\) » dépend de la branche : la branche mobile donne \(2\sqrt{b}\), la branche stationnaire ne part jamais. La définition 2.3 (un seul \(T\)) exige donc l'unicité du flot : en 1D elle est acquise dès que \(u > 0\) (lemme 4.1) ; en dimension supérieure, l'hypothèse \(C^1\) (Cauchy–Lipschitz) est le garde-fou standard. Un champ admissible pour V1/V2 ne doit donc pas présenter de stagnation « plate » non lipschitzienne, ou doit spécifier une convention de branche.
 
-**Remarque 4.7 (limites et sortie de domaine).** Sur \(\Omega =\, ]0,1[\) avec \(u \equiv U\) : le temps de sortie vaut \(\sigma(a) = (1-a)/U\) ; les points au-delà du domaine relèvent de la convention (C2), pas du \(+\infty\) d'orientation.
+**Remarque 4.7 (limites et sortie de domaine).** Sur \(\Omega =\, ]0,1[\) avec \(u \equiv U\), pour \(U>0\) et \(a\in\Omega\), l'intervalle maximal positif dans le domaine a pour extrémité \(\sigma(a)=(1-a)/U\). Une cible située au-delà de 1 n'est pas atteinte par la solution considérée dans \(\Omega\) : ce cas est classé comme sortie du domaine, et non comme simple inaccessibilité par orientation. La définition de \(\sigma\) porte sur l'intervalle maximal de la solution, pas sur l'évaluation de \(X\) après cet intervalle.
 
 ## 5. V2 : champ uniforme et champs de cisaillement (2D, calculables à la main)
 
