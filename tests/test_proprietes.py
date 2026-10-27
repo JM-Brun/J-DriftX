@@ -11,7 +11,9 @@ propriétés ne constitue une validation physique.
 import math
 
 import pytest
-from hypothesis import given, settings, strategies as st
+
+from hypothesis import given, settings
+from hypothesis import strategies as st
 
 from jdriftx.metric import pseudo_distance_uniforme
 from jdriftx.similitude import concentration_panache
