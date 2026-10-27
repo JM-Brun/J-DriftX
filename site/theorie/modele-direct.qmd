@@ -174,18 +174,86 @@ Une **analyse Monte Carlo** est une procédure numérique qui répète un calcul
 
 Si une évaluation du modèle coûte $c$ et que l'on effectue $N$ réalisations, le coût de calcul brut est de l'ordre de $Nc$, auquel s'ajoutent la préparation des données, les éventuels calculs de référence et l'analyse des résultats. Ce coût peut motiver l'étude d'un modèle réduit, mais ne prouve pas que le modèle direct soit impraticable ni que J-DriftX soit plus rapide. Une comparaison doit mesurer le coût total et l'erreur sur le même ensemble de cas, avec une baseline et un protocole définis. Les balayages paramétriques et les évaluations SIG sont d'autres usages possibles ; ils ne sont pas synonymes de Monte Carlo.
 
-## 10. Du modèle direct à la réduction : chaîne logique et limites
+## 10. Du problème générique à l'équation parabolique de panache
 
-La chaîne de raisonnement est la suivante :
+Cette section détaille le **passage du problème général à l'équation d'entrée de la similitude**. Chaque ligne ci-dessous est une réduction supplémentaire : elle n'est pas une identité sans hypothèse. La dérivation de la famille gaussienne commence seulement après cette section, dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli).
 
-1. La conservation du scalaire conduit à une équation de transport si le champ, les sources et les flux sont définis.
-2. Le moyennage de Reynolds introduit un flux turbulent inconnu.
-3. Une fermeture, telle que la fermeture gradient, modélise ce flux avec un tenseur $\mathbf K$.
-4. Sous les hypothèses de panache stationnaire, de vent uniforme $U>0$, de diffusivités transversales constantes $K_y,K_z$ et de diffusion longitudinale négligée, on obtient l'équation réduite $U\,\partial_x C = K_y\,\partial_{yy}C + K_z\,\partial_{zz}C$. C'est cette équation — et non l'équation générale de transport — que la page [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli) transforme en équation de diffusion via $t'=x/U$ pour dériver le profil gaussien.
-5. Les modèles empiriques de dispersion paramètrent ces largeurs pour certaines classes de conditions ; le choix de formule et son domaine de validité doivent être explicites.
-6. Drift-X/J-DriftX étudie si des solutions de similitude et une représentation géométrique des temps de transport peuvent former un modèle approché moins coûteux. Cette réduction reste une hypothèse à valider, et non une conséquence automatique des étapes précédentes.
+### 10.1 Point de départ : transport moyen fermé
 
-Le coût du modèle direct dépend du domaine, du schéma, du maillage, du régime, des tolérances et des ressources. Il doit être comparé à une baseline pertinente ; les composantes et compromis de cette résolution maillée sont détaillés dans [EDP & maillage](edp-et-maillage.qmd). De même, les propriétés physiques — conservation, positivité, superposition, divergence — doivent être définies avec leurs hypothèses et testées séparément ; les tests actuels ne prouvent pas toutes ces propriétés pour le modèle historique général.
+Après moyennage de Reynolds et fermeture gradient, l'équation de référence est
+$$
+\frac{\partial C}{\partial t}
++\nabla\!\cdot(\overline{\mathbf u}C)
+=\nabla\!\cdot(\mathbf D\nabla C)+\overline S,
+\qquad \mathbf D:=D_m\mathbf I+\mathbf K.
+$$
+Ici, $C$ désigne désormais la concentration moyenne, $\overline{\mathbf u}$ la vitesse moyenne et $\mathbf D$ la diffusivité effective moléculaire + turbulente. Cette équation reste générale : le champ de vitesse, le tenseur diffusif, la source et le domaine peuvent varier dans l'espace et dans le temps.
+
+Dans la région aval $x>0$, on considère la concentration hors du support de la source : $\overline S=0$ localement. La source ponctuelle continue sera représentée par un débit $Q$ et une condition de source à l'origine dans le problème simplifié, pas par un terme volumique non nul partout.
+
+### 10.2 Hypothèse 1 — régime stationnaire
+
+On suppose que les statistiques du champ et la concentration moyenne sont stationnaires :
+$$
+\partial_t C=0.
+$$
+Cela élimine le terme d'évolution temporelle, mais ne rend pas le champ de vitesse uniforme et ne supprime aucun terme spatial de diffusion. On obtient
+$$
+\nabla\!\cdot(\overline{\mathbf u}C)
+=\nabla\!\cdot(\mathbf D\nabla C).
+$$
+
+### 10.3 Hypothèse 2 — vent uniforme aligné avec l'axe du panache
+
+On pose
+$$
+\overline{\mathbf u}=(U,0,0),\qquad U>0,
+$$
+avec $U$ constant. Comme $\nabla\cdot\overline{\mathbf u}=0$, le terme advectif devient
+$$
+\nabla\!\cdot(\overline{\mathbf u}C)=U\,\partial_x C.
+$$
+Cette hypothèse exclut à ce stade les variations verticales, transversales ou longitudinales du vent, ainsi que les déviations du flux dues au relief. Elle ne doit pas être confondue avec la seule hypothèse d'incompressibilité : un champ incompressible peut être fortement non uniforme.
+
+### 10.4 Hypothèse 3 — axes principaux et diffusivités constantes
+
+Pour rendre les termes lisibles, on suppose que le tenseur effectif est diagonal dans les axes $(x,y,z)$ et constant :
+$$
+\mathbf D=\operatorname{diag}(D_x,D_y,D_z).
+$$
+L'équation stationnaire devient alors
+$$
+U\,\partial_x C
+=D_x\,\partial_{xx}C
++D_y\,\partial_{yy}C
++D_z\,\partial_{zz}C.
+$$
+Dans la notation de la dérivation gaussienne, $D_y,D_z$ sont notés $K_y,K_z$ lorsque la diffusion moléculaire est négligée devant la diffusion turbulente. Cette identification est une approximation supplémentaire, et non un changement de notation universel.
+
+### 10.5 Hypothèse 4 — approximation parabolique, diffusion longitudinale négligée
+
+On suppose que l'advection dominante vers l'aval rend la diffusion longitudinale négligeable devant le transport et la diffusion transversale :
+$$
+D_x\,\partial_{xx}C\ \text{est négligé}.
+$$
+Ce choix est l'approximation parabolique de panache. Il conduit, avec $D_y\simeq K_y$ et $D_z\simeq K_z$, à
+$$
+\boxed{
+U\frac{\partial C}{\partial x}
+=K_y\frac{\partial^2 C}{\partial y^2}
++K_z\frac{\partial^2 C}{\partial z^2}.
+}
+$$
+La boîte est **l'équation d'entrée** de la dérivation de similitude, pas l'équation générale d'advection–diffusion. Elle suppose aussi qu'il n'y a, dans cette version, ni réaction, ni dépôt, ni autre puits ou source distribuée dans la région aval.
+
+### 10.6 Ce qui reste à préciser pour obtenir la solution gaussienne
+
+L'équation parabolique seule ne fixe pas une solution unique. Il faut encore spécifier la source continue ponctuelle, les conditions transversales, le domaine vertical, les valeurs de $K_y,K_z$ et la condition au sol. La page [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli) déroule ensuite la transformation $t'=x/U$, la fonction de Green transversale, la superposition correspondant à la source continue, la normalisation et enfin la réflexion au sol.
+
+La chaîne de raisonnement complète est donc :
+**conservation → moyennage de Reynolds → fermeture gradient → stationnarité → vent uniforme aligné → tenseur diagonal constant → approximation parabolique → problème source/conditions aux limites → solution gaussienne → famille candidate de réduction.**
+
+Cette dernière étape n'établit pas que le modèle approché reste valide dans un champ non uniforme. Elle motive une famille candidate ; son erreur et son coût total doivent être mesurés. Les propriétés physiques — conservation, positivité, superposition, divergence — doivent être définies avec leurs hypothèses et vérifiées séparément. Les tests actuels ne prouvent pas ces propriétés pour le modèle historique général.
 
 ## 11. Articulation avec les autres pages : qui définit quoi ?
 
