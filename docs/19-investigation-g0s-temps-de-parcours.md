@@ -117,7 +117,7 @@ Conséquences immédiates : positivité stricte (\(b > a \Rightarrow T > 0\)), s
 | Champ | Temps calculé | Propriété illustrée |
 |---|---|---|
 | \(u \equiv U > 0\) | \(T(a,b) = (b-a)/U\) si \(b > a\), \(+\infty\) sinon | quasi-distance étendue linéaire ; cas implémenté (<code>pseudo_distance_uniforme</code>) |
-| \(u(x) = x\) sur \(]0,+\infty[\) | \(T(1,2) = \ln 2\) ; \(T(0,b) = +\infty\) | stagnation d'ordre 1 **au départ** : jamais quittée |
+| \(u(x) = x\) sur \([0,+\infty[\) | \(T(1,2) = \ln 2\) ; \(T(0,b) = +\infty\) | stagnation d'ordre 1 **au départ** : jamais quittée |
 | \(u(x) = \sqrt{x}\) sur \([0,+\infty[\) | branche mobile : \(T(0,b) = 2\sqrt{b}\) | stagnation d'ordre 1/2 : évasion en temps fini, mais flot non unique (4.6) |
 | \(u(x) = 1 - x\) sur \([0,1[\) | \(T(0,b) = -\ln(1-b) \to +\infty\) quand \(b \to 1\) | stagnation d'ordre 1 **à l'arrivée** : jamais atteinte |
 | \(u(x) = \sqrt{1-x}\) sur \([0,1]\) | \(T(0,1) = 2\) | stagnation d'ordre 1/2 à l'arrivée : atteinte en temps fini (flot unique ici) |
@@ -136,7 +136,7 @@ Ce critère tranche la question 1D de l'issue : la singularité de l'intégrande
 
 ## 5. V2 : champ uniforme et champs de cisaillement (2D, calculables à la main)
 
-**Proposition 5.1 (V2 = V1 en dimension 1).** Pour \(d = 1\), la caractéristique \(\gamma_a\) est l'intervalle lui-même : tout \(b\) se projette sur lui-même, \(b^\perp = b\), donc \(d(a,b) = T(a,b)\). Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. ∎
+**Proposition 5.1 (V2 = V1 en dimension 1).** Sous les hypothèses (H1)–(H2) de la définition 2.4 (caractéristique non dégénérée, projection bien définie), pour \(d = 1\), la caractéristique \(\gamma_a\) est l'intervalle lui-même : tout \(b\) se projette sur lui-même, \(b^\perp = b\), donc \(d(a,b) = T(a,b)\). Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. La restriction n'est pas décorative : en 1D, une source stagnante \(u(a)=0\) réduit \(\gamma_a\) à un point et fait échouer la séparation — c'est exactement ce qu'exclut (H1). ∎
 
 ### 5.2 Champ uniforme — dégénérescence transversale
 
