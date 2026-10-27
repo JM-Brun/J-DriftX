@@ -133,6 +133,7 @@ graph TD
     champ_analytique["champ_analytique.py"]::module
     experiences_uniforme["experiences/uniforme.py"]::module
     experiences_reconstruction_vent["experiences/reconstruction_vent.py"]::module
+    experiences_cas_synthetiques["experiences/cas_synthetiques.py"]::module
     fields["fields.py"]::module
     terrain["terrain.py"]::module
     trajectories["trajectories.py"]::module
@@ -188,6 +189,7 @@ graph TD
     t_figure_02["test_figure_02.py"]::test
     t_wind_field["test_wind_field_explorer.py"]::test
     t_interactif["test_interactive_wind_page.py"]::test
+    t_cas_synthetiques["test_cas_synthetiques.py"]::test
   end
   c_fcourant -->|"construit"| c_champ
   c_courant -->|"dépend de"| c_champ
@@ -245,6 +247,8 @@ graph TD
   t_graphe -->|"couvre"| graphe_connaissances
   t_extraction -->|"couvre"| extraction_graphe
   t_diagnostic -->|"couvre"| diagnostic_graphe
+  experiences_cas_synthetiques -->|"utilise"| c_panache
+  t_cas_synthetiques -->|"couvre"| experiences_cas_synthetiques
   classDef niveau fill:#ddd0f0,stroke:#495057,color:#212529;
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
   classDef propriete fill:#ffd9b3,stroke:#495057,color:#212529;
@@ -260,6 +264,7 @@ graph TD
 | champ_analytique.py | Module de code | [champ_analytique.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/champ_analytique.py) |
 | experiences/uniforme.py | Module de code | [uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/uniforme.py) |
 | experiences/reconstruction_vent.py | Module de code | [reconstruction_vent.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reconstruction_vent.py) |
+| experiences/cas_synthetiques.py | Module de code | [cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/cas_synthetiques.py) |
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
 | constraints.py | Module de code | [constraints.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/constraints.py) |
@@ -304,6 +309,7 @@ graph TD
 | test_figure_02.py | Test (CI) | [test_figure_02.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_02.py) |
 | test_wind_field_explorer.py | Test (CI) | [test_wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_wind_field_explorer.py) |
 | test_interactive_wind_page.py | Test (CI) | [test_interactive_wind_page.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_interactive_wind_page.py) |
+| test_cas_synthetiques.py | Test (CI) | [test_cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_cas_synthetiques.py) |
 | graphe_connaissances.py | Module de code | [graphe_connaissances.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/graphe_connaissances.py) |
 | extraction_graphe.py | Module de code | [src/jdriftx/extraction_graphe.py](../../src/jdriftx/extraction_graphe.py) |
 | diagnostic_graphe.py | Module de code | [src/jdriftx/diagnostic_graphe.py](../../src/jdriftx/diagnostic_graphe.py) |

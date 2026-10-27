@@ -352,6 +352,12 @@ libelle = "experiences/reconstruction_vent.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reconstruction_vent.py"
 
 [[noeuds]]
+id = "experiences/cas_synthetiques"
+type = "module"
+libelle = "experiences/cas_synthetiques.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/cas_synthetiques.py"
+
+[[noeuds]]
 id = "similitude"
 type = "module"
 libelle = "similitude.py"
@@ -550,6 +556,12 @@ id = "t-diagnostic"
 type = "test"
 libelle = "test_diagnostic_graphe.py"
 lien = "tests/test_diagnostic_graphe.py"
+
+[[noeuds]]
+id = "t-cas-synthetiques"
+type = "test"
+libelle = "test_cas_synthetiques.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_cas_synthetiques.py"
 
 # ---------- Nœuds : références (clés de site/references.bib) ----------
 
@@ -1350,6 +1362,18 @@ de = "t-diagnostic"
 vers = "diagnostic_graphe"
 relation = "couvre"
 
+# ---------- Arêtes : cas synthétiques S0 ----------
+
+[[aretes]]
+de = "experiences/cas_synthetiques"
+vers = "c-panache"
+relation = "utilise"
+
+[[aretes]]
+de = "t-cas-synthetiques"
+vers = "experiences/cas_synthetiques"
+relation = "couvre"
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1391,7 +1415,8 @@ description = "Les modules du paquet, les concepts qu'ils implémentent, les tes
 sens = "TD"
 noeuds = [
   "metric", "champ_analytique", "experiences/uniforme",
-  "experiences/reconstruction_vent", "similitude", "stabilite",
+  "experiences/reconstruction_vent", "experiences/cas_synthetiques",
+  "similitude", "stabilite",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
   "figures/figure_02", "figures/wind_field_explorer",
@@ -1403,7 +1428,8 @@ noeuds = [
   "t-metric", "t-similitude", "t-constraints", "t-champ", "t-recon",
   "t-uniforme", "t-advection", "t-fields", "t-periodic", "t-stabilite",
   "t-terrain", "t-trajectories", "t-figure-01", "t-figure-02",
-  "t-wind-field", "t-interactif", "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
+  "t-wind-field", "t-interactif", "t-cas-synthetiques",
+  "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
   "t-graphe", "t-extraction", "t-diagnostic",
 ]
 
@@ -1447,6 +1473,7 @@ noeuds = [
     "t-constraints", "t-champ", "t-recon", "t-uniforme", "t-advection",
     "t-fields", "t-periodic", "t-stabilite", "t-terrain", "t-trajectories",
     "t-figure-01", "t-figure-02", "t-wind-field", "t-interactif",
+    "t-cas-synthetiques",
   ]
 
 [[graphes]]
