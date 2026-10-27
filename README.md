@@ -70,4 +70,6 @@ La charte qualité détaillée — code orienté objet avec responsabilités sé
 
 ## Licence
 
-À définir (proposition de travail : GPLv3 pour le code, CC BY 4.0 pour la documentation).
+- **Code** (`src/`, `apps/`, `tests/`) : GNU General Public License v3 ou ultérieure — texte intégral dans [LICENSE](LICENSE).
+- **Documentation** (`site/`, `docs/`, `README.md`, `CONTRIBUTING.md`) : Creative Commons Attribution 4.0 International (CC BY 4.0) — texte intégral dans [LICENSE-docs.txt](LICENSE-docs.txt).
+- **Sources tierces** (`raw/`) : conservent les droits de leurs titulaires d'origine ; elles ne sont pas relicenciées par ce dépôt.
