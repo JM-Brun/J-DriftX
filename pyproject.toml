@@ -5,6 +5,7 @@ description = "Reprise de recherche sur les modèles de dispersion à complexit�
 readme = "README.md"
 authors = [{ name = "Jean-Marc Brun" }]
 requires-python = ">=3.12"
+license = "GPL-3.0-or-later"
 dependencies = ["numpy>=2.0"]
 keywords = [
   "atmospheric-dispersion",
@@ -16,6 +17,7 @@ keywords = [
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
   "Programming Language :: Python :: 3.12",
   "Topic :: Scientific/Engineering :: Atmospheric Science",
 ]
