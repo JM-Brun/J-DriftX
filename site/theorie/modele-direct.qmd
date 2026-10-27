@@ -170,7 +170,7 @@ La chaîne de raisonnement est la suivante :
 1. La conservation du scalaire conduit à une équation de transport si le champ, les sources et les flux sont définis.
 2. Le moyennage de Reynolds introduit un flux turbulent inconnu.
 3. Une fermeture, telle que la fermeture gradient, modélise ce flux avec un tenseur $\mathbf K$.
-4. Sous des hypothèses supplémentaires, des équations simplifiées admettent des profils de panache gaussiens caractérisés par $\sigma_y$ et $\sigma_z$.
+4. Sous les hypothèses de panache stationnaire, de vent uniforme $U>0$, de diffusivités transversales constantes $K_y,K_z$ et de diffusion longitudinale négligée, on obtient l'équation réduite $U\,\partial_x C = K_y\,\partial_{yy}C + K_z\,\partial_{zz}C$. C'est cette équation — et non l'équation générale de transport — que la page [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli) transforme en équation de diffusion via $t'=x/U$ pour dériver le profil gaussien.
 5. Les modèles empiriques de dispersion paramètrent ces largeurs pour certaines classes de conditions ; le choix de formule et son domaine de validité doivent être explicites.
 6. Drift-X/J-DriftX étudie si des solutions de similitude et une représentation géométrique des temps de transport peuvent former un modèle approché moins coûteux. Cette réduction reste une hypothèse à valider, et non une conséquence automatique des étapes précédentes.
 
