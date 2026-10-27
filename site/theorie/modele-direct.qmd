@@ -174,7 +174,7 @@ Une **analyse Monte Carlo** est une procédure numérique qui répète un calcul
 
 Si une évaluation du modèle coûte $c$ et que l'on effectue $N$ réalisations, le coût de calcul brut est de l'ordre de $Nc$, auquel s'ajoutent la préparation des données, les éventuels calculs de référence et l'analyse des résultats. Ce coût peut motiver l'étude d'un modèle réduit, mais ne prouve pas que le modèle direct soit impraticable ni que J-DriftX soit plus rapide. Une comparaison doit mesurer le coût total et l'erreur sur le même ensemble de cas, avec une baseline et un protocole définis. Les balayages paramétriques et les évaluations SIG sont d'autres usages possibles ; ils ne sont pas synonymes de Monte Carlo.
 
-## 10. Du problème générique à l'équation parabolique de panache
+## 10. Du problème générique à l'équation parabolique de panache {#derive-equation-parabolique-panache}
 
 Cette section détaille le **passage du problème général à l'équation d'entrée de la similitude**. Chaque ligne ci-dessous est une réduction supplémentaire : elle n'est pas une identité sans hypothèse. La dérivation de la famille gaussienne commence seulement après cette section, dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli).
 
