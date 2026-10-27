@@ -16,6 +16,9 @@ from collections.abc import Callable
 import numpy as np
 from numpy.typing import ArrayLike
 
+from jdriftx.similitude import concentration_panache
+from jdriftx.stabilite import ClasseStabilite
+
 
 def positivite(concentration: ArrayLike, tol: float = 1e-12) -> bool:
     """Verifie qu'un champ de concentration est positif (a tol pres)."""
@@ -28,7 +31,7 @@ def linearite(
     point: tuple[float, float, float],
     q1: float,
     q2: float,
-    **kwargs: float,
+    **kwargs: object,
 ) -> bool:
     """Verifie la superposition : modele(q1 + q2) = modele(q1) + modele(q2).
 
@@ -37,7 +40,8 @@ def linearite(
         point: triplet (x, y, z) du point d'evaluation.
         q1: premiere emission.
         q2: seconde emission.
-        **kwargs: arguments supplementaires (u, classe, hauteur...).
+        **kwargs: arguments supplementaires transmis tels quels au modele,
+            non verifies ici ; preferer "linearite_panache" pour le panache.
 
     Returns:
         True si la superposition est verifiee a precision machine pres.
@@ -47,3 +51,40 @@ def linearite(
     c2 = modele(x, y, z, q2, **kwargs)
     c12 = modele(x, y, z, q1 + q2, **kwargs)
     return bool(np.isclose(c12, c1 + c2, rtol=1e-10, atol=1e-14))
+
+
+def linearite_panache(
+    point: tuple[float, float, float],
+    q1: float,
+    q2: float,
+    *,
+    u: float,
+    classe: str | ClasseStabilite,
+    hauteur: float = 0.0,
+) -> bool:
+    """Vérifie la linéarité en débit du panache gaussien en un point.
+
+    Variante intégralement typée de "linearite" pour le cas nominal du
+    panache (audit docs/25, recommandation 1, option A) : le contrat est
+    explicite de bout en bout, sans kwargs non vérifiés.
+
+    Args:
+        point: triplet (x, y, z) du point d'evaluation.
+        q1: première émission (kg s^-1).
+        q2: seconde émission (kg s^-1).
+        u: vitesse du vent (m s^-1), strictement positive.
+        classe: classe de stabilite de Pasquill (lettre ou ClasseStabilite).
+        hauteur: hauteur effective de la source (m).
+
+    Returns:
+        True si la superposition est verifiee a precision machine pres.
+    """
+    return linearite(
+        concentration_panache,
+        point,
+        q1,
+        q2,
+        u=u,
+        classe=classe,
+        hauteur=hauteur,
+    )

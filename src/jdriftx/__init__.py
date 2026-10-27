@@ -7,7 +7,7 @@ pseudo-distance historique ni un modèle de dispersion validé.
 """
 
 from jdriftx.champ_analytique import ChampFonctionCourant, ChampPlan, SuperpositionChamps
-from jdriftx.constraints import linearite, positivite
+from jdriftx.constraints import linearite, linearite_panache, positivite
 from jdriftx.experiences import (
     ChampUniforme,
     ManifesteReconstruction,
@@ -45,6 +45,7 @@ __all__ = [
     "concentration_puff",
     "construire_manifeste",
     "linearite",
+    "linearite_panache",
     "positivite",
     "pseudo_distance_uniforme",
     "resoudre_scenario",
