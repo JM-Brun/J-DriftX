@@ -41,7 +41,7 @@ $$
 \frac{\partial C}{\partial t'} = K_y \frac{\partial^2 C}{\partial y^2} + K_z \frac{\partial^2 C}{\partial z^2},
 $$
 
-qui est l'équation de la chaleur transversale, où le rôle du temps est joué par le temps de transport. En vent uniforme, $t' = x/U$ **est** la métrique $\tau$ de Drift-X. La généralisation à un vent non uniforme — remplacer $x/U$ par $\tau$ — est précisément l'objet de la page [Métrique travel-time](metrique-travel-time.qmd), avec ses précautions (projection, pseudo-distance).
+qui est l'équation de la chaleur transversale, où le rôle du temps est joué par le temps de transport. En vent uniforme, $t'=x/U$ correspond au temps de transport aval pour un déplacement longitudinal dans ce cas idéalisé. Cette correspondance ne démontre pas que remplacer $x/U$ par un objet $\tau$ défini dans un champ non uniforme préserve l'équation de diffusion ni la solution gaussienne. Cette généralisation est précisément la question examinée dans la page [Métrique travel-time](metrique-travel-time.qmd), avec les précautions liées à la projection et à la pseudo-distance.
 
 **Étape 3 — Diffuser un point.** La fonction de Green de l'équation de diffusion pour une impulsion ponctuelle en $t' = 0$ est une gaussienne de variance croissante :
 
@@ -111,7 +111,7 @@ Les profils sont **auto-similaires** : une fois adimensionnés par les largeurs 
 
 | Hypothèse de la dérivation | Dans J-DriftX |
 |---|---|
-| Vent uniforme $U$, $t' = x/U$ | remplacé par la métrique $\tau$ ([Métrique travel-time](metrique-travel-time.qmd)) — la portée de la substitution est auditée |
+| Vent uniforme $U$, $t'=x/U$ | généralisation candidate par un temps de transport $\tau$ ([Métrique travel-time](metrique-travel-time.qmd)) — validité à établir, non garantie par la dérivation uniforme |
 | Terrain plat, sol réflecteur | terrain suivi par MNT ; déposition en extension M3 ([Limites](../hypotheses/limites.qmd)) |
 | $\sigma$ tabulés (Briggs, classes de Pasquill) | paramètres calibrés par [assimilation](assimilation-identification.qmd) de mesures partielles |
 | Diffusion longitudinale négligée ; $K_y,K_z$ constants dans la dérivation analytique | approximation nécessaire à l'équation parabolique de panache ; les $\sigma$ empiriques de l'implémentation ne constituent pas une validation de cette dérivation |
