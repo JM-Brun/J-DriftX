@@ -50,7 +50,37 @@ L'analyse de l'héritage et le panorama de l'état de l'art sont présentés dan
 
 ## Parcours de lecture
 
-Commencer par la [carte d'articulation scientifique](projet/carte-articulation.qmd), qui distingue les sources historiques, l'hypothèse mathématique, les vérifications du code, la comparaison différentielle et la validation indépendante. Le cadrage documentaire G0 est franchi, mais l'utilité applicative (G0-A) reste non démontrée. Les questions ouvertes et les travaux à suivre sont consignés dans les [issues du dépôt](https://github.com/JM-Brun/J-DriftX/issues). Les pages publiques distinguent les fondements scientifiques, les résultats vérifiables et les limites connues.
+La [carte d'articulation scientifique](projet/carte-articulation.qmd) donne la vue d'ensemble : elle distingue les sources historiques, l'hypothèse mathématique, les vérifications du code, la comparaison différentielle et la validation indépendante. Choisir ensuite le parcours adapté à la question recherchée.
+
+### Découvrir le projet
+
+1. [Héritage Drift-X](projet/heritage.qmd) — comprendre l'origine historique et ce que les travaux antérieurs établissent.
+2. [Objectifs de J-DriftX](projet/objectifs.qmd) — identifier l'hypothèse étudiée, sans la confondre avec une capacité validée.
+3. [Utilité scientifique](projet/utilite-scientifique.qmd) — comprendre les conditions nécessaires pour justifier un cas d'usage.
+
+### Suivre la dérivation physique et mathématique
+
+1. [Modèle direct](theorie/modele-direct.qmd) — partir de l'équation générale de conservation et suivre les hypothèses qui conduisent à l'équation parabolique.
+2. [Solutions de similitude](theorie/similitude.qmd) — dériver la solution gaussienne pour le problème simplifié et ses conditions aux limites.
+3. [Réduction a priori](theorie/reduction-a-priori.qmd) — examiner comment cette famille devient une représentation candidate d'un problème plus large, et ce qu'il reste à mesurer.
+
+Cette chaîne ne démontre pas que la famille candidate reste valide pour un vent non uniforme.
+
+### Comprendre le temps de transport
+
+1. [Métrique travel-time](theorie/metrique-travel-time.qmd) — distinguer le coût le long d'un chemin imposé, le temps de première arrivée et la construction historique par projection.
+2. [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) — comparer les objets mathématiques voisins sans présumer leur équivalence.
+3. [Revue mathématique](etat-art/revue-mathematique.qmd) — situer les résultats établis, les contre-exemples et les questions ouvertes.
+
+Cette chaîne est liée au modèle physique, mais ne découle pas automatiquement de la dérivation à vent uniforme.
+
+### Vérifier ce qui est réellement établi
+
+1. [Contraintes physiques](theorie/contraintes-physiques.qmd) — retrouver le statut des propriétés visées.
+2. [Qualité & tests](projet/qualite.qmd) — comprendre ce que les tests vérifient, et leurs limites.
+3. [Limites et domaines de validité](hypotheses/limites.qmd) — identifier les extrapolations qui restent à justifier.
+
+Le cadrage documentaire G0 est franchi, mais l'utilité applicative (G0-A) reste non démontrée. Les questions ouvertes et les travaux à suivre sont consignés dans les [issues du dépôt](https://github.com/JM-Brun/J-DriftX/issues).
 
 ## De l'idée au détail
 
