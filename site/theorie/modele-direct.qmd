@@ -8,6 +8,17 @@ Cette page définit le problème physique de référence avant toute réduction.
 
 Le modèle direct est ici un **problème de référence conceptuel**, pas l'affirmation que J-DriftX résout déjà cette équation générale. Le noyau actuel implémente notamment un panache/puff gaussien dans des cas limités ; il ne reconstruit pas le champ de vent multi-niveaux historique. Voir [Niveaux de modélisation](../projet/niveaux-modelisation.qmd) pour situer cette chaîne dans N0–N6, [Catalogue des hypothèses](../hypotheses/catalogue.qmd) pour les hypothèses traçables, [Contraintes physiques](contraintes-physiques.qmd) pour le statut des preuves et [Solutions de similitude](similitude.qmd) pour la dérivation du panache gaussien.
 
+## Place dans la chaîne et contrat de lecture
+
+Cette page est le **premier maillon de la chaîne physique** : elle pose le problème de référence avant toute réduction, sans l'impliquer résolu par le code.
+
+- **Prérequis :** le vocabulaire du [glossaire](../glossaire.qmd) (scalaire passif, fermeture turbulente, champ stationnaire) et la carte des [niveaux de modélisation](../projet/niveaux-modelisation.qmd) (N0–N6).
+- **Objet défini ici :** l'équation de transport, le moyennage de Reynolds, la fermeture gradient et le tenseur $\mathbf K$ — avec, à chaque étape, le statut exact : identité mathématique, hypothèse physique ou fermeture constitutive.
+- **Résultat transmis :** l'équation réduite $U\,\partial_x C = K_y\,\partial_{yy}C + K_z\,\partial_{zz}C$ et ses hypothèses, dérivées dans [Solutions de similitude](similitude.qmd) ; le statut de la famille gaussienne comme approximation candidate, dans [Réduction a priori](reduction-a-priori.qmd).
+- **Limite actuelle :** les questions de temps de transport relèvent de la chaîne géométrique, qui commence à [Métrique travel-time](metrique-travel-time.qmd) ; elles ne découlent pas du seul modèle d'advection–diffusion.
+
+Le parcours de lecture est donc : **modèle direct → similitude → réduction a priori** pour la chaîne physique ; la chaîne géométrique se lit séparément. L'articulation complète — qui définit quoi, et selon quel contrat — fait l'objet de la section « Articulation avec les autres pages » en fin de page.
+
 ## 1. Problème, variables et unités
 
 On considère un scalaire passif, par exemple un traceur ou une substance transportée par l'air, dont la concentration volumique est notée
