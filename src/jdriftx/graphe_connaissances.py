@@ -167,36 +167,59 @@ def charger(chemin: Path) -> Registre:
 def valider(registre: Registre, racine: Path) -> None:
     """Vérifie la cohérence du registre avec lui-même et avec le dépôt."""
     erreurs: list[str] = []
-    types_valides = set(registre.types)
-    relations_valides = set(registre.relations)
+    erreurs.extend(_erreurs_noeuds(registre, racine))
+    erreurs.extend(_erreurs_aretes(registre))
+    erreurs.extend(_erreurs_vues(registre))
+    erreurs.extend(_erreurs_groupes(registre))
+    erreurs.extend(_erreurs_references(registre, racine))
+    erreurs.extend(_erreurs_modules(registre, racine))
+    if erreurs:
+        raise ValueError("Registre invalide :\n- " + "\n- ".join(erreurs))
+
+
+def _erreurs_noeuds(registre: Registre, racine: Path) -> list[str]:
+    """Identifiants dupliqués, types inconnus, liens morts."""
+    resultats: list[str] = []
     identifiants = [noeud.id for noeud in registre.noeuds]
     doublons = sorted({i for i in identifiants if identifiants.count(i) > 1})
     if doublons:
-        erreurs.append(f"identifiants dupliqués : {', '.join(doublons)}")
+        resultats.append(f"identifiants dupliqués : {', '.join(doublons)}")
     for noeud in registre.noeuds:
-        if noeud.type not in types_valides:
-            erreurs.append(f"nœud {noeud.id} : type inconnu ({noeud.type})")
+        if noeud.type not in registre.types:
+            resultats.append(f"nœud {noeud.id} : type inconnu ({noeud.type})")
         if noeud.lien and not _lien_existe(noeud.lien, racine):
-            erreurs.append(f"nœud {noeud.id} : lien introuvable ({noeud.lien})")
+            resultats.append(f"nœud {noeud.id} : lien introuvable ({noeud.lien})")
+    return resultats
+
+
+def _erreurs_aretes(registre: Registre) -> list[str]:
+    """Relations inconnues et extrémités absentes du registre."""
+    resultats: list[str] = []
     for arete in registre.aretes:
-        if arete.relation not in relations_valides:
-            erreurs.append(
+        if arete.relation not in registre.relations:
+            resultats.append(
                 f"arête {arete.de} -> {arete.vers} : relation inconnue "
                 f"({arete.relation})"
             )
         if arete.de not in registre.index:
-            erreurs.append(f"arête vers {arete.vers} : origine inconnue ({arete.de})")
+            resultats.append(f"arête vers {arete.vers} : origine inconnue ({arete.de})")
         if arete.vers not in registre.index:
-            erreurs.append(f"arête depuis {arete.de} : cible inconnue ({arete.vers})")
+            resultats.append(f"arête depuis {arete.de} : cible inconnue ({arete.vers})")
+    return resultats
+
+
+def _erreurs_vues(registre: Registre) -> list[str]:
+    """Nœuds orphelins (aucune vue) et arêtes invisibles dans toutes les vues."""
+    resultats: list[str] = []
     vues = {graphe.id: set(graphe.noeuds) for graphe in registre.graphes}
-    apparitions = {identifiant: 0 for identifiant in registre.index}
+    apparitions = dict.fromkeys(registre.index, 0)
     for ensemble in vues.values():
         for identifiant in ensemble:
             if identifiant in apparitions:
                 apparitions[identifiant] += 1
     orphelins = sorted(i for i, n in apparitions.items() if n == 0)
     if orphelins:
-        erreurs.append(f"nœuds absents de toutes les vues : {', '.join(orphelins)}")
+        resultats.append(f"nœuds absents de toutes les vues : {', '.join(orphelins)}")
     rendues = sum(
         1
         for arete in registre.aretes
@@ -207,40 +230,58 @@ def valider(registre: Registre, racine: Path) -> None:
     )
     if rendues != len(registre.aretes):
         manquantes = len(registre.aretes) - rendues
-        erreurs.append(f"{manquantes} arête(s) invisible(s) dans toutes les vues")
+        resultats.append(f"{manquantes} arête(s) invisible(s) dans toutes les vues")
+    return resultats
+
+
+def _erreurs_groupes(registre: Registre) -> list[str]:
+    """Nœuds de groupe hors graphe, nœuds de vue sans groupe, sens invalide."""
+    resultats: list[str] = []
+    vues = {graphe.id: set(graphe.noeuds) for graphe in registre.graphes}
     for graphe in registre.graphes:
         ensemble = vues[graphe.id]
         declares: set[str] = set()
         for groupe in graphe.groupes:
             for identifiant in groupe.noeuds:
                 if identifiant not in ensemble:
-                    erreurs.append(
+                    resultats.append(
                         f"graphe {graphe.id} : nœud {identifiant} du groupe "
                         f"{groupe.id} hors du graphe"
                     )
                 declares.add(identifiant)
         manquants = sorted(ensemble - declares)
         if manquants:
-            erreurs.append(
+            resultats.append(
                 f"graphe {graphe.id} : nœuds absents des groupes : "
                 f"{', '.join(manquants)}"
             )
         if graphe.sens not in {"LR", "TD", "RL", "BT"}:
-            erreurs.append(f"graphe {graphe.id} : sens invalide ({graphe.sens})")
+            resultats.append(f"graphe {graphe.id} : sens invalide ({graphe.sens})")
+    return resultats
+
+
+def _erreurs_references(registre: Registre, racine: Path) -> list[str]:
+    """Correspondance exacte entre clés bib et nœuds référence."""
+    resultats: list[str] = []
     cles_bib = _cles_bib(racine / "site" / "references.bib")
     references = {n.id for n in registre.noeuds if n.type == "reference"}
     for cle in sorted(cles_bib - references):
-        erreurs.append(f"clé bib absente du registre : {cle}")
+        resultats.append(f"clé bib absente du registre : {cle}")
     for cle in sorted(references - cles_bib):
-        erreurs.append(f"référence absente de site/references.bib : {cle}")
+        resultats.append(f"référence absente de site/references.bib : {cle}")
+    return resultats
+
+
+def _erreurs_modules(registre: Registre, racine: Path) -> list[str]:
+    """Correspondance exacte entre modules du paquet et nœuds module."""
+    resultats: list[str] = []
     modules = _modules(racine / "src" / "jdriftx")
-    declares_modules = {n.id for n in registre.noeuds if n.type == "module"}
-    for module in sorted(modules - declares_modules):
-        erreurs.append(f"module absent du registre : {module}")
-    for module in sorted(declares_modules - modules):
-        erreurs.append(f"nœud module sans fichier : {module}")
-    if erreurs:
-        raise ValueError("Registre invalide :\n- " + "\n- ".join(erreurs))
+    declares = {n.id for n in registre.noeuds if n.type == "module"}
+    for module in sorted(modules - declares):
+        resultats.append(f"module absent du registre : {module}")
+    for module in sorted(declares - modules):
+        resultats.append(f"nœud module sans fichier : {module}")
+    return resultats
 
 
 def _lien_existe(lien: str, racine: Path) -> bool:
