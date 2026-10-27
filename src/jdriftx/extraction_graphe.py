@@ -14,8 +14,8 @@ import json
 import re
 import unicodedata
 from dataclasses import asdict, dataclass
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 REGEX_TITRE = re.compile(r'^title:\s*["\']?([^"\'\n]+)["\']?\s*$')
 REGEX_TITRE_MARKDOWN = re.compile(r"^#{1,6}\s+(.+?)\s*#*\s*$")
