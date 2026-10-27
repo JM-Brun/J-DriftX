@@ -8,7 +8,7 @@ Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les
 
 ## Place dans le raisonnement et contrat de lecture
 
-Cette page formalise le **temps de transport** utilisé dans l'hypothèse de généralisation des solutions de similitude. Elle ne démontre pas que la substitution d'une coordonnée uniforme $x/U$ par un temps $\\tau$ dans un champ variable conserve l'équation de dispersion ni ses propriétés.
+Cette page formalise le **temps de transport** utilisé dans l'hypothèse de généralisation des solutions de similitude. Elle ne démontre pas que la substitution d'une coordonnée uniforme $x/U$ par un temps $\tau$ dans un champ variable conserve l'équation de dispersion ni ses propriétés.
 
 - **Prérequis :** le vocabulaire de [chemin, trajectoire et caractéristique](../glossaire.qmd#chemins-lignes-et-temps-de-transport) et le cadre des [niveaux de modélisation](../projet/niveaux-modelisation.qmd).
 - **Objet défini ici :** distinguer le coût intégré le long d'une courbe, le temps de première arrivée d'une dynamique et la construction historique par projection.
