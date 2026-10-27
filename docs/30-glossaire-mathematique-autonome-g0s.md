@@ -90,10 +90,10 @@ Dans le cadre retenu par G0-S, $u:\Omega\to\mathbb R^d$ est un champ stationnair
 
 Le **temps de première arrivée** de $B$ depuis $A$ est
 $$
-T$A,B$=\inf\{t\in I_A\cap[0,+\infty[\mid X(t;A)=B\},
+$T(A,B)=\inf\{t\in I_A\cap[0,+\infty[\mid X(t;A)=B\},
 \qquad \inf\varnothing=+\infty.
 $$
-Autrement dit, c'est le premier temps non négatif où la trajectoire issue de $A$ atteint $B$, si elle l'atteint pendant son existence. Le temps $t=0$ est admis : ainsi $T(A,A)=0$. Le **temps de retour** en $A$, lui, désigne généralement le premier temps strictement positif où une trajectoire revient en (A), s'il existe ; il s'agit d'une autre quantité.
+Autrement dit, c'est le premier temps non négatif où la trajectoire issue de $A$ atteint $B$, si elle l'atteint pendant son existence. Le temps $t=0$ est admis : ainsi $T(A,A)=0$. Le **temps de retour** en $A$, lui, désigne généralement le premier temps strictement positif où une trajectoire revient en $A$, s'il existe ; il s'agit d'une autre quantité.
 
 Pourquoi définir l'ensemble sur $I_A$ ? Parce qu'une solution ne peut être évaluée après la fin de son intervalle maximal. Écrire simplement $t\geq0$ sans cette restriction masque cette condition d'existence.
 
@@ -117,7 +117,7 @@ tandis que $b<a$ n'est pas atteint dans le temps positif et $T(a,b)=+\infty$ sel
 
 ## 6. Orbite périodique et asymétrie
 
-Une trajectoire $X(t;A)$ est **périodique** s'il existe $p>0$ tel que $X(t+p;A)=X(t;A)$ pour tout temps où l'expression est définie. La **période minimale** est le plus petit (p>0) satisfaisant cette propriété, lorsqu'il existe. L'orbite géométrique est l'ensemble des points parcourus par cette trajectoire.
+Une trajectoire $X(t;A)$ est **périodique** s'il existe $p>0$ tel que $X(t+p;A)=X(t;A)$ pour tout temps où l'expression est définie. La **période minimale** est le plus petit $p>0$ satisfaisant cette propriété, lorsqu'il existe. L'orbite géométrique est l'ensemble des points parcourus par cette trajectoire.
 
 Exemple : le champ stationnaire
 $$
