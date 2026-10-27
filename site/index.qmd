@@ -6,7 +6,7 @@ title: "J-DriftX — dispersion atmosphérique à complexité réduite"
 
 **J-DriftX** est un projet de recherche open source sur la **dispersion atmosphérique de scalaires passifs** à très faible coût de calcul. Il est la reprise et la modernisation du projet **Drift-X** développé entre 2006 et 2009 par J.-M. Brun et B. Mohammadi (Cemagref/ITAP et I3M, Montpellier) [@bozon2009driftx; @mohammadi2009gis].
 
-![Schéma de principe : panache gaussien généralisé dans la métrique des temps de transport τ, avec évaluation ponctuelle sans maillage.](images/panache-travel-time.svg)
+![Illustration conceptuelle de l'hypothèse étudiée : panache gaussien évalué à partir d'une coordonnée candidate de temps de transport τ, sans que cette généralisation soit encore validée.](images/panache-travel-time.svg)
 
 > **Statut scientifique :** hypothèse de recherche en phase de cadrage et de validation. Les propriétés présentées ci-dessous sont des **objectifs de conception**, pas des capacités validées ; le README du dépôt consigne l'état réel de l'implémentation. Voir le [positionnement](etat-art/positionnement.qmd) et la [carte d'articulation](projet/carte-articulation.qmd).
 
@@ -38,7 +38,7 @@ L'assimilation de données partielles identifie les paramètres ; l'analyse de s
 
 :::
 
-![Du rang de vigne au bassin versant : champ proche (parcelle) et champ lointain (bassin 400 km²) couplés par la même métrique τ ; multi-niveaux emboîtés et chaîne de traitement SIG.](images/projet-jdriftx.svg)
+![Schéma de l'architecture applicative historique visée : du champ proche au champ lointain, avec hypothèses de couplage multi-niveaux et chaîne de traitement SIG à reconstruire et valider.](images/projet-jdriftx.svg)
 
 ## Pourquoi maintenant ?
 
