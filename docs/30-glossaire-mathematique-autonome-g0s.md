@@ -28,11 +28,11 @@ Le tableau explicite les recouvrements : chaque notion reprend les axiomes indiq
 
 | Notion | Valeurs | Non-négativité | Diagonale nulle | Séparation | Symétrie | Triangle | Commentaire |
 |---|---|---:|---:|---:|---:|---:|---|
-| **Métrique** | $[0,+\\infty[$ | Oui | Oui | Oui | Oui | Oui | Notion de référence ; tous les axiomes sont requis. |
-| **Pseudo-métrique** | $[0,+\\infty[$ | Oui | Oui | **Non** | Oui | Oui | Peut attribuer une distance nulle à deux points distincts. |
-| **Quasi-métrique dirigée** | $[0,+\\infty[$ | Oui | Oui | Oui selon la convention stricte | **Non** | Oui, dans le sens dirigé | Le terme est polysémique ; vérifier la définition de chaque source. |
-| **Quasi-distance étendue dirigée (V1 ici)** | $[0,+\\infty]$ | Oui | Oui | Oui dans le cadre retenu | **Non exigée** | Oui, dans le sens dirigé | Autorise $+\\infty$ pour une cible non atteinte. |
-| **V2 après projection** | $[0,+\\infty]$ selon la convention | Oui si le temps projeté est défini | Oui si la projection de $A$ est bien définie | **Pas garantie en 2D** | Pas garantie | Pas garantie en général | Construction particulière, pas une classe métrique standard. |
+| **Métrique** | $[0,+\infty[$ | Oui | Oui | Oui | Oui | Oui | Notion de référence ; tous les axiomes sont requis. |
+| **Pseudo-métrique** | $[0,+\infty[$ | Oui | Oui | **Non** | Oui | Oui | Peut attribuer une distance nulle à deux points distincts. |
+| **Quasi-métrique dirigée** | $[0,+\infty[$ | Oui | Oui | Oui selon la convention stricte | **Non** | Oui, dans le sens dirigé | Le terme est polysémique ; vérifier la définition de chaque source. |
+| **Quasi-distance étendue dirigée (V1 ici)** | $[0,+\infty]$ | Oui | Oui | Oui dans le cadre retenu | **Non exigée** | Oui, dans le sens dirigé | Autorise $+\infty$ pour une cible non atteinte. |
+| **V2 après projection** | $[0,+\infty]$ selon la convention | Oui si le temps projeté est défini | Oui si la projection de $A$ est bien définie | **Pas garantie en 2D** | Pas garantie | Pas garantie en général | Construction particulière, pas une classe métrique standard. |
 
 La pseudo-métrique abandonne précisément l’axiome de séparation. Une quasi-distance dirigée abandonne la symétrie, et la version étendue autorise en plus la valeur infinie. V2 peut perdre la séparation parce que la projection ignore un décalage transversal.
 
