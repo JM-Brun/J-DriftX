@@ -4,6 +4,8 @@
 
 **Note de portée ajoutée le 27 octobre 2026 :** l'investigation distingue désormais explicitement le cadre de base (champ stationnaire \(C^1\) sur un ouvert) des extensions unidimensionnelles de la section 4, qui incluent des champs non lipschitziens et des endpoints. Les résultats d'une extension ne doivent pas être présentés comme s'ils satisfaisaient automatiquement les hypothèses du cadre de base. La matrice décrit les hypothèses propres à chaque résultat.
 
+**Référentiel de définitions public :** le [glossaire mathématique autonome G0-S](30-glossaire-mathematique-autonome-g0s.md) définit les axiomes de distance et leurs variantes, les hypothèses de Lipschitz, le temps de première arrivée, les composantes connexes sans stagnation et les orbites périodiques. La présente matrice renvoie à ce glossaire et à l'[investigation G0-S](19-investigation-g0s-temps-de-parcours.md) pour relier chaque propriété à ses preuves et contre-exemples.
+
 ## Statuts utilisés
 
 - **Démontré analytiquement** : une dérivation ou une preuve explicite est donnée sous des hypothèses précisées.
