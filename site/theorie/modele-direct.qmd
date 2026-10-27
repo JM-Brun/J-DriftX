@@ -232,10 +232,20 @@ Dans la notation de la dérivation gaussienne, $D_y,D_z$ sont notés $K_y,K_z$ l
 
 ### 10.5 Hypothèse 4 — approximation parabolique, diffusion longitudinale négligée
 
-On suppose que l'advection dominante vers l'aval rend la diffusion longitudinale négligeable devant le transport et la diffusion transversale :
-$$
+On suppose que l'advection dominante vers l'aval rend la diffusion longitudinale négligeable devant les termes conservés :
+$
 D_x\,\partial_{xx}C\ \text{est négligé}.
-$$
+$
+
+**Critère d'échelle.** Si $L_x$ est l'échelle de variation longitudinale, le rapport entre diffusion longitudinale et advection est de l'ordre de
+$
+\frac{D_x C/L_x^2}{U C/L_x}
+=\frac{D_x}{U L_x}
+=\mathrm{Pe}_x^{-1},
+\qquad \mathrm{Pe}_x:=\frac{U L_x}{D_x}.
+$
+Un grand nombre de Péclet longitudinal ($\mathrm{Pe}_x\gg1$) justifie que cette diffusion soit petite devant l'advection. Pour la négliger dans une équation qui conserve explicitement la diffusion transversale, il faut aussi vérifier que le terme longitudinal est petit devant les termes transversaux pertinents à l'échelle considérée, par exemple en comparant $D_x/L_x^2$ à $K_y/L_y^2$ et $K_z/L_z^2$. Ces comparaisons sont des critères d'ordre de grandeur, pas une preuve uniforme de validité près de la source, aux frontières ou là où les gradients changent d'échelle.
+
 Ce choix est l'approximation parabolique de panache. Il conduit, avec $D_y\simeq K_y$ et $D_z\simeq K_z$, à
 $$
 \boxed{
