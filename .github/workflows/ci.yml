@@ -65,3 +65,14 @@ jobs:
             echo "::error title=pytest (exit $code)::$(tail -n 80 pytest-output.txt | tr '\n' ' ' | head -c 2500)"
             exit 1
           fi
+
+      - name: Générer le diagnostic de rapprochement du graphe
+        run: uv run python -m jdriftx.diagnostic_graphe --sortie diagnostic-graphe.json
+
+      - name: Archiver le diagnostic de rapprochement
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostic-graphe-${{ github.sha }}
+          path: diagnostic-graphe.json
+          if-no-files-found: error
+          retention-days: 14
