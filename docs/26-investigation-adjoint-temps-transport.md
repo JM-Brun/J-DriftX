@@ -411,6 +411,12 @@ reconsidérer si cette primitive sert un jour d'oracle de comparaison.
 - Les différences finies valident l'implémentation aux points testés
   contre les formules fermées ; la preuve générale est la dérivation de la
   section 3.2, pas les tests.
+- Les entrées générées de `tests/test_proprietes.py` (hypothesis) étendent
+  l'identité tau = lambda . d et l'homogénéité en le vent à des
+  configurations aval aléatoires, évaluées à travers les objets
+  `ScenarioUniforme` de l'expérience champ uniforme ; elles élargissent la
+  couverture des points testés, pas la nature de la preuve — la dérivation
+  de la section 3.2 reste la référence.
 
 ## 9. Lien avec la feuille de route
 
