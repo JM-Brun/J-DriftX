@@ -11,6 +11,7 @@ Choisir un ou plusieurs modes : revue de sources · formulation mathématique ·
 ## Chaîne de preuve
 
 - [ ] Les affirmations nouvelles/modifiées sont sourcées ou identifiées comme hypothèses.
+- [ ] Les pages publiques citent des sources accessibles et ne renvoient pas les lecteurs vers le Wiki privé.
 - [ ] Les hypothèses, domaines de validité, unités, cas limites et incertitudes sont explicités lorsque pertinents.
 - [ ] Les différences définition–code–tests–résultats sont reliées ou signalées.
 - [ ] Les tests précisent ce qu'ils établissent et sous quelles hypothèses.
