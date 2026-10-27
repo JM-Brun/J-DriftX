@@ -39,6 +39,31 @@ def _parse_page(path: Path) -> _PageParser:
     return parser
 
 
+def _local_url_path(raw_url: str, site_url: str) -> str | None:
+    """Return a same-site path, or None for external and non-HTTP URLs."""
+    parsed = urlsplit(raw_url)
+    site = urlsplit(site_url)
+    if parsed.scheme and parsed.scheme.lower() not in {"http", "https"}:
+        return None
+
+    target_path = unquote(parsed.path)
+    base_path = site.path.rstrip("/")
+    if parsed.netloc:
+        if parsed.netloc.lower() != site.netloc.lower():
+            return None
+        if not base_path or not (
+            target_path == base_path or target_path.startswith(base_path + "/")
+        ):
+            return None
+        return target_path[len(base_path) :]
+
+    if target_path.startswith("/") and base_path and (
+        target_path == base_path or target_path.startswith(base_path + "/")
+    ):
+        return target_path[len(base_path) :]
+    return target_path
+
+
 def _resolve_target(
     raw_url: str,
     source: Path,
@@ -46,28 +71,10 @@ def _resolve_target(
     site_url: str,
 ) -> tuple[Path | None, str]:
     """Resolve a local URL to a rendered file and return its decoded fragment."""
-    parsed = urlsplit(raw_url)
-    site = urlsplit(site_url)
-    fragment = unquote(parsed.fragment)
-
-    if parsed.scheme and parsed.scheme.lower() not in {"http", "https"}:
+    fragment = unquote(urlsplit(raw_url).fragment)
+    target_path = _local_url_path(raw_url, site_url)
+    if target_path is None:
         return None, fragment
-    if parsed.netloc:
-        if parsed.netloc.lower() != site.netloc.lower():
-            return None, fragment
-        target_path = unquote(parsed.path)
-        base_path = site.path.rstrip("/")
-        if base_path and (target_path == base_path or target_path.startswith(base_path + "/")):
-            target_path = target_path[len(base_path) :]
-        else:
-            return None, fragment
-    else:
-        target_path = unquote(parsed.path)
-        base_path = site.path.rstrip("/")
-        if target_path.startswith("/") and base_path and (
-            target_path == base_path or target_path.startswith(base_path + "/")
-        ):
-            target_path = target_path[len(base_path) :]
 
     if not target_path:
         target = source
@@ -86,10 +93,9 @@ def _resolve_target(
     if not target.suffix:
         candidates.extend((target.with_suffix(".html"), target / "index.html"))
     for candidate in candidates:
-        if candidate.is_dir():
-            candidate = candidate / "index.html"
-        if candidate.is_file():
-            return candidate, fragment
+        resolved_candidate = candidate / "index.html" if candidate.is_dir() else candidate
+        if resolved_candidate.is_file():
+            return resolved_candidate, fragment
     return target, fragment
 
 
