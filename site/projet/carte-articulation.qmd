@@ -69,9 +69,20 @@ Le chemin comporte plusieurs niveaux ; il faut conserver leur ordre, car chaque 
 
 **Point de jonction :** la transformation $x/U$ est justifiée dans le cadre du vent uniforme considéré par la chaîne physique. L'utiliser comme un temps $\tau$ dans un champ variable est une nouvelle construction à dériver, pas une conséquence automatique de la chaîne géométrique.
 
+### Chaîne numérique et reproductibilité
+
+Ce parcours vérifie ce que l'implémentation fait dans des cas contrôlés ; il ne remplace pas la preuve analytique ni la validation sur des observations indépendantes.
+
+1. [**Catalogue du laboratoire numérique**](laboratoire-interactif.qmd) : choisir le cas de référence, lire les hypothèses, puis utiliser les commandes indiquées pour reproduire l'expérience localement.
+2. [**Qualité & tests**](qualite.qmd) et [**tests automatisés du dépôt**](https://github.com/JM-Brun/J-DriftX/tree/main/tests) : relier les propriétés annoncées aux tests, aux tolérances et aux limites de leur couverture.
+3. [**Instrument de mesure du coût**](https://github.com/JM-Brun/J-DriftX/blob/main/benchmarks/README.md) : reproduire les mesures existantes. La construction de la métrique et la recalibration restent non couvertes ; le squelette ne démontre aucun gain face à un solveur EDP/CFD.
+4. [**Validation scientifique**](validation-scientifique.qmd) et [**catalogue de données candidates**](catalogue-donnees.qmd) : identifier les baselines et références indépendantes nécessaires à une évaluation applicative.
+
+**Limite de conclusion :** une CI verte établit que les contrôles automatisés configurés ont réussi sur le commit concerné. Elle ne prouve ni l'exactitude générale du modèle, ni un gain prédictif, ni l'utilité pour une décision réelle.
+
 ### Vérification et décision
 
-Enfin, consulter le [laboratoire interactif](laboratoire-interactif.qmd) et [Qualité & tests](qualite.qmd) pour distinguer les comportements vérifiés des propriétés générales ; puis les [questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues) pour décider de la suite à partir des preuves disponibles.
+Après les contrôles reproductibles, consulter les [questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues) et les issues ciblées sur le [besoin applicatif G0-A](https://github.com/JM-Brun/J-DriftX/issues/43) et les [benchmarks de référence](https://github.com/JM-Brun/J-DriftX/issues/17). La décision de poursuivre doit dépendre des preuves disponibles, pas de la seule faisabilité technique.
 
 ## Suivi des travaux
 
