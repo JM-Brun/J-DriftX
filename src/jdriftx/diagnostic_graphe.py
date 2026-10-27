@@ -13,7 +13,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from jdriftx.extraction_graphe import FaitExtrait, extraire_faits
+from jdriftx.extraction_graphe import extraire_faits
 from jdriftx.graphe_connaissances import charger
 
 KINDS_FICHIER = {"python_module", "test_file", "quarto_page"}
@@ -113,7 +113,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(contenu, end="")
     else:
         arguments.sortie.parent.mkdir(parents=True, exist_ok=True)
-        arguments.sortie.write_text(contenu, encoding="utf-8", newline="\\n")
+        arguments.sortie.write_text(contenu, encoding="utf-8", newline="\n")
     return 0
 
 
