@@ -18,7 +18,7 @@ On remplace le modèle direct $p \mapsto V(p)$ (calcul complet de l'état) par u
 
 $$
 V(p) \;\longrightarrow\; v(p), \qquad v \in S(\text{similitude}), \qquad \text{coût}(v) \;\stackrel{?}{\ll}\; \text{coût}(V).
-$
+$$
 
 L'inégalité de coût est un **objectif à mesurer**, non un résultat établi : elle doit inclure le calcul de $\tau$, les données, la calibration et les évaluations de référence nécessaires.
 
