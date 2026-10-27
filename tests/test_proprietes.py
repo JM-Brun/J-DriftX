@@ -11,7 +11,6 @@ propriétés ne constitue une validation physique.
 import math
 
 import pytest
-
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
