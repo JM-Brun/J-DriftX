@@ -20,6 +20,7 @@ def test_check_site_links_accepts_existing_files_and_fragments(tmp_path: Path) -
     (root / "guide").mkdir(parents=True)
     (root / "assets").mkdir()
     (root / "index.html").write_text(
+        '<div id="top"></div>'
         '<a href="guide/page.html#details">Guide</a>'
         '<a href="#top">Top</a>'
         '<img src="assets/figure.svg">'
