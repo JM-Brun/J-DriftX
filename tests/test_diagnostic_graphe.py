@@ -29,6 +29,10 @@ def _depot_minimal(racine: Path) -> Path:
         '---\ntitle: "Modèle"\n---\n# Hypothèses\n', encoding="utf-8"
     )
     (racine / "site/theorie/orphelin.qmd").write_text("# Page non référencée\n", encoding="utf-8")
+    (racine / "site/_extensions/live").mkdir(parents=True)
+    (racine / "site/_extensions/live/_knitr.qmd").write_text(
+        '---\\ntitle: "Extension interne"\\n---\\n', encoding="utf-8"
+    )
     (racine / "site/references.bib").write_text(
         "@article{demo,\n title = {Démo},\n}\n", encoding="utf-8"
     )
@@ -66,6 +70,12 @@ id = "test-noyau"
 type = "test"
 libelle = "Test noyau"
 lien = "tests/test_noyau.py"
+
+[[noeuds]]
+id = "helper-extension"
+type = "concept"
+libelle = "Extension interne"
+lien = "site/_extensions/live/_knitr.qmd"
 
 [[noeuds]]
 id = "page-perimee"

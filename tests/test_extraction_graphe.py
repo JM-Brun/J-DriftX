@@ -45,6 +45,11 @@ def _depot_minimal(racine: Path) -> Path:
         "# Page sans titre\nTexte simple.\n",
         encoding="utf-8",
     )
+    (racine / "site/_extensions/live").mkdir(parents=True)
+    (racine / "site/_extensions/live/_knitr.qmd").write_text(
+        '---\ntitle: "Extension interne"\n---\n# Ne pas indexer\n[@ExtensionInterne]\n',
+        encoding="utf-8",
+    )
     return racine
 
 
@@ -80,6 +85,8 @@ def test_extrait_pages_titres_citations_et_liens(tmp_path: Path) -> None:
     lien = par_id["markdown_link:site/theorie/modele.qmd:5:16"]
     assert lien.label == "documentée -> ../references.qmd"
     assert par_id["quarto_page:site/sans-titre.qmd"].label == "sans-titre"
+    assert "quarto_page:site/_extensions/live/_knitr.qmd" not in par_id
+    assert not any(fait.path == "site/_extensions/live/_knitr.qmd" for fait in faits)
     assert "citation:site/theorie/modele.qmd:9:FausseCle" not in par_id
     assert all(fait.label != "Fausse section" for fait in faits)
     assert all(fait.origin_kind == "extracted" for fait in faits)
@@ -130,3 +137,4 @@ def test_extraction_reelle_reproductible_et_reliee_au_graphe() -> None:
     assert "test_file:tests/test_graphe_connaissances.py" in identifiants
     assert "test_file:tests/test_extraction_graphe.py" in identifiants
     assert "quarto_page:site/projet/carte-connaissances.qmd" in identifiants
+    assert "quarto_page:site/_extensions/live/_knitr.qmd" not in identifiants
