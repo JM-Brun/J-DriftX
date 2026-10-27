@@ -43,15 +43,19 @@
 <!-- panel 4 -->
 <rect x="730" y="470" width="675" height="300" rx="14" fill="white" stroke="#9ac8a8" stroke-width="2"/>
 <text x="755" y="507" font-family="sans-serif" font-size="22" font-weight="700" fill="#21834a">4. Projection : perte de séparation en 2D</text>
-<line x1="780" y1="625" x2="1030" y2="625" stroke="#647b8e" stroke-width="2" marker-end="url(#arrow)"/>
-<circle cx="805" cy="625" r="6" fill="#2f9e44"/><circle cx="1000" cy="625" r="6" fill="#c43d3d"/>
-<text x="795" y="650" font-family="sans-serif" font-size="16" fill="#17324d">B</text><text x="990" y="650" font-family="sans-serif" font-size="16" fill="#17324d">C</text>
-<text x="780" y="562" font-family="sans-serif" font-size="18" font-weight="700" fill="#21834a">Champ constant : u = (1,0)</text><text x="780" y="586" font-family="sans-serif" font-size="15" fill="#40576b">Projection sur la caractéristique</text>
-<text x="1070" y="562" font-family="sans-serif" font-size="18" font-weight="700" fill="#21834a">Points distincts B et C</text>
-<line x1="1090" y1="680" x2="1360" y2="680" stroke="#647b8e" stroke-width="1.5"/><line x1="1110" y1="710" x2="1110" y2="585" stroke="#647b8e" stroke-width="1.5"/>
-<g stroke="#21834a" stroke-width="2" marker-end="url(#arrow)"><line x1="1130" y1="655" x2="1165" y2="638"/><line x1="1180" y1="655" x2="1215" y2="638"/><line x1="1230" y1="655" x2="1265" y2="638"/><line x1="1280" y1="655" x2="1315" y2="638"/><line x1="1130" y1="615" x2="1165" y2="598"/><line x1="1180" y1="615" x2="1215" y2="598"/><line x1="1230" y1="615" x2="1265" y2="598"/><line x1="1280" y1="615" x2="1315" y2="598"/></g>
-<text x="755" y="710" font-family="sans-serif" font-size="15" fill="#40576b">B=(2,1) et C=(2,−1) ont la même projection sur la droite y=1.</text><text x="755" y="735" font-family="sans-serif" font-size="15" fill="#40576b">Donc V2(B,C)=0 alors que B ≠ C : la séparation échoue.</text>
-<rect x="35" y="795" width="1370" height="105" rx="12" fill="#e5f3fb" stroke="#9ac8a8" stroke-width="1.5"/>
+<text x="770" y="545" font-family="sans-serif" font-size="17" font-weight="700" fill="#21834a">Champ u = (1,0) : les caractéristiques sont horizontales</text>
+<line x1="790" y1="600" x2="1350" y2="600" stroke="#21834a" stroke-width="2" marker-end="url(#arrow)"/>
+<line x1="790" y1="680" x2="1350" y2="680" stroke="#21834a" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="795" y="590" font-family="sans-serif" font-size="14" fill="#40576b">y = 1</text>
+<text x="795" y="670" font-family="sans-serif" font-size="14" fill="#40576b">y = −1</text>
+<line x1="1110" y1="612" x2="1110" y2="668" stroke="#c43d3d" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#redarrow)"/>
+<circle cx="1110" cy="600" r="7" fill="#21834a"/>
+<circle cx="1110" cy="680" r="7" fill="#c43d3d"/>
+<text x="1125" y="595" font-family="sans-serif" font-size="16" fill="#21834a">B = (2,1)</text>
+<text x="1125" y="702" font-family="sans-serif" font-size="16" fill="#c43d3d">C = (2,−1)</text>
+<text x="755" y="730" font-family="sans-serif" font-size="15" fill="#40576b">La projection de C sur la caractéristique y=1 passant par B est B.</text>
+<text x="755" y="752" font-family="sans-serif" font-size="15" font-weight="700" fill="#14532d">Donc V2(B,C)=0 malgré B ≠ C : la séparation échoue.</text>
+<rect x="35" y="795" width="1370" height="105" rx="12" fill="#eaf6ec" stroke="#9ac8a8" stroke-width="1.5"/>
 <text x="60" y="831" font-family="sans-serif" font-size="19" font-weight="700" fill="#21834a">À retenir</text>
 <text x="60" y="860" font-family="sans-serif" font-size="16" fill="#17324d">Exemples illustratifs, non preuves. V1/V2 gardent leurs hypothèses ; aucun solveur général de champ variable n’est revendiqué.</text>
 </svg>
