@@ -135,7 +135,25 @@ Une métrique usuelle est finie et satisfait notamment séparation, symétrie et
 
 La conservation de masse ne découle pas de la seule définition de $\tau$. L’article de 2006 formule une contrainte globale $\int_{\mathbb R^3}c\,dV=Q$; le chapitre de 2008 définit $C=\int_{\mathbb R^2}c^+(x,y)\,d\sigma$ comme la quantité totale transportée que le modèle réduit doit conserver. Dans les passages vérifiés, ces contraintes ne sont pas accompagnées d’une preuve générale selon laquelle le flux intégré sur toute surface iso-$\tau$ vaut exactement $Q$. Il faut distinguer cette revendication plus forte du résultat conditionnel obtenu par le théorème de la divergence pour le débit volumique à travers deux sections d’un même tube de courant. Pour le flux du scalaire $c$, le bilan doit inclure sources/puits, conditions aux limites et tous les termes physiques retenus.
 
-### 3.4.1 Résultat conditionnel démontrable par le théorème de la divergence
+### 3.4.1 Test analytique de l'équation locale de temps de transport
+
+Une fonction de temps d'arrivée régulière $\tau$ le long d'un flot stationnaire satisfait localement $\mathbf u\cdot\nabla\tau=1$ là où elle est bien définie, différentiable et où les trajectoires restent dans le domaine. Cette équation ne doit pas être supposée vraie pour la pseudo-distance projetée historique $d_A(B)=T(A,B^\perp)$.
+
+Considérons le champ de cisaillement lisse $\mathbf u(x,y)=(v(y),0)$ avec $v(y)>0$, et la source $A=(x_A,y_A)$. Les caractéristiques sont horizontales et la projection de $B=(x,y)$ sur la caractéristique de $A$ vaut $B^\perp=(x,y_A)$. Pour une cible aval, la définition historique donne
+
+$
+d_A(x,y)=\frac{x-x_A}{v(y_A)}.
+$
+
+Par dérivation directe, $\nabla d_A=(1/v(y_A),0)$, donc
+
+$
+\mathbf u(x,y)\cdot\nabla d_A=\frac{v(y)}{v(y_A)}.
+$
+
+Ce résultat diffère de $1$ dès que $v(y)\ne v(y_A)$. Il vaut $1$ sur la caractéristique source, mais pas globalement sur le domaine. Ainsi, même pour un champ $C^1$, stationnaire, positif et de divergence nulle, la pseudo-distance projetée par paires n'est pas généralement un champ de temps d'arrivée satisfaisant l'équation locale $\mathbf u\cdot\nabla d_A=1$. Cela ne réfute pas toute construction historique de concentration, mais interdit de justifier la généralisation par la seule identité de temps de parcours. Il faut dériver séparément le modèle de concentration et ses contraintes.
+
+## 3.4.2 Résultat conditionnel démontrable par le théorème de la divergence
 
 On peut établir une conservation de flux entre deux sections transverses d'un même tube de courant sans supposer d'emblée une formule particulière pour le jacobien. Soit \(V\) le volume borné par deux sections \(S_1\) et \(S_2\), et par une surface latérale \(\Sigma\) formée de lignes de courant. Si le champ \(\mathbf u\) est suffisamment régulier dans \(V\), si \(\nabla\cdot\mathbf u=0\), et si aucune singularité ou ouverture supplémentaire n'intersecte la frontière, le théorème de la divergence donne
 
