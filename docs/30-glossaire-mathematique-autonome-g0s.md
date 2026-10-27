@@ -36,9 +36,6 @@ Le tableau explicite les recouvrements : chaque notion reprend les axiomes indiq
 
 La pseudo-métrique abandonne précisément l’axiome de séparation. Une quasi-distance dirigée abandonne la symétrie, et la version étendue autorise en plus la valeur infinie. V2 peut perdre la séparation parce que la projection ignore un décalage transversal.
 
-- Une **pseudo-métrique** vérifie la non-négativité, la diagonale nulle, la symétrie et l'inégalité triangulaire, mais la séparation peut échouer : deux points distincts peuvent être à distance nulle.
-- Une **quasi-métrique dirigée** (convention de terminologie variable selon les sources) autorise l'échec de la symétrie. Selon la convention, la séparation et l'inégalité triangulaire restent exigées.
-- Une **quasi-distance étendue dirigée**, au sens utilisé ici pour V1, prend ses valeurs dans $[0,+\infty]$ et vérifie la diagonale nulle, la non-négativité, la séparation et l'inégalité triangulaire dirigée. Elle peut valoir $+\infty$ lorsque la cible n'est pas atteinte et elle n'est pas nécessairement symétrique. Ce n'est donc pas une métrique au sens strict.
 
 Pour V1, la convention $T(A,B)=+\infty$ en l'absence d'arrivée est utile pour représenter l'inaccessibilité dans le sens du flot. Elle doit toutefois être distinguée d'une non-existence de la trajectoire dans le domaine : ce dernier cas relève du temps maximal de solution et des conventions de sortie de domaine.
 
