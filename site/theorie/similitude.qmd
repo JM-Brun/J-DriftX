@@ -40,19 +40,31 @@ $$
 
 où $K_y, K_z$ sont les diffusivités turbulentes transversales.
 
-**Étape 2 — Reconnaître une équation de diffusion « datée ».** Posons
+**Étape 2 — Transformer la coordonnée longitudinale en temps de transport.** Dans ce cas seulement, le vent longitudinal $U$ est une constante strictement positive. Posons
 
-$$
-t' = \frac{x}{U}
-$$
+$
+t' = \frac{x}{U}, \qquad \widetilde C(t',y,z)=C(Ut',y,z).
+$
 
-le **temps de transport** depuis la source. L'équation s'écrit alors
+Par la règle de dérivation en chaîne, $\partial_x C=(\partial t'/\partial x)\,\partial_{t'}\widetilde C=(1/U)\,\partial_{t'}\widetilde C$. L'équation réduite de l'étape 1 devient donc
 
-$$
-\frac{\partial C}{\partial t'} = K_y \frac{\partial^2 C}{\partial y^2} + K_z \frac{\partial^2 C}{\partial z^2},
-$$
+$
+\frac{\partial \widetilde C}{\partial t'} =
+K_y \frac{\partial^2 \widetilde C}{\partial y^2}
++ K_z \frac{\partial^2 \widetilde C}{\partial z^2}.
+$
 
-qui est l'équation de la chaleur transversale, où le rôle du temps est joué par le temps de transport. En vent uniforme, $t'=x/U$ correspond au temps de transport aval pour un déplacement longitudinal dans ce cas idéalisé. Cette correspondance ne démontre pas que remplacer $x/U$ par un objet $\tau$ défini dans un champ non uniforme préserve l'équation de diffusion ni la solution gaussienne. Cette généralisation est précisément la question examinée dans la page [Métrique travel-time](metrique-travel-time.qmd), avec les précautions liées à la projection et à la pseudo-distance.
+C'est l'équation de la chaleur transversale : dans ce modèle parabolique, la distance aval $x$ paramètre l'évolution comme le ferait un temps $t'$. L'équivalence repose simultanément sur $U$ constant, l'absence de diffusion longitudinale et des diffusivités transversales indépendantes de $x$ dans la dérivation présentée. Elle n'affirme pas que le temps physique d'une particule quelconque soit toujours $x/U$.
+
+**Pourquoi le remplacement par un temps $\tau$ variable n'est pas une substitution formelle.** Si l'on définit une coordonnée $\tau=\tau(x,y,z)$ et écrit $C(x,y,z)=F(\tau(x,y,z),y,z)$, la règle en chaîne donne
+
+$
+\partial_x C=F_\tau\,\partial_x\tau, \qquad
+\partial_{yy}C=F_{yy}+2F_{y\tau}\,\partial_y\tau
++F_{\tau\tau}(\partial_y\tau)^2+F_\tau\,\partial_{yy}\tau.
+$
+
+Les dérivées supplémentaires apparaissent dès que $\tau$ varie transversalement ; même si $\partial_y\tau=0$, le coefficient de l'advection dépend de $\partial_x\tau$ et doit être compatible avec le champ. Il faut donc dériver l'équation transformée, préciser les hypothèses sur $\tau$ et les conditions aux limites, puis vérifier la forme de la solution et les propriétés de conservation. Une coordonnée définie par projection, comme la construction historique discutée dans [Métrique travel-time](metrique-travel-time.qmd), ne satisfait pas automatiquement ces conditions. Cette page fournit la dérivation uniforme de référence ; la page géométrique étudie séparément les candidats à sa généralisation.
 
 **Étape 3 — Diffuser un point.** La fonction de Green de l'équation de diffusion pour une impulsion ponctuelle en $t' = 0$ est une gaussienne de variance croissante :
 
