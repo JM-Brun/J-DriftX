@@ -1,9 +1,11 @@
 """Tests des contraintes physiques."""
 
 import numpy as np
+import pytest
 
-from jdriftx.constraints import linearite, positivite
+from jdriftx.constraints import linearite, linearite_panache, positivite
 from jdriftx.similitude import concentration_panache
+from jdriftx.stabilite import ClasseStabilite
 
 
 def test_positivite_ok() -> None:
@@ -36,3 +38,28 @@ def test_superposition_panache() -> None:
         classe="D",
         hauteur=10.0,
     )
+
+
+def test_linearite_panache_typee_verifie_la_superposition() -> None:
+    """La variante typée linearite_panache établit la même linéarité en débit."""
+    # Given — un point du domaine et deux débits d'émission différents.
+    point = (500.0, 25.0, 2.0)
+    # When / Then — la linéarité en débit est vérifiée via la signature typée.
+    assert linearite_panache(point, 1.0, 2.5, u=3.0, classe="D", hauteur=10.0)
+
+
+def test_linearite_panache_accepte_enum() -> None:
+    """ClasseStabilite.D est accepté en place de la lettre "D"."""
+    # Given — un point du domaine et la classe D passée comme objet.
+    point = (500.0, 25.0, 2.0)
+    # When / Then — la superposition est vérifiée avec l'enum.
+    assert linearite_panache(point, 1.0, 2.0, u=3.0, classe=ClasseStabilite.D)
+
+
+def test_linearite_panache_rejette_classe_inconnue() -> None:
+    """Une classe inconnue propage l'erreur historique de concentration_panache."""
+    # Given — une classe de stabilité inexistante.
+    point = (500.0, 25.0, 2.0)
+    # When / Then — l'erreur historique est levée à l'évaluation du modèle.
+    with pytest.raises(ValueError, match="Classe de stabilite inconnue"):
+        linearite_panache(point, 1.0, 2.5, u=3.0, classe="X")
