@@ -4,9 +4,9 @@ title: "J-DriftX — dispersion atmosphérique à complexité réduite"
 
 # J-DriftX
 
-**J-DriftX** est un projet de recherche open source sur la **dispersion atmosphérique de scalaires passifs** à très faible coût de calcul. Il est la reprise et la modernisation du projet **Drift-X** développé entre 2006 et 2009 par J.-M. Brun et B. Mohammadi (Cemagref/ITAP et I3M, Montpellier) [@bozon2009driftx; @mohammadi2009gis].
+**J-DriftX** est un projet de recherche open source qui étudie des représentations approchées de la **dispersion atmosphérique de scalaires passifs**, avec l'objectif de réduire le coût de calcul. Il est la reprise et la modernisation du projet **Drift-X** développé entre 2006 et 2009 par J.-M. Brun et B. Mohammadi (Cemagref/ITAP et I3M, Montpellier) [@bozon2009driftx; @mohammadi2009gis].
 
-![Schéma de principe : panache gaussien généralisé dans la métrique des temps de transport τ, avec évaluation ponctuelle sans maillage.](images/panache-travel-time.svg)
+![Illustration conceptuelle de l'hypothèse étudiée : panache gaussien évalué à partir d'une coordonnée candidate de temps de transport τ, sans que cette généralisation soit encore validée.](images/panache-travel-time.svg)
 
 > **Statut scientifique :** hypothèse de recherche en phase de cadrage et de validation. Les propriétés présentées ci-dessous sont des **objectifs de conception**, pas des capacités validées ; le README du dépôt consigne l'état réel de l'implémentation. Voir le [positionnement](etat-art/positionnement.qmd) et la [carte d'articulation](projet/carte-articulation.qmd).
 
@@ -22,28 +22,28 @@ Les notations de cette page ($C(x,y,z)$, $\tau$, $Q$, $h$…) et les notions emp
 
 ### Réduction *a priori*
 
-L'espace de recherche est construit sur des connaissances physiques (similitude des panaches), pas sur des *snapshots* coûteux d'un modèle CFD. Coût d'évaluation visé quasi nul, indépendant de la taille du domaine.
+L'espace de recherche visé est construit à partir de connaissances physiques (similitude des panaches), plutôt qu'à partir de *snapshots* d'un modèle CFD. L'objectif est une évaluation ponctuelle peu coûteuse ; le coût total, notamment celui du calcul de $\tau$, sa dépendance au domaine et son avantage face à une baseline restent à mesurer.
 
 ### Métrique des temps de transport
 
-La coordonnée naturelle n'est pas la distance mais le temps $\tau$ mis par le vent pour relier la source au point. Non symétrique, elle encode vents cisaillés et topographie — la généralisation centrale de Drift-X, dont la portée est auditée ([revue mathématique](etat-art/revue-mathematique.qmd)).
+La coordonnée candidate n'est pas seulement la distance euclidienne : c'est un temps de transport dirigé $\tau$, défini à partir du champ de vent selon une construction qui doit être explicitée. La non-symétrie, le traitement des vents non uniformes et la prise en compte du relief dépendent de la définition retenue et restent à établir pour la généralisation étudiée ([Métrique travel-time](theorie/metrique-travel-time.qmd), [revue mathématique](etat-art/revue-mathematique.qmd)).
 
 ### Contraintes physiques imposées
 
-Conservation de la masse, positivité, superposition, divergence nulle du vent : le modèle réduit doit rester solution du modèle direct — un contrat de confiance dont l'état des preuves (formulée, testée, démontrée) est suivi sur la page [Contraintes physiques](theorie/contraintes-physiques.qmd).
+Conservation, positivité, superposition et compatibilité avec un champ de vent incompressible sont des contraintes à préciser pour chaque formulation et domaine de validité. Elles ne signifient pas que le modèle réduit est une solution exacte du modèle direct ; leur statut (formulée, testée, démontrée) est suivi sur la page [Contraintes physiques](theorie/contraintes-physiques.qmd).
 
 ### Calibration par données
 
-L'assimilation de données partielles identifie les paramètres ; l'analyse de sensibilité fournit le risque et l'identification de source — l'adjoint visé est analytique, donc quasi gratuit (capacité conditionnelle, non validée).
+L'assimilation de données partielles peut identifier des paramètres ; l'analyse de sensibilité peut contribuer à l'identification de source et à l'étude des incertitudes. Des gradients analytiques sont envisageables pour certaines formulations, mais leur disponibilité, leur coût et leur validité dépendent du modèle et ne sont pas encore établis pour le cas général.
 
 :::
 
-![Du rang de vigne au bassin versant : champ proche (parcelle) et champ lointain (bassin 400 km²) couplés par la même métrique τ ; multi-niveaux emboîtés et chaîne de traitement SIG.](images/projet-jdriftx.svg)
+![Schéma de l'architecture applicative historique visée : du champ proche au champ lointain, avec hypothèses de couplage multi-niveaux et chaîne de traitement SIG à reconstruire et valider.](images/projet-jdriftx.svg)
 
 ## Pourquoi maintenant ?
 
 - L'**AGDISP Modernization Project** (2023–2026) réécrit le modèle de dérive en open source en portant l'effort sur le near-field et le 3D ; le **far-field réaliste** — la cible historique de Drift-X — n'est pas l'objet annoncé ([panorama](etat-art/panorama.qmd)).
-- Les **ROM et surrogate ML** modernes restent, en première analyse, *a posteriori* : elles exigent des snapshots CFD. L'hypothèse d'une réduction *a priori* reste à confronter à ce paysage, pas une niche démontrée ([panorama](etat-art/panorama.qmd)).
+- De nombreuses ROM classiques et approches *data-driven* s'appuient sur des *snapshots* ou des données d'entraînement, mais ce n'est pas une propriété universelle de toutes les ROM ni de tous les surrogates ML. L'hypothèse d'une réduction *a priori* doit être comparée à des méthodes de référence définies et à coût total équitable ([panorama](etat-art/panorama.qmd)).
 - Les données qui manquaient en 2008 (**ERA5/Copernicus, MNT ouverts, capteurs low-cost**) existent désormais.
 
 L'analyse de l'héritage et le panorama de l'état de l'art sont présentés dans les pages scientifiques dédiées. Les notes de pilotage et de décision ne font pas partie du parcours documentaire public.
