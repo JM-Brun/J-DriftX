@@ -121,16 +121,9 @@ def check_site_links(site_dir: Path, site_url: str) -> list[str]:
                         )
                         continue
                 if fragment not in target_page.identifiers:
-                    known_ids = sorted(target_page.identifiers)
-                    nearby_ids = [
-                        identifier
-                        for identifier in known_ids
-                        if identifier.lower().startswith(fragment[:2].lower())
-                    ][:12]
                     diagnostics.append(
                         f"{source.relative_to(root)}: fragment #{fragment} not found in "
-                        f"{target.relative_to(root)} (from {raw_url}); "
-                        f"nearby identifiers: {nearby_ids}"
+                        f"{target.relative_to(root)} (from {raw_url})"
                     )
     return diagnostics
 
