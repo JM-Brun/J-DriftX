@@ -62,3 +62,5 @@ Un fallback satisfaisant produit une définition non ambiguë, une preuve ou une
 ## Document détaillé
 
 Le protocole de décision, les critères d'acceptation et les limites sont décrits dans cette page et le [cadre d'utilité et de preuve](utilite-scientifique.qmd). Le suivi des questions ouvertes est disponible dans les [issues publiques](https://github.com/JM-Brun/J-DriftX/issues).
+
+**État du noyau actuel.** Le cas 1D à vitesse constante est une référence analytique implémentée ; il ne suffit pas à valider le modèle jouet plus général proposé ici. La [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) explicite cette différence et les résultats qui restent non établis.
