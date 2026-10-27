@@ -29,7 +29,7 @@ où $\mathbf{x}=(x,y,z)$ est la position (m) et $t$ le temps (s). « Passif » s
 
 Le champ de vitesse de l'air est $\mathbf{u}(\mathbf{x},t)$, en $\mathrm{m\,s^{-1}}$. Une source volumique $S(\mathbf{x},t)$ a pour unité $\mathrm{kg\,m^{-3}\,s^{-1}}$. Pour une source ponctuelle, on représente idéalement la source par une distribution de Dirac ; son intensité intégrée est alors un débit massique $Q$ en $\mathrm{kg\,s^{-1}}$. Les unités concrètes doivent être adaptées si le scalaire est une fraction volumique ou si l'on utilise une autre convention de concentration.
 
-## 2. Équation de conservation et équation d'advection–diffusion
+## 2. Équation de conservation et équation d'advection–diffusion {#equation-conservation-advection-diffusion}
 
 La forme conservative générale, pour un milieu à densité constante et une vitesse incompressible, s'écrit
 $$
@@ -53,7 +53,7 @@ $$
 
 Cette équation ne définit pas à elle seule un problème bien posé. Il faut aussi spécifier le domaine spatial, les conditions initiales, les conditions aux limites (sol, limites latérales et supérieures), la source et ses unités, ainsi que les propriétés du champ de vitesse. La négligence du dépôt, de la chimie ou de la diffusion longitudinale est une hypothèse de modèle, pas une identité mathématique. Par exemple, pour le panache gaussien idéalisé au-dessus d'un sol imperméable, une condition de flux vertical nul au sol est satisfaite par la méthode des images ; sa dérivation et ses limites sont explicitées dans [Solutions de similitude](similitude.qmd#etape-6-reflexion-au-sol-par-la-methode-des-images).
 
-## 3. Moyennage de Reynolds : d'où vient le flux turbulent ?
+## 3. Moyennage de Reynolds : d'où vient le flux turbulent ? {#moyennage-reynolds-flux-turbulent}
 
 ### 3.1 Décomposition moyenne + fluctuation
 
@@ -90,7 +90,7 @@ $$
 $$
 est le **flux turbulent de scalaire**. Son unité est $\mathrm{kg\,m^{-2}\,s^{-1}}$. Il décrit la corrélation entre fluctuations de vitesse et de concentration. L'équation moyenne contient donc une nouvelle inconnue, $\mathbf F_t$, qui n'est pas déterminée par la seule équation de $\overline C$. C'est le **problème de fermeture**.
 
-## 4. Fermeture gradient et tenseur turbulent $\mathbf K$
+## 4. Fermeture gradient et tenseur turbulent $\mathbf K$ {#fermeture-gradient-tenseur-diffusif}
 
 ### 4.1 Hypothèse de fermeture
 
