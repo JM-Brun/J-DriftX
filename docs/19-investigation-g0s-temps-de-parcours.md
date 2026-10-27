@@ -78,7 +78,7 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 
 *Preuve de (ii).* Si \(X(t^*;A) = B\), alors \(s \mapsto X(t^*-s; A)\) est une trajectoire de \(-\mathbf u\) issue de \(B\) qui atteint \(A\) en \(s = t^*\) : \(T_{-\mathbf u}(B,A) \le T_{\mathbf u}(A,B)\). En appliquant le même argument à \(-\mathbf u\), l'inégalité inverse. ∎
 
-**Proposition 3.7 (les orbites fermées restaurent l'accessibilité bilatérale).** Si la trajectoire issue de \(A\) est périodique de période \(p\) et si \(B \in \gamma_A\), \(B \ne A\), alors \(T(A,B) \in ]0,p[\) et \(T(B,A)=p-T(A,B)\in ]0,p[\). Sur une orbite fermée, tout couple de points distincts est accessible dans les deux sens : l'« asymétrie » y disparaît.
+**Proposition 3.7 (les orbites fermées restaurent l'accessibilité bilatérale).** Si la trajectoire issue de \(A\) est périodique de période minimale \(p\) et si \(B \in \gamma_A\), \(B \ne A\), alors \(T(A,B) \in ]0,p[\) et \(T(B,A)=p-T(A,B)\in ]0,p[\). Sur une orbite fermée, tout couple de points distincts est accessible dans les deux sens : l'« asymétrie » y disparaît.
 
 *Preuve.* L'orbite est parcourue entièrement en une période. Puisque \(B\ne A\), le premier passage en \(B\) a lieu à un temps \(t_1\in]0,p[\), avec \(X(t_1;A)=B\). Par périodicité, les temps d'atteinte de \(A\) depuis \(B\) sont \(p-t_1+kp\), \(k\ge0\), et le plus petit vaut \(p-t_1\in]0,p[\). ∎
 
