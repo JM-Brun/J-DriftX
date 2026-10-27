@@ -1,6 +1,6 @@
 # Contribuer à J-DriftX
 
-Ce dépôt est un projet de recherche : **la rigueur scientifique et la qualité du code priment sur l'ajout de fonctionnalités**. Chaque PR doit annoncer son mode de contribution, sa question précise et le type de preuve qu'elle apporte. Une contribution documentaire, mathématique, logicielle ou expérimentale n'est pas évaluée avec les mêmes critères.
+Ce dépôt est un projet de recherche : **la rigueur scientifique et la qualité du code priment sur l'ajout de fonctionnalités**. Chaque PR doit annoncer son mode de contribution, sa question précise et le type de preuve qu'elle apporte. Une contribution documentaire, mathématique, logicielle ou expérimentale n'est pas évaluée avec les mêmes critères. Le Wiki canonique est actuellement privé : les pages publiques de J-DriftX ne doivent pas envoyer les lecteurs vers des URLs Wiki inaccessibles. Citer des sources publiques accessibles et inclure uniquement la définition concise nécessaire à comprendre l'application locale ; ne pas recopier un chapitre général complet.
 
 ## Modes de contribution
 
