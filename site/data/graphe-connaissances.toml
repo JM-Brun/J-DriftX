@@ -429,6 +429,12 @@ type = "module"
 libelle = "extraction_graphe.py"
 lien = "src/jdriftx/extraction_graphe.py"
 
+[[noeuds]]
+id = "diagnostic_graphe"
+type = "module"
+libelle = "diagnostic_graphe.py"
+lien = "src/jdriftx/diagnostic_graphe.py"
+
 # ---------- Nœuds : tests ----------
 
 [[noeuds]]
@@ -538,6 +544,12 @@ id = "t-extraction"
 type = "test"
 libelle = "test_extraction_graphe.py"
 lien = "tests/test_extraction_graphe.py"
+
+[[noeuds]]
+id = "t-diagnostic"
+type = "test"
+libelle = "test_diagnostic_graphe.py"
+lien = "tests/test_diagnostic_graphe.py"
 
 # ---------- Nœuds : références (clés de site/references.bib) ----------
 
@@ -1333,6 +1345,11 @@ de = "t-extraction"
 vers = "extraction_graphe"
 relation = "couvre"
 
+[[aretes]]
+de = "t-diagnostic"
+vers = "diagnostic_graphe"
+relation = "couvre"
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1386,8 +1403,8 @@ noeuds = [
   "t-metric", "t-similitude", "t-constraints", "t-champ", "t-recon",
   "t-uniforme", "t-advection", "t-fields", "t-periodic", "t-stabilite",
   "t-terrain", "t-trajectories", "t-figure-01", "t-figure-02",
-  "t-wind-field", "t-interactif", "graphe_connaissances", "extraction_graphe",
-  "t-graphe", "t-extraction",
+  "t-wind-field", "t-interactif", "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
+  "t-graphe", "t-extraction", "t-diagnostic",
 ]
 
   [[graphes.groupes]]
@@ -1419,7 +1436,7 @@ noeuds = [
   [[graphes.groupes]]
   id = "carte"
   titre = "Carte des connaissances"
-  noeuds = ["graphe_connaissances", "extraction_graphe", "t-graphe", "t-extraction"]
+  noeuds = ["graphe_connaissances", "extraction_graphe", "diagnostic_graphe", "t-graphe", "t-extraction", "t-diagnostic"]
 
   [[graphes.groupes]]
   id = "prp"
