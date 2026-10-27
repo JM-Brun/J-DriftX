@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from jdriftx.diagnostic_graphe import diagnostiquer, main
+from jdriftx.diagnostic_graphe import _chemin_local, _identite_github, diagnostiquer, main
 
 
 def _depot_minimal(racine: Path) -> Path:
@@ -14,6 +14,11 @@ def _depot_minimal(racine: Path) -> Path:
     (racine / "tests").mkdir()
     (racine / "site/data").mkdir(parents=True)
     (racine / "site/theorie").mkdir()
+    (racine / ".git").mkdir()
+    (racine / ".git/config").write_text(
+        '[remote "origin"]\n\turl = https://github.com/JM-Brun/J-DriftX.git\n',
+        encoding="utf-8",
+    )
     (racine / "src/jdriftx/noyau.py").write_text(
         "def calculer() -> int:\n    return 1\n", encoding="utf-8"
     )
@@ -23,7 +28,9 @@ def _depot_minimal(racine: Path) -> Path:
     (racine / "site/theorie/modele.qmd").write_text(
         '---\ntitle: "Modèle"\n---\n# Hypothèses\n', encoding="utf-8"
     )
-    (racine / "site/theorie/orphelin.qmd").write_text("# Page non référencée\n", encoding="utf-8")
+    (racine / "site/theorie/orphelin.qmd").write_text(
+        "# Page non référencée\n", encoding="utf-8"
+    )
     (racine / "site/references.bib").write_text(
         "@article{demo,\n title = {Démo},\n}\n", encoding="utf-8"
     )
@@ -54,7 +61,7 @@ lien = "site/theorie/modele.qmd"
 id = "noyau"
 type = "module"
 libelle = "Noyau"
-lien = "src/jdriftx/noyau.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/noyau.py"
 
 [[noeuds]]
 id = "test-noyau"
@@ -121,6 +128,26 @@ def test_diagnostic_distingue_fichiers_mappes_non_mappes_et_localisateurs_perime
         }
     ]
     assert "do not establish scientific support" in rapport["semantics"]
+
+
+def test_url_externe_et_url_dun_autre_depot_sont_ignorees(tmp_path: Path) -> None:
+    """Seules les URL de fichiers du dépôt analysé deviennent des chemins locaux."""
+    racine = _depot_minimal(tmp_path / "depot")
+    identite = _identite_github(racine)
+
+    assert identite == ("jm-brun", "j-driftx")
+    assert (
+        _chemin_local(
+            "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/noyau.py",
+            identite,
+        )
+        == "src/jdriftx/noyau.py"
+    )
+    assert _chemin_local("https://example.com/src/jdriftx/noyau.py", identite) is None
+    assert (
+        _chemin_local("https://github.com/other/project/blob/main/src/jdriftx/noyau.py", identite)
+        is None
+    )
 
 
 def test_diagnostic_json_et_commande_sont_deterministes(tmp_path: Path, capsys: object) -> None:
