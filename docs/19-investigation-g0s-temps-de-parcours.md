@@ -8,7 +8,7 @@ La question de l'issue #41 est : **quelles propriétés possède une fonction de
 
 Réponse courte, démontrée dans les sections 3 à 7 :
 
-1. Le **temps de première arrivée** (variante V1, définition 2.3) satisfait automatiquement, par sa seule définition : positivité, séparation des points, inégalité triangulaire dirigée (propositions 3.2 et 3.3). Il ne satisfait pas, en général : la symétrie (structurellement), ni la finitude (points inaccessibles). C'est une **quasi-distance étendue** au sens des axiomes (D1)–(D4) ci-dessous.
+1. Sous les hypothèses du cadre de base (§ 2.1–2.2), le **temps de première arrivée** (variante V1, définition 2.3) vérifie la non-négativité, la séparation des points et l'inégalité triangulaire dirigée (propositions 3.2 et 3.3). Ces propriétés reposent sur la continuité des trajectoires et, pour la triangulation, sur l'unicité et la propriété de semi-groupe du flot autonome ; elles ne découlent pas de la seule notation d'un infimum. Il ne satisfait pas, en général : la symétrie (structurellement), ni la finitude (points inaccessibles). C'est une **quasi-distance étendue** au sens des axiomes (D1)–(D4) ci-dessous.
 2. La **construction projetée historique V2** (définition 2.4, Mohammadi & Brun 2006) reste non négative et vérifie \(d(A,A)=0\) lorsque la projection de \(A\) sur sa propre caractéristique est bien définie. En dimension 2, elle ne vérifie toutefois pas en général la séparation (§ 5.2) ni l'inégalité triangulaire (§ 5.4–5.6) ; sa valeur peut aussi être non unique lorsque la projection l'est (§ 6.1). Il faut donc préciser quelles propriétés sont conservées et lesquelles échouent, plutôt que dire qu'aucun axiome de distance ne subsiste. En dimension 1, V2 coïncide avec V1 sous les hypothèses explicitées en proposition 5.1.
 3. Aucune des deux variantes n'entraîne de propriété physique (conservation de masse, positivité d'une concentration) : ces propriétés relèvent de l'équation de transport et de ses hypothèses, pas du temps de parcours (renvoi à [14-revue-mathematique-ciblee.md](14-revue-mathematique-ciblee.md), § 3.4).
 4. Le risque de nouveauté est tranché (§ 7) : l'intégrale de temps le long d'une ligne de courant est un objet classique (time-of-flight des méthodes streamline, distances-temps en géographie) ; la construction projetée par paires et son statut de pseudo-distance sont annoncés dans la source primaire de 2006 elle-même. Conclusion du MVP : **idée connue, utile pédagogiquement, désormais délimitée précisément** — l'une des conclusions autorisées par le document MVP (§ 3).
@@ -36,7 +36,7 @@ définie sur un intervalle ouvert \(I_A\) contenant 0 (unicité : Cauchy–Lipsc
 Pour \(A, B \in \Omega\) :
 
 \[
-T(A, B) = \inf\{\, t \ge 0 : X(t; A) = B \,\}, \qquad \inf \varnothing = +\infty.
+T(A, B) = \inf\{\, t \in I_A \cap [0,+\infty[ : X(t; A) = B \,\}, \qquad \inf \varnothing = +\infty.
 \]
 
 \(T(A,B)\) est le **temps de première arrivée** de \(B\) sur l'orbite positive de \(A\). Unités : \([\mathbf u] = \mathrm{m\,s^{-1}}\), \([T] = \mathrm{s}\).
@@ -140,7 +140,7 @@ Ce critère tranche la question de convergence de l'intégrale : la singularité
 
 ## 5. V2 : champ uniforme et champs de cisaillement (2D, calculables à la main)
 
-**Proposition 5.1 (V2 = V1 en dimension 1).** Sous les hypothèses (H1)–(H2) de la définition 2.4 (caractéristique non dégénérée, projection bien définie), pour \(d = 1\), la caractéristique \(\gamma_a\) est l'intervalle lui-même : tout \(b\) se projette sur lui-même, \(b^\perp = b\), donc \(d(a,b) = T(a,b)\). Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. La restriction n'est pas décorative : en 1D, une source stagnante \(u(a)=0\) réduit \(\gamma_a\) à un point et fait échouer la séparation — c'est exactement ce qu'exclut (H1). ∎
+**Proposition 5.1 (V2 = V1 en dimension 1).** Supposons le domaine 1D considéré connexe (un intervalle), les hypothèses (H1)–(H2) de la définition 2.4 satisfaites, et \(a,b\) dans la même composante admissible. Alors, hors dégénérescence d'une caractéristique réduite à un point, la caractéristique \(\gamma_a\) est l'intervalle parcouru par la trajectoire ; tout \(b\) admissible sur cet intervalle se projette sur lui-même, \(b^\perp = b\), donc \(d(a,b) = T(a,b)\). Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. La restriction n'est pas décorative : en 1D, une source stagnante \(u(a)=0\) réduit \(\gamma_a\) à un point et fait échouer la séparation — c'est exactement ce qu'exclut (H1). ∎
 
 ### 5.2 Champ uniforme — dégénérescence transversale
 
