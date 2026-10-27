@@ -1443,7 +1443,8 @@ noeuds = [
   titre = "Champs, expériences et rendu"
   noeuds = [
     "champ_analytique", "experiences/uniforme",
-    "experiences/reconstruction_vent", "fields", "terrain",
+    "experiences/reconstruction_vent", "experiences/cas_synthetiques",
+    "fields", "terrain",
     "trajectories", "figures/figure_01", "figures/figure_02",
     "figures/wind_field_explorer", "c-fcourant", "c-champ", "c-courant",
     "c-multiniveaux", "n0",
