@@ -6,7 +6,7 @@ status: working
 
 # Notions mathématiques des temps de parcours dirigés
 
-Cette page fait partie du dépôt public **J-DriftX**. Elle contient les définitions dont le lecteur a besoin pour comprendre l'étude des temps de parcours, sans devoir consulter un wiki privé ou un autre dépôt. Elle complète l'investigation [G0-S — temps de parcours dirigé](19-investigation-g0s-temps-de-parcours.md) ; elle ne la remplace pas.
+Cette page fait partie du dépôt public **J-DriftX**. Elle rassemble les définitions nécessaires pour comprendre les temps de première arrivée et les propriétés mathématiques étudiées dans le « socle mathématique des temps de parcours dirigés » (nom de travail G0-S). Elle complète l’[investigation sur les temps de parcours dirigés](19-investigation-g0s-temps-de-parcours.md) ; elle ne la remplace pas.
 
 ## 1. Distance, métrique et variantes
 
