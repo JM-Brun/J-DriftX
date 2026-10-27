@@ -102,7 +102,7 @@ L'adaptation de maillage anisotrope [@borouchaki1997delaunay] et la pseudo-dista
 
 ## Ce qui reste à formaliser (reprise v2)
 
-- Une définition autonome et auto-contenue de $\tau$ et de ses propriétés (actuellement dispersée entre la thèse [@brun2006these], le CR Mécanique et le chapitre Springer) — objectif M0 (ancrage documentaire).
+- Une définition autonome et auto-contenue de $\tau$ et de ses propriétés (actuellement dispersée entre la thèse [@brun2006these], le CR Mécanique et le chapitre Springer) — objectif M0/M1.
 - La correspondance exacte entre la contrainte historique $\int_{\mathbb R^3}c\,dV=Q$ / $C=\int_{\mathbb R^2}c^+\,d\sigma$ et toute affirmation de flux conservé sur une surface iso-$\tau$ : aucune équivalence générale n’est revendiquée sans dérivation source à l’appui.
 - L'estimateur d'erreur entre niveaux dans la hiérarchie multi-échelles — objectif M2.
 - Le traitement du régime $|\mathbf{u}| \to 0$ (troncature, physique de stagnation) — voir [Limites](../hypotheses/limites.qmd).
