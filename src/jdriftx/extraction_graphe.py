@@ -12,6 +12,7 @@ import argparse
 import ast
 import json
 import re
+import unicodedata
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Sequence
@@ -125,11 +126,17 @@ def _extraire_quarto(racine: Path) -> list[FaitExtrait]:
                 line=1,
             )
         )
+        dans_bloc_code = False
         for numero, ligne in enumerate(lignes, start=1):
+            if ligne.lstrip().startswith(("\x60\x60\x60", "~~~")):
+                dans_bloc_code = not dans_bloc_code
+                continue
+            if dans_bloc_code:
+                continue
             titre = REGEX_TITRE_MARKDOWN.match(ligne)
             if titre:
                 libelle = titre.group(1).strip()
-                slug = REGEX_SLUG.sub("-", libelle.lower()).strip("-") or "section"
+                slug = _slug(libelle)
                 faits.append(
                     FaitExtrait(
                         id=f"quarto_heading:{relatif}#{slug}:{numero}",
@@ -161,6 +168,13 @@ def _extraire_quarto(racine: Path) -> list[FaitExtrait]:
                     )
                 )
     return faits
+
+
+def _slug(texte: str) -> str:
+    """Produit un identifiant stable et lisible, y compris pour les accents."""
+    normalise = unicodedata.normalize("NFKD", texte)
+    ascii_texte = normalise.encode("ascii", "ignore").decode("ascii").lower()
+    return REGEX_SLUG.sub("-", ascii_texte).strip("-") or "section"
 
 
 def serialiser(faits: list[FaitExtrait]) -> str:
