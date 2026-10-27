@@ -35,3 +35,5 @@ Les conclusions de positionnement — notamment l’absence de concurrents utili
 - Garder le statut des jalons cohérent entre cette page, les objectifs et la feuille de route.
 
 Le protocole public de validation est maintenu dans [docs/05-plan-validation-et-integration.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/05-plan-validation-et-integration.md). Les plans de travail détaillés et le suivi opérationnel des décisions restent dans les notes privées du projet.
+
+**État des preuves du MVP-S.** Le protocole ci-dessus définit les critères à satisfaire ; il ne constitue pas en lui-même une validation. La [matrice de traçabilité MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) répertorie les définitions, hypothèses, démonstrations, fonctions, tests et limites actuellement documentés.
