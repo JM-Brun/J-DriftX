@@ -158,7 +158,9 @@ graph TD
   end
   subgraph carte["Carte des connaissances"]
     graphe_connaissances["graphe_connaissances.py"]::module
+    extraction_graphe["extraction_graphe.py"]::module
     t_graphe["test_graphe_connaissances.py"]::test
+    t_extraction["test_extraction_graphe.py"]::test
   end
   subgraph prp["Propriétés et tests"]
     p_positivite["Positivité (famille gaussienne)"]::propriete
@@ -239,6 +241,7 @@ graph TD
   t_wind_field -->|"couvre"| figures_wind_field_explorer
   t_interactif -->|"couvre"| figures_wind_field_explorer
   t_graphe -->|"couvre"| graphe_connaissances
+  t_extraction -->|"couvre"| extraction_graphe
   classDef niveau fill:#ddd0f0,stroke:#495057,color:#212529;
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
   classDef propriete fill:#ffd9b3,stroke:#495057,color:#212529;
@@ -299,7 +302,9 @@ graph TD
 | test_wind_field_explorer.py | Test (CI) | [test_wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_wind_field_explorer.py) |
 | test_interactive_wind_page.py | Test (CI) | [test_interactive_wind_page.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_interactive_wind_page.py) |
 | graphe_connaissances.py | Module de code | [graphe_connaissances.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/graphe_connaissances.py) |
+| extraction_graphe.py | Module de code | [extraction_graphe.py](../../src/jdriftx/extraction_graphe.py) |
 | test_graphe_connaissances.py | Test (CI) | [test_graphe_connaissances.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_graphe_connaissances.py) |
+| test_extraction_graphe.py | Test (CI) | [test_extraction_graphe.py](../../tests/test_extraction_graphe.py) |
 
 ## Références et corpus
 
