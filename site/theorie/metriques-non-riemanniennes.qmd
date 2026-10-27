@@ -45,7 +45,7 @@ Un traceur passif en advection pure suit le champ de vitesse; il ne choisit pas 
 ## Ce que J-DriftX hérite, et ce qu'il apporte
 
 - **Héritage géographique** [@muller1979persee] : la distance pertinente est celle *vécue par l'objet* — temps de parcours, pas mètres au sol ; la carte se déforme pour rester fidèle à cette métrique (isochrones, anamorphoses ; ici : courbes iso-$\tau$).
-- **Héritage numérique** [@borouchaki1997delaunay] : la spécification métrique gouverne la géométrie — technologie transférée de l'adaptation de maillage au panache.
+- **Analogie numérique** [@borouchaki1997delaunay] : dans les deux domaines, une structure géométrique adaptée au problème peut guider le calcul. Cette analogie ne constitue ni une technologie transférée ni une filiation historique démontrée.
 - **Hypothèse d'apport Drift-X à établir** : une représentation de temps de transport reconstruite à partir d'un champ de vent, avec des propriétés de conservation et une évaluation ponctuelle à formaliser. Ces propriétés ne découlent pas du seul vocabulaire de métrique; elles demandent une dérivation, des hypothèses explicites et des cas de vérification.
 
 La définition exacte, les propriétés à vérifier et la comparaison aux formulations voisines sont discutées dans la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd). Voir aussi la page [Métrique travel-time](metrique-travel-time.qmd).
