@@ -32,12 +32,28 @@ Cette projection fait partie de la définition : elle signifie que le coût peut
 
 Les solutions de similitude formulées en vent uniforme sont réexprimées dans un système lié au temps de transport et à la coordonnée normale. La portée de cette généralisation dépend des hypothèses sur le champ, les caractéristiques et la projection; elle ne découle pas de la seule formule d'intégrale.
 
+### Test analytique d'une coordonnée de transport dans un cisaillement
+
+Ce test distingue un temps de parcours le long d'une caractéristique de la pseudo-distance projetée définie par paires de points. Prenons un champ stationnaire lisse de cisaillement $\mathbf u(x,y)=(v(y),0)$ avec $v(y)>0$, une source $A=(x_A,y_A)$ et une cible aval $B=(x,y)$. La projection historique sur la caractéristique horizontale issue de $A$ donne
+
+$$
+d_A(x,y)=\frac{x-x_A}{v(y_A)}.
+$$
+
+En considérant $d_A$ comme un champ scalaire sur les points cibles, on obtient
+
+$$
+\mathbf u(x,y)\cdot\nabla_{(x,y)}d_A=\frac{v(y)}{v(y_A)}.
+$$
+
+Cette quantité n'est généralement pas égale à $1$ lorsque $v(y)\ne v(y_A)$. Elle vaut $1$ sur la caractéristique source $y=y_A$, mais pas sur tout le domaine. Ainsi, la pseudo-distance projetée historique ne satisfait pas en général l'équation locale de temps de transport $\mathbf u\cdot\nabla d_A=1$ partout, même pour un champ lisse, stationnaire et de divergence nulle. Ce contre-exemple n'invalide pas à lui seul le modèle de concentration historique; il montre que la validité de la généralisation des solutions de similitude et toute conservation associée exigent une dérivation propre, et ne découlent pas simplement de la définition de $d_A$.
+
 ### Définition géométrique et approximation numérique
 
 Le chapitre de 2008 distingue implicitement deux objets qu'il faut garder séparés dans J-DriftX :
 
 - **Définition géométrique** : projeter $B$ sur la caractéristique passant par $A$, en $B^\perp$, puis intégrer le temps jusqu'à cette projection.
-- **Approximation de calcul** : approximer $B^\perp\approx B$, puis appliquer en champ uniforme une correction $2/\pi$ motivée par une moyenne cosinus stochastique. Le chapitre précise que l'égalité exacte entre la caractéristique issue de $A$ et le point $B$ est peu probable en général, et présente la méthode pour des champs atmosphériques lisses.
+- **Approximation de calcul** : approximer $B^\perp\approx B$, puis appliquer en champ uniforme le facteur imprimé dans le chapitre comme « $2/3=0.636$ ». Cette égalité est incohérente arithmétiquement; $2/\pi\approx0.637$ correspondrait à la moyenne de $|\cos\theta|$ pour un angle uniforme sur $[0,\pi]$, mais le coefficient exact reste à confirmer dans la source ou le code historique. Le chapitre précise que l'égalité exacte entre la caractéristique issue de $A$ et le point $B$ est peu probable en général, et présente la méthode pour des champs atmosphériques lisses.
 
 Ces deux étapes ne doivent pas être confondues. Le MVP doit d'abord reproduire la définition, puis mesurer séparément l'effet de l'approximation numérique et de sa correction.
 
@@ -74,7 +90,7 @@ La divergence nulle signifie qu'il n'y a pas de dilatation volumique locale du c
 
 **Stagnation : singularité à analyser.** L'intégrande $1/|\mathbf u|$ devient singulier quand $|\mathbf u|\to0$, mais la divergence de l'intégrale dépend du comportement local du champ et de la trajectoire. Le domaine admissible et le traitement des points stagnants doivent être spécifiés; la divergence n'est pas une conséquence automatique de la seule limite ponctuelle.
 
-**Conservation : résultat historique à vérifier.** Les documents historiques associent le changement de variables $(x, y, z) \to (\tau, n_1, n_2)$ à une conservation du flux intégré sur les surfaces iso-$\tau$, sous une condition de divergence nulle [@brun2008]. La présente reprise n'a pas encore reproduit la dérivation complète; le résultat doit être vérifié avec ses hypothèses, le jacobien et les conditions aux limites avant d'être traité comme un théorème établi dans J-DriftX.
+**Conservation : distinguer la contrainte historique du théorème à démontrer.** L’article de 2006 impose une contrainte globale de conservation de la quantité émise, et le chapitre de 2008 demande que la quantité intégrée du scalaire transporté soit conservée par le modèle réduit. Dans les passages examinés, ces sources ne fournissent pas une démonstration générale de la conservation du flux sur toute surface iso-$\tau$. Le théorème de la divergence établit seulement, sous des hypothèses adaptées, l’égalité du débit volumique $\int_S \mathbf u\cdot\mathbf n\,dS$ entre deux sections d’un même tube de courant si $\nabla\cdot\mathbf u=0$. Pour la quantité transportée, il faut partir du bilan de $c\mathbf u$ et expliciter sources, pertes, frontières et domaine d’intégration. Voir la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd) pour les hypothèses et les limites de ce résultat conditionnel.
 
 ![Quasi-distance de Drift-X : τ(source→A) fini sur la ligne de courant ; τ(A→source) = ∞ — on ne remonte pas le vent.](../images/metrique-non-symetrique.svg)
 
@@ -87,5 +103,6 @@ L'adaptation de maillage anisotrope [@borouchaki1997delaunay] et la pseudo-dista
 ## Ce qui reste à formaliser (reprise v2)
 
 - Une définition autonome et auto-contenue de $\tau$ et de ses propriétés (actuellement dispersée entre la thèse [@brun2006these], le CR Mécanique et le chapitre Springer) — objectif M0 (ancrage documentaire).
+- La correspondance exacte entre la contrainte historique $\int_{\mathbb R^3}c\,dV=Q$ / $C=\int_{\mathbb R^2}c^+\,d\sigma$ et toute affirmation de flux conservé sur une surface iso-$\tau$ : aucune équivalence générale n’est revendiquée sans dérivation source à l’appui.
 - L'estimateur d'erreur entre niveaux dans la hiérarchie multi-échelles — objectif M2.
 - Le traitement du régime $|\mathbf{u}| \to 0$ (troncature, physique de stagnation) — voir [Limites](../hypotheses/limites.qmd).
