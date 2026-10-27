@@ -1,6 +1,6 @@
 # MVP-S — matrice publique de traçabilité des définitions et des preuves
 
-> **État :** audit documentaire du 26 octobre 2026. Cette matrice relie les définitions, leurs hypothèses, le code et les tests. Elle ne remplace pas les preuves analytiques et ne vaut pas validation physique. Les tests doivent être lus comme des vérifications finies.
+> **État :** audit documentaire du 26 octobre 2026. Cette matrice relie les définitions, leurs hypothèses, le code et les tests. Elle ne remplace pas les preuves analytiques et ne vaut pas validation physique. Les tests doivent être lus comme des vérifications finies. Le contrôle croisé du code et des tests au 27 octobre est consigné dans [l’audit de traçabilité MVP-S](29-audit-tracabilite-mvp-s-2026-10-27.md).
 
 ## Statuts utilisés
 
