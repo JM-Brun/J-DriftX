@@ -14,7 +14,7 @@ Cette page est le **premier maillon de la chaîne physique** : elle pose le prob
 
 - **Prérequis :** le vocabulaire du [glossaire](../glossaire.qmd) (scalaire passif, fermeture turbulente, champ stationnaire) et la carte des [niveaux de modélisation](../projet/niveaux-modelisation.qmd) (N0–N6).
 - **Objet défini ici :** l'équation de transport, le moyennage de Reynolds, la fermeture gradient et le tenseur $\mathbf K$ — avec, à chaque étape, le statut exact : identité mathématique, hypothèse physique ou fermeture constitutive.
-- **Résultat transmis :** l'équation réduite $U\,\partial_x C = K_y\,\partial_{yy}C + K_z\,\partial_{zz}C$ et ses hypothèses, dérivées dans [Solutions de similitude](similitude.qmd) ; le statut de la famille gaussienne comme approximation candidate, dans [Réduction a priori](reduction-a-priori.qmd).
+- **Résultat transmis :** l'équation réduite $U\,\partial_x C = K_y\,\partial_{yy}C + K_z\,\partial_{zz}C$ et ses hypothèses, dérivées dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli) ; le statut de la famille gaussienne comme approximation candidate, dans [Réduction a priori](reduction-a-priori.qmd).
 - **Limite actuelle :** les questions de temps de transport relèvent de la chaîne géométrique, qui commence à [Métrique travel-time](metrique-travel-time.qmd) ; elles ne découlent pas du seul modèle d'advection–diffusion.
 
 Le parcours de lecture est donc : **modèle direct → similitude → réduction a priori** pour la chaîne physique ; la chaîne géométrique se lit séparément. L'articulation complète — qui définit quoi, et selon quel contrat — fait l'objet de la section « Articulation avec les autres pages » en fin de page.
