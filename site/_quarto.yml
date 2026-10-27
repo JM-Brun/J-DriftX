@@ -49,28 +49,26 @@ website:
                 text: "Catalogue de données"
       - section: "Théorie"
         contents:
-          - section: "Le modèle et sa réduction"
+          - section: "Modèle direct et réduction"
             contents:
               - href: theorie/modele-direct.qmd
                 text: "Modèle direct"
+              - href: theorie/similitude.qmd
+                text: "Solutions de similitude"
               - href: theorie/reduction-a-priori.qmd
                 text: "Réduction a priori"
+              - href: theorie/contraintes-physiques.qmd
+                text: "Contraintes physiques"
           - section: "La métrique des temps de transport"
             contents:
               - href: theorie/metrique-travel-time.qmd
                 text: "Métrique travel-time"
               - href: theorie/metriques-non-riemanniennes.qmd
                 text: "Métriques non riemanniennes"
-          - section: "Solutions et contraintes"
+          - section: "Calibration et perspectives"
             contents:
-              - href: theorie/similitude.qmd
-                text: "Solutions de similitude"
-              - href: theorie/contraintes-physiques.qmd
-                text: "Contraintes physiques"
               - href: theorie/assimilation-identification.qmd
                 text: "Assimilation & identification"
-          - section: "Perspectives et comparaisons"
-            contents:
               - href: theorie/edp-et-maillage.qmd
                 text: "EDP & maillage"
               - href: theorie/comparaison-complexites.qmd
