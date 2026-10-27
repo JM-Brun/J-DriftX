@@ -1,4 +1,4 @@
 # Visuels mathématiques G0-S
 
-Voir [`glossaire-g0s.svg`](glossaire-g0s.svg) pour le schéma vectoriel éditable et [`prompts/infographie-glossaire-g0s.md`](prompts/infographie-glossaire-g0s.md) pour la trace du prototype généré par IA.
+Le fichier [`glossaire-g0s.svg`](glossaire-g0s.svg) est la source vectorielle éditable. Une copie destinée au site Quarto est publiée dans [`site/visuels-g0s/glossaire-g0s.svg`](../../site/visuels-g0s/glossaire-g0s.svg) : **synchroniser les deux fichiers dans le même changement**. La page [Temps de transport dirigés](../../site/theorie/metrique-travel-time.qmd) l’intègre au site. Le prompt reconstitué est archivé dans [`prompts/infographie-glossaire-g0s.md`](prompts/infographie-glossaire-g0s.md).
 
