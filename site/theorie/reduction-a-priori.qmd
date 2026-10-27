@@ -12,7 +12,7 @@ Cette page prend comme entrées le [modèle direct](modele-direct.qmd) et la fam
 
 - **Prérequis :** connaître le problème de référence, les hypothèses conduisant au panache gaussien et les paramètres de la famille candidate.
 - **Résultat traité ici :** distinguer le modèle direct $V(p)$, le modèle approché $v(p)$, leur domaine de validité et le coût total à mesurer.
-- **Étape suivante :** les propriétés physiques et géométriques doivent être établies séparément. Remplacer $x/U$ par un temps $\\tau$ dans un champ non uniforme relève de la [page Métrique travel-time](metrique-travel-time.qmd) et ne découle pas de la seule réduction gaussienne.
+- **Étape suivante :** les propriétés physiques et géométriques doivent être établies séparément. Remplacer $x/U$ par un temps $\tau$ dans un champ non uniforme relève de la [page Métrique travel-time](metrique-travel-time.qmd) et ne découle pas de la seule réduction gaussienne.
 
 ## Les deux réductions classiques
 
