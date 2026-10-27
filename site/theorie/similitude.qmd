@@ -17,6 +17,24 @@ Cette page est le **deuxième maillon de la chaîne physique** : elle dérive la
 
 Le parcours de lecture est donc : **modèle direct → similitude → réduction a priori** pour la chaîne physique ; la porte d'entrée vers la chaîne géométrique est la question du temps de transport, ouverte à l'étape 2 de la dérivation.
 
+## Carte de la dérivation : des hypothèses au profil final
+
+La dérivation est répartie volontairement entre deux pages. Le [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache) conduit à l'équation parabolique ; la présente page part de cette équation et construit une solution particulière. Les étapes ci-dessous ne doivent pas être lues comme une suite d'identités valables pour l'équation d'advection–diffusion générale.
+
+| Étape | Question résolue | Résultat et portée |
+|---|---|---|
+| 1. Réduction du modèle direct | Quelles hypothèses transforment le transport moyen en équation parabolique ? | Stationnarité, vent uniforme aligné, diffusivités transversales constantes et négligence de la diffusion longitudinale. Voir [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache). |
+| 2. Changement de coordonnée | Pourquoi la distance aval joue-t-elle le rôle d'un temps ? | Seulement si $U$ est constant et strictement positif : $t'=x/U$. Ce n'est pas un temps de parcours général en champ variable. |
+| 3. Noyau de diffusion | Quelle est la solution élémentaire de l'équation transversale ? | Produit de deux noyaux gaussiens, avec variances $2K_y t'$ et $2K_z t'$. |
+| 4. Source continue | Comment fixer l'amplitude sans perdre les unités ni le débit ? | La condition d'entrée est $(Q/U)\,\delta(y)\,\delta(z-h)$ : $Q/U$ est une masse linéique. |
+| 5. Domaine vertical non borné | Le préfacteur restitue-t-il le débit dans $z\in\mathbb R$ ? | Oui, par intégration analytique des deux gaussiennes ; cette étape inclut encore la région sous le sol. |
+| 6. Sol imperméable | Comment imposer un flux vertical nul sur $z=0$ ? | Une source image de même signe impose la condition de Neumann et donne la normalisation sur $z\geq0$. |
+| 7. Dispersion opérationnelle | Comment utiliser des largeurs réalistes ? | Les lois empiriques de Pasquill–Gifford/Briggs prescrivent les largeurs ; elles ne découlent pas directement de l'hypothèse de diffusivités constantes. |
+
+**Ce que cette chaîne établit.** Elle construit analytiquement une solution gaussienne exacte pour le problème parabolique simplifié et ses conditions de source et de sol. Elle ne démontre ni que le problème atmosphérique général est gaussien, ni que les lois empiriques de largeur sont des conséquences de la fermeture à diffusivité constante, ni que la famille est précise ou plus rapide pour un problème applicatif.
+
+**Où poursuivre.** La page [Réduction a priori](reduction-a-priori.qmd) décrit la famille gaussienne comme approximation candidate d'un problème plus général et le protocole nécessaire pour en mesurer l'erreur. La page [Contraintes physiques](contraintes-physiques.qmd) sépare les preuves analytiques des tests numériques du code. La page [Métrique travel-time](metrique-travel-time.qmd) traite séparément la question d'une généralisation géométrique du temps de transport.
+
 ## D'où vient la forme gaussienne ?
 
 Deux lectures convergentes, avant toute dérivation :
