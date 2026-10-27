@@ -23,6 +23,8 @@ website:
         contents:
           - href: projet/carte-articulation.qmd
             text: "Carte d'articulation"
+          - href: projet/carte-connaissances.qmd
+            text: "Carte des connaissances"
           - href: projet/heritage.qmd
             text: "Héritage Drift-X (2006–2009)"
           - href: projet/objectifs.qmd

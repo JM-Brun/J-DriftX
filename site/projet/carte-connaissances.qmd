@@ -1,0 +1,32 @@
+---
+title: "Carte des connaissances"
+---
+
+Cette page ne décrète rien : elle montre les liens. Concepts, hypothèses, niveaux de modélisation, modules, tests, références et jeux de données y apparaissent comme les nœuds typés d'un graphe, reliés par des arêtes elles-mêmes typées (« s'applique à », « implémenté par », « teste »...).
+
+Le graphe n'est pas dessiné à la main. Il est généré depuis un registre typé (`site/data/graphe-connaissances.toml`) par `uv run python -m jdriftx.graphe_connaissances`, et la CI vérifie sa cohérence avec le dépôt : chaque nœud apparaît dans au moins une vue, chaque arête est rendue, chaque lien pointe vers un fichier réel, chaque clé de `references.bib` et chaque module de `src/jdriftx` a son nœud. Un graphe joli mais faux casserait donc les tests, pas la confiance.
+
+## Comment lire cette carte
+
+- **Couleurs** : une couleur par type de nœud (légende en tête de rendu). Les niveaux de preuve ne sont pas uniformes : une arête « fonde » ou « décrit » dit qu'un document traite d'un objet, pas qu'il le valide expérimentalement.
+- **Quatre vues plutôt qu'une** : théorie et hypothèses, code et preuves, références et corpus, jeux de données candidats. Un graphe unique serait illisible ; les tables « Nœuds et destinations » sous chaque vue servent de filtre.
+- **Liens cliquables** : chaque nœud renvoie vers la page, le fichier ou la référence qui le documente.
+- **Citations vérifiées** : la table finale indique où chaque référence est réellement citée dans le site ; une référence jamais citée est signalée plutôt que masquée.
+
+::: {.callout warning}
+## Structure n'est pas validité
+
+Une arête affirme un lien documenté (implémentation, test, citation), jamais une validité physique. Le niveau de preuve de chaque affirmation reste celui de la page de destination : catalogue des hypothèses, contraintes physiques, catalogue de données.
+:::
+
+## Étendre la carte
+
+Éditer `site/data/graphe-connaissances.toml` (nœuds, arêtes, vues), puis :
+
+```{.bash}
+uv run python -m jdriftx.graphe_connaissances
+```
+
+et committer le registre avec `site/projet/_graphes-mermaid.md` régénéré. La CI refuse un rendu désynchronisé ; les règles et le workflow sont documentés dans CONTRIBUTING.md.
+
+{{< include _graphes-mermaid.md >}}
