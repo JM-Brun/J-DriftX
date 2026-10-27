@@ -13,7 +13,7 @@ Le graphe n'est pas dessiné à la main. Il est généré depuis un registre typ
 - **Liens cliquables** : chaque nœud renvoie vers la page, le fichier ou la référence qui le documente.
 - **Citations vérifiées** : la table finale indique où chaque référence est réellement citée dans le site ; une référence jamais citée est signalée plutôt que masquée.
 
-::: {.callout warning}
+::: {.callout-warning}
 ## Structure n'est pas validité
 
 Une arête affirme un lien documenté (implémentation, test, citation), jamais une validité physique. Le niveau de preuve de chaque affirmation reste celui de la page de destination : catalogue des hypothèses, contraintes physiques, catalogue de données.
