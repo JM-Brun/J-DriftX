@@ -107,6 +107,8 @@ def _extraire_quarto(racine: Path) -> list[FaitExtrait]:
     faits: list[FaitExtrait] = []
     racine_site = racine / "site"
     for chemin in sorted(racine_site.rglob("*.qmd")):
+        if chemin.is_relative_to(racine_site / "_extensions"):
+            continue
         relatif = chemin.relative_to(racine).as_posix()
         lignes = chemin.read_text(encoding="utf-8").splitlines()
         titre_page = chemin.stem
