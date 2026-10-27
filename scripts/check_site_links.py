@@ -57,8 +57,10 @@ def _local_url_path(raw_url: str, site_url: str) -> str | None:
             return None
         return target_path[len(base_path) :]
 
-    if target_path.startswith("/") and base_path and (
-        target_path == base_path or target_path.startswith(base_path + "/")
+    if (
+        target_path.startswith("/")
+        and base_path
+        and (target_path == base_path or target_path.startswith(base_path + "/"))
     ):
         return target_path[len(base_path) :]
     return target_path
