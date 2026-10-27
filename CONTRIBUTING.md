@@ -54,3 +54,13 @@ uv run python -m jdriftx.extraction_graphe > /tmp/graphe-extrait.json
 L'export JSON est déterministe et contient des localisateurs (fichier et ligne) pour les modules, classes/fonctions Python, fonctions de test, pages et titres Quarto, occurrences de citations et liens Markdown. Pour écrire le résultat dans un fichier précis, utiliser `--sortie chemin/vers/faits.json`; une autre racine peut être passée avec `--racine chemin/du/depot`.
 
 Cet export est un **inventaire extrait**, pas un graphe de relations accepté. Il ne faut pas déduire automatiquement qu'un lien Markdown prouve une affirmation, qu'un test prouve une propriété générale, ou qu'une fonction implémente un concept simplement parce que son nom lui ressemble. Les relations théorie–hypothèses–code–tests restent déclarées et revues dans `site/data/graphe-connaissances.toml`. Les tests de l'extracteur s'exécutent dans la CI via `pytest`.
+
+### Diagnostics de rapprochement
+
+Comparer l'inventaire structurel aux localisateurs du registre sans déduire de sémantique :
+
+```bash
+uv run python -m jdriftx.diagnostic_graphe --sortie /tmp/diagnostic-graphe.json
+```
+
+Le rapport sépare les fichiers extraits déjà référencés, les fichiers extraits sans nœud directement associé et les localisateurs du registre qui ne correspondent pas à un fait extrait. Ce sont des diagnostics à examiner, pas des erreurs automatiques : le graphe sémantique est une sélection éditoriale, pas un catalogue exhaustif des fichiers. Les correspondances de chemins ne prouvent ni validité scientifique, ni dépendance, ni causalité.
