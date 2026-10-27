@@ -70,7 +70,9 @@ Ce calcul analytique utilise les intégrales complètes des deux gaussiennes et 
 
 **Contrôle logiciel distinct.** La CI exécute un test numérique de conservation pour l'implémentation actuelle du panache, à $x=1000\,\mathrm m$, sur une grille finie en $y,z$, avec une tolérance relative de 2 %. Ce test ciblé ne vérifie ni cette dérivation à diffusivités constantes, ni tous les $x>0$, ni une conservation exacte indépendante de la discrétisation.
 
-**Étape 6 — Réflexion au sol par la méthode des images.** Le sol ne laisse rien passer à travers lui : la condition est un flux vertical nul en $z = 0$. La méthode des images la satisfait exactement en ajoutant une **source virtuelle symétrique** en $(0, 0, -h)$ : la somme des deux gaussiennes annule le flux au sol et **double** la concentration au niveau du sol. C'est l'origine des deux termes verticaux de la formule de la page d'accueil :
+### Étape 6 — Réflexion au sol par la méthode des images {#etape-6-reflexion-au-sol-par-la-methode-des-images}
+
+Le sol ne laisse rien passer à travers lui : la condition est un flux vertical nul en $z = 0$. La méthode des images la satisfait exactement en ajoutant une **source virtuelle symétrique** en $(0, 0, -h)$ : la somme des deux gaussiennes annule le flux au sol et **double** la concentration au niveau du sol. C'est l'origine des deux termes verticaux de la formule de la page d'accueil :
 
 $$
 \exp\!\left(-\frac{(z-h)^2}{2\sigma_z^2}\right)
