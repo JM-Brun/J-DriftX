@@ -141,15 +141,15 @@ Une fonction de temps d'arrivée régulière $\tau$ le long d'un flot stationnai
 
 Considérons le champ de cisaillement lisse $\mathbf u(x,y)=(v(y),0)$ avec $v(y)>0$, et la source $A=(x_A,y_A)$. Les caractéristiques sont horizontales et la projection de $B=(x,y)$ sur la caractéristique de $A$ vaut $B^\perp=(x,y_A)$. Pour une cible aval, la définition historique donne
 
-$
+$$
 d_A(x,y)=\frac{x-x_A}{v(y_A)}.
-$
+$$
 
 Par dérivation directe, $\nabla d_A=(1/v(y_A),0)$, donc
 
-$
+$$
 \mathbf u(x,y)\cdot\nabla d_A=\frac{v(y)}{v(y_A)}.
-$
+$$
 
 Ce résultat diffère de $1$ dès que $v(y)\ne v(y_A)$. Il vaut $1$ sur la caractéristique source, mais pas globalement sur le domaine. Ainsi, même pour un champ $C^1$, stationnaire, positif et de divergence nulle, la pseudo-distance projetée par paires n'est pas généralement un champ de temps d'arrivée satisfaisant l'équation locale $\mathbf u\cdot\nabla d_A=1$. Cela ne réfute pas toute construction historique de concentration, mais interdit de justifier la généralisation par la seule identité de temps de parcours. Il faut dériver séparément le modèle de concentration et ses contraintes.
 
