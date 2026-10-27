@@ -101,7 +101,7 @@ Si $B$ n'appartient pas à l'orbite positive de $A$, la convention donne $T(A,B)
 
 ## 5. Composante connexe sans stagnation en dimension 1
 
-En dimension 1, soit $u:I\to\mathbb R$ un champ continu sur un intervalle $I$. Un **point de stagnation** est un point $x^*$ où (u$x^*$=0). L'ensemble
+En dimension 1, soit $u:I\to\mathbb R$ un champ continu sur un intervalle $I$. Un **point de stagnation** est un point $x^*$ où $u(x^*)=0$. L'ensemble
 $$
 I\setminus\{x\in I:u(x)=0\}
 $$
