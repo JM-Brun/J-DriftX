@@ -37,3 +37,5 @@ L'intégration SIG, la rapidité, l'interprétabilité et l'auditabilité peuven
 ## Conclusion provisoire
 
 L'état de l'art justifie une **investigation critique**, pas encore le développement applicatif. La priorité est de choisir un problème étroit, d'identifier l'utilisateur et la décision, puis de fixer une expérience susceptible de réfuter l'hypothèse de valeur. L'[audit adversarial](https://github.com/JM-Brun/J-DriftX/blob/main/docs/15-audit-adversarial-hallucinations.md) consigne les objections ; le [cadre de décision et de preuve](https://github.com/JM-Brun/J-DriftX/blob/main/docs/08-decision-utilite-et-preuve.md) fixe les conditions de poursuite ou d'arrêt.
+
+**Lien avec les preuves du prototype.** Les constats de littérature présentés ici ne démontrent pas les performances de J-DriftX. La [matrice de traçabilité MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) décrit séparément le périmètre du code actuel, les tests et les propriétés non établies.
