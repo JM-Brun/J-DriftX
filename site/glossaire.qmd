@@ -49,7 +49,7 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 **Panache (plume).** La traînée allongée laissée par une source **continue** (une cheminée qui émet en permanence). *Origine* : vocabulaire standard de la dispersion atmosphérique. → [Solutions de similitude](theorie/similitude.qmd)
 
-**Panache gaussien généralisé.** Terme propre à Drift-X [@mohammadi2006crmeca; @brun2008] : le panache gaussien classique — construit pour un vent uniforme sur terrain plat — **réexprimé dans la métrique des temps de transport**, la distance sous le vent $x$ étant remplacée par le temps $\tau$. La même forme de similitude, transportée dans la géométrie du vent réel (cisaillé, en terrain suivi). La portée exacte de cette généralisation fait l'objet de la [revue mathématique](etat-art/revue-mathematique.qmd). → [Similitude](theorie/similitude.qmd) et [Métrique travel-time](theorie/metrique-travel-time.qmd)
+**Panache gaussien généralisé.** Dans les travaux historiques de Drift-X [@mohammadi2006crmeca; @brun2008], cette expression désigne l'idée de réexprimer le panache gaussien classique — établi pour un vent uniforme sur terrain plat — au moyen d'une coordonnée de temps de transport $\tau$ plutôt que de la seule distance sous le vent $x$. Cela décrit une construction étudiée, pas une garantie que la solution gaussienne reste valide dans un vent cisaillé ou sur un terrain suivi. La portée mathématique de la généralisation, ses hypothèses et ses antécédents font l'objet de la [revue mathématique](etat-art/revue-mathematique.qmd). → [Similitude](theorie/similitude.qmd) et [Métrique travel-time](theorie/metrique-travel-time.qmd)
 
 **Puff.** Une « bouffée » : la traînée d'une émission **brève et localisée** dans le temps (déversement accidentel). → [Solutions de similitude](theorie/similitude.qmd)
 
@@ -92,7 +92,7 @@ Les caractéristiques complètes par classe sont détaillées dans la [fiche doc
 
 **Champ stationnaire.** Un champ de vitesse qui ne dépend pas du temps : $\mathbf u(\mathbf x)$, et non $\mathbf u(\mathbf x, t)$. La ligne de courant issue d'un point est alors une courbe fixe, et la particule lâchée en ce point la suit : ligne de courant et trajectoire coïncident. *Quasi-stationnaire* (hypothèse [H3](hypotheses/catalogue.qmd)) : le champ est traité comme stationnaire pendant la durée d'un transport, même s'il évolue ensuite. → [Métrique travel-time](theorie/metrique-travel-time.qmd)
 
-**Topographie et MNT (DEM).** Le modèle numérique de terrain : l'altitude du sol en chaque point. Le MNT donne la normale au sol, utilisée pour « coller » le panache au relief. Le multi-niveaux permet de charger le MNT à la bonne résolution : grossière au loin, fine près des zones d'intérêt.
+**Topographie et MNT (DEM).** Un modèle numérique de terrain décrit l'altitude du sol. Dans une modélisation qui suit le relief, sa géométrie peut servir à définir la surface du sol et sa normale ; cela ne suffit pas à garantir qu'un panache « colle » physiquement au terrain. Le raffinement multi-niveaux du MNT appartient à l'architecture historique visée : son statut dans le code actuel et son effet sur les prédictions doivent être vérifiés séparément.
 
 ## Chemins, lignes et temps de transport
 
