@@ -74,7 +74,7 @@ def test_extrait_pages_titres_citations_et_liens(tmp_path: Path) -> None:
         "Cadre général"
     )
     assert par_id["citation:site/theorie/modele.qmd:5:Auteur2026"].kind == "citation_occurrence"
-    lien = par_id["markdown_link:site/theorie/modele.qmd:5:17"]
+    lien = par_id["markdown_link:site/theorie/modele.qmd:5:16"]
     assert lien.label == "documentée -> ../references.qmd"
     assert par_id["quarto_page:site/sans-titre.qmd"].label == "sans-titre"
     assert all(fait.origin_kind == "extracted" for fait in faits)
