@@ -248,7 +248,7 @@ La boîte est **l'équation d'entrée** de la dérivation de similitude, pas l'�
 
 ### 10.6 Ce qui reste à préciser pour obtenir la solution gaussienne
 
-L'équation parabolique seule ne fixe pas une solution unique. Il faut encore spécifier la source continue ponctuelle, les conditions transversales, le domaine vertical, les valeurs de $K_y,K_z$ et la condition au sol. La page [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli) déroule ensuite la transformation $t'=x/U$, la fonction de Green transversale, la superposition correspondant à la source continue, la normalisation et enfin la réflexion au sol.
+L'équation parabolique seule ne fixe pas une solution unique. Il faut encore spécifier la source continue ponctuelle, les conditions transversales, le domaine vertical, les valeurs de $K_y,K_z$ et la condition au sol. Dans la coordonnée $t'=x/U$, le débit source $Q$ se traduit par une condition d'entrée transversale normalisée de masse linéique $Q/U$ ; ce facteur n'est pas un débit massique. La page [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli) déroule la transformation, la fonction de Green, cette normalisation et enfin la réflexion au sol.
 
 La chaîne de raisonnement complète est donc :
 **conservation → moyennage de Reynolds → fermeture gradient → stationnarité → vent uniforme aligné → tenseur diagonal constant → approximation parabolique → problème source/conditions aux limites → solution gaussienne → famille candidate de réduction.**
