@@ -32,6 +32,46 @@ $$
 
 L'inégalité de coût est un **objectif à mesurer**, non un résultat établi : elle doit inclure le calcul de $\tau$, les données, la calibration et les évaluations de référence nécessaires.
 
+### Trois objets à ne pas confondre
+
+1. **Solution exacte du problème simplifié.** Sous les hypothèses de la page [Modèle direct](modele-direct.qmd#derive-equation-parabolique-panache), puis les conditions de source et de frontière détaillées dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli), le profil gaussien est une solution analytique de l'équation parabolique à coefficients constants. « Exacte » signifie exacte pour ce problème mathématique simplifié, et non pour toute dispersion atmosphérique réelle.
+2. **Approximation candidate d'un problème plus général.** On propose d'utiliser cette famille dans un contexte où certaines hypothèses — notamment le vent uniforme, la stationnarité ou la fermeture diffusive — ne sont plus satisfaites. Cette transposition est une hypothèse de modélisation, pas une conséquence de la dérivation gaussienne.
+3. **Erreur de réduction mesurée.** Elle n'existe comme résultat quantifié qu'après comparaison à une référence indépendante selon un protocole défini. Ni l'existence de la famille ni sa motivation physique ne donnent, à elles seules, une borne d'erreur.
+
+### Comment les hypothèses structurent la famille candidate
+
+Le paramètre $p$ doit regrouper les entrées du problème (au minimum la position et le débit de source, la hauteur, les conditions de vent et les paramètres de dispersion retenus). Les paramètres affichés ci-dessous sont ceux qui structurent la famille gaussienne ; leur présence dans une formule ne signifie pas qu'ils sont tous libres ou identifiables indépendamment.
+
+| Restriction ou choix | Conséquence pour la famille candidate | Paramètres ou éléments concernés | Statut |
+|---|---|---|---|
+| Scalaire passif, sans réaction ni dépôt | Pas de terme source/puits distribué dans l'équation aval ; la réponse reste linéaire dans le débit si le reste du problème est fixé | $Q$, concentration $C$ | Hypothèse du modèle simplifié |
+| Régime stationnaire | Pas de dépendance temporelle explicite dans le panache établi | État $v(p)$ ; distinction avec un puff transitoire | Hypothèse |
+| Vent uniforme aligné, vitesse $U>0$ | La distance aval $x-x_0$ peut être convertie en temps de diffusion $t'=(x-x_0)/U$ | $x_0$, $U$ | Hypothèse ; ne définit pas un temps de parcours général |
+| Fermeture par gradient et tenseur diagonal constant | Diffusion transverse représentée par deux paramètres constants | $K_y$, $K_z$ | Fermeture et hypothèse de coefficients constants |
+| Diffusion longitudinale négligée | Équation parabolique en $x$ ; la diffusion aval n'est pas représentée | Domaine aval, échelle $L_x$, nombre de Péclet longitudinal | Approximation d'échelle, non valable automatiquement près de la source |
+| Source ponctuelle continue de débit $Q$ à hauteur $h$ | Condition d'entrée normalisée ; profil transversal gaussien dans le modèle parabolique | $Q$, $h$, $x_0$ | Condition de source |
+| Sol plat imperméable, condition de Neumann | Ajout d'une source image de même signe pour imposer un flux vertical nul | $h$, domaine $z\geq0$ | Résultat analytique sous ces hypothèses |
+| Largeurs issues des diffusivités constantes | Dans le cas idéal, $\sigma_y^2=2K_y(x-x_0)/U$ et $\sigma_z^2=2K_z(x-x_0)/U$ | $\sigma_y$, $\sigma_z$, $K_y$, $K_z$ | Relation dérivée dans le problème simplifié |
+| Lois empiriques de dispersion, par exemple Pasquill–Briggs | Les largeurs sont prescrites ou calibrées en fonction de la distance et de la stabilité ; elles ne sont plus simplement la conséquence de diffusivités constantes | $\sigma_y(x)$, $\sigma_z(x)$ et paramètres empiriques | Calibration empirique distincte de la solution analytique précédente |
+
+La famille gaussienne candidate peut ainsi être notée $v(p)$ avec, entre autres, les entrées $p=(x_0,Q,h,U,\sigma_y,\sigma_z,\ldots)$. Dans le cas dérivé à diffusivités constantes, les largeurs sont contraintes par $K_y,K_z$ et $x-x_0$ ; avec des lois empiriques, elles suivent une autre règle. Il faut préciser laquelle est utilisée dans toute comparaison, plutôt que de mélanger les deux justifications.
+
+**Frontière importante : $x/U$ n'est pas un temps de parcours général.** Dans le cas uniforme et aligné, $t'=(x-x_0)/U$ est le temps de propagation associé au changement de variable de l'équation parabolique. Dans un champ non uniforme, un temps $\tau$ dépend d'une définition de chemin ou de première arrivée, et peut avoir des propriétés différentes. Substituer $\tau$ à $(x-x_0)/U$ dans la famille candidate constitue une extension distincte : elle doit être définie et justifiée dans la chaîne géométrique, pas présentée comme un résultat de la dérivation gaussienne.
+
+### Protocole d'évaluation avant toute revendication de performance
+
+Avant un benchmark, figer et documenter les éléments suivants :
+
+1. **Référence.** Choisir un modèle plus complet résolu numériquement, une solution analytique pertinente ou des observations avec incertitudes. Préciser ce que cette référence représente et ses propres limites ; le code gaussien candidat ne peut pas servir seul de référence indépendante.
+2. **Domaine d'évaluation.** Définir les plages de débit, hauteur, vitesse, stabilité, géométrie et conditions aux limites ; inclure les régimes proches des limites annoncées et des cas d'échec plausibles.
+3. **Séparation calibration/évaluation.** Estimer les paramètres uniquement sur les cas de calibration ; réserver des cas distincts pour l'évaluation finale. Si des observations sont utilisées, éviter qu'une même observation contribue aux deux ensembles.
+4. **Mesure d'erreur.** Pré-spécifier les grandeurs comparées, le domaine spatial, la pondération et la norme (par exemple erreur relative $L^2$ sur une zone où la référence est significative, complétée par une erreur absolue près des faibles concentrations). Indiquer comment sont traitées les valeurs proches de zéro et les incertitudes de référence.
+5. **Cas d'échec et diagnostics.** Rapporter les erreurs par régime et pas seulement une moyenne globale ; rechercher notamment les écarts associés au vent non uniforme, aux frontières, à la diffusion longitudinale négligée et à la calibration des largeurs.
+6. **Coût total.** Mesurer séparément puis conjointement le temps et les ressources nécessaires au calcul de référence, à la construction éventuelle du champ et de $\tau$, à la préparation des données, à la calibration et aux prédictions. Comparer des tâches de même périmètre et inclure les coûts amortis de préparation.
+
+Tant que ce protocole n'a pas été exécuté et ses résultats rapportés, la précision, la robustesse hors calibration et le gain de coût de $v(p)$ restent **à mesurer**. Aucun seuil d'erreur ni gain numérique n'est fixé ici, faute de référence et de besoin applicatif spécifiés.
+
+
 Trois conséquences attendues — à distinguer des performances déjà mesurées :
 
 1. **Pas nécessairement de snapshots CFD pour construire la famille de base** : l'espace de recherche candidat est défini par des solutions de similitude (jets, panaches, puffs — voir [Similitude](similitude.qmd)). Cela ne supprime pas les besoins éventuels de données pour calibrer ou valider le modèle.
