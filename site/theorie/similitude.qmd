@@ -6,6 +6,17 @@ title: "Solutions de similitude"
 
 Les solutions de similitude des panaches et puffs constituent la brique élémentaire de Drift-X : c'est l'information physique *a priori* qui structure l'espace de recherche. Cette page explique **d'où vient leur forme** : elles ne sont pas posées comme une hypothèse décorative, elles se **dérivent** de l'équation de transport ([Modèle direct](modele-direct.qmd)) sous un jeu d'hypothèses explicites — que J-DriftX héritera ou généralisera.
 
+## Place dans la chaîne et contrat de lecture
+
+Cette page est le **deuxième maillon de la chaîne physique** : elle dérive la famille gaussienne sous hypothèses explicites, à partir du problème posé dans [Modèle direct](modele-direct.qmd).
+
+- **Prérequis :** l'équation de transport et la fermeture gradient ([Modèle direct](modele-direct.qmd)) ; le vocabulaire du [glossaire](../glossaire.qmd) (panache, puff, classes de Pasquill).
+- **Objet défini ici :** la dérivation du panache et du puff gaussiens — hypothèse par hypothèse — jusqu'à la coordonnée $t'=x/U$ et la table de traçabilité des hypothèses.
+- **Résultat transmis :** la famille gaussienne devient l'espace de recherche candidat, dont le statut d'approximation est précisé dans [Réduction a priori](reduction-a-priori.qmd) ; la substitution de $x/U$ par un temps $\tau$ dans un champ non uniforme est la question d'entrée de [Métrique travel-time](metrique-travel-time.qmd).
+- **Limite actuelle :** les $\sigma$ tabulés (Briggs, Pasquill) calibrent la largeur ; ils ne valident pas la dérivation à diffusivités constantes. La dérivation en vent uniforme ne justifie pas à elle seule la généralisation métrique.
+
+Le parcours de lecture est donc : **modèle direct → similitude → réduction a priori** pour la chaîne physique ; la porte d'entrée vers la chaîne géométrique est la question du temps de transport, ouverte à l'étape 2 de la dérivation.
+
 ## D'où vient la forme gaussienne ?
 
 Deux lectures convergentes, avant toute dérivation :
@@ -15,11 +26,13 @@ Deux lectures convergentes, avant toute dérivation :
 
 Les deux chemins mènent à la même structure : **profils transversaux gaussiens, amplitude en décroissance comme $1/(\sigma_y \sigma_z)$**. La dérivation ci-dessous la fait apparaître terme à terme.
 
-## Dérivation du panache gaussien (régime établi)
+## Dérivation du panache gaussien (régime établi) {#derivation-du-panache-gaussien-regime-etabli}
 
-Hypothèses de départ : régime établi (pas de dépendance temporelle), vent **uniforme** $U>0$ porté par l'axe $x$, source ponctuelle continue située en $x=0$ et de débit $Q$ à la hauteur $h$, fermeture gradient, diffusivités transversales constantes $K_y,K_z$, et absence de diffusion longitudinale, de réaction et de dépôt. Le domaine de calcul du panache est $x>0$. La condition de sol imperméable sera ajoutée séparément par la méthode des images à l'étape 6.
+**Point de départ et portée de cette page.** L'équation de départ n'est pas l'advection–diffusion générique prise sans restriction. On importe ici l'équation parabolique dérivée étape par étape dans [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache) : le transport moyen est fermé par une loi gradient, puis on impose successivement la stationnarité, un vent uniforme $\overline{\mathbf u}=(U,0,0)$ avec $U>0$, un tenseur diffusif diagonal constant et la négligence de la diffusion longitudinale. Les réactions, le dépôt et les sources distribuées sont absents dans la région aval $x>0$. Ces hypothèses sont des restrictions de modèle, pas des conséquences automatiques de l'équation générale.
 
-**Étape 1 — Réduire l'équation.** À partir de l'équation stationnaire d'advection–diffusion, on néglige ici la diffusion longitudinale $K_x\,\partial_{xx}C$ (approximation de panache à transport dominant selon $x$), on suppose $U$ constant et on ne conserve que les diffusivités transversales. Sous ces hypothèses, l'équation réduite est :
+Pour la dérivation gaussienne, on ajoute une source ponctuelle continue en $x=0$, de débit $Q$ et de hauteur $h$, des diffusivités transversales constantes $K_y,K_z$, puis des conditions transversales et verticales précisées au fil des étapes. Le domaine aval est $x>0$ ; la condition de sol imperméable sera ajoutée séparément par la méthode des images à l'étape 6.
+
+**Étape 1 — Écrire l'équation d'entrée héritée du modèle direct.** Sous les hypothèses précédentes, l'équation parabolique obtenue est :
 
 $$
 U \frac{\partial C}{\partial x}
@@ -29,19 +42,31 @@ $$
 
 où $K_y, K_z$ sont les diffusivités turbulentes transversales.
 
-**Étape 2 — Reconnaître une équation de diffusion « datée ».** Posons
+**Étape 2 — Transformer la coordonnée longitudinale en temps de transport.** Dans ce cas seulement, le vent longitudinal $U$ est une constante strictement positive. Posons
 
 $$
-t' = \frac{x}{U}
+t' = \frac{x}{U}, \qquad \widetilde C(t',y,z)=C(Ut',y,z).
 $$
 
-le **temps de transport** depuis la source. L'équation s'écrit alors
+Par la règle de dérivation en chaîne, $\partial_x C=(\partial t'/\partial x)\,\partial_{t'}\widetilde C=(1/U)\,\partial_{t'}\widetilde C$. L'équation réduite de l'étape 1 devient donc
 
 $$
-\frac{\partial C}{\partial t'} = K_y \frac{\partial^2 C}{\partial y^2} + K_z \frac{\partial^2 C}{\partial z^2},
+\frac{\partial \widetilde C}{\partial t'} =
+K_y \frac{\partial^2 \widetilde C}{\partial y^2}
++ K_z \frac{\partial^2 \widetilde C}{\partial z^2}.
 $$
 
-qui est l'équation de la chaleur transversale, où le rôle du temps est joué par le temps de transport. En vent uniforme, $t'=x/U$ correspond au temps de transport aval pour un déplacement longitudinal dans ce cas idéalisé. Cette correspondance ne démontre pas que remplacer $x/U$ par un objet $\tau$ défini dans un champ non uniforme préserve l'équation de diffusion ni la solution gaussienne. Cette généralisation est précisément la question examinée dans la page [Métrique travel-time](metrique-travel-time.qmd), avec les précautions liées à la projection et à la pseudo-distance.
+C'est l'équation de la chaleur transversale : dans ce modèle parabolique, la distance aval $x$ paramètre l'évolution comme le ferait un temps $t'$. L'équivalence repose simultanément sur $U$ constant, l'absence de diffusion longitudinale et des diffusivités transversales indépendantes de $x$ dans la dérivation présentée. Elle n'affirme pas que le temps physique d'une particule quelconque soit toujours $x/U$.
+
+**Pourquoi le remplacement par un temps $\tau$ variable n'est pas une substitution formelle.** Si l'on définit une coordonnée $\tau=\tau(x,y,z)$ et écrit $C(x,y,z)=F(\tau(x,y,z),y,z)$, la règle en chaîne donne
+
+$$
+\partial_x C=F_\tau\,\partial_x\tau, \qquad
+\partial_{yy}C=F_{yy}+2F_{y\tau}\,\partial_y\tau
++F_{\tau\tau}(\partial_y\tau)^2+F_\tau\,\partial_{yy}\tau.
+$$
+
+Les dérivées supplémentaires apparaissent dès que $\tau$ varie transversalement ; même si $\partial_y\tau=0$, le coefficient de l'advection dépend de $\partial_x\tau$ et doit être compatible avec le champ. Il faut donc dériver l'équation transformée, préciser les hypothèses sur $\tau$ et les conditions aux limites, puis vérifier la forme de la solution et les propriétés de conservation. Une coordonnée définie par projection, comme la construction historique discutée dans [Métrique travel-time](metrique-travel-time.qmd), ne satisfait pas automatiquement ces conditions. Cette page fournit la dérivation uniforme de référence ; la page géométrique étudie séparément les candidats à sa généralisation.
 
 **Étape 3 — Diffuser un point.** La fonction de Green de l'équation de diffusion pour une impulsion ponctuelle en $t' = 0$ est une gaussienne de variance croissante :
 

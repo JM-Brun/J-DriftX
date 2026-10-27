@@ -45,11 +45,33 @@ Ces expériences servent à la **vérification numérique**, non à la validatio
 
 ## Parcours de lecture conseillé
 
-1. [Héritage Drift-X](heritage.qmd) et les [Lectures des sources](lectures.qmd) (annexe) — établir la base documentaire.
-2. [Fondements théoriques : modèle direct](../theorie/modele-direct.qmd), [Solutions de similitude](../theorie/similitude.qmd) et [Métrique travel-time](../theorie/metrique-travel-time.qmd) — préciser les objets mathématiques.
-3. L'[investigation mathématique sur le temps de parcours](https://github.com/JM-Brun/J-DriftX/issues/41) — borner les premières expériences admissibles.
-4. [Laboratoire interactif](laboratoire-interactif.qmd) et [Qualité & tests](qualite.qmd) — lire les résultats numériques avec leurs limites.
-5. Les [questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues) — décider de la suite selon les preuves.
+Commencer par l'[héritage Drift-X](heritage.qmd) et les [lectures des sources](lectures.qmd) pour établir ce que les publications historiques affirment réellement. Puis suivre l'une des deux chaînes théoriques ci-dessous. Elles se rejoignent dans l'évaluation de la réduction, mais leurs résultats ne doivent pas être confondus.
+
+### Chaîne physique — du problème générique à la famille candidate
+
+Le chemin comporte plusieurs niveaux ; il faut conserver leur ordre, car chaque flèche ajoute une hypothèse ou change le statut du résultat.
+
+1. [**Modèle direct — problème générique**](../theorie/modele-direct.qmd#equation-conservation-advection-diffusion) : conservation du scalaire et équation d'advection–diffusion, avec source, domaine et conditions aux limites à préciser.
+2. [**Moyennage de Reynolds**](../theorie/modele-direct.qmd#moyennage-reynolds-flux-turbulent) puis [**fermeture gradient**](../theorie/modele-direct.qmd#fermeture-gradient-tenseur-diffusif) : le moyennage introduit un flux turbulent inconnu ; la fermeture le modélise par un tenseur diffusif effectif. Cette loi constitutive n'est pas une identité exacte de la turbulence.
+3. [**Hypothèses de réduction vers le panache**](../theorie/modele-direct.qmd#derive-equation-parabolique-panache) : la section 10 applique successivement stationnarité, vent uniforme aligné $\overline{\mathbf u}=(U,0,0)$, tenseur diffusif diagonal constant, puis négligence de la diffusion longitudinale. On obtient l'équation parabolique ; chaque hypothèse restreint le problème générique.
+4. [**Solutions de similitude**](../theorie/similitude.qmd#derivation-du-panache-gaussien-regime-etabli) : à partir de cette équation, on transforme $x$ en $t'=x/U$, construit la solution de diffusion transversale, superpose les contributions de la source continue, puis traite la normalisation et le sol par réflexion. La solution exacte obtenue est exacte pour ce problème simplifié et ses conditions, pas pour le problème générique.
+5. [**Réduction a priori**](../theorie/reduction-a-priori.qmd) : la famille issue de la similitude devient un espace de recherche candidat pour un problème plus large. Son erreur, son domaine de validité et son coût total doivent être évalués ; elle n'est pas présumée contenir la solution exacte.
+
+**Frontière entre les chaînes :** remplacer $x/U$ par un temps ou une pseudo-distance $\tau$ dans un champ non uniforme est une nouvelle construction. Elle doit être dérivée et évaluée séparément dans [Métrique travel-time](../theorie/metrique-travel-time.qmd).
+
+**Ce que la chaîne n'établit pas à elle seule :** la validité de la famille candidate dans un champ de vent non uniforme, les propriétés physiques de la généralisation ou un gain applicatif.
+
+### Chaîne géométrique — du transport aux propriétés métriques
+
+1. [Métrique travel-time](../theorie/metrique-travel-time.qmd) — distinguer l'intégrale sur une courbe, le temps de première arrivée et la construction historique par projection.
+2. [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) — comparer les axiomes et les familles voisines sans inférer d'équivalence par analogie.
+3. [Investigation mathématique G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) — consulter les hypothèses, preuves et contre-exemples détaillés.
+
+**Point de jonction :** la transformation $x/U$ est justifiée dans le cadre du vent uniforme considéré par la chaîne physique. L'utiliser comme un temps $\tau$ dans un champ variable est une nouvelle construction à dériver, pas une conséquence automatique de la chaîne géométrique.
+
+### Vérification et décision
+
+Enfin, consulter le [laboratoire interactif](laboratoire-interactif.qmd) et [Qualité & tests](qualite.qmd) pour distinguer les comportements vérifiés des propriétés générales ; puis les [questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues) pour décider de la suite à partir des preuves disponibles.
 
 ## Suivi des travaux
 
