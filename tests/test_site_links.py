@@ -17,7 +17,8 @@ def test_check_site_links_accepts_existing_files_and_fragments(tmp_path: Path) -
         '<a href="#top">Top</a>'
         '<img src="assets/figure.svg">'
         '<a href="https://example.test/external">External</a>'
-        '<a href="https://jm-brun.github.io/J-DriftX/guide/page.html#details">Absolute</a>',
+        '<a href="https://jm-brun.github.io/J-DriftX/guide/page.html#details">Absolute</a>'
+        '<a href="/J-DriftX/guide/page.html#details">Root-relative</a>',
         encoding="utf-8",
     )
     (root / "guide/page.html").write_text(
