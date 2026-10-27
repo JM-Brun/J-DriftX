@@ -48,3 +48,5 @@ Pour l'identification de source ([Assimilation & identification](assimilation-id
 ## Mise en garde
 
 Ce tableau ne dit rien de la **précision** de chaque famille ni de son domaine de validité. Un modèle à coût $O(1)$ faux reste faux ; un CFD bien résolu reste la référence physique. Le [positionnement](../etat-art/positionnement.qmd) fixe les conditions d'une comparaison honnête — même observable, même régime, coûts complets mesurés (préparation, calibration, inférence, mémoire) — et le [panorama](../etat-art/panorama.qmd) rappelle que les familles ROM/surrogates sont hétérogènes et ne se paient pas toutes de la même façon.
+
+**Portée des résultats J-DriftX.** Cette comparaison est structurelle et ne constitue pas un benchmark mesuré. Pour savoir ce qui est effectivement implémenté, testé ou non établi dans le MVP-S, consulter la [matrice de traçabilité](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md).
