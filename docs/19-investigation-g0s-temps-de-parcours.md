@@ -58,9 +58,9 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 
 ## 3. V1 : ce qui découle de la seule définition
 
-**Lemme 3.1 (le temps de première arrivée est atteint).** Si \(T(A,B) < +\infty\), alors \(X(T(A,B); A) = B\).
+**Lemme 3.1 (le temps de première arrivée est atteint).** Si l'ensemble des temps d'atteinte \(H_{A,B}=\{t\ge0:X(t;A)=B\}\) est non vide, alors son infimum est atteint.
 
-*Preuve.* L'ensemble \(H = \{t \ge 0 : X(t;A) = B\}\) est fermé (image réciproque du fermé \(\{B\}\) par l'application continue \(t \mapsto X(t;A)\), intersecté avec \([0,+\infty[\)) et non vide ; son infimum est limite d'une suite d'éléments de \(H\), donc appartient à \(H\). ∎
+*Preuve.* Choisissons \(t_0\in H_{A,B}\). La solution existe et est continue sur \([0,t_0]\). L'ensemble \(H_{A,B}\cap[0,t_0]\) est donc fermé dans le compact \([0,t_0]\), non vide, et possède un minimum \(t_*\). Comme \(t_0\) est lui-même un temps d'atteinte, ce minimum est aussi l'infimum de \(H_{A,B}\) sur tous les temps positifs. Ainsi \(X(t_*;A)=B\) et \(t_*=T(A,B)\). ∎
 
 **Proposition 3.2 (positivité et séparation).** V1 vérifie (D1), (D2) et (D4).
 
@@ -78,11 +78,13 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 
 *Preuve de (ii).* Si \(X(t^*;A) = B\), alors \(s \mapsto X(t^*-s; A)\) est une trajectoire de \(-\mathbf u\) issue de \(B\) qui atteint \(A\) en \(s = t^*\) : \(T_{-\mathbf u}(B,A) \le T_{\mathbf u}(A,B)\). En appliquant le même argument à \(-\mathbf u\), l'inégalité inverse. ∎
 
-**Proposition 3.7 (les orbites fermées restaurent l'accessibilité bilatérale).** Si la trajectoire issue de \(A\) est périodique de période \(p\) et si \(B \in \gamma_A\), \(B \ne A\), alors \(T(A,B) \in\, ]0, p]\) et \(T(B,A) = p - T(A,B) < +\infty\). Sur une orbite fermée, tout couple de points est accessible dans les deux sens : l'« asymétrie » y disparaît.
+**Proposition 3.7 (les orbites fermées restaurent l'accessibilité bilatérale).** Si la trajectoire issue de \(A\) est périodique de période minimale \(p\) et si \(B \in \gamma_A\), \(B \ne A\), alors \(T(A,B) \in ]0,p[\) et \(T(B,A)=p-T(A,B)\in ]0,p[\). Sur une orbite fermée, tout couple de points distincts est accessible dans les deux sens : l'« asymétrie » y disparaît.
 
-*Preuve.* L'orbite est parcourue entièrement en une période : le premier passage en \(B\) existe dans \(]0, p]\), noté \(t_1\), avec \(X(t_1;A) = B\). Les temps d'atteinte d'un point d'une orbite fermée depuis un autre point de la même orbite forment une progression arithmétique de raison \(p\) ; ceux de \(A\) depuis \(B\) sont donc \((p - t_1) + k p\), \(k \ge 0\), dont le plus petit est \(p - t_1\). ∎
+*Preuve.* L'orbite est parcourue entièrement en une période. Puisque \(B\ne A\), le premier passage en \(B\) a lieu à un temps \(t_1\in]0,p[\), avec \(X(t_1;A)=B\). Par périodicité, les temps d'atteinte de \(A\) depuis \(B\) sont \(p-t_1+kp\), \(k\ge0\), et le plus petit vaut \(p-t_1\in]0,p[\). ∎
 
-**Proposition 3.8 (stabilité locale).** Si \(X(t^*; A_0) = B\) avec \(\mathbf u(B) \ne 0\), alors chaque temps d'atteinte isolé de \(B\) dépend de façon \(C^1\) de \(A\) au voisinage de \(A_0\) (théorème des fonctions implicites appliqué à \((t,A) \mapsto X(t;A) - B\), dont la dérivée partielle en \(t\) vaut \(\mathbf u(B) \ne 0\)) ; si en outre \(t^*\) est l'unique temps d'atteinte (trajectoire non périodique), \(T(\cdot, B)\) est \(C^1\) au voisinage de \(A_0\). La stabilité se perd aux cibles stagnantes (§ 6.4). (Preuve : esquisse standard par fonctions implicites et unicité locale.)
+**Proposition 3.8 (régularité locale en dimension 1 uniquement).** Supposons \(d=1\), \(u\in C^1(\Omega)\), \(X(t^*;a_0)=b\) et \(u(b)\ne0\). Pour la branche locale de temps d'atteinte, la fonction \(F(t,a)=X(t;a)-b\) est scalaire et vérifie \(F(t^*,a_0)=0\), \(\partial_tF(t^*,a_0)=u(b)\ne0\). Le théorème des fonctions implicites donne donc un temps local d'atteinte de classe \(C^1\) en fonction de \(a\). Pour conclure que le temps de **première** arrivée \(T(\cdot,b)\) est lui-même \(C^1\), il faut en outre que cette branche reste la première localement (pas de changement de branche dû à une autre atteinte plus précoce).
+
+Cette affirmation n'est pas établie ici en dimension \(d\ge2\) : l'équation \(X(t;a)=b\) impose alors \(d\) contraintes avec un seul paramètre temporel ; une trajectoire issue d'un point initial voisin ne passe généralement pas par le même point \(b\). Pour parler de temps de franchissement en dimension supérieure, il faut définir une cible comme une hypersurface et vérifier une condition de transversalité. La stabilité peut aussi échouer aux cibles stagnantes (§ 6.4).
 
 **Tableau 3.9 (V1, récapitulatif).**
 
@@ -115,7 +117,7 @@ Conséquences immédiates : positivité stricte (\(b > a \Rightarrow T > 0\)), s
 | Champ | Temps calculé | Propriété illustrée |
 |---|---|---|
 | \(u \equiv U > 0\) | \(T(a,b) = (b-a)/U\) si \(b > a\), \(+\infty\) sinon | quasi-distance étendue linéaire ; cas implémenté (<code>pseudo_distance_uniforme</code>) |
-| \(u(x) = x\) sur \(]0,+\infty[\) | \(T(1,2) = \ln 2\) ; \(T(0,b) = +\infty\) | stagnation d'ordre 1 **au départ** : jamais quittée |
+| \(u(x) = x\) sur \([0,+\infty[\) | \(T(1,2) = \ln 2\) ; \(T(0,b) = +\infty\) | stagnation d'ordre 1 **au départ** : jamais quittée |
 | \(u(x) = \sqrt{x}\) sur \([0,+\infty[\) | branche mobile : \(T(0,b) = 2\sqrt{b}\) | stagnation d'ordre 1/2 : évasion en temps fini, mais flot non unique (4.6) |
 | \(u(x) = 1 - x\) sur \([0,1[\) | \(T(0,b) = -\ln(1-b) \to +\infty\) quand \(b \to 1\) | stagnation d'ordre 1 **à l'arrivée** : jamais atteinte |
 | \(u(x) = \sqrt{1-x}\) sur \([0,1]\) | \(T(0,1) = 2\) | stagnation d'ordre 1/2 à l'arrivée : atteinte en temps fini (flot unique ici) |
@@ -134,7 +136,7 @@ Ce critère tranche la question 1D de l'issue : la singularité de l'intégrande
 
 ## 5. V2 : champ uniforme et champs de cisaillement (2D, calculables à la main)
 
-**Proposition 5.1 (V2 = V1 en dimension 1).** Pour \(d = 1\), la caractéristique \(\gamma_a\) est l'intervalle lui-même : tout \(b\) se projette sur lui-même, \(b^\perp = b\), donc \(d(a,b) = T(a,b)\). Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. ∎
+**Proposition 5.1 (V2 = V1 en dimension 1).** Sous les hypothèses (H1)–(H2) de la définition 2.4 (caractéristique non dégénérée, projection bien définie), pour \(d = 1\), la caractéristique \(\gamma_a\) est l'intervalle lui-même : tout \(b\) se projette sur lui-même, \(b^\perp = b\), donc \(d(a,b) = T(a,b)\). Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. La restriction n'est pas décorative : en 1D, une source stagnante \(u(a)=0\) réduit \(\gamma_a\) à un point et fait échouer la séparation — c'est exactement ce qu'exclut (H1). ∎
 
 ### 5.2 Champ uniforme — dégénérescence transversale
 
@@ -156,13 +158,13 @@ d(A,B) = \frac{x_B - x_A}{U} \text{ si } x_B \ge x_A, \qquad +\infty \text{ sino
 d(A,B) = \frac{x_B - x_A}{v(y_A)} \text{ si } x_B \ge x_A, \qquad +\infty \text{ sinon.}
 \]
 
-**Lemme 5.4 (caractérisation exacte de la triangulation en cisaillement).** Pour \(x_A \le x_B \le x_C\) :
+**Lemme 5.4 (caractérisation exacte de la triangulation en cisaillement).** Pour \(x_A \le x_B < x_C\) :
 
 \[
 d(A,C) \le d(A,B) + d(B,C) \iff v(y_B) \le v(y_A).
 \]
 
-*Preuve.* En développant, puis en soustrayant \((x_B - x_A)/v(y_A)\) et en divisant par \(x_C - x_B > 0\) : l'inégalité équivaut à \(1/v(y_A) \le 1/v(y_B)\), soit \(v(y_B) \le v(y_A)\). ∎
+*Preuve.* En développant, puis en soustrayant \((x_B-x_A)/v(y_A)\) et en divisant par \(x_C-x_B>0\), l'inégalité équivaut à \(1/v(y_A)\le1/v(y_B)\), soit \(v(y_B)\le v(y_A)\). La condition stricte \(x_B<x_C\) est nécessaire pour cette équivalence ; si \(x_B=x_C\), le segment \(BC\) a un déplacement longitudinal nul et l'inégalité devient une égalité indépendamment de \(v(y_B)\).
 
 Interprétation : la triangulation dirigée échoue **exactement** lorsque le point intermédiaire \(B\) est porté par une caractéristique plus rapide que celle de \(A\).
 

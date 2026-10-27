@@ -57,8 +57,15 @@ Les cas analytiques et la CI justifient de conserver ce noyau comme **prototype 
 
 **Décision proposée, à ratifier dans le suivi de projet :** considérer la tranche de code MVP-S constant 1D comme implémentée et couverte par CI, mais garder le jalon global MVP-S ouvert jusqu'à ce que (a) la reproduction locale soit effectivement exécutée et son environnement consigné, (b) la comparaison aux antécédents soit conclue, et (c) une décision explicite soit prise sur l'arrêt ou la poursuite. G0-A reste séparé et non franchi.
 
-## 5. Sources de vérité
+## 5. Traçabilité des affirmations
 
+La [matrice publique de traçabilité](27-matrice-tracabilite-mvp-s.md) relie les définitions MVP-S à leurs hypothèses, démonstrations ou contre-exemples, fonctions et tests nommés. Elle distingue les résultats démontrés analytiquement des vérifications finies par tests. En particulier, les tests de la fonction V1 constante 1D ne démontrent pas les propriétés générales du temps de première arrivée présentées dans l'investigation G0-S.
+
+La reproduction locale est un contrôle de portabilité de l'environnement ; elle ne constitue pas une preuve mathématique. La CI documente le passage des contrôles automatisés sur le commit effectivement testé. Ni l'une ni l'autre ne valide à elle seule la nouveauté, l'utilité applicative ou la physique du modèle.
+
+## 6. Sources de vérité
+
+- [Matrice de traçabilité : définitions, hypothèses, preuves et tests](27-matrice-tracabilite-mvp-s.md)
 - [Investigation G0-S — définitions, dérivations et contre-exemples](19-investigation-g0s-temps-de-parcours.md)
 - [Code de référence](../src/jdriftx/metric.py)
 - [Tests](../tests/test_metric.py)
