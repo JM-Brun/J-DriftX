@@ -70,9 +70,7 @@ def _extraire_python(racine: Path) -> list[FaitExtrait]:
     return faits
 
 
-def _faits_symboles(
-    arbre: ast.Module, chemin: str, est_test: bool
-) -> list[FaitExtrait]:
+def _faits_symboles(arbre: ast.Module, chemin: str, est_test: bool) -> list[FaitExtrait]:
     """Extrait récursivement les symboles Python en conservant leur nom qualifié."""
     faits: list[FaitExtrait] = []
 
@@ -179,19 +177,22 @@ def _slug(texte: str) -> str:
 
 def serialiser(faits: list[FaitExtrait]) -> str:
     """Sérialise les faits en JSON stable, prêt pour une couche de résolution."""
-    return json.dumps(
-        {
-            "schema_version": 1,
-            "semantics": (
-                "Observed structure only; extracted facts do not imply scientific "
-                "support, validity, dependency, or causality."
-            ),
-            "facts": [asdict(fait) for fait in sorted(faits)],
-        },
-        ensure_ascii=False,
-        indent=2,
-        sort_keys=True,
-    ) + "\n"
+    return (
+        json.dumps(
+            {
+                "schema_version": 1,
+                "semantics": (
+                    "Observed structure only; extracted facts do not imply scientific "
+                    "support, validity, dependency, or causality."
+                ),
+                "facts": [asdict(fait) for fait in sorted(faits)],
+            },
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n"
+    )
 
 
 def main(argv: Sequence[str] | None = None) -> int:
