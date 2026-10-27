@@ -19,6 +19,7 @@ Les tests automatisés vérifient des propriétés définies pour des fonctions 
 | Tests de `pseudo_distance_uniforme` | Projection longitudinale, coût nul pour certains points distincts, coût infini en amont, invariance par rotation et gestion du vent nul/formes invalides | Référence analytique limitée au vent uniforme ; ne reproduit pas la métrique historique dans un champ variable |
 | `test_polyline_cost_is_invariant_to_path_reversal_and_wind_sign` | Confirme que la primitive de polyligne utilise la norme de la vitesse et ignore son orientation | Ce test montre précisément que cette primitive n'est pas la pseudo-distance historique orientée |
 | Divergence du champ de vent | Tests ciblés sur les champs analytiques à fonction de courant (différences finies, superposition) et sur la reconstruction à deux mesures (grille, $< 10^{-12}\ \mathrm{s}^{-1}$) | Ces tests couvrent des champs de vérification analytiques ; le champ de vent multi-niveaux historique n'est pas implémenté dans le noyau actuel |
+| Tests d’adjoint (gradient du coût dirigé) | Gradient exact de la référence uniforme par différences finies : vecteur adjoint $\lambda = \mathbf{u}/\|\mathbf{u}\|^2$, identité $\tau = \lambda\cdot(\mathbf{b}-\mathbf{a})$, gradients par rapport au vent et aux points ; gradient exact du cas 1D | Référence analytique uniquement ; pas un état adjoint en champ variable, ni la sensibilité du panache gaussien |
 
 ## Given / When / Then
 
@@ -41,11 +42,12 @@ Le projet ne doit donc pas annoncer une propriété comme « vérifiée systéma
 - **conservation :** intégrales numériques du panache (six classes, plusieurs distances, hauteur non nulle), du puff et d’une superposition, tolérance 0,1 % sur grilles adaptées à quatre écarts-types ; convergence testée à l’élargissement ;
 - **divergence nulle :** testée par des tests ciblés sur les champs analytiques à fonction de courant et sur la reconstruction à deux mesures ; le champ de vent multi-niveaux historique, lui, n'est pas implémenté ;
 - **métrique historique :** seule une référence analytique de champ uniforme est testée ; la fonction générale de temps de transport sur polyligne est une primitive distincte.
+- **adjoint (sensibilité) :** gradient exact testé pour la référence uniforme (vecteur adjoint, gradients par rapport au vent et aux points) et pour le cas 1D ; pas d’état adjoint en champ variable ;
 
 ## Priorités qualité avant le benchmark
 
 1. Conservation étendue (classes, distances, hauteur, puff, superposition — y compris multi-configurations —, élargissement de grille) : couverte ; restent le raffinement du pas et la conservation en champ variable.
-2. Ajouter des tests de convergence et des cas limites indépendants des formules de production.
+2. Ajouter des tests de convergence et des cas limites indépendants des formules de production : les gradients d’adjoint (référence uniforme et cas 1D) sont désormais couverts par différences finies ; restent des cas limites supplémentaires.
 3. Formaliser la métrique historique et séparer explicitement son API de la primitive de polyligne.
 4. Les tests de divergence existants couvrent les champs analytiques à fonction de courant ; pour le champ de vent multi-niveaux historique, ne créer les tests qu'après l'avoir défini et implémenté.
 5. Pour chaque jalon, rapporter la couverture réellement obtenue ; ne pas présenter le nombre de tests ou la CI verte comme une preuve de validité scientifique.

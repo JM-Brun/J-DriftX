@@ -361,3 +361,107 @@ def test_1d_first_arrival_rejects_infinite_displacement() -> None:
     # When / Then — l'évaluation est refusée avant tout calcul de temps.
     with pytest.raises(ValueError, match="deplacement"):
         temps_premiere_arrivee_1d(a, b, 1.0)
+
+
+@pytest.mark.parametrize(
+    ("a", "b", "vent"),
+    [
+        ((0.0, 0.0), (12.0, 9.0), (4.0, 3.0)),
+        ((0.0, 0.0), (300.0, 65.0), (2.0, 0.0)),
+        ((10.0, 20.0), (310.0, 85.0), (1.5, 2.5)),
+    ],
+)
+def test_uniform_pseudodistance_is_adjoint_vector_dot_displacement(
+    a: tuple[float, float], b: tuple[float, float], vent: tuple[float, float]
+) -> None:
+    """Le coût dirigé uniforme est le produit scalaire de l'adjoint et du déplacement."""
+    # Given — le vecteur adjoint exact du champ uniforme, dérivé
+    # indépendamment : lambda = u/(u.u), et l'identité tau = lambda.(b - a).
+    vitesse = np.asarray(vent, dtype=float)
+    adjoint = vitesse / float(np.dot(vitesse, vitesse))
+    identite = float(np.dot(adjoint, np.asarray(b, dtype=float) - np.asarray(a, dtype=float)))
+    # When — la pseudo-distance uniforme est évaluée par l'implémentation.
+    obtenu = pseudo_distance_uniforme(a, b, vent)
+    # Then — l'identité adjointe est restituée à la précision machine près.
+    assert obtenu == pytest.approx(identite, rel=1e-12, abs=1e-12)
+
+
+@pytest.mark.parametrize(
+    ("a", "b", "vent"),
+    [
+        ((0.0, 0.0), (12.0, 9.0), (4.0, 3.0)),
+        ((0.0, 0.0), (300.0, 65.0), (2.0, 0.0)),
+        ((10.0, 20.0), (310.0, 85.0), (1.5, 2.5)),
+    ],
+)
+def test_uniform_pseudodistance_gradient_wrt_wind_matches_analytic(
+    a: tuple[float, float], b: tuple[float, float], vent: tuple[float, float]
+) -> None:
+    """Le gradient du coût dirigé par rapport au vent est analytiquement exact."""
+    # Given — la dérivée fermée indépendante :
+    # d(tau)/du = d/(u.u) - 2 (d.u) u / (u.u)^2.
+    deplacement = np.asarray(b, dtype=float) - np.asarray(a, dtype=float)
+    vitesse = np.asarray(vent, dtype=float)
+    uu = float(np.dot(vitesse, vitesse))
+    du = float(np.dot(deplacement, vitesse))
+    attendu = deplacement / uu - 2.0 * du * vitesse / (uu * uu)
+    # When — le gradient est estimé par différences finies centrées.
+    pas = 1e-5
+    gradient = np.zeros(2)
+    for axe in range(2):
+        perturbation = np.zeros(2)
+        perturbation[axe] = pas
+        plus = pseudo_distance_uniforme(a, b, vitesse + perturbation)
+        moins = pseudo_distance_uniforme(a, b, vitesse - perturbation)
+        gradient[axe] = (plus - moins) / (2.0 * pas)
+    # Then — l'estimation coïncide avec la formule analytique.
+    np.testing.assert_allclose(gradient, attendu, rtol=1e-6, atol=1e-6)
+
+
+def test_uniform_pseudodistance_gradient_wrt_points_is_adjoint_vector() -> None:
+    """Le gradient par rapport aux extrémités vaut plus ou moins le vecteur adjoint."""
+    # Given — une configuration aval quelconque et l'adjoint exact
+    # lambda = u/(u.u) : le coût est linéaire en la position.
+    a = np.array([10.0, 20.0])
+    b = np.array([310.0, 85.0])
+    vitesse = np.array([1.5, 2.5])
+    adjoint = vitesse / float(np.dot(vitesse, vitesse))
+    pas = 1e-5
+    gradient_b = np.zeros(2)
+    gradient_a = np.zeros(2)
+    # When — les gradients par rapport à b puis à a sont estimés par
+    # différences finies centrées.
+    for axe in range(2):
+        decalage = np.zeros(2)
+        decalage[axe] = pas
+        plus = pseudo_distance_uniforme(a, b + decalage, vitesse)
+        moins = pseudo_distance_uniforme(a, b - decalage, vitesse)
+        gradient_b[axe] = (plus - moins) / (2.0 * pas)
+        plus = pseudo_distance_uniforme(a + decalage, b, vitesse)
+        moins = pseudo_distance_uniforme(a - decalage, b, vitesse)
+        gradient_a[axe] = (plus - moins) / (2.0 * pas)
+    # Then — d(tau)/db = lambda et d(tau)/da = -lambda, à la précision des
+    # différences finies près.
+    np.testing.assert_allclose(gradient_b, adjoint, rtol=1e-6, atol=1e-6)
+    np.testing.assert_allclose(gradient_a, -adjoint, rtol=1e-6, atol=1e-6)
+
+
+def test_1d_first_arrival_gradient_matches_closed_form() -> None:
+    """Le gradient du cas 1D exact vaut -tau/v pour la vitesse et 1/v pour la cible."""
+    # Given — un cas aval 1D (b > a, vitesse positive) et les dérivées
+    # fermées d(tau)/dv = -tau/v et d(tau)/db = 1/v.
+    a = 0.0
+    b = 10.0
+    vitesse = 2.0
+    tau = temps_premiere_arrivee_1d(a, b, vitesse)
+    pas = 1e-5
+    # When — les gradients sont estimés par différences finies centrées.
+    plus_v = temps_premiere_arrivee_1d(a, b, vitesse + pas)
+    moins_v = temps_premiere_arrivee_1d(a, b, vitesse - pas)
+    derivee_v = (plus_v - moins_v) / (2.0 * pas)
+    plus_b = temps_premiere_arrivee_1d(a, b + pas, vitesse)
+    moins_b = temps_premiere_arrivee_1d(a, b - pas, vitesse)
+    derivee_b = (plus_b - moins_b) / (2.0 * pas)
+    # Then — les estimations coïncident avec les formules fermées.
+    assert derivee_v == pytest.approx(-tau / vitesse, rel=1e-6)
+    assert derivee_b == pytest.approx(1.0 / vitesse, rel=1e-6)
