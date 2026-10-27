@@ -52,12 +52,12 @@ Le chapitre *Reduced-Order Modelling of Dispersion* est également disponible da
 
 - la définition exacte utilise \(B^\perp\), projection euclidienne de \(B\) sur la caractéristique passant par \(A\);
 - plus loin, la méthode numérique approxime \(B^\perp=B\), en indiquant que la caractéristique passant par \(A\) passe exactement par \(B\), ce qui est présenté comme peu probable en général;
-- en champ uniforme, le chapitre introduit un facteur correctif \(2/\pi\) (noté dans le texte comme une moyenne cosinus stochastique) pour corriger le temps calculé sous cette approximation;
+- en champ uniforme, le chapitre Springer (2008, p. 251) imprime le facteur correctif « 2/3 = 0.636 » et le décrit comme un cosinus moyen stochastique pour des angles entre 0 et $\pi$. Ces valeurs sont arithmétiquement incompatibles : $2/3\approx0.667$, tandis que $2/\pi\approx0.637$. La moyenne de $|\cos\theta|$ pour un angle uniforme sur $[0,\pi]$ vaut $2/\pi$, mais il ne faut pas corriger silencieusement la source : le coefficient exact à reproduire dans l’algorithme historique reste à confirmer (possible coquille typographique dans le chapitre).
 - la méthode est présentée comme satisfaisante pour des champs atmosphériques lisses et dans un contexte applicatif particulier, pas comme une construction sans restriction pour tout champ de vitesse.
 
 Il faut donc séparer **la définition géométrique idéale** et **l'algorithme approché publié**. Reproduire seulement la projection exacte teste la définition; reproduire l'algorithme de 2008 demande également de documenter l'approximation \(B^\perp\approx B\), le facteur correctif, l'interpolation de la caractéristique et son domaine de validité.
 
-Le chapitre formule aussi des contraintes de divergence nulle, d'advection, de positivité et de conservation pour les champs et les solutions réduites. Dans les passages examinés, cela ne remplace pas une preuve détaillée du résultat plus spécifique « le flux sur chaque surface iso-\(\tau\) restitue exactement \(Q\) ». Cette dernière affirmation doit être rattachée à une dérivation précise avant d'être conservée comme résultat démontré dans la documentation actuelle.
+Le chapitre formule des contraintes de divergence nulle, d’advection, de positivité et de conservation pour les champs et les solutions réduites. L’article de 2006 précise notamment une contrainte globale $\int_{\mathbb R^3} c\,dV=Q$; le chapitre de 2008 définit ensuite la quantité transportée $C=\int_{\mathbb R^2}c^+(x,y)\,d\sigma$ comme une quantité à conserver par le modèle réduit. Dans les passages consultés, ces formulations ne démontrent pas à elles seules l’énoncé plus spécifique « le flux sur chaque surface iso-$\tau$ restitue exactement $Q$ ». Cette dernière affirmation doit rester une question distincte tant qu’une dérivation source explicite n’a pas été identifiée.
 
 ### Schéma de la construction et du contre-exemple
 
@@ -133,9 +133,27 @@ Une métrique usuelle est finie et satisfait notamment séparation, symétrie et
 
 ### 3.4 La conservation de masse est une affirmation distincte
 
-La conservation de masse ne découle pas de la seule définition de \(\tau\). Elle dépend de l'équation de transport, de la divergence du champ, des sources/puits, des conditions aux limites et du jacobien de la transformation de coordonnées. La revendication historique selon laquelle un flux intégré sur une surface iso-\(\tau\) restitue exactement \(Q\) doit être reliée à une dérivation complète et à ses hypothèses, et non considérée comme démontrée par la définition de temps de parcours.
+La conservation de masse ne découle pas de la seule définition de $\tau$. L’article de 2006 formule une contrainte globale $\int_{\mathbb R^3}c\,dV=Q$; le chapitre de 2008 définit $C=\int_{\mathbb R^2}c^+(x,y)\,d\sigma$ comme la quantité totale transportée que le modèle réduit doit conserver. Dans les passages vérifiés, ces contraintes ne sont pas accompagnées d’une preuve générale selon laquelle le flux intégré sur toute surface iso-$\tau$ vaut exactement $Q$. Il faut distinguer cette revendication plus forte du résultat conditionnel obtenu par le théorème de la divergence pour le débit volumique à travers deux sections d’un même tube de courant. Pour le flux du scalaire $c$, le bilan doit inclure sources/puits, conditions aux limites et tous les termes physiques retenus.
 
-### 3.4.1 Résultat conditionnel démontrable par le théorème de la divergence
+### 3.4.1 Test analytique de l'équation locale de temps de transport
+
+Une fonction de temps d'arrivée régulière $\tau$ le long d'un flot stationnaire satisfait localement $\mathbf u\cdot\nabla\tau=1$ là où elle est bien définie, différentiable et où les trajectoires restent dans le domaine. Cette équation ne doit pas être supposée vraie pour la pseudo-distance projetée historique $d_A(B)=T(A,B^\perp)$.
+
+Considérons le champ de cisaillement lisse $\mathbf u(x,y)=(v(y),0)$ avec $v(y)>0$, et la source $A=(x_A,y_A)$. Les caractéristiques sont horizontales et la projection de $B=(x,y)$ sur la caractéristique de $A$ vaut $B^\perp=(x,y_A)$. Pour une cible aval, la définition historique donne
+
+$$
+d_A(x,y)=\frac{x-x_A}{v(y_A)}.
+$$
+
+Par dérivation directe, $\nabla d_A=(1/v(y_A),0)$, donc
+
+$$
+\mathbf u(x,y)\cdot\nabla d_A=\frac{v(y)}{v(y_A)}.
+$$
+
+Ce résultat diffère de $1$ dès que $v(y)\ne v(y_A)$. Il vaut $1$ sur la caractéristique source, mais pas globalement sur le domaine. Ainsi, même pour un champ $C^1$, stationnaire, positif et de divergence nulle, la pseudo-distance projetée par paires n'est pas généralement un champ de temps d'arrivée satisfaisant l'équation locale $\mathbf u\cdot\nabla d_A=1$. Cela ne réfute pas toute construction historique de concentration, mais interdit de justifier la généralisation par la seule identité de temps de parcours. Il faut dériver séparément le modèle de concentration et ses contraintes.
+
+## 3.4.2 Résultat conditionnel démontrable par le théorème de la divergence
 
 On peut établir une conservation de flux entre deux sections transverses d'un même tube de courant sans supposer d'emblée une formule particulière pour le jacobien. Soit \(V\) le volume borné par deux sections \(S_1\) et \(S_2\), et par une surface latérale \(\Sigma\) formée de lignes de courant. Si le champ \(\mathbf u\) est suffisamment régulier dans \(V\), si \(\nabla\cdot\mathbf u=0\), et si aucune singularité ou ouverture supplémentaire n'intersecte la frontière, le théorème de la divergence donne
 
@@ -156,7 +174,7 @@ Ce résultat ne prouve pas automatiquement que l'intégrale du flux de polluant 
 
 La différence de flux entre sections dépend donc de la source \(s\) contenue dans le volume; elle est nulle dans un volume sans source, et égale à l'émission intégrée uniquement si le volume et les conventions de signe englobent exactement cette émission, sans pertes ni flux non comptabilisés. Si l'équation comprend diffusion, réaction, dépôt ou d'autres termes, leurs flux/contributions doivent être ajoutés au bilan.
 
-**Limites de cette dérivation :** elle établit un résultat conditionnel pour un tube de courant régulier, pas une preuve universelle de la revendication historique. Elle ne règle ni les caractéristiques multiples, ni les stagnations, ni les surfaces iso-\(\tau\) non globalement définies, ni les conditions aux limites du problème réel. Pour valider la formulation publiée, il reste à identifier dans la source le sens précis de \(Q\), le scalaire transporté, le domaine d'intégration et les hypothèses utilisées. Un jacobien explicite est nécessaire si l'on veut ensuite dériver la formule dans des coordonnées \((\tau,\eta)\), mais il ne doit pas être inventé avant que cette transformation soit définie.
+**Limites de cette dérivation :** elle établit un résultat conditionnel pour un tube de courant régulier, pas une preuve universelle de la revendication historique. Elle ne règle ni les caractéristiques multiples, ni les stagnations, ni les surfaces iso-$\tau$ non globalement définies, ni les conditions aux limites du problème réel. La prochaine étape est de définir précisément la quantité conservée (masse totale, débit volumique ou flux de scalaire), son domaine d’intégration, et les sources/puits. Le jacobien d’une transformation $(x,y,z)\mapsto(\tau,\eta_1,\eta_2)$ ne doit être dérivé qu’après avoir défini cette transformation et vérifié qu’elle est localement inversible.
 
 ## 4. Comparaison ciblée avec les antécédents
 
