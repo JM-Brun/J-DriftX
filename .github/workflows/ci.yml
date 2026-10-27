@@ -30,6 +30,9 @@ jobs:
           QUARTO_PYTHON: ${{ github.workspace }}/.venv/bin/python
         run: quarto render site
 
+      - name: Vérifier les liens internes et les ancres du site rendu
+        run: uv run python scripts/check_site_links.py --site-dir site/_site --site-url https://jm-brun.github.io/J-DriftX/
+
       - name: Vérifier l'explorateur rendu
         run: |
           page="site/_site/projet/experiences-interactives.html"
