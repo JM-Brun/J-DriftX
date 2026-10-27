@@ -32,12 +32,28 @@ Cette projection fait partie de la définition : elle signifie que le coût peut
 
 Les solutions de similitude formulées en vent uniforme sont réexprimées dans un système lié au temps de transport et à la coordonnée normale. La portée de cette généralisation dépend des hypothèses sur le champ, les caractéristiques et la projection; elle ne découle pas de la seule formule d'intégrale.
 
+### Test analytique d'une coordonnée de transport dans un cisaillement
+
+Ce test distingue un temps de parcours le long d'une caractéristique de la pseudo-distance projetée définie par paires de points. Prenons un champ stationnaire lisse de cisaillement $\mathbf u(x,y)=(v(y),0)$ avec $v(y)>0$, une source $A=(x_A,y_A)$ et une cible aval $B=(x,y)$. La projection historique sur la caractéristique horizontale issue de $A$ donne
+
+$
+d_A(x,y)=\frac{x-x_A}{v(y_A)}.
+$
+
+En considérant $d_A$ comme un champ scalaire sur les points cibles, on obtient
+
+$
+\mathbf u(x,y)\cdot\nabla_{(x,y)}d_A=\frac{v(y)}{v(y_A)}.
+$
+
+Cette quantité n'est généralement pas égale à $1$ lorsque $v(y)\ne v(y_A)$. Elle vaut $1$ sur la caractéristique source $y=y_A$, mais pas sur tout le domaine. Ainsi, la pseudo-distance projetée historique ne satisfait pas en général l'équation locale de temps de transport $\mathbf u\cdot\nabla d_A=1$ partout, même pour un champ lisse, stationnaire et de divergence nulle. Ce contre-exemple n'invalide pas à lui seul le modèle de concentration historique; il montre que la validité de la généralisation des solutions de similitude et toute conservation associée exigent une dérivation propre, et ne découlent pas simplement de la définition de $d_A$.
+
 ### Définition géométrique et approximation numérique
 
 Le chapitre de 2008 distingue implicitement deux objets qu'il faut garder séparés dans J-DriftX :
 
 - **Définition géométrique** : projeter $B$ sur la caractéristique passant par $A$, en $B^\perp$, puis intégrer le temps jusqu'à cette projection.
-- **Approximation de calcul** : approximer $B^\perp\approx B$, puis appliquer en champ uniforme une correction $2/\pi$ motivée par une moyenne cosinus stochastique. Le chapitre précise que l'égalité exacte entre la caractéristique issue de $A$ et le point $B$ est peu probable en général, et présente la méthode pour des champs atmosphériques lisses.
+- **Approximation de calcul** : approximer $B^\perp\approx B$, puis appliquer en champ uniforme le facteur imprimé dans le chapitre comme « $2/3=0.636$ ». Cette égalité est incohérente arithmétiquement; $2/\pi\approx0.637$ correspondrait à la moyenne de $|\cos\theta|$ pour un angle uniforme sur $[0,\pi]$, mais le coefficient exact reste à confirmer dans la source ou le code historique. Le chapitre précise que l'égalité exacte entre la caractéristique issue de $A$ et le point $B$ est peu probable en général, et présente la méthode pour des champs atmosphériques lisses.
 
 Ces deux étapes ne doivent pas être confondues. Le MVP doit d'abord reproduire la définition, puis mesurer séparément l'effet de l'approximation numérique et de sa correction.
 
