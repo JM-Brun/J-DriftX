@@ -98,7 +98,14 @@ def temps_transport(
         msg = "vent doit contenir uniquement des vitesses finies."
         raise ValueError(msg)
 
-    segments = np.diff(pts, axis=0)
+    # Finite endpoints can still overflow when subtracted (e.g. -1e308 to 1e308).
+    # Reject an unrepresentable segment rather than returning an infinite cost.
+    with np.errstate(over="ignore", invalid="ignore"):
+        segments = np.diff(pts, axis=0)
+    if not np.all(np.isfinite(segments)):
+        msg = "Les deplacements des segments doivent rester finis."
+        raise ValueError(msg)
+
     longueurs = np.hypot(segments[:, 0], segments[:, 1])
     vitesses = np.hypot(u_seg[:, 0], u_seg[:, 1])
     if np.any(vitesses < umin):

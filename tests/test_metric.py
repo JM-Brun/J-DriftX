@@ -125,6 +125,18 @@ def test_inconsistent_polyline_shapes_raise_value_error() -> None:
         temps_transport(np.zeros((1, 2)), np.zeros((1, 2)))
 
 
+def test_polyline_cost_rejects_overflowing_segment_difference() -> None:
+    """Des coordonnées finies dont la différence déborde sont refusées."""
+    # Given — les extrémités sont finies, mais leur différence dépasse le
+    # domaine représentable en float64.
+    ligne = np.array([[-1.0e308, 0.0], [1.0e308, 0.0]])
+    vent = np.array([[1.0, 0.0]])
+
+    # When / Then — aucun coût infini ne doit être retourné silencieusement.
+    with pytest.raises(ValueError, match="deplacements des segments"):
+        temps_transport(ligne, vent)
+
+
 def test_polyline_speed_below_minimum_raises_value_error() -> None:
     """Une vitesse sous le seuil umin est refusée."""
     # Given — un segment et un vent sous le seuil umin par défaut.
