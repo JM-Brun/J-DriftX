@@ -10,7 +10,7 @@ Cette page fait partie du dépôt public **J-DriftX**. Elle contient les défini
 
 ## 1. Distance, métrique et variantes
 
-Soit $E$ un ensemble. Une fonction $d:E\times E\to[0,+\infty[$ est une **métrique** si, pour tous $x,y,z\in E$, elle vérifie les quatre axiomes suivants.
+Soit $E$ un ensemble. Une fonction $d:E\times E\to[0,+\infty[$ est une **métrique** si, pour tous $x,y,z\in E$, elle vérifie les cinq axiomes suivants.
 
 | Propriété | Définition | Signification |
 |---|---|---|
@@ -137,7 +137,7 @@ Sur une branche mobile monotone, la séparation des variables dans $\dot x=u(x)>
 $$
 t=\int_{x(0)}^{x(t)}\frac{ds}{u(s)}.
 $$
-Si $u(x)\sim c|x-x^*|^\alpha$ près d'une stagnation, avec $c>0$, le temps le long de cette branche est comparable à
+Si $u(x)\sim c|x-x^*|^\alpha$ près d'une stagnation, avec $c>0$ et $\alpha>0$, le temps le long de cette branche est comparable à
 $$
 \int_0^\delta\frac{dr}{c r^\alpha}.
 $$
@@ -166,3 +166,52 @@ Ces options ne sont pas équivalentes. Le MVP-S retient le cadre à flot unique 
 | V2 avec projection non unique (exemple détaillé dans l'investigation G0-S, § 6.1) | La construction projetée peut ne pas définir une valeur scalaire unique sans règle de projection | Que toute projection dans tout champ soit non unique |
 
 Les contre-exemples sont des diagnostics de portée logique. Ils ne remplacent ni les démonstrations générales ni les tests du code. La matrice de traçabilité du projet relie les affirmations aux définitions, aux preuves, aux implémentations et aux tests : [matrice de traçabilité MVP-S](27-matrice-tracabilite-mvp-s.md).
+
+
+## 9. Flot, semi-groupe, atteignabilité et projection
+
+### Flot et propriété de semi-groupe
+
+Lorsque le problème initial
+$$
+\dot X(t)=u(X(t)),\qquad X(0)=A
+$$
+admet une solution unique, on peut noter $X(t;A)$ la position au temps $t$. Pour un champ autonome, l'évolution ne dépend pas explicitement de l'horloge : si la trajectoire existe aux temps concernés, elle vérifie
+$$
+X(t+s;A)=X\bigl(t;X(s;A)\bigr).
+$$
+C'est la **propriété de semi-groupe** du flot. Elle signifie qu'évoluer pendant $s+t$ revient à évoluer d'abord pendant $s$, puis pendant $t$ depuis la position atteinte. Cette identité repose sur l'unicité : sans elle, le membre de droite ne désigne pas nécessairement la même branche de solution.
+
+Elle fournit la preuve de l'inégalité triangulaire dirigée de V1. Si $B$ est atteint depuis $A$ au temps $s$ et $C$ est atteint depuis $B$ au temps $t$, la propriété de semi-groupe donne $X(s+t;A)=C$. Ainsi, le premier temps d'arrivée de $C$ depuis $A$ satisfait
+$$
+T(A,C)\leq s+t=T(A,B)+T(B,C),
+$$
+lorsque les deux temps d'arrivée sont finis et les trajectoires existent jusqu'aux instants considérés. Si l'un des termes du membre de droite vaut $+\infty$, l'inégalité étendue est triviale. Cette preuve ne s'applique pas automatiquement à une quantité qui n'est pas construite à partir du même flot, comme V2 projetée.
+
+### Atteignabilité et temps infini
+
+Dire que $B$ est **atteignable depuis $A$ dans le temps positif** signifie qu'il existe $t\in I_A\cap[0,+\infty[$ tel que $X(t;A)=B$. Ce terme porte sur une arrivée exacte en temps fini, pas seulement sur une limite asymptotique. Par exemple, pour $\dot x=1-x$ avec $x(0)=0$, la solution $x(t)=1-e^{-t}$ tend vers $1$ mais ne l'atteint à aucun temps fini ; selon la définition de première arrivée ci-dessus, $T(0,1)=+\infty$. À l'inverse, pour $\dot x=\sqrt{1-x}$ sur le domaine $x\leq1$, la branche issue de $x(0)=0$ atteint $1$ au temps fini $2$, même si le champ n'est pas localement lipschitzien au point cible. Cet exemple appartient à une extension non $C^1$ et ne contredit pas les résultats formulés sous l'hypothèse de base $C^1$.
+
+### Projection et définition de V2
+
+Dans la référence codée en champ uniforme non nul $u\in\mathbb R^2$, la direction unitaire du champ est $e=u/\|u\|$. Le déplacement longitudinal de $A$ vers $B$ est $(B-A)\cdot e$. La fonction `pseudo_distance_uniforme` calcule
+$$
+V2(A,B)=
+\begin{cases}
+\dfrac{(B-A)\cdot u}{\|u\|^2}, & (B-A)\cdot u\geq0,\\
++\infty, & (B-A)\cdot u<0.
+\end{cases}
+$$
+La formule est un temps longitudinal pour la convention locale choisie ; elle ignore le déplacement transversal. En particulier, un déplacement transversal non nul peut donner zéro : V2 ne satisfait donc pas la séparation des points. La formule suppose un champ uniforme et ne doit pas être extrapolée à un champ variable sans définir comment la caractéristique est construite, si plusieurs projections sont possibles et comment les cibles non atteignables sont traitées.
+
+### Carte explicite entre notions, documentation et code
+
+| Notion | Définition / preuve publique | Code actuel | Portée effective |
+|---|---|---|---|
+| Temps de première arrivée 1D à vitesse constante | Section 4 de cette page et annexe B du bilan MVP-S 1D | `temps_premiere_arrivee_1d` dans [`src/jdriftx/metric.py`](../src/jdriftx/metric.py) | Cas analytique constant uniquement |
+| Coût discret d'une polyligne | Définition de la primitive dans le [module](../src/jdriftx/metric.py) et la [matrice](27-matrice-tracabilite-mvp-s.md) | `temps_transport` | Somme longueur/norme de vitesse ; ne tient pas compte du signe du vent |
+| V2 uniforme projetée | Formule ci-dessus et investigation G0-S, section 6 | `pseudo_distance_uniforme` | Champ constant non nul en 2D ; convention amont explicite |
+| Propriétés générales du flot V1 | Sections 2 à 7 de l'[investigation G0-S](19-investigation-g0s-temps-de-parcours.md) | Pas de solveur général de champ variable | Résultats analytiques sous hypothèses ; pas validés par les seuls tests de la primitive 1D |
+| Contre-exemple de non-unicité | Section 3 et section 7 de cette page | Exemple mathématique documenté, non implémenté comme solveur ODE dans `src/` | Sert à préciser les limites logiques ; ce n'est pas une fonctionnalité logicielle |
+
+Les tests de `tests/test_metric.py` vérifient des cas ciblés des primitives implémentées. Ils ne démontrent ni l'existence d'un flot pour tout champ, ni l'unicité générale, ni les propriétés analytiques universelles de V1, ni la validité physique de la méthode historique. Pour chaque affirmation générale, la preuve et ses hypothèses restent la référence ; pour chaque comportement logiciel, le code et les tests constituent la référence d'implémentation.
