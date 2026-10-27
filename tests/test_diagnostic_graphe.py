@@ -28,9 +28,7 @@ def _depot_minimal(racine: Path) -> Path:
     (racine / "site/theorie/modele.qmd").write_text(
         '---\ntitle: "Modèle"\n---\n# Hypothèses\n', encoding="utf-8"
     )
-    (racine / "site/theorie/orphelin.qmd").write_text(
-        "# Page non référencée\n", encoding="utf-8"
-    )
+    (racine / "site/theorie/orphelin.qmd").write_text("# Page non référencée\n", encoding="utf-8")
     (racine / "site/references.bib").write_text(
         "@article{demo,\n title = {Démo},\n}\n", encoding="utf-8"
     )
