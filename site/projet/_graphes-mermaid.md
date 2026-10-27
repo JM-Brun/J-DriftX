@@ -302,9 +302,9 @@ graph TD
 | test_wind_field_explorer.py | Test (CI) | [test_wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_wind_field_explorer.py) |
 | test_interactive_wind_page.py | Test (CI) | [test_interactive_wind_page.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_interactive_wind_page.py) |
 | graphe_connaissances.py | Module de code | [graphe_connaissances.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/graphe_connaissances.py) |
-| extraction_graphe.py | Module de code | [extraction_graphe.py](../../src/jdriftx/extraction_graphe.py) |
+| extraction_graphe.py | Module de code | [src/jdriftx/extraction_graphe.py](../../src/jdriftx/extraction_graphe.py) |
 | test_graphe_connaissances.py | Test (CI) | [test_graphe_connaissances.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_graphe_connaissances.py) |
-| test_extraction_graphe.py | Test (CI) | [test_extraction_graphe.py](../../tests/test_extraction_graphe.py) |
+| test_extraction_graphe.py | Test (CI) | [tests/test_extraction_graphe.py](../../tests/test_extraction_graphe.py) |
 
 ## Références et corpus
 
