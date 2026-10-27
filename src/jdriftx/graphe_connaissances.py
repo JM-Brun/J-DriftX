@@ -307,7 +307,9 @@ def _modules(racine_paquet: Path) -> set[str]:
 
 def citations(registre: Registre, racine: Path) -> dict[str, list[PageCitante]]:
     """Extrait, pour chaque référence, les pages du site qui la citent."""
-    par_cle = {noeud.id: [] for noeud in registre.noeuds if noeud.type == "reference"}
+    par_cle: dict[str, list[PageCitante]] = {
+        noeud.id: [] for noeud in registre.noeuds if noeud.type == "reference"
+    }
     racine_site = racine / "site"
     if not racine_site.exists():
         return par_cle
