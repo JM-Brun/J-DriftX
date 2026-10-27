@@ -82,7 +82,7 @@ def test_extrait_pages_titres_citations_et_liens(tmp_path: Path) -> None:
     assert lien.label == "documentée -> ../references.qmd"
     assert par_id["quarto_page:site/sans-titre.qmd"].label == "sans-titre"
     assert "citation:site/theorie/modele.qmd:9:FausseCle" not in par_id
-    assert all("Fausse section" != fait.label for fait in faits)
+    assert all(fait.label != "Fausse section" for fait in faits)
     assert all(fait.origin_kind == "extracted" for fait in faits)
 
 
