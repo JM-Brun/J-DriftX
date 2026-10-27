@@ -145,10 +145,23 @@ C(x, y, z, t) = \frac{M}{(2\pi)^{3/2} \sigma_x \sigma_y \sigma_z}
 $$
 
 - le **centroïde** suit le vent ($x_0 + U t$) ;
-- les $\sigma$ croissent avec le temps de parcours ($\sigma^2 = 2 K t$ à $K$ constant) ;
+- pour des diffusivités effectives constantes et diagonales, chaque variance suit $\sigma_i^2(t)=2D_i t$ pour $i\in\{x,y,z\}$ ;
 - une source en hauteur s'obtient par translation, et la réflexion au sol par images, comme à l'étape 6.
 
-**Le lien entre les deux solutions.** Le panache établi est la **superposition temporelle des puffs** : l'intégrale sur toutes les dates d'émission $Q\,\mathrm{d}t'$ reproduit exactement la formule du panache à $K$ constants. L'intégration fait disparaître $\sigma_x$ — l'étalement longitudinal des puffs est remplacé par l'émission continue. C'est la linéarité qui fait tout le travail ; elle est conservée comme contrainte physique numéro 3.
+**Lien avec le panache établi : une distinction nécessaire.** La superposition des rejets instantanés est bien un principe de linéarité, mais elle ne suffit pas à conclure que toute intégration de puffs redonne la formule parabolique précédente. La formule de puff écrite ci-dessus inclut une diffusion longitudinale, avec $\sigma_x^2=2K_x t$ si $K_x$ est constant. En intégrant ces puffs sur les dates d'émission, on obtient la solution stationnaire associée à l'équation qui conserve cette diffusion longitudinale, soit, hors de la source et pour des coefficients constants,
+
+$
+U\frac{\partial C}{\partial x}
+=K_x\frac{\partial^2 C}{\partial x^2}
++K_y\frac{\partial^2 C}{\partial y^2}
++K_z\frac{\partial^2 C}{\partial z^2}.
+$
+
+Ce n'est, en général, **pas exactement** la solution de l'équation parabolique $U\partial_x C=K_y\partial_{yy}C+K_z\partial_{zz}C$, qui a précisément négligé le terme longitudinal $K_x\partial_{xx}C$.
+
+L'équivalence exacte avec le panache parabolique demande donc de prendre la limite d'advection longitudinale dominante, où la diffusion longitudinale est négligée (formellement $K_x\to0$), et de conserver les mêmes hypothèses transversales, la même source et les mêmes conditions aux limites. Dans cette limite, la position longitudinale du puff est déterminée par l'advection, et la coordonnée $t'=x/U$ fixe l'âge de transport associé à la station $x$. Si $K_x$ reste non nul, la superposition demeure valide pour le modèle complet correspondant, mais elle ne doit pas être présentée comme une identité avec la formule parabolique.
+
+La linéarité garantit donc la superposition dans chaque modèle linéaire ; **elle ne rend pas identiques deux modèles dont les termes diffusifs diffèrent**. Cette distinction est importante pour la contrainte physique numéro 3 : les tests de superposition doivent comparer des solutions calculées sous le même jeu d'hypothèses.
 
 ## Pourquoi le mot « similitude »
 
