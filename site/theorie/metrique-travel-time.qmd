@@ -59,7 +59,7 @@ Ces deux étapes ne doivent pas être confondues. Le MVP doit d'abord reproduire
 
 ## Correspondance avec le code actuel
 
-Les définitions géométriques et l'approximation décrites ci-dessus ne correspondent pas à trois algorithmes déjà disponibles. Les définitions mathématiques priment : le code du dépôt est une **implémentation partielle** de ces concepts, pas leur référence. Le dépôt contient trois primitives distinctes, dont les contrats sont visibles dans [`src/jdriftx/metric.py`](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/metric.py) et dont les comportements sont caractérisés par [`tests/test_metric.py`](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py). Une **polyligne** désigne ici une suite de points reliés par des segments droits — le tracé que `temps_transport` reçoit de son appelant ; la notion est définie dans le [glossaire](../glossaire.qmd).
+Les définitions géométriques et l'approximation décrites ci-dessus ne se réduisent pas aux trois algorithmes déjà disponibles dans le dépôt. Les définitions mathématiques priment : le code du dépôt est une **implémentation partielle** de ces concepts, pas leur référence. Le dépôt contient trois primitives distinctes, dont les contrats sont visibles dans [`src/jdriftx/metric.py`](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/metric.py) et dont les comportements sont caractérisés par [`tests/test_metric.py`](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py). Une **polyligne** désigne ici une suite de points reliés par des segments droits — le tracé que `temps_transport` reçoit de son appelant ; la notion est définie dans le [glossaire](../glossaire.qmd).
 
 | Objet mathématique | Statut dans le code | Conséquence et tests pertinents |
 |---|---|---|
@@ -80,7 +80,7 @@ Deux contre-exemples sont donc visibles directement dans les tests du code : (1)
 
 ## Lien avec la mécanique des fluides
 
-Pour un traceur passif de concentration $c$, l'équation conservative d'advection avec source $s$ est $\partial_t c+\nabla\cdot(c\mathbf u)=s$. Si $\nabla\cdot\mathbf u=0$, elle devient $\partial_t c+\mathbf u\cdot\nabla c=s$. Les caractéristiques suivent la vitesse du fluide et permettent de décrire le transport advectif. Cette interprétation est une passerelle physique, pas une preuve que la pseudo-distance projetée suffit à reconstruire la concentration.
+Pour un traceur passif de concentration $C$, l'équation conservative d'advection avec source $S$ est $\partial_t C+\nabla\cdot(C\mathbf u)=S$. Si $\nabla\cdot\mathbf u=0$, elle devient $\partial_t C+\mathbf u\cdot\nabla C=S$. Les caractéristiques suivent la vitesse du fluide et permettent de décrire le transport advectif. Cette interprétation est une passerelle physique, pas une preuve que la pseudo-distance projetée suffit à reconstruire la concentration.
 
 La divergence nulle signifie qu'il n'y a pas de dilatation volumique locale du champ; pour un fluide à densité constante, elle exprime l'incompressibilité cinématique. Elle ne prouve pas seule la conservation du flux sur une surface iso-$\tau$. Il faut dériver le changement de coordonnées et son jacobien, préciser les conditions aux limites et tenir compte des sources/puits. La diffusion, la turbulence et le dépôt ne sont pas inclus dans la simple intégrale $\int ds/\|\mathbf u\|$.
 
@@ -98,9 +98,7 @@ Selon le domaine et les axiomes démontrés, $\tau$ peut relever d'une fonction 
 
 ## Analogie avec l'adaptation de maillage par métrique
 
-L'adaptation de maillage anisotrope utilise un champ métrique pour exprimer des exigences locales de taille et d'orientation des éléments; cette formulation peut guider des algorithmes de génération de maillage, dont ceux étudiés par Borouchaki et al. [@borouchaki1997delaunay]. La pseudo-distance travel-time de Drift-X est un autre objet : elle s'appuie sur le temps de transport et une projection sur les caractéristiques du champ de vitesse.
-
-Les deux approches partagent l'idée générale qu'une géométrie utile dépend du problème plutôt que de la seule distance euclidienne. **La référence sur les maillages ne démontre toutefois ni une filiation historique directe, ni une équivalence mathématique entre les deux constructions.** En l'absence d'une source établissant explicitement ce transfert, il faut présenter ce rapprochement comme une analogie conceptuelle, pas comme la généalogie démontrée de la méthode Drift-X.
+L'adaptation de maillage anisotrope [@borouchaki1997delaunay] et la pseudo-distance travel-time partagent l'idée générale qu'une géométrie utile dépend du problème plutôt que de la seule distance euclidienne. Ce rapprochement reste toutefois une analogie conceptuelle : la référence sur les maillages ne démontre ni une filiation historique directe, ni une équivalence mathématique entre les deux constructions. La table des familles géométriques voisines (dont la métrique de maillage) est détaillée sur la page [Métriques non riemanniennes](metriques-non-riemanniennes.qmd).
 
 ## Ce qui reste à formaliser (reprise v2)
 

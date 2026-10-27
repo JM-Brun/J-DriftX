@@ -33,6 +33,8 @@ website:
             text: "Objectifs de J-DriftX"
           - href: projet/utilite-scientifique.qmd
             text: "Utilité scientifique"
+          - href: projet/niveaux-modelisation.qmd
+            text: "Niveaux de modélisation"
           - section: "Vérification et validation"
             contents:
               - href: projet/validation-scientifique.qmd
@@ -89,6 +91,14 @@ website:
             text: "Positionnement de J-DriftX"
           - href: etat-art/revue-mathematique.qmd
             text: "Revue mathématique ciblée"
+      - section: "Annexes"
+        contents:
+          - href: projet/lectures.qmd
+            text: "Lectures des sources"
+          - href: projet/audit.qmd
+            text: "Audit de l'héritage"
+          - href: projet/modele-jouet.qmd
+            text: "Modèle jouet"
       - href: glossaire.qmd
         text: "Glossaire"
       - href: references.qmd
