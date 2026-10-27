@@ -400,7 +400,7 @@ def _ligne_table(noeud: Noeud, registre: Registre) -> str:
     if noeud.lien is None:
         destination = _texte(noeud.libelle)
     else:
-        destination = f"[{_texte_lien(noeud.lien)}]({_lien(noeud.lien)}))"
+        destination = f"[{_texte_lien(noeud.lien)}]({_lien(noeud.lien)})"
     return f"| {_texte(noeud.libelle)} | {type_libelle} | {destination} |"
 
 
