@@ -74,13 +74,15 @@ Cette chaîne ne démontre pas que la famille candidate reste valide pour un ven
 
 Cette chaîne est liée au modèle physique, mais ne découle pas automatiquement de la dérivation à vent uniforme.
 
-### Vérifier ce qui est réellement établi
+### Reproduire et évaluer les résultats
 
-1. [Contraintes physiques](theorie/contraintes-physiques.qmd) — retrouver le statut des propriétés visées.
-2. [Qualité & tests](projet/qualite.qmd) — comprendre ce que les tests vérifient, et leurs limites.
-3. [Limites et domaines de validité](hypotheses/limites.qmd) — identifier les extrapolations qui restent à justifier.
+1. [Catalogue du laboratoire numérique](projet/laboratoire-interactif.qmd) — choisir une expérience synthétique et retrouver ses hypothèses, sa solution de référence et la commande pour la lancer localement.
+2. [Qualité & tests](projet/qualite.qmd) — identifier les propriétés effectivement testées, les tolérances et les limites de chaque oracle ; la CI vérifie le code et le rendu, pas la validité physique générale.
+3. [Tests du dépôt](https://github.com/JM-Brun/J-DriftX/tree/main/tests) — examiner les cas automatisés qui soutiennent les affirmations sur le comportement du code.
+4. [Instrument de coût](https://github.com/JM-Brun/J-DriftX/blob/main/benchmarks/README.md) — reproduire les mesures de coût disponibles en gardant à l'esprit que le squelette actuel ne démontre pas de gain face à un solveur EDP/CFD.
+5. [Validation scientifique](projet/validation-scientifique.qmd) et [catalogue de données candidates](projet/catalogue-donnees.qmd) — retrouver les conditions nécessaires à une comparaison sur référence indépendante.
 
-Le cadrage documentaire G0 est franchi, mais l'utilité applicative (G0-A) reste non démontrée. Les questions ouvertes et les travaux à suivre sont consignés dans les [issues du dépôt](https://github.com/JM-Brun/J-DriftX/issues).
+**Portée actuelle :** les expériences synthétiques et les tests ciblés vérifient des cas définis. Ils ne constituent pas une validation météorologique ou applicative. Le cadrage documentaire G0 est franchi, mais l'utilité applicative (G0-A), la valeur différentielle et un gain de performance restent non démontrés. Les questions scientifiques ouvertes sont suivies dans les [issues publiques du dépôt](https://github.com/JM-Brun/J-DriftX/issues).
 
 ## De l'idée au détail
 
