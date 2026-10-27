@@ -48,7 +48,7 @@ Les conditions typiques décrivent la classification d'origine (Pasquill 1961 ; 
 - message d'erreur d'une classe inconnue inchangé (`Classe de stabilite inconnue : ...`) ;
 - `CLASSES` conserve le même contenu (tuple des six lettres) pour la compatibilité.
 
-Garde : `tests/test_stabilite.py` épingle les coefficients exacts par classe (σ_y et σ_z), les formes par famille, les régimes, les identifiants de `FormeSigmaZ`, l'équivalence enum/lettre dans `sigma_y`/`sigma_z`, et le message d'erreur historique. Les tests existants de `similitude` (croissance des σ, bilans de masse, etc.) couvrent le comportement numérique inchangé.
+Garde : `tests/test_stabilite.py` épingle les coefficients exacts par classe (σ_y et σ_z), les formes par famille, les régimes, les identifiants de `FormeSigmaZ`, l'équivalence enum/lettre dans `sigma_y`/`sigma_z`, et le message d'erreur historique. Les tests existants de `similitude` (croissance des σ, bilans de masse, etc.) couvrent le comportement numérique inchangé. Les tests par propriétés (`tests/test_proprietes.py`) tirent leurs classes des membres de l'objet `ClasseStabilite` (`st.sampled_from`), jamais de chaînes littérales : la source unique de vérité s'applique aussi côté tests.
 
 ## 5. Limites
 
