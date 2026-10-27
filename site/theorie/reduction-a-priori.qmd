@@ -6,6 +6,15 @@ title: "Réduction a priori"
 
 L'idée fondatrice attribuée à Drift-X [@brun2008] est de construire *a priori* un **espace de recherche physiquement motivé**, plutôt que de construire systématiquement une base à partir de *snapshots*. Cet espace est une approximation candidate de la solution, pas un sous-espace dont on sait d'avance qu'il contient la solution exacte.
 
+## Place dans la chaîne et contrat de lecture
+
+This page takes as inputs the [direct model](modele-direct.qmd) and the Gaussian family derived in [Solutions de similitude](similitude.qmd). It does not re-derive the transport equation or the Gaussian profile: it specifies the status of that family as a **candidate approximation** to a more general problem and the measurements required to evaluate the reduction.
+
+- **Prerequisites:** the reference problem, the assumptions leading to the Gaussian plume, and the parameters of the candidate family.
+- **Result treated here:** the distinction between the direct model $V(p)$, the approximate model $v(p)$, the domain of validity, and the total cost to measure.
+- **Next step:** physical and geometric properties must be established separately. Replacing $x/U$ by a travel-time $\\tau$ in a non-uniform field belongs to [Métrique travel-time](metrique-travel-time.qmd) and does not follow from the Gaussian reduction alone.
+
+
 ## Les deux réductions classiques
 
 **Méthodes de projection (éléments finis)** : la solution est cherchée dans un sous-espace $S(\{W_N\})$ décrit par une base fonctionnelle $\{W_N\}$, avec $N \to \infty$ pour la consistance. Le problème reste de grande taille ($1 \ll N < \infty$) et exige un maillage.
