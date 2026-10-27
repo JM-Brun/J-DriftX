@@ -17,8 +17,10 @@ L'idée fondatrice attribuée à Drift-X [@brun2008] est de construire *a priori
 On remplace le modèle direct $p \mapsto V(p)$ (calcul complet de l'état) par un **modèle approché** $p \mapsto v(p)$, construit à partir de ce que la physique nous apprend des panaches :
 
 $$
-V(p) \;\longrightarrow\; v(p), \qquad v \in S(\text{similitude}), \qquad \text{coût} \; \ll \; \text{coût}(V).
-$$
+V(p) \;\longrightarrow\; v(p), \qquad v \in S(\text{similitude}), \qquad \text{coût}(v) \;\stackrel{?}{\ll}\; \text{coût}(V).
+$
+
+L'inégalité de coût est un **objectif à mesurer**, non un résultat établi : elle doit inclure le calcul de $\tau$, les données, la calibration et les évaluations de référence nécessaires.
 
 Trois conséquences attendues — à distinguer des performances déjà mesurées :
 
