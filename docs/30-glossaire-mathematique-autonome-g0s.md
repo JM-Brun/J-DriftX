@@ -8,6 +8,8 @@ status: working
 
 Cette page fait partie du dépôt public **J-DriftX**. Elle contient les définitions dont le lecteur a besoin pour comprendre l'étude des temps de parcours, sans devoir consulter un wiki privé ou un autre dépôt. Elle complète l'investigation [G0-S — temps de parcours dirigé](19-investigation-g0s-temps-de-parcours.md) ; elle ne la remplace pas.
 
+**Comment lire le nom « G0-S ».** « G0-S » n'est pas une notion mathématique : c'est le repère d'un chantier dans la feuille de route du projet, à lire « G zéro S ». **G0** désigne le premier jalon de cadrage ; le suffixe **S** désigne l'axe **scientifique**, par opposition à l'axe applicatif **G0-A**, dont l'objet — l'utilité pratique — reste non démontré (détail dans la [carte d’articulation scientifique](18-carte-articulation-scientifique.md), section 3). En clair, « G0-S » désigne ici l'**étude des temps de parcours dirigés** : dans un vent donné, combien de temps faut-il pour aller d'un point $A$ à un point $B$ en suivant le courant, et quelles propriétés ce temps vérifie-t-il ? Dans toute la page, ce nom de code peut se lire comme « l'étude des temps de parcours dirigés ».
+
 ## 1. Distance, métrique et variantes
 
 Soit $E$ un ensemble. Une fonction $d:E\times E\to[0,+\infty[$ est une **métrique** si, pour tous $x,y,z\in E$, elle vérifie les cinq axiomes suivants.
@@ -27,6 +29,15 @@ Le terme **distance** désigne parfois, de manière informelle, une mesure d'éc
 - Une **pseudo-métrique** vérifie la non-négativité, la diagonale nulle, la symétrie et l'inégalité triangulaire, mais la séparation peut échouer : deux points distincts peuvent être à distance nulle.
 - Une **quasi-métrique dirigée** (convention de terminologie variable selon les sources) autorise l'échec de la symétrie. Selon la convention, la séparation et l'inégalité triangulaire restent exigées.
 - Une **quasi-distance étendue dirigée**, au sens utilisé ici pour V1, prend ses valeurs dans $[0,+\infty]$ et vérifie la diagonale nulle, la non-négativité, la séparation et l'inégalité triangulaire dirigée. Elle peut valoir $+\infty$ lorsque la cible n'est pas atteinte et elle n'est pas nécessairement symétrique. Ce n'est donc pas une métrique au sens strict.
+
+Le tableau suivant récapitule, axiome par axiome, ce qui rapproche et ce qui distingue ces notions. Les quatre partagent la non-négativité et la diagonale nulle ; elles se séparent sur la séparation, la symétrie, l'inégalité triangulaire et l'admission de la valeur $+\infty$.
+
+| Notion | Non-négativité | Diagonale nulle | Séparation | Symétrie | Inégalité triangulaire | Valeurs possibles |
+|---|---|---|---|---|---|---|
+| Métrique | Oui | Oui | Oui | Oui | Oui | $[0,+\infty[$ |
+| Pseudo-métrique | Oui | Oui | Peut échouer | Oui | Oui | $[0,+\infty[$ |
+| Quasi-métrique dirigée | Oui | Oui | Exigée selon la convention | Peut échouer | Dirigée ; exigée selon la convention | $[0,+\infty[$ |
+| Quasi-distance étendue dirigée (V1) | Oui | Oui | Oui | Peut échouer | Oui, dirigée | $[0,+\infty]$ |
 
 Pour V1, la convention $T(A,B)=+\infty$ en l'absence d'arrivée est utile pour représenter l'inaccessibilité dans le sens du flot. Elle doit toutefois être distinguée d'une non-existence de la trajectoire dans le domaine : ce dernier cas relève du temps maximal de solution et des conventions de sortie de domaine.
 
@@ -61,6 +72,8 @@ $$
 $$
 la continuité du champ assure notamment l'existence locale d'au moins une solution (théorème de Peano), mais **ne garantit pas à elle seule son unicité**. Une hypothèse locale de Lipschitz est une condition suffisante standard pour l'existence et l'unicité locales (théorème de Cauchy–Lipschitz/Picard–Lindelöf). Elle permet de définir un flot $X(t;A)$ non ambigu, puis d'utiliser sa propriété de semi-groupe pour démontrer l'inégalité triangulaire de V1.
 
+Un **flot** désigne la famille complète des trajectoires du champ, vue comme une seule application $(t,A)\mapsto X(t;A)$ : à un point de départ $A$ et un temps $t$, elle associe la position $X(t;A)$ atteinte à l'instant $t$ par la solution de $\dot X=u(X)$ issue de $A$. L'image est celle d'un transport : de même qu'un courant porte une particule de $A$ vers l'aval, le champ transporte chaque point, et le flot rassemble tous ces transports en un objet unique. Ce mot n'a de sens que si chaque point de départ $A$ détermine une seule trajectoire : c'est l'unicité qui permet d'écrire $X(t;A)$ sans ambiguïté — d'où le rôle central de cette hypothèse dans la suite.
+
 Il faut distinguer les implications :
 - $u\in C^1\Rightarrow u$ localement lipschitzien $\Rightarrow$ unicité locale ;
 - $u$ seulement continu $\Rightarrow$ existence locale sous les hypothèses usuelles, mais pas nécessairement unicité ;
@@ -86,7 +99,7 @@ est également une solution : après le délai, sa dérivée vaut $(t-\tau)/2=\s
 
 ## 4. Temps de première arrivée (hitting time)
 
-Dans le cadre retenu par G0-S, $u:\Omega\to\mathbb R^d$ est un champ stationnaire suffisamment régulier pour que la solution maximale $X(t;A)$ issue de $A$ soit unique. Son intervalle maximal d'existence est noté $I_A$, avec $0\in I_A$.
+Dans le cadre retenu par G0-S — l'étude des temps de parcours dirigés, explicitée en tête de page —, $u:\Omega\to\mathbb R^d$ est un champ stationnaire suffisamment régulier pour que la solution maximale $X(t;A)$ issue de $A$ soit unique. Son intervalle maximal d'existence est noté $I_A$, avec $0\in I_A$.
 
 Le **temps de première arrivée** de $B$ depuis $A$ est
 $$
@@ -96,6 +109,13 @@ $$
 Autrement dit, c'est le premier temps non négatif où la trajectoire issue de $A$ atteint $B$, si elle l'atteint pendant son existence. Le temps $t=0$ est admis : ainsi $T(A,A)=0$. Le **temps de retour** en $A$, lui, désigne généralement le premier temps strictement positif où une trajectoire revient en $A$, s'il existe ; il s'agit d'une autre quantité.
 
 Pourquoi définir l'ensemble sur $I_A$ ? Parce qu'une solution ne peut être évaluée après la fin de son intervalle maximal. Écrire simplement $t\geq0$ sans cette restriction masque cette condition d'existence.
+
+L'**intervalle maximal d'existence** $I_A$ est l'intervalle de temps, contenant $0$, au-delà duquel la solution issue de $A$ ne peut plus être prolongée en restant dans le modèle. Il peut être strictement plus petit que $[0,+\infty[$ pour deux raisons distinctes :
+
+1. **Sortie du domaine.** La trajectoire atteint le bord de $\Omega$ et ne peut plus y être prolongée. Exemple : pour le champ uniforme $u\equiv U>0$ restreint à $\Omega=\,]0,1[$, la solution issue de $a$ atteint le bord au temps $(1-a)/U$ ; au-delà, elle quitte le domaine et le modèle ne la définit plus.
+2. **Explosion en temps fini.** La solution grandit sans borne et cesse d'exister au bout d'un temps fini. Exemple : pour $\dot x=x^2$ avec $x(0)=1$, la solution $x(t)=1/(1-t)$ n'est définie que pour $t<1$.
+
+Ces deux fins d'existence ne disent pas la même chose qu'une cible inaccessible dans le sens du flot : la distinction entre inaccessibilité par orientation ($+\infty$) et sortie de domaine est précisée par les conventions (C1) et (C2) de l'investigation. C'est pourquoi l'ensemble des temps de la définition est restreint à $I_A$ au lieu de tous les $t\geq0$.
 
 Si $B$ n'appartient pas à l'orbite positive de $A$, la convention donne $T(A,B)=+\infty$. Si la trajectoire quitte le domaine avant d'atteindre $B$, il faut signaler cette sortie comme telle plutôt que confondre automatiquement les causes d'inaccessibilité.
 
