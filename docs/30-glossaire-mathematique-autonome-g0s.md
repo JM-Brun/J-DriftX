@@ -89,7 +89,7 @@ est également une solution : après le délai, sa dérivée vaut $(t-\tau)/2=\s
 Dans le cadre retenu par G0-S, $u:\Omega\to\mathbb R^d$ est un champ stationnaire suffisamment régulier pour que la solution maximale $X(t;A)$ issue de $A$ soit unique. Son intervalle maximal d'existence est noté $I_A$, avec $0\in I_A$.
 
 Le **temps de première arrivée** de $B$ depuis $A$ est
-$
+$$
 T(A,B)=\inf\{t\in I_A\cap[0,+\infty[\mid X(t;A)=B\},
 \qquad \inf\varnothing=+\infty.
 $$
