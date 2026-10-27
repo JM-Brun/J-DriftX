@@ -8,8 +8,8 @@ La question de l'issue #41 est : **quelles propriétés possède une fonction de
 
 Réponse courte, démontrée dans les sections 3 à 7 :
 
-1. Le **temps de première arrivée** (variante V1, définition 2.3) satisfait automatiquement, par sa seule définition : positivité, séparation des points, inégalité triangulaire dirigée (propositions 3.2 et 3.3). Il ne satisfait pas, en général : la symétrie (structurellement), ni la finitude (points inaccessibles). C'est une **quasi-distance étendue** au sens des axiomes (D1)–(D4) ci-dessous.
-2. La **pseudo-distance projetée historique** (variante V2, définition 2.4, Mohammadi & Brun 2006) ne conserve **automatiquement aucune** propriété de distance dès la dimension 2 : la séparation (§ 5.2), l'inégalité triangulaire (§ 5.4–5.6) et même l'unicité de la valeur (§ 6.1) peuvent échouer. En dimension 1, V2 coïncide avec V1 (proposition 5.1) : les pathologies de V2 sont des phénomènes de dimension supérieure ou égale à 2.
+1. Sous les hypothèses du cadre de base (§ 2.1–2.2), le **temps de première arrivée** (variante V1, définition 2.3) vérifie la non-négativité, la séparation des points et l'inégalité triangulaire dirigée (propositions 3.2 et 3.3). Ces propriétés reposent sur la continuité des trajectoires et, pour la triangulation, sur l'unicité et la propriété de semi-groupe du flot autonome ; elles ne découlent pas de la seule notation d'un infimum. Il ne satisfait pas, en général : la symétrie (structurellement), ni la finitude (points inaccessibles). C'est une **quasi-distance étendue** au sens des axiomes (D1)–(D4) ci-dessous.
+2. La **construction projetée historique V2** (définition 2.4, Mohammadi & Brun 2006) reste non négative et vérifie \(d(A,A)=0\) lorsque la projection de \(A\) sur sa propre caractéristique est bien définie. En dimension 2, elle ne vérifie toutefois pas en général la séparation (§ 5.2) ni l'inégalité triangulaire (§ 5.4–5.6) ; sa valeur peut aussi être non unique lorsque la projection l'est (§ 6.1). Il faut donc préciser quelles propriétés sont conservées et lesquelles échouent, plutôt que dire qu'aucun axiome de distance ne subsiste. En dimension 1, V2 coïncide avec V1 sous les hypothèses explicitées en proposition 5.1.
 3. Aucune des deux variantes n'entraîne de propriété physique (conservation de masse, positivité d'une concentration) : ces propriétés relèvent de l'équation de transport et de ses hypothèses, pas du temps de parcours (renvoi à [14-revue-mathematique-ciblee.md](14-revue-mathematique-ciblee.md), § 3.4).
 4. Le risque de nouveauté est tranché (§ 7) : l'intégrale de temps le long d'une ligne de courant est un objet classique (time-of-flight des méthodes streamline, distances-temps en géographie) ; la construction projetée par paires et son statut de pseudo-distance sont annoncés dans la source primaire de 2006 elle-même. Conclusion du MVP : **idée connue, utile pédagogiquement, désormais délimitée précisément** — l'une des conclusions autorisées par le document MVP (§ 3).
 
@@ -17,7 +17,9 @@ Réponse courte, démontrée dans les sections 3 à 7 :
 
 ### 2.1 Champ admissible
 
-Soit \(\Omega\) un ouvert de \(\mathbb R^d\) (d = 1 ou 2 dans ce document). Un **champ admissible** est une application \(\mathbf u : \Omega \to \mathbb R^d\) de classe \(C^1\), **stationnaire**. Le caractère stationnaire est une hypothèse de périmètre : dans un champ instationnaire, lignes de courant, trajectoires et lignes d'émission diffèrent, et rien ci-dessous ne se transfère sans retravail (§ 10).
+Soit \(\Omega\) un ouvert de \(\mathbb R^d\) (d = 1 ou 2 dans ce document). Le **cadre de base** prend un champ \(\mathbf u : \Omega \to \mathbb R^d\) de classe \(C^1\), **stationnaire**. Cette hypothèse garantit l'existence locale et l'unicité des solutions maximales, ainsi que leur dépendance \(C^1\) par rapport aux conditions initiales. Le caractère stationnaire est une hypothèse de périmètre : dans un champ instationnaire, lignes de courant, trajectoires et lignes d'émission diffèrent, et rien ci-dessous ne se transfère sans retravail (§ 10).
+
+**Extension de portée en section 4.** Les exemples 1D de stagnation étudient aussi des champs seulement continus ou non lipschitziens, et certains sont définis sur des intervalles fermés ou semi-ouverts pour analyser un endpoint. Ils sortent donc du cadre de base \(\Omega\) ouvert et \(C^1\) ; ils sont des contre-exemples ou cas-limites sous des hypothèses élargies, pas des applications directes de toutes les propositions établies sous le cadre de base. Chaque conclusion de la section 4 doit être lue sous ses hypothèses locales explicites.
 
 ### 2.2 Flot, trajectoire, caractéristique
 
@@ -34,7 +36,7 @@ définie sur un intervalle ouvert \(I_A\) contenant 0 (unicité : Cauchy–Lipsc
 Pour \(A, B \in \Omega\) :
 
 \[
-T(A, B) = \inf\{\, t \ge 0 : X(t; A) = B \,\}, \qquad \inf \varnothing = +\infty.
+T(A, B) = \inf\{\, t \in I_A \cap [0,+\infty[ : X(t; A) = B \,\}, \qquad \inf \varnothing = +\infty.
 \]
 
 \(T(A,B)\) est le **temps de première arrivée** de \(B\) sur l'orbite positive de \(A\). Unités : \([\mathbf u] = \mathrm{m\,s^{-1}}\), \([T] = \mathrm{s}\).
@@ -74,7 +76,7 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 
 **Exemple 3.5 (sous-additivité stricte, champ rotationnel).** \(\mathbf u(x,y) = (-y, x)\), \(A=(1,0)\), \(B=(-1,0)\), \(C=(0,1)\). La trajectoire est \(X(t;A) = (\cos t, \sin t)\) : \(T(A,B) = \pi\), \(T(B,C) = 3\pi/2\) (trois quarts de tour), \(T(A,C) = \pi/2\). Donc \(T(A,C) = \pi/2 < \pi + 3\pi/2\). (Contrôlé numériquement, annexe A.)
 
-**Proposition 3.6 (non-symétrie structurelle et retournement).** (i) En général \(T(B,A) = +\infty\) alors que \(T(A,B) < +\infty\) (tout champ dirigé, § 5). (ii) **Retournement exact** : pour le champ opposé \(-\mathbf u\), \(T_{-\mathbf u}(B,A) = T_{\mathbf u}(A,B)\) chaque fois que l'un des deux membres est fini. La non-symétrie n'est donc pas une propriété de la courbe géométrique \(\gamma_A\), mais du couple (champ, orientation).
+**Proposition 3.6 (non-symétrie possible et retournement).** (i) V1 n'est pas symétrique en général : il existe des champs et des paires pour lesquels \(T(A,B)<+\infty\) mais \(T(B,A)=+\infty\), par exemple le champ uniforme \(u\equiv U>0\) du tableau 4.3. Ce n'est toutefois pas universel : sur une orbite périodique, les deux temps sont finis (proposition 3.7). (ii) **Retournement exact** : pour le champ opposé \(-\mathbf u\), \(T_{-\mathbf u}(B,A) = T_{\mathbf u}(A,B)\) lorsque le temps de première arrivée du membre de droite est fini. La non-symétrie dépend du couple (champ, orientation), et non de la seule courbe géométrique.
 
 *Preuve de (ii).* Si \(X(t^*;A) = B\), alors \(s \mapsto X(t^*-s; A)\) est une trajectoire de \(-\mathbf u\) issue de \(B\) qui atteint \(A\) en \(s = t^*\) : \(T_{-\mathbf u}(B,A) \le T_{\mathbf u}(A,B)\). En appliquant le même argument à \(-\mathbf u\), l'inégalité inverse. ∎
 
@@ -138,7 +140,7 @@ Ce critère tranche la question de convergence de l'intégrale : la singularité
 
 ## 5. V2 : champ uniforme et champs de cisaillement (2D, calculables à la main)
 
-**Proposition 5.1 (V2 = V1 en dimension 1).** Sous les hypothèses (H1)–(H2) de la définition 2.4 (caractéristique non dégénérée, projection bien définie), pour \(d = 1\), la caractéristique \(\gamma_a\) est l'intervalle lui-même : tout \(b\) se projette sur lui-même, \(b^\perp = b\), donc \(d(a,b) = T(a,b)\). Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. La restriction n'est pas décorative : en 1D, une source stagnante \(u(a)=0\) réduit \(\gamma_a\) à un point et fait échouer la séparation — c'est exactement ce qu'exclut (H1). ∎
+**Proposition 5.1 (V2 = V1 en dimension 1).** Supposons \(d=1\), les hypothèses (H1)–(H2) de la définition 2.4 satisfaites, et \(a,b\) dans la même composante connexe de \(\Omega\setminus\{x:u(x)=0\}\). Sur cette composante, \(u\) ne s'annule pas et la trajectoire maximale parcourt toute la composante (le temps pour atteindre tout point intérieur est fini). La projection de \(b\) sur \(\gamma_a\) est donc \(b\) lui-même, \(b^\perp=b\), et \(d(a,b)=T(a,b)\). Si la composante se réduit à un point de stagnation, cette conclusion ne s'applique pas. Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. La restriction n'est pas décorative : en 1D, une source stagnante \(u(a)=0\) réduit \(\gamma_a\) à un point et fait échouer la séparation — c'est exactement ce qu'exclut (H1). ∎
 
 ### 5.2 Champ uniforme — dégénérescence transversale
 
