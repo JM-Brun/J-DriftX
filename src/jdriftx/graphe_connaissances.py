@@ -128,8 +128,7 @@ def charger(chemin: Path) -> Registre:
         for cle, table in brut["types"].items()
     }
     relations = {
-        cle: Relation(cle=cle, libelle=table["libelle"])
-        for cle, table in brut["relations"].items()
+        cle: Relation(cle=cle, libelle=table["libelle"]) for cle, table in brut["relations"].items()
     }
     noeuds = tuple(Noeud(**table) for table in brut["noeuds"])
     aretes = tuple(Arete(**table) for table in brut["aretes"])
@@ -198,8 +197,7 @@ def _erreurs_aretes(registre: Registre) -> list[str]:
     for arete in registre.aretes:
         if arete.relation not in registre.relations:
             resultats.append(
-                f"arête {arete.de} -> {arete.vers} : relation inconnue "
-                f"({arete.relation})"
+                f"arête {arete.de} -> {arete.vers} : relation inconnue ({arete.relation})"
             )
         if arete.de not in registre.index:
             resultats.append(f"arête vers {arete.vers} : origine inconnue ({arete.de})")
@@ -223,10 +221,7 @@ def _erreurs_vues(registre: Registre) -> list[str]:
     rendues = sum(
         1
         for arete in registre.aretes
-        if any(
-            arete.de in ensemble and arete.vers in ensemble
-            for ensemble in vues.values()
-        )
+        if any(arete.de in ensemble and arete.vers in ensemble for ensemble in vues.values())
     )
     if rendues != len(registre.aretes):
         manquantes = len(registre.aretes) - rendues
@@ -252,8 +247,7 @@ def _erreurs_groupes(registre: Registre) -> list[str]:
         manquants = sorted(ensemble - declares)
         if manquants:
             resultats.append(
-                f"graphe {graphe.id} : nœuds absents des groupes : "
-                f"{', '.join(manquants)}"
+                f"graphe {graphe.id} : nœuds absents des groupes : {', '.join(manquants)}"
             )
         if graphe.sens not in {"LR", "TD", "RL", "BT"}:
             resultats.append(f"graphe {graphe.id} : sens invalide ({graphe.sens})")
@@ -351,8 +345,7 @@ def generer_contenu(
 def _legende(registre: Registre) -> str:
     """Rend la légende des couleurs, une pastille par type de nœud."""
     morceaux = [
-        MOTIF_LEGENDE.format(couleur=t.couleur, libelle=t.libelle)
-        for t in registre.types.values()
+        MOTIF_LEGENDE.format(couleur=t.couleur, libelle=t.libelle) for t in registre.types.values()
     ]
     return "## Légende\n\n" + " \u00b7 ".join(morceaux)
 
@@ -376,15 +369,12 @@ def _section_vue(graphe: Graphe, registre: Registre) -> str:
     for arete in registre.aretes:
         if arete.de in vus and arete.vers in vus:
             libelle = registre.relations[arete.relation].libelle
-            lignes.append(
-                f'  {_identifiant(arete.de)} -->|"{libelle}"| {_identifiant(arete.vers)}'
-            )
+            lignes.append(f'  {_identifiant(arete.de)} -->|"{libelle}"| {_identifiant(arete.vers)}')
     types_vus = {registre.index[i].type for i in graphe.noeuds}
     for cle, type_noeud in registre.types.items():
         if cle in types_vus:
             lignes.append(
-                f"  classDef {cle} fill:{type_noeud.couleur},"
-                "stroke:#495057,color:#212529;"
+                f"  classDef {cle} fill:{type_noeud.couleur},stroke:#495057,color:#212529;"
             )
     lignes.append("```")
     lignes.append("")

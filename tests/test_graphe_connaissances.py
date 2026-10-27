@@ -104,9 +104,7 @@ def _depot_minimal(racine: Path) -> Path:
     (racine / "site/references.bib").write_text(
         "@article{cle2000,\n  title = {Démo},\n}\n", encoding="utf-8"
     )
-    (racine / "src/jdriftx/noyau.py").write_text(
-        '"""Module minimal."""\n', encoding="utf-8"
-    )
+    (racine / "src/jdriftx/noyau.py").write_text('"""Module minimal."""\n', encoding="utf-8")
     return racine
 
 
@@ -168,9 +166,7 @@ def test_depot_minimal_valide(tmp_path: Path) -> None:
         ),
     ],
 )
-def test_erreurs_de_validation(
-    tmp_path: Path, avant: str, apres: str, motif: str
-) -> None:
+def test_erreurs_de_validation(tmp_path: Path, avant: str, apres: str, motif: str) -> None:
     """Étant donné un registre modifié de façon invalide, quand on valide,
     alors l'erreur mentionne le motif attendu."""
     racine = _depot_minimal(tmp_path / "depot")
