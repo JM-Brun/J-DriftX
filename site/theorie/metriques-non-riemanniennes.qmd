@@ -49,3 +49,5 @@ Un traceur passif en advection pure suit le champ de vitesse; il ne choisit pas 
 - **Hypothèse d'apport Drift-X à établir** : une représentation de temps de transport reconstruite à partir d'un champ de vent, avec des propriétés de conservation et une évaluation ponctuelle à formaliser. Ces propriétés ne découlent pas du seul vocabulaire de métrique; elles demandent une dérivation, des hypothèses explicites et des cas de vérification.
 
 La définition exacte, les propriétés à vérifier et la comparaison aux formulations voisines sont discutées dans la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd). Voir aussi la page [Métrique travel-time](metrique-travel-time.qmd).
+
+**Traçabilité de l'implémentation.** Les propriétés de la définition historique ne doivent pas être attribuées automatiquement au prototype Python. La [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) précise les cas analytiques couverts, les fonctions concernées et les limites des tests.
