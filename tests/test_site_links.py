@@ -22,8 +22,7 @@ def test_check_site_links_accepts_existing_files_and_fragments(tmp_path: Path) -
         encoding="utf-8",
     )
     (root / "guide/page.html").write_text(
-        '<h2 data-anchor-id="details">Details</h2>'
-        '<a name="legacy-anchor"></a>',
+        '<h2 data-anchor-id="details">Details</h2><a name="legacy-anchor"></a>',
         encoding="utf-8",
     )
     (root / "assets/figure.svg").write_text("<svg></svg>", encoding="utf-8")
@@ -36,8 +35,7 @@ def test_check_site_links_reports_missing_file_and_fragment(tmp_path: Path) -> N
     root = tmp_path / "_site"
     root.mkdir()
     (root / "index.html").write_text(
-        '<a href="missing.html">Missing page</a>'
-        '<a href="index.html#not-here">Missing fragment</a>',
+        '<a href="missing.html">Missing page</a><a href="index.html#not-here">Missing fragment</a>',
         encoding="utf-8",
     )
 
