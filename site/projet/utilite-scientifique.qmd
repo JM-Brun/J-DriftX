@@ -40,3 +40,5 @@ Le suivi des questions ouvertes est public dans les [issues GitHub](https://gith
 - [Panorama de l'état de l'art](../etat-art/panorama.qmd)
 - [Positionnement de J-DriftX](../etat-art/positionnement.qmd)
 - [Catalogue du laboratoire numérique](laboratoire-interactif.qmd)
+
+**État vérifiable du prototype.** Les critères de valeur définissent un programme d'évaluation, pas un résultat positif. La [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) sépare les résultats analytiques, le code, les tests ciblés et les affirmations qui restent non établies.

@@ -34,3 +34,5 @@ Une modélisation à complexité réduite honnête publie ses limites au même n
 2. **Contraintes physiques systématiques** : conservation (panache : six classes, plusieurs distances, hauteur non nulle ; puff ; superposition, y compris à classes différentes (panaches et puffs) — tolérance 0,1 % sur grilles adaptées), positivité et superposition testées en CI — tests ciblés, pas une preuve générale ; l’état de chaque preuve (formulée, testée, démontrée) est suivi sur la page [Contraintes physiques](../theorie/contraintes-physiques.qmd).
 3. **Benchmarks publics** : comparaison permanente au gaussien de référence, aux cas académiques et aux campagnes publiées.
 4. **Estimateur d'erreur inter-niveaux** : jalon M2 — la pièce méthodologique manquante de l'héritage.
+
+**Traçabilité MVP-S.** Pour distinguer les limites documentées des propriétés réellement démontrées, implémentées ou testées, consulter la [matrice publique de traçabilité](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md). Les limites générales du modèle ne sont pas toutes couvertes par le noyau 1D ou les tests actuels.
