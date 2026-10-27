@@ -36,7 +36,7 @@ Une propriété ne découle pas du fait qu'une quantité soit positive, exprimé
 
 | Propriété | V1 : temps de première arrivée | V2 : temps après projection |
 |---|---|---|
-| Non-négativité | Oui, par définition du temps $t\geq0$, avec (+\infty) autorisé | Oui lorsque la projection est définie et que V2 est calculée comme un temps V1 |
+| Non-négativité | Oui, par définition du temps $t\geq0$, avec $+\infty$ autorisé | Oui lorsque la projection est définie et que V2 est calculée comme un temps V1 |
 | Diagonale nulle | Oui : $T(A,A)=0$, puisque $t=0$ est admis | Oui si la projection de $A$ sur sa propre caractéristique est bien définie et vaut $A$ |
 | Séparation | Oui dans le cadre du flot continu et univoque retenu ; un temps nul implique la même position initiale et finale | Pas garantie en dimension 2 : une projection peut coïncider avec $A$ alors que $B\ne A$ |
 | Symétrie | Pas garantie : le flot est orienté dans le temps | Pas garantie ; la projection et le flot sont orientés et peuvent dépendre du point de départ |
@@ -89,8 +89,8 @@ est également une solution : après le délai, sa dérivée vaut $(t-\tau)/2=\s
 Dans le cadre retenu par G0-S, $u:\Omega\to\mathbb R^d$ est un champ stationnaire suffisamment régulier pour que la solution maximale $X(t;A)$ issue de $A$ soit unique. Son intervalle maximal d'existence est noté $I_A$, avec $0\in I_A$.
 
 Le **temps de première arrivée** de $B$ depuis $A$ est
-$$
-$T(A,B)=\inf\{t\in I_A\cap[0,+\infty[\mid X(t;A)=B\},
+$
+T(A,B)=\inf\{t\in I_A\cap[0,+\infty[\mid X(t;A)=B\},
 \qquad \inf\varnothing=+\infty.
 $$
 Autrement dit, c'est le premier temps non négatif où la trajectoire issue de $A$ atteint $B$, si elle l'atteint pendant son existence. Le temps $t=0$ est admis : ainsi $T(A,A)=0$. Le **temps de retour** en $A$, lui, désigne généralement le premier temps strictement positif où une trajectoire revient en $A$, s'il existe ; il s'agit d'une autre quantité.
