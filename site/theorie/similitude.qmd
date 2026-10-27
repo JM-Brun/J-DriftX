@@ -117,13 +117,49 @@ Ce calcul analytique utilise les intégrales complètes des deux gaussiennes et 
 
 ### Étape 6 — Réflexion au sol par la méthode des images {#etape-6-reflexion-au-sol-par-la-methode-des-images}
 
-Le sol ne laisse rien passer à travers lui : la condition est un flux vertical nul en $z = 0$. La méthode des images la satisfait exactement en ajoutant une **source virtuelle symétrique** en $(0, 0, -h)$ : la somme des deux gaussiennes annule le flux au sol et **double** la concentration au niveau du sol. C'est l'origine des deux termes verticaux qui complètent le panache établi de l'étape 4 :
+On restreint maintenant le domaine physique au demi-espace $z\geq 0$, avec un sol plat imperméable en $z=0$. Pour une diffusivité verticale constante, le flux diffusif vertical vaut $J_z=-K_z\,\partial_z C$ : la condition de non-pénétration est donc la condition de Neumann $\partial_z C(x,y,0)=0$.
 
-$$
-\exp\!\left(-\frac{(z-h)^2}{2\sigma_z^2}\right)
-+
-\exp\!\left(-\frac{(z+h)^2}{2\sigma_z^2}\right).
-$$
+La méthode des images la satisfait en ajoutant à la source réelle située à la hauteur $h$ une **source virtuelle de même signe** située à la hauteur $-h$. En notant $g(z;a)=\exp[-(z-a)^2/(2\sigma_z^2)]$, le facteur vertical devient $g(z;h)+g(z;-h)$. À la paroi,
+
+$
+\left.\frac{\partial}{\partial z}\big[g(z;h)+g(z;-h)\big]\right|_{z=0}
+=\frac{h}{\sigma_z^2}e^{-h^2/(2\sigma_z^2)}
+-\frac{h}{\sigma_z^2}e^{-h^2/(2\sigma_z^2)}
+=0.
+$
+
+La condition de flux nul est ainsi vérifiée exactement pour cette solution et ces hypothèses. À $z=0$, les deux contributions sont égales : la concentration au sol est le double de celle qu'aurait le terme de la source réelle seul. La source image est un artifice mathématique, pas une émission physique supplémentaire.
+
+**Vérification de la conservation sur le demi-espace.** Avec la normalisation de l'étape 4, le panache réfléchi s'écrit
+
+$
+C(x,y,z)=\frac{Q}{2\pi U\sigma_y\sigma_z}
+e^{-y^2/(2\sigma_y^2)}
+\left[
+e^{-(z-h)^2/(2\sigma_z^2)}
++e^{-(z+h)^2/(2\sigma_z^2)}
+\right],\qquad z\geq0.
+$
+
+Les deux intégrales verticales se complètent :
+
+$
+\int_0^{\infty}\!\left[
+e^{-(z-h)^2/(2\sigma_z^2)}
++e^{-(z+h)^2/(2\sigma_z^2)}
+\right]\,\mathrm dz
+=\int_{-\infty}^{\infty}e^{-u^2/(2\sigma_z^2)}\,\mathrm du
+=\sqrt{2\pi}\,\sigma_z.
+$
+
+En utilisant aussi $\int_{-\infty}^{\infty}e^{-y^2/(2\sigma_y^2)}\,\mathrm dy=\sqrt{2\pi}\,\sigma_y$, on obtient
+
+$
+U\int_{-\infty}^{\infty}\!\int_0^{\infty}C(x,y,z)\,\mathrm dz\,\mathrm dy=Q,
+\qquad x>0.
+$
+
+La méthode des images conserve donc le débit massique sur le demi-espace : le flux advectif intégré vaut $Q$. Ce résultat est analytique, sous les hypothèses du modèle parabolique à coefficients constants ; il est distinct des tests numériques sur grille décrits à l'étape 5.
 
 **Étape 7 — Les vrais $\sigma$ : de $K$ aux formules de Briggs.** La dérivation suppose $K_y, K_z$ constants — rarement réaliste : la turbulence dépend de la stabilité et de la hauteur. La démarche opérationnelle (Pasquill 1961, courbes de Gifford, formules de Briggs 1973) ne modélise pas $K$ : elle **tabule directement les $\sigma_y(x)$, $\sigma_z(x)$** à partir d'essais de traçage, par classe de stabilité A–F, en lois puissance de la distance. La théorie statistique de la diffusion turbulente (Taylor 1921) en donne la charpente :
 
