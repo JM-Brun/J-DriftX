@@ -8,12 +8,11 @@ L'idée fondatrice attribuée à Drift-X [@brun2008] est de construire *a priori
 
 ## Place dans la chaîne et contrat de lecture
 
-This page takes as inputs the [direct model](modele-direct.qmd) and the Gaussian family derived in [Solutions de similitude](similitude.qmd). It does not re-derive the transport equation or the Gaussian profile: it specifies the status of that family as a **candidate approximation** to a more general problem and the measurements required to evaluate the reduction.
+Cette page prend comme entrées le [modèle direct](modele-direct.qmd) et la famille gaussienne dérivée dans [Solutions de similitude](similitude.qmd). Elle ne redérive ni l'équation de transport ni le profil gaussien : elle précise le statut de cette famille comme **approximation candidate** d'un problème plus général et les mesures nécessaires pour évaluer la réduction.
 
-- **Prerequisites:** the reference problem, the assumptions leading to the Gaussian plume, and the parameters of the candidate family.
-- **Result treated here:** the distinction between the direct model $V(p)$, the approximate model $v(p)$, the domain of validity, and the total cost to measure.
-- **Next step:** physical and geometric properties must be established separately. Replacing $x/U$ by a travel-time $\\tau$ in a non-uniform field belongs to [Métrique travel-time](metrique-travel-time.qmd) and does not follow from the Gaussian reduction alone.
-
+- **Prérequis :** connaître le problème de référence, les hypothèses conduisant au panache gaussien et les paramètres de la famille candidate.
+- **Résultat traité ici :** distinguer le modèle direct $V(p)$, le modèle approché $v(p)$, leur domaine de validité et le coût total à mesurer.
+- **Étape suivante :** les propriétés physiques et géométriques doivent être établies séparément. Remplacer $x/U$ par un temps $\\tau$ dans un champ non uniforme relève de la [page Métrique travel-time](metrique-travel-time.qmd) et ne découle pas de la seule réduction gaussienne.
 
 ## Les deux réductions classiques
 
