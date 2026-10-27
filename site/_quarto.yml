@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    - visuels-g0s/glossaire-g0s.svg
 
 website:
   title: "J-DriftX"
