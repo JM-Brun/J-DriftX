@@ -2,9 +2,16 @@
 
 from __future__ import annotations
 
+import importlib.util
 from pathlib import Path
 
-from scripts.check_site_links import check_site_links
+_checker_path = Path(__file__).resolve().parents[1] / "scripts" / "check_site_links.py"
+_checker_spec = importlib.util.spec_from_file_location("check_site_links", _checker_path)
+if _checker_spec is None or _checker_spec.loader is None:
+    raise ImportError(f"Cannot load link checker from {_checker_path}")
+_checker_module = importlib.util.module_from_spec(_checker_spec)
+_checker_spec.loader.exec_module(_checker_module)
+check_site_links = _checker_module.check_site_links
 
 
 def test_check_site_links_accepts_existing_files_and_fragments(tmp_path: Path) -> None:
