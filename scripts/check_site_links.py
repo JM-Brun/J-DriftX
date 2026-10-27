@@ -63,6 +63,11 @@ def _resolve_target(
             return None, fragment
     else:
         target_path = unquote(parsed.path)
+        base_path = site.path.rstrip("/")
+        if target_path.startswith("/") and base_path and (
+            target_path == base_path or target_path.startswith(base_path + "/")
+        ):
+            target_path = target_path[len(base_path) :]
 
     if not target_path:
         target = source
