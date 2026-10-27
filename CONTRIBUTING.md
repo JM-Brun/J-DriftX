@@ -31,3 +31,13 @@ Ce dépôt est un projet de recherche : **la rigueur scientifique et la qualité
 - Toute affirmation est sourcée et traçable ; ne jamais présenter une reconstruction synthétique comme une reproduction quantitative des papiers historiques.
 - Séparer explicitement, dans la PR, ce qui est transcription vérifiée d'une source de ce qui est hypothèse nouvelle.
 - Les figures portent leur statut de fidélité (schéma explicatif / reconstruction conceptuelle / reproduction numérique) et un manifeste de régénération.
+
+## Carte des connaissances
+
+Le graphe de la page « Carte des connaissances » n'est pas dessiné à la main : il est généré depuis le registre typé `site/data/graphe-connaissances.toml` par `src/jdriftx/graphe_connaissances.py`, et le rendu `site/projet/_graphes-mermaid.md` est committé. Pour ajouter ou modifier un nœud, une arête ou une vue :
+
+1. Éditer `site/data/graphe-connaissances.toml`.
+2. Régénérer : `uv run python -m jdriftx.graphe_connaissances`.
+3. Committer ensemble le registre et `site/projet/_graphes-mermaid.md`.
+
+La CI (`tests/test_graphe_connaissances.py`) refuse un rendu désynchronisé, un lien mort, une clé de `site/references.bib` sans nœud, ou un module de `src/jdriftx` sans nœud : le graphe ne peut pas dériver silencieusement du dépôt.

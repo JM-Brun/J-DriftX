@@ -1,0 +1,1496 @@
+# Graphe de connaissances J-DriftX : source de vérité unique.
+#
+# Ce registre décrit les nœuds typés du projet (concepts, hypothèses H1-H8,
+# niveaux N0-N6, propriétés, modules, tests, références bibliographiques,
+# jeux de données) et les arêtes typées qui les relient. Le rendu Mermaid
+# (site/projet/_graphes-mermaid.md) est généré depuis ce fichier par
+# `uv run python -m jdriftx.graphe_connaissances` et inclus dans la page
+# « Carte des connaissances » du site Quarto.
+#
+# Règles vérifiées par src/jdriftx.graphe_connaissances.py (et la CI) :
+#   - identifiants uniques ; types et relations dans les listes ci-dessous ;
+#   - chaque nœud apparaît dans au moins une vue ; chaque arête est rendue
+#     dans au moins une vue (ses deux extrémités y sont) ;
+#   - chaque lien pointe vers un fichier réel du dépôt ou une URL absolue ;
+#   - chaque clé de site/references.bib a un nœud reference, et réciproquement ;
+#   - chaque module de src/jdriftx (hors __init__.py) a un nœud module, et
+#     réciproquement.
+#
+# Toute modification doit être suivie d'une régénération du rendu et d'un
+# commit des deux fichiers ensemble : le test de synchronisation
+# (tests/test_graphe_connaissances.py) échoue sinon.
+
+# ---------- Types de nœuds (une couleur par type) ----------
+
+[types.hypothese]
+libelle = "Hypothèse"
+couleur = "#bfe0ff"
+
+[types.niveau]
+libelle = "Niveau de modélisation"
+couleur = "#ddd0f0"
+
+[types.concept]
+libelle = "Concept"
+couleur = "#c9ecd9"
+
+[types.propriete]
+libelle = "Propriété (visée ou testée)"
+couleur = "#ffd9b3"
+
+[types.module]
+libelle = "Module de code"
+couleur = "#d7f0a1"
+
+[types.test]
+libelle = "Test (CI)"
+couleur = "#e9ecef"
+
+[types.donnees]
+libelle = "Jeu de données candidat"
+couleur = "#fff1a6"
+
+[types.reference]
+libelle = "Référence bibliographique"
+couleur = "#e6dccb"
+
+# ---------- Relations (fermé : toute arête doit en utiliser une) ----------
+
+[relations.sapplique-a]
+libelle = "s'applique à"
+
+[relations.traduite-en]
+libelle = "traduite en"
+
+[relations.fonde]
+libelle = "fonde"
+
+[relations.depend-de]
+libelle = "dépend de"
+
+[relations.alimente]
+libelle = "alimente"
+
+[relations.construit]
+libelle = "construit"
+
+[relations.implemente-par]
+libelle = "implémenté par"
+
+[relations.teste]
+libelle = "teste"
+
+[relations.teste-par]
+libelle = "testée par"
+
+[relations.couvre]
+libelle = "couvre"
+
+[relations.utilise]
+libelle = "utilise"
+
+[relations.decrit]
+libelle = "décrit"
+
+[relations.candidat-pour]
+libelle = "candidat pour"
+
+[relations.contexte]
+libelle = "contexte"
+
+[relations.non-couvert-par]
+libelle = "non couvert par"
+
+# ---------- Nœuds : concepts ----------
+
+[[noeuds]]
+id = "c-transport"
+type = "concept"
+libelle = "Équation de transport (advection-diffusion)"
+lien = "site/theorie/modele-direct.qmd"
+
+[[noeuds]]
+id = "c-champ"
+type = "concept"
+libelle = "Champ de vent stationnaire"
+lien = "site/glossaire.qmd"
+
+[[noeuds]]
+id = "c-courant"
+type = "concept"
+libelle = "Ligne de courant et caractéristique"
+lien = "site/glossaire.qmd"
+
+[[noeuds]]
+id = "c-fcourant"
+type = "concept"
+libelle = "Fonction de courant"
+lien = "site/glossaire.qmd"
+
+[[noeuds]]
+id = "c-tau"
+type = "concept"
+libelle = "Temps de transport"
+lien = "site/theorie/metrique-travel-time.qmd"
+
+[[noeuds]]
+id = "c-polyligne"
+type = "concept"
+libelle = "Coût dirigé sur polyligne"
+lien = "site/theorie/metrique-travel-time.qmd"
+
+[[noeuds]]
+id = "c-tpa"
+type = "concept"
+libelle = "Temps de première arrivée (cas 1D exact)"
+lien = "site/theorie/metrique-travel-time.qmd"
+
+[[noeuds]]
+id = "c-pdist"
+type = "concept"
+libelle = "Pseudo-distance dirigée (référence uniforme)"
+lien = "site/theorie/metrique-travel-time.qmd"
+
+[[noeuds]]
+id = "c-panache"
+type = "concept"
+libelle = "Panache gaussien (similitude)"
+lien = "site/theorie/similitude.qmd"
+
+[[noeuds]]
+id = "c-stabilite"
+type = "concept"
+libelle = "Classes de Pasquill et lois de Briggs"
+lien = "site/glossaire.qmd"
+
+[[noeuds]]
+id = "c-multiniveaux"
+type = "concept"
+libelle = "Champ multi-niveaux historique (non reconstruit)"
+lien = "site/projet/niveaux-modelisation.qmd"
+
+[[noeuds]]
+id = "c-reduction"
+type = "concept"
+libelle = "Modèle approché v(p) (réduction a priori)"
+lien = "site/theorie/reduction-a-priori.qmd"
+
+[[noeuds]]
+id = "c-assimilation"
+type = "concept"
+libelle = "Assimilation et calibration"
+lien = "site/theorie/assimilation-identification.qmd"
+
+[[noeuds]]
+id = "c-maillage"
+type = "concept"
+libelle = "Maillage gouverné par métrique"
+lien = "site/theorie/edp-et-maillage.qmd"
+
+[[noeuds]]
+id = "c-burgers"
+type = "concept"
+libelle = "Équation de Burgers"
+lien = "site/theorie/burgers-et-jdriftx.qmd"
+
+# ---------- Nœuds : niveaux N0-N6 ----------
+
+[[noeuds]]
+id = "n0"
+type = "niveau"
+libelle = "N0 — contexte physique"
+lien = "site/projet/niveaux-modelisation.qmd"
+
+[[noeuds]]
+id = "n1"
+type = "niveau"
+libelle = "N1 — équations aux dérivées partielles"
+lien = "site/projet/niveaux-modelisation.qmd"
+
+[[noeuds]]
+id = "n2"
+type = "niveau"
+libelle = "N2 — discrétisation et maillage"
+lien = "site/projet/niveaux-modelisation.qmd"
+
+[[noeuds]]
+id = "n3"
+type = "niveau"
+libelle = "N3 — solveurs et schémas numériques"
+lien = "site/projet/niveaux-modelisation.qmd"
+
+[[noeuds]]
+id = "n4"
+type = "niveau"
+libelle = "N4 — modèles réduits"
+lien = "site/projet/niveaux-modelisation.qmd"
+
+[[noeuds]]
+id = "n5"
+type = "niveau"
+libelle = "N5 — expériences et données de terrain"
+lien = "site/projet/niveaux-modelisation.qmd"
+
+[[noeuds]]
+id = "n6"
+type = "niveau"
+libelle = "N6 — calibration et aide à la décision"
+lien = "site/projet/niveaux-modelisation.qmd"
+
+# ---------- Nœuds : hypothèses H1-H8 ----------
+
+[[noeuds]]
+id = "h1"
+type = "hypothese"
+libelle = "H1 — scalaire passif"
+lien = "site/hypotheses/catalogue.qmd"
+
+[[noeuds]]
+id = "h2"
+type = "hypothese"
+libelle = "H2 — régime auto-similaire établi"
+lien = "site/hypotheses/catalogue.qmd"
+
+[[noeuds]]
+id = "h3"
+type = "hypothese"
+libelle = "H3 — quasi-stationnarité du vent"
+lien = "site/hypotheses/catalogue.qmd"
+
+[[noeuds]]
+id = "h4"
+type = "hypothese"
+libelle = "H4 — transport advectif dominant dans la métrique"
+lien = "site/hypotheses/catalogue.qmd"
+
+[[noeuds]]
+id = "h5"
+type = "hypothese"
+libelle = "H5 — homogénéité horizontale par morceaux"
+lien = "site/hypotheses/catalogue.qmd"
+
+[[noeuds]]
+id = "h6"
+type = "hypothese"
+libelle = "H6 — domaine de validité local du modèle réduit"
+lien = "site/hypotheses/catalogue.qmd"
+
+[[noeuds]]
+id = "h7"
+type = "hypothese"
+libelle = "H7 — données d'assimilation représentatives"
+lien = "site/hypotheses/catalogue.qmd"
+
+[[noeuds]]
+id = "h8"
+type = "hypothese"
+libelle = "H8 — superposition des sources"
+lien = "site/hypotheses/catalogue.qmd"
+
+# ---------- Nœuds : propriétés ----------
+
+[[noeuds]]
+id = "p-positivite"
+type = "propriete"
+libelle = "Positivité (famille gaussienne)"
+lien = "site/theorie/contraintes-physiques.qmd"
+
+[[noeuds]]
+id = "p-superposition"
+type = "propriete"
+libelle = "Superposition et linéarité en débit"
+lien = "site/theorie/contraintes-physiques.qmd"
+
+[[noeuds]]
+id = "p-conservation"
+type = "propriete"
+libelle = "Bilan de masse (famille gaussienne)"
+lien = "site/theorie/contraintes-physiques.qmd"
+
+[[noeuds]]
+id = "p-divergence"
+type = "propriete"
+libelle = "Divergence nulle (champs analytiques)"
+lien = "site/theorie/contraintes-physiques.qmd"
+
+[[noeuds]]
+id = "p-nonsym"
+type = "propriete"
+libelle = "Non-symétrie (métrique dirigée)"
+lien = "site/theorie/contraintes-physiques.qmd"
+
+[[noeuds]]
+id = "p-adjoint"
+type = "propriete"
+libelle = "Adjoint : gradient exact (référence uniforme et cas 1D)"
+lien = "site/theorie/contraintes-physiques.qmd"
+
+# ---------- Nœuds : modules ----------
+
+[[noeuds]]
+id = "metric"
+type = "module"
+libelle = "metric.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/metric.py"
+
+[[noeuds]]
+id = "champ_analytique"
+type = "module"
+libelle = "champ_analytique.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/champ_analytique.py"
+
+[[noeuds]]
+id = "experiences/uniforme"
+type = "module"
+libelle = "experiences/uniforme.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/uniforme.py"
+
+[[noeuds]]
+id = "experiences/reconstruction_vent"
+type = "module"
+libelle = "experiences/reconstruction_vent.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reconstruction_vent.py"
+
+[[noeuds]]
+id = "similitude"
+type = "module"
+libelle = "similitude.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py"
+
+[[noeuds]]
+id = "stabilite"
+type = "module"
+libelle = "stabilite.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py"
+
+[[noeuds]]
+id = "constraints"
+type = "module"
+libelle = "constraints.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/constraints.py"
+
+[[noeuds]]
+id = "periodic_transport"
+type = "module"
+libelle = "periodic_transport.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/periodic_transport.py"
+
+[[noeuds]]
+id = "advection_diffusion"
+type = "module"
+libelle = "advection_diffusion.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/advection_diffusion.py"
+
+[[noeuds]]
+id = "trajectories"
+type = "module"
+libelle = "trajectories.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/trajectories.py"
+
+[[noeuds]]
+id = "fields"
+type = "module"
+libelle = "fields.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/fields.py"
+
+[[noeuds]]
+id = "terrain"
+type = "module"
+libelle = "terrain.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/terrain.py"
+
+[[noeuds]]
+id = "figures/figure_01"
+type = "module"
+libelle = "figures/figure_01.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_01.py"
+
+[[noeuds]]
+id = "figures/figure_02"
+type = "module"
+libelle = "figures/figure_02.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_02.py"
+
+[[noeuds]]
+id = "figures/wind_field_explorer"
+type = "module"
+libelle = "figures/wind_field_explorer.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/wind_field_explorer.py"
+
+[[noeuds]]
+id = "graphe_connaissances"
+type = "module"
+libelle = "graphe_connaissances.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/graphe_connaissances.py"
+
+# ---------- Nœuds : tests ----------
+
+[[noeuds]]
+id = "t-metric"
+type = "test"
+libelle = "test_metric.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py"
+
+[[noeuds]]
+id = "t-similitude"
+type = "test"
+libelle = "test_similitude.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_similitude.py"
+
+[[noeuds]]
+id = "t-constraints"
+type = "test"
+libelle = "test_constraints.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_constraints.py"
+
+[[noeuds]]
+id = "t-champ"
+type = "test"
+libelle = "test_champ_analytique.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_champ_analytique.py"
+
+[[noeuds]]
+id = "t-recon"
+type = "test"
+libelle = "test_reconstruction_vent.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reconstruction_vent.py"
+
+[[noeuds]]
+id = "t-uniforme"
+type = "test"
+libelle = "test_experience_uniforme.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_experience_uniforme.py"
+
+[[noeuds]]
+id = "t-advection"
+type = "test"
+libelle = "test_advection_diffusion.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_advection_diffusion.py"
+
+[[noeuds]]
+id = "t-fields"
+type = "test"
+libelle = "test_fields.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_fields.py"
+
+[[noeuds]]
+id = "t-periodic"
+type = "test"
+libelle = "test_periodic_transport.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_periodic_transport.py"
+
+[[noeuds]]
+id = "t-stabilite"
+type = "test"
+libelle = "test_stabilite.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_stabilite.py"
+
+[[noeuds]]
+id = "t-terrain"
+type = "test"
+libelle = "test_terrain.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_terrain.py"
+
+[[noeuds]]
+id = "t-trajectories"
+type = "test"
+libelle = "test_trajectories.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_trajectories.py"
+
+[[noeuds]]
+id = "t-figure-01"
+type = "test"
+libelle = "test_figure_01.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_01.py"
+
+[[noeuds]]
+id = "t-figure-02"
+type = "test"
+libelle = "test_figure_02.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_02.py"
+
+[[noeuds]]
+id = "t-wind-field"
+type = "test"
+libelle = "test_wind_field_explorer.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_wind_field_explorer.py"
+
+[[noeuds]]
+id = "t-interactif"
+type = "test"
+libelle = "test_interactive_wind_page.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_interactive_wind_page.py"
+
+[[noeuds]]
+id = "t-graphe"
+type = "test"
+libelle = "test_graphe_connaissances.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_graphe_connaissances.py"
+
+# ---------- Nœuds : références (clés de site/references.bib) ----------
+
+[[noeuds]]
+id = "mohammadi2006crmeca"
+type = "reference"
+libelle = "Mohammadi et Brun 2006 — C. R. Mécanique"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "mohammadi2006pironneau"
+type = "reference"
+libelle = "Mohammadi, Brun et Pironneau — reduced order modelling (référence non confirmée)"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "brun2008"
+type = "reference"
+libelle = "Brun et Mohammadi 2008 — chapitre Springer"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "bozon2008esta"
+type = "reference"
+libelle = "Bozon, Mohammadi et Sinfort 2008 — e-sta"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "bozon2009driftx"
+type = "reference"
+libelle = "Bozon, Sinfort et Mohammadi 2009 — Drift-X (HAL)"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "mohammadi2009gis"
+type = "reference"
+libelle = "Bozon et Mohammadi 2009 — Applied Geomatics"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "brun2006these"
+type = "reference"
+libelle = "Brun 2006 — thèse de doctorat (métadonnées à confirmer)"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "muller1979persee"
+type = "reference"
+libelle = "Muller 1979 — cartographie des distances-temps"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "mohammadi2001shape"
+type = "reference"
+libelle = "Mohammadi et Pironneau 2001 — Applied Shape Optimization"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "borouchaki1997delaunay"
+type = "reference"
+libelle = "Borouchaki et al. 1997 — maillage de Delaunay"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "raupach1981canopy"
+type = "reference"
+libelle = "Raupach et Thom 1981 — turbulence de canopée"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "simpson1997gravity"
+type = "reference"
+libelle = "Simpson 1997 — courants de gravité"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "hutchinson2017ste"
+type = "reference"
+libelle = "Hutchinson et al. 2017 — estimation de terme source"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "renormalization2014"
+type = "reference"
+libelle = "Turbelin et al. 2014 — renormalisation en champ moyen"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "vervecken2015rom"
+type = "reference"
+libelle = "Vervecken et al. 2015 — ROM de panache urbain"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "fno2024plume"
+type = "reference"
+libelle = "Ayoub et al. 2024 — plume FNO (WSPEEDI)"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "trindade2021urban"
+type = "reference"
+libelle = "Trindade da Silva et al. 2021 — dispersion urbaine"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "mahmud2026symmetry"
+type = "reference"
+libelle = "Mahmud et al. 2026 — dispersion urbaine par ML"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "epa2024appendixw"
+type = "reference"
+libelle = "EPA 2024 — Appendix W (AERMOD)"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "bonicelli2012cigr"
+type = "reference"
+libelle = "Bonicelli et al. 2012 — dérive des pesticides"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "defra2011ps2024"
+type = "reference"
+libelle = "Defra 2011 — PS2024 (exposition des riverains)"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "garbaczewski1997burgers"
+type = "reference"
+libelle = "Garbaczewski et al. 1997 — équation de Burgers"
+lien = "site/references.qmd"
+
+# ---------- Nœuds : jeux de données candidats ----------
+
+[[noeuds]]
+id = "d-datem"
+type = "donnees"
+libelle = "DATEM (NOAA) — traces longue distance"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/20-audit-technique-jeux-donnees.md"
+
+[[noeuds]]
+id = "d-etex"
+type = "donnees"
+libelle = "ETEX (JRC) — rejets atmosphériques européens"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/20-audit-technique-jeux-donnees.md"
+
+[[noeuds]]
+id = "d-diflu"
+type = "donnees"
+libelle = "DIFLU — hélium, arrêté préfectoral"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/20-audit-technique-jeux-donnees.md"
+
+[[noeuds]]
+id = "d-eries"
+type = "donnees"
+libelle = "ERIES — soufflerie urbaine"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/20-audit-technique-jeux-donnees.md"
+
+[[noeuds]]
+id = "d-prairie"
+type = "donnees"
+libelle = "Prairie Grass (1956) — rejets de terrain"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-jeux-donnees-seconde-vague-et-cas-synthetiques.md"
+
+[[noeuds]]
+id = "d-cedval"
+type = "donnees"
+libelle = "CEDVAL / CODASC — données de vent"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-jeux-donnees-seconde-vague-et-cas-synthetiques.md"
+
+[[noeuds]]
+id = "d-mvk"
+type = "donnees"
+libelle = "Model Validation Kit — rejets de terrain"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-jeux-donnees-seconde-vague-et-cas-synthetiques.md"
+
+[[noeuds]]
+id = "d-dad"
+type = "donnees"
+libelle = "DAD-drift — modèle mécaniste ouvert"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-jeux-donnees-seconde-vague-et-cas-synthetiques.md"
+
+[[noeuds]]
+id = "d-uav"
+type = "donnees"
+libelle = "UAV vignoble — dépôt de pesticide"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-jeux-donnees-seconde-vague-et-cas-synthetiques.md"
+
+[[noeuds]]
+id = "d-knapsack"
+type = "donnees"
+libelle = "Pulvérisateur knapsack — dépôt"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-jeux-donnees-seconde-vague-et-cas-synthetiques.md"
+
+# ---------- Arêtes : vue théorie ----------
+
+[[aretes]]
+de = "n0"
+vers = "n1"
+relation = "alimente"
+
+[[aretes]]
+de = "n1"
+vers = "n2"
+relation = "alimente"
+
+[[aretes]]
+de = "n2"
+vers = "n3"
+relation = "alimente"
+
+[[aretes]]
+de = "n3"
+vers = "n4"
+relation = "alimente"
+
+[[aretes]]
+de = "n4"
+vers = "n5"
+relation = "alimente"
+
+[[aretes]]
+de = "n5"
+vers = "n6"
+relation = "alimente"
+
+[[aretes]]
+de = "h1"
+vers = "n4"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h1"
+vers = "n5"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h2"
+vers = "n4"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h3"
+vers = "n1"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h3"
+vers = "n3"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h4"
+vers = "n3"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h5"
+vers = "n0"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h5"
+vers = "n3"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h6"
+vers = "n4"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h7"
+vers = "n6"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h8"
+vers = "n5"
+relation = "sapplique-a"
+
+[[aretes]]
+de = "h1"
+vers = "c-transport"
+relation = "traduite-en"
+
+[[aretes]]
+de = "h2"
+vers = "c-panache"
+relation = "traduite-en"
+
+[[aretes]]
+de = "h3"
+vers = "c-champ"
+relation = "traduite-en"
+
+[[aretes]]
+de = "h4"
+vers = "c-tau"
+relation = "traduite-en"
+
+[[aretes]]
+de = "h5"
+vers = "c-polyligne"
+relation = "traduite-en"
+
+[[aretes]]
+de = "h6"
+vers = "c-reduction"
+relation = "traduite-en"
+
+[[aretes]]
+de = "h7"
+vers = "c-assimilation"
+relation = "traduite-en"
+
+[[aretes]]
+de = "h8"
+vers = "c-panache"
+relation = "traduite-en"
+
+[[aretes]]
+de = "h1"
+vers = "h8"
+relation = "fonde"
+
+[[aretes]]
+de = "c-fcourant"
+vers = "c-champ"
+relation = "construit"
+
+[[aretes]]
+de = "c-courant"
+vers = "c-champ"
+relation = "depend-de"
+
+[[aretes]]
+de = "c-tau"
+vers = "c-courant"
+relation = "depend-de"
+
+[[aretes]]
+de = "c-transport"
+vers = "c-champ"
+relation = "depend-de"
+
+[[aretes]]
+de = "c-panache"
+vers = "c-transport"
+relation = "depend-de"
+
+[[aretes]]
+de = "c-panache"
+vers = "c-stabilite"
+relation = "depend-de"
+
+[[aretes]]
+de = "c-assimilation"
+vers = "c-reduction"
+relation = "utilise"
+
+[[aretes]]
+de = "c-multiniveaux"
+vers = "c-champ"
+relation = "construit"
+
+# ---------- Arêtes : vue code ----------
+
+[[aretes]]
+de = "c-polyligne"
+vers = "metric"
+relation = "implemente-par"
+
+[[aretes]]
+de = "c-tpa"
+vers = "metric"
+relation = "implemente-par"
+
+[[aretes]]
+de = "c-pdist"
+vers = "metric"
+relation = "implemente-par"
+
+[[aretes]]
+de = "c-fcourant"
+vers = "champ_analytique"
+relation = "implemente-par"
+
+[[aretes]]
+de = "c-champ"
+vers = "champ_analytique"
+relation = "implemente-par"
+
+[[aretes]]
+de = "c-champ"
+vers = "experiences/uniforme"
+relation = "implemente-par"
+
+[[aretes]]
+de = "c-panache"
+vers = "similitude"
+relation = "implemente-par"
+
+[[aretes]]
+de = "c-stabilite"
+vers = "stabilite"
+relation = "implemente-par"
+
+[[aretes]]
+de = "c-courant"
+vers = "trajectories"
+relation = "implemente-par"
+
+[[aretes]]
+de = "similitude"
+vers = "stabilite"
+relation = "utilise"
+
+[[aretes]]
+de = "c-multiniveaux"
+vers = "p-divergence"
+relation = "non-couvert-par"
+
+[[aretes]]
+de = "experiences/uniforme"
+vers = "c-pdist"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/reconstruction_vent"
+vers = "c-fcourant"
+relation = "utilise"
+
+[[aretes]]
+de = "figures/figure_01"
+vers = "experiences/reconstruction_vent"
+relation = "utilise"
+
+[[aretes]]
+de = "figures/figure_02"
+vers = "experiences/uniforme"
+relation = "utilise"
+
+[[aretes]]
+de = "figures/wind_field_explorer"
+vers = "fields"
+relation = "utilise"
+
+[[aretes]]
+de = "fields"
+vers = "c-champ"
+relation = "contexte"
+
+[[aretes]]
+de = "terrain"
+vers = "n0"
+relation = "contexte"
+
+[[aretes]]
+de = "periodic_transport"
+vers = "c-transport"
+relation = "contexte"
+
+[[aretes]]
+de = "advection_diffusion"
+vers = "c-transport"
+relation = "contexte"
+
+[[aretes]]
+de = "constraints"
+vers = "p-positivite"
+relation = "teste"
+
+[[aretes]]
+de = "constraints"
+vers = "p-superposition"
+relation = "teste"
+
+[[aretes]]
+de = "p-positivite"
+vers = "t-similitude"
+relation = "teste-par"
+
+[[aretes]]
+de = "p-positivite"
+vers = "t-constraints"
+relation = "teste-par"
+
+[[aretes]]
+de = "p-superposition"
+vers = "t-constraints"
+relation = "teste-par"
+
+[[aretes]]
+de = "p-superposition"
+vers = "t-similitude"
+relation = "teste-par"
+
+[[aretes]]
+de = "p-conservation"
+vers = "t-similitude"
+relation = "teste-par"
+
+[[aretes]]
+de = "p-divergence"
+vers = "t-champ"
+relation = "teste-par"
+
+[[aretes]]
+de = "p-divergence"
+vers = "t-recon"
+relation = "teste-par"
+
+[[aretes]]
+de = "p-nonsym"
+vers = "t-metric"
+relation = "teste-par"
+
+[[aretes]]
+de = "p-adjoint"
+vers = "t-metric"
+relation = "teste-par"
+
+[[aretes]]
+de = "t-metric"
+vers = "metric"
+relation = "couvre"
+
+[[aretes]]
+de = "t-similitude"
+vers = "similitude"
+relation = "couvre"
+
+[[aretes]]
+de = "t-constraints"
+vers = "constraints"
+relation = "couvre"
+
+[[aretes]]
+de = "t-champ"
+vers = "champ_analytique"
+relation = "couvre"
+
+[[aretes]]
+de = "t-recon"
+vers = "experiences/reconstruction_vent"
+relation = "couvre"
+
+[[aretes]]
+de = "t-uniforme"
+vers = "experiences/uniforme"
+relation = "couvre"
+
+[[aretes]]
+de = "t-advection"
+vers = "advection_diffusion"
+relation = "couvre"
+
+[[aretes]]
+de = "t-fields"
+vers = "fields"
+relation = "couvre"
+
+[[aretes]]
+de = "t-periodic"
+vers = "periodic_transport"
+relation = "couvre"
+
+[[aretes]]
+de = "t-stabilite"
+vers = "stabilite"
+relation = "couvre"
+
+[[aretes]]
+de = "t-terrain"
+vers = "terrain"
+relation = "couvre"
+
+[[aretes]]
+de = "t-trajectories"
+vers = "trajectories"
+relation = "couvre"
+
+[[aretes]]
+de = "t-figure-01"
+vers = "figures/figure_01"
+relation = "couvre"
+
+[[aretes]]
+de = "t-figure-02"
+vers = "figures/figure_02"
+relation = "couvre"
+
+[[aretes]]
+de = "t-wind-field"
+vers = "figures/wind_field_explorer"
+relation = "couvre"
+
+[[aretes]]
+de = "t-interactif"
+vers = "figures/wind_field_explorer"
+relation = "couvre"
+
+[[aretes]]
+de = "t-graphe"
+vers = "graphe_connaissances"
+relation = "couvre"
+
+# ---------- Arêtes : vue références ----------
+
+[[aretes]]
+de = "mohammadi2006crmeca"
+vers = "c-pdist"
+relation = "fonde"
+
+[[aretes]]
+de = "mohammadi2006crmeca"
+vers = "c-tau"
+relation = "fonde"
+
+[[aretes]]
+de = "mohammadi2006pironneau"
+vers = "c-reduction"
+relation = "decrit"
+
+[[aretes]]
+de = "brun2008"
+vers = "c-multiniveaux"
+relation = "decrit"
+
+[[aretes]]
+de = "brun2008"
+vers = "c-panache"
+relation = "decrit"
+
+[[aretes]]
+de = "bozon2008esta"
+vers = "p-nonsym"
+relation = "decrit"
+
+[[aretes]]
+de = "bozon2009driftx"
+vers = "c-multiniveaux"
+relation = "decrit"
+
+[[aretes]]
+de = "mohammadi2009gis"
+vers = "c-multiniveaux"
+relation = "decrit"
+
+[[aretes]]
+de = "brun2006these"
+vers = "c-tau"
+relation = "contexte"
+
+[[aretes]]
+de = "muller1979persee"
+vers = "c-tau"
+relation = "contexte"
+
+[[aretes]]
+de = "mohammadi2001shape"
+vers = "c-reduction"
+relation = "decrit"
+
+[[aretes]]
+de = "borouchaki1997delaunay"
+vers = "c-maillage"
+relation = "decrit"
+
+[[aretes]]
+de = "raupach1981canopy"
+vers = "c-panache"
+relation = "contexte"
+
+[[aretes]]
+de = "simpson1997gravity"
+vers = "c-panache"
+relation = "contexte"
+
+[[aretes]]
+de = "hutchinson2017ste"
+vers = "c-assimilation"
+relation = "decrit"
+
+[[aretes]]
+de = "renormalization2014"
+vers = "c-assimilation"
+relation = "decrit"
+
+[[aretes]]
+de = "vervecken2015rom"
+vers = "c-reduction"
+relation = "contexte"
+
+[[aretes]]
+de = "fno2024plume"
+vers = "c-reduction"
+relation = "contexte"
+
+[[aretes]]
+de = "trindade2021urban"
+vers = "c-champ"
+relation = "contexte"
+
+[[aretes]]
+de = "mahmud2026symmetry"
+vers = "c-reduction"
+relation = "contexte"
+
+[[aretes]]
+de = "epa2024appendixw"
+vers = "c-panache"
+relation = "contexte"
+
+[[aretes]]
+de = "bonicelli2012cigr"
+vers = "c-panache"
+relation = "contexte"
+
+[[aretes]]
+de = "defra2011ps2024"
+vers = "c-panache"
+relation = "contexte"
+
+[[aretes]]
+de = "garbaczewski1997burgers"
+vers = "c-burgers"
+relation = "decrit"
+
+[[aretes]]
+de = "c-burgers"
+vers = "c-tau"
+relation = "contexte"
+
+# ---------- Arêtes : vue jeux de données ----------
+
+[[aretes]]
+de = "d-datem"
+vers = "n5"
+relation = "candidat-pour"
+
+[[aretes]]
+de = "d-etex"
+vers = "n5"
+relation = "candidat-pour"
+
+[[aretes]]
+de = "d-diflu"
+vers = "n5"
+relation = "candidat-pour"
+
+[[aretes]]
+de = "d-eries"
+vers = "n5"
+relation = "candidat-pour"
+
+[[aretes]]
+de = "d-prairie"
+vers = "n5"
+relation = "candidat-pour"
+
+[[aretes]]
+de = "d-cedval"
+vers = "n5"
+relation = "candidat-pour"
+
+[[aretes]]
+de = "d-mvk"
+vers = "n6"
+relation = "candidat-pour"
+
+[[aretes]]
+de = "d-dad"
+vers = "n6"
+relation = "candidat-pour"
+
+[[aretes]]
+de = "d-uav"
+vers = "n6"
+relation = "candidat-pour"
+
+[[aretes]]
+de = "d-knapsack"
+vers = "n6"
+relation = "candidat-pour"
+
+# ---------- Vues ----------
+
+[[graphes]]
+id = "theorie"
+titre = "Théorie et hypothèses"
+description = "La chaîne conceptuelle N0-N6, les hypothèses H1-H8 qui la contraignent et les objets mathématiques que chaque hypothèse fait exister. Le détail de chaque hypothèse (justification, limite, ancrage dans le code) reste dans le catalogue des hypothèses."
+sens = "LR"
+noeuds = [
+  "n0", "n1", "n2", "n3", "n4", "n5", "n6",
+  "h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8",
+  "c-transport", "c-champ", "c-courant", "c-fcourant", "c-tau",
+  "c-polyligne", "c-tpa", "c-pdist", "c-panache", "c-stabilite",
+  "c-multiniveaux", "c-reduction", "c-assimilation",
+]
+
+  [[graphes.groupes]]
+  id = "niv"
+  titre = "Niveaux de modélisation (N0-N6)"
+  noeuds = ["n0", "n1", "n2", "n3", "n4", "n5", "n6"]
+
+  [[graphes.groupes]]
+  id = "hyp"
+  titre = "Hypothèses (H1-H8)"
+  noeuds = ["h1", "h2", "h3", "h4", "h5", "h6", "h7", "h8"]
+
+  [[graphes.groupes]]
+  id = "cpt"
+  titre = "Concepts"
+  noeuds = [
+    "c-transport", "c-champ", "c-courant", "c-fcourant", "c-tau",
+    "c-polyligne", "c-tpa", "c-pdist", "c-panache", "c-stabilite",
+    "c-multiniveaux", "c-reduction", "c-assimilation",
+  ]
+
+[[graphes]]
+id = "code"
+titre = "Code, propriétés et preuves"
+description = "Les modules du paquet, les concepts qu'ils implémentent, les tests de la CI et les propriétés qu'ils établissent, dans les limites documentées sur la page Contraintes physiques. Un concept sans arête « implémenté par » — le champ multi-niveaux historique — signale une capacité non reconstruite, pas un lien manquant."
+sens = "TD"
+noeuds = [
+  "metric", "champ_analytique", "experiences/uniforme",
+  "experiences/reconstruction_vent", "similitude", "stabilite",
+  "constraints", "periodic_transport", "advection_diffusion",
+  "trajectories", "fields", "terrain", "figures/figure_01",
+  "figures/figure_02", "figures/wind_field_explorer",
+  "c-polyligne", "c-tpa", "c-pdist", "c-fcourant", "c-champ",
+  "c-courant", "c-panache", "c-stabilite", "c-transport",
+  "c-multiniveaux", "n0",
+  "p-positivite", "p-superposition", "p-conservation", "p-divergence",
+  "p-nonsym", "p-adjoint",
+  "t-metric", "t-similitude", "t-constraints", "t-champ", "t-recon",
+  "t-uniforme", "t-advection", "t-fields", "t-periodic", "t-stabilite",
+  "t-terrain", "t-trajectories", "t-figure-01", "t-figure-02",
+  "t-wind-field", "t-interactif", "graphe_connaissances", "t-graphe",
+]
+
+  [[graphes.groupes]]
+  id = "prm"
+  titre = "Primitives de la métrique"
+  noeuds = ["metric", "c-polyligne", "c-tpa", "c-pdist"]
+
+  [[graphes.groupes]]
+  id = "chp"
+  titre = "Champs, expériences et rendu"
+  noeuds = [
+    "champ_analytique", "experiences/uniforme",
+    "experiences/reconstruction_vent", "fields", "terrain",
+    "trajectories", "figures/figure_01", "figures/figure_02",
+    "figures/wind_field_explorer", "c-fcourant", "c-champ", "c-courant",
+    "c-multiniveaux", "n0",
+  ]
+
+  [[graphes.groupes]]
+  id = "sol"
+  titre = "Socle gaussien"
+  noeuds = ["similitude", "stabilite", "c-panache", "c-stabilite"]
+
+  [[graphes.groupes]]
+  id = "rfs"
+  titre = "Solveurs de référence"
+  noeuds = ["periodic_transport", "advection_diffusion", "c-transport"]
+
+  [[graphes.groupes]]
+  id = "carte"
+  titre = "Carte des connaissances"
+  noeuds = ["graphe_connaissances", "t-graphe"]
+
+  [[graphes.groupes]]
+  id = "prp"
+  titre = "Propriétés et tests"
+  noeuds = [
+    "p-positivite", "p-superposition", "p-conservation", "p-divergence",
+    "p-nonsym", "p-adjoint", "constraints", "t-metric", "t-similitude",
+    "t-constraints", "t-champ", "t-recon", "t-uniforme", "t-advection",
+    "t-fields", "t-periodic", "t-stabilite", "t-terrain", "t-trajectories",
+    "t-figure-01", "t-figure-02", "t-wind-field", "t-interactif",
+  ]
+
+[[graphes]]
+id = "references"
+titre = "Références et corpus"
+description = "Les vingt-deux entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique)."
+sens = "LR"
+noeuds = [
+  "mohammadi2006crmeca", "mohammadi2006pironneau", "brun2008",
+  "bozon2008esta", "bozon2009driftx", "mohammadi2009gis", "brun2006these",
+  "muller1979persee", "mohammadi2001shape", "borouchaki1997delaunay",
+  "raupach1981canopy", "simpson1997gravity", "hutchinson2017ste",
+  "renormalization2014", "vervecken2015rom", "fno2024plume",
+  "trindade2021urban", "mahmud2026symmetry", "epa2024appendixw",
+  "bonicelli2012cigr", "defra2011ps2024", "garbaczewski1997burgers",
+  "c-pdist", "c-tau", "c-multiniveaux", "c-panache", "c-reduction",
+  "c-assimilation", "c-maillage", "c-burgers", "c-champ", "c-transport",
+  "p-nonsym",
+]
+
+  [[graphes.groupes]]
+  id = "cor"
+  titre = "Corpus historique (2006-2009)"
+  noeuds = [
+    "mohammadi2006crmeca", "mohammadi2006pironneau", "brun2008",
+    "bozon2008esta", "bozon2009driftx", "mohammadi2009gis", "brun2006these",
+  ]
+
+  [[graphes.groupes]]
+  id = "art"
+  titre = "État de l'art et contextes"
+  noeuds = [
+    "muller1979persee", "mohammadi2001shape", "borouchaki1997delaunay",
+    "raupach1981canopy", "simpson1997gravity", "hutchinson2017ste",
+    "renormalization2014", "vervecken2015rom", "fno2024plume",
+    "trindade2021urban", "mahmud2026symmetry", "epa2024appendixw",
+    "bonicelli2012cigr", "defra2011ps2024", "garbaczewski1997burgers",
+  ]
+
+  [[graphes.groupes]]
+  id = "obj"
+  titre = "Objets décrits ou fondés"
+  noeuds = [
+    "c-pdist", "c-tau", "c-multiniveaux", "c-panache", "c-reduction",
+    "c-assimilation", "c-maillage", "c-burgers", "c-champ", "c-transport",
+    "p-nonsym",
+  ]
+
+[[graphes]]
+id = "donnees"
+titre = "Jeux de données candidats"
+description = "Les corpus examinés par les audits docs/20 et docs/21, et les niveaux de la chaîne N0-N6 qu'ils permettraient de contraindre. « Candidat » ne signifie pas validé : licences, observables et indépendance des essais sont suivis dans l'issue d'audit des données."
+sens = "LR"
+noeuds = [
+  "d-datem", "d-etex", "d-diflu", "d-eries", "d-prairie", "d-cedval",
+  "d-mvk", "d-dad", "d-uav", "d-knapsack", "n5", "n6",
+]
+
+  [[graphes.groupes]]
+  id = "proche"
+  titre = "Champ proche et installations"
+  noeuds = ["d-diflu", "d-prairie", "d-eries", "d-cedval"]
+
+  [[graphes.groupes]]
+  id = "loin"
+  titre = "Longue distance"
+  noeuds = ["d-datem", "d-etex"]
+
+  [[graphes.groupes]]
+  id = "meth"
+  titre = "Méthodologie et jumeaux numériques"
+  noeuds = ["d-mvk", "d-dad"]
+
+  [[graphes.groupes]]
+  id = "der"
+  titre = "Dérive de pulvérisation"
+  noeuds = ["d-uav", "d-knapsack"]
+
+  [[graphes.groupes]]
+  id = "cible"
+  titre = "Niveaux visés"
+  noeuds = ["n5", "n6"]
