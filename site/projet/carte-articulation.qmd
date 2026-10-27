@@ -50,7 +50,7 @@ Commencer par l'[héritage Drift-X](heritage.qmd) et les [lectures des sources](
 ### Chaîne physique — du modèle à la famille candidate
 
 1. [Modèle direct](../theorie/modele-direct.qmd) — poser l'équation physique et identifier les fermetures et hypothèses.
-2. [Solutions de similitude](../theorie/similitude.qmd) — dériver la solution du problème simplifié et préciser le rôle de la coordonnée $x/U$.
+2. [Solutions de similitude](../theorie/similitude.qmd#derivation-du-panache-gaussien-regime-etabli) — dériver la solution du problème simplifié ; l'étape 2 explicite la règle de chaîne qui justifie $t'=x/U$ uniquement sous les hypothèses du modèle uniforme.
 3. [Réduction a priori](../theorie/reduction-a-priori.qmd) — distinguer solution exacte du modèle simplifié, famille candidate pour un problème plus large et erreur de réduction à mesurer.
 
 **Ce que cette chaîne n'établit pas à elle seule :** que la famille candidate reste valide dans un champ de vent non uniforme, ni qu'elle apporte un gain applicatif.
