@@ -6,7 +6,9 @@ title: "Objectifs de J-DriftX"
 
 ## Vision
 
-**J-DriftX v2** est un moteur open source de dispersion à complexité réduite : solutions de similitude généralisées dans une métrique non symétrique de temps de transport, évaluation ponctuelle sans maillage et calibration par assimilation de données. Les propriétés physiques annoncées constituent des objectifs à démontrer par analyse et benchmarks ; elles ne sont pas présumées garanties avant validation.
+J-DriftX étudie l'hypothèse qu'une représentation à complexité réduite de la dispersion, fondée sur des solutions de similitude et une représentation dirigée par les temps de transport, puisse réduire le coût de certaines évaluations.
+
+La généralisation des solutions de similitude à un champ non uniforme, l'évaluation ponctuelle sans maillage et la calibration par assimilation sont des **objectifs ou pistes de recherche**, pas des capacités validées du logiciel actuel. Leur intérêt physique, leur précision et leur coût total doivent être établis par des définitions, des tests et des comparaisons appropriés. L'état de l'implémentation est décrit dans le [README du dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/README.md) ; la portée des vérifications actuelles est détaillée dans [Qualité & tests](qualite.qmd) et les conditions d'évaluation dans le [protocole de validation scientifique](validation-scientifique.qmd).
 
 ## Cibles applicatives
 
