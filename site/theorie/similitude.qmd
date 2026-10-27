@@ -26,7 +26,7 @@ Deux lectures convergentes, avant toute dérivation :
 
 Les deux chemins mènent à la même structure : **profils transversaux gaussiens, amplitude en décroissance comme $1/(\sigma_y \sigma_z)$**. La dérivation ci-dessous la fait apparaître terme à terme.
 
-## Dérivation du panache gaussien (régime établi)
+## Dérivation du panache gaussien (régime établi) {#derivation-du-panache-gaussien-regime-etabli}
 
 **Point de départ et portée de cette page.** L'équation de départ n'est pas l'advection–diffusion générique prise sans restriction. On importe ici l'équation parabolique dérivée étape par étape dans [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache) : le transport moyen est fermé par une loi gradient, puis on impose successivement la stationnarité, un vent uniforme $\overline{\mathbf u}=(U,0,0)$ avec $U>0$, un tenseur diffusif diagonal constant et la négligence de la diffusion longitudinale. Les réactions, le dépôt et les sources distribuées sont absents dans la région aval $x>0$. Ces hypothèses sont des restrictions de modèle, pas des conséquences automatiques de l'équation générale.
 
