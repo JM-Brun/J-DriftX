@@ -42,9 +42,9 @@ Le problème de **Zermelo** (1931) demande le chemin le plus rapide d'un point �
 
 Un traceur passif en advection pure suit le champ de vitesse; il ne choisit pas librement une direction comme le navigateur de Zermelo. Pour des points non situés sur la même trajectoire orientée, le temps advectif peut être non défini; le poser égal à $+\infty$ est une convention de coût étendu qui doit être explicitée. Cette formulation n'est donc pas automatiquement une métrique de Randers, ni une métrique finie. La non-symétrie découle ici de l'accessibilité orientée, pas simplement de la non-uniformité du champ.
 
-## Ce que J-DriftX hérite, et ce qu'il apporte
+## Analogies utiles et hypothèse d'apport
 
-- **Héritage géographique** [@muller1979persee] : la distance pertinente est celle *vécue par l'objet* — temps de parcours, pas mètres au sol ; la carte se déforme pour rester fidèle à cette métrique (isochrones, anamorphoses ; ici : courbes iso-$\tau$).
+- **Analogie géographique** [@muller1979persee] : la distance pertinente peut être le temps de parcours plutôt que les mètres au sol ; la carte se déforme pour représenter cette mesure (isochrones, anamorphoses). Ce rapprochement n'établit pas de filiation historique directe avec Drift-X.
 - **Analogie numérique** [@borouchaki1997delaunay] : dans les deux domaines, une structure géométrique adaptée au problème peut guider le calcul. Cette analogie ne constitue ni une technologie transférée ni une filiation historique démontrée.
 - **Hypothèse d'apport Drift-X à établir** : une représentation de temps de transport reconstruite à partir d'un champ de vent, avec des propriétés de conservation et une évaluation ponctuelle à formaliser. Ces propriétés ne découlent pas du seul vocabulaire de métrique; elles demandent une dérivation, des hypothèses explicites et des cas de vérification.
 
