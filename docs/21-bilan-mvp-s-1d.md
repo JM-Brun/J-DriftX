@@ -1,6 +1,6 @@
 # MVP-S 1D — bilan de reproductibilité et état des preuves
 
-**État au 26 octobre 2026.** Cette note est un état des lieux technique et scientifique, pas une déclaration de clôture du MVP-S.
+**État au 26 octobre 2026.** Cette note est un état des lieux technique et scientifique, pas une déclaration de clôture du MVP-S. La portée des résultats analytiques doit être lue au regard des hypothèses de chaque section : le cadre général stationnaire \(C^1\) est distinct des exemples 1D élargis aux champs non lipschitziens et aux endpoints.
 
 ## 1. Périmètre réellement implémenté
 
