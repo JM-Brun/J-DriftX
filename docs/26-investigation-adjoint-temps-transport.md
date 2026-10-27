@@ -95,10 +95,14 @@ son usage et sa construction :
   réduit, produit par différentiation automatique en mode inverse
   (Tapenade), avec la propriété économique caractéristique du mode inverse :
   un coût du gradient indépendant du nombre de paramètres de contrôle ;
-- l'acception 1 au sens strict (état adjoint d'une EDP) est structurellement
-  exclue : le modèle revendique explicitement de ne résoudre aucune EDP
-  (« The approach does not require the solution of any PDE »), et la
-  sensibilité est dite incomplète, portant sur le modèle approché.
+- les sources examinées ne décrivent pas un état adjoint de l'EDP directe :
+  elles documentent un gradient obtenu par différentiation automatique en mode
+  inverse du code du modèle réduit. Le fait que le modèle ne requière pas la
+  résolution d'une EDP (« The approach does not require the solution of any
+  PDE ») et que la sensibilité soit dite incomplète — linéarisation du modèle
+  approché — étaye cette lecture historique, sans exclure en général qu'un
+  modèle réduit ou un système discret puisse avoir une formulation adjointe.
+  Dans J-DriftX, aucun état adjoint d'EDP n'est actuellement implémenté.
 
 Conséquence pour J-DriftX : les gradients exacts testés dans cette PR
 (vecteur adjoint constant de la référence uniforme, gradient 1D) sont du
