@@ -36,15 +36,15 @@ Les solutions de similitude formulées en vent uniforme sont réexprimées dans 
 
 Ce test distingue un temps de parcours le long d'une caractéristique de la pseudo-distance projetée définie par paires de points. Prenons un champ stationnaire lisse de cisaillement $\mathbf u(x,y)=(v(y),0)$ avec $v(y)>0$, une source $A=(x_A,y_A)$ et une cible aval $B=(x,y)$. La projection historique sur la caractéristique horizontale issue de $A$ donne
 
-$
+$$
 d_A(x,y)=\frac{x-x_A}{v(y_A)}.
-$
+$$
 
 En considérant $d_A$ comme un champ scalaire sur les points cibles, on obtient
 
-$
+$$
 \mathbf u(x,y)\cdot\nabla_{(x,y)}d_A=\frac{v(y)}{v(y_A)}.
-$
+$$
 
 Cette quantité n'est généralement pas égale à $1$ lorsque $v(y)\ne v(y_A)$. Elle vaut $1$ sur la caractéristique source $y=y_A$, mais pas sur tout le domaine. Ainsi, la pseudo-distance projetée historique ne satisfait pas en général l'équation locale de temps de transport $\mathbf u\cdot\nabla d_A=1$ partout, même pour un champ lisse, stationnaire et de divergence nulle. Ce contre-exemple n'invalide pas à lui seul le modèle de concentration historique; il montre que la validité de la généralisation des solutions de similitude et toute conservation associée exigent une dérivation propre, et ne découlent pas simplement de la définition de $d_A$.
 
