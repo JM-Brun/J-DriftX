@@ -87,7 +87,11 @@ def _est_extractible(chemin: str) -> bool:
             and Path(chemin).name.startswith("test_")
             and chemin.endswith(".py")
         )
-        or (chemin.startswith("site/") and chemin.endswith(".qmd"))
+        or (
+            chemin.startswith("site/")
+            and not chemin.startswith("site/_extensions/")
+            and chemin.endswith(".qmd")
+        )
     )
 
 
