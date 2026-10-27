@@ -113,8 +113,8 @@ def test_diagnostic_distingue_fichiers_mappes_non_mappes_et_localisateurs_perime
         "registry_locator_without_extracted_fact_count": 1,
     }
     assert rapport["mapped_files"] == [
-        {"path": "src/jdriftx/noyau.py", "node_ids": ["noyau"]},
         {"path": "site/theorie/modele.qmd", "node_ids": ["modele"]},
+        {"path": "src/jdriftx/noyau.py", "node_ids": ["noyau"]},
         {"path": "tests/test_noyau.py", "node_ids": ["test-noyau"]},
     ]
     assert rapport["unmapped_files"] == [
