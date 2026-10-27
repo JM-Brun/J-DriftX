@@ -6,6 +6,17 @@ title: "Métrique travel-time"
 
 Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les solutions de similitude qui supposent un vent **uniforme** (métrique cartésienne) sont envisagées dans une coordonnée naturelle liée au **temps de transport** pour traiter des champs non uniformes. La validité et la portée de cette généralisation doivent être établies à partir des hypothèses et dérivations des sources primaires.
 
+## Place dans le raisonnement et contrat de lecture
+
+Cette page formalise le **temps de transport** utilisé dans l'hypothèse de généralisation des solutions de similitude. Elle ne démontre pas que la substitution d'une coordonnée uniforme $x/U$ par un temps $\\tau$ dans un champ variable conserve l'équation de dispersion ni ses propriétés.
+
+- **Prérequis :** le vocabulaire de [chemin, trajectoire et caractéristique](../glossaire.qmd#chemins-lignes-et-temps-de-transport) et le cadre des [niveaux de modélisation](../projet/niveaux-modelisation.qmd).
+- **Objet défini ici :** distinguer le coût intégré le long d'une courbe, le temps de première arrivée d'une dynamique et la construction historique par projection.
+- **Résultat transmis :** les propriétés métriques doivent être examinées séparément dans [Pseudo-distances, coûts orientés et géométries non riemanniennes](metriques-non-riemanniennes.qmd), tandis que les hypothèses et contre-exemples détaillés sont consignés dans [l'investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md).
+- **Limite actuelle :** la définition projetée historique, son approximation numérique et le temps de première arrivée ne sont pas interchangeables ; aucune conservation générale ni équivalence métrique n'est revendiquée ici.
+
+Le parcours de lecture est donc : **modèle de dispersion uniforme → similitude → question de généralisation du temps → propriétés géométriques à établir**. Pour revenir à l'origine physique de la coordonnée, consulter [Solutions de similitude](similitude.qmd) ; pour les axiomes, poursuivre vers [Métriques non riemanniennes](metriques-non-riemanniennes.qmd).
+
 ## Vocabulaire et hypothèses
 
 Pour une présentation synthétique des notions et contre-exemples, voir le [schéma des temps de parcours dirigés](../visuels-g0s/glossaire-g0s.svg) ci-dessous. Il est illustratif : les définitions, hypothèses et preuves restent dans cette page et dans le [glossaire mathématique autonome du dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/30-glossaire-mathematique-autonome-g0s.md).
