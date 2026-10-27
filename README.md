@@ -46,7 +46,7 @@ raw/                  # Sources primaires et documents bruts
 
 ## Statut de l'implémentation mathématique
 
-La fonction Python `jdriftx.metric.temps_transport` calcule actuellement une somme `longueur / norme(vitesse)` sur une polyligne fournie par l'appelant. Elle ne calcule pas les caractéristiques du champ, ne projette pas le point cible sur une caractéristique et ignore le signe des vecteurs vitesse. Elle **n'est donc pas une implémentation de la pseudo-distance historique de 2006**. Une fonction distincte `pseudo_distance_uniforme` fournit une référence analytique limitée au champ uniforme 2D; elle n'est pas généralisée aux champs variables. Voir la [revue mathématique ciblée](https://jm-brun.github.io/J-DriftX/etat-art/revue-mathematique.html) et le [bilan reproductibilité/preuves du MVP-S 1D](docs/21-bilan-mvp-s-1d.md).
+La fonction Python `jdriftx.metric.temps_transport` calcule actuellement une somme `longueur / norme(vitesse)` sur une polyligne fournie par l'appelant. Elle ne calcule pas les caractéristiques du champ, ne projette pas le point cible sur une caractéristique et ignore le signe des vecteurs vitesse. Elle **n'est donc pas une implémentation de la pseudo-distance historique de 2006**. Une fonction distincte `pseudo_distance_uniforme` fournit une référence analytique limitée au champ uniforme 2D; elle n'est pas généralisée aux champs variables. Voir le [glossaire mathématique autonome G0-S](docs/30-glossaire-mathematique-autonome-g0s.md), la [revue mathématique ciblée](https://jm-brun.github.io/J-DriftX/etat-art/revue-mathematique.html) et le [bilan reproductibilité/preuves du MVP-S 1D](docs/21-bilan-mvp-s-1d.md).
 
 ## Développement
 
