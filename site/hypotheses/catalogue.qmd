@@ -35,7 +35,7 @@ Le panache suit les solutions de similitude : profils gaussiens, croissance de $
 
 *Traduction mathématique* : la solution est cherchée dans la famille des panaches gaussiens — une formule fermée (définition : [glossaire](../glossaire.qmd)) donnant $C(x,y,z)$ à partir de quelques paramètres : débit $Q$, hauteur d'émission $h$, vent $U$, classe de stabilité. Les largeurs du panache, $\sigma_y(x)$ et $\sigma_z(x)$, sont ses **écarts-types transversal et vertical** (en mètres, table des notations : [glossaire](../glossaire.qmd)) ; elles croissent avec la distance selon la classe de stabilité — les six classes A–F de Pasquill, les lois $\sigma(x)$ étant données par les formules de Briggs (1973). Origine et usage de ces tables : entrée « Classes de Pasquill » du [glossaire](../glossaire.qmd) ; dérivation des $\sigma$ : [Similitude](../theorie/similitude.qmd), étape 7 (de $K$ aux formules de Briggs, Taylor 1921).
 
-*Ce que cela permet* : décrire tout le panache par quelques nombres, au lieu d'un champ de concentration entier sur un maillage (niveau N5) — d'où l'évaluation ponctuelle, à coût quasi nul.
+*Ce que cela permet en principe* : représenter le panache par quelques paramètres et calculer une concentration en un point sans construire le champ complet sur un maillage. Cela rend possible une évaluation ponctuelle, mais ne démontre pas que le coût total est quasi nul : le calcul de la coordonnée de transport, la préparation des données et la calibration doivent aussi être comptés.
 
 *Justification* : invariance d'échelle des panaches turbulents — une fois adimensionnés par leurs largeurs locales, les profils se superposent d'une station à l'autre (voir [Similitude](../theorie/similitude.qmd), section « Pourquoi le mot “similitude” »).
 
@@ -69,7 +69,7 @@ $\tau = \int ds / |\mathbf{u}|$ néglige la diffusion dans le temps d'arrivée ;
 
 *Traduction mathématique* : $\tau_\gamma = \int_\gamma ds/\|\mathbf u\|$. Cette intégrale représente le temps d'une particule **si** $\gamma$ est une caractéristique du champ et si la vitesse ne s'annule pas le long du trajet. Sur une polyligne arbitraire fournie par l'appelant, la même somme est seulement un coût géométrique, pas nécessairement le temps physique d'une particule. La diffusion est absente de cette définition advective de $\tau$ ; elle agit sur l'étalement du panache (H2), tandis que l'approximation du temps d'arrivée par l'advection seule reste une hypothèse du modèle.
 
-*Ce que cela permet* : calculer $\tau$ sans résoudre l'équation de diffusion — une intégrale le long d'un chemin, à coût quasi nul ; en champ uniforme, la pseudo-distance se calcule même par formule fermée (définition : [glossaire](../glossaire.qmd)).
+*Ce que cela permet dans cette définition* : calculer une coordonnée advective sans résoudre l'équation de diffusion. Une intégrale le long d'un chemin peut toutefois avoir un coût dépendant de la représentation et de la discrétisation de ce chemin ; le coût total n'est pas établi. En champ uniforme, la pseudo-distance considérée dans le code se calcule par formule fermée (définition et limites : [glossaire](../glossaire.qmd)).
 
 *Justification / statut* : la métrique choisit de représenter le transport longitudinal par l'advection et de réserver l'étalement à la fermeture de dispersion. Dire que l'effet de la diffusion sur le temps d'arrivée est négligeable exige une analyse d'échelle ou une comparaison au modèle d'advection–diffusion dans le régime visé ; ce n'est pas une conséquence générale du seul fait que l'advection domine.
 
