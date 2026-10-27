@@ -41,3 +41,16 @@ Le graphe de la page « Carte des connaissances » n'est pas dessiné à la main
 3. Committer ensemble le registre et `site/projet/_graphes-mermaid.md`.
 
 La CI (`tests/test_graphe_connaissances.py`) refuse un rendu désynchronisé, un lien mort, une clé de `site/references.bib` sans nœud, ou un module de `src/jdriftx` sans nœud : le graphe ne peut pas dériver silencieusement du dépôt.
+
+
+### Extraction structurelle du graphe
+
+Le registre TOML reste la source de vérité des **relations sémantiques revues**. Un extracteur séparé recense les faits observables, sans leur attribuer de sens scientifique :
+
+```bash
+uv run python -m jdriftx.extraction_graphe > /tmp/graphe-extrait.json
+```
+
+L'export JSON est déterministe et contient des localisateurs (fichier et ligne) pour les modules, classes/fonctions Python, fonctions de test, pages et titres Quarto, occurrences de citations et liens Markdown. Pour écrire le résultat dans un fichier précis, utiliser `--sortie chemin/vers/faits.json`; une autre racine peut être passée avec `--racine chemin/du/depot`.
+
+Cet export est un **inventaire extrait**, pas un graphe de relations accepté. Il ne faut pas déduire automatiquement qu'un lien Markdown prouve une affirmation, qu'un test prouve une propriété générale, ou qu'une fonction implémente un concept simplement parce que son nom lui ressemble. Les relations théorie–hypothèses–code–tests restent déclarées et revues dans `site/data/graphe-connaissances.toml`. Les tests de l'extracteur s'exécutent dans la CI via `pytest`.
