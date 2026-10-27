@@ -13,8 +13,8 @@ import ast
 import json
 import re
 import unicodedata
-from dataclasses import asdict, dataclass
 from collections.abc import Sequence
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 REGEX_TITRE = re.compile(r'^title:\s*["\']?([^"\'\n]+)["\']?\s*$')
