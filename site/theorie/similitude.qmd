@@ -68,11 +68,11 @@ $$
 
 Ce calcul analytique utilise les intégrales complètes des deux gaussiennes et les diffusivités constantes. Il ne décrit pas encore le domaine physique $z\geq0$ avec sol imperméable : à cette étape, la moitié de l'espace vertical sous le sol est encore incluse. L'étape 6 ajoute la source image et permet d'obtenir la normalisation correspondante sur le demi-espace $z\geq0$.
 
-**Contrôle logiciel distinct.** La CI exécute un test numérique de conservation pour l'implémentation actuelle du panache, à $x=1000\,\mathrm m$, sur une grille finie en $y,z$, avec une tolérance relative de 2 %. Ce test ciblé ne vérifie ni cette dérivation à diffusivités constantes, ni tous les $x>0$, ni une conservation exacte indépendante de la discrétisation.
+**Contrôle logiciel distinct.** La CI exécute des tests numériques de conservation pour l'implémentation actuelle du panache : un cas de base à $x=1000\,\mathrm m$ sur une grille finie (tolérance relative 2 %), complété par une famille étendue — six classes de Pasquill, la classe D à 200 et 5000 m, une source en hauteur, le puff et les superpositions — sur des grilles adaptées à quatre écarts-types (0,1 % relatif). Ces tests ciblés ne vérifient ni cette dérivation à diffusivités constantes, ni tous les $x>0$, ni une conservation exacte indépendante de la discrétisation ; l'état complet est consigné sur la page [Contraintes physiques](contraintes-physiques.qmd).
 
 ### Étape 6 — Réflexion au sol par la méthode des images {#etape-6-reflexion-au-sol-par-la-methode-des-images}
 
-Le sol ne laisse rien passer à travers lui : la condition est un flux vertical nul en $z = 0$. La méthode des images la satisfait exactement en ajoutant une **source virtuelle symétrique** en $(0, 0, -h)$ : la somme des deux gaussiennes annule le flux au sol et **double** la concentration au niveau du sol. C'est l'origine des deux termes verticaux de la formule de la page d'accueil :
+Le sol ne laisse rien passer à travers lui : la condition est un flux vertical nul en $z = 0$. La méthode des images la satisfait exactement en ajoutant une **source virtuelle symétrique** en $(0, 0, -h)$ : la somme des deux gaussiennes annule le flux au sol et **double** la concentration au niveau du sol. C'est l'origine des deux termes verticaux qui complètent le panache établi de l'étape 4 :
 
 $$
 \exp\!\left(-\frac{(z-h)^2}{2\sigma_z^2}\right)
@@ -114,7 +114,7 @@ Les profils sont **auto-similaires** : une fois adimensionnés par les largeurs 
 | Hypothèse de la dérivation | Dans J-DriftX |
 |---|---|
 | Vent uniforme $U$, $t'=x/U$ | généralisation candidate par un temps de transport $\tau$ ([Métrique travel-time](metrique-travel-time.qmd)) — validité à établir, non garantie par la dérivation uniforme |
-| Terrain plat, sol réflecteur | terrain suivi par MNT ; déposition en extension M3 ([Limites](../hypotheses/limites.qmd)) |
+| Terrain plat, sol réflecteur | terrain suivi par MNT ; déposition en extension future ([Limites](../hypotheses/limites.qmd)) |
 | $\sigma$ tabulés (Briggs, classes de Pasquill) | paramètres calibrés par [assimilation](assimilation-identification.qmd) de mesures partielles |
 | Diffusion longitudinale négligée ; $K_y,K_z$ constants dans la dérivation analytique | approximation nécessaire à l'équation parabolique de panache ; les $\sigma$ empiriques de l'implémentation ne constituent pas une validation de cette dérivation |
 | Source ponctuelle | le champ proche fournit les conditions d'entrée (section suivante) |
@@ -128,4 +128,4 @@ La chaîne multi-niveaux de Drift-X :
 1. **Champ proche** (rangées de culture, buse) : construit sur observations expérimentales ; on évalue la fraction de matière qui quitte la sous-couche atmosphérique.
 2. **Champ lointain** : cette quantité candidate au transport longue distance via les solutions de similitude pour couches de mélange et panaches [@brun2008].
 
-L'étape 2 se fait dans une **métrique généralisée** — l'objet de la page suivante.
+L'étape 2 se fait dans une **métrique généralisée** — l'objet de la page [Métrique travel-time](metrique-travel-time.qmd).
