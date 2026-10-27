@@ -4,7 +4,7 @@ title: "J-DriftX — dispersion atmosphérique à complexité réduite"
 
 # J-DriftX
 
-**J-DriftX** est un projet de recherche open source sur la **dispersion atmosphérique de scalaires passifs** à très faible coût de calcul. Il est la reprise et la modernisation du projet **Drift-X** développé entre 2006 et 2009 par J.-M. Brun et B. Mohammadi (Cemagref/ITAP et I3M, Montpellier) [@bozon2009driftx; @mohammadi2009gis].
+**J-DriftX** est un projet de recherche open source qui étudie des représentations approchées de la **dispersion atmosphérique de scalaires passifs**, avec l'objectif de réduire le coût de calcul. Il est la reprise et la modernisation du projet **Drift-X** développé entre 2006 et 2009 par J.-M. Brun et B. Mohammadi (Cemagref/ITAP et I3M, Montpellier) [@bozon2009driftx; @mohammadi2009gis].
 
 ![Illustration conceptuelle de l'hypothèse étudiée : panache gaussien évalué à partir d'une coordonnée candidate de temps de transport τ, sans que cette généralisation soit encore validée.](images/panache-travel-time.svg)
 
