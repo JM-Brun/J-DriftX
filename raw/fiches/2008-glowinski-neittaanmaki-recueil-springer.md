@@ -2,8 +2,8 @@
 
 ## Identification du fichier
 
-- **État après la PR #67 (28 octobre 2026)** : le PDF intégral a été retiré du dépôt. Cette fiche est conservée comme référence bibliographique et trace de provenance de la copie consultée historiquement ; elle ne signifie pas que le binaire est encore distribué.
-- **Décision de dépôt** : le retrait du PDF intégral est proposé par la PR [#67](https://github.com/JM-Brun/J-DriftX/pull/67) afin de ne pas redistribuer une version éditeur sans autorisation établie. La référence bibliographique et cette fiche de provenance sont conservées ; l'état de fusion de la PR doit être vérifié sur GitHub.
+- **État vérifié sur `main` après fusion de la PR #67 (28 octobre 2026)** : le PDF intégral a été retiré du dépôt. Cette fiche est conservée comme référence bibliographique et trace de provenance de la copie consultée historiquement ; le binaire n'est plus distribué dans ce dépôt.
+- **Décision de dépôt** : la PR [#67](https://github.com/JM-Brun/J-DriftX/pull/67) a été fusionnée. Le PDF éditeur complet n'est pas conservé faute d'autorisation de redistribution établie. La référence bibliographique et cette fiche de provenance sont conservées.
 - **Nature** : recueil éditorial complet, et non tiré-à-part du seul chapitre utile au projet.
 - **Contrôle documentaire** : une copie consultée antérieurement a servi à contrôler la page de titre, l'ISBN, la table des matières et le texte du chapitre 14. Cela étaye l'identification bibliographique et la lecture scientifique initiale, mais ne signifie pas que le PDF intégral est redistribuable.
 - **Matériaux conservés** : le dépôt contient aussi `raw/2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf` (pages 245–246 seulement) et `raw/extracts/2008-brun-mohammadi-springer-chap14-notes.txt` (notes analytiques, pas OCR intégral). Ils ne remplacent pas une vérification des équations et figures sur le chapitre original.
