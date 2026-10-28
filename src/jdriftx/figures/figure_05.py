@@ -218,8 +218,8 @@ def render_figure_05_svg() -> str:
     ligne_avec = f"Région avec : {surface_avec_txt} m² ({resultat.cellules_avec} cellules)"
     ligne_cmax_sans = f"c max sans : {resultat.concentration_max_sans:.1e} kg m⁻³"
     ligne_cmax_avec = f"c max avec : {resultat.concentration_max_avec:.1e} kg m⁻³"
-    ligne_ratio_1 = f"Ratio au sommet A : ×{resultat.ratio_sommet_1:.2f}"
-    ligne_ratio_2 = f"Ratio au sommet B : ×{resultat.ratio_sommet_2:.2f}"
+    ligne_ratio_1 = f"Ratio au sommet A : \u00d7{resultat.ratio_sommet_1:.2f}"
+    ligne_ratio_2 = f"Ratio au sommet B : \u00d7{resultat.ratio_sommet_2:.2f}"
     elements = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{SVG_WIDTH}" '
         f'height="{SVG_HEIGHT}" viewBox="0 0 {SVG_WIDTH} {SVG_HEIGHT}" role="img" '
