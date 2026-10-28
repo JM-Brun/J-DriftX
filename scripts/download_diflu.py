@@ -114,7 +114,7 @@ def list_remote_files(by_name: dict[str, list[dict[str, Any]]], output_path: Pat
             data_file = {}
         size = data_file.get("filesize", "?")
         file_id = data_file.get("id", "?")
-        print(f"{str(size):>12} bytes  id={str(file_id):<10} {name}")
+        print(f"{size!s:>12} bytes  id={file_id!s:<10} {name}")
     print(f"Saved API response to {output_path}")
 
 
@@ -272,7 +272,8 @@ def main() -> int:
             print(f"ERROR: {len(matches)} entries named {name!r}; refusing ambiguity.", file=sys.stderr)
             return 2
         try:
-            manifest["files"].append(download_one(name, matches[0], args.output_dir, args.timeout))
+            record = download_one(name, matches[0], args.output_dir, args.timeout)
+            manifest["files"].append(record)
         except (RuntimeError, ValueError) as exc:
             print(f"ERROR: {exc}", file=sys.stderr)
             return 2
