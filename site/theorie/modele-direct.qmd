@@ -305,13 +305,13 @@ Le modèle gaussien de panache et l'équation d'advection–diffusion sont liés
 | Aspect | Équation d'advection–diffusion fermée | Panache gaussien opérationnel |
 |---|---|---|
 | Objet | Évolution du champ de concentration selon un champ de vitesse et des flux diffusifs | Profil analytique ou paramétré de concentration pour un scénario idéalisé |
-| Entrées | Champ de vitesse, diffusivité(s), source, conditions initiales et aux limites | Débit massique (Q), vent (U), hauteur effective (H), distance sous le vent et largeurs \\(\\sigma_y,\\sigma_z\\) |
-| Paramètres de mélange | Tenseur \\(\\mathbf K\\), selon une fermeture et une paramétrisation explicites | Largeurs empiriques \\(\\sigma_y(x),\\sigma_z(x)\\), souvent déterminées par classe de stabilité |
+| Entrées | Champ de vitesse, diffusivité(s), source, conditions initiales et aux limites | Débit massique (Q), vent (U), hauteur effective (H), distance sous le vent et largeurs $\\sigma_y,\\sigma_z$ |
+| Paramètres de mélange | Tenseur $\\mathbf K$, selon une fermeture et une paramétrisation explicites | Largeurs empiriques $\\sigma_y(x),\\sigma_z(x)$, souvent déterminées par classe de stabilité |
 | Statut mathématique | Problème différentiel ; exige domaine, données et conditions aux limites | Solution exacte seulement pour une équation et des hypothèses particulières ; sinon approximation empirique |
 | Vérification | Résidu de l'équation, conditions aux limites, conservation et convergence numérique | Unités, normalisation du débit, limites du domaine, domaine de validité et comparaison aux données de référence |
 | Limite importante | Une fermeture turbulente reste un modèle physique | Une formule gaussienne ne démontre ni la validité de la fermeture ni celle d'une généralisation en champ variable |
 
-Dans le cas parabolique idéalisé détaillé dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli), vent uniforme (U>0), diffusivités transversales constantes et diffusion longitudinale négligée, on obtient \\(\\sigma_i^2=2K_i x/U\\). Les paramétrisations de Pasquill–Gifford/Briggs remplacent cette loi par des largeurs empiriques dans leur domaine d'application. Le maintien d'une forme gaussienne ne signifie alors pas que la formule obtenue est encore une solution exacte de l'équation à diffusivités constantes.
+Dans le cas parabolique idéalisé détaillé dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli), vent uniforme (U>0), diffusivités transversales constantes et diffusion longitudinale négligée, on obtient $\\sigma_i^2=2K_i x/U$. Les paramétrisations de Pasquill–Gifford/Briggs remplacent cette loi par des largeurs empiriques dans leur domaine d'application. Le maintien d'une forme gaussienne ne signifie alors pas que la formule obtenue est encore une solution exacte de l'équation à diffusivités constantes.
 
 Le [rapport INERIS sur la dispersion atmosphérique (2002)](https://pollution.ott.fr/wp-content/uploads/2021/12/Dispersion-Ineris-2002-46web.pdf) constitue une introduction aux mécanismes et aux familles de modèles. Le [glossaire AMS sur les classes de Pasquill](https://glossary.ametsoc.org/wiki/pasquill-stability-classes/) est une référence terminologique pour la classification météorologique. Ces deux sources sont complémentaires : ni l'une ni l'autre ne remplace la référence exacte de la paramétrisation utilisée dans une implémentation.
 
@@ -322,7 +322,7 @@ Les contrôles doivent être associés à une affirmation précise. Une réussit
 | Question | Contrôle adapté | Ce que le contrôle ne prouve pas |
 |---|---|---|
 | Les dimensions sont-elles cohérentes ? | Analyse dimensionnelle des termes, des paramètres et de la concentration calculée | La validité des hypothèses physiques |
-| Le panache représente-t-il le débit annoncé ? | Intégration analytique du profil, puis intégration numérique avec erreur de troncature et de quadrature séparées | La validité empirique des largeurs \\(\\sigma_y,\\sigma_z\\) |
+| Le panache représente-t-il le débit annoncé ? | Intégration analytique du profil, puis intégration numérique avec erreur de troncature et de quadrature séparées | La validité empirique des largeurs $\\sigma_y,\\sigma_z$ |
 | Les conditions au sol sont-elles satisfaites ? | Vérification analytique du flux normal pour le modèle et la condition aux limites choisis | La validité pour un terrain complexe ou un dépôt non nul |
 | Le résultat numérique converge-t-il ? | Étude séparée du raffinement de grille et de l'élargissement du domaine ; documenter la norme d'erreur et le critère d'arrêt | La convergence vers la physique réelle si le modèle est inadéquat |
 | Le résultat dépend-il fortement des paramètres ? | Analyse de sensibilité, variations contrôlées et protocole documenté | Une incertitude probabiliste si aucune distribution n'a été définie |
@@ -374,3 +374,6 @@ La métrique des temps de transport est une autre chaîne, liée au champ de ven
 - [Réduction a priori](reduction-a-priori.qmd) : hypothèse de réduction et distinction entre modèle direct et modèle approché.
 - [Glossaire](../glossaire.qmd) : index des symboles et termes.
 - Brun et Mohammadi (2008), « Reduced-Order Modelling of Dispersion », chapitre 14, *Partial Differential Equations: Modelling and Numerical Simulation*, DOI: 10.1007/978-1-4020-8758-5_14.
+- INERIS (2002), [Dispersion atmosphérique : mécanismes et outils de calcul](https://pollution.ott.fr/wp-content/uploads/2021/12/Dispersion-Ineris-2002-46web.pdf) — contexte physique et familles de modèles.
+- INERIS, [Guide de bonnes pratiques pour les modélisations 3D, version 2.0](https://aida.ineris.fr/sites/default/files/guides/Guide_Bonnes_Pratiques_V2.0_sans_suivi_1.pdf) — méthodologie de modélisation et de validation, à interpréter dans son contexte accidentel.
+- American Meteorological Society, [Pasquill stability classes](https://glossary.ametsoc.org/wiki/pasquill-stability-classes/) — définition terminologique des classes de stabilité.
