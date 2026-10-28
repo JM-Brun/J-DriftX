@@ -127,10 +127,8 @@ def test_la_region_totale_depasse_la_somme_des_regions() -> None:
     resultat = resoudre_scenario(SCENARIO_DEFAUT)
     assert resultat.surface_affectee_1 > 0.0
     assert resultat.surface_affectee_2 > 0.0
-    assert (
-        resultat.surface_affectee_totale
-        > resultat.surface_affectee_1 + resultat.surface_affectee_2
-    )
+    somme = resultat.surface_affectee_1 + resultat.surface_affectee_2
+    assert resultat.surface_affectee_totale > somme
 
 
 def test_les_contributions_croisees_et_le_maximum_sont_coherents() -> None:

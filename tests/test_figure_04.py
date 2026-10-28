@@ -30,10 +30,9 @@ def test_les_valeurs_affichees_proviennent_de_la_tranche() -> None:
     svg = render_figure_04_svg()
     vents = (resultat.vent_mesure_1, resultat.vent_mesure_2, resultat.vent_mesure_3)
     for etiquette, vent in zip(("M1", "M2", "M3"), vents, strict=True):
-        attendu = (
-            f"u({etiquette}) = ({formate_composante(vent[0])}, "
-            f"{formate_composante(vent[1])}) m/s"
-        )
+        u = formate_composante(vent[0])
+        v = formate_composante(vent[1])
+        attendu = f"u({etiquette}) = ({u}, {v}) m/s"
         assert attendu in svg
     assert f"Seuil : {SCENARIO_DEFAUT.seuil:.1f} (concentration relative)" in svg
     assert f"r1 = r2 = {resultat.rayon_affecte_1:.1f} m" in svg

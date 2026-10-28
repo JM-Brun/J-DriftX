@@ -136,9 +136,7 @@ def _valide_disques(
     for source in (source_1, source_2):
         rayon = source.rayon_affecte(seuil)
         x0, y0 = source.position
-        boite = Rectangle(
-            coin=(x0 - rayon, y0 - rayon), largeur=2.0 * rayon, hauteur=2.0 * rayon
-        )
+        boite = Rectangle(coin=(x0 - rayon, y0 - rayon), largeur=2.0 * rayon, hauteur=2.0 * rayon)
         if not all(fenetre.contient(coin) for coin in _coins(boite)):
             msg = "Les disques affectés doivent rester dans la fenêtre."
             raise ValueError(msg)

@@ -212,9 +212,8 @@ def render_figure_04_svg() -> str:
     if min(resultat.rayon_affecte_1, resultat.rayon_affecte_2) * ECHELLE_FENETRE < 15.0:
         msg = "Les disques affectés doivent rester visibles à l'échelle du panneau."
         raise ValueError(msg)
-    if (
-        resultat.concentration_max_totale
-        <= max(scenario.source_1.amplitude, scenario.source_2.amplitude)
+    if resultat.concentration_max_totale <= max(
+        scenario.source_1.amplitude, scenario.source_2.amplitude
     ):
         msg = "La somme doit dépasser chaque contribution maximale individuelle."
         raise ValueError(msg)
@@ -240,16 +239,15 @@ def render_figure_04_svg() -> str:
         raise ValueError(msg)
     lignes_mesures: list[str] = []
     for indice, (etiquette, vent) in enumerate(zip(("M1", "M2", "M3"), vents, strict=True)):
-        ligne = (
-            f"u({etiquette}) = ({formate_composante(vent[0])}, "
-            f"{formate_composante(vent[1])}) m/s"
-        )
+        u = formate_composante(vent[0])
+        v = formate_composante(vent[1])
+        ligne = f"u({etiquette}) = ({u}, {v}) m/s"
         lignes_mesures.append(_text(32.0, 498.0 + 28.0 * indice, ligne, size=15))
     elements = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{SVG_WIDTH}" '
         f'height="{SVG_HEIGHT}" viewBox="0 0 {SVG_WIDTH} {SVG_HEIGHT}" role="img" '
         'aria-labelledby="title desc">',
-        "<title id=\"title\">Figure 4 : les champs s'ajoutent, pas les régions</title>",
+        '<title id="title">Figure 4 : les champs s\'ajoutent, pas les régions</title>',
         '<desc id="desc">Deux sources gaussiennes dans un champ de vent '
         "incompressible : contributions individuelles et somme.</desc>",
         '<rect width="100%" height="100%" fill="#ffffff"/>',
