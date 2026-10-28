@@ -11,7 +11,12 @@ SAS. Tous droits réservés. Extraction de recherche (text mining)
 avec attribution, destinée au travail de relecture du projet J-DriftX
 (voir docs/04-revues-papiers-sources.md, fiche n° 2).
 
-NOTE TECHNIQUE : extraction automatique du texte du PDF (octobre 2026).
+Provenance de l'extraction :
+- Page source et PDF consulté : https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf
+- Pages concernées : article complet, pagination imprimée 634–638 (5 pages).
+- Méthode : extraction automatique du texte du PDF, réalisée en octobre 2026.
+
+NOTE TECHNIQUE :
 La mise en page, les figures et les équations ne sont PAS conservées
 (les formules apparaissent dégradées ou hors contexte). Le PDF original
 reste la référence unique. Ce fichier sert au grep, aux citations
