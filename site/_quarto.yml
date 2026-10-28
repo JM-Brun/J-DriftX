@@ -41,6 +41,8 @@ website:
                 text: "Validation scientifique"
               - href: projet/qualite.qmd
                 text: "Qualité & tests"
+              - href: projet/registre-preuves.qmd
+                text: "Registre des preuves"
               - href: projet/laboratoire-interactif.qmd
                 text: "Catalogue du laboratoire"
               - href: projet/experiences-interactives.qmd
