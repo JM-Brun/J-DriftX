@@ -7,7 +7,7 @@
 
 ## Référence
 
-InVS / Santé publique France (2009). *Évaluation de l'exposition aérienne aux pesticides de la population générale. Étude en air extérieur dans quatre sites de l'Hérault en 2006*. Rapport de synthèse (Santé publique France, direction Occitanie) ; [téléchargement Santé publique France](https://www.santepubliquefrance.fr/content/download/186474/document_file/82748_9958-9958-ps.pdf). Identifié par son titre et sa provenance (le site de l'agence bloque la lecture automatique).
+InVS / Santé publique France (2009). *Évaluation de l'exposition aérienne aux pesticides de la population générale. Étude en air extérieur dans quatre sites de l'Hérault en 2006*. Rapport de synthèse (InVS, mars 2009, 54 p. selon la notice officielle indexée) ; [URL historique](https://www.santepubliquefrance.fr/content/download/186474/document_file/82748_9958-9958-ps.pdf) ; [autre URL officielle indexée](https://www.santepubliquefrance.fr/sites/default/files/rdd/document/82748_9958-9958-ps.pdf). La correspondance binaire avec le PDF versionné n'a pas encore été vérifiée ; la lecture/OCR du fichier local reste à faire.
 
 ## Revue
 
