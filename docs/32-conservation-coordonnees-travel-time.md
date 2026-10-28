@@ -302,7 +302,7 @@ To resolve the historical question:
 1. Obtain verifiable full text for the primary sources and transcribe their governing near-/far-field equations and definitions verbatim, preserving notation. Status after this note: 2006 §1–§5 transcribed from the open-access publisher PDF (§7 above), with text-layer caveats; 2008 §2.1–2.2 transcribed from an accessible scan (§6; publisher-hosted copy still unavailable); 2009 transcribed from the publisher version of record (§6). Still to transcribe: the thesis (2007), the JESA 2010 version of record, and any equation affected by the extraction caveats.
 2. Recover and inspect the thesis or an authoritative implementation if available; verify bibliographic metadata separately. The 2006 article’s reference [1] dates the thesis 2007 (§7).
 3. Identify precisely what \(c^+\) and \(C\) denote, their units, and their integration domains.
-4. Derive the specific coordinate map and its Jacobian only if the historical equations define a regular map on the stated domain.
+4. Derive the specific coordinate map and its Jacobian only if the historical equations define a regular map on the stated domain. The one setting where the map is fully explicit — the uniform reference field — is now constructed in [docs/37](37-transformation-tau-eta-cas-uniforme.md), together with the conditional flux theorem and the rate/inventory distinction.
 5. Add each physical source, sink and boundary term to the balance before claiming conservation.
 6. Conclude with one of three outcomes: proof under explicit assumptions, a restricted result, or a documented statement that the claim cannot be reconstructed from available evidence.
 
