@@ -269,7 +269,10 @@ def main() -> int:
     for name in selected_names:
         matches = by_name[name]
         if len(matches) != 1:
-            print(f"ERROR: {len(matches)} entries named {name!r}; refusing ambiguity.", file=sys.stderr)
+            print(
+                f"ERROR: {len(matches)} entries named {name!r}; refusing ambiguity.",
+                file=sys.stderr,
+            )
             return 2
         try:
             record = download_one(name, matches[0], args.output_dir, args.timeout)
