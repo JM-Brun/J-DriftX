@@ -47,7 +47,7 @@ Le projet ne doit donc pas annoncer une propriété comme « vérifiée systéma
 
 ## Priorités qualité avant le benchmark
 
-1. Conservation étendue (classes, distances, hauteur, puff, superposition — y compris multi-configurations —, élargissement de grille) : couverte ; le raffinement du pas à domaine fixé est désormais couvert par le test d’erreur de quadrature, reste la conservation en champ variable.
+1. Conservation étendue (classes, distances, hauteur, puff, superposition — y compris multi-configurations — et élargissement de grille) : couverte par des tests ciblés ; le raffinement du pas à domaine fixé est couvert par un test distinct d’erreur de quadrature ; reste la conservation en champ variable.
 2. Ajouter des tests de convergence et des cas limites indépendants des formules de production : les gradients d’adjoint (référence uniforme et cas 1D) sont désormais couverts par différences finies ; restent des cas limites supplémentaires.
 3. Formaliser la métrique historique et séparer explicitement son API de la primitive de polyligne.
 4. Les tests de divergence existants couvrent les champs analytiques à fonction de courant ; pour le champ de vent multi-niveaux historique, ne créer les tests qu'après l'avoir défini et implémenté.
