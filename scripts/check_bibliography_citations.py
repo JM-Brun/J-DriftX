@@ -75,9 +75,7 @@ def main() -> int:
     """Run the citation-key validation."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--site-dir", type=Path, default=Path("site"))
-    parser.add_argument(
-        "--bibliography", type=Path, default=Path("site/references.bib")
-    )
+    parser.add_argument("--bibliography", type=Path, default=Path("site/references.bib"))
     args = parser.parse_args()
     diagnostics = check_citation_keys(args.site_dir, args.bibliography)
     if diagnostics:
