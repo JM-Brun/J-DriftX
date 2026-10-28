@@ -26,20 +26,6 @@ Les fichiers du corpus historique utilisent déjà la convention `AAAA-auteur-su
 | `reviews/2026-revue-systematique-jdriftx-resume-executif-partie-1.pdf` | Résumé exécutif interne de la revue, partie 1 | Source directe interne : docs/02, docs/04 et bibliographie annotée ; date exacte de génération non consignée. [Provenance du PDF](provenance/2026-revue-systematique-jdriftx-resume-executif-partie-1.pdf.md) |
 | `reviews/2026-revue-systematique-jdriftx-resume-executif-partie-2.pdf` | Résumé exécutif interne de la revue, partie 2 | Source directe interne : docs/02, docs/04 et bibliographie annotée ; date exacte de génération non consignée. [Provenance du PDF](provenance/2026-revue-systematique-jdriftx-resume-executif-partie-2.pdf.md) |
 
-## Audit de provenance — 28 octobre 2026
-
-Le contrôle de l'arborescence `raw/` confirme **7 PDF binaires et 7 sidecars de provenance correspondants** : les cinq PDF du dossier principal, plus les deux PDF dans `reviews/`. Les liens ci-dessus donnent accès directement aux fiches sidecar. Les fiches documentent l'origine connue et rendent explicites les inconnues ; elles ne doivent pas être interprétées comme une authentification binaire de chaque fichier.
-
-Les sidecars dont les liens ne sont pas intégrés dans les lignes historiques du tableau sont disponibles ici : [provenance du PDF 2006](provenance/2006-mohammadi-brun-crmeca.pdf.md) ; [provenance de l'extrait Springer p. 245–246](provenance/2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf.md) ; [provenance du recueil Springer complet](provenance/2008-glowinski-neittaanmaki-recueil-springer.pdf.md). Ces liens sont placés dans le présent audit afin de ne pas modifier les lignes concernées par la PR publique #67, qui reste différée.
-
-- **Origine directe non totalement reconstituée :** pour le PDF de 2006, la page officielle est identifiée mais le chemin de téléchargement ayant produit le binaire n'est pas démontré ; pour l'extrait Springer p. 245–246, la page ResearchGate est connue mais l'URL directe et la date du téléchargement ne sont pas conservées.
-- **Source effectivement consultée distincte de la référence bibliographique :** le recueil Springer complet a été consulté via un miroir tiers SGO/J. Baylie ; la notice Springer établit la référence du livre, pas l'origine du binaire versionné. Les droits de redistribution restent à arbitrer.
-- **Version et intégrité à vérifier :** le rapport InVS dispose d'URL officielles, mais le binaire du dépôt n'a pas été comparé directement à la version officielle ; son extraction reste à faire. Pour le manuscrit Drift-X, la provenance HAL du PDF est distinguée du relais ResearchGate utilisé pour récupérer l'extraction texte.
-- **Documents internes :** les deux PDF de résumé exécutif proviennent du travail J-DriftX, pas d'un site externe ; les sources de contenu sont indiquées, mais la date exacte de génération n'est pas enregistrée.
-- **Fichiers textuels dérivés :** les trois fichiers de `extracts/` ont un en-tête avec source, périmètre de pages et méthode connue. L'extraction 2009 précise que ResearchGate a servi de relais ; les notes analytiques du chapitre 2008 signalent qu'elles ne sont pas un OCR verbatim.
-
-Aucun PDF n'a été remplacé, téléchargé ou supprimé par cet audit. La présence d'un fichier, la possibilité de le consulter et le droit de le redistribuer restent trois questions distinctes.
-
 Les fiches Markdown décrivant les liens scientifiques entre les références et le projet sont centralisées dans [la bibliographie annotée](../docs/bibliographie-annotee-jdriftx.md). Cette cartographie distingue les sources fondatrices, les baselines concurrentes, les méthodes complémentaires, les analogies conceptuelles et les références de contexte applicatif.
 
 ## raw/extracts/ — extractions texte
@@ -99,3 +85,17 @@ Ne pas confondre une synthèse de revue avec une source primaire ni compter comm
 Le rapport final de revue systématique sera ajouté par le mainteneur dans ce dossier. Son fichier exact sera indiqué ici après dépôt. Le rapport est une source de travail ; les résultats utiles à la compréhension publique doivent être synthétisés dans les documents scientifiques publics, avec les références vérifiées et les limites de preuve. Le suivi opérationnel des décisions reste dans les notes privées associées.
 
 Ne pas remplacer les PDF historiques ni confondre le rapport de revue avec les sources primaires qu'il cite. Si le rapport contient des exports bibliographiques ou des données de sélection, les conserver avec leur provenance et leur format d'origine.
+
+## Audit de provenance — 28 octobre 2026
+
+Le contrôle de l'arborescence `raw/` confirme **7 PDF binaires et 7 sidecars de provenance correspondants** : les cinq PDF du dossier principal, plus les deux PDF dans `reviews/`. Les liens ci-dessus donnent accès directement aux fiches sidecar. Les fiches documentent l'origine connue et rendent explicites les inconnues ; elles ne doivent pas être interprétées comme une authentification binaire de chaque fichier.
+
+Les sidecars dont les liens ne sont pas intégrés dans les lignes historiques du tableau sont disponibles ici : [provenance du PDF 2006](provenance/2006-mohammadi-brun-crmeca.pdf.md) ; [provenance de l'extrait Springer p. 245–246](provenance/2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf.md) ; [provenance du recueil Springer complet](provenance/2008-glowinski-neittaanmaki-recueil-springer.pdf.md). Ces liens sont placés dans le présent audit afin de ne pas modifier les lignes concernées par la PR publique #67, qui reste différée.
+
+- **Origine directe non totalement reconstituée :** pour le PDF de 2006, la page officielle est identifiée mais le chemin de téléchargement ayant produit le binaire n'est pas démontré ; pour l'extrait Springer p. 245–246, la page ResearchGate est connue mais l'URL directe et la date du téléchargement ne sont pas conservées.
+- **Source effectivement consultée distincte de la référence bibliographique :** le recueil Springer complet a été consulté via un miroir tiers SGO/J. Baylie ; la notice Springer établit la référence du livre, pas l'origine du binaire versionné. Les droits de redistribution restent à arbitrer.
+- **Version et intégrité à vérifier :** le rapport InVS dispose d'URL officielles, mais le binaire du dépôt n'a pas été comparé directement à la version officielle ; son extraction reste à faire. Pour le manuscrit Drift-X, la provenance HAL du PDF est distinguée du relais ResearchGate utilisé pour récupérer l'extraction texte.
+- **Documents internes :** les deux PDF de résumé exécutif proviennent du travail J-DriftX, pas d'un site externe ; les sources de contenu sont indiquées, mais la date exacte de génération n'est pas enregistrée.
+- **Fichiers textuels dérivés :** les trois fichiers de `extracts/` ont un en-tête avec source, périmètre de pages et méthode connue. L'extraction 2009 précise que ResearchGate a servi de relais ; les notes analytiques du chapitre 2008 signalent qu'elles ne sont pas un OCR verbatim.
+
+Aucun PDF n'a été remplacé, téléchargé ou supprimé par cet audit. La présence d'un fichier, la possibilité de le consulter et le droit de le redistribuer restent trois questions distinctes.
