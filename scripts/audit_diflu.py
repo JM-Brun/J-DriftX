@@ -5,6 +5,7 @@ Raw files are written locally. The script verifies original-file size/checksum w
 Dataverse publishes them, then writes a machine-readable manifest and audit report.
 Only the Python standard library is required.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -105,9 +106,7 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
         sampling_type = (row.get("sampling_type") or "").strip()
         bag_id = (row.get("sampling_bag_id") or "").strip()
         if sampling_type == "EA" and bag_id != "NA":
-            violations.append(
-                {"row": row_number, "rule": "EA sampling_bag_id must be literal NA"}
-            )
+            violations.append({"row": row_number, "rule": "EA sampling_bag_id must be literal NA"})
         elif sampling_type == "VEGA" and (not bag_id or bag_id == "NA"):
             violations.append({"row": row_number, "rule": "VEGA sampling_bag_id must be populated"})
     return {
@@ -212,10 +211,7 @@ def run(output_dir: Path, timeout: float) -> dict[str, Any]:  # noqa: PLR0915
     audit = audit_sampling_csv(local_by_remote_name["DIFLU_helium_release_sampling.tab"])
     report = {
         "dataset_pid": DATASET_PID,
-        "dataset_url": (
-            f"{BASE_URL}/dataset.xhtml?persistentId="
-            f"{DATASET_PID.replace(':', '%3A')}"
-        ),
+        "dataset_url": (f"{BASE_URL}/dataset.xhtml?persistentId={DATASET_PID.replace(':', '%3A')}"),
         "retrieved_at_utc": datetime.now(UTC).isoformat(),
         "listing_url": listing_final_url,
         "listing_content_type": listing_headers.get("content-type"),
@@ -260,9 +256,7 @@ def main() -> int:
     print(f"Audit report: {args.output_dir / 'audit-report.json'}")
     print(f"Sampling rows: {report['sampling_audit']['row_count']}")
     print(f"Sampling types: {report['sampling_audit']['sampling_type_counts']}")
-    invariant = report["sampling_audit"]["semantic_checks"][
-        "EA_literal_NA_and_VEGA_populated"
-    ]
+    invariant = report["sampling_audit"]["semantic_checks"]["EA_literal_NA_and_VEGA_populated"]
     print(f"EA/VEGA invariant: {invariant}")
     return 0 if invariant == "passed" else 1
 
