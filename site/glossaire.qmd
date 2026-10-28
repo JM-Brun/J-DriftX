@@ -79,6 +79,8 @@ Les notations employées sur la page d'accueil et ses schémas ($C(x,y,z)$, $\ta
 
 **Classes de Pasquill.** Six classes de stabilité atmosphérique, de A (très instable) à F (stable), qui pilotent la croissance des $\sigma_y$, $\sigma_z$ avec la distance. *Origine* : F. Pasquill (1961), complétées par les courbes de Gifford et les formules de Briggs (1973) utilisées par les modèles réglementaires. *Dans le code* : chaque classe est un objet `ClasseStabilite` qui porte son régime, ses conditions typiques et ses coefficients de Briggs (module `stabilite`).
 
+**Stabilité numérique.** Propriété d'une méthode numérique décrivant comment les perturbations, les erreurs d'arrondi ou les erreurs introduites par la discrétisation évoluent sous l'application du schéma ; sa définition précise dépend du problème et de la méthode étudiée. Elle ne se confond pas avec la **stabilité atmosphérique**, qui classe les conditions de stratification et de turbulence utilisées ici via les classes de Pasquill A–F. **Dans J-DriftX, aucune analyse générale de stabilité numérique n'est documentée par les tests consultés.** Le fichier `tests/test_stabilite.py` vérifie la nomenclature des classes, leurs régimes, les coefficients des lois de Briggs et leur compatibilité avec les fonctions de similitude ; ces tests ne démontrent pas la stabilité d'un schéma numérique. → [Tests des classes de Pasquill](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_stabilite.py), [module des classes atmosphériques](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py).
+
 | Classe | Régime | Conditions typiques | $\sigma_z$ (Briggs, site rural) |
 |---|---|---|---|
 | A | très instable | jour, insolation forte, vent < 2 m/s | linéaire |
