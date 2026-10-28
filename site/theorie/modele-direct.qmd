@@ -351,6 +351,15 @@ Le [rapport INERIS sur la dispersion atmosphérique (2002)](https://pollution.ot
 
 Les contrôles doivent être associés à une affirmation précise. Une réussite sur un cas particulier ne constitue pas une preuve générale, et une vérification numérique ne valide pas à elle seule la représentation physique.
 
+Il faut distinguer quatre activités, qui répondent à des questions différentes :
+
+- **Vérification du code** : l'implémentation respecte-t-elle ses contrats (tests unitaires, cas limites, types et interfaces) ?
+- **Vérification de la solution numérique** : le calcul résout-il correctement le problème mathématique posé (solution analytique de référence, résidu, bilan conservatif, convergence et erreurs numériques) ?
+- **Validation physique** : le modèle représente-t-il suffisamment le phénomène visé, dans un domaine d'usage défini, lorsqu'on le compare à des observations ou à des benchmarks pertinents ?
+- **Analyse d'incertitude** : comment les incertitudes sur les entrées, paramètres, données et choix de modèle affectent-elles la quantité d'intérêt ? Elle requiert des hypothèses d'incertitude explicites et ne remplace ni la vérification ni la validation.
+
+Dans l'état actuel du projet, des tests de propriétés ciblées existent pour les solutions gaussiennes ; cette page ne revendique pas une validation atmosphérique indépendante.
+
 | Question | Contrôle adapté | Ce que le contrôle ne prouve pas |
 |---|---|---|
 | Les dimensions sont-elles cohérentes ? | Analyse dimensionnelle des termes, des paramètres et de la concentration calculée | La validité des hypothèses physiques |
