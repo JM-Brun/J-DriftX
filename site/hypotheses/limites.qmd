@@ -9,7 +9,7 @@ Une modélisation à complexité réduite honnête publie ses limites au même n
 ## Limites météorologiques
 
 - **Vent faible / stagnation** : la métrique $\tau$ diverge quand $|\mathbf{u}| \to 0$. *Contrôle* : garde <code>umin</code> dans le code ; physique de stagnation à définir (M2). C'est aussi une information de risque : une zone de stagnation est une zone de concentration potentielle.
-- **Stabilité changeante, inversions nocturnes** : la classe de Pasquill est locale et temporelle. *Contrôle* : assemblage par segments de trajectoire (H5), discrétisation temporelle des scénarios.
+- **Stabilité changeante, inversions nocturnes** : la classe de Pasquill est locale et temporelle. *Piste de contrôle* : représenter les changements par segments (H5) et discrétiser temporellement les scénarios ; l'assemblage de paramètres différents par segment et la prise en charge d'un vent variant dans le temps ne sont pas implémentés dans le code actuel.
 - **Cisaillement vertical fort** : la solution mono-$\sigma_z$ approche mal les profiles de vent tournants. *Contrôle* : extension multi-couches (couches de mélange, [@brun2008]).
 
 ## Limites de terrain
