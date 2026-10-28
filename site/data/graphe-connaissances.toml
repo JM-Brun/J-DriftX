@@ -418,6 +418,12 @@ libelle = "experiences/relief.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/relief.py"
 
 [[noeuds]]
+id = "experiences/modele_reduit_edp"
+type = "module"
+libelle = "experiences/modele_reduit_edp.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/modele_reduit_edp.py"
+
+[[noeuds]]
 id = "similitude"
 type = "module"
 libelle = "similitude.py"
@@ -476,6 +482,12 @@ id = "figures/figure_02"
 type = "module"
 libelle = "figures/figure_02.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_02.py"
+
+[[noeuds]]
+id = "figures/figure_03"
+type = "module"
+libelle = "figures/figure_03.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_03.py"
 
 [[noeuds]]
 id = "figures/figure_04"
@@ -622,6 +634,18 @@ id = "t-figure-05"
 type = "test"
 libelle = "test_figure_05.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_05.py"
+
+[[noeuds]]
+id = "t-modele-reduit-edp"
+type = "test"
+libelle = "test_modele_reduit_edp.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_modele_reduit_edp.py"
+
+[[noeuds]]
+id = "t-figure-03"
+type = "test"
+libelle = "test_figure_03.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_03.py"
 
 [[noeuds]]
 id = "t-wind-field"
@@ -1141,6 +1165,21 @@ vers = "experiences/relief"
 relation = "utilise"
 
 [[aretes]]
+de = "experiences/modele_reduit_edp"
+vers = "c-panache"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/modele_reduit_edp"
+vers = "c-transport"
+relation = "utilise"
+
+[[aretes]]
+de = "figures/figure_03"
+vers = "experiences/modele_reduit_edp"
+relation = "utilise"
+
+[[aretes]]
 de = "figures/wind_field_explorer"
 vers = "fields"
 relation = "utilise"
@@ -1338,6 +1377,18 @@ de = "t-figure-05"
 vers = "figures/figure_05"
 relation = "couvre"
 justification = "tests/test_figure_05.py : rendu SVG synchronisé avec la tranche typée."
+
+[[aretes]]
+de = "t-modele-reduit-edp"
+vers = "experiences/modele_reduit_edp"
+relation = "couvre"
+justification = "tests/test_modele_reduit_edp.py : normes reproductibles, convergence d’ordre deux, bilan de masse aux tranches."
+
+[[aretes]]
+de = "t-figure-03"
+vers = "figures/figure_03"
+relation = "couvre"
+justification = "tests/test_figure_03.py : rendu SVG synchronisé avec la tranche typée."
 
 [[aretes]]
 de = "t-wind-field"
@@ -1617,10 +1668,11 @@ noeuds = [
   "metric", "champ_analytique", "experiences/uniforme",
   "experiences/reconstruction_vent", "experiences/cas_synthetiques",
   "experiences/superposition_sources", "experiences/relief",
+  "experiences/modele_reduit_edp",
   "similitude", "stabilite",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
-  "figures/figure_02", "figures/figure_04", "figures/figure_05",
+  "figures/figure_02", "figures/figure_03", "figures/figure_04", "figures/figure_05",
   "figures/wind_field_explorer",
   "c-polyligne", "c-tpa", "c-pdist", "c-fcourant", "c-champ",
   "c-courant", "c-panache", "c-stabilite", "c-transport",
@@ -1631,6 +1683,7 @@ noeuds = [
   "t-uniforme", "t-advection", "t-fields", "t-periodic", "t-stabilite",
   "t-terrain", "t-trajectories", "t-figure-01", "t-figure-02",
   "t-superposition", "t-figure-04", "t-relief", "t-figure-05",
+  "t-modele-reduit-edp", "t-figure-03",
   "t-wind-field", "t-interactif",
   "t-cas-synthetiques",
   "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
@@ -1649,8 +1702,10 @@ noeuds = [
     "champ_analytique", "experiences/uniforme",
     "experiences/reconstruction_vent", "experiences/cas_synthetiques",
     "experiences/superposition_sources", "experiences/relief",
+    "experiences/modele_reduit_edp",
     "fields", "terrain",
-    "trajectories", "figures/figure_01", "figures/figure_02", "figures/figure_04",
+    "trajectories", "figures/figure_01", "figures/figure_02", "figures/figure_03",
+    "figures/figure_04",
     "figures/figure_05",
     "figures/wind_field_explorer", "c-fcourant", "c-champ", "c-courant",
     "c-multiniveaux", "n0",
@@ -1680,7 +1735,7 @@ noeuds = [
     "t-constraints", "t-champ", "t-recon", "t-uniforme", "t-advection",
     "t-fields", "t-periodic", "t-stabilite", "t-terrain", "t-trajectories",
     "t-figure-01", "t-figure-02", "t-superposition", "t-figure-04",
-    "t-relief", "t-figure-05",
+    "t-relief", "t-figure-05", "t-modele-reduit-edp", "t-figure-03",
     "t-wind-field", "t-interactif",
     "t-cas-synthetiques",
   ]

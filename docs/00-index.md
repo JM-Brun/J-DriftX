@@ -11,7 +11,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 35 (la note 34, figure 5 du chapitre 2008,
+Prochain numéro libre sur main : 36 (la note 35, figure 3 du chapitre 2008,
 est désormais sur main).
 
 ## Numéros en double
@@ -57,6 +57,7 @@ est désormais sur main).
 | `32-conservation-coordonnees-travel-time.md` | Bilan de conservation dans des coordonnées travel-time : dérivation conditionnelle et transcriptions des sources (2006, 2008, 2009) |
 | `33-figure-04-superposition-sources.md` | Figure 4 du chapitre 2008 : superposition de deux sources, champ à trois mesures |
 | `34-figure-05-relief.md` | Figure 5 du chapitre 2008 : relief synthétique, correction du point de calcul |
+| `35-figure-03-modele-reduit-edp.md` | Figure 3 du chapitre 2008 : modèle réduit vs EDP, deux résolutions indépendantes |
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
 | `bibliographie/` | Dossier bibliographique |
