@@ -106,6 +106,56 @@ La page officielle (snapshot du 8 juin 2026) précise le périmètre de l'archiv
 | Moyenne | Télécharger ERIES (xlsx, txt, Matlab) et vérifier unités et incertitudes chiffrées | Fichiers non inspectés |
 | Moyenne | Fixer et documenter les partitions calibrage/évaluation ci-dessus | À figer avant tout entraînement |
 
+### Procédure reproductible — récupérer un fichier DIFLU sans télécharger les archives complètes
+
+Cette procédure est documentée mais **n’a pas pu être exécutée depuis l’environnement de rédaction** (résolution DNS/réseau externe indisponible). Elle doit être exécutée depuis une machine disposant d’un accès réseau. Elle cible d’abord le fichier tabulaire des prélèvements, sans télécharger les archives ZIP de ~381 Mo.
+
+Prérequis : `curl`, `jq` et `sha256sum` (ou `shasum -a 256` sur macOS).
+
+```bash
+set -euo pipefail
+
+BASE='https://entrepot.recherche.data.gouv.fr'
+DATASET_PID='doi:10.57745/A9YC3C'
+FILE_NAME='DIFLU_helium_release_sampling.tab'
+
+# Enregistrer la réponse API qui décrit les fichiers de la version publiée.
+curl --fail --location --show-error \
+  --get "$BASE/api/datasets/:persistentId/versions/:latest/files" \
+  --data-urlencode "persistentId=$DATASET_PID" \
+  --output diflu-files.json
+
+# Extraire l'identifiant Dataverse du fichier nommé, sans deviner son DOI.
+FILE_ID="$(jq -er --arg name "$FILE_NAME" '
+  [.data[] | select(.dataFile.filename == $name) | .dataFile.id]
+  | if length == 1 then .[0]
+    elif length == 0 then error("File not found: " + $name)
+    else error("Ambiguous filename; inspect diflu-files.json: " + $name)
+    end
+' diflu-files.json)"
+
+# Télécharger le fichier ciblé, puis conserver une empreinte locale.
+curl --fail --location --show-error \
+  "$BASE/api/access/datafile/$FILE_ID" \
+  --output "$FILE_NAME"
+
+if command -v sha256sum >/dev/null 2>&1; then
+  sha256sum "$FILE_NAME" | tee "$FILE_NAME.sha256"
+elif command -v shasum >/dev/null 2>&1; then
+  shasum -a 256 "$FILE_NAME" | tee "$FILE_NAME.sha256"
+else
+  printf "Need sha256sum or shasum to calculate SHA-256\n" >&2
+  exit 1
+fi
+wc -c "$FILE_NAME"
+```
+
+Si la requête API ou le filtre échoue, conserver le code HTTP, le corps d’erreur et la réponse JSON obtenue ; ne pas remplacer silencieusement l’identifiant ni considérer un fichier d’erreur comme les données. Le manifeste `diflu-files.json`, le fichier téléchargé, son empreinte et la date d’accès doivent être archivés ensemble. L’empreinte SHA-256 prouve l’identité des octets conservés pour les analyses ultérieures, pas l’exactitude scientifique des données.
+
+Après téléchargement, contrôler le statut HTTP, le type et la taille du fichier, l’encodage et le séparateur, puis examiner les en-têtes, unités, horodatages, identifiants d’expérience, valeurs manquantes et limites de détection. Cette seule table ne suffit pas à vérifier la cohérence avec les mesures météorologiques : télécharger ensuite uniquement les fichiers météo/instrument nécessaires, selon le même mécanisme. La valeur 19 ne doit être interprétée comme un nombre d’essais que si un champ et sa sémantique l’établissent explicitement.
+
+Référence API : [FAQ officielle Recherche Data Gouv — accès aux fichiers par API](https://recherche.data.gouv.fr/fr/faq) ; [documentation de l’API native Dataverse — liste des fichiers d’une version](https://guides.dataverse.org/en/latest/api/native-api.html).
+
 ## Sources de l'audit (consultées le 23 octobre 2026)
 
 - Datacite, métadonnées DIFLU : [api.datacite.org/dois/10.57745/A9YC3C](https://api.datacite.org/dois/10.57745/A9YC3C) — titre complet, auteurs, producteur ASNR, description des campagnes 2019, rightsList vide, sous-DOIs `HasPart`.
