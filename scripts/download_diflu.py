@@ -159,9 +159,9 @@ def download_one(
                 "dataset because the API size metadata and received bytes disagree."
             ),
         }
-        diagnostic_path.with_suffix(
-            diagnostic_path.suffix + ".json"
-        ).write_text(json.dumps(diagnostic, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        diagnostic_path.with_suffix(diagnostic_path.suffix + ".json").write_text(
+            json.dumps(diagnostic, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
         raise RuntimeError(
             f"Size mismatch for {name}: API={expected_size}, downloaded={len(payload)} "
             f"(difference {len(payload) - expected_size}). "
@@ -172,9 +172,7 @@ def download_one(
     destination = output_dir / name
     destination.write_bytes(payload)
     digest = hashlib.sha256(payload).hexdigest()
-    (output_dir / f"{name}.sha256").write_text(
-        f"{digest}  {name}\n", encoding="utf-8"
-    )
+    (output_dir / f"{name}.sha256").write_text(f"{digest}  {name}\n", encoding="utf-8")
     print(f"OK {name}: {len(payload)} bytes SHA-256 {digest}")
     return {
         "filename": name,
