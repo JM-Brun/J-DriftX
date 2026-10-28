@@ -326,16 +326,17 @@ def resoudre_scenario(scenario: ScenarioRelief) -> ResultatRelief:
     pas = _PAS_GRILLE
     x_origine = scenario.fenetre.coin[0]
     y_origine = scenario.fenetre.coin[1]
-    nombre = int(scenario.fenetre.largeur / pas) + 1
+    nombre_x = int(scenario.fenetre.largeur / pas) + 1
+    nombre_y = int(scenario.fenetre.hauteur / pas) + 1
     seuil = scenario.seuil
     altitude_max = 0.0
     cellules_sans = 0
     cellules_avec = 0
     c_max_sans = 0.0
     c_max_avec = 0.0
-    for i in range(nombre):
+    for i in range(nombre_x):
         x = x_origine + i * pas
-        for j in range(nombre):
+        for j in range(nombre_y):
             y = y_origine + j * pas
             altitude = scenario.altitude_sol(x, y)
             altitude_max = max(altitude_max, altitude)
