@@ -208,8 +208,7 @@ def render_figure_05_svg() -> str:
     axe_txt = f"{resultat.altitude_axe:.1f}"
     evaluation_txt = f"{scenario.hauteur_evaluation:.0f}"
     ligne_geometrie = (
-        f"h = {hauteur_txt} m ; axe à {axe_txt} m ; "
-        f"point à {evaluation_txt} m du sol."
+        f"h = {hauteur_txt} m ; axe à {axe_txt} m ; point à {evaluation_txt} m du sol."
     )
     ligne_seuil = f"Seuil : {scenario.seuil:.1e} kg m⁻³"
     surface_sans_txt = _entier_espace(int(resultat.surface_region_sans))
