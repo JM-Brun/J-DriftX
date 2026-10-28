@@ -115,6 +115,8 @@ d_A(x,y)=\frac{x-x_A}{v(y_A)},
 \]
 For non-constant \(v\), the last expression is not identically one. Therefore this projected cost cannot simply be substituted for a global travel-time coordinate in (3)–(5).
 
+The analytical regression test for this example is documented in [the shear-counterexample test note](33-test-contre-exemple-cisaillement.md). It checks the closed-form projected cost, the non-unit transport residual for a non-constant profile, and the uniform-flow control case. The test is deliberately independent of a numerical solver; it freezes this mathematical counterexample rather than validating the full historical model.
+
 ## 6. Primary-source transcription and dimensional audit (2009 article)
 
 The publisher's open-access HTML for Bozon & Mohammadi (2009), *Applied Geomatics*, exposes the following statements and equations directly. They are transcribed here as printed; no suspected typo is silently repaired.
