@@ -36,7 +36,7 @@ def fetch_bytes(url: str, timeout: float) -> tuple[bytes, dict[str, str], str]:
     parsed = urlsplit(url)
     if parsed.scheme != "https" or parsed.hostname != "entrepot.recherche.data.gouv.fr":
         raise ValueError(f"Refusing non-official URL: {url}")
-    request = Request(url, headers={"User-Agent": USER_AGENT})
+    request = Request(url, headers={"User-Agent": USER_AGENT})  # noqa: S310
     try:
         # The URL is restricted to the official HTTPS host above.
         with urlopen(request, timeout=timeout) as response:  # noqa: S310
@@ -157,7 +157,9 @@ def run(output_dir: Path, timeout: float) -> dict[str, Any]:  # noqa: PLR0915
     for remote_name in CORE_FILES:
         matches = indexed.get(remote_name, [])
         if len(matches) != 1:
-            raise RuntimeError(f"Expected one listing entry for {remote_name}; found {len(matches)}")
+            raise RuntimeError(
+                f"Expected one listing entry for {remote_name}; found {len(matches)}"
+            )
         item = matches[0]
         data_file = item.get("dataFile")
         if not isinstance(data_file, dict) or not isinstance(data_file.get("id"), int):
