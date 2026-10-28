@@ -15,7 +15,7 @@ Cette page intervient **après la définition du travel-time** : elle classe les
 - **Résultat transmis :** une analogie avec une quasi-métrique, Finsler ou Randers reste une piste de positionnement tant que les axiomes et les hypothèses ne sont pas démontrés pour l'objet exact.
 - **Limite actuelle :** la construction projetée historique peut échouer à la séparation et à l'inégalité triangulaire ; elle ne doit donc pas être qualifiée de quasi-métrique au sens usuel sans une définition différente ou une preuve correspondante.
 
-Pour les définitions et le contre-exemple de cisaillement, revenir à [Métrique travel-time](metrique-travel-time.qmd). Pour les preuves et contre-exemples complets, consulter [l'investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) et la [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md).
+Pour les définitions et le contre-exemple de cisaillement, revenir à [Métrique travel-time](metrique-travel-time.qmd). Pour les preuves et contre-exemples complets, consulter [l’investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) et, pour l’état d’implémentation (cas analytiques couverts, fonctions concernées, limites des tests), la [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md). **Étape suivante :** pour les hypothèses exactes des résultats conditionnels — conservation, théorème de la divergence — et la comparaison détaillée aux formulations voisines, poursuivre vers la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
 
 ## Riemannien, non riemannien : de quoi parle-t-on ?
 
