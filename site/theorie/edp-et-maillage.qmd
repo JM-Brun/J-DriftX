@@ -47,7 +47,7 @@ Le nombre de cellules est dicté par les échelles à résoudre : le décimètre
 ## Schémas numériques et conditions de robustesse
 
 - **Discrétisation en espace** : volumes finis (conservatifs par construction), éléments finis, différences finies.
-- **Discrétisation en temps** : le pas de temps est limité par la condition **CFL** (l'information ne doit pas franchir plus d'une cellule par pas). Raffiner le maillage d'un facteur 2 par dimension multiplie les cellules par 8 et, via la CFL, réduit le pas de temps d'un facteur 2 : le coût croît d'environ un facteur 16.
+- **Discrétisation en temps** : pour les schémas explicites usuels d'advection, une condition de type **CFL** relie le pas de temps à la taille des cellules et aux vitesses caractéristiques. Sa forme exacte dépend du schéma, de l'équation et du maillage ; « ne pas franchir plus d'une cellule par pas » n'est qu'une intuition, pas une définition universelle. À domaine physique fixé, un raffinement uniforme d'un facteur 2 dans chacune des trois dimensions multiplie le nombre de cellules par 8. Si le schéma explicite impose alors de diviser le pas de temps par 2, le nombre de pas double et le coût par simulation croît approximativement d'un facteur 16, à coût par cellule comparable. Ce facteur est un ordre de grandeur conditionnel, pas une loi valable pour tout solveur (notamment implicite), maillage ou régime.
 - **Positivité et conservation** : un schéma naïf peut produire des concentrations négatives ou des oscillations numériques ; il faut des schémas upwind, des limiteurs de pente.
 - **Diffusion numérique** : le schéma lui-même disperse artificiellement le panache ; l'erreur se maîtrise par des études de convergence en maillage.
 
@@ -59,7 +59,7 @@ Le coût d'une simulation se chiffre en (nombre de cellules) × (nombre de pas d
 
 - chaque scénario (météo, émission, terrain) exige une **simulation complète** : changer un paramètre, c'est tout recalculer ;
 - le **champ entier** est calculé même si un seul point est demandé ;
-- le **Monte Carlo massif**, l'analyse de sensibilité par perturbations et l'assimilation itérative deviennent hors de portée pour les usages visés (SIG, temps réel) — c'est l'argument fondateur de la page [Modèle direct](modele-direct.qmd) ;
+- le **Monte Carlo massif**, l'analyse de sensibilité par perturbations et l'assimilation itérative peuvent devenir coûteux lorsque chaque scénario exige une résolution complète ; leur faisabilité pour les usages visés (SIG, temps réel) dépend toutefois du domaine, du solveur, des ressources et du nombre de scénarios, et doit être mesurée plutôt que déclarée impossible a priori — voir la page [Modèle direct](modele-direct.qmd) ;
 - le **problème inverse** (identification de source) exige en outre le modèle **adjoint** du solveur — historiquement obtenu par différentiation automatique (Tapenade), au prix d'un développement considérable.
 
 ## Ce que la modélisation complète apporte en retour
