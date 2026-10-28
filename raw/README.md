@@ -58,7 +58,7 @@ Les fiches Markdown décrivant les liens scientifiques entre les références et
 | <code>2008-bozon-mohammadi-sinfort-esta.pdf</code> | e-sta vol. 5, STIC & Environnement’07 | Archives SEE introuvables en ligne à ce jour |
 | ~~<code>2008-brun-mohammadi-springer-chap14.pdf</code>~~ | Chapitre complet — désormais couvert par le recueil Glowinski & Neittaanmäki présent dans <code>raw/</code> (23 octobre 2026) ; un fichier chapitre séparé n'est plus nécessaire | Recueil présent ; extraction à poursuivre |
 | <code>2009-bozon-mohammadi-applied-geomatics.pdf</code> | Applied Geomatics 1, 59–74 | Abonnement Springer / tiré-à-part auteur |
-| <code>2010-bozon-sinfort-mohammadi-jesa.pdf</code> | JESA 44(4-5), 445–461 | Abonnement Lavoisier ; DOI 10.3166/jesa.44.445-461 |
+| <code>2010-bozon-sinfort-mohammadi-jesa.pdf</code> | Bozon, Sinfort & Mohammadi, *A GIS-based atmospheric dispersion model*, JESA 44(4–5), 445–461, DOI [10.3166/jesa.44.445-461](https://doi.org/10.3166/jesa.44.445-461) | Version éditée finale non obtenue ni authentifiée au 28/10/2026. Pistes : accès institutionnel autorisé via [ISTEX/Mir@bel](https://reseau-mirabel.info/revue/4637/Journal-europeen-des-systemes-automatises-JESA) ou demande à l’éditeur ; ne pas confondre avec le manuscrit auteur HAL `hal-00468863` de la communication 2009. |
 | <code>1979-muller-espace-geographique.pdf</code> | Muller, *La cartographie d'une métrique non euclidienne : les distances-temps*, L'Espace géographique 8(3), 215–227 | [Persée](https://www.persee.fr/doc/spgeo_0046-2497_1979_num_8_3_1915) — référence théorique (métriques non riemanniennes), hors corpus Drift-X |
 
 ## Comment ajouter d'autres PDF
