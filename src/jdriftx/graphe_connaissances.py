@@ -212,7 +212,9 @@ def _erreurs_aretes(registre: Registre) -> list[str]:
     resultats: list[str] = []
     for cle, relation in registre.relations.items():
         if relation.type_semantique not in TYPES_SEMANTIQUES:
-            resultats.append(f"relation {cle} : type sémantique inconnu ({relation.type_semantique})")
+            resultats.append(
+                f"relation {cle} : type sémantique inconnu ({relation.type_semantique})"
+            )
     for arete in registre.aretes:
         if arete.relation not in registre.relations:
             resultats.append(
