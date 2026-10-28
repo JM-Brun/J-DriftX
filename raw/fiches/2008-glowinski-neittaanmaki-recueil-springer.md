@@ -2,10 +2,11 @@
 
 ## Identification du fichier
 
-- **Fichier intégral dans le dépôt public** : aucun. Le PDF complet du recueil n'est pas distribué par ce dépôt ; la référence bibliographique et le DOI sont conservés.
+- **État constaté sur `main` le 28 octobre 2026** : le PDF intégral est présent dans `raw/Partial Differential Equations - Modelling and Numerical Simulation - R. Glowinski, P. Neittaanmaki (Springer, 2008) WW.pdf` (6 376 789 octets). Cette présence contredit l'ancienne mention d'absence ci-dessous et les statuts documentaires de PR #67/#69. La fiche décrit ici l'état réel du dépôt, sans conclure que la redistribution est autorisée.
+- **Décision de droits en suspens** : la PR [#67](https://github.com/JM-Brun/J-DriftX/pull/67) demandant le retrait est restée différée selon la décision de travail antérieure. Ne pas annoncer le fichier comme absent ni le supprimer implicitement dans une mise à jour documentaire ; arbitrer séparément maintien/retrait et documenter la décision.
 - **Nature** : recueil éditorial complet, et non tiré-à-part du seul chapitre utile au projet.
 - **Contrôle documentaire** : une copie consultée antérieurement a servi à contrôler la page de titre, l'ISBN, la table des matières et le texte du chapitre 14. Cela étaye l'identification bibliographique et la lecture scientifique initiale, mais ne signifie pas que le PDF intégral est redistribuable.
-- **Matériaux conservés** : voir l'extrait identifié séparément dans `raw/` et les notes d'extraction. Ils ne remplacent pas le chapitre original et leurs propres conditions de réutilisation doivent être respectées.
+- **Matériaux conservés** : le dépôt contient aussi `raw/2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf` (pages 245–246 seulement) et `raw/extracts/2008-brun-mohammadi-springer-chap14-notes.txt` (notes analytiques, pas OCR intégral). Ils ne remplacent pas une vérification des équations et figures sur le chapitre original.
 
 ## Référence bibliographique
 

@@ -10,6 +10,10 @@ vol. 16, Springer, pp. 245–256.
 DOI du chapitre : https://doi.org/10.1007/978-1-4020-8758-5_14
 DOI du livre : https://doi.org/10.1007/978-1-4020-8758-5
 
+Source effectivement consultée pour le contrôle analytique : copie PDF hébergée sur le site tiers SGO / J. Baylie :
+https://www.sgo.fi/~j/baylie/Partial%20Differential%20Equations%20-%20Modelling%20and%20Numerical%20Simulation%20-%20R.%20Glowinski%2C%20P.%20Neittaanmaki%20%28Springer%2C%202008%29%20WW.pdf
+La notice Springer ci-dessus est la référence bibliographique officielle ; elle n'est pas la source prouvée du fichier PDF utilisé. Le PDF séparé conservé dans `raw/` provient d'un visualiseur ResearchGate et ne couvre que les pages imprimées 245–246 ; l'URL directe du fichier téléchargé n'a pas été conservée. Voir aussi `raw/provenance/` pour la provenance des PDF binaires.
+
 Document status
 ---------------
 This is an analytical extraction in original wording, not a verbatim OCR
