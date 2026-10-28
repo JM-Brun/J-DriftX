@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 _BIB_ENTRY = re.compile(r"@\w+\s*\{\s*([^,\s]+)\s*,")
-_CITATION = re.compile(r"(?<![\w@])-?@([A-Za-z][A-Za-z0-9_:.+-]*)")
+_CITATION = re.compile(r"(?<![\w@])-?@([A-Za-z][A-Za-z0-9_:+-]*)")
 _CROSS_REFERENCE_PREFIXES = (
     "fig-",
     "tbl-",
