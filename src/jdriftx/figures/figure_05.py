@@ -290,7 +290,7 @@ def render_figure_05_svg() -> str:
         _text(745.0, 364.0, "Sans / avec correction", size=17, weight="bold"),
         _text(745.0, 392.0, "Sans : le sol du modèle est le plan z = 0.", size=15),
         _text(745.0, 416.0, "Avec : le point suit le sol réel, le panache ne change pas.", size=15),
-        _text(745.0, 440.0, "Vent, source et \N{GREEK SMALL LETTER SIGMA}(x) identiques : ablation.", size=15),
+        _text(745.0, 440.0, "Vent, source et \u03c3(x) identiques : ablation.", size=15),
         _text(745.0, 472.0, "Résultats (tranche typée)", size=17, weight="bold"),
         _text(745.0, 500.0, ligne_seuil, size=15),
         _text(745.0, 524.0, ligne_sans, size=15),
