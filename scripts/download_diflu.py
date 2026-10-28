@@ -161,7 +161,7 @@ def download_one(
         }
         diagnostic_path.with_suffix(
             diagnostic_path.suffix + ".json"
-        ).write_text(json.dumps(diagnostic, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+        ).write_text(json.dumps(diagnostic, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         raise RuntimeError(
             f"Size mismatch for {name}: API={expected_size}, downloaded={len(payload)} "
             f"(difference {len(payload) - expected_size}). "
