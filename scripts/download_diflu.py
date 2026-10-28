@@ -138,8 +138,35 @@ def download_one(
 
     expected_size = data_file.get("filesize")
     if isinstance(expected_size, int) and expected_size != len(payload):
+        # Preserve the received bytes and response metadata for diagnosis, but do not
+        # save them under the canonical filename or treat them as an audited dataset.
+        diagnostic_path = output_dir / f"{name}.size-mismatch"
+        diagnostic_path.write_bytes(payload)
+        diagnostic = {
+            "filename": name,
+            "dataverse_file_id": file_id,
+            "download_url": download_url,
+            "final_url": final_url,
+            "response_headers": headers,
+            "api_filesize_bytes": expected_size,
+            "downloaded_size_bytes": len(payload),
+            "size_difference_bytes": len(payload) - expected_size,
+            "api_file_metadata": data_file,
+            "received_payload_sha256": hashlib.sha256(payload).hexdigest(),
+            "diagnostic_payload_path": str(diagnostic_path),
+            "note": (
+                "Preserved for diagnosis only. This file is not accepted as the canonical "
+                "dataset because the API size metadata and received bytes disagree."
+            ),
+        }
+        diagnostic_path.with_suffix(
+            diagnostic_path.suffix + ".json"
+        ).write_text(json.dumps(diagnostic, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
         raise RuntimeError(
-            f"Size mismatch for {name}: API={expected_size}, downloaded={len(payload)}."
+            f"Size mismatch for {name}: API={expected_size}, downloaded={len(payload)} "
+            f"(difference {len(payload) - expected_size}). "
+            f"Received bytes and headers preserved at {diagnostic_path} and "
+            f"{diagnostic_path}.json; inspect before retrying."
         )
 
     destination = output_dir / name
