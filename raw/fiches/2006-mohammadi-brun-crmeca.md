@@ -2,14 +2,16 @@
 
 ## Fichier
 
-- Actuel : <code>CRMECA_2006__334_10_634_0.pdf</code> → renommage recommandé : <code>2006-mohammadi-brun-crmeca.pdf</code>
-- Extraction texte : <code>extracts/2006-mohammadi-brun-crmeca.txt</code> (texte intégral)
+- PDF actuellement présent : <code>../2006-mohammadi-brun-crmeca.pdf</code> (le renommage est déjà effectif ; l'ancien nom <code>CRMECA_2006__334_10_634_0.pdf</code> est historique).
+- Extraction texte : <code>../extracts/2006-mohammadi-brun-crmeca.txt</code> (extraction automatique de 5 pages, avec formules dégradées ; ce fichier ne constitue pas à lui seul une preuve de lecture intégrale vérifiée).
 
 ## Référence
 
 Mohammadi, B. & Brun, J.-M. (2006). « Similitude généralisée et modélisation géométrique à complexité réduite ». *C. R. Mécanique* 334(10), 634–638. DOI 10.1016/j.crme.2006.06.007. [PDF en accès libre](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) (archive ouverte de l'Académie des sciences).
 
-## Revue — l'essentiel
+## Revue — synthèse historique, statut de lecture à nuancer
+
+**Statut de preuve.** Le PDF éditeur et une extraction automatique des cinq pages sont présents. Conformément à la correction de la [PR #143](https://github.com/JM-Brun/J-DriftX/pull/143), la documentation publique qualifie la lecture de partielle : la présence d'un texte extrait ne garantit pas que les formules, figures et conventions ont été vérifiées visuellement dans le PDF. Les détails ci-dessous doivent être lus comme une synthèse à contrôler sur la source originale, non comme une transcription certifiée.
 
 - **Pseudo-distance** (éq. 3–5) : d(B,A) = ∞ si A est amont ; d(A,B) = temps de migration de A à B⊥ le long de la caractéristique ; aucun des axiomes d'une distance (identité, symétrie, triangle) n'est vérifié.
 - **Vent complété** par écoulement potentiel u = ∇φ (éq. 4) ; alternative : grille de temps de migration + interpolation (temps infini si amont).
