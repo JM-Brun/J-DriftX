@@ -8,6 +8,10 @@ Ce dossier rassemble les **documents sources** du projet : corpus historique Dri
 - une fiche de lecture par source : <code>fiches/AAAA-auteur-sujet.md</code> — référence, revue, informations extraites, valeur pour J-DriftX ;
 - <code>extracts/</code> : extractions texte brutes, grep-ables, avec en-tête documentaire (la mise en page, les figures et les équations n'y sont pas conservées : le PDF original reste la référence).
 
+## Provenance obligatoire par fichier
+
+**Chaque fichier doit indiquer d'où il vient.** Pour chaque PDF binaire conservé dans `raw/` ou `raw/reviews/`, une fiche sidecar correspondante est maintenue dans `raw/provenance/`. Elle donne la notice et le site source, l'URL exacte disponible, les pages conservées, le nom initial, la méthode d'obtention connue, les fichiers dérivés et les limites de preuve. Pour les fichiers textuels, l'en-tête doit inclure l'URL/page source, la méthode d'extraction et les pages concernées ; pour les notes analytiques, distinguer clairement la source bibliographique officielle du fichier effectivement consulté. Les inconnues sont marquées comme telles, jamais devinées.
+
 ## Sources PDF présentes
 
 Les fichiers du corpus historique utilisent déjà la convention `AAAA-auteur-sujet.pdf`. La table ci-dessous documente les sources conservées dans `raw/`.
