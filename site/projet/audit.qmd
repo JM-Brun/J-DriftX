@@ -28,4 +28,4 @@ title: "Audit de l'héritage"
 
 Le corpus historique décrit une hypothèse méthodologique à examiner, mais ne suffit pas à établir sa validité générale, sa nouveauté exhaustive ou un avantage en 2026. Les lacunes concernent aussi la formalisation mathématique, les hypothèses et la validation indépendante ; elles ne sont pas seulement des questions d'exécution.
 
-**Recommandation : reprendre**, à trois conditions : benchmarks publics d'abord, code moderne ensuite, article de synthèse enfin.
+**Conclusion de cette synthèse :** les sources justifient de poursuivre l'examen critique de l'hypothèse, mais pas de conclure à sa validité, à sa nouveauté ou à son utilité. Toute étape ultérieure doit être justifiée par une question testable, des sources traçables et des critères d'évaluation définis à l'avance.

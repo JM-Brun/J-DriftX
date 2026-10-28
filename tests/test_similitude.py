@@ -1,5 +1,8 @@
 """Tests physiques et numeriques des solutions de similitude."""
 
+from itertools import pairwise
+from math import erf, sqrt
+
 import numpy as np
 import pytest
 
@@ -212,26 +215,49 @@ def test_conservation_masse_superposition_deux_puffs() -> None:
     assert integrale == pytest.approx(masse1 + masse2, rel=1e-3)
 
 
-def test_convergence_elargissement_grille() -> None:
-    """L'erreur relative du bilan de masse decroit quand la grille s'elargit."""
-    # Given — un panache de classe D a x = 1000 m et trois etendues de grille.
+def test_erreur_de_troncature_domaine_a_resolution_controlee() -> None:
+    """La fraction analytique omise diminue avec l'étendue du domaine."""
+    # Given — un panache au sol : le flux exact dans [-k sy, k sy] x [0, k sz]
+    # est Q * erf(k / sqrt(2))**2. Cette référence isole la troncature du domaine.
     debit, u, x, classe = 1.5, 4.0, 1000.0, "D"
     sy = float(sigma_y(x, classe))
     sz = float(sigma_z(x, classe))
-    erreurs = []
+    erreurs_troncature = []
     for k in (2.0, 3.0, 4.0):
-        y = np.linspace(-k * sy, k * sy, 241)
-        z = np.linspace(0.0, k * sz, 121)
+        # Pas spatial fixé en unités de sigma : le nombre de points augmente
+        # avec l'étendue, au lieu de faire varier simultanément pas et domaine.
+        y = np.linspace(-k * sy, k * sy, round(2.0 * k * 40.0) + 1)
+        z = np.linspace(0.0, k * sz, round(k * 40.0) + 1)
         yy, zz = np.meshgrid(y, z, indexing="ij")
-        # When — le flux est integre pour chaque etendue k * sigma.
         c = concentration_panache(x, yy, zz, debit=debit, u=u, classe=classe)
         flux = u * np.trapezoid(np.trapezoid(c, y, axis=0), z)
-        erreurs.append(abs(flux - debit) / debit)
-    # Then — l'erreur decroit strictement avec l'elargissement et reste sous
-    # 0,1 % a quatre sigma : elle est dominee par la troncature du domaine,
-    # pas par le pas de discretisation.
-    assert erreurs[0] > erreurs[1] > erreurs[2]
-    assert erreurs[2] < 1e-3
+        flux_tronque_exact = debit * erf(k / sqrt(2.0)) ** 2
+        assert flux == pytest.approx(flux_tronque_exact, rel=2e-4)
+        erreurs_troncature.append(abs(flux_tronque_exact - debit) / debit)
+
+    # Then — seule l'erreur de troncature analytique est comparée entre domaines.
+    assert erreurs_troncature[0] > erreurs_troncature[1] > erreurs_troncature[2]
+    assert erreurs_troncature[2] < 1e-3
+
+
+def test_erreur_discretisation_domaine_fixe() -> None:
+    """À domaine fixé, raffiner la grille réduit l'erreur de quadrature."""
+    # Given — même domaine à quatre sigma et flux exact tronqué connu.
+    debit, u, x, classe, k = 1.5, 4.0, 1000.0, "D", 4.0
+    sy = float(sigma_y(x, classe))
+    sz = float(sigma_z(x, classe))
+    flux_tronque_exact = debit * erf(k / sqrt(2.0)) ** 2
+    erreurs_quadrature = []
+    for n in (21, 41, 81, 161):
+        y = np.linspace(-k * sy, k * sy, 2 * n - 1)
+        z = np.linspace(0.0, k * sz, n)
+        yy, zz = np.meshgrid(y, z, indexing="ij")
+        c = concentration_panache(x, yy, zz, debit=debit, u=u, classe=classe)
+        flux = u * np.trapezoid(np.trapezoid(c, y, axis=0), z)
+        erreurs_quadrature.append(abs(flux - flux_tronque_exact) / debit)
+
+    # Then — l'étendue reste identique ; seule la résolution change.
+    assert all(precedente > suivante for precedente, suivante in pairwise(erreurs_quadrature))
 
 
 def test_positivite_puff() -> None:
