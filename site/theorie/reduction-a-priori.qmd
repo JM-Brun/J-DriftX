@@ -24,13 +24,15 @@ Le parcours de lecture est donc : **modèle direct → similitude → statut de 
 
 ## L'approche Drift-X : un modèle approché a priori
 
-On remplace le modèle direct $p \mapsto V(p)$ (calcul complet de l'état) par un **modèle approché** $p \mapsto v(p)$, construit à partir de ce que la physique nous apprend des panaches :
+On remplace le modèle direct $p \mapsto V(p)$ — la correspondance **définie** dans [Modèle direct](modele-direct.qmd#notation-modele-direct), qui associe aux paramètres du problème de référence l’état complet — par un **modèle approché** $p \mapsto v(p)$, dont la forme est **construite** dans [Solutions de similitude](similitude.qmd#famille-candidate-v) à partir de ce que la physique nous apprend des panaches :
 
 $$
 V(p) \;\longrightarrow\; v(p), \qquad v \in S(\text{similitude}), \qquad \text{coût}(v) \;\stackrel{?}{\ll}\; \text{coût}(V).
 $$
 
-L'inégalité de coût est un **objectif à mesurer**, non un résultat établi : elle doit inclure le calcul de $\tau$, les données, la calibration et les évaluations de référence nécessaires.
+Ce schéma est navigable de bout en bout : $V(p)$ est **défini** dans [Modèle direct, notation](modele-direct.qmd#notation-modele-direct) ; les hypothèses qui réduisent le problème sont **typées** dans [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache) ; la forme de $v(p)$ est **construite** dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli) et récapitulée dans [la section « famille candidate »](similitude.qmd#famille-candidate-v) ; la présente page fixe le **statut** de $v$ (approximation candidate) et le protocole qui mesurera son erreur.
+
+L’inégalité de coût est un **objectif à mesurer**, non un résultat établi : elle doit inclure le calcul de $\tau$, les données, la calibration et les évaluations de référence nécessaires.
 
 ### Trois objets à ne pas confondre
 

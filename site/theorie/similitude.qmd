@@ -267,6 +267,10 @@ L'équivalence exacte avec le panache parabolique demande donc de prendre la lim
 
 La linéarité garantit donc la superposition dans chaque modèle linéaire ; **elle ne rend pas identiques deux modèles dont les termes diffusifs diffèrent**. Cette distinction est importante pour la contrainte physique numéro 3 : les tests de superposition doivent comparer des solutions calculées sous le même jeu d'hypothèses.
 
+### La famille candidate notée $v(p)$ {#famille-candidate-v}
+
+La construction de cette page produit une famille à peu de paramètres : pour un jeu d’entrées $p=(x_0,Q,h,U,\sigma_y,\sigma_z,\ldots)$ — position de la source, débit, hauteur, vent, largeurs, la classe de stabilité venant prescrire ces largeurs dans l’usage opérationnel — la formule du panache établi et celle du puff définissent chacune un état $v(p)$. C’est le **modèle approché** confronté au modèle direct $V(p)$ dans [Réduction a priori](reduction-a-priori.qmd) ; la définition de $V$ est donnée dans [Modèle direct](modele-direct.qmd#notation-modele-direct). La présente page construit la forme de $v$ ; l’erreur de réduction, le coût total et le protocole qui les mesure relèvent de [Réduction a priori](reduction-a-priori.qmd).
+
 ## Pourquoi le mot « similitude »
 
 Les profils sont **auto-similaires** : une fois adimensionnés par les largeurs locales $\sigma_y(x), \sigma_z(x)$ et l'amplitude locale, les profils transversaux se superposent d'une station à l'autre [@raupach1981canopy; @simpson1997gravity]. Autrement dit, la solution ne vit pas dans un champ arbitraire : elle vit dans une **famille à peu de paramètres** $(Q, h, U, \text{classe de stabilité})$ — un sous-espace de très faible dimension. C'est exactement ce qui permet de [pré-structurer l'espace de recherche sans calcul](reduction-a-priori.qmd). La même mécanique de réduction donne les solutions auto-similaires des jets et panaches, avec des lois de croissance en puissance différentes selon le régime — la famille élargie dont Drift-X hérite.

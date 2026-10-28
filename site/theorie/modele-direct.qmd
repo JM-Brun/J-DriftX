@@ -19,6 +19,10 @@ Cette page est le **premier maillon de la chaîne physique** : elle pose le prob
 
 Le parcours de lecture est donc : **modèle direct → similitude → réduction a priori** pour la chaîne physique ; la chaîne géométrique se lit séparément. L'articulation complète — qui définit quoi, et selon quel contrat — fait l'objet de la section « Articulation avec les autres pages » en fin de page.
 
+### Notation : le modèle direct $p\mapsto V(p)$ {#notation-modele-direct}
+
+Partout dans la documentation, le **modèle direct** désigne la correspondance $p\mapsto V(p)$ : aux paramètres $p$ du problème de référence — source, champ de vitesse, tenseur $\mathbf K$, conditions aux limites — il associe l’état complet $V(p)$, la concentration résolue de l’équation de transport de la section 2, sans réduction de l’espace des solutions. Cette notation est celle de la page [Réduction a priori](reduction-a-priori.qmd), qui confronte $V(p)$ au modèle approché $v(p)$ construit dans [Solutions de similitude](similitude.qmd#famille-candidate-v). **Statut : conceptuel.** Aucune implémentation de $V(p)$ n’existe dans le dépôt : cette page définit le problème de référence, elle ne l’implémente pas.
+
 ## 1. Problème, variables et unités
 
 On considère un scalaire passif, par exemple un traceur ou une substance transportée par l'air, dont la concentration volumique est notée
