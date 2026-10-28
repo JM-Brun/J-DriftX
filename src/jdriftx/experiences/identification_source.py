@@ -69,9 +69,7 @@ def concentration(
         (transport advectif dominant), gaussienne en travers avec un
         écart-type en racine carrée de la distance advective.
     """
-    return _concentration_panache(
-        scenario.vent, scenario.diffusivite, point, source, debit
-    )
+    return _concentration_panache(scenario.vent, scenario.diffusivite, point, source, debit)
 
 
 def _concentration_panache(
@@ -349,9 +347,7 @@ def _cout_minimal(
 ) -> tuple[float, float]:
     """Renvoie le coût minimal et le débit optimal pour une position candidate."""
     reponses = tuple(
-        _concentration_panache(
-            scenario.vent, scenario.diffusivite, capteur, source, 1.0
-        )
+        _concentration_panache(scenario.vent, scenario.diffusivite, capteur, source, 1.0)
         for capteur in scenario.capteurs
     )
     norme = sum(r * r for r in reponses)
@@ -465,9 +461,7 @@ def resoudre_scenario(scenario: ScenarioIdentification) -> ResultatIdentificatio
     couts, cout_minimum, position_estimee, debit_etoile = _grille_couts(
         scenario, observees, cout_nul
     )
-    nombre_cellules_vallee, etendue_vallee, largeur_vallee = _vallee_cout(
-        scenario, couts, cout_nul
-    )
+    nombre_cellules_vallee, etendue_vallee, largeur_vallee = _vallee_cout(scenario, couts, cout_nul)
     cout_decale, debit_decale = _cout_minimal(
         scenario, scenario.candidat_decale, observees, cout_nul
     )

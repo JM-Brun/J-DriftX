@@ -114,8 +114,7 @@ def _marques_capteurs(scenario: ScenarioIdentification, x0: float) -> list[str]:
     capteur = scenario.capteurs[scenario.indice_detection]
     px, py = _px(x0, capteur[0]), _py(capteur[1])
     elements.append(
-        f'<circle cx="{px:.1f}" cy="{py:.1f}" r="8" fill="none" '
-        'stroke="#c0392b" stroke-width="2"/>'
+        f'<circle cx="{px:.1f}" cy="{py:.1f}" r="8" fill="none" stroke="#c0392b" stroke-width="2"/>'
     )
     elements.append(_text(px + 12.0, py - 8.0, "détection", size=12))
     return elements
@@ -341,8 +340,7 @@ def _lignes_valeurs(
         f"Q* = {resultat.debit_etoile_decale:.2f} kg/s,"
     )
     ligne_decale_2 = (
-        f"coût {resultat.cout_relatif_decale:.1e} de J0 : "
-        "position et débit restent couplés."
+        f"coût {resultat.cout_relatif_decale:.1e} de J0 : position et débit restent couplés."
     )
     return (
         ligne_detection_1,

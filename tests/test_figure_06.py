@@ -70,8 +70,7 @@ def test_les_valeurs_affichees_proviennent_du_resultat() -> None:
     )
     assert attendu_decale_1 in svg
     attendu_decale_2 = (
-        f"coût {resultat.cout_relatif_decale:.1e} de J0 : "
-        "position et débit restent couplés."
+        f"coût {resultat.cout_relatif_decale:.1e} de J0 : position et débit restent couplés."
     )
     assert attendu_decale_2 in svg
 

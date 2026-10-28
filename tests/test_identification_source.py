@@ -17,9 +17,7 @@ def test_le_capteur_de_detection_depasse_le_seul_seuil() -> None:
     """Un seul capteur détecte, celui du coin inférieur gauche."""
     resultat = resoudre_scenario(SCENARIO_DEFAUT)
     assert resultat.concentration_detection >= SCENARIO_DEFAUT.seuil_detection
-    au_dessus = [
-        c >= SCENARIO_DEFAUT.seuil_detection for c in resultat.concentrations_observees
-    ]
+    au_dessus = [c >= SCENARIO_DEFAUT.seuil_detection for c in resultat.concentrations_observees]
     assert sum(au_dessus) == 1
     assert au_dessus[SCENARIO_DEFAUT.indice_detection]
 
