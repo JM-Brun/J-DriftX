@@ -54,6 +54,7 @@ PR, est désormais sur main).
 | `29-audit-tracabilite-mvp-s-2026-10-27.md` | Audit de la traçabilité MVP-S (27/10/2026) |
 | `30-glossaire-mathematique-autonome-g0s.md` | Glossaire mathématique autonome G0-S |
 | `31-investigation-champ-multiniveaux.md` | Investigation du champ de vent multi-niveaux historique |
+| `32-conservation-coordonnees-travel-time.md` | Bilan de conservation dans des coordonnées travel-time : dérivation conditionnelle |
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
 | `bibliographie/` | Dossier bibliographique |
