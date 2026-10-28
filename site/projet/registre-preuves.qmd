@@ -1,0 +1,43 @@
+---
+title: "Registre de traçabilité des preuves"
+---
+
+# Objet et statut
+
+Cette page documente un premier lot ciblé de relations du graphe entre propriétés et tests. Elle complète la [carte des connaissances](carte-connaissances.qmd) : le graphe exprime les liens typés, tandis que ce registre précise ce que les tests permettent — et ne permettent pas — de conclure.
+
+**Règle de lecture :** « testé par » signifie qu'un test logiciel exerce une propriété dans les conditions indiquées. Cela ne constitue pas, à lui seul, une démonstration analytique ni une validation physique générale.
+
+Ce registre est une revue documentaire manuelle. Les contrôles automatiques vérifient la structure des liens, pas la validité scientifique de leur interprétation.
+
+## Relations propriété → tests examinées
+
+| Propriété et relation du graphe | Justification localisable | Portée effectivement testée | Hors de portée / statut |
+|---|---|---|---|
+| **Positivité de la famille gaussienne** (p-positivite → t-similitude, teste-par) | [test_positivite_panache](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_similitude.py) et test de positivité du puff dans le même fichier ; [tests du prédicat](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_constraints.py) | Le panache et le puff sont évalués sur les configurations définies par les tests ; le prédicat de positivité est testé sur des tableaux positifs et contenant des valeurs négatives. | Ne démontre pas la positivité pour tous les points, paramètres, interpolations ou extensions. **Testé**, portée finie. |
+| **Superposition / linéarité en débit** (p-superposition → t-constraints, teste-par) | [test_superposition_panache et test_linearite_panache_typee_verifie_la_superposition](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_constraints.py) | La linéarité en débit est vérifiée au point et pour les paramètres spécifiés par ces tests. | Ne prouve pas la linéarité de toute chaîne d'assimilation, de tout couplage ou de toute extension future. **Testé**, portée finie. |
+| **Bilan de masse de la famille gaussienne** (p-conservation → t-similitude, teste-par) | [Tests de conservation panache, puff et superpositions](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_similitude.py) | Des intégrales numériques restituent le débit ou la masse dans les configurations documentées ; les tolérances, grilles et cas couverts sont détaillés dans [Contraintes physiques](../theorie/contraintes-physiques.qmd). | Ne démontre ni une conservation exacte universelle, ni la conservation sur toute surface iso-τ, ni la conservation en champ variable. **Testé**, domaine restreint. |
+| **Divergence nulle des champs analytiques** (p-divergence → t-champ, teste-par) | [Tests de divergence du champ analytique et de sa superposition](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_champ_analytique.py) | La divergence numérique estimée est proche de zéro aux points testés, par différences finies. | La précision est limitée par le pas et l'arithmétique ; cela ne valide pas le champ historique multi-niveaux non reconstruit. **Testé**, champs analytiques concernés. |
+| **Divergence estimée pour la reconstruction à deux mesures** (p-divergence → t-recon, teste-par) | [test_les_divergences_numeriques_sont_negligeables](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reconstruction_vent.py) | Les divergences numériques des deux champs construits par cette expérience restent sous le seuil fixé par le test. | Ne prouve pas l'unicité de la reconstruction ni la validité de ces champs hors du scénario synthétique. **Testé**, scénario donné. |
+| **Non-symétrie de la pseudo-distance uniforme** (p-nonsym → t-metric, teste-par) | [Tests de non-symétrie et frontière transversale](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py) | La référence uniforme a un coût fini vers l'aval, infini vers l'amont et un coût nul sur la frontière transversale dans les cas construits. | Ne s'étend pas automatiquement au coût de polyligne ni à une métrique en champ variable. **Testé**, référence uniforme seulement. |
+| **Gradient de la référence uniforme et du cas 1D** (p-adjoint → t-metric, teste-par) | [Tests des gradients de la référence uniforme et du cas 1D](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py) | Les expressions analytiques sont comparées aux différences finies pour les cas explicitement testés. | Ne valide pas un état adjoint pour un champ variable, ni les sensibilités du panache gaussien. **Testé**, références uniformes / cas 1D. |
+
+## Conventions de qualification
+
+- **SUPPORTED_BY / étayé par** : nécessite une source ou un argument explicitement localisé ; le lien seul n'est pas une justification.
+- **VALIDATED_BY / validé par** : exige un domaine de validité et un protocole adaptés à la revendication. Les tests logiciels cités ci-dessus ne sont pas qualifiés de validation physique générale.
+- **TESTED_BY / testé par** : exige le nom du test et une description de ses conditions et limites.
+- **LIMITED_BY / limité par** : pointe vers une limite connue qui restreint l'interprétation de la propriété.
+
+Les types ci-dessus sont des catégories sémantiques de revue. Ils ne remplacent pas les relations actuelles du graphe et ne sont pas automatiquement inférés par le code.
+
+## Travail restant
+
+Ce lot couvre les relations propriété → tests les plus directement vérifiables. Il ne satisfait pas à lui seul le critère « chaque relation » de S11. Restent notamment à examiner :
+
+- les relations entre hypothèses, niveaux de modélisation et concepts ;
+- les relations entre concepts et implémentations, avec les contrats des fonctions concernées ;
+- les relations vers les références bibliographiques, après vérification de la proposition précise qu'elles étayent ;
+- les relations de limitation ou de non-couverture, pour s'assurer que la limite est documentée à l'endroit indiqué.
+
+Aucune relation ne doit être considérée comme justifiée uniquement parce que ses deux nœuds existent ou que le graphe est rendu sans erreur.
