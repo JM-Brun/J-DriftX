@@ -106,17 +106,6 @@ La page officielle (snapshot du 8 juin 2026) précise le périmètre de l'archiv
 | Moyenne | Télécharger ERIES (xlsx, txt, Matlab) et vérifier unités et incertitudes chiffrées | Fichiers non inspectés |
 | Moyenne | Fixer et documenter les partitions calibrage/évaluation ci-dessus | À figer avant tout entraînement |
 
-## Sources de l'audit (consultées le 23 octobre 2026)
-
-- Datacite, métadonnées DIFLU : [api.datacite.org/dois/10.57745/A9YC3C](https://api.datacite.org/dois/10.57745/A9YC3C) — titre complet, auteurs, producteur ASNR, description des campagnes 2019, rightsList vide, sous-DOIs `HasPart`.
-- Datacite, métadonnées ERIES : [api.datacite.org/dois/10.4121/e7f87f46-1d17-43ed-be81-60bee65081bf](https://api.datacite.org/dois/10.4121/e7f87f46-1d17-43ed-be81-60bee65081bf) — licence CC BY 4.0 (SPDX), description du dispositif (Sofia 1:350, 76 points, S1/S2, éthylène, VDI-3783), formats, financement ERIES.
-- NOAA ARL, page DATEM : [snapshot d'archive du 8 juin 2026](https://web.archive.org/web/20260608053910/https://www.arl.noaa.gov/hysplit/datem-tracer-evaluation/datem/) (site direct en 403 le 23/10/2026) — périmètre pilote (5 expériences, > 19 000 échantillons, NCAR/NCEP), formats, attribution demandée.
-- NOAA ARL, [DATEM Tracer Evaluation](https://www.arl.noaa.gov/hysplit/datem-tracer-evaluation/) et [HYSPLIT Evaluation Results Using DATEM](https://www.arl.noaa.gov/hysplit/datem-tracer-evaluation/hysplit-evaluation-results-using-datem/) (extraits indexés) — neuf expériences listées dont ETEX ; exclusion d'INEL74/SRPTEX/ETEX de l'évaluation approfondie.
-- JRC, [ETEX — Download datasets](https://remon.jrc.ec.europa.eu/past_activities/etex/site/datasets.htm), [Overview of the ETEX project](https://remon.jrc.ec.europa.eu/past_activities/etex/site/10.htm) et [Operations at the release site](https://remon.jrc.ec.europa.eu/past_activities/etex/site/71.htm) — quatre archives ; 168 stations, ~9 000 échantillons ; PMCP à 11,6 g/s au lâcher 2.
-- JRC Open Data, [notice de copyright](https://jeodpp.jrc.ec.europa.eu/ftp/public/JRC-OpenData/copyright.txt) (extraits indexés) — © Union européenne, décision du 12 décembre 2011, licence Creative Commons.
-- Préalables issus de l'[audit documentaire G0](15-audit-corpus-g0-resultats.md) : termes source ETEX (340 kg PMCH / 490 kg PMCP, 12 h chacun, Monterfil), papier DIFLU associé (*Atmosphere* 13(8):1223, DOI [10.3390/atmos13081223](https://doi.org/10.3390/atmos13081223)), [catalogue des données](12-catalogue-donnees-transport-dispersion.md).
-
-
 ### Procédure reproductible — récupérer un fichier DIFLU sans télécharger les archives complètes
 
 Cette procédure est documentée mais **n’a pas pu être exécutée depuis l’environnement de rédaction** (résolution DNS/réseau externe indisponible). Elle doit être exécutée depuis une machine disposant d’un accès réseau. Elle cible d’abord le fichier tabulaire des prélèvements, sans télécharger les archives ZIP de ~381 Mo.
@@ -155,3 +144,13 @@ Si la requête API ou le filtre échoue, conserver le code HTTP, le corps d’er
 Après téléchargement, contrôler le statut HTTP, le type et la taille du fichier, l’encodage et le séparateur, puis examiner les en-têtes, unités, horodatages, identifiants d’expérience, valeurs manquantes et limites de détection. Cette seule table ne suffit pas à vérifier la cohérence avec les mesures météorologiques : télécharger ensuite uniquement les fichiers météo/instrument nécessaires, selon le même mécanisme. La valeur 19 ne doit être interprétée comme un nombre d’essais que si un champ et sa sémantique l’établissent explicitement.
 
 Référence API : [FAQ officielle Recherche Data Gouv — accès aux fichiers par API](https://recherche.data.gouv.fr/fr/faq) ; [documentation de l’API native Dataverse — liste des fichiers d’une version](https://guides.dataverse.org/en/latest/api/native-api.html).
+
+## Sources de l'audit (consultées le 23 octobre 2026)
+
+- Datacite, métadonnées DIFLU : [api.datacite.org/dois/10.57745/A9YC3C](https://api.datacite.org/dois/10.57745/A9YC3C) — titre complet, auteurs, producteur ASNR, description des campagnes 2019, rightsList vide, sous-DOIs `HasPart`.
+- Datacite, métadonnées ERIES : [api.datacite.org/dois/10.4121/e7f87f46-1d17-43ed-be81-60bee65081bf](https://api.datacite.org/dois/10.4121/e7f87f46-1d17-43ed-be81-60bee65081bf) — licence CC BY 4.0 (SPDX), description du dispositif (Sofia 1:350, 76 points, S1/S2, éthylène, VDI-3783), formats, financement ERIES.
+- NOAA ARL, page DATEM : [snapshot d'archive du 8 juin 2026](https://web.archive.org/web/20260608053910/https://www.arl.noaa.gov/hysplit/datem-tracer-evaluation/datem/) (site direct en 403 le 23/10/2026) — périmètre pilote (5 expériences, > 19 000 échantillons, NCAR/NCEP), formats, attribution demandée.
+- NOAA ARL, [DATEM Tracer Evaluation](https://www.arl.noaa.gov/hysplit/datem-tracer-evaluation/) et [HYSPLIT Evaluation Results Using DATEM](https://www.arl.noaa.gov/hysplit/datem-tracer-evaluation/hysplit-evaluation-results-using-datem/) (extraits indexés) — neuf expériences listées dont ETEX ; exclusion d'INEL74/SRPTEX/ETEX de l'évaluation approfondie.
+- JRC, [ETEX — Download datasets](https://remon.jrc.ec.europa.eu/past_activities/etex/site/datasets.htm), [Overview of the ETEX project](https://remon.jrc.ec.europa.eu/past_activities/etex/site/10.htm) et [Operations at the release site](https://remon.jrc.ec.europa.eu/past_activities/etex/site/71.htm) — quatre archives ; 168 stations, ~9 000 échantillons ; PMCP à 11,6 g/s au lâcher 2.
+- JRC Open Data, [notice de copyright](https://jeodpp.jrc.ec.europa.eu/ftp/public/JRC-OpenData/copyright.txt) (extraits indexés) — © Union européenne, décision du 12 décembre 2011, licence Creative Commons.
+- Préalables issus de l'[audit documentaire G0](15-audit-corpus-g0-resultats.md) : termes source ETEX (340 kg PMCH / 490 kg PMCP, 12 h chacun, Monterfil), papier DIFLU associé (*Atmosphere* 13(8):1223, DOI [10.3390/atmos13081223](https://doi.org/10.3390/atmos13081223)), [catalogue des données](12-catalogue-donnees-transport-dispersion.md).
