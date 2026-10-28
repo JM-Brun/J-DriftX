@@ -11,7 +11,7 @@ Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les
 Cette page formalise le **temps de transport** utilisé dans l'hypothèse de généralisation des solutions de similitude. Elle ne démontre pas que la substitution d'une coordonnée uniforme $x/U$ par un temps $\tau$ dans un champ variable conserve l'équation de dispersion ni ses propriétés.
 
 - **Prérequis :** le vocabulaire de [chemins, lignes et temps de transport](../glossaire.qmd#chemins-lignes-et-temps-de-transport) et le cadre des [niveaux de modélisation](../projet/niveaux-modelisation.qmd).
-- **Objet défini ici :** distinguer le coût intégré le long d'une courbe, le temps de première arrivée d'une dynamique et la construction historique par projection.
+- **Objet défini ici :** distinguer le coût intégré le long d'une courbe, le temps de première arrivée d'une dynamique et la construction historique par projection — avec, pour chacun, domaine, hypothèses, conditions d'existence et statut — puis établir la grille d'axiomes correspondante.
 - **Résultat transmis :** les propriétés métriques doivent être examinées séparément dans [Pseudo-distances, coûts orientés et géométries non riemanniennes](metriques-non-riemanniennes.qmd), tandis que les hypothèses et contre-exemples détaillés sont consignés dans [l'investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md).
 - **Limite actuelle :** la définition projetée historique, son approximation numérique et le temps de première arrivée ne sont pas interchangeables ; aucune conservation générale ni équivalence métrique n'est revendiquée ici.
 
@@ -25,9 +25,13 @@ Pour une présentation synthétique des notions et contre-exemples, voir le [sch
 
 Un schéma différenciant ligne de courant, caractéristique, polyligne et navigation minimale est proposé dans le [glossaire](../glossaire.qmd#chemins-lignes-et-temps-de-transport). Le glossaire distingue aussi la navigation minimale du temps de première arrivée sous une dynamique imposée. Le champ de vitesse $\mathbf u$ donne la vitesse locale du fluide. Une ligne de courant est tangente au champ à un instant fixé; une trajectoire de particule suit $\dot X=\mathbf u(X,t)$. Elles coïncident spatialement seulement pour un champ stationnaire (et sous les conditions de régularité appropriées). La définition historique s'appuie sur une caractéristique d'un champ considéré comme stationnaire; son extension à un champ instationnaire ne doit pas être supposée automatique.
 
-La formule ci-dessous suppose une vitesse non nulle le long de la courbe et une trajectoire suffisamment régulière pour que l'intégrale existe. Dans l'article de 2006, un critère écrit avec $\mathbf u\cdot\nabla c$ intervient dans la discussion des projections non uniques; cette expression est la dérivée directionnelle de la concentration dans la direction du vent. Son rôle exact ne doit pas être généralisé sans relire les hypothèses du passage. Pour reconstruire la projection historique, il faut en plus préciser : (1) le domaine et les conditions aux limites; (2) l'unicité de la caractéristique passant par A; (3) la définition exacte de la projection de B et son unicité; (4) le traitement des sources, puits, séparatrices et stagnations; (5) la convention retenue pour les points inaccessibles.
+La formule ci-dessous suppose une vitesse non nulle le long de la courbe et une trajectoire suffisamment régulière pour que l'intégrale existe. Dans l'article de 2006, un critère écrit avec $\mathbf u\cdot\nabla c$ intervient dans la discussion des projections non uniques; cette expression est la dérivée directionnelle de la concentration dans la direction du vent. Son rôle exact ne doit pas être généralisé sans relire les hypothèses du passage. La reconstruction complète de la projection historique exige en outre des prérequis explicites — domaine et conditions aux limites, unicité de la caractéristique issue de $A$, définition et unicité de la projection de $B$, traitement des sources, puits, séparatrices et stagnations, convention pour les points inaccessibles — développés dans la section « Prérequis de la reconstruction historique » plus bas.
 
 ## Définition
+
+Trois objets se succèdent dans la construction de Drift-X. Ils ne sont pas interchangeables : chacun a sa définition, son domaine, ses hypothèses, ses conditions d'existence et son statut. Les définitions, conventions et preuves de référence sont fixées dans l'[investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) et le [glossaire mathématique autonome du dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/30-glossaire-mathematique-autonome-g0s.md) ; la présente page les présente sans les démontrer à nouveau.
+
+### Objet 1 — intégrale d'un coût le long d'une courbe prescrite
 
 Le temps de parcours le long d'une caractéristique orientée $\gamma$, entre deux points appartenant à cette caractéristique, s'écrit
 
@@ -35,11 +39,35 @@ $$
 T_\gamma(A,B)=\int_{\gamma_{A\to B}}\frac{ds}{|\mathbf u(s)|}.
 $$
 
+- **Domaine et hypothèses.** La courbe est prescrite : fournie d'avance, jamais optimisée ; le calcul ne tient pas compte de l'orientation du vent le long du tracé. Champ stationnaire pour parler de caractéristique, vitesse non nulle sur la courbe.
+- **Conditions d'existence.** L'intégrale existe si $|\mathbf u|>0$ sur le tracé et si l'intégrande est intégrable ; une stagnation sur le tracé rend l'intégrande singulier — l'ordre d'annulation décide de la divergence (investigation G0-S, § 4.4–4.5).
+- **Statut.** Implémenté (`temps_transport` sur polyligne) et testé ; l'invariance au signe du vent prouve que cet objet n'est **pas** dirigé : un chronomètre le long d'un tracé, pas une métrique.
+
+### Objet 2 — temps de première arrivée ($T_{\mathrm{arr}}$)
+
+Pour un champ autonome $\mathbf u$ sur un domaine $\Omega$, le temps de première arrivée de $A$ vers $B$ est
+
+$$
+T_{\mathrm{arr}}(A,B)=\inf\{\,t\ge 0 : X(t;A)=B\,\}, \qquad \inf\varnothing=+\infty,
+$$
+
+où $X(t;A)$ est la trajectoire issue de $A$ sous la dynamique $\dot X=\mathbf u(X)$, $X(0)=A$ (définition 2.3 de l'[investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md)). C'est une propriété de la **dynamique** : la trajectoire n'est pas prescrite, elle est suivie.
+
+- **Domaine et hypothèses.** Champ stationnaire de classe $C^1$ sur un ouvert $\Omega$ (cadre de base de l'investigation, § 2.1) : existence locale, unicité du flot, dépendance $C^1$ aux conditions initiales (Cauchy–Lipschitz). L'unicité du flot n'est pas décorative : sans elle, le temps dépend de la branche (contre-exemple $\dot x=\sqrt{x}$, investigation § 4.6).
+- **Conditions d'existence.** Trois états distincts (investigation § 6.2) : accessible (temps fini) ; inaccessible par orientation ($+\infty$ par convention) ; non-existence par fin de validité dans le domaine ($\sigma_\Omega(A)<T_{\mathrm{arr}}(A,B)$). Les orbites fermées imposent la convention de première arrivée ($T_{\mathrm{arr}}(A,A)=0$ ; le temps de retour est une autre grandeur) ; une cible stagnante en champ $C^1$ n'est jamais atteinte (barrière $C^1$, investigation § 4.5).
+- **Statut.** Le cas 1D à vitesse constante est implémenté (`temps_premiere_arrivee_1d`) et testé. Les propriétés générales — non-négativité, séparation, inégalité triangulaire dirigée (propositions 3.2–3.3 de l'investigation) — sont **démontrées sous les hypothèses du cadre de base** ; aucun solveur général du temps de première arrivée n'est implémenté.
+
+### Objet 3 — construction historique par projection ($T_{\mathrm{proj}}$)
+
 **Ce n'est pas à lui seul la définition complète de la pseudo-distance historique de Drift-X.** Dans l'article de Mohammadi & Brun (2006, §3), le point cible $B$ est projeté sur la caractéristique passant par $A$, en $B^\perp$, puis le coût est le temps de migration de $A$ à $B^\perp$. Voir la [source primaire en texte intégral](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) et la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
 
 ![Projection du point cible sur la caractéristique issue du point de départ. Le coût est calculé sur le segment longitudinal; le décalage transversal n'est pas pénalisé. Le second panneau identifie B⊥ et C⊥ pour le contre-exemple triangulaire.](../images/pseudo-distance-projection-et-triangulation.svg)
 
 Cette projection fait partie de la définition : elle signifie que le coût peut ne pas distinguer deux points séparés transversalement. L'article historique le signale explicitement en qualifiant la construction de **pseudo-distance**, qui peut ne pas séparer les points et peut violer l'inégalité triangulaire.
+
+- **Domaine et hypothèses.** Champ stationnaire ; la caractéristique issue de $A$ est unique (sources et puits écartés : hypothèse (H1) de l'investigation) et la projection $B\mapsto B^\perp$ est bien définie (hypothèse (H2)) — cette dernière peut échouer (projection multiple, investigation § 6.1).
+- **Conditions d'existence.** Celles de l'objet 2 pour le segment $A\to B^\perp$, plus les prérequis propres à la projection, détaillés dans la section « Prérequis de la reconstruction historique » ci-dessous.
+- **Statut.** Une référence analytique en champ uniforme 2D est implémentée (`pseudo_distance_uniforme`) et testée ; la construction générale sur caractéristique courbe n'est pas implémentée et sa valeur peut être non unique. En dimension 1, $T_{\mathrm{proj}}$ coïncide avec $T_{\mathrm{arr}}$ sous les hypothèses explicitées (proposition 5.1 de l'investigation) : les échecs d'axiomes sont des phénomènes de dimension 2 et plus.
 
 Les solutions de similitude formulées en vent uniforme sont réexprimées dans un système lié au temps de transport et à la coordonnée normale. La portée de cette généralisation dépend des hypothèses sur le champ, les caractéristiques et la projection; elle ne découle pas de la seule formule d'intégrale.
 
@@ -57,7 +85,7 @@ $$
 \mathbf u(x,y)\cdot\nabla_{(x,y)}d_A=\frac{v(y)}{v(y_A)}.
 $$
 
-Cette quantité n'est généralement pas égale à $1$ lorsque $v(y)\ne v(y_A)$. Elle vaut $1$ sur la caractéristique source $y=y_A$, mais pas sur tout le domaine. Ainsi, la pseudo-distance projetée historique ne satisfait pas en général l'équation locale de temps de transport $\mathbf u\cdot\nabla d_A=1$ partout, même pour un champ lisse, stationnaire et de divergence nulle. Ce contre-exemple n'invalide pas à lui seul le modèle de concentration historique; il montre que la validité de la généralisation des solutions de similitude et toute conservation associée exigent une dérivation propre, et ne découlent pas simplement de la définition de $d_A$.
+Cette quantité n'est généralement pas égale à $1$ lorsque $v(y)\ne v(y_A)$. Elle vaut $1$ sur la caractéristique source $y=y_A$, mais pas sur tout le domaine. Ainsi, la pseudo-distance projetée historique ne satisfait pas en général l'équation locale de temps de transport $\mathbf u\cdot\nabla d_A=1$ partout, même pour un champ lisse, stationnaire et de divergence nulle. Ce contre-exemple n'invalide pas à lui seul le modèle de concentration historique; il montre que la validité de la généralisation des solutions de similitude et toute conservation associée exigent une dérivation propre, et ne découlent pas simplement de la définition de $d_A$. C'est le contre-exemple de cisaillement de l'[investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) (§ 5.3), où il est complété par la caractérisation exacte de l'échec de l'inégalité triangulaire : le temps projeté ne satisfait pas nécessairement $\mathbf u\cdot\nabla\tau=1$ hors de la caractéristique de départ.
 
 ### Définition géométrique et approximation numérique
 
@@ -67,6 +95,30 @@ Le chapitre de 2008 distingue implicitement deux objets qu'il faut garder sépar
 - **Approximation de calcul** : approximer $B^\perp\approx B$, puis appliquer en champ uniforme le facteur imprimé dans le chapitre comme « $2/3=0.636$ ». Cette égalité est incohérente arithmétiquement; $2/\pi\approx0.637$ correspondrait à la moyenne de $|\cos\theta|$ pour un angle uniforme sur $[0,\pi]$, mais le coefficient exact reste à confirmer dans la source ou le code historique. Le chapitre précise que l'égalité exacte entre la caractéristique issue de $A$ et le point $B$ est peu probable en général, et présente la méthode pour des champs atmosphériques lisses.
 
 Ces deux étapes ne doivent pas être confondues. Le MVP doit d'abord reproduire la définition, puis mesurer séparément l'effet de l'approximation numérique et de sa correction.
+
+## Prérequis de la reconstruction historique
+
+La construction projetée historique ne se réduit pas à la formule d'intégrale : cinq prérequis doivent être explicités avant toute implémentation générale. Ils sont établis dans l'[investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) (§ 2.4 et § 6) et repris dans le [glossaire mathématique autonome](https://github.com/JM-Brun/J-DriftX/blob/main/docs/30-glossaire-mathematique-autonome-g0s.md).
+
+### 1. Domaine et conditions aux limites
+
+L'intégrale et la projection sont définies sur un domaine $\Omega$ explicite. Le temps maximal de validité $\sigma_\Omega(A)$ distingue la non-existence par fin de validité dans le domaine (sortie par la frontière, ou fin d'existence en temps fini) de l'inaccessibilité par orientation : les deux donnent $+\infty$ dans la convention étendue, mais ils n'ont pas la même signification (investigation, conventions (C1)–(C2), § 6.2).
+
+### 2. Unicité de la caractéristique issue de $A$
+
+Le cadre de base (champ $C^1$ stationnaire) garantit l'existence locale et l'unicité du flot (Cauchy–Lipschitz). Sources, puits et séparatrices peuvent faire échouer cette unicité : l'hypothèse (H1) de la source historique les écarte explicitement (investigation, § 2.4).
+
+### 3. Définition et unicité de la projection de $B$
+
+Le point $B^\perp$ doit être défini sans ambiguïté sur la caractéristique $\gamma_A$. La projection peut être non unique — cas extrême : $B$ au centre d'un champ rotationnel, où tout point du cercle $\gamma_A$ est à distance égale de $B$ (investigation, § 6.1). La source historique résout ce cas par un critère en $\mathbf u\cdot\nabla c$ qui dépend de la concentration, donc de la sortie du modèle : cette dépendance circulaire est documentée, non résolue.
+
+### 4. Sources, puits, séparatrices et stagnations
+
+Une stagnation rend l'intégrande $1/|\mathbf u|$ singulier. En champ $C^1$, un point de stagnation n'est ni atteint ni quitté en temps fini, et aucune trajectoire ne le traverse (barrière $C^1$, investigation § 4.5) ; des temps finis au voisinage d'une stagnation exigent une annulation d'ordre non entier, donc un champ non $C^1$ au point considéré, au prix de l'unicité du flot (contre-exemple $\dot x=\sqrt{x}$, investigation § 4.6). Le traitement de ces points doit être spécifié avant tout calcul.
+
+### 5. Convention pour les points inaccessibles
+
+$+\infty$ est un choix de modélisation, pas une propriété démontrée (convention (C1) de l'investigation). Dans le code, la référence uniforme adopte la convention locale suivante : $+\infty$ si la projection de la cible est strictement en amont, valeur nulle sur la frontière transverse. La garde `u_min` du code est une **convention algorithmique** distincte — elle conditionne l'acceptabilité numérique du calcul, pas la définition mathématique (voir [niveaux de modélisation](../projet/niveaux-modelisation.qmd) et l'hypothèse H4 du [catalogue](../hypotheses/catalogue.qmd)).
 
 ## Correspondance avec le code actuel
 
@@ -106,6 +158,27 @@ La divergence nulle signifie qu'il n'y a pas de dilatation volumique locale du c
 ![Quasi-distance de Drift-X : τ(source→A) fini sur la ligne de courant ; τ(A→source) = ∞ — on ne remonte pas le vent.](../images/metrique-non-symetrique.svg)
 
 Selon le domaine et les axiomes démontrés, $\tau$ peut relever d'une fonction de coût orientée ou d'une quasi-distance étendue; le terme « métrique » ne doit pas être utilisé sans qualification avant vérification de la séparation, de l'inégalité triangulaire et du traitement des points inaccessibles. La généalogie des objets voisins est détaillée sur la page [Métriques non riemanniennes](metriques-non-riemanniennes.qmd) et dans la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
+
+## Grille d'axiomes
+
+Les axiomes de distance sont notés (D1)–(D4) dans l'[investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) (§ 2.5) : (D1) diagonale nulle, (D2) non-négativité, (D3) inégalité triangulaire dirigée, (D4) séparation. Une **quasi-distance étendue** vérifie (D1)–(D4) ; une distance vérifie en outre la symétrie et la finitude. Statut par propriété et par objet :
+
+| Propriété | Objet 1 — coût sur courbe prescrite | Objet 2 — première arrivée ($T_{\mathrm{arr}}$) | Objet 3 — projection historique ($T_{\mathrm{proj}}$) |
+|---|---|---|---|
+| Non-négativité (D2) | Démontrée sur la courbe (intégrande positive) | Démontrée par définition (infimum sur $[0,+\infty[$) | Démontrée (hérite de $T_{\mathrm{arr}}$ sur le segment projeté ; convention $+\infty$ en amont) |
+| Diagonale nulle (D1) | Démontrée (segment de longueur nulle) | Démontrée ($t=0$ admis dans l'infimum) | Démontrée lorsque la projection de $A$ sur sa propre caractéristique est bien définie |
+| Séparation (D4) | **Sans objet** : le coût dépend du tracé prescrit, ce n'est pas une fonction de paires | **Démontrée** sous les hypothèses du cadre de base (proposition 3.2) | **Réfutée** pour la convention du code dès la dimension 2 : coût nul pour des points distincts de même abscisse (cas dégénéré $B^\perp=A$, testé dans le code) ; la source historique exclut ce cas par la condition $B^\perp\ne A$ — l'échec dépend donc de la convention retenue (voir « Correspondance avec le code ») |
+| Inégalité triangulaire (D3) | **Sans objet** | **Démontrée** au sens étendu via le semi-groupe du flot (proposition 3.3) ; stricte possible sur orbite fermée (exemple 3.5) | **Réfutée** en champ de cisaillement non uniforme (caractérisation exacte, lemme 5.4, contre-exemple 5.6) ; égalité en champ uniforme ; contre-exemple contrôlé numériquement |
+| Symétrie | **Sans objet** | **Réfutée** structurellement ($T_{\mathrm{arr}}(B,A)=+\infty$ possible alors que l'aller est fini) ; bilatérale sur les orbites fermées (proposition 3.7) | **Réfutée** ($+\infty$ vers l'amont) |
+| Finitude | **Sans objet** | Réfutée : $+\infty$ amont, non-existence par sortie de domaine | Réfutée : idem |
+| Convention d'inaccessibilité ($+\infty$) | Non applicable : tout tracé est admissible, l'objet ignore l'orientation | Convention de modélisation (C1), distincte de la non-existence par fin de validité (C2) | Convention locale du code en champ uniforme : $+\infty$ si la projection est strictement en amont |
+| Unicité de la valeur | Dépend du tracé prescrit | Oui (flot unique sous $C^1$) | **Non établie en général** : projection multiple possible (investigation § 6.1) |
+
+Les statuts « démontrée / réfutée » sont ceux des propositions et du tableau récapitulatif (§ 8) de l'investigation G0-S ; les mentions « testée » renvoient aux tests du dépôt recensés dans la [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md). Rien de tout cela n'est établi pour des champs instationnaires (hors périmètre).
+
+### Des familles à ne pas confondre
+
+La grille interdit les confusions de famille. $T_{\mathrm{proj}}$ peut échouer à la séparation **et** à l'inégalité triangulaire : ce n'est pas une quasi-métrique au sens usuel (non symétrique mais triangulaire), et « pseudo-distance » est la qualification que la source historique donne elle-même à sa construction projetée. $T_{\mathrm{arr}}$ vérifie (D1)–(D4) sous les hypothèses du cadre de base : une **quasi-distance étendue**, pas une distance (ni symétrique ni finie en général). Les rapprochements avec Finsler, Randers et la navigation de Zermelo décrivent un navigateur **contrôlable**, pas un traceur passif : ce sont des analogies explicites, détaillées dans [Pseudo-distances, coûts orientés et géométries non riemanniennes](metriques-non-riemanniennes.qmd).
 
 ## Analogie avec l'adaptation de maillage par métrique
 
