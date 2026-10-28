@@ -41,8 +41,8 @@ def test_les_valeurs_affichees_proviennent_de_la_tranche() -> None:
     assert attendu_cmax_sans in svg
     attendu_cmax_avec = f"c max avec : {resultat.concentration_max_avec:.1e} kg m⁻³"
     assert attendu_cmax_avec in svg
-    assert f"Ratio au sommet A : ×{resultat.ratio_sommet_1:.2f}" in svg
-    assert f"Ratio au sommet B : ×{resultat.ratio_sommet_2:.2f}" in svg
+    assert f"Ratio au sommet A : \\u00d7{resultat.ratio_sommet_1:.2f}" in svg
+    assert f"Ratio au sommet B : \\u00d7{resultat.ratio_sommet_2:.2f}" in svg
     attendu_axe = (
         f"h = {SCENARIO_DEFAUT.hauteur_source:.0f} m ; axe à {resultat.altitude_axe:.1f} m"
     )
