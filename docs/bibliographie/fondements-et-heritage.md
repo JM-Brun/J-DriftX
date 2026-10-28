@@ -26,10 +26,10 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 ### Mohammadi, Brun & Pironneau (2006) — *Reduced order modelling of dispersion*
 
 - **Lien :** source historique annoncée dans la bibliographie, directement pertinente.
-- **Référence :** entrée bibliographique citée sous le titre *Reduced order modelling of dispersion* et associée à *Numerical Analysis and Scientific Computing with PDE and their Challenging Applications* ; le recueil et le statut éditorial n'ont pas été confirmés par une notice primaire.
+- **Référence :** entrée bibliographique citée sous le titre *Reduced order modelling of dispersion* et associée au recueil *Numerical analysis and scientific computing for PDEs and their challenging applications* (J. Haataja, R. Stenberg, J. Periaux, P. Raback & P. Neittaanmäki, éds.), recueil confirmé le 28 octobre 2026 par des notices primaires : CIMNE, Barcelone, 2008 (© 2007 sur la page de titre d'un chapitre du recueil), ISBN 9788496736412, 314 p., dédié au professeur Olivier Pironneau pour son 60e anniversaire (OpenAlex, source « CIMNE eBooks » ; CiNii NCID BB13610220).
 - **Idées pertinentes :** modélisation réduite de dispersion ; détails à confirmer à partir du chapitre lui-même.
-- **Conséquence :** retrouver le chapitre pour vérifier les recouvrements, les différences de formulation et la chronologie scientifique.
-- **Statut :** citation secondaire attestée, mais source primaire et métadonnées du recueil non confirmées ; ne pas lui attribuer de résultats ni la présenter comme chapitre Springer établi.
+- **Conséquence :** retrouver le recueil CIMNE identifié (ISBN 9788496736412) et son sommaire pour vérifier que le chapitre cité y figure, puis vérifier les recouvrements, les différences de formulation et la chronologie scientifique.
+- **Statut :** citation secondaire attestée ; recueil confirmé (CIMNE, Barcelone, 2008, ISBN 9788496736412, Festschrift dédié à Olivier Pironneau), mais présence du chapitre non confirmée à cette date (sommaire non accessible en ligne ; aucune notice par chapitre chez Crossref/OpenAlex, aucun article de revue à ces trois auteurs recensé) ; ne pas lui attribuer de résultats ni la présenter comme chapitre établi avant vérification du sommaire.
 
 ### Brun & Mohammadi (2008) — *Reduced-Order Modelling of Dispersion*
 
