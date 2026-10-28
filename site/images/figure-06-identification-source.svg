@@ -508,10 +508,10 @@
 <text x="330.0" y="396.0" font-size="12" font-weight="normal" fill="#202833">J/J0</text>
 <text x="35.0" y="428.0" font-size="16" font-weight="bold" fill="#202833">C. Coupe du coût le long de l&#x27;axe du vent</text>
 <rect x="30" y="437" width="550" height="318" fill="#f6f8f6" stroke="#d5dbe3" stroke-width="2"/>
-<polyline points="45.0,501.6 110.6,508.0 176.3,517.4 241.9,533.8 307.5,618.0 373.1,533.2 438.8,516.3 504.4,506.5 570.0,499.9" fill="none" stroke="#2f6fae" stroke-width="2" stroke-dasharray="6 4"/>
+<polyline points="45.0,501.6 110.6,508.0 176.2,517.4 241.9,533.8 307.5,618.0 373.1,533.2 438.8,516.3 504.4,506.5 570.0,499.9" fill="none" stroke="#2f6fae" stroke-width="2" stroke-dasharray="6 4"/>
 <circle cx="45.0" cy="501.6" r="5" fill="#2864a5"/>
 <circle cx="110.6" cy="508.0" r="5" fill="#2864a5"/>
-<circle cx="176.3" cy="517.4" r="5" fill="#2864a5"/>
+<circle cx="176.2" cy="517.4" r="5" fill="#2864a5"/>
 <circle cx="241.9" cy="533.8" r="5" fill="#2864a5"/>
 <circle cx="307.5" cy="618.0" r="5" fill="#2864a5"/>
 <circle cx="373.1" cy="533.2" r="5" fill="#2864a5"/>
