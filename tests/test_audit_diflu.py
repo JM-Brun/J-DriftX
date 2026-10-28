@@ -1,4 +1,5 @@
 """Offline regression tests for the DIFLU audit workflow."""
+
 from __future__ import annotations
 
 import csv
@@ -6,6 +7,7 @@ import hashlib
 from pathlib import Path
 
 import pytest
+
 from scripts.audit_diflu import audit_sampling_csv, verify_original
 
 
