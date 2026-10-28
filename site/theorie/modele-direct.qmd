@@ -13,7 +13,7 @@ Le modèle direct est ici un **problème de référence conceptuel**, pas l'affi
 Cette page est le **premier maillon de la chaîne physique** : elle pose le problème de référence avant toute réduction, sans l'impliquer résolu par le code.
 
 - **Prérequis :** le vocabulaire du [glossaire](../glossaire.qmd) (scalaire passif, fermeture turbulente, champ stationnaire) et la carte des [niveaux de modélisation](../projet/niveaux-modelisation.qmd) (N0–N6).
-- **Objet défini ici :** l'équation de transport, le moyennage de Reynolds, la fermeture gradient et le tenseur $\mathbf K$ — avec, à chaque étape, le statut exact : identité mathématique, hypothèse physique ou fermeture constitutive.
+- **Objet défini ici :** l'équation de transport, le moyennage de Reynolds, la fermeture gradient et le tenseur $\mathbf K$ — avec, à chaque étape, le statut exact : identité mathématique, hypothèse physique, fermeture constitutive ou approximation asymptotique (section 10) — et des renvois au [catalogue des hypothèses](../hypotheses/catalogue.qmd) (H1–H8) plutôt que des duplications.
 - **Résultat transmis :** l'équation réduite $U\,\partial_x C = K_y\,\partial_{yy}C + K_z\,\partial_{zz}C$ et ses hypothèses, dérivées dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli) ; le statut de la famille gaussienne comme approximation candidate, dans [Réduction a priori](reduction-a-priori.qmd).
 - **Limite actuelle :** les questions de temps de transport relèvent de la chaîne géométrique, qui commence à [Métrique travel-time](metrique-travel-time.qmd) ; elles ne découlent pas du seul modèle d'advection–diffusion.
 
@@ -176,7 +176,24 @@ Si une évaluation du modèle coûte $c$ et que l'on effectue $N$ réalisations,
 
 ## 10. Du problème générique à l'équation parabolique de panache {#derive-equation-parabolique-panache}
 
-Cette section détaille le **passage du problème général à l'équation d'entrée de la similitude**. Chaque ligne ci-dessous est une réduction supplémentaire : elle n'est pas une identité sans hypothèse. La dérivation de la famille gaussienne commence seulement après cette section, dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli).
+Cette section détaille le **passage du problème général à l'équation d'entrée de la similitude**. Chaque ligne ci-dessous est une réduction supplémentaire : elle n'est pas une identité sans hypothèse.
+
+Chaque transition est **typée** : *identité mathématique* (égalité exacte, sous l'hypothèse vérifiée au passage), *hypothèse physique* (restriction librement admise, ni démontrée ni testée en général), *fermeture constitutive* (loi ajoutée pour fermer le système) ou *approximation asymptotique* (terme négligé par analyse d'échelle). Le tableau donne, pour chaque étape, le type, l'effet concret et le statut ; les hypothèses traçables du projet sont numérotées dans le [catalogue](../hypotheses/catalogue.qmd) (H1–H8), auquel cette section renvoie plutôt que de les dupliquer.
+
+| Étape | Transition | Type | Effet concret | Statut, renvoi |
+|---|---|---|---|---|
+| § 2 | Conservation de la masse | Identité (sous incompressibilité) | Équation de transport du scalaire passif | Identité ; scalaire passif : H1 |
+| § 3 | Moyennage de Reynolds | Identité de décomposition (+ hypothèses de moyennage) | Fait apparaître le flux turbulent $\mathbf F_t$ : problème de fermeture | Identité ; hypothèses de moyennage **supposées** |
+| § 4 | Fermeture gradient | Fermeture constitutive | Ferme le système via le tenseur $\mathbf K$ | **Supposée** (inadéquate en cas de non-localité ou de mémoire) |
+| § 4.1 | $D_m\mathbf I+\mathbf K\simeq\mathbf K$ | Approximation | Diffusion moléculaire absorbée dans $\mathbf K$ | **Supposée** (ordre de grandeur atmosphérique usuel) |
+| § 10.1 | Source hors de la région aval ; ni réaction ni dépôt | Hypothèse physique | $\overline S=0$ hors source ; condition d'entrée $Q$ | H1 (scalaire passif) ; la superposition qui en découle : H8 |
+| § 10.2 | Stationnarité | Hypothèse physique | Supprime $\partial_t C$ | **Supposée** ; pour le champ : H3 (quasi-stationnarité) |
+| § 10.3 | Vent uniforme aligné | Hypothèse physique | Advection réduite à $U\,\partial_x C$ | **Supposée** ; cas dégénéré à un segment de H5 |
+| § 10.4 | Tenseur diagonal constant | Hypothèse physique | Découple les directions ; $D_y,D_z\simeq K_y,K_z$ | **Supposée** ; hypothèse de dérivation, sans entrée dédiée |
+| § 10.5 | Diffusion longitudinale négligée | Approximation asymptotique ($\mathrm{Pe}_x\gg1$) | Supprime $D_x\,\partial_{xx}C$ | **Critère d'échelle, pas une preuve** ; même esprit que H4 |
+| § 10.6 | $t'=x/U$ | Identité (changement de variable sous les hypothèses) | Équation de la chaleur transversale | Identité **conditionnelle** ; détails dans [Similitude](similitude.qmd) |
+
+La dérivation de la famille gaussienne commence seulement après cette section, dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli).
 
 ### 10.1 Point de départ : transport moyen fermé
 
@@ -203,6 +220,8 @@ $$
 =\nabla\!\cdot(\mathbf D\nabla C).
 $$
 
+**Type : hypothèse physique — statut : supposée.** Pour le champ de vent, cette stationnarité est la quasi-stationnarité H3 du [catalogue](../hypotheses/catalogue.qmd) ; la stationnarité de la concentration moyenne elle-même (régime établi) est une hypothèse propre à cette chaîne, distincte de H2 qui porte sur la famille des solutions.
+
 ### 10.3 Hypothèse 2 — vent uniforme aligné avec l'axe du panache
 
 On pose
@@ -214,6 +233,8 @@ $$
 \nabla\!\cdot(\overline{\mathbf u}C)=U\,\partial_x C.
 $$
 Cette hypothèse exclut à ce stade les variations verticales, transversales ou longitudinales du vent, ainsi que les déviations du flux dues au relief. Elle ne doit pas être confondue avec la seule hypothèse d'incompressibilité : un champ incompressible peut être fortement non uniforme.
+
+**Type : hypothèse physique — statut : supposée.** Le vent uniforme est le cas dégénéré à un seul segment de l'homogénéité horizontale par morceaux (H5 du [catalogue](../hypotheses/catalogue.qmd)).
 
 ### 10.4 Hypothèse 3 — axes principaux et diffusivités constantes
 
@@ -229,6 +250,8 @@ U\,\partial_x C
 +D_z\,\partial_{zz}C.
 $$
 Dans la notation de la dérivation gaussienne, $D_y,D_z$ sont notés $K_y,K_z$ lorsque la diffusion moléculaire est négligée devant la diffusion turbulente. Cette identification est une approximation supplémentaire, et non un changement de notation universel.
+
+**Type : hypothèse physique — statut : supposée.** C'est une hypothèse de la dérivation, sans entrée dédiée au catalogue : la traçabilité des hypothèses de la dérivation gaussienne est tenue dans [Solutions de similitude](similitude.qmd).
 
 ### 10.5 Hypothèse 4 — approximation parabolique, diffusion longitudinale négligée
 
@@ -256,9 +279,19 @@ U\frac{\partial C}{\partial x}
 $$
 La boîte est **l'équation d'entrée** de la dérivation de similitude, pas l'équation générale d'advection–diffusion. Elle suppose aussi qu'il n'y a, dans cette version, ni réaction, ni dépôt, ni autre puits ou source distribuée dans la région aval.
 
+**Type : approximation asymptotique — statut : critère d'échelle, pas une preuve uniforme.** C'est l'analogue, pour l'équation de concentration, de l'hypothèse H4 du [catalogue](../hypotheses/catalogue.qmd) pour la métrique (transport advectif dominant : la diffusion agit transversalement, pas longitudinalement) — deux énoncés cohérents, pas une même preuve. L'absence de réaction, de dépôt et de source distribuée dans la région aval renvoie à H1 (scalaire passif).
+
 ### 10.6 Ce qui reste à préciser pour obtenir la solution gaussienne
 
 L'équation parabolique seule ne fixe pas une solution unique. Il faut encore spécifier la source continue ponctuelle, les conditions transversales, le domaine vertical, les valeurs de $K_y,K_z$ et la condition au sol. Dans la coordonnée $t'=x/U$, le débit source $Q$ se traduit par une condition d'entrée transversale normalisée de masse linéique $Q/U$ ; ce facteur n'est pas un débit massique. La page [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli) déroule la transformation, la fonction de Green, cette normalisation et enfin la réflexion au sol.
+
+**Pourquoi $t'=x/U$ transforme ce modèle en diffusion transversale.** En divisant l'équation encadrée par $U>0$ et en posant $t'=x/U$ (une durée, en secondes), puis en notant $\widetilde C(t',y,z)=C(Ut',y,z)$, la règle de dérivation en chaîne donne
+$$
+\frac{\partial \widetilde C}{\partial t'}
+=K_y\frac{\partial^2 \widetilde C}{\partial y^2}
++K_z\frac{\partial^2 \widetilde C}{\partial z^2},
+$$
+l'équation de la chaleur dans le plan transversal : la coordonnée longitudinale $x$ paramètre l'évolution comme le ferait le temps. Ce changement de variable est une **identité sous les hypothèses précédentes** — $U$ constant, diffusion longitudinale négligée, diffusivités transversales constantes — et n'affirme pas que le temps physique d'une particule quelconque soit $x/U$. La substitution de $x/U$ par un temps généralisé en champ variable exige une dérivation propre : c'est l'entrée de la [chaîne géométrique](metrique-travel-time.qmd) ; la transformation détaillée est déroulée à l'[étape 2 de la dérivation de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli).
 
 La chaîne de raisonnement complète est donc :
 **conservation → moyennage de Reynolds → fermeture gradient → stationnarité → vent uniforme aligné → tenseur diagonal constant → approximation parabolique → problème source/conditions aux limites → solution gaussienne → famille candidate de réduction.**
