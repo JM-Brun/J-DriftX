@@ -142,7 +142,6 @@ graph TD
     trajectories["trajectories.py"]::module
     figures_figure_01["figures/figure_01.py"]::module
     figures_figure_02["figures/figure_02.py"]::module
-    figures_figure_04["figures/figure_04.py"]::module
     figures_figure_03["figures/figure_03.py"]::module
     figures_figure_04["figures/figure_04.py"]::module
     figures_figure_05["figures/figure_05.py"]::module
@@ -196,8 +195,6 @@ graph TD
     t_figure_02["test_figure_02.py"]::test
     t_superposition["test_superposition_sources.py"]::test
     t_figure_04["test_figure_04.py"]::test
-    t_relief["test_relief.py"]::test
-    t_figure_05["test_figure_05.py"]::test
     t_relief["test_relief.py"]::test
     t_figure_05["test_figure_05.py"]::test
     t_modele_reduit_edp["test_modele_reduit_edp.py"]::test
@@ -306,9 +303,6 @@ graph TD
 | fields.py | Module de code | [fields.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/fields.py) |
 | terrain.py | Module de code | [terrain.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/terrain.py) |
 | figures/figure_01.py | Module de code | [figure_01.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_01.py) |
-| figures/figure_02.py | Module de code | [figure_02.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_02.py) |
-| figures/figure_04.py | Module de code | [figure_04.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_04.py) |
-| figures/figure_05.py | Module de code | [figure_05.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_05.py) |
 | figures/figure_02.py | Module de code | [figure_02.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_02.py) |
 | figures/figure_03.py | Module de code | [figure_03.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_03.py) |
 | figures/figure_04.py | Module de code | [figure_04.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_04.py) |
