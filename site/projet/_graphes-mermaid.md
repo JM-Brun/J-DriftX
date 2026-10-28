@@ -137,6 +137,7 @@ graph TD
     experiences_superposition_sources["experiences/superposition_sources.py"]::module
     experiences_relief["experiences/relief.py"]::module
     experiences_modele_reduit_edp["experiences/modele_reduit_edp.py"]::module
+    experiences_identification_source["experiences/identification_source.py"]::module
     fields["fields.py"]::module
     terrain["terrain.py"]::module
     trajectories["trajectories.py"]::module
@@ -145,10 +146,12 @@ graph TD
     figures_figure_03["figures/figure_03.py"]::module
     figures_figure_04["figures/figure_04.py"]::module
     figures_figure_05["figures/figure_05.py"]::module
+    figures_figure_06["figures/figure_06.py"]::module
     figures_wind_field_explorer["figures/wind_field_explorer.py"]::module
     c_fcourant["Fonction de courant"]::concept
     c_champ["Champ de vent stationnaire"]::concept
     c_courant["Ligne de courant et caractéristique"]::concept
+    c_assimilation["Assimilation et calibration"]::concept
     c_multiniveaux["Champ multi-niveaux historique (non reconstruit)"]::concept
     n0["N0 — contexte physique"]::niveau
   end
@@ -199,6 +202,8 @@ graph TD
     t_figure_05["test_figure_05.py"]::test
     t_modele_reduit_edp["test_modele_reduit_edp.py"]::test
     t_figure_03["test_figure_03.py"]::test
+    t_identification["test_identification_source.py"]::test
+    t_figure_06["test_figure_06.py"]::test
     t_wind_field["test_wind_field_explorer.py"]::test
     t_interactif["test_interactive_wind_page.py"]::test
     t_cas_synthetiques["test_cas_synthetiques.py"]::test
@@ -232,6 +237,9 @@ graph TD
   experiences_modele_reduit_edp -->|"utilise"| c_panache
   experiences_modele_reduit_edp -->|"utilise"| c_transport
   figures_figure_03 -->|"utilise"| experiences_modele_reduit_edp
+  experiences_identification_source -->|"utilise"| c_panache
+  experiences_identification_source -->|"utilise"| c_assimilation
+  figures_figure_06 -->|"utilise"| experiences_identification_source
   figures_wind_field_explorer -->|"utilise"| fields
   fields -->|"contexte"| c_champ
   terrain -->|"contexte"| n0
@@ -268,6 +276,8 @@ graph TD
   t_figure_05 -->|"couvre"| figures_figure_05
   t_modele_reduit_edp -->|"couvre"| experiences_modele_reduit_edp
   t_figure_03 -->|"couvre"| figures_figure_03
+  t_identification -->|"couvre"| experiences_identification_source
+  t_figure_06 -->|"couvre"| figures_figure_06
   t_wind_field -->|"couvre"| figures_wind_field_explorer
   t_interactif -->|"couvre"| figures_wind_field_explorer
   t_graphe -->|"couvre"| graphe_connaissances
@@ -294,6 +304,7 @@ graph TD
 | experiences/superposition_sources.py | Module de code | [superposition_sources.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/superposition_sources.py) |
 | experiences/relief.py | Module de code | [relief.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/relief.py) |
 | experiences/modele_reduit_edp.py | Module de code | [modele_reduit_edp.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/modele_reduit_edp.py) |
+| experiences/identification_source.py | Module de code | [identification_source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/identification_source.py) |
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
 | constraints.py | Module de code | [constraints.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/constraints.py) |
@@ -307,6 +318,7 @@ graph TD
 | figures/figure_03.py | Module de code | [figure_03.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_03.py) |
 | figures/figure_04.py | Module de code | [figure_04.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_04.py) |
 | figures/figure_05.py | Module de code | [figure_05.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_05.py) |
+| figures/figure_06.py | Module de code | [figure_06.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_06.py) |
 | figures/wind_field_explorer.py | Module de code | [wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/wind_field_explorer.py) |
 | Coût dirigé sur polyligne | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Temps de première arrivée (cas 1D exact) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
@@ -317,6 +329,7 @@ graph TD
 | Panache gaussien (similitude) | Concept | [theorie/similitude.qmd](../theorie/similitude.qmd) |
 | Classes de Pasquill et lois de Briggs | Concept | [glossaire.qmd](../glossaire.qmd) |
 | Équation de transport (advection-diffusion) | Concept | [theorie/modele-direct.qmd](../theorie/modele-direct.qmd) |
+| Assimilation et calibration | Concept | [theorie/assimilation-identification.qmd](../theorie/assimilation-identification.qmd) |
 | Champ multi-niveaux historique (non reconstruit) | Concept | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
 | N0 — contexte physique | Niveau de modélisation | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
 | Positivité (famille gaussienne) | Propriété (visée ou testée) | [theorie/contraintes-physiques.qmd](../theorie/contraintes-physiques.qmd) |
@@ -345,6 +358,8 @@ graph TD
 | test_figure_05.py | Test (CI) | [test_figure_05.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_05.py) |
 | test_modele_reduit_edp.py | Test (CI) | [test_modele_reduit_edp.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_modele_reduit_edp.py) |
 | test_figure_03.py | Test (CI) | [test_figure_03.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_03.py) |
+| test_identification_source.py | Test (CI) | [test_identification_source.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_identification_source.py) |
+| test_figure_06.py | Test (CI) | [test_figure_06.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_06.py) |
 | test_wind_field_explorer.py | Test (CI) | [test_wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_wind_field_explorer.py) |
 | test_interactive_wind_page.py | Test (CI) | [test_interactive_wind_page.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_interactive_wind_page.py) |
 | test_cas_synthetiques.py | Test (CI) | [test_cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_cas_synthetiques.py) |
