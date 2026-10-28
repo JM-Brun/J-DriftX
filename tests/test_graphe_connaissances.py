@@ -34,9 +34,15 @@ couleur = "#e6dccb"
 
 [relations.contexte]
 libelle = "contexte"
+signification = "le nœud d'origine fournit un arrière-plan au nœud ciblé"
+ne_affirme_pas = "tout appui, fondement ou validation"
+type_semantique = "structurelle"
 
 [relations.couvre]
 libelle = "couvre"
+signification = "le fichier de test exerce les fonctions du module ciblé"
+ne_affirme_pas = "une validité physique ou une couverture exhaustive"
+type_semantique = "TESTED_BY"
 
 [[noeuds]]
 id = "c-demo"
@@ -70,6 +76,7 @@ relation = "contexte"
 de = "noyau"
 vers = "c-demo"
 relation = "couvre"
+justification = "fichier de test du module noyau"
 
 [[graphes]]
 id = "vue"
@@ -163,6 +170,16 @@ def test_depot_minimal_valide(tmp_path: Path) -> None:
             'noeuds = ["noyau", "c-demo", "cle2000", "c-nu"]',
             'noeuds = ["noyau", "c-demo", "cle2000"]',
             "absents des groupes",
+        ),
+        (
+            'type_semantique = "TESTED_BY"',
+            'type_semantique = "INCONNU"',
+            "type sémantique inconnu",
+        ),
+        (
+            'justification = "fichier de test du module noyau"',
+            'justification = ""',
+            "justification manquante",
         ),
     ],
 )

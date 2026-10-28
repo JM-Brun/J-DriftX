@@ -4,7 +4,8 @@ Le fichier ``site/data/graphe-connaissances.toml`` est la source de vérité : i
 décrit les nœuds typés du projet (concepts, hypothèses, niveaux, propriétés,
 modules, tests, références, jeux de données) et les arêtes typées qui les
 relient. Ce module charge le registre, vérifie sa cohérence avec le dépôt
-(liens existants, clés de ``references.bib``, modules de ``src/jdriftx``),
+(liens existants, clés de ``references.bib``, modules de ``src/jdriftx``, typage
+sémantique des relations et justifications des arêtes),
 puis génère ``site/projet/_graphes-mermaid.md``, inclus dans la page Carte
 des connaissances du site Quarto.
 
@@ -41,6 +42,10 @@ ENTETE = (
     "site/data/graphe-connaissances.toml -->"
 )
 
+TYPES_SEMANTIQUES = frozenset(
+    {"SUPPORTED_BY", "VALIDATED_BY", "TESTED_BY", "LIMITED_BY", "structurelle"}
+)
+
 
 @dataclass(frozen=True)
 class TypeNoeud:
@@ -53,10 +58,13 @@ class TypeNoeud:
 
 @dataclass(frozen=True)
 class Relation:
-    """Un type d'arête, avec son libellé lisible."""
+    """Un type d'arête : libellé, signification, borne, type sémantique."""
 
     cle: str
     libelle: str
+    signification: str = ""
+    ne_affirme_pas: str = ""
+    type_semantique: str = ""
 
 
 @dataclass(frozen=True)
@@ -76,6 +84,7 @@ class Arete:
     de: str
     vers: str
     relation: str
+    justification: str | None = None
 
 
 @dataclass(frozen=True)
@@ -128,7 +137,14 @@ def charger(chemin: Path) -> Registre:
         for cle, table in brut["types"].items()
     }
     relations = {
-        cle: Relation(cle=cle, libelle=table["libelle"]) for cle, table in brut["relations"].items()
+        cle: Relation(
+            cle=cle,
+            libelle=table["libelle"],
+            signification=table.get("signification", ""),
+            ne_affirme_pas=table.get("ne_affirme_pas", ""),
+            type_semantique=table.get("type_semantique", ""),
+        )
+        for cle, table in brut["relations"].items()
     }
     noeuds = tuple(Noeud(**table) for table in brut["noeuds"])
     aretes = tuple(Arete(**table) for table in brut["aretes"])
@@ -192,8 +208,11 @@ def _erreurs_noeuds(registre: Registre, racine: Path) -> list[str]:
 
 
 def _erreurs_aretes(registre: Registre) -> list[str]:
-    """Relations inconnues et extrémités absentes du registre."""
+    """Relations inconnues, extrémités absentes, typage sémantique incomplet."""
     resultats: list[str] = []
+    for cle, relation in registre.relations.items():
+        if relation.type_semantique not in TYPES_SEMANTIQUES:
+            resultats.append(f"relation {cle} : type sémantique inconnu ({relation.type_semantique})")
     for arete in registre.aretes:
         if arete.relation not in registre.relations:
             resultats.append(
@@ -203,7 +222,17 @@ def _erreurs_aretes(registre: Registre) -> list[str]:
             resultats.append(f"arête vers {arete.vers} : origine inconnue ({arete.de})")
         if arete.vers not in registre.index:
             resultats.append(f"arête depuis {arete.de} : cible inconnue ({arete.vers})")
+        if _justification_manquante(registre, arete):
+            resultats.append(f"arête {arete.de} -> {arete.vers} : justification manquante")
     return resultats
+
+
+def _justification_manquante(registre: Registre, arete: Arete) -> bool:
+    """Vrai si l'arête exige une justification et que celle-ci est absente."""
+    if arete.relation not in registre.relations:
+        return False
+    relation = registre.relations[arete.relation]
+    return relation.type_semantique != "structurelle" and not (arete.justification or "").strip()
 
 
 def _erreurs_vues(registre: Registre) -> list[str]:

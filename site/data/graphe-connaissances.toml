@@ -8,6 +8,9 @@
 # « Carte des connaissances » du site Quarto.
 #
 # Règles vérifiées par src/jdriftx.graphe_connaissances.py (et la CI) :
+#   - chaque relation porte un type sémantique parmi SUPPORTED_BY, VALIDATED_BY,
+#     TESTED_BY, LIMITED_BY ou structurelle ; toute arête non structurelle
+#     porte une justification vérifiable (document, référence, code ou test) ;
 #   - identifiants uniques ; types et relations dans les listes ci-dessous ;
 #   - chaque nœud apparaît dans au moins une vue ; chaque arête est rendue
 #     dans au moins une vue (ses deux extrémités y sont) ;
@@ -57,48 +60,93 @@ couleur = "#e6dccb"
 # ---------- Relations (fermé : toute arête doit en utiliser une) ----------
 
 [relations.sapplique-a]
+signification = "l’hypothèse contraint le niveau visé dans la démarche de modélisation"
+ne_affirme_pas = "que l’hypothèse soit implémentée ou testée à ce niveau"
+type_semantique = "structurelle"
 libelle = "s'applique à"
 
 [relations.traduite-en]
+signification = "l’hypothèse donne naissance à l’objet mathématique visé dans la modélisation"
+ne_affirme_pas = "que cet objet soit implémenté ou testé"
+type_semantique = "structurelle"
 libelle = "traduite en"
 
 [relations.fonde]
+signification = "la source primaire identifiée fonde l’objet visé (définition, construction ou propriété)"
+ne_affirme_pas = "une validation expérimentale de l’objet par cette seule source"
+type_semantique = "SUPPORTED_BY"
 libelle = "fonde"
 
 [relations.depend-de]
+signification = "l’objet d’origine suppose l’objet ciblé pour être défini"
+ne_affirme_pas = "une relation de preuve entre les deux objets"
+type_semantique = "structurelle"
 libelle = "dépend de"
 
 [relations.alimente]
+signification = "enchaînement de lecture du niveau amont vers le niveau aval"
+ne_affirme_pas = "un enchaînement implémenté ou testé"
+type_semantique = "structurelle"
 libelle = "alimente"
 
 [relations.construit]
+signification = "l’objet d’origine participe à la construction de l’objet ciblé"
+ne_affirme_pas = "que cette construction soit implémentée dans le code actuel"
+type_semantique = "structurelle"
 libelle = "construit"
 
 [relations.implemente-par]
+signification = "le module cité implémente l’objet mathématique, selon le contrat vérifiable du code source"
+ne_affirme_pas = "l’exactitude de l’implémentation au-delà des tests nommés"
+type_semantique = "SUPPORTED_BY"
 libelle = "implémenté par"
 
 [relations.teste]
+signification = "le module exécute des vérifications ciblées de la propriété, dans la portée des tests correspondants"
+ne_affirme_pas = "une preuve universelle de la propriété ou une validité physique"
+type_semantique = "TESTED_BY"
 libelle = "teste"
 
 [relations.teste-par]
+signification = "le fichier de test vérifie la propriété dans une portée explicitée sur la carte des preuves"
+ne_affirme_pas = "une preuve universelle de la propriété ou une validité physique"
+type_semantique = "TESTED_BY"
 libelle = "testée par"
 
 [relations.couvre]
+signification = "le fichier de test exerce les fonctions du module ciblé"
+ne_affirme_pas = "une validité physique du module ou une couverture exhaustive"
+type_semantique = "TESTED_BY"
 libelle = "couvre"
 
 [relations.utilise]
+signification = "le module ou l’objet d’origine utilise l’objet ciblé"
+ne_affirme_pas = "une relation de preuve"
+type_semantique = "structurelle"
 libelle = "utilise"
 
 [relations.decrit]
+signification = "la référence documente l’objet visé, sans nécessairement le fonder"
+ne_affirme_pas = "un appui direct des affirmations du projet"
+type_semantique = "SUPPORTED_BY"
 libelle = "décrit"
 
 [relations.candidat-pour]
+signification = "le jeu de données est candidat pour contraindre le niveau visé, sous réserve des licences et des observables"
+ne_affirme_pas = "une validation par ce seul jeu de données"
+type_semantique = "structurelle"
 libelle = "candidat pour"
 
 [relations.contexte]
+signification = "la référence ou le module fournit un arrière-plan documentaire à l’objet visé"
+ne_affirme_pas = "tout appui, fondement ou validation"
+type_semantique = "structurelle"
 libelle = "contexte"
 
 [relations.non-couvert-par]
+signification = "l’objet d’origine est explicitement soumis à la limite connue portée par la cible"
+ne_affirme_pas = "que cette limite soit levée ailleurs dans le projet"
+type_semantique = "LIMITED_BY"
 libelle = "non couvert par"
 
 # ---------- Nœuds : concepts ----------
@@ -890,6 +938,7 @@ relation = "traduite-en"
 de = "h1"
 vers = "h8"
 relation = "fonde"
+justification = "catalogue.qmd, traçabilité H8 : la superposition découle de la linéarité du transport du scalaire passif (H1)."
 
 [[aretes]]
 de = "c-fcourant"
@@ -937,46 +986,55 @@ relation = "construit"
 de = "c-polyligne"
 vers = "metric"
 relation = "implemente-par"
+justification = "src/jdriftx/metric.py, temps_transport ; docs/27, ligne Coût de polyligne."
 
 [[aretes]]
 de = "c-tpa"
 vers = "metric"
 relation = "implemente-par"
+justification = "src/jdriftx/metric.py, temps_premiere_arrivee_1d ; docs/27, ligne T_arr 1D."
 
 [[aretes]]
 de = "c-pdist"
 vers = "metric"
 relation = "implemente-par"
+justification = "src/jdriftx/metric.py, pseudo_distance_uniforme ; docs/27, lignes T_proj."
 
 [[aretes]]
 de = "c-fcourant"
 vers = "champ_analytique"
 relation = "implemente-par"
+justification = "src/jdriftx/champ_analytique.py, ChampFonctionCourant."
 
 [[aretes]]
 de = "c-champ"
 vers = "champ_analytique"
 relation = "implemente-par"
+justification = "src/jdriftx/champ_analytique.py : ChampFonctionCourant et SuperpositionChamps."
 
 [[aretes]]
 de = "c-champ"
 vers = "experiences/uniforme"
 relation = "implemente-par"
+justification = "src/jdriftx/experiences/uniforme.py, ChampUniforme et resoudre_scenario."
 
 [[aretes]]
 de = "c-panache"
 vers = "similitude"
 relation = "implemente-par"
+justification = "src/jdriftx/similitude.py : formules du panache et du puff gaussiens."
 
 [[aretes]]
 de = "c-stabilite"
 vers = "stabilite"
 relation = "implemente-par"
+justification = "src/jdriftx/stabilite.py : classes de Pasquill et lois de Briggs."
 
 [[aretes]]
 de = "c-courant"
 vers = "trajectories"
 relation = "implemente-par"
+justification = "src/jdriftx/trajectories.py, integrate_trajectory : intégration des caractéristiques."
 
 [[aretes]]
 de = "similitude"
@@ -987,6 +1045,7 @@ relation = "utilise"
 de = "c-multiniveaux"
 vers = "p-divergence"
 relation = "non-couvert-par"
+justification = "contraintes-physiques.qmd : le champ multi-niveaux historique n’est pas reconstruit ; la divergence entre niveaux n’est ni démontrée ni testée."
 
 [[aretes]]
 de = "experiences/uniforme"
@@ -1037,141 +1096,169 @@ relation = "contexte"
 de = "constraints"
 vers = "p-positivite"
 relation = "teste"
+justification = "tests ciblés de test_constraints.py ; portée : configurations évaluées (contraintes-physiques.qmd, carte des preuves)."
 
 [[aretes]]
 de = "constraints"
 vers = "p-superposition"
 relation = "teste"
+justification = "tests ciblés de test_constraints.py ; portée : superposition ponctuelle (contraintes-physiques.qmd, carte des preuves)."
 
 [[aretes]]
 de = "p-positivite"
 vers = "t-similitude"
 relation = "teste-par"
+justification = "test_positivite_panache et test_positivite_puff ; portée sur contraintes-physiques.qmd."
 
 [[aretes]]
 de = "p-positivite"
 vers = "t-constraints"
 relation = "teste-par"
+justification = "tests de non-négativité de test_constraints.py ; portée sur contraintes-physiques.qmd."
 
 [[aretes]]
 de = "p-superposition"
 vers = "t-constraints"
 relation = "teste-par"
+justification = "superposition ponctuelle à précision machine ; portée sur contraintes-physiques.qmd."
 
 [[aretes]]
 de = "p-superposition"
 vers = "t-similitude"
 relation = "teste-par"
+justification = "bilans de masse des superpositions, y compris classes différentes ; portée sur contraintes-physiques.qmd."
 
 [[aretes]]
 de = "p-conservation"
 vers = "t-similitude"
 relation = "teste-par"
+justification = "bilans à 0,1 % sur grilles adaptées à quatre écarts-types, six classes, plusieurs distances ; troncature et quadrature séparées ; portée sur contraintes-physiques.qmd."
 
 [[aretes]]
 de = "p-divergence"
 vers = "t-champ"
 relation = "teste-par"
+justification = "divergence nulle par construction, différences finies et superposition ; portée sur contraintes-physiques.qmd."
 
 [[aretes]]
 de = "p-divergence"
 vers = "t-recon"
 relation = "teste-par"
+justification = "divergence numérique négligeable sur grille pour la reconstruction à deux mesures ; portée sur contraintes-physiques.qmd."
 
 [[aretes]]
 de = "p-nonsym"
 vers = "t-metric"
 relation = "teste-par"
+justification = "asymétrie aval fini / amont infini et borne transversale nulle ; portée et subtilité d’arrondi sur contraintes-physiques.qmd."
 
 [[aretes]]
 de = "p-adjoint"
 vers = "t-metric"
 relation = "teste-par"
+justification = "gradient exact par différences finies (référence uniforme, cas 1D) ; portée sur contraintes-physiques.qmd."
 
 [[aretes]]
 de = "t-metric"
 vers = "metric"
 relation = "couvre"
+justification = "tests/test_metric.py : les trois primitives de metric.py (polyligne, T_arr 1D, T_proj), propriétés et rejets."
 
 [[aretes]]
 de = "t-similitude"
 vers = "similitude"
 relation = "couvre"
+justification = "tests/test_similitude.py : panache et puff — conservation, positivité, superposition, rejets."
 
 [[aretes]]
 de = "t-constraints"
 vers = "constraints"
 relation = "couvre"
+justification = "tests/test_constraints.py : concentrations et rejets d’entrées invalides."
 
 [[aretes]]
 de = "t-champ"
 vers = "champ_analytique"
 relation = "couvre"
+justification = "tests/test_champ_analytique.py : vitesse, divergence, superposition des champs."
 
 [[aretes]]
 de = "t-recon"
 vers = "experiences/reconstruction_vent"
 relation = "couvre"
+justification = "tests/test_reconstruction_vent.py : scénario à deux mesures, non-unicité du champ interpolé."
 
 [[aretes]]
 de = "t-uniforme"
 vers = "experiences/uniforme"
 relation = "couvre"
+justification = "tests/test_experience_uniforme.py : scénario jouet, invariants, manifeste."
 
 [[aretes]]
 de = "t-advection"
 vers = "advection_diffusion"
 relation = "couvre"
+justification = "tests/test_advection_diffusion.py : solveur de transport contre cas analytiques."
 
 [[aretes]]
 de = "t-fields"
 vers = "fields"
 relation = "couvre"
+justification = "tests/test_fields.py : branches du module exercées, à lire dans le fichier."
 
 [[aretes]]
 de = "t-periodic"
 vers = "periodic_transport"
 relation = "couvre"
+justification = "tests/test_periodic_transport.py : solveurs périodiques contre solutions exactes."
 
 [[aretes]]
 de = "t-stabilite"
 vers = "stabilite"
 relation = "couvre"
+justification = "tests/test_stabilite.py : classes de Pasquill et lois de Briggs."
 
 [[aretes]]
 de = "t-terrain"
 vers = "terrain"
 relation = "couvre"
+justification = "tests/test_terrain.py : fonctions du module exercées, à lire dans le fichier."
 
 [[aretes]]
 de = "t-trajectories"
 vers = "trajectories"
 relation = "couvre"
+justification = "tests/test_trajectories.py : intégration de trajectoires."
 
 [[aretes]]
 de = "t-figure-01"
 vers = "figures/figure_01"
 relation = "couvre"
+justification = "tests/test_figure_01.py : rendu SVG synchronisé avec l’émulateur de référence."
 
 [[aretes]]
 de = "t-figure-02"
 vers = "figures/figure_02"
 relation = "couvre"
+justification = "tests/test_figure_02.py : valeurs affichées égales à l’implémentation partagée."
 
 [[aretes]]
 de = "t-wind-field"
 vers = "figures/wind_field_explorer"
 relation = "couvre"
+justification = "tests/test_wind_field_explorer.py : fonctions de l’explorateur exercées."
 
 [[aretes]]
 de = "t-interactif"
 vers = "figures/wind_field_explorer"
 relation = "couvre"
+justification = "tests/test_interactive_wind_page.py : page interactive synchronisée."
 
 [[aretes]]
 de = "t-graphe"
 vers = "graphe_connaissances"
 relation = "couvre"
+justification = "tests/test_graphe_connaissances.py : validation du registre et synchronisation du rendu."
 
 # ---------- Arêtes : vue références ----------
 
@@ -1179,41 +1266,49 @@ relation = "couvre"
 de = "mohammadi2006crmeca"
 vers = "c-pdist"
 relation = "fonde"
+justification = "docs/19 §2.4 et docs/30 : construction historique projetée (T_proj), source primaire Mohammadi et Brun 2006."
 
 [[aretes]]
 de = "mohammadi2006crmeca"
 vers = "c-tau"
 relation = "fonde"
+justification = "docs/19 §2.3 et docs/30 : temps de première arrivée (T_arr), source primaire Mohammadi et Brun 2006."
 
 [[aretes]]
 de = "mohammadi2006pironneau"
 vers = "c-reduction"
 relation = "decrit"
+justification = "references.qmd (entrée au statut documentaire non confirmé, audit docs/15 B-09) : reduced order modelling."
 
 [[aretes]]
 de = "brun2008"
 vers = "c-multiniveaux"
 relation = "decrit"
+justification = "chapitre 14 Springer 2008 ; architecture multi-niveaux décrite dans niveaux-modelisation.qmd et docs/14."
 
 [[aretes]]
 de = "brun2008"
 vers = "c-panache"
 relation = "decrit"
+justification = "chapitre 14 Springer 2008 ; panache gaussien et facteur correctif, voir docs/14."
 
 [[aretes]]
 de = "bozon2008esta"
 vers = "p-nonsym"
 relation = "decrit"
+justification = "e-sta 2008 : non-symétrie de la métrique des temps de migration."
 
 [[aretes]]
 de = "bozon2009driftx"
 vers = "c-multiniveaux"
 relation = "decrit"
+justification = "HAL hal-00468863 : Drift-X, champ de vent multi-niveaux."
 
 [[aretes]]
 de = "mohammadi2009gis"
 vers = "c-multiniveaux"
 relation = "decrit"
+justification = "Applied Geomatics 2009 : potentiels harmoniques emboîtés (étude de positionnement, relevé du manuscrit)."
 
 [[aretes]]
 de = "brun2006these"
@@ -1229,11 +1324,13 @@ relation = "contexte"
 de = "mohammadi2001shape"
 vers = "c-reduction"
 relation = "decrit"
+justification = "Applied Shape Optimization 2001 : proximité documentée avec la sensibilité incomplète, équivalence non établie."
 
 [[aretes]]
 de = "borouchaki1997delaunay"
 vers = "c-maillage"
 relation = "decrit"
+justification = "Borouchaki et al. 1997 : maillage de Delaunay gouverné par une métrique."
 
 [[aretes]]
 de = "raupach1981canopy"
@@ -1249,11 +1346,13 @@ relation = "contexte"
 de = "hutchinson2017ste"
 vers = "c-assimilation"
 relation = "decrit"
+justification = "Hutchinson et al. 2017 : estimation de terme source."
 
 [[aretes]]
 de = "renormalization2014"
 vers = "c-assimilation"
 relation = "decrit"
+justification = "Turbelin et al. 2014 : renormalisation en champ moyen."
 
 [[aretes]]
 de = "vervecken2015rom"
@@ -1294,6 +1393,7 @@ relation = "contexte"
 de = "garbaczewski1997burgers"
 vers = "c-burgers"
 relation = "decrit"
+justification = "Garbaczewski 1997 : équation de Burgers."
 
 [[aretes]]
 de = "c-burgers"
@@ -1356,11 +1456,13 @@ relation = "candidat-pour"
 de = "t-extraction"
 vers = "extraction_graphe"
 relation = "couvre"
+justification = "tests/test_extraction_graphe.py : export de l’inventaire extrait, reproductible."
 
 [[aretes]]
 de = "t-diagnostic"
 vers = "diagnostic_graphe"
 relation = "couvre"
+justification = "tests/test_diagnostic_graphe.py : diagnostic des écarts, à lire dans le fichier."
 
 # ---------- Arêtes : cas synthétiques S0 ----------
 
@@ -1373,6 +1475,7 @@ relation = "utilise"
 de = "t-cas-synthetiques"
 vers = "experiences/cas_synthetiques"
 relation = "couvre"
+justification = "tests/test_cas_synthetiques.py : génération des cas synthétiques à vérité exacte."
 
 # ---------- Vues ----------
 
