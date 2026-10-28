@@ -2,7 +2,7 @@
 
 Cette expérience porte l'étape D du plan de figures du chapitre de 2008
 (figure 5, pp. 254-255) : un modèle numérique de terrain synthétique
-sur un domaine de 2 km × 2 km, une source de scalaire passif dans un
+sur un domaine de 2 km x 2 km, une source de scalaire passif dans un
 vent uniforme du nord, et la comparaison de deux conventions
 d'évaluation de la concentration au sol. Sans correction, le modèle
 ignore le relief : le sol du modèle est le plan z = 0 et le point de
