@@ -44,7 +44,7 @@ def test_les_valeurs_affichees_proviennent_de_la_tranche() -> None:
     attendu_max = f"Concentration max (somme, grille) : {resultat.concentration_max_totale:.3f}"
     assert attendu_max in svg
     assert "Région totale &gt; S1 + S2" in svg
-    assert "∇·u < 1e-12 s⁻¹" in svg
+    assert "∇·u &lt; 1e-12 s⁻¹" in svg
 
 
 def test_le_rendu_est_deterministe() -> None:
