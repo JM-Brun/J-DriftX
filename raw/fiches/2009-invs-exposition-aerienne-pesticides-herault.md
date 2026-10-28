@@ -2,8 +2,8 @@
 
 ## Fichier
 
-- Actuel : <code>82748_9958-9958-ps.pdf</code> (4 Mo) → renommage recommandé : <code>2009-invs-exposition-aerienne-pesticides-herault.pdf</code>
-- Extraction texte : **pas encore faite** (binaire volumineux non extractible par les outils actuels) — revue à compléter après OCR
+- PDF actuellement présent : <code>../2009-invs-exposition-aerienne-pesticides-herault.pdf</code> (4 091 028 octets ; le renommage est déjà effectif, l'ancien nom était <code>82748_9958-9958-ps.pdf</code>).
+- Extraction texte : **absente de `raw/extracts/`** au 28 octobre 2026 ; l'OCR et la revue détaillée restent à faire. La limite est celle des outils utilisés jusqu'ici, pas une propriété intrinsèque du PDF.
 
 ## Référence
 
