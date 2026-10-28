@@ -34,6 +34,24 @@ uv run python -m jdriftx.extraction_graphe > /tmp/graphe-extrait.json
 
 Cette séparation évite de confondre une coïncidence de noms ou un lien documentaire avec une relation scientifique. La prochaine étape éventuelle sera une résolution explicite des faits extraits vers les nœuds du registre, avec signalement des écarts et validation humaine des relations sémantiques.
 
+## Typage sémantique des relations
+
+Chaque type d'arête du registre porte trois champs, vérifiés par la CI : une **signification** (ce que l'arête affirme), une clause de borne (`ne_affirme_pas` : ce qu'elle ne dit jamais) et un **type sémantique** parmi cinq valeurs :
+
+| Type sémantique | Signification précise | Relations actuelles |
+|---|---|---|
+| `SUPPORTED_BY` | Étayé par une source ou un argument identifié : la justification désigne le document, la référence ou le contrat de code qui porte l'affirmation. | `fonde`, `décrit`, `implémenté par` |
+| `TESTED_BY` | Soumis à un test dont la portée est explicitée : la justification désigne le test et la carte des preuves. Un test logiciel réussi n'est jamais une preuve de validité physique générale. | `teste`, `testée par`, `couvre` |
+| `LIMITED_BY` | Soumis à une limite connue et documentée. | `non couvert par` |
+| `VALIDATED_BY` | Validé dans un domaine et selon un protocole précis. | aucune à ce jour |
+| `structurelle` | Lien d'organisation (chaîne de lecture, dépendance définitionnelle, arrière-plan) : aucune affirmation de preuve. | `s'applique à`, `traduite en`, `dépend de`, `alimente`, `construit`, `utilise`, `contexte`, `candidat pour` |
+
+**`VALIDATED_BY` est aujourd'hui inutilisé, et c'est un état de fait plutôt qu'un oubli** : aucune validation physique n'est revendiquée par ce graphe. Ce type deviendra pertinent seulement lorsqu'un protocole d'évaluation sur données indépendantes aura été mené (suivi dans l'[issue d'audit des données](https://github.com/JM-Brun/J-DriftX/issues/13)).
+
+La CI refuse un registre où un type sémantique serait inconnu, ou où une arête non structurelle manquerait de justification : chaque arête porteuse d'un type de preuve désigne elle-même où se vérifie l'affirmation (document, référence, contrat de code ou test nommé).
+
+Ce typage est aligné sur la source unique des statuts ([contraintes physiques](../theorie/contraintes-physiques.qmd)) et sur la [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) : une propriété du graphe ne porte jamais un statut plus favorable que celui de la carte des preuves.
+
 ## Étendre la carte
 
 Éditer `site/data/graphe-connaissances.toml` (nœuds, arêtes, vues), puis :
