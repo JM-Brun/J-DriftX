@@ -17,7 +17,7 @@ Les conclusions de positionnement — notamment l’absence de concurrents utili
 1. **M1 — Noyau et référence :** formaliser le domaine de validité, établir un cas gaussien reproductible et automatiser les tests physiques.
 2. **M2 — Calibration et problème inverse :** séparer calibration et validation, puis mesurer l’effet du bruit, des données manquantes et de la régularisation.
 3. **M3 — Terrain :** utiliser des campagnes publiées avec un jeu de validation indépendant et analyser les incertitudes.
-4. **M4 — Publication :** soumettre une synthèse scientifique après validation, en incluant limites et résultats négatifs.
+4. **Publication scientifique (hors numérotation M0–M3) :** envisager une synthèse seulement après que les critères de validation applicables sont satisfaits ; présenter les limites, incertitudes et résultats négatifs. Cette étape de diffusion n'est pas définie ici comme un jalon M4, car la feuille de route documentée dans le glossaire ne formalise que M0–M3.
 
 ## Critères minimaux d’un benchmark
 
