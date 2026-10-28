@@ -24,9 +24,7 @@ def _projected_cost(x: float, x_a: float, v_at_source: float) -> float:
     return (x - x_a) / v_at_source
 
 
-def _directional_transport_residual(
-    v_at_point: float, v_at_source: float
-) -> float:
+def _directional_transport_residual(v_at_point: float, v_at_source: float) -> float:
     """Return u · grad(d_A) for the analytical projected cost."""
     if v_at_source <= 0:
         raise ValueError("The shear profile must be positive at the source.")
@@ -37,9 +35,7 @@ def test_projected_cost_has_expected_downstream_value() -> None:
     """Check the closed-form cost at a downstream point."""
     x_a, y_a = 1.0, 0.0
     x, y = 4.0, 1.0
-    cost = _projected_cost(
-        x=x, x_a=x_a, v_at_source=_shear_speed(y_a)
-    )
+    cost = _projected_cost(x=x, x_a=x_a, v_at_source=_shear_speed(y_a))
 
     assert cost == pytest.approx(3.0, rel=0.0, abs=1e-12)
     assert math.isfinite(cost)
@@ -60,8 +56,6 @@ def test_shear_counterexample_violates_unit_transport_identity() -> None:
 def test_uniform_flow_is_the_control_case() -> None:
     """For constant positive v, the same identity equals one."""
     v_constant = 2.5
-    residual = _directional_transport_residual(
-        v_at_point=v_constant, v_at_source=v_constant
-    )
+    residual = _directional_transport_residual(v_at_point=v_constant, v_at_source=v_constant)
 
     assert residual == pytest.approx(1.0, rel=0.0, abs=1e-12)
