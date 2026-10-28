@@ -38,6 +38,7 @@ def fetch_bytes(url: str, timeout: float) -> tuple[bytes, dict[str, str], str]:
         raise ValueError(f"Refusing non-official URL: {url}")
     request = Request(url, headers={"User-Agent": USER_AGENT})
     try:
+        # The URL is restricted to the official HTTPS host above.
         with urlopen(request, timeout=timeout) as response:  # noqa: S310
             return (
                 response.read(),
@@ -104,7 +105,9 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
         sampling_type = (row.get("sampling_type") or "").strip()
         bag_id = (row.get("sampling_bag_id") or "").strip()
         if sampling_type == "EA" and bag_id != "NA":
-            violations.append({"row": row_number, "rule": "EA sampling_bag_id must be literal NA"})
+            violations.append(
+                {"row": row_number, "rule": "EA sampling_bag_id must be literal NA"}
+            )
         elif sampling_type == "VEGA" and (not bag_id or bag_id == "NA"):
             violations.append({"row": row_number, "rule": "VEGA sampling_bag_id must be populated"})
     return {
@@ -119,12 +122,15 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
         "semantic_checks": {
             "EA_literal_NA_and_VEGA_populated": "passed" if not violations else "failed",
             "violations": violations,
-            "note": "Literal NA is preserved as a domain value for EA; no global NA normalization is performed.",
+            "note": (
+                "Literal NA is preserved as a domain value for EA; "
+                "no global NA normalization is performed."
+            ),
         },
     }
 
 
-def run(output_dir: Path, timeout: float) -> dict[str, Any]:
+def run(output_dir: Path, timeout: float) -> dict[str, Any]:  # noqa: PLR0915
     """Download core files, verify original bytes, and produce the audit report."""
     output_dir.mkdir(parents=True, exist_ok=True)
     listing_url = f"{LIST_URL}?{urlencode({'persistentId': DATASET_PID})}"
@@ -161,13 +167,17 @@ def run(output_dir: Path, timeout: float) -> dict[str, Any]:
         metadata_url = f"{BASE_URL}/api/files/{file_id}"
         metadata_payload, _, metadata_final_url = fetch_bytes(metadata_url, timeout)
         envelope = json_response(metadata_payload, f"metadata for {remote_name}")
-        metadata = envelope.get("data", {}).get("dataFile") if isinstance(envelope.get("data"), dict) else None
+        metadata = (
+            envelope.get("data", {}).get("dataFile")
+            if isinstance(envelope.get("data"), dict)
+            else None
+        )
         if not isinstance(metadata, dict):
             raise RuntimeError(f"Missing detailed metadata for {remote_name}")
         original_name = metadata.get("originalFileName")
         if not isinstance(original_name, str) or not original_name:
             raise RuntimeError(f"Dataverse does not publish originalFileName for {remote_name}")
-        # Use the server-provided basename only; never allow a metadata path to escape output_dir.
+        # Use only the server-provided basename; never allow a metadata path to escape output_dir.
         safe_name = Path(original_name).name
         if safe_name != original_name or safe_name in {"", ".", ".."}:
             raise RuntimeError(f"Unsafe original filename in metadata: {original_name!r}")
@@ -180,7 +190,8 @@ def run(output_dir: Path, timeout: float) -> dict[str, Any]:
         destination = output_dir / safe_name
         destination.write_bytes(payload)
         local_by_remote_name[remote_name] = destination
-        records.append({
+        records.append(
+            {
             "dataverse_label": remote_name,
             "dataverse_file_id": file_id,
             "metadata_url": metadata_url,
@@ -192,13 +203,17 @@ def run(output_dir: Path, timeout: float) -> dict[str, Any]:
             "dataverse_export_filename": metadata.get("filename"),
             "dataverse_export_size_bytes": metadata.get("filesize"),
             "integrity": integrity,
-            "local_path": str(destination),
-        })
+                "local_path": str(destination),
+            }
+        )
 
     audit = audit_sampling_csv(local_by_remote_name["DIFLU_helium_release_sampling.tab"])
     report = {
         "dataset_pid": DATASET_PID,
-        "dataset_url": f"{BASE_URL}/dataset.xhtml?persistentId={DATASET_PID.replace(':', '%3A')}",
+        "dataset_url": (
+            f"{BASE_URL}/dataset.xhtml?persistentId="
+            f"{DATASET_PID.replace(':', '%3A')}"
+        ),
         "retrieved_at_utc": datetime.now(UTC).isoformat(),
         "listing_url": listing_final_url,
         "listing_content_type": listing_headers.get("content-type"),
@@ -234,8 +249,11 @@ def main() -> int:
     print(f"Audit report: {args.output_dir / 'audit-report.json'}")
     print(f"Sampling rows: {report['sampling_audit']['row_count']}")
     print(f"Sampling types: {report['sampling_audit']['sampling_type_counts']}")
-    print(f"EA/VEGA invariant: {report['sampling_audit']['semantic_checks']['EA_literal_NA_and_VEGA_populated']}")
-    return 0 if report["sampling_audit"]["semantic_checks"]["EA_literal_NA_and_VEGA_populated"] == "passed" else 1
+    invariant = report["sampling_audit"]["semantic_checks"][
+        "EA_literal_NA_and_VEGA_populated"
+    ]
+    print(f"EA/VEGA invariant: {invariant}")
+    return 0 if invariant == "passed" else 1
 
 
 if __name__ == "__main__":
