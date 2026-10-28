@@ -1,6 +1,7 @@
 # Provenance — `raw/2009-invs-exposition-aerienne-pesticides-herault.pdf`
 
 - **Nature :** rapport d'agence sanitaire, PDF de 4 091 028 octets.
+- **Identifiant du binaire local dans Git :** blob SHA-1 `52a1e6bd34125c8df5df46b22b6a28bc7844fec8` (identifiant de l'objet Git, pas une empreinte SHA-256 brute du PDF). Il permet de référencer précisément le contenu versionné dans ce dépôt ; il ne permet pas à lui seul de conclure que le binaire est identique au téléchargement officiel.
 - **Référence :** InVS (2009), *Évaluation de l'exposition aérienne aux pesticides de la population générale. Étude en air extérieur dans quatre sites de l'Hérault en 2006*.
 - **Site source :** Santé publique France, site officiel de l'agence sanitaire.
 - **URL de téléchargement déjà enregistrée dans le dépôt :** https://www.santepubliquefrance.fr/content/download/186474/document_file/82748_9958-9958-ps.pdf
