@@ -130,7 +130,7 @@ Le tenseur ne se déduit pas du seul nom « turbulence ». Il doit être prescri
 
 **Régime** désigne ici le type de comportement temporel et physique supposé pour le problème ; le mot doit toujours être qualifié. Un régime **transitoire** dépend du temps ; un régime **stationnaire** satisfait $\partial C/\partial t=0$ pour l'état modélisé ; un régime **établi** signifie que les statistiques ou le profil considéré ne changent plus dans le cadre d'observation choisi. « Stationnaire » et « établi » sont souvent associés mais ne sont pas interchangeables sans préciser ce qui est stationnaire (le vent, la source, les statistiques ou la concentration). Les régimes **laminaire** et **turbulent** qualifient plutôt la dynamique de l'écoulement ; ils ne sont pas synonymes de transitoire et stationnaire. Le [glossaire](../glossaire.qmd) donne aussi la définition courte du champ stationnaire et de la quasi-stationnarité ; celle-ci ne dispense pas de préciser ici l'objet dont le temps est écarté.
 
-La **stabilité atmosphérique** décrit notamment la façon dont la stratification thermique favorise ou freine les déplacements verticaux turbulents. Les classes empiriques de Pasquill (souvent notées A à F, de conditions très instables à très stables) résument des conditions météorologiques à partir d'indicateurs tels que le rayonnement solaire, la couverture nuageuse et le vent, selon la variante de classification. Les définitions opérationnelles et les courbes associées doivent être consultées dans la [page Solutions de similitude](similitude.qmd) et dans l'entrée « Classes de Pasquill » du [glossaire](../glossaire.qmd). Elles servent dans certains modèles de dispersion à choisir des paramètres ou courbes empiriques. Elles ne constituent ni une loi universelle de turbulence, ni une mesure directe de tous les coefficients de $\mathbf K$. Les variantes réglementaires et les domaines d'application doivent être cités lorsqu'une paramétrisation précise est utilisée.
+La **stabilité atmosphérique** décrit notamment la façon dont la stratification thermique favorise ou freine les déplacements verticaux turbulents. Les classes empiriques de Pasquill (souvent notées A à F, de conditions très instables à très stables) résument des conditions météorologiques à partir d'indicateurs tels que le rayonnement solaire, la couverture nuageuse et le vent, selon la variante de classification. Pour la définition météorologique générale, voir le [glossaire de l'American Meteorological Society — Pasquill stability classes](https://glossary.ametsoc.org/wiki/pasquill-stability-classes/). Les définitions opérationnelles et les courbes de dispersion utilisées par un modèle particulier doivent aussi être consultées dans la [page Solutions de similitude](similitude.qmd) et dans l'entrée « Classes de Pasquill » du [glossaire](../glossaire.qmd) : la classification météorologique ne fixe pas à elle seule une paramétrisation unique. Elles servent dans certains modèles de dispersion à choisir des paramètres ou courbes empiriques. Elles ne constituent ni une loi universelle de turbulence, ni une mesure directe de tous les coefficients de $\mathbf K$. Les variantes réglementaires et les domaines d'application doivent être cités lorsqu'une paramétrisation précise est utilisée.
 
 ## 6. Coefficients de dispersion $\sigma_y$ et $\sigma_z$
 
@@ -298,7 +298,41 @@ La chaîne de raisonnement complète est donc :
 
 Cette dernière étape n'établit pas que le modèle approché reste valide dans un champ non uniforme. Elle motive une famille candidate ; son erreur et son coût total doivent être mesurés. Les propriétés physiques — conservation, positivité, superposition, divergence — doivent être définies avec leurs hypothèses et vérifiées séparément. Les tests actuels ne prouvent pas ces propriétés pour le modèle historique général.
 
-## 11. Articulation avec les autres pages : qui définit quoi ?
+## 11. Modèle gaussien et équation d'advection–diffusion : deux niveaux distincts {#gaussien-et-advection-diffusion}
+
+Le modèle gaussien de panache et l'équation d'advection–diffusion sont liés, mais ne sont pas interchangeables.
+
+| Aspect | Équation d'advection–diffusion fermée | Panache gaussien opérationnel |
+|---|---|---|
+| Objet | Évolution du champ de concentration selon un champ de vitesse et des flux diffusifs | Profil analytique ou paramétré de concentration pour un scénario idéalisé |
+| Entrées | Champ de vitesse, diffusivité(s), source, conditions initiales et aux limites | Débit massique (Q), vent (U), hauteur effective (H), distance sous le vent et largeurs \\(\\sigma_y,\\sigma_z\\) |
+| Paramètres de mélange | Tenseur \\(\\mathbf K\\), selon une fermeture et une paramétrisation explicites | Largeurs empiriques \\(\\sigma_y(x),\\sigma_z(x)\\), souvent déterminées par classe de stabilité |
+| Statut mathématique | Problème différentiel ; exige domaine, données et conditions aux limites | Solution exacte seulement pour une équation et des hypothèses particulières ; sinon approximation empirique |
+| Vérification | Résidu de l'équation, conditions aux limites, conservation et convergence numérique | Unités, normalisation du débit, limites du domaine, domaine de validité et comparaison aux données de référence |
+| Limite importante | Une fermeture turbulente reste un modèle physique | Une formule gaussienne ne démontre ni la validité de la fermeture ni celle d'une généralisation en champ variable |
+
+Dans le cas parabolique idéalisé détaillé dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli), vent uniforme (U>0), diffusivités transversales constantes et diffusion longitudinale négligée, on obtient \\(\\sigma_i^2=2K_i x/U\\). Les paramétrisations de Pasquill–Gifford/Briggs remplacent cette loi par des largeurs empiriques dans leur domaine d'application. Le maintien d'une forme gaussienne ne signifie alors pas que la formule obtenue est encore une solution exacte de l'équation à diffusivités constantes.
+
+Le [rapport INERIS sur la dispersion atmosphérique (2002)](https://pollution.ott.fr/wp-content/uploads/2021/12/Dispersion-Ineris-2002-46web.pdf) constitue une introduction aux mécanismes et aux familles de modèles. Le [glossaire AMS sur les classes de Pasquill](https://glossary.ametsoc.org/wiki/pasquill-stability-classes/) est une référence terminologique pour la classification météorologique. Ces deux sources sont complémentaires : ni l'une ni l'autre ne remplace la référence exacte de la paramétrisation utilisée dans une implémentation.
+
+## 12. Grille de vérification et portée des preuves {#grille-verification-modele-direct}
+
+Les contrôles doivent être associés à une affirmation précise. Une réussite sur un cas particulier ne constitue pas une preuve générale, et une vérification numérique ne valide pas à elle seule la représentation physique.
+
+| Question | Contrôle adapté | Ce que le contrôle ne prouve pas |
+|---|---|---|
+| Les dimensions sont-elles cohérentes ? | Analyse dimensionnelle des termes, des paramètres et de la concentration calculée | La validité des hypothèses physiques |
+| Le panache représente-t-il le débit annoncé ? | Intégration analytique du profil, puis intégration numérique avec erreur de troncature et de quadrature séparées | La validité empirique des largeurs \\(\\sigma_y,\\sigma_z\\) |
+| Les conditions au sol sont-elles satisfaites ? | Vérification analytique du flux normal pour le modèle et la condition aux limites choisis | La validité pour un terrain complexe ou un dépôt non nul |
+| Le résultat numérique converge-t-il ? | Étude séparée du raffinement de grille et de l'élargissement du domaine ; documenter la norme d'erreur et le critère d'arrêt | La convergence vers la physique réelle si le modèle est inadéquat |
+| Le résultat dépend-il fortement des paramètres ? | Analyse de sensibilité, variations contrôlées et protocole documenté | Une incertitude probabiliste si aucune distribution n'a été définie |
+| Le modèle décrit-il correctement l'atmosphère ? | Comparaison à des observations ou benchmarks pertinents, avec scénario, données et métriques documentés | Une validité universelle hors du domaine évalué |
+
+Le [Guide de bonnes pratiques INERIS pour les modélisations 3D (version 2.0)](https://aida.ineris.fr/sites/default/files/guides/Guide_Bonnes_Pratiques_V2.0_sans_suivi_1.pdf) est une source méthodologique utile pour structurer les études de modélisation, notamment les choix numériques, la convergence et la validation. Son contexte — modélisations 3D de situations accidentelles — doit rester explicite : ses recommandations ne sont pas automatiquement des critères d'acceptation universels pour les expériences mathématiques réduites de J-DriftX.
+
+Pour chaque expérience de convergence, consigner au minimum : (1) le problème et les hypothèses, (2) la solution ou référence de comparaison, (3) le domaine et les conditions aux limites, (4) les résolutions spatiales et temporelles, (5) la norme ou quantité d'intérêt, (6) la tolérance et la règle d'arrêt, (7) les erreurs de troncature et de discrétisation évaluées séparément. Cette grille complète les tests existants ; elle ne prétend pas qu'une validation atmosphérique a déjà été réalisée.
+
+## 13. Articulation avec les autres pages : qui définit quoi ?
 
 La documentation sépare volontairement les définitions fondamentales, les hypothèses de la réduction, les objets de la métrique et le statut des preuves. Pour éviter les définitions contradictoires, utiliser les pages selon le rôle suivant :
 
