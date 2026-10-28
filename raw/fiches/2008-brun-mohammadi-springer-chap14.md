@@ -2,9 +2,9 @@
 
 ## Fichier
 
-- Actuel : <code>PDF.js viewer.pdf</code> → renommage recommandé : <code>2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf</code>
+- PDF actuellement présent : <code>../2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf</code> (le renommage est déjà effectif ; <code>PDF.js viewer.pdf</code> est l'ancien nom de téléchargement).
 - Attention : **extrait de 2 pages seulement** (p. 245–246), généré depuis un visualiseur PDF ; le chapitre complet est désormais disponible via le recueil Glowinski & Neittaanmäki 2008 ajouté dans <code>raw/</code> le 23 octobre 2026 (fiche : <code>fiches/2008-glowinski-neittaanmaki-recueil-springer.md</code>)
-- Extraction texte : pages océrisées (résumé, introduction, début de la section 2) ; revue intégrée dans cette fiche et dans la fiche 4 de <code>docs/04-revues-papiers-sources.md</code>
+- Extraction : pas de transcription OCR intégrale vérifiée du chapitre. Des notes analytiques existent dans <code>../extracts/2008-brun-mohammadi-springer-chap14-notes.txt</code> et sont croisées avec la revue du corpus. Le PDF séparé ne couvre que les pages 245–246 ; le recueil complet présent sur `main` permet théoriquement de consulter les pages 245–256, sous réserve de l'arbitrage sur les droits.
 
 ## Référence
 
