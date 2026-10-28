@@ -144,7 +144,7 @@ if command -v sha256sum >/dev/null 2>&1; then
 elif command -v shasum >/dev/null 2>&1; then
   shasum -a 256 "$FILE_NAME" | tee "$FILE_NAME.sha256"
 else
-  printf "Need sha256sum or shasum to calculate SHA-256\\n" >&2
+  printf "Need sha256sum or shasum to calculate SHA-256\n" >&2
   exit 1
 fi
 wc -c "$FILE_NAME"
