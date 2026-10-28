@@ -128,7 +128,7 @@ A complete historical reconstruction still requires the equations and assumption
 | Historical definition of \(C\), its units and integration domain reconciled across sources | **Still to reconstruct** |
 | Applicability of a regular \((\tau,\eta_1,\eta_2)\) chart to the historical projected pseudo-distance | **Not established; counterexamples show it cannot be assumed generally** |
 | Treatment of source/sink, diffusion, deposition, ground reflection and open boundaries in the historical model | **Still to reconstruct** |
-| Correction factor printed as “2/3 = 0.636” in the accessible Bozon, Sinfort & Mohammadi (2010) manuscript | **Numerically inconsistent as written**: $2/3 \approx 0.667$, while $2/\pi \approx 0.637$. Whether the same expression appears in Brun & Mohammadi (2008) remains unverified against the publisher text; do not silently correct either source. |
+| Correction factor printed as “2/3 = 0.636” in the accessible Bozon, Sinfort & Mohammadi (2010) manuscript; a related published paper by Bozon & Mohammadi (2009) also prints it | **Arithmetic inconsistency confirmed in published text**: $2/3 \approx 0.667$, whereas $0.636 \approx 2/\pi$. The 2009 paper describes the factor as a stochastic averaged cosine, but does not provide a formal derivation on the accessible page. This supports—but does not prove—the inference that $2/\pi$ was intended. Whether the same expression appears in Brun & Mohammadi (2008) remains unverified; do not silently rewrite any source. |
 
 ## 7. Decision and next evidence required
 
@@ -150,5 +150,6 @@ No variable-field solver or new benchmark should be justified by this note alone
 - Mohammadi, B. & Brun, J.-M. (2006). “Similitude généralisée et modélisation géométrique à complexité réduite.” *Comptes Rendus Mécanique*, 334(10), 634–638. https://doi.org/10.1016/j.crme.2006.06.007. Open PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf
 - Brun, J.-M. & Mohammadi, B. (2008). “Reduced-Order Modelling of Dispersion.” In *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, chap. 14, pp. 245–256. https://doi.org/10.1007/978-1-4020-8758-5_14
 - Bozon, N., Sinfort, C. & Mohammadi, B. (2010). “A GIS-based atmospheric dispersion model.” *Journal Européen des Systèmes Automatisés*, 44(4), 445–461. https://doi.org/10.3166/jesa.44.445-461. The accessible copy is the HAL author manuscript `hal-00468863` (version 1, 31 March 2010), not an authenticated publisher version of record; use it for provisional source attribution only.
+- Bozon, N. & Mohammadi, B. (2009). “GIS-based atmospheric dispersion modelling: Forecasting the pesticide atmospheric spray drift from a vineyard plot to a watershed.” *Applied Geomatics*, 1, 59–74. https://doi.org/10.1007/s12518-009-0006-0. Publisher version of record; its online text prints `2/3 = 0.636` and describes the factor as a stochastic averaged cosine.
 - Project source reconciliation and shear counterexample: [PR #122](https://github.com/JM-Brun/J-DriftX/pull/122).
 - Follow-up tracking issue: [#123](https://github.com/JM-Brun/J-DriftX/issues/123).
