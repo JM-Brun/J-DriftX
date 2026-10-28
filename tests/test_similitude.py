@@ -1,5 +1,7 @@
 """Tests physiques et numeriques des solutions de similitude."""
 
+from math import erf, sqrt
+
 import numpy as np
 import pytest
 
@@ -214,8 +216,6 @@ def test_conservation_masse_superposition_deux_puffs() -> None:
 
 def test_erreur_de_troncature_domaine_a_resolution_controlee() -> None:
     """La fraction analytique omise diminue avec l'étendue du domaine."""
-    from math import erf, sqrt
-
     # Given — un panache au sol : le flux exact dans [-k sy, k sy] × [0, k sz]
     # est Q * erf(k / sqrt(2))**2. Cette référence isole la troncature du domaine.
     debit, u, x, classe = 1.5, 4.0, 1000.0, "D"
@@ -241,8 +241,6 @@ def test_erreur_de_troncature_domaine_a_resolution_controlee() -> None:
 
 def test_erreur_discretisation_domaine_fixe() -> None:
     """À domaine fixé, raffiner la grille réduit l'erreur de quadrature."""
-    from math import erf, sqrt
-
     # Given — même domaine à quatre sigma et flux exact tronqué connu.
     debit, u, x, classe, k = 1.5, 4.0, 1000.0, "D", 4.0
     sy = float(sigma_y(x, classe))
