@@ -14,7 +14,7 @@ $$
 \tau(\mathbf{x}_0\to\mathbf{x})=\int_\gamma \frac{ds}{|\mathbf{u}(s)|},
 $$
 
-décrit un temps de parcours le long d'une trajectoire donnée. Il faut distinguer cette intégrale d'un **temps minimal de navigation** (où la trajectoire est choisie) et d'un **temps de première arrivée** défini par une loi de propagation. Dans les notes du dépôt, le temps de première arrivée porte l'identifiant **V1** et la construction projetée historique l'identifiant **V2** (« temps après projection ») ; voir le [glossaire mathématique autonome](https://github.com/JM-Brun/J-DriftX/blob/main/docs/30-glossaire-mathematique-autonome-g0s.md).
+décrit un temps de parcours le long d'une trajectoire donnée. Il faut distinguer cette intégrale d'un **temps minimal de navigation** (où la trajectoire est choisie) et d'un **temps de première arrivée** défini par une loi de propagation. Dans les notes du dépôt, le temps de première arrivée porte l'identifiant **$T_{\mathrm{arr}}$** et la construction projetée historique l'identifiant **$T_{\mathrm{proj}}$** (« temps après projection ») ; voir le [glossaire mathématique autonome](https://github.com/JM-Brun/J-DriftX/blob/main/docs/30-glossaire-mathematique-autonome-g0s.md).
 
 ## Lire les termes de mécanique des fluides
 

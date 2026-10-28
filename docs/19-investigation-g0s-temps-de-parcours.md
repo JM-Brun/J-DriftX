@@ -10,8 +10,8 @@ La question de l'issue #41 est : **quelles propriétés possède une fonction de
 
 Réponse courte, démontrée dans les sections 3 à 7 :
 
-1. Sous les hypothèses du cadre de base (§ 2.1–2.2), le **temps de première arrivée** (variante V1, définition 2.3) vérifie la non-négativité, la séparation des points et l'inégalité triangulaire dirigée (propositions 3.2 et 3.3). Ces propriétés reposent sur la continuité des trajectoires et, pour la triangulation, sur l'unicité et la propriété de semi-groupe du flot autonome ; elles ne découlent pas de la seule notation d'un infimum. Il ne satisfait pas, en général : la symétrie (structurellement), ni la finitude (points inaccessibles). C'est une **quasi-distance étendue** au sens des axiomes (D1)–(D4) ci-dessous.
-2. La **construction projetée historique**, ou **temps après projection (V2)** (définition 2.4, Mohammadi & Brun 2006) reste non négative et vérifie \(d(A,A)=0\) lorsque la projection de \(A\) sur sa propre caractéristique est bien définie. En dimension 2, elle ne vérifie toutefois pas en général la séparation (§ 5.2) ni l'inégalité triangulaire (§ 5.4–5.6) ; sa valeur peut aussi être non unique lorsque la projection l'est (§ 6.1). Il faut donc préciser quelles propriétés sont conservées et lesquelles échouent, plutôt que dire qu'aucun axiome de distance ne subsiste. En dimension 1, V2 coïncide avec V1 sous les hypothèses explicitées en proposition 5.1.
+1. Sous les hypothèses du cadre de base (§ 2.1–2.2), le **temps de première arrivée** (variante $T_{\mathrm{arr}}$, définition 2.3) vérifie la non-négativité, la séparation des points et l'inégalité triangulaire dirigée (propositions 3.2 et 3.3). Ces propriétés reposent sur la continuité des trajectoires et, pour la triangulation, sur l'unicité et la propriété de semi-groupe du flot autonome ; elles ne découlent pas de la seule notation d'un infimum. Il ne satisfait pas, en général : la symétrie (structurellement), ni la finitude (points inaccessibles). C'est une **quasi-distance étendue** au sens des axiomes (D1)–(D4) ci-dessous.
+2. La **construction projetée historique**, ou **temps après projection ($T_{\mathrm{proj}}$)** (définition 2.4, Mohammadi & Brun 2006) reste non négative et vérifie \(d(A,A)=0\) lorsque la projection de \(A\) sur sa propre caractéristique est bien définie. En dimension 2, elle ne vérifie toutefois pas en général la séparation (§ 5.2) ni l'inégalité triangulaire (§ 5.4–5.6) ; sa valeur peut aussi être non unique lorsque la projection l'est (§ 6.1). Il faut donc préciser quelles propriétés sont conservées et lesquelles échouent, plutôt que dire qu'aucun axiome de distance ne subsiste. En dimension 1, $T_{\mathrm{proj}}$ coïncide avec $T_{\mathrm{arr}}$ sous les hypothèses explicitées en proposition 5.1.
 3. Aucune des deux variantes n'entraîne de propriété physique (conservation de masse, positivité d'une concentration) : ces propriétés relèvent de l'équation de transport et de ses hypothèses, pas du temps de parcours (renvoi à [14-revue-mathematique-ciblee.md](14-revue-mathematique-ciblee.md), § 3.4).
 4. Le risque de nouveauté est tranché (§ 7) : l'intégrale de temps le long d'une ligne de courant est un objet classique (time-of-flight des méthodes streamline, distances-temps en géographie) ; la construction projetée par paires et son statut de pseudo-distance sont annoncés dans la source primaire de 2006 elle-même. Conclusion du MVP : **idée connue, utile pédagogiquement, désormais délimitée précisément** — l'une des conclusions autorisées par le document MVP (§ 3).
 
@@ -33,7 +33,7 @@ Pour \(A \in \Omega\), la **trajectoire** issue de \(A\) est l'unique solution m
 
 définie sur un intervalle ouvert \(I_A\) contenant 0 (unicité : Cauchy–Lipschitz, \(\mathbf u\) de classe \(C^1\)). On note \(\gamma_A = \{X(t; A) : t \in I_A\}\) la courbe trajectoire et \(\gamma_A^+ = \{X(t; A) : t \in I_A \cap [0,+\infty[\}\) l'**orbite positive**. Champ stationnaire : la courbe trajectoire coïncide avec la ligne de courant et sert de caractéristique à l'équation d'advection ; ces trois notions ne doivent pas être confondues en instationnaire (revue ciblée, § 2).
 
-### 2.3 Variante V1 — temps de première arrivée
+### 2.3 Variante $T_{\mathrm{arr}}$ — temps de première arrivée
 
 Pour \(A, B \in \Omega\) :
 
@@ -43,7 +43,7 @@ T(A, B) = \inf\{\, t \in I_A \cap [0,+\infty[ : X(t; A) = B \,\}, \qquad \inf \v
 
 \(T(A,B)\) est le **temps de première arrivée** de \(B\) sur l'orbite positive de \(A\). Unités : \([\mathbf u] = \mathrm{m\,s^{-1}}\), \([T] = \mathrm{s}\).
 
-### 2.4 Variante V2 — temps après projection (pseudo-distance projetée historique)
+### 2.4 Variante $T_{\mathrm{proj}}$ — temps après projection (pseudo-distance projetée historique)
 
 (Mohammadi & Brun 2006, § 3.) Pour \(A, B \in \Omega\) :
 
@@ -60,17 +60,17 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 - **(C3)** \(t = 0\) est admis dans l'infimum : \(T(A,A) = 0\). Le « temps de retour » sur une orbite fermée est une autre grandeur (§ 6.3).
 - **Axiomes.** (D1) \(T(x,x)=0\) ; (D2) \(T(x,y) \ge 0\) ; (D3) inégalité triangulaire dirigée \(T(x,z) \le T(x,y) + T(y,z)\) au sens étendu ; (D4) séparation : \(T(x,y) = 0 \Rightarrow x = y\). Une **quasi-distance étendue** vérifie (D1)–(D4) ; une distance vérifie en outre la symétrie et la finitude.
 
-## 3. V1 — temps de première arrivée : ce qui découle de la seule définition
+## 3. $T_{\mathrm{arr}}$ — temps de première arrivée : ce qui découle de la seule définition
 
 **Lemme 3.1 (le temps de première arrivée est atteint).** Si l'ensemble des temps d'atteinte \(H_{A,B}=\{t\ge0:X(t;A)=B\}\) est non vide, alors son infimum est atteint.
 
 *Preuve.* Choisissons \(t_0\in H_{A,B}\). La solution existe et est continue sur \([0,t_0]\). L'ensemble \(H_{A,B}\cap[0,t_0]\) est donc fermé dans le compact \([0,t_0]\), non vide, et possède un minimum \(t_*\). Comme \(t_0\) est lui-même un temps d'atteinte, ce minimum est aussi l'infimum de \(H_{A,B}\) sur tous les temps positifs. Ainsi \(X(t_*;A)=B\) et \(t_*=T(A,B)\). ∎
 
-**Proposition 3.2 (positivité et séparation).** V1 vérifie (D1), (D2) et (D4).
+**Proposition 3.2 (positivité et séparation).** $T_{\mathrm{arr}}$ vérifie (D1), (D2) et (D4).
 
 *Preuve.* (D1) : \(t=0 \in H_{A,A}\), donc \(T(A,A)=0\). (D2) : infimum sur \([0,+\infty[\). (D4) : si \(A \ne B\), posons \(\delta = |A-B| > 0\). Par continuité de \(t \mapsto X(t;A)\) en 0, il existe \(\varepsilon > 0\) tel que \(|X(t;A) - A| < \delta/2\) pour \(t \in [0,\varepsilon]\) ; alors \(|X(t;A) - B| \ge \delta/2 > 0\) sur \([0,\varepsilon]\), donc \(T(A,B) \ge \varepsilon > 0\). ∎
 
-**Proposition 3.3 (inégalité triangulaire dirigée).** V1 vérifie (D3), au sens étendu (\(+\infty + a = +\infty\)).
+**Proposition 3.3 (inégalité triangulaire dirigée).** $T_{\mathrm{arr}}$ vérifie (D3), au sens étendu (\(+\infty + a = +\infty\)).
 
 *Preuve.* Si \(T(A,B) = +\infty\) ou \(T(B,C) = +\infty\), l'inégalité est triviale. Sinon, posons \(t_1 = T(A,B)\), \(t_2 = T(B,C)\), atteints (lemme 3.1). Le flot autonome vérifie la propriété de semi-groupe \(X(s; X(t;A)) = X(s+t; A)\) (les deux membres résolvent la même équation avec la même condition initiale ; unicité de Cauchy–Lipschitz). Donc \(X(t_1+t_2; A) = X(t_2; X(t_1;A)) = X(t_2; B) = C\) : \(t_1 + t_2 \in H_{A,C}\), donc \(T(A,C) \le t_1 + t_2\). ∎
 
@@ -78,7 +78,7 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 
 **Exemple 3.5 (sous-additivité stricte, champ rotationnel).** \(\mathbf u(x,y) = (-y, x)\), \(A=(1,0)\), \(B=(-1,0)\), \(C=(0,1)\). La trajectoire est \(X(t;A) = (\cos t, \sin t)\) : \(T(A,B) = \pi\), \(T(B,C) = 3\pi/2\) (trois quarts de tour), \(T(A,C) = \pi/2\). Donc \(T(A,C) = \pi/2 < \pi + 3\pi/2\). (Contrôlé numériquement, annexe A.)
 
-**Proposition 3.6 (non-symétrie possible et retournement).** (i) V1 n'est pas symétrique en général : il existe des champs et des paires pour lesquels \(T(A,B)<+\infty\) mais \(T(B,A)=+\infty\), par exemple le champ uniforme \(u\equiv U>0\) du tableau 4.3. Ce n'est toutefois pas universel : sur une orbite périodique, les deux temps sont finis (proposition 3.7). (ii) **Retournement exact** : pour le champ opposé \(-\mathbf u\), \(T_{-\mathbf u}(B,A) = T_{\mathbf u}(A,B)\) lorsque le temps de première arrivée du membre de droite est fini. La non-symétrie dépend du couple (champ, orientation), et non de la seule courbe géométrique.
+**Proposition 3.6 (non-symétrie possible et retournement).** (i) $T_{\mathrm{arr}}$ n'est pas symétrique en général : il existe des champs et des paires pour lesquels \(T(A,B)<+\infty\) mais \(T(B,A)=+\infty\), par exemple le champ uniforme \(u\equiv U>0\) du tableau 4.3. Ce n'est toutefois pas universel : sur une orbite périodique, les deux temps sont finis (proposition 3.7). (ii) **Retournement exact** : pour le champ opposé \(-\mathbf u\), \(T_{-\mathbf u}(B,A) = T_{\mathbf u}(A,B)\) lorsque le temps de première arrivée du membre de droite est fini. La non-symétrie dépend du couple (champ, orientation), et non de la seule courbe géométrique.
 
 *Preuve de (ii).* Si \(X(t^*;A) = B\), alors \(s \mapsto X(t^*-s; A)\) est une trajectoire de \(-\mathbf u\) issue de \(B\) qui atteint \(A\) en \(s = t^*\) : \(T_{-\mathbf u}(B,A) \le T_{\mathbf u}(A,B)\). En appliquant le même argument à \(-\mathbf u\), l'inégalité inverse. ∎
 
@@ -90,9 +90,9 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 
 Cette affirmation n'est pas établie ici en dimension \(d\ge2\) : l'équation \(X(t;a)=b\) impose alors \(d\) contraintes avec un seul paramètre temporel ; une trajectoire issue d'un point initial voisin ne passe généralement pas par le même point \(b\). Pour parler de temps de franchissement en dimension supérieure, il faut définir une cible comme une hypersurface et vérifier une condition de transversalité. La stabilité peut aussi échouer aux cibles stagnantes (§ 6.4).
 
-**Tableau 3.9 (V1, récapitulatif).**
+**Tableau 3.9 ($T_{\mathrm{arr}}$, récapitulatif).**
 
-| Axiome / propriété | V1 | Référence |
+| Axiome / propriété | $T_{\mathrm{arr}}$ | Référence |
 |---|---|---|
 | (D1) \(T(x,x)=0\) | oui, par définition | 3.2 |
 | (D2) positivité | oui, par définition | 3.2 |
@@ -128,21 +128,21 @@ Conséquences immédiates : positivité stricte (\(b > a \Rightarrow T > 0\)), s
 
 **Proposition 4.4 (critère intégral d'ordre de la stagnation).** Soit \(x^*\) un point de stagnation (\(u(x^*) = 0\)) et supposons \(|u(x)| \sim c\,|x - x^*|^{\alpha}\) (\(c > 0, \alpha > 0\)) d'un côté de \(x^*\). Le temps associé à une **branche mobile** qui parcourt ce côté jusqu'à une distance \(\delta > 0\), ou qui rejoint \(x^*\) depuis cette distance, est donné par une intégrale comparable à \(\int_0^\delta dr/(c r^\alpha)\). Cette intégrale est finie si et seulement si \(\alpha < 1\).
 
-*Précision essentielle.* Pour \(\alpha < 1\), le champ n'est pas localement lipschitzien au point de stagnation dans le modèle-type \(u(x)=c|x-x^*|^\alpha\). L'intégrale finie décrit une branche mobile, mais ne garantit pas l'unicité de la solution issue de \(x^*\) : une branche stationnaire ou des branches avec attente peuvent aussi exister. Sans unicité du flot ou convention de branche explicite, ce calcul ne définit donc pas à lui seul un temps de première arrivée V1 univoque. Le contre-exemple 4.6 illustre précisément cette distinction.
+*Précision essentielle.* Pour \(\alpha < 1\), le champ n'est pas localement lipschitzien au point de stagnation dans le modèle-type \(u(x)=c|x-x^*|^\alpha\). L'intégrale finie décrit une branche mobile, mais ne garantit pas l'unicité de la solution issue de \(x^*\) : une branche stationnaire ou des branches avec attente peuvent aussi exister. Sans unicité du flot ou convention de branche explicite, ce calcul ne définit donc pas à lui seul un temps de première arrivée $T_{\mathrm{arr}}$ univoque. Le contre-exemple 4.6 illustre précisément cette distinction.
 
 *Preuve.* Sur une branche monotone mobile, la séparation des variables donne le temps \(\int dx/u(x)\). L'équivalence \(|u(x)| \sim c|x-x^*|^\alpha\) rend cet intégrande comparable à \(1/(c r^\alpha)\), dont l'intégrale au voisinage de zéro converge exactement lorsque \(\alpha < 1\). La conclusion porte sur cette branche, pas sur l'unicité de la dynamique. ∎
 
-Ce critère tranche la question de convergence de l'intégrale : la singularité de \(1/|u|\) près d'une stagnation ne conduit pas toujours à un temps infini — **l'ordre d'annulation décide**. Il ne lève pas l'exigence d'unicité du flot nécessaire à la définition de V1.
+Ce critère tranche la question de convergence de l'intégrale : la singularité de \(1/|u|\) près d'une stagnation ne conduit pas toujours à un temps infini — **l'ordre d'annulation décide**. Il ne lève pas l'exigence d'unicité du flot nécessaire à la définition de $T_{\mathrm{arr}}$.
 
 **Corollaire 4.5 (barrière C¹).** Pour un champ de classe \(C^1\), un point de stagnation n'est **ni atteint ni quitté** en temps fini le long d'une trajectoire, et aucune trajectoire ne le traverse. *Preuve.* \(u'\) bornée au voisinage de \(x^*\) donne \(|u(x)| \le M |x - x^*|\), donc \(\int dr/|u| \ge (1/M)\int dr/r = +\infty\) ; traverser \(x^*\) imposerait \(X(t^*) = x^*\), donc (unicité de Cauchy–Lipschitz) \(X \equiv x^*\). ∎ Conséquence pour le contexte atmosphérique : dans un champ \(C^1\), toute zone de vent nul est une barrière en temps infini pour le temps de parcours dirigé. Les temps finis du tableau 4.3 (\(\alpha < 1\)) exigent une annulation d'ordre non entier, donc un champ **non \(C^1\)** au point de stagnation — précisément le régime du contre-exemple suivant.
 
-**Contre-exemple 4.6 (nécessité de l'unicité du flot — la régularité n'est pas décorative).** \(\dot x = \sqrt{x}\), \(x(0) = 0\) : \(x(t) \equiv 0\) et \(x(t) = (t/2)^2\) sont deux solutions (vérification : \(\frac{d}{dt}(t/2)^2 = t/2 = \sqrt{(t/2)^2}\)). Le « temps de parcours de 0 vers \(b\) » dépend de la branche : la branche mobile donne \(2\sqrt{b}\), la branche stationnaire ne part jamais. La définition 2.3 (un seul \(T\)) exige donc l'unicité du flot : en 1D elle est acquise dès que \(u > 0\) (lemme 4.1) ; en dimension supérieure, l'hypothèse \(C^1\) (Cauchy–Lipschitz) est le garde-fou standard. Un champ admissible pour V1/V2 ne doit donc pas présenter de stagnation « plate » non lipschitzienne, ou doit spécifier une convention de branche.
+**Contre-exemple 4.6 (nécessité de l'unicité du flot — la régularité n'est pas décorative).** \(\dot x = \sqrt{x}\), \(x(0) = 0\) : \(x(t) \equiv 0\) et \(x(t) = (t/2)^2\) sont deux solutions (vérification : \(\frac{d}{dt}(t/2)^2 = t/2 = \sqrt{(t/2)^2}\)). Le « temps de parcours de 0 vers \(b\) » dépend de la branche : la branche mobile donne \(2\sqrt{b}\), la branche stationnaire ne part jamais. La définition 2.3 (un seul \(T\)) exige donc l'unicité du flot : en 1D elle est acquise dès que \(u > 0\) (lemme 4.1) ; en dimension supérieure, l'hypothèse \(C^1\) (Cauchy–Lipschitz) est le garde-fou standard. Un champ admissible pour $T_{\mathrm{arr}}$/$T_{\mathrm{proj}}$ ne doit donc pas présenter de stagnation « plate » non lipschitzienne, ou doit spécifier une convention de branche.
 
-**Remarque 4.7 (limites et sortie de domaine).** Sur `Omega = (0,1)` avec `u = U`, pour `U > 0` et `a` dans `Omega`, l'intervalle maximal positif dans le domaine a pour extrémité `sigma_Omega(a) = (1-a)/U` : ici, cette fin de validité correspond bien à l'approche de la frontière droite. Les points situés au-delà de 1 sont hors de `Omega` et ne sont donc pas des cibles admissibles pour la définition de V1 telle qu'énoncée avec `A,B` dans `Omega` ; les traiter comme cibles exige d'étendre explicitement le domaine du modèle. En général, une extrémité maximale finie ne prouve pas à elle seule une sortie géométrique par la frontière : elle peut aussi refléter une explosion en temps fini.
+**Remarque 4.7 (limites et sortie de domaine).** Sur `Omega = (0,1)` avec `u = U`, pour `U > 0` et `a` dans `Omega`, l'intervalle maximal positif dans le domaine a pour extrémité `sigma_Omega(a) = (1-a)/U` : ici, cette fin de validité correspond bien à l'approche de la frontière droite. Les points situés au-delà de 1 sont hors de `Omega` et ne sont donc pas des cibles admissibles pour la définition de $T_{\mathrm{arr}}$ telle qu'énoncée avec `A,B` dans `Omega` ; les traiter comme cibles exige d'étendre explicitement le domaine du modèle. En général, une extrémité maximale finie ne prouve pas à elle seule une sortie géométrique par la frontière : elle peut aussi refléter une explosion en temps fini.
 
-## 5. V2 — temps après projection : champ uniforme et champs de cisaillement (2D, calculables à la main)
+## 5. $T_{\mathrm{proj}}$ — temps après projection : champ uniforme et champs de cisaillement (2D, calculables à la main)
 
-**Proposition 5.1 (V2 = V1 en dimension 1).** Supposons \(d=1\), les hypothèses (H1)–(H2) de la définition 2.4 satisfaites, et \(a,b\) dans la même composante connexe de \(\Omega\setminus\{x:u(x)=0\}\). Sur cette composante, \(u\) ne s'annule pas et la trajectoire maximale parcourt toute la composante (le temps pour atteindre tout point intérieur est fini). La projection de \(b\) sur \(\gamma_a\) est donc \(b\) lui-même, \(b^\perp=b\), et \(d(a,b)=T(a,b)\). Si la composante se réduit à un point de stagnation, cette conclusion ne s'applique pas. Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. La restriction n'est pas décorative : en 1D, une source stagnante \(u(a)=0\) réduit \(\gamma_a\) à un point et fait échouer la séparation — c'est exactement ce qu'exclut (H1). ∎
+**Proposition 5.1 ($T_{\mathrm{proj}}$ = $T_{\mathrm{arr}}$ en dimension 1).** Supposons \(d=1\), les hypothèses (H1)–(H2) de la définition 2.4 satisfaites, et \(a,b\) dans la même composante connexe de \(\Omega\setminus\{x:u(x)=0\}\). Sur cette composante, \(u\) ne s'annule pas et la trajectoire maximale parcourt toute la composante (le temps pour atteindre tout point intérieur est fini). La projection de \(b\) sur \(\gamma_a\) est donc \(b\) lui-même, \(b^\perp=b\), et \(d(a,b)=T(a,b)\). Si la composante se réduit à un point de stagnation, cette conclusion ne s'applique pas. Toutes les pathologies de $T_{\mathrm{proj}}$ (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. La restriction n'est pas décorative : en 1D, une source stagnante \(u(a)=0\) réduit \(\gamma_a\) à un point et fait échouer la séparation — c'est exactement ce qu'exclut (H1). ∎
 
 ### 5.2 Champ uniforme — dégénérescence transversale
 
@@ -184,15 +184,15 @@ d(A,C) = 2 > 1 + 0{,}1 = 1{,}1 = d(A,B) + d(B,C).
 
 (Généralise l'exemple de [14-revue-mathematique-ciblee.md](14-revue-mathematique-ciblee.md) § 2.1 en une caractérisation complète ; contrôlé, annexe A.)
 
-**Mécanisme 5.7.** La violation vient du **mélange de caractéristiques** : \(d(A,C)\) est mesuré sur \(\gamma_A\), \(d(B,C)\) sur \(\gamma_B\). V2 n'est pas un coût sur un espace commun de chemins ; c'est un paramètre de coordonnée longitudinale par paires. Cohérent avec l'usage historique (coordonnée de solutions de similitude), cela interdit d'utiliser V2 comme une distance au sens de (D1)–(D4) — ce que la source de 2006 annonce elle-même (« pseudo-distance »).
+**Mécanisme 5.7.** La violation vient du **mélange de caractéristiques** : \(d(A,C)\) est mesuré sur \(\gamma_A\), \(d(B,C)\) sur \(\gamma_B\). $T_{\mathrm{proj}}$ n'est pas un coût sur un espace commun de chemins ; c'est un paramètre de coordonnée longitudinale par paires. Cohérent avec l'usage historique (coordonnée de solutions de similitude), cela interdit d'utiliser $T_{\mathrm{proj}}$ comme une distance au sens de (D1)–(D4) — ce que la source de 2006 annonce elle-même (« pseudo-distance »).
 
 ## 6. Non-unicité, singularités, non-existence
 
-### 6.1 Projection non unique (V2)
+### 6.1 Projection non unique ($T_{\mathrm{proj}}$)
 
-Champ rotationnel \(\mathbf u = (-y, x)\) : les caractéristiques sont les cercles centrés en \(O\). Prenons \(A = (1,0)\), \(B = O\) : **tout point du cercle \(\gamma_A\) est à la distance 1 de \(B\)** ; la projection \(B^\perp\) est totalement indéterminée et \(d(A,B)\) n'a pas de valeur unique. La source historique résout ce cas par le critère \(\mathbf u \cdot \nabla c\) : le coût dépend alors de la concentration — donc de la sortie du modèle. Cette dépendance circulaire doit être documentée avant toute implémentation générale de V2 (hors périmètre G0-S). Cas moins extrême : une caractéristique courbe peut admettre plusieurs minima locaux de la distance de projection.
+Champ rotationnel \(\mathbf u = (-y, x)\) : les caractéristiques sont les cercles centrés en \(O\). Prenons \(A = (1,0)\), \(B = O\) : **tout point du cercle \(\gamma_A\) est à la distance 1 de \(B\)** ; la projection \(B^\perp\) est totalement indéterminée et \(d(A,B)\) n'a pas de valeur unique. La source historique résout ce cas par le critère \(\mathbf u \cdot \nabla c\) : le coût dépend alors de la concentration — donc de la sortie du modèle. Cette dépendance circulaire doit être documentée avant toute implémentation générale de $T_{\mathrm{proj}}$ (hors périmètre G0-S). Cas moins extrême : une caractéristique courbe peut admettre plusieurs minima locaux de la distance de projection.
 
-### 6.2 Trois états distincts (V1 et V2)
+### 6.2 Trois états distincts ($T_{\mathrm{arr}}$ et $T_{\mathrm{proj}}$)
 
 (i) accessible : \(T\) fini ; (ii) inaccessible par orientation : \(+\infty\) (C1) ; (iii) non-existence par sortie de domaine : \(\sigma(A) < T(A,B)\) (C2). La documentation du module métrique doit nommer ces trois états ; les confondre fausse les tests comme les interprétations.
 
@@ -208,29 +208,29 @@ Point selle \(\mathbf u = (x, -y)\) : depuis \(A = (0,1)\), la trajectoire est \
 
 | Situation | Variante | Statut |
 |---|---|---|
-| \(B\) hors de l'orbite positive de \(A\) | V1, V2 | \(+\infty\) par convention (C1) |
-| \(B\) atteint seulement après sortie de domaine | V1, V2 | non-existence (C2) |
-| champ non lipschitzien + stagnation | V1 | flot non unique (4.6) : \(T\) dépend de la branche |
-| projection multiple sur \(\gamma_A\) | V2 | \(d\) non unique (6.1) |
-| cible stagnante, champ \(C^1\) | V1 | \(T = +\infty\) (4.5) ; régularité perdue (3.8) |
+| \(B\) hors de l'orbite positive de \(A\) | $T_{\mathrm{arr}}$, $T_{\mathrm{proj}}$ | \(+\infty\) par convention (C1) |
+| \(B\) atteint seulement après sortie de domaine | $T_{\mathrm{arr}}$, $T_{\mathrm{proj}}$ | non-existence (C2) |
+| champ non lipschitzien + stagnation | $T_{\mathrm{arr}}$ | flot non unique (4.6) : \(T\) dépend de la branche |
+| projection multiple sur \(\gamma_A\) | $T_{\mathrm{proj}}$ | \(d\) non unique (6.1) |
+| cible stagnante, champ \(C^1\) | $T_{\mathrm{arr}}$ | \(T = +\infty\) (4.5) ; régularité perdue (3.8) |
 
 ## 7. Positionnement : objets voisins et risque de nouveauté
 
-| Famille | Ce que c'est | Différence structurelle avec V1/V2 | Verdict pour la nouveauté |
+| Famille | Ce que c'est | Différence structurelle avec $T_{\mathrm{arr}}$/$T_{\mathrm{proj}}$ | Verdict pour la nouveauté |
 |---|---|---|---|
-| **Navigation de Zermelo / métriques de Randers** (Gibbons et al. 2009 ; Dušek 2018 ; Zermelo avec obstacles 2024 ; Markvorsen et al. 2025) | temps minimal d'un navigateur doté d'une **vitesse propre**, dans un vent ; géométrie de Randers \(F = \sqrt{h} + W\) | **contrôle** contre **pas de contrôle** : le traceur passif suit le champ, il ne choisit pas sa direction. La limite vitesse propre \(\to 0\) est **singulière** (la forte convexité \(\|W\|_h < 1\) est perdue) ; V1 en est la limite dégénérée, pas un cas particulier régulier | pas d'équivalence ; pas de nouveauté de ce côté |
-| **Time-of-flight, simulation streamline** (Pollock 1988 ; Batycky et al. 1997 ; Datta-Gupta & King 2007) | \(\tau(x) = \int ds/|\mathbf u|\) depuis une source le long des lignes de courant ; coordonnée naturelle du transport en réservoir, vérifiant \(\mathbf u \cdot \nabla \tau = 1\) | V1 avec \(A\) = source : **même intégrale**. L'usage comme coordonnée de solutions de similitude est l'apport revendiqué par Drift-X, pas l'intégrale elle-même | l'intégrale est **classique** : aucune revendication possible sur elle |
+| **Navigation de Zermelo / métriques de Randers** (Gibbons et al. 2009 ; Dušek 2018 ; Zermelo avec obstacles 2024 ; Markvorsen et al. 2025) | temps minimal d'un navigateur doté d'une **vitesse propre**, dans un vent ; géométrie de Randers \(F = \sqrt{h} + W\) | **contrôle** contre **pas de contrôle** : le traceur passif suit le champ, il ne choisit pas sa direction. La limite vitesse propre \(\to 0\) est **singulière** (la forte convexité \(\|W\|_h < 1\) est perdue) ; $T_{\mathrm{arr}}$ en est la limite dégénérée, pas un cas particulier régulier | pas d'équivalence ; pas de nouveauté de ce côté |
+| **Time-of-flight, simulation streamline** (Pollock 1988 ; Batycky et al. 1997 ; Datta-Gupta & King 2007) | \(\tau(x) = \int ds/|\mathbf u|\) depuis une source le long des lignes de courant ; coordonnée naturelle du transport en réservoir, vérifiant \(\mathbf u \cdot \nabla \tau = 1\) | $T_{\mathrm{arr}}$ avec \(A\) = source : **même intégrale**. L'usage comme coordonnée de solutions de similitude est l'apport revendiqué par Drift-X, pas l'intégrale elle-même | l'intégrale est **classique** : aucune revendication possible sur elle |
 | **Distances-temps** (Muller 1979, géographie) | cartographie de métriques non euclidiennes de type temps de trajet | mêmes questions d'axiomes, autre dynamique (réseaux) | idée ancienne ; caution de vocabulaire |
 | **Eikonale / Hamilton–Jacobi** (Contreras & Kachroo 2020 ; Sethian & Vladimirsky 2001) | temps de première arrivée d'un front régi par une loi de vitesse, éventuellement contrôlée | sans contrôle, l'équation se réduit à l'advection linéaire \(\mathbf u \cdot \nabla \tau = 1\) ; avec contrôle, c'est un problème différent (fonction valeur) | analogue méthodologique seulement |
 | **Pseudo-distance projetée** (Mohammadi & Brun 2006) | \(d(A,B) = T(A, B^\perp)\) | l'objet historique lui-même | déjà publié ; ses échecs (séparation, triangulation) y sont **annoncés** |
 
-**Verdict (risque de nouveauté, tranché).** L'intégrale est classique (time-of-flight, distances-temps) ; la construction projetée est publiée (2006) et ses échecs d'axiomes y sont annoncés. Les caractérisations élémentaires ajoutées ici — dichotomie V1/V2, coïncidence en dimension 1 (5.1), lemme de cisaillement (5.4), critère d'ordre (4.4), barrière \(C^1\) (4.5) — sont des clarifications mathématiques de niveau licence, utiles pour délimiter le contrat du module métrique ; elles ne fondent **aucune** revendication de contribution de recherche. La conclusion du MVP relève de la catégorie « idée connue, utile pédagogiquement, délimitée précisément » ([13-mvp-scientifique-et-g0.md](13-mvp-scientifique-et-g0.md), § 3). Si un différenciel doit être cherché, ce sera dans l'**usage** des temps de parcours comme coordonnées de solutions de similitude (hors périmètre G0-S), pas dans leur définition.
+**Verdict (risque de nouveauté, tranché).** L'intégrale est classique (time-of-flight, distances-temps) ; la construction projetée est publiée (2006) et ses échecs d'axiomes y sont annoncés. Les caractérisations élémentaires ajoutées ici — dichotomie $T_{\mathrm{arr}}$/$T_{\mathrm{proj}}$, coïncidence en dimension 1 (5.1), lemme de cisaillement (5.4), critère d'ordre (4.4), barrière \(C^1\) (4.5) — sont des clarifications mathématiques de niveau licence, utiles pour délimiter le contrat du module métrique ; elles ne fondent **aucune** revendication de contribution de recherche. La conclusion du MVP relève de la catégorie « idée connue, utile pédagogiquement, délimitée précisément » ([13-mvp-scientifique-et-g0.md](13-mvp-scientifique-et-g0.md), § 3). Si un différenciel doit être cherché, ce sera dans l'**usage** des temps de parcours comme coordonnées de solutions de similitude (hors périmètre G0-S), pas dans leur définition.
 
 ## 8. Réponse à la question de l'issue : ce qui découle de la seule définition
 
-| Propriété | V1 (temps de première arrivée) | V2 (temps après projection) | Où |
+| Propriété | $T_{\mathrm{arr}}$ (temps de première arrivée) | $T_{\mathrm{proj}}$ (temps après projection) | Où |
 |---|---|---|---|
-| (D1) \(T(x,x)=0\) | oui, par définition | oui (hérite de V1) | 3.2 |
+| (D1) \(T(x,x)=0\) | oui, par définition | oui (hérite de $T_{\mathrm{arr}}$) | 3.2 |
 | (D2) positivité | oui, par définition | oui | 3.2 |
 | (D4) séparation | **oui, démontrée** | **non** dès \(d \ge 2\) (dégénérescence transversale) | 3.2, 5.2 |
 | (D3) triangulation dirigée | **oui, démontrée** | **non** (cisaillement non uniforme) ; oui en champ uniforme | 3.3, 5.4–5.6 |
@@ -244,9 +244,9 @@ Point selle \(\mathbf u = (x, -y)\) : depuis \(A = (0,1)\), la trajectoire est \
 
 Conformément à la règle de dépendance de la feuille de route (« aucun test de propriété avant les définitions de #41 »), les définitions ci-dessus gèlent le vocabulaire :
 
-- **Contrats de test V1** : positivité/séparation ; triangulation dirigée sur le champ rotationnel (avec l'exemple 3.5 comme garde-fou d'interprétation) ; \(+\infty\) amont en 1D ; retournement \(T_{-\mathbf u}(B,A) = T_{\mathbf u}(A,B)\) — qui n'est **pas** un test de « non-symétrie » (cf. l'écart documenté dans [14-revue-mathematique-ciblee.md](14-revue-mathematique-ciblee.md) § 5) ; orbites fermées : \(T(A,B) + T(B,A) = p\).
-- **Contrats de test V2** : champ uniforme (déjà implémenté) ; cisaillement : contre-exemple 5.6 comme test de non-triangulation ; refus explicite et documenté des projections non uniques (6.1) ; conventions (C1)–(C3) dans les docstrings.
-- **Frontière V1/V2** : aucun test ne doit mélanger les deux variantes ; la primitive polyligne existante reste une API distincte.
+- **Contrats de test $T_{\mathrm{arr}}$** : positivité/séparation ; triangulation dirigée sur le champ rotationnel (avec l'exemple 3.5 comme garde-fou d'interprétation) ; \(+\infty\) amont en 1D ; retournement \(T_{-\mathbf u}(B,A) = T_{\mathbf u}(A,B)\) — qui n'est **pas** un test de « non-symétrie » (cf. l'écart documenté dans [14-revue-mathematique-ciblee.md](14-revue-mathematique-ciblee.md) § 5) ; orbites fermées : \(T(A,B) + T(B,A) = p\).
+- **Contrats de test $T_{\mathrm{proj}}$** : champ uniforme (déjà implémenté) ; cisaillement : contre-exemple 5.6 comme test de non-triangulation ; refus explicite et documenté des projections non uniques (6.1) ; conventions (C1)–(C3) dans les docstrings.
+- **Frontière $T_{\mathrm{arr}}$/$T_{\mathrm{proj}}$** : aucun test ne doit mélanger les deux variantes ; la primitive polyligne existante reste une API distincte.
 - **#17** : le cas analytique minimal pour <code>benchmarks/reference</code> est le triplet {uniforme, cisaillement \(v(y) = 1+9y\), rotation} — trois champs calculables à la main, sans solveur. Aucun benchmark applicatif n'est introduit (G0-A non franchi).
 - **Cas 2D synthétique (solveur)** : non requis — toutes les questions de l'issue ont été tranchées analytiquement.
 
@@ -257,7 +257,7 @@ Conformément à la règle de dépendance de la feuille de route (« aucun test 
 | champs instationnaires | hors périmètre (lignes de courant ≠ trajectoires) ; aucun résultat transféré |
 | critère historique exact de projection (\(\mathbf u \cdot \nabla c\)) | à relire dans la source intégrale ; dépendance circulaire documentée (6.1), non résolue |
 | approximation \(B^\perp \approx B\) et facteur \(2/\pi\) (chapitre 2008) | non couverts ici ; relèvent de la reproduction de l'algorithme publié (revue ciblée § 2.1) |
-| généralisation du lemme 5.4 hors cisaillement | ouverte : caractériser les classes de champs où la triangulation dirigée de V2 tient |
+| généralisation du lemme 5.4 hors cisaillement | ouverte : caractériser les classes de champs où la triangulation dirigée de $T_{\mathrm{proj}}$ tient |
 | dimension 3 | non traitée ; aucune raison d'attendre de meilleurs axiomes (les contre-exemples 2D s'étendent) |
 | thèse (2006/2007) | non consultée ; examen différé jusqu'au dépôt (issue #44) |
 
@@ -282,7 +282,7 @@ Méthode : intégration RK4 indépendante des formules fermées (pas \(\le 2\cdo
 
 Sauf mention contraire, références déjà auditées dans le dépôt ([15-audit-adversarial-hallucinations.md](15-audit-adversarial-hallucinations.md), [04-revues-papiers-sources.md](04-revues-papiers-sources.md)) :
 
-- Mohammadi, B. & Brun, J.-M. (2006). Similitude généralisée et modélisation géométrique à complexité réduite. *C. R. Mécanique* 334(10), 634–638. DOI 10.1016/j.crme.2006.06.007 — source primaire de V2.
+- Mohammadi, B. & Brun, J.-M. (2006). Similitude généralisée et modélisation géométrique à complexité réduite. *C. R. Mécanique* 334(10), 634–638. DOI 10.1016/j.crme.2006.06.007 — source primaire de $T_{\mathrm{proj}}$.
 - Brun, J.-M. & Mohammadi, B. (2008). Reduced-Order Modelling of Dispersion. Springer, CSM 16, chap. 14, p. 245–256. DOI 10.1007/978-1-4020-8758-5_14.
 - Gibbons, G. W. et al. (2009). Stationary metrics and optical Zermelo-Randers-Finsler geometry. *Phys. Rev. D* 79, 044022. DOI 10.1103/PhysRevD.79.044022.
 - Dušek, M. (2018). Zermelo Navigation Problem in Geometry. DOI 10.17818/NM/2018/4SI.16.
@@ -302,7 +302,7 @@ Pour l'EDO stationnaire dx/dt = u, avec u constant signé, la première arrivée
 - si (b-a)u > 0, T(a,b) = |b-a|/|u| ;
 - si u = 0 et b != a, ou si (b-a)u < 0, T(a,b) = +inf.
 
-La fonction `temps_premiere_arrivee_1d` dans `src/jdriftx/metric.py` implémente cette référence et ses tests sont dans `tests/test_metric.py`. Elle rend le cas 1D de V1 exécutable ; elle ne résout pas un champ variable, ne représente pas la projection V2 en 2D et ne valide aucune application physique.
+La fonction `temps_premiere_arrivee_1d` dans `src/jdriftx/metric.py` implémente cette référence et ses tests sont dans `tests/test_metric.py`. Elle rend le cas 1D de $T_{\mathrm{arr}}$ exécutable ; elle ne résout pas un champ variable, ne représente pas la projection $T_{\mathrm{proj}}$ en 2D et ne valide aucune application physique.
 
 
 ## Annexe C — Bilan de reproductibilité et état des preuves
