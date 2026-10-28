@@ -37,7 +37,7 @@ def fetch_bytes(url: str, timeout: float) -> tuple[bytes, dict[str, str], str]:
     parsed = urlsplit(url)
     if parsed.scheme != "https" or parsed.hostname != "entrepot.recherche.data.gouv.fr":
         raise ValueError(f"Refusing non-official URL: {url}")
-    request = Request(url, headers={"User-Agent": USER_AGENT})  # noqa: S310
+    request = Request(url, headers={"User-Agent": USER_AGENT})
     try:
         # The URL is restricted to the official HTTPS host above.
         with urlopen(request, timeout=timeout) as response:  # noqa: S310
