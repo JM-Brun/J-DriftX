@@ -23,7 +23,7 @@ La dérivation est répartie volontairement entre deux pages. Le [Modèle direct
 
 | Étape | Question résolue | Résultat et portée |
 |---|---|---|
-| 1. Réduction du modèle direct | Quelles hypothèses transforment le transport moyen en équation parabolique ? | Stationnarité, vent uniforme aligné, diffusivités transversales constantes et négligence de la diffusion longitudinale. Voir [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache). |
+| 1. Réduction du modèle direct | Quelles hypothèses transforment le transport moyen en équation parabolique ? | Stationnarité, vent uniforme aligné, diffusivités transversales constantes et négligence de la diffusion longitudinale. Voir [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache), qui type chaque transition (identité mathématique, hypothèse physique, fermeture constitutive, approximation asymptotique) et renvoie au catalogue H1–H8 plutôt que de dupliquer. |
 | 2. Changement de coordonnée | Pourquoi la distance aval joue-t-elle le rôle d'un temps ? | Seulement si $U$ est constant et strictement positif : $t'=x/U$. Ce n'est pas un temps de parcours général en champ variable. |
 | 3. Noyau de diffusion | Quelle est la solution élémentaire de l'équation transversale ? | Produit de deux noyaux gaussiens, avec variances $2K_y t'$ et $2K_z t'$. |
 | 4. Source continue | Comment fixer l'amplitude sans perdre les unités ni le débit ? | La condition d'entrée est $(Q/U)\,\delta(y)\,\delta(z-h)$ : $Q/U$ est une masse linéique. |
