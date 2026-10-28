@@ -136,11 +136,14 @@ graph TD
     experiences_cas_synthetiques["experiences/cas_synthetiques.py"]::module
     experiences_superposition_sources["experiences/superposition_sources.py"]::module
     experiences_relief["experiences/relief.py"]::module
+    experiences_modele_reduit_edp["experiences/modele_reduit_edp.py"]::module
     fields["fields.py"]::module
     terrain["terrain.py"]::module
     trajectories["trajectories.py"]::module
     figures_figure_01["figures/figure_01.py"]::module
     figures_figure_02["figures/figure_02.py"]::module
+    figures_figure_04["figures/figure_04.py"]::module
+    figures_figure_03["figures/figure_03.py"]::module
     figures_figure_04["figures/figure_04.py"]::module
     figures_figure_05["figures/figure_05.py"]::module
     figures_wind_field_explorer["figures/wind_field_explorer.py"]::module
@@ -195,6 +198,10 @@ graph TD
     t_figure_04["test_figure_04.py"]::test
     t_relief["test_relief.py"]::test
     t_figure_05["test_figure_05.py"]::test
+    t_relief["test_relief.py"]::test
+    t_figure_05["test_figure_05.py"]::test
+    t_modele_reduit_edp["test_modele_reduit_edp.py"]::test
+    t_figure_03["test_figure_03.py"]::test
     t_wind_field["test_wind_field_explorer.py"]::test
     t_interactif["test_interactive_wind_page.py"]::test
     t_cas_synthetiques["test_cas_synthetiques.py"]::test
@@ -225,6 +232,9 @@ graph TD
   experiences_relief -->|"utilise"| c_panache
   experiences_relief -->|"utilise"| terrain
   figures_figure_05 -->|"utilise"| experiences_relief
+  experiences_modele_reduit_edp -->|"utilise"| c_panache
+  experiences_modele_reduit_edp -->|"utilise"| c_transport
+  figures_figure_03 -->|"utilise"| experiences_modele_reduit_edp
   figures_wind_field_explorer -->|"utilise"| fields
   fields -->|"contexte"| c_champ
   terrain -->|"contexte"| n0
@@ -259,6 +269,8 @@ graph TD
   t_figure_04 -->|"couvre"| figures_figure_04
   t_relief -->|"couvre"| experiences_relief
   t_figure_05 -->|"couvre"| figures_figure_05
+  t_modele_reduit_edp -->|"couvre"| experiences_modele_reduit_edp
+  t_figure_03 -->|"couvre"| figures_figure_03
   t_wind_field -->|"couvre"| figures_wind_field_explorer
   t_interactif -->|"couvre"| figures_wind_field_explorer
   t_graphe -->|"couvre"| graphe_connaissances
@@ -284,6 +296,7 @@ graph TD
 | experiences/cas_synthetiques.py | Module de code | [cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/cas_synthetiques.py) |
 | experiences/superposition_sources.py | Module de code | [superposition_sources.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/superposition_sources.py) |
 | experiences/relief.py | Module de code | [relief.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/relief.py) |
+| experiences/modele_reduit_edp.py | Module de code | [modele_reduit_edp.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/modele_reduit_edp.py) |
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
 | constraints.py | Module de code | [constraints.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/constraints.py) |
@@ -294,6 +307,10 @@ graph TD
 | terrain.py | Module de code | [terrain.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/terrain.py) |
 | figures/figure_01.py | Module de code | [figure_01.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_01.py) |
 | figures/figure_02.py | Module de code | [figure_02.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_02.py) |
+| figures/figure_04.py | Module de code | [figure_04.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_04.py) |
+| figures/figure_05.py | Module de code | [figure_05.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_05.py) |
+| figures/figure_02.py | Module de code | [figure_02.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_02.py) |
+| figures/figure_03.py | Module de code | [figure_03.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_03.py) |
 | figures/figure_04.py | Module de code | [figure_04.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_04.py) |
 | figures/figure_05.py | Module de code | [figure_05.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_05.py) |
 | figures/wind_field_explorer.py | Module de code | [wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/wind_field_explorer.py) |
@@ -332,6 +349,8 @@ graph TD
 | test_figure_04.py | Test (CI) | [test_figure_04.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_04.py) |
 | test_relief.py | Test (CI) | [test_relief.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_relief.py) |
 | test_figure_05.py | Test (CI) | [test_figure_05.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_05.py) |
+| test_modele_reduit_edp.py | Test (CI) | [test_modele_reduit_edp.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_modele_reduit_edp.py) |
+| test_figure_03.py | Test (CI) | [test_figure_03.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_03.py) |
 | test_wind_field_explorer.py | Test (CI) | [test_wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_wind_field_explorer.py) |
 | test_interactive_wind_page.py | Test (CI) | [test_interactive_wind_page.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_interactive_wind_page.py) |
 | test_cas_synthetiques.py | Test (CI) | [test_cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_cas_synthetiques.py) |
