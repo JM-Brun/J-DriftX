@@ -59,7 +59,7 @@ def test_le_scenario_rejette_une_colline_hors_fenetre() -> None:
 
 def test_le_scenario_rejette_une_colline_en_amont() -> None:
     """Une colline en amont de la source n'est pas balayée par le panache."""
-    colline = CollineGaussienne(centre=(1000.0, 1950.0), hauteur=40.0, echelle=90.0)
+    colline = CollineGaussienne(centre=(1000.0, 1950.0), hauteur=40.0, echelle=10.0)
     with pytest.raises(ValueError, match="sous le vent"):
         _scenario_modifie(collines=(colline, COLLINE_2_DEFAUT))
 
