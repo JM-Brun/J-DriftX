@@ -164,16 +164,16 @@ b x, & \text{classes A–B},\\
 \]
 Les coefficients \(a\) et \(b\) sont sans dimension ; \(d_y\) et \(d_z\) sont en \(\mathrm{m}^{-1}\), afin que les deux écarts-types soient en mètres.
 
-| Classe | Régime conventionnel | \(a\) dans \(\sigma_y\) | \(d_y\) (\(\mathrm{m}^{-1}\)) | Forme de \(\sigma_z\) | \(b\) | \(d_z\) (\(\mathrm{m}^{-1}\)) |
+| Classe | Régime conventionnel | Repères météorologiques indicatifs (non exhaustifs) | \(a\) dans \(\sigma_y\) | \(d_y\) (\(\mathrm{m}^{-1}\)) | Forme de \(\sigma_z\) | \(b\) | \(d_z\) (\(\mathrm{m}^{-1}\)) |
 |---|---|---:|---:|---|---:|---:|
-| A | Très instable | 0,22 | 0,0001 | Linéaire | 0,20 | 0 |
-| B | Modérément instable | 0,16 | 0,0001 | Linéaire | 0,12 | 0 |
-| C | Faiblement instable | 0,11 | 0,0001 | Racine | 0,08 | 0,0002 |
-| D | Neutre | 0,08 | 0,0001 | Racine | 0,06 | 0,0015 |
-| E | Faiblement stable | 0,06 | 0,0001 | Inverse | 0,03 | 0,0003 |
-| F | Stable | 0,04 | 0,0001 | Inverse | 0,016 | 0,0003 |
+| A | Très instable | Jour, fort ensoleillement, vent faible (repère indicatif : < 2 m/s) | 0,22 | 0,0001 | Linéaire | 0,20 | 0 |
+| B | Modérément instable | Jour, ensoleillement modéré ou vent d'environ 2–3 m/s | 0,16 | 0,0001 | Linéaire | 0,12 | 0 |
+| C | Faiblement instable | Jour nuageux ou faible ensoleillement, vent d'environ 3–5 m/s | 0,11 | 0,0001 | Racine | 0,08 | 0,0002 |
+| D | Neutre | Couverture nuageuse dense, ou vent fort (repère du code : > 6 m/s) | 0,08 | 0,0001 | Racine | 0,06 | 0,0015 |
+| E | Faiblement stable | Nuit, vent d'environ 3–5 m/s ou ciel partiellement couvert | 0,06 | 0,0001 | Inverse | 0,03 | 0,0003 |
+| F | Stable | Nuit claire, vent faible (repère indicatif : < 3 m/s), inversion nocturne | 0,04 | 0,0001 | Inverse | 0,016 | 0,0003 |
 
-Les classes et coefficients sont définis comme objets dans le module \`stabilite\`, puis évalués dans \`similitude\` ; cela évite de dupliquer les constantes dans le calcul de concentration. Le module attribue ces relations aux formules rurales de Briggs et mentionne Martin (1976) comme référence secondaire, tandis que la documentation scientifique du projet renvoie aussi au chapitre [Brun & Mohammadi (2008)](../references.bib). La référence primaire/secondaire exacte des coefficients doit être vérifiée avant toute revendication de conformité réglementaire. Le domaine indiqué par l'implémentation est **rural** ; ne pas transférer ces coefficients à un site urbain, à une topographie complexe ou à une autre convention sans justification.
+Les classes et coefficients sont définis comme objets dans le module \`stabilite\`, puis évalués dans \`similitude\` ; cela évite de dupliquer les constantes dans le calcul de concentration. Le module attribue ces relations aux formules rurales de Briggs et mentionne Martin (1976) comme référence secondaire, tandis que la documentation scientifique du projet renvoie aussi au chapitre [Brun & Mohammadi (2008)](../references.bib). Le code cite Martin (1976) pour ces coefficients, mais cette référence n'est pas encore enregistrée dans la bibliographie du site ; la traçabilité bibliographique exacte reste donc à compléter avant toute revendication de conformité réglementaire. Le chapitre [Brun & Mohammadi (2008)](similitude.qmd) décrit le contexte de réduction de modèle, mais n'est pas présenté ici comme validation indépendante de chaque coefficient. Le domaine indiqué par l'implémentation est **rural** ; ne pas transférer ces coefficients à un site urbain, à une topographie complexe ou à une autre convention sans justification.
 
 Cette paramétrisation empirique ne découle pas automatiquement de la fermeture gradient : il faut ajouter les hypothèses, la géométrie, les conditions aux limites et la loi de dispersion. La dérivation détaillée du cas gaussien idéal et ses limites sont données dans [Solutions de similitude](similitude.qmd).
 
