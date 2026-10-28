@@ -10,8 +10,15 @@ Texte récupéré via le relais public ResearchGate de la publication
 (extraction d'octobre 2026). Manuscrit auteur (dépôt ouvert HAL) ;
 le projet J-DriftX est porté par les auteurs du papier.
 
-NOTE TECHNIQUE : extraction automatique ; mise en page, figures et
-équations non conservées. Le PDF HAL original reste la référence :
+Provenance de l'extraction :
+- Notice source : https://hal.science/hal-00468863
+- PDF source de référence : https://hal.science/hal-00468863/file/MO2009-PUB00026817.pdf
+- Source effectivement utilisée pour récupérer le texte : relais public ResearchGate ; l'URL directe du téléchargement depuis ResearchGate n'a pas été conservée.
+- Pages concernées : manuscrit auteur complet, 17 pages selon la fiche de provenance ; pagination imprimée à confirmer sur le PDF.
+- Méthode : extraction automatique du texte, réalisée en octobre 2026.
+
+NOTE TECHNIQUE : mise en page, figures et équations non conservées.
+Le PDF HAL original reste la référence bibliographique et documentaire :
 https://hal.science/hal-00468863/file/MO2009-PUB00026817.pdf
 Ce fichier sert au grep, aux citations rapides et à la traçabilité
 documentaire (voir docs/04-revues-papiers-sources.md, fiche n° 6).
