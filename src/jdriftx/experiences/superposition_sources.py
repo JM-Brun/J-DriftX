@@ -91,6 +91,58 @@ class SourceGaussienne:
         return self.longueur * math.sqrt(math.log(self.amplitude / seuil))
 
 
+def _valide_sources(
+    source_1: SourceGaussienne,
+    source_2: SourceGaussienne,
+    fenetre: Rectangle,
+) -> None:
+    """Valide deux sources distinctes situées dans la fenêtre."""
+    if source_1.position == source_2.position:
+        msg = "Les deux sources doivent être en des positions distinctes."
+        raise ValueError(msg)
+    for source in (source_1, source_2):
+        if not fenetre.contient(source.position):
+            msg = "Les sources doivent être dans la fenêtre."
+            raise ValueError(msg)
+
+
+def _valide_mesures(
+    mesures: tuple[tuple[float, float], ...],
+    fenetre: Rectangle,
+) -> None:
+    """Valide exactement trois mesures distinctes dans la fenêtre."""
+    if len(mesures) != 3:
+        msg = "Le scénario exige exactement trois mesures."
+        raise ValueError(msg)
+    for mesure in mesures:
+        _valide_point("mesure", mesure)
+        if not fenetre.contient(mesure):
+            msg = "Les points de mesure doivent être dans la fenêtre."
+            raise ValueError(msg)
+    for avant, apres in zip(mesures, mesures[1:], strict=False):
+        if avant == apres:
+            msg = "Les trois points de mesure doivent être distincts."
+            raise ValueError(msg)
+
+
+def _valide_disques(
+    source_1: SourceGaussienne,
+    source_2: SourceGaussienne,
+    seuil: float,
+    fenetre: Rectangle,
+) -> None:
+    """Valide que les disques affectés restent dans la fenêtre."""
+    for source in (source_1, source_2):
+        rayon = source.rayon_affecte(seuil)
+        x0, y0 = source.position
+        boite = Rectangle(
+            coin=(x0 - rayon, y0 - rayon), largeur=2.0 * rayon, hauteur=2.0 * rayon
+        )
+        if not all(fenetre.contient(coin) for coin in _coins(boite)):
+            msg = "Les disques affectés doivent rester dans la fenêtre."
+            raise ValueError(msg)
+
+
 @dataclass(frozen=True)
 class ScenarioSuperposition:
     """Configuration immuable de la superposition de deux sources.
@@ -115,28 +167,11 @@ class ScenarioSuperposition:
 
     def __post_init__(self) -> None:
         """Valide les sources, les mesures, le seuil et la fenêtre."""
-        if self.source_1.position == self.source_2.position:
-            msg = "Les deux sources doivent être en des positions distinctes."
-            raise ValueError(msg)
         if not all(self.domaine.contient(coin) for coin in _coins(self.fenetre)):
             msg = "La fenêtre doit être entièrement contenue dans le domaine."
             raise ValueError(msg)
-        for source in (self.source_1, self.source_2):
-            if not self.fenetre.contient(source.position):
-                msg = "Les sources doivent être dans la fenêtre."
-                raise ValueError(msg)
-        if len(self.mesures) != 3:
-            msg = "Le scénario exige exactement trois mesures."
-            raise ValueError(msg)
-        for mesure in self.mesures:
-            _valide_point("mesure", mesure)
-            if not self.fenetre.contient(mesure):
-                msg = "Les points de mesure doivent être dans la fenêtre."
-                raise ValueError(msg)
-        for avant, apres in zip(self.mesures, self.mesures[1:], strict=False):
-            if avant == apres:
-                msg = "Les trois points de mesure doivent être distincts."
-                raise ValueError(msg)
+        _valide_sources(self.source_1, self.source_2, self.fenetre)
+        _valide_mesures(self.mesures, self.fenetre)
         if not math.isfinite(self.seuil) or self.seuil <= 0.0:
             msg = "Le seuil doit être fini et strictement positif."
             raise ValueError(msg)
@@ -146,15 +181,7 @@ class ScenarioSuperposition:
                 "pour que chaque région affectée soit non vide."
             )
             raise ValueError(msg)
-        for source in (self.source_1, self.source_2):
-            rayon = source.rayon_affecte(self.seuil)
-            x0, y0 = source.position
-            boite = Rectangle(
-                coin=(x0 - rayon, y0 - rayon), largeur=2.0 * rayon, hauteur=2.0 * rayon
-            )
-            if not all(self.fenetre.contient(coin) for coin in _coins(boite)):
-                msg = "Les disques affectés doivent rester dans la fenêtre."
-                raise ValueError(msg)
+        _valide_disques(self.source_1, self.source_2, self.seuil, self.fenetre)
 
 
 @dataclass(frozen=True)

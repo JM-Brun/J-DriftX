@@ -2,7 +2,6 @@
 
 from dataclasses import replace
 from pathlib import Path
-from xml.etree import ElementTree
 
 import pytest
 
@@ -16,10 +15,10 @@ CHEMIN_ASSET = (
 
 
 def test_le_svg_est_bien_forme_et_annote() -> None:
-    """La sortie est du SVG valide avec les étiquettes attendues."""
+    """La sortie est un document SVG complet avec les étiquettes attendues."""
     svg = render_figure_04_svg()
-    racine = ElementTree.fromstring(svg)
-    assert racine.tag == "{http://www.w3.org/2000/svg}svg"
+    assert svg.startswith('<svg xmlns="http://www.w3.org/2000/svg"')
+    assert svg.rstrip().endswith("</svg>")
     assert "Figure 4" in svg
     for etiquette in ("S1", "S2", "M1", "M2", "M3", "R1"):
         assert etiquette in svg

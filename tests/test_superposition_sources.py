@@ -111,7 +111,6 @@ def test_les_vents_mesures_proviennent_du_champ_analytique() -> None:
     resultat = resoudre_scenario(SCENARIO_DEFAUT)
     champ = SCENARIO_DEFAUT.champ_vent
     attendus = tuple(champ.vitesse(*mesure) for mesure in SCENARIO_DEFAUT.mesures)
-    attendus = tuple(attendus)  # type: ignore[redundant-cast]
     assert (resultat.vent_mesure_1, resultat.vent_mesure_2, resultat.vent_mesure_3) == attendus
     for vent in attendus:
         assert math.hypot(vent[0], vent[1]) > 1.0
@@ -128,7 +127,10 @@ def test_la_region_totale_depasse_la_somme_des_regions() -> None:
     resultat = resoudre_scenario(SCENARIO_DEFAUT)
     assert resultat.surface_affectee_1 > 0.0
     assert resultat.surface_affectee_2 > 0.0
-    assert resultat.surface_affectee_totale > resultat.surface_affectee_1 + resultat.surface_affectee_2
+    assert (
+        resultat.surface_affectee_totale
+        > resultat.surface_affectee_1 + resultat.surface_affectee_2
+    )
 
 
 def test_les_contributions_croisees_et_le_maximum_sont_coherents() -> None:
