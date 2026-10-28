@@ -23,6 +23,7 @@ qualité du dépôt.
 
 from __future__ import annotations
 
+import itertools
 import math
 from dataclasses import dataclass
 from importlib import metadata
@@ -119,7 +120,7 @@ def _valide_mesures(
         if not fenetre.contient(mesure):
             msg = "Les points de mesure doivent être dans la fenêtre."
             raise ValueError(msg)
-    for avant, apres in zip(mesures, mesures[1:], strict=False):
+    for avant, apres in itertools.pairwise(mesures):
         if avant == apres:
             msg = "Les trois points de mesure doivent être distincts."
             raise ValueError(msg)
