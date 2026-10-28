@@ -99,5 +99,5 @@ La copie historiquement consultée était une version éditeur du recueil comple
 ## Sources de contrôle
 
 - Springer Nature, notice et table des matières du recueil : https://link.springer.com/book/10.1007/978-1-4020-8758-5
-- PDF consulté pour le contrôle bibliographique et la lecture du chapitre 14 : https://www.sgo.fi/~j/baylie/Partial%20Differential%20Equations%20-%20Modelling%20and%20Numerical%20Simulation%20-%20R.%20Glowinski%2C%20P.%20Neittaanmaki%20%28Springer%2C%202008%29%20WW.pdf
+- Copie consultée historiquement pour le contrôle bibliographique et la lecture du chapitre 14 : miroir tiers, URL non reproduite ici ; cette consultation historique n'établit pas un droit de redistribution.
 - Notice du chapitre : https://www.researchgate.net/publication/226478979_Reduced-Order_Modelling_of_Dispersion
