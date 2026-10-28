@@ -43,7 +43,7 @@ def test_les_valeurs_affichees_proviennent_de_la_tranche() -> None:
     assert f"Contribution de S2 en S1 : {resultat.contribution_croisee_1:.4f}" in svg
     attendu_max = f"Concentration max (somme, grille) : {resultat.concentration_max_totale:.3f}"
     assert attendu_max in svg
-    assert "Région totale > S1 + S2" in svg
+    assert "Région totale &gt; S1 + S2" in svg
     assert "∇·u < 1e-12 s⁻¹" in svg
 
 
