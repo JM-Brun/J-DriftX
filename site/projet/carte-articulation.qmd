@@ -45,7 +45,14 @@ Ces expériences servent à la **vérification numérique**, non à la validatio
 
 ## Parcours de lecture conseillé
 
-Commencer par l'[héritage Drift-X](heritage.qmd) et les [lectures des sources](lectures.qmd) pour établir ce que les publications historiques affirment réellement. Puis suivre l'une des deux chaînes théoriques ci-dessous. Elles se rejoignent dans l'évaluation de la réduction, mais leurs résultats ne doivent pas être confondus.
+### Découvrir le projet
+
+1. [Héritage Drift-X](heritage.qmd) — établir ce que les publications historiques affirment réellement, avec leurs incertitudes.
+2. [Lectures des sources](lectures.qmd) — revenir aux fiches de lecture du corpus et aux sources primaires.
+3. [Objectifs de J-DriftX](objectifs.qmd) — identifier l'hypothèse étudiée, sans la confondre avec une capacité validée.
+4. [Utilité scientifique](utilite-scientifique.qmd) — comprendre les conditions nécessaires pour justifier un cas d'usage.
+
+Puis suivre l'une des trois chaînes ci-dessous. Les deux chaînes théoriques se rejoignent dans l'évaluation de la réduction, mais leurs résultats ne doivent pas être confondus.
 
 ### Chaîne physique — du problème générique à la famille candidate
 
@@ -88,12 +95,14 @@ Après les contrôles reproductibles, consulter les [questions ouvertes du proje
 
 Les tâches à accomplir, les investigations à faire et les validations requises sont suivies dans les issues du dépôt :
 
-- [#41](https://github.com/JM-Brun/J-DriftX/issues/41) — Investigation mathématique G0-S : définitions, cas 1D, contre-exemples.
-- [#42](https://github.com/JM-Brun/J-DriftX/issues/42) — Tests des propriétés visées : non-symétrie, divergence nulle, conservation, superposition, adjoint.
-- [#43](https://github.com/JM-Brun/J-DriftX/issues/43) — Besoin applicatif G0-A : utilisateur, décision, observable, baseline, seuils.
-- [#44](https://github.com/JM-Brun/J-DriftX/issues/44) — Ancrage documentaire M0 : dépôts HAL du corpus historique.
+- [#41](https://github.com/JM-Brun/J-DriftX/issues/41) — Investigation mathématique G0-S : **terminée** — définitions, cas 1D et contre-exemples consignés dans [docs/19](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) ; issue fermée le 23/10/2026.
+- [#42](https://github.com/JM-Brun/J-DriftX/issues/42) — Tests des propriétés visées : **en cours** — non-symétrie de la référence uniforme et divergence nulle des champs analytiques testées ; bilan de masse étendu (six classes de stabilité, source en hauteur, puff, superpositions, troncature et quadrature séparées) ; restent la conservation en champ variable, des tests de positivité plus variés et les propriétés du champ de vent multi-niveaux historique (non reconstruit à ce jour).
+- [#43](https://github.com/JM-Brun/J-DriftX/issues/43) — Besoin applicatif G0-A : **ouvert** — utilisateur, décision, observable, baseline et seuils à établir indépendamment de la méthode.
+- [#44](https://github.com/JM-Brun/J-DriftX/issues/44) — Ancrage documentaire M0 : **terminé** — décision « aucun autodépôt HAL » consignée, la thèse sera ajoutée plus tard au corpus ; issue fermée le 23/10/2026.
 
-Voir aussi [#13](https://github.com/JM-Brun/J-DriftX/issues/13) (audit des jeux de données candidats) et [#17](https://github.com/JM-Brun/J-DriftX/issues/17) (squelette benchmarks/reference).
+Voir aussi [#13](https://github.com/JM-Brun/J-DriftX/issues/13) (audit des jeux de données candidats : l'audit documentaire en deux vagues est fait — [docs/20](https://github.com/JM-Brun/J-DriftX/blob/main/docs/20-audit-technique-jeux-donnees.md) et [docs/21](https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-jeux-donnees-seconde-vague-et-cas-synthetiques.md) — restent les téléchargements manuels et la vérification des licences) et [#17](https://github.com/JM-Brun/J-DriftX/issues/17) (squelette benchmarks/reference : **ouvert** — les familles de cas synthétiques S0–S3 y sont planifiées).
+
+*État vérifié le 28/10/2026.*
 
 ## Référence éditoriale
 
