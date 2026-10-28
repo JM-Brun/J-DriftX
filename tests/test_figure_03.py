@@ -30,7 +30,7 @@ def test_les_valeurs_affichees_proviennent_de_la_tranche() -> None:
     svg = render_figure_03_svg()
     attendu_vent = f"Vent uniforme U = {SCENARIO_DEFAUT.vent:.1f} m/s le long de x."
     assert attendu_vent in svg
-    attendu_entree = f"Entrée à {SCENARIO_DEFAUT.x_entree:.0f} m : colonne du panache."
+    attendu_entree = f"Entrée à {SCENARIO_DEFAUT.x_entree:.0f} m : colonne du panache de similitude."
     assert attendu_entree in svg
     attendu_maillage = f"dy = {SCENARIO_DEFAUT.pas_transverse:.0f} m ; r = 1/3"
     assert attendu_maillage in svg

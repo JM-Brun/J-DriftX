@@ -243,7 +243,7 @@ def _pas_explicite(champ: list[float], coefficient: float) -> list[float]:
     """Avance le champ d'un pas longitudinal du schéma FTCS (Dirichlet nul)."""
     suivant: list[float] = [0.0] * len(champ)
     for i in range(1, len(champ) - 1):
-        suivant[i] = champ[i] + coefficient * (champ[i + 1] - 2.0 * champ[i] + champ[i - 1])
+        suivant[i] = champ[i] + coefficient * (champ[i + 1] + champ[i - 1] - 2.0 * champ[i])
     return suivant
 
 
