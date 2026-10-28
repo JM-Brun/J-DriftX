@@ -4,19 +4,21 @@ title: "Lectures des sources"
 
 # Lectures des sources : que disent les papiers historiques ?
 
-Le corpus Drift-X compte sept publications (2006–2009). Cette page relit chaque papier **en français et sans jargon inutile** : ce qu'il dit, ce qu'on en a extrait, et ce que J-DriftX en reprend. Les fiches détaillées (contenus verbatim, équations, statuts d'accès) sont dans le dépôt : <code>docs/04-revues-papiers-sources.md</code>. Les sources primaires (PDF et extractions texte intégrales, dont le papier de 2006) sont archivées dans <code>raw/</code> du dépôt.
+Cette page organise les sources historiques par rôle scientifique : fondements mathématiques, modèle multi-niveaux et extensions applicatives. Elle distingue le contenu directement vérifié, les extraits partiels et les hypothèses de synthèse propres à J-DriftX. Les fiches détaillées et les statuts d'accès sont dans <code>docs/04-revues-papiers-sources.md</code> et les archives disponibles dans <code>raw/</code>. Le but est une vue d'ensemble cohérente, pas une uniformisation artificielle des notations ni une liste exhaustive de détails d'implémentation.
 
 ::: {.callout-note}
-**Un principe de lecture honnête.** Chaque fiche ci-dessous distingue ce qui est **extrait du papier** (résumé, équations, architecture) de ce qui n'est **pas encore accessible** (thèse non déposée, articles introuvables). Rien n'est inventé pour combler les trous.
+::: {.callout-note}
+**Statut documentaire.** Les notices bibliographiques peuvent être confirmées sans que le texte intégral ait été lu. Les équations et conclusions sont présentées au niveau de détail permis par l'accès réellement vérifié ; les écarts de notation entre sources sont conservés lorsqu'ils correspondent à des objets différents, et rapprochés lorsqu'une définition commune peut être établie.
+:::
 :::
 
-## La thèse (2006) — le document fondateur, à ajouter
+## La thèse de J.-M. Brun (notice localisée, texte intégral en attente)
 
 **Brun, J.-M., *Modélisation à complexité réduite de la dérive*, Université Montpellier II.**
 
-La thèse n'a pas été localisée dans les sources en ligne consultées et son texte intégral n'est donc pas disponible pour cette synthèse. Les bibliographies des publications ultérieures attestent une référence à une thèse de J.-M. Brun, mais l'année varie selon les sources (2006/2007). **Limite documentaire :** le titre officiel, l'année et le contenu détaillé devront être vérifiés sur la page de titre et le document intégral avant toute attribution plus précise.
+La notice de la thèse a été retrouvée dans le catalogue AGRIS/INRAE et reliée à un dépôt HAL, mais le téléchargement du PDF est actuellement bloqué par le mécanisme d'accès du site dans l'environnement de lecture. Le texte intégral n'a donc pas été lu. Les références secondaires divergent sur l'année (2006/2007) et les variantes de titre ; ces points restent à confirmer sur la page de titre. **Décision de travail :** suspendre les tâches qui exigent la lecture de la thèse, sans suspendre les comparaisons possibles à partir des articles accessibles.
 
-## L'article de 2006 (C. R. Mécanique) — le cœur mathématique, relu intégralement
+## L'article de 2006 (C. R. Mécanique) — fondement mathématique, accès direct incomplet
 
 **Mohammadi, B. & Brun, J.-M., « Similitude généralisée et modélisation géométrique à complexité réduite »** — [PDF libre (Académie des sciences)](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
 
@@ -27,16 +29,16 @@ Publié en octobre 2006 (reçu en avril, accepté en juin), ce papier de 5 pages
 3. **Sans EDP ni maillage** : aucune équation aux dérivées partielles n'est résolue.
 4. **Évaluation ponctuelle** : la concentration se calcule en un point isolé, sans calculer le champ entier.
 
-Nous l'avons relu **en entier** (extraction texte archivée dans <code>raw/extracts/</code> du dépôt). Ce que la relecture intégrale ajoute :
+L'accès direct au PDF éditeur renvoie une erreur 403 dans l'environnement de lecture ; l'indexation web expose toutefois des extraits de plusieurs sections. Les éléments ci-dessous sont donc une **extraction partielle**, à confirmer par une lecture intégrale avant de figer toutes les conventions :
 
-- **La définition mathématique de la métrique.** Une pseudo-distance où, si A est en amont de B : d(B,A) = ∞ — on ne remonte pas le vent — et d(A,B) = temps de migration de A vers B le long de la caractéristique. Ce n'est **pas** une vraie distance (ni symétrique, ni l'inégalité triangulaire) : c'est précisément l'objet du test « non-symétrie » du noyau.
+- **La construction géométrique historique (à confirmer sur le texte intégral).** Les extraits disponibles décrivent un coût orienté lié au temps de transport sur une caractéristique et une projection de la cible. Les conventions d'amont/aval et les cas dégénérés doivent être vérifiés dans leur contexte complet ; ne pas confondre cette construction avec le temps de première arrivée ni avec un coût calculé sur une polyligne imposée. La comparaison avec le code actuel est suivie dans la [page travel-time](../theorie/metrique-travel-time.qmd).
 - **La conservation, calée au rang de culture.** La quantité totale émise (résolue par un modèle de traitement au niveau du rang de vigne) est conservée globalement — réaliste car les traitements ne se font que par vent faible (moins de 20 km/h).
 - **Le vent complété par un écoulement potentiel.** En pratique, moins d'un point de mesure par parcelle de plusieurs hectares : le champ de vitesse est reconstruit par u = ∇φ calé sur les observations.
 - **Le gradient « gratuit ».** L'adjoint était construit par différentiation automatique (l'outil INRIA **Tapenade**), à coût indépendant du nombre de paramètres — c'est lui qui permet l'identification de source.
 - **Le benchmark fondateur.** Comparaison avec une simulation éléments finis stabilisés (~3000 points) : l'évaluation ponctuelle réduit le coût **d'un facteur ≈ 10³–10⁴ par point**, croissant avec la taille du problème (quadratique en 2D, cubique en 3D). Dimensions réalistes : buse de 10 cm, rangs espacés de 1,5 m, parcelle d'un hectare dans un bassin de 400 km².
 - **Deux pistes documentaires neuves** : une soumission à l'IJNMF 2006 jamais retrouvée en publication, et la thèse citée « 2007 » dans la bibliographie de ce papier (alors que les sources de 2008–2009 citent 2006) — voir les fiches détaillées.
 
-**Ce que J-DriftX en reprend :** la définition de référence de la pseudo-distance (contrat du module métrique), le facteur 10³–10⁴ comme cible de performance des benchmarks, le protocole éléments finis comme patron du futur benchmark gaussien (M1), et l'hypothèse « vent < 20 km/h » à inscrire au catalogue. Voir [Métrique travel-time](../theorie/metrique-travel-time.qmd), [Contraintes physiques](../theorie/contraintes-physiques.qmd) et [Qualité & tests](qualite.qmd).
+**Ce que J-DriftX en retient à ce stade :** un antécédent direct pour la similitude généralisée, la géométrie orientée et la réduction de complexité. Les facteurs de performance et hypothèses applicatives du papier sont des résultats historiques contextualisés, pas des objectifs automatiquement transférables au noyau actuel. La définition historique exacte reste à confronter au texte intégral et aux cas limites du code ; voir [Métrique travel-time](../theorie/metrique-travel-time.qmd), [Contraintes physiques](../theorie/contraintes-physiques.qmd) et [Qualité & tests](qualite.qmd).
 
 ## Le chapitre de 2008 (Springer) — le cahier des charges scientifique
 
@@ -56,13 +58,13 @@ Version longue du travail (fournie par l'auteur), c'est la source la plus compl�
 
 **Bozon, N., Mohammadi, B. & Sinfort, C., « Similitude and non symmetric geometry for dispersion modelling ».**
 
-Premier papier avec N. Bozon et C. Sinfort (ITAP), donc la transition vers le monde viticole/SIG. Son titre (« similitude et géométrie non symétrique ») suggère qu’il introduit la **topographie** dans le modèle. **Limite documentaire :** le texte intégral reste introuvable dans les sources en ligne consultées (archives de la revue e-sta inaccessibles). Les métadonnées disponibles attribuent l'article à *e-sta* vol. 5, n° 2, p. 182–192 (numéro spécial STIC et Environnement’07), mais le contenu scientifique détaillé ne peut pas être vérifié sans le texte intégral.
+Le titre et la notice bibliographique identifient une communication consacrée à la similitude et à la géométrie non symétrique. La notice AGRIS/INRAE renvoie à un enregistrement HAL, mais le PDF reste bloqué par Anubis dans l'environnement de lecture. **Ne pas inférer du seul titre** que ce texte introduit une méthode topographique précise. La contribution exacte, les équations et le recouvrement avec les articles ultérieurs restent à vérifier sur le document primaire.
 
 ## Le papier plateforme (2009) — le plus riche de tous
 
 **Bozon, N., Sinfort, C. & Mohammadi, B., « A GIS-based atmospheric dispersion model »** — actes STIC & Environnement (Calais), déposé sur [HAL](https://hal.science/hal-00468863). **Nouveauté de la relecture : une version journal existe**, *JESA* 44(4-5), 445–461, 2010.
 
-Le manuscrit intégral (17 pages) est accessible et documente tout : le modèle, le multi-niveaux, la topographie, et même le code. En voici l'essentiel, notion par notion :
+Le manuscrit auteur de la communication (17 pages, version déposée en 2010) est accessible. Il décrit le modèle multi-niveaux et plusieurs choix de mise en œuvre ; il ne doit pas être traité comme indépendant de l'article Springer de 2009 ou de l'article JESA de 2010 sans comparaison des versions. Les points applicatifs ci-dessous sont conservés comme contexte historique, mais sont secondaires par rapport à la définition mathématique et à la chaîne de réduction du modèle.
 
 ### Le modèle gaussien spatialisé
 
@@ -70,7 +72,7 @@ La concentration d'un panache se décompose en un comportement le long de l'axe 
 
 ### Le multi-niveaux à 4 coins
 
-Pour couvrir à la fois 10 km² et 10 m², le domaine est emboîté en **3 niveaux rectangulaires homothétiques** (typiquement 20×20 points par niveau : topographie tous les 500 m au niveau grossier, tous les 50 cm au niveau fin). À chaque niveau, le vent et la concentration sont restreints par interpolation aux **4 coins** du rectangle — une construction qui **garantit mathématiquement** que le vent reste à divergence nulle et que la masse se conserve. C'est le secret du « sans maillage ».
+Pour couvrir à la fois 10 km² et 10 m², le domaine est emboîté en **3 niveaux rectangulaires homothétiques** (typiquement 20×20 points par niveau : topographie tous les 500 m au niveau grossier, tous les 50 cm au niveau fin). À chaque niveau, le manuscrit décrit une restriction/interpolation à partir des **4 coins** du rectangle et lui attribue des propriétés de conservation. Cette garantie doit être comprise dans le cadre précis de la construction et des hypothèses du papier ; elle ne prouve pas, à elle seule, la conservation du noyau J-DriftX actuel ni la validité d'une extension différente.
 
 ### La topographie
 
@@ -82,7 +84,7 @@ Le modèle sort des **données intégrales** : dépôt au sol, quantité encore 
 
 ### L'architecture logicielle historique
 
-Point inédit de cette relecture : le prototype historique était un **programme Fortran** dialoguant avec un plugin **QGIS** via des fichiers CSV — extraction du MNT par commandes GDAL, zoom multi-niveaux dessiné à la main (outil « Region Tool »), sorties en nuages de points (shapefile) interpolées en raster (algorithme inverse-distance de gdal_grid). Le noyau Python de J-DriftX remplace le Fortran ; le CSV reste une bonne interface de compatibilité, et la chaîne GDAL/QGIS reste la spécification de la future couche SIG.
+Le manuscrit décrit un prototype historique en **Fortran** interfacé à un SIG via fichiers CSV et outils GDAL/QGIS. Il s'agit d'un fait d'architecture historique, pas d'une décision d'architecture pour J-DriftX. **L'intégration ArcGIS/QGIS et la reproduction de cette chaîne ne sont pas prioritaires à ce stade** : elles seront réévaluées seulement si un cas d'usage et une validation scientifique justifient cette couche applicative.
 
 ## Le papier journal de 2009 (Applied Geomatics) — la synthèse de positionnement
 
@@ -94,6 +96,14 @@ La version la plus courte, utile pour situer le projet en une lecture : modèle 
 
 ## Limites de la couverture documentaire
 
-Les textes intégraux ne sont pas tous disponibles dans les sources consultées. En particulier, la thèse citée par les publications, le texte intégral de l'article e-sta de 2008 et certains exemples du chapitre de 2008 restent à vérifier sur les documents originaux. Les résumés et métadonnées ne permettent pas de reconstituer les équations ou les résultats manquants ; aucune conclusion n'est inférée à partir des seules références bibliographiques.
+## Synthèse transversale et priorités de lecture
+
+Les sources accessibles convergent sur une architecture générale : **(1)** un problème de transport d'un scalaire passif et ses conditions physiques ; **(2)** une réduction sous hypothèses successives vers des familles de solutions de similitude ; **(3)** une tentative de généralisation géométrique du temps de transport pour des champs non uniformes ; **(4)** un assemblage multi-niveaux entre champ proche et transport lointain ; **(5)** des extensions d'assimilation, de risque et de SIG. Ces niveaux ne sont pas équivalents : les trois premiers portent le cœur mathématique, le quatrième l'architecture du modèle, et le cinquième les applications.
+
+Pour une vue cohérente, lire [Modèle direct](../theorie/modele-direct.qmd) → [Solutions de similitude](../theorie/similitude.qmd) → [Réduction a priori](../theorie/reduction-a-priori.qmd) → [Métrique travel-time](../theorie/metrique-travel-time.qmd). La première chaîne dérive la solution gaussienne dans un cas simplifié ; la dernière page traite séparément l'hypothèse de généralisation et ses contre-exemples. Les notations historiques seront rapprochées via un vocabulaire de travail commun, sans effacer les différences d'objet (temps de première arrivée, coût le long d'un chemin imposé, construction projetée, navigation minimale).
+
+**Priorité immédiate :** finir la comparaison des textes accessibles, préciser les hypothèses et les cas limites de la construction projetée, et relier chaque affirmation à une source, une définition, une preuve ou un test. **En attente du PDF de la thèse :** toute conclusion qui dépend spécifiquement de son texte intégral. **Différé :** intégration ArcGIS/QGIS et détails de reproduction de l'interface historique, jusqu'à ce que le noyau mathématique et un cas d'usage validé le justifient.
+
+Les sources primaires et les versions apparentées ne sont pas toutes intégralement comparées. Les résumés et métadonnées ne permettent pas de reconstituer les équations ou résultats manquants ; aucune conclusion n'est inférée à partir des seules références bibliographiques.
 
 Fiches détaillées et références consultées : [revue des papiers sources](https://github.com/JM-Brun/J-DriftX/blob/main/docs/04-revues-papiers-sources.md). Notions à clarifier ? Voir le [glossaire](../glossaire.qmd).
