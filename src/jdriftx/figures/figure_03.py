@@ -26,6 +26,7 @@ from html import escape
 from jdriftx.experiences.modele_reduit_edp import (
     SCENARIO_DEFAUT,
     ResultatComparaison,
+    ScenarioComparaisonEDP,
     TrancheComparaison,
     comparer_scenario,
 )
@@ -163,6 +164,50 @@ def _panneau_convergence(resultat: ResultatComparaison) -> list[str]:
     return elements
 
 
+def _lignes_texte(
+    scenario: ScenarioComparaisonEDP,
+    resultat: ResultatComparaison,
+) -> tuple[str, str, str, str, str, str, str, str, str, str, str]:
+    """Renvoie les lignes de texte des panneaux de droite, dans l'ordre du rendu."""
+    vent_txt = f"{scenario.vent:.1f}"
+    ligne_vent = f"Vent uniforme U = {vent_txt} m/s le long de x."
+    diffusivite_txt = f"{scenario.diffusivite:.0f}"
+    ligne_diffusivite = f"Diffusivité transversale K = {diffusivite_txt} m²/s, constante."
+    debit_txt = f"{scenario.debit:.1f}"
+    ligne_debit = f"Flux de masse Q = {debit_txt} kg/s dans la colonne d'entrée."
+    entree_txt = f"{scenario.x_entree:.0f}"
+    ligne_entree = f"Entrée à {entree_txt} m : colonne du panache de similitude."
+    fenetre_txt = f"{scenario.demi_largeur:.0f}"
+    ligne_fenetre = f"Fenêtre ±{fenetre_txt} m : au moins 4 écarts-types, Dirichlet nul."
+    pas_txt = f"{scenario.pas_transverse:.0f}"
+    ligne_maillage = f"Maillage de référence dy = {pas_txt} m ; r = 1/3 (schéma explicite)."
+    tranches_txt = f"{resultat.nombre_tranches}"
+    tranche_txt = f"{scenario.pas_tranche:.0f}"
+    ligne_tranches = f"{tranches_txt} tranches de comparaison tous les {tranche_txt} m."
+    l2_txt = f"{resultat.l2_reference:.1e}"
+    linf_txt = f"{resultat.linf_reference:.1e}"
+    ligne_normes = f"L2 relative : {l2_txt} ; L infinie relative : {linf_txt}."
+    flux_num_txt = f"{resultat.ecart_flux_max:.1e}"
+    flux_red_txt = f"{resultat.ecart_flux_reduit:.1e}"
+    ligne_flux_1 = "Bilan de masse, écart de flux maximal aux tranches :"
+    ligne_flux_2 = f"EDP {flux_num_txt} ; forme fermée {flux_red_txt} (rapporté à Q)."
+    r1_txt = f"{resultat.ratio_grossier:.1f}"
+    r2_txt = f"{resultat.ratio_fin:.1f}"
+    ligne_convergence = f"Convergence : \u00d7{r1_txt} puis \u00d7{r2_txt} en divisant dy par deux."
+    return (
+        ligne_vent,
+        ligne_diffusivite,
+        ligne_debit,
+        ligne_entree,
+        ligne_fenetre,
+        ligne_maillage,
+        ligne_tranches,
+        ligne_normes,
+        ligne_flux_1,
+        ligne_flux_2,
+        ligne_convergence,
+    )
+
 def render_figure_03_svg() -> str:
     """Renvoie le SVG déterministe de la figure 3 (modèle réduit vs EDP)."""
     scenario = SCENARIO_DEFAUT
@@ -201,31 +246,19 @@ def render_figure_03_svg() -> str:
     if cellules_c < 100:
         msg = "La carte d'écart ne doit pas être vide."
         raise ValueError(msg)
-    vent_txt = f"{scenario.vent:.1f}"
-    ligne_vent = f"Vent uniforme U = {vent_txt} m/s le long de x."
-    diffusivite_txt = f"{scenario.diffusivite:.0f}"
-    ligne_diffusivite = f"Diffusivité transversale K = {diffusivite_txt} m²/s, constante."
-    debit_txt = f"{scenario.debit:.1f}"
-    ligne_debit = f"Flux de masse Q = {debit_txt} kg/s dans la colonne d'entrée."
-    entree_txt = f"{scenario.x_entree:.0f}"
-    ligne_entree = f"Entrée à {entree_txt} m : colonne du panache de similitude."
-    fenetre_txt = f"{scenario.demi_largeur:.0f}"
-    ligne_fenetre = f"Fenêtre ±{fenetre_txt} m : au moins 4 écarts-types, Dirichlet nul."
-    pas_txt = f"{scenario.pas_transverse:.0f}"
-    ligne_maillage = f"Maillage de référence dy = {pas_txt} m ; r = 1/3 (schéma explicite)."
-    tranches_txt = f"{resultat.nombre_tranches}"
-    tranche_txt = f"{scenario.pas_tranche:.0f}"
-    ligne_tranches = f"{tranches_txt} tranches de comparaison tous les {tranche_txt} m."
-    l2_txt = f"{resultat.l2_reference:.1e}"
-    linf_txt = f"{resultat.linf_reference:.1e}"
-    ligne_normes = f"L2 relative : {l2_txt} ; L infinie relative : {linf_txt}."
-    flux_num_txt = f"{resultat.ecart_flux_max:.1e}"
-    flux_red_txt = f"{resultat.ecart_flux_reduit:.1e}"
-    ligne_flux_1 = "Bilan de masse, écart de flux maximal aux tranches :"
-    ligne_flux_2 = f"EDP {flux_num_txt} ; forme fermée {flux_red_txt} (rapporté à Q)."
-    r1_txt = f"{resultat.ratio_grossier:.1f}"
-    r2_txt = f"{resultat.ratio_fin:.1f}"
-    ligne_convergence = f"Convergence : \u00d7{r1_txt} puis \u00d7{r2_txt} en divisant dy par deux."
+    (
+        ligne_vent,
+        ligne_diffusivite,
+        ligne_debit,
+        ligne_entree,
+        ligne_fenetre,
+        ligne_maillage,
+        ligne_tranches,
+        ligne_normes,
+        ligne_flux_1,
+        ligne_flux_2,
+        ligne_convergence,
+    ) = _lignes_texte(scenario, resultat)
     elements = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{SVG_WIDTH}" '
         f'height="{SVG_HEIGHT}" viewBox="0 0 {SVG_WIDTH} {SVG_HEIGHT}" role="img" '

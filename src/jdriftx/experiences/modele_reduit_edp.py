@@ -126,7 +126,7 @@ class ScenarioComparaisonEDP:
 
     def nombre_tranches(self) -> int:
         """Nombre de tranches de comparaison, entrée incluse."""
-        intervalles = int(round((self.x_fin - self.x_entree) / self.pas_tranche))
+        intervalles = round((self.x_fin - self.x_entree) / self.pas_tranche)
         return intervalles + 1
 
     def concentration_reduite(self, x: float, y: float) -> float:
@@ -223,7 +223,7 @@ def _noeuds_transversaux(
     pas: float,
 ) -> list[float]:
     """Renvoie les abscisses transversales des nœuds d'un maillage."""
-    nombre = int(round(2.0 * scenario.demi_largeur / pas)) + 1
+    nombre = round(2.0 * scenario.demi_largeur / pas) + 1
     return [-scenario.demi_largeur + i * pas for i in range(nombre)]
 
 
@@ -264,7 +264,7 @@ def resoudre_edp(
     noeuds = _noeuds_transversaux(scenario, pas_transverse)
     dx = scenario.pas_longitudinal(pas_transverse)
     coefficient = scenario.diffusivite * dx / (scenario.vent * pas_transverse * pas_transverse)
-    pas_par_tranche = int(round(scenario.pas_tranche / dx))
+    pas_par_tranche = round(scenario.pas_tranche / dx)
     champ = [scenario.concentration_reduite(scenario.x_entree, y) for y in noeuds]
     tranches: list[TrancheComparaison] = []
     tranches.append(
