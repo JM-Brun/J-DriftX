@@ -66,7 +66,7 @@ def _scenarios_aval(draw):
 def test_temps_dirige_invariant_par_translation(scenario, translation) -> None:
     """Translater origine et cible ne change pas le temps dirigé.
 
-    Référence : docs/30, section 1 — la construction T_proj (temps après projection) uniforme ne dépend que
+    Référence : docs/30, section 1 — la construction T_proj uniforme ne dépend que
     du déplacement cible - origine (carte de la section 9). Cas fixé
     voisin : test_uniform_pseudodistance_is_rotation_invariant dans
     tests/test_metric.py. Hypothèse : champ uniforme indépendant du temps.
