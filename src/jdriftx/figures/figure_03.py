@@ -155,8 +155,10 @@ def _panneau_convergence(resultat: ResultatComparaison) -> list[str]:
         f'<polyline points="{points}" fill="none" stroke="#2f6fae" '
         'stroke-width="2" stroke-dasharray="6 4"/>'
     )
-    elements.append('<line x1="560" y1="280" x2="1060" y2="280" stroke="#7c8894" '
-                    'stroke-width="1.5"/>')
+    elements.append(
+        '<line x1="560" y1="280" x2="1060" y2="280" stroke="#7c8894" '
+        'stroke-width="1.5"/>'
+    )
     for pas, px, py, erreur in marqueurs:
         elements.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="6" fill="#2864a5"/>')
         elements.append(_text(px - 24.0, py - 14.0, f"{erreur:.1e}", size=15))
@@ -207,6 +209,7 @@ def _lignes_texte(
         ligne_flux_2,
         ligne_convergence,
     )
+
 
 def render_figure_03_svg() -> str:
     """Renvoie le SVG déterministe de la figure 3 (modèle réduit vs EDP)."""
