@@ -2,7 +2,7 @@
 
 ## Identification du fichier
 
-- **État constaté sur `main` le 28 octobre 2026** : le PDF intégral est présent dans `raw/Partial Differential Equations - Modelling and Numerical Simulation - R. Glowinski, P. Neittaanmaki (Springer, 2008) WW.pdf` (6 376 789 octets). Cette présence contredit l'ancienne mention d'absence ci-dessous et les statuts documentaires de PR #67/#69. La fiche décrit ici l'état réel du dépôt, sans conclure que la redistribution est autorisée.
+- **État après la PR #67 (28 octobre 2026)** : le PDF intégral a été retiré du dépôt. Cette fiche est conservée comme référence bibliographique et trace de provenance de la copie consultée historiquement ; elle ne signifie pas que le binaire est encore distribué.
 - **Décision de droits en suspens** : la PR [#67](https://github.com/JM-Brun/J-DriftX/pull/67) demandant le retrait est restée différée selon la décision de travail antérieure. Ne pas annoncer le fichier comme absent ni le supprimer implicitement dans une mise à jour documentaire ; arbitrer séparément maintien/retrait et documenter la décision.
 - **Nature** : recueil éditorial complet, et non tiré-à-part du seul chapitre utile au projet.
 - **Contrôle documentaire** : une copie consultée antérieurement a servi à contrôler la page de titre, l'ISBN, la table des matières et le texte du chapitre 14. Cela étaye l'identification bibliographique et la lecture scientifique initiale, mais ne signifie pas que le PDF intégral est redistribuable.
@@ -87,14 +87,14 @@ Ce chapitre est une source primaire particulièrement importante pour le noyau h
 - [x] Identité du livre, éditeurs, année, collection, ISBN et pagination contrôlés.
 - [x] Présence et pagination du chapitre 14 confirmées dans la table des matières : p. 245–256.
 - [x] Première lecture du texte du chapitre 14 : objectif, architecture, hypothèses, contraintes, géométrie, exemples et limites consignés ci-dessus.
-- [ ] Comparer visuellement le binaire local versionné avec la version publique consultée, en particulier les pages 245–256 et les figures/équations.
+- [x] Documenter la provenance historique de la copie consultée ; le binaire complet n'est plus conservé dans le dépôt.
 - [x] Ajouter une extraction analytique structurée dans `raw/extracts/2008-brun-mohammadi-springer-chap14-notes.txt`, avec provenance, pagination, limites et note de droits. Il ne s'agit pas d'une transcription OCR intégrale.
 - [ ] Si une transcription OCR intégrale est nécessaire, la produire localement à partir du PDF autorisé, puis vérifier les équations, figures et légendes sur le document original ; ne pas confondre texte OCR non relu et extraction validée.
 - [ ] Reporter les constats utiles dans la fiche dédiée du chapitre `raw/fiches/2008-brun-mohammadi-springer-chap14.md` et dans la synthèse documentaire `docs/04-revues-papiers-sources.md` si ces pages ne les intègrent pas déjà.
 
 ## Droits et conservation
 
-Le PDF est une version éditeur du recueil complet. La page de copyright du livre interdit la reproduction ou la transmission sans autorisation, sous réserve des exceptions qu'elle précise. La disponibilité technique du fichier en ligne ne signifie pas que sa redistribution est libre. Le recueil contient de nombreux chapitres étrangers au corpus J-DriftX : limiter son usage à l'archive de travail, vérifier les droits applicables et privilégier pour une diffusion publique les notices bibliographiques, DOI et versions auteur autorisées.
+La copie historiquement consultée était une version éditeur du recueil complet. La page de copyright encadre la reproduction ou la transmission. Le dépôt ne conserve plus ce binaire ; il conserve la référence, les DOI et une analyse explicitement limitée par la source consultée. Pour toute reprise de lecture, privilégier une source légalement accessible ou une version auteur autorisée.
 
 ## Sources de contrôle
 
