@@ -1,6 +1,6 @@
 # Index de provenance des sources — J-DriftX
 
-**Audit du 28 octobre 2026.** Ce fichier complète [le README du dossier raw](../README.md) et indexe les sidecars de provenance. Il est séparé de raw/README.md pour ne pas entrer en conflit avec la PR publique #67, qui reste différée et n'est pas modifiée par cette opération.
+**Audit du 28 octobre 2026.** Ce fichier complète [le README du dossier raw](../README.md) et indexe les sidecars de provenance. La PR publique #67 retire le recueil Springer intégral et met à jour les fiches de provenance associées ; cette table décrit l'état après retrait du binaire.
 
 ## PDF présents et sidecars
 
