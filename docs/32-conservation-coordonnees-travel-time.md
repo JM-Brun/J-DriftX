@@ -195,9 +195,88 @@ With \(c^i\) interpreted as a volumetric concentration, the left side has units 
 
 The article does describe the global velocity construction as divergence-free and presents conservation as a constraint, but divergence-free velocity alone does not imply conservation of a passive scalar. The displayed equations require a consistent scalar definition and measure before they can be used as a physical mass balance.
 
-The official 2006 article is available from *Comptes Rendus Mécanique* (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007)); its publisher PDF could not be retrieved through the current source interface for a reliable equation-by-equation transcription. The 2008 Springer chapter has been inspected from an accessible third-party-hosted scan of the book (chapter pp. 245–256; the Springer landing page provides the bibliographic record, DOI [10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14)). The scan is useful for transcription but is not itself a publisher-hosted copy. The 2009 article remains a separate source and must not be conflated with either the 2006 paper or the 2008 chapter.
+The official 2006 article is available from *Comptes Rendus Mécanique* (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007)); its open-access publisher PDF has since been retrieved and transcribed in §7 below, including its global conservation statement. The 2008 Springer chapter has been inspected from an accessible third-party-hosted scan of the book (chapter pp. 245–256; the Springer landing page provides the bibliographic record, DOI [10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14)). The scan is useful for transcription but is not itself a publisher-hosted copy. The 2009 article remains a separate source and must not be conflated with either the 2006 paper or the 2008 chapter.
 
-## 7. What remains to be established from the primary model
+## 7. Primary-source transcription: Mohammadi & Brun (2006)
+
+The open-access publisher PDF of the founding Note is available from the Comptes Rendus site (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007); direct PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) and was retrieved and transcribed on 28 October 2026. **Extraction caveat:** the PDF text layer garbles some math glyphs (integrals, radicals, exponents, sum signs); the equations below are reconstructions from the text layer and the surrounding prose, and this is flagged wherever it matters. They must be checked against the typeset PDF before being cited as verbatim. No suspected typo is silently repaired.
+
+### Assimilation setting and transport assumption (§1)
+
+The model parameters \(p\) — computation-domain definition, topography, meteo conditions, source locations, nozzle characteristics — are determined through the assimilation objective
+
+\[
+\min_{p\in\mathcal O} J(p)=\|\vec u(p)-\vec u_{\rm obs}\|^2+\|c(p,\vec u(p))-c_{\rm obs}\|^2,
+\tag{MB06-1}
+\]
+
+(the exponents and norm bars are not visible in the text layer; the printed equation is a sum of two norms). The article then states that \(\vec u(p)\) est « un champ de vitesse à divergence nulle servant au transport de \(c(p,\vec u(p))\) »: the transport velocity is divergence-free **by assumption** in this Note, not by a construction given there.
+
+### Similitude solution in a uniform flow (§2)
+
+The scalar emitted at the origin and transported by a planar uniform flow \(U\) is modelled by
+
+\[
+c(x,y)=c_c(x)\,f\left(y,\delta(x)\right),
+\qquad
+c_c(x)\sim\exp(-a(U)x),
+\qquad
+f\left(y,\delta(x)\right)\sim\exp\left(-b(U,\delta(x))\,y^2\right),
+\tag{MB06-2}
+\]
+
+with \(a(\cdot)\) positive monotone decreasing and \(b(\cdot,\cdot)\) positive, increasing in \(U\), decreasing in \(\delta\); \(c_c\) is the axis distribution of the plume of thickness \(\delta(x)\), with the jet analogy recalled by the authors (parabolic in laminar, linear in turbulent). This uniform-flow solution is what §3 generalizes.
+
+### Directed cost and global conservation constraint (§3)
+
+After recalling a symmetric metric distance \(d_M(AB)=\int_0^1(\overrightarrow{AB}^{\,T}M(A+t\,\overrightarrow{AB})\overrightarrow{AB})^{1/2}dt\) (Eq. (3) of the article, reconstructed from the text layer), the Note introduces the pseudo-distance: if \(A\) is upstream of \(B\), then \(d(B,A)=\infty\) and
+
+\[
+d(A,B)=\int_A^{B^\perp}\frac{ds}{u},
+\]
+
+the migration time from \(A\) to \(B^\perp\) along the characteristic through \(A\), « que l'on supposera unique, écartant les sources et puits ». \(B^\perp\) is the projection of \(B\) onto that characteristic; non-unique projections are resolved by choosing the projection direction that best satisfies \((\vec u\cdot\nabla c=0)\) at \(B\). This is the founding printed definition of the projected cost analysed as \(T_{\rm proj}\) in docs/19 and docs/30.
+
+The conservation statement follows, transcribed in full (the integration element is not visible in the text layer; a volume element, as in the 2008 chapter's corresponding constraint transcribed in the previous section, is the natural reading):
+
+> « On introduit, par ailleurs, une condition de conservation globale pour la quantité transportée \(\int_{\mathbb R^3} c(p,u(p))=\) quantité totale émise, solution d'un modèle de traitement au niveau du rang de culture [1]. »
+
+The article then states explicitly that the construction is **not** a distance: \(d(A,B)=0\nRightarrow A=B\), non-symmetry \(d(A,B)\neq d(B,A)\), and possible failure of the triangle inequality.
+
+### Velocity completion from sparse observations (§3, Eq. 4)
+
+\[
+\vec u=\nabla\varphi,
+\qquad
+-\Delta\varphi=\sum_{i=1,\dots,n_{\rm obs}}\|\nabla\varphi-\vec u_{\rm obs}\|,
+\tag{MB06-4}
+\]
+
+as extracted (the text layer does not show how the observation points enter the terms inside the sum); the article presents this as the completion of the velocity field from \(n_{\rm obs}\) observation points, and offers as an alternative a coarse migration-time grid with interpolation. The equation is not dimensionally homogeneous as reconstructed — a pointwise-source or optimality reading may be intended — and is transcribed without repair.
+
+### Generalized similitude ansatz (§3, Eq. 5)
+
+\[
+c=c_c\left(d(p)\right)\,f\left(d^\perp(p),\,\delta\left(d(p)\right)\right),
+\tag{MB06-5}
+\]
+
+where \(d^\perp\) is the Euclidean distance in the local normal direction to the source characteristic (direction \(BB^\perp\)). The directed cost \(d\) enters (i) as the argument of the axis profile \(c_c\) and (ii) as the argument of the growth law \(\delta\): it replaces the axial variable of the uniform-flow solution (MB06-2). No per-surface flux statement is attached to this ansatz in the article.
+
+### Calibration of the deposition sink (§5)
+
+In the validation examples, the reference PDE (transport–diffusion–deposition, stabilized finite elements, explicit RK2 in time) uses a deposition sink which « a été calé pour un champ de vitesse uniforme pour retrouver la solution de dispersion analytique (2) par la solution de l'EDP », and the similitude solutions are accumulated by linearity to treat a moving source. The sink term is thus **calibrated on the uniform case**, not derived from a balance law.
+
+### What the 2006 source adds to the conservation question
+
+1. **The 2006 conservation statement is global, not per-surface.** It is a volume integral of \(c\) over \(\mathbb R^3\), set equal to the total emitted quantity. **No flux conservation across iso-\(\tau\) surfaces is claimed anywhere in the article.** The per-surface reading is therefore not supported by the founding source.
+2. **It is dimensionally consistent as printed** — under the conventional \(c\in[M\,L^{-3}]\), the integral is a mass — in contrast with the printed Eqs. (28)/(31) of the 2009 article transcribed in the previous section.
+3. **As a physical claim it conflicts with deposition.** §5 calibrates a deposition sink; with a sink active, the atmospheric inventory \(\int_{\mathbb R^3}c\,dV\) falls below the emitted mass once deposition starts. Pending the thesis [1], the constraint is therefore best read as a **normalization/calibration convention of the reduced model** — the emitted quantity being itself « solution d'un modèle de traitement au niveau du rang de culture » — not as a theorem derived from a balance law.
+4. **The three audited sources state three different conservation objects as printed:** 2006 — global volume integral of \(c\) over \(\mathbb R^3\); 2008 — \(C=\int_{\mathbb R^2}c^+\,d\sigma\) with two printed alternatives for \(c^+\) (not dimensionally equivalent); 2009 — \(K\), \(C_g\), \(C_a\) with printed element mismatches. A single unambiguous historical conserved quantity has **not** been identified across the corpus as printed; the reconstruction must not average or silently reconcile the three.
+5. **The founding Note itself documents the metric failures** (non-separation, non-symmetry, triangle inequality), consistent with the project's audited understanding of \(T_{\rm proj}\).
+6. **Thesis date evidence.** Reference [1] of the article cites « J.-M. Brun, Modélisation à complexité réduite de la dérive, Thèse université Montpellier II, 2007 »: the founding Note's own bibliography dates the thesis **2007** (the repository cites 2006; the 2007 date is corroborated by this primary source).
+
+## 8. What remains to be established from the primary model
 
 A complete historical reconstruction still requires the equations and assumptions of the near-/far-field model, not only the general balance law above.
 
@@ -207,19 +286,19 @@ A complete historical reconstruction still requires the equations and assumption
 | Coordinate transformation and Jacobian terms for a regular chart | Derived conditionally on a time-independent diffeomorphism |
 | Conditions for constant integrated flux across coordinate surfaces | Derived conditionally in (5) |
 | Identification of that flux with emitted quantity \(Q\) | **Not established** |
-| Historical definition of \(C\), its units and integration domain reconciled across sources | **Still to reconstruct** |
+| Historical definition of \(C\), its units and integration domain reconciled across sources | **Still to reconstruct** — three formulations now transcribed (2006 §7, 2008 and 2009 §6) state different objects as printed; none is silently privileged |
 | Applicability of a regular \((\tau,\eta_1,\eta_2)\) chart to the historical projected pseudo-distance | **Not established; counterexamples show it cannot be assumed generally** |
 | Treatment of source/sink, diffusion, deposition, ground reflection and open boundaries in the historical model | **Still to reconstruct** |
 | Correction factor printed as “2/3 = 0.636” in Brun & Mohammadi (2008, chapter p. 251) and Bozon & Mohammadi (2009, publisher version of record); also present in the accessible Bozon, Sinfort & Mohammadi (2010) author manuscript | **Arithmetic inconsistency confirmed in two published sources**: $2/3 \approx 0.667$, whereas $0.636 \approx 2/\pi$. Both 2008 and 2009 describe the factor as a stochastic averaged cosine for angles between 0 and $\pi$, but neither inspected passage supplies a derivation of the averaging distribution that resolves the discrepancy. $2/\pi$ is plausible, not proven as the intended factor; do not silently rewrite any source. |
 
-## 8. Decision and next evidence required
+## 9. Decision and next evidence required
 
 This derivation establishes a conditional conservation statement for a regular coordinate chart; it does **not** validate the historical model or prove a universal iso-\(\tau\) conservation claim.
 
 To resolve the historical question:
 
-1. Obtain verifiable full text for Mohammadi & Brun (2006, §3) and Brun & Mohammadi (2008, §2.2); transcribe their governing near-/far-field equations and definitions verbatim, preserving notation. The 2009 publisher equations above are a separate related source, not a substitute.
-2. Recover and inspect the thesis or an authoritative implementation if available; verify bibliographic metadata separately.
+1. Obtain verifiable full text for the primary sources and transcribe their governing near-/far-field equations and definitions verbatim, preserving notation. Status after this note: 2006 §1–§5 transcribed from the open-access publisher PDF (§7 above), with text-layer caveats; 2008 §2.1–2.2 transcribed from an accessible scan (§6; publisher-hosted copy still unavailable); 2009 transcribed from the publisher version of record (§6). Still to transcribe: the thesis (2007), the JESA 2010 version of record, and any equation affected by the extraction caveats.
+2. Recover and inspect the thesis or an authoritative implementation if available; verify bibliographic metadata separately. The 2006 article’s reference [1] dates the thesis 2007 (§7).
 3. Identify precisely what \(c^+\) and \(C\) denote, their units, and their integration domains.
 4. Derive the specific coordinate map and its Jacobian only if the historical equations define a regular map on the stated domain.
 5. Add each physical source, sink and boundary term to the balance before claiming conservation.
@@ -229,7 +308,7 @@ No variable-field solver or new benchmark should be justified by this note alone
 
 ## References
 
-- Mohammadi, B. & Brun, J.-M. (2006). “Similitude généralisée et modélisation géométrique à complexité réduite.” *Comptes Rendus Mécanique*, 334(10), 634–638. https://doi.org/10.1016/j.crme.2006.06.007. Open PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf
+- Mohammadi, B. & Brun, J.-M. (2006). “Similitude généralisée et modélisation géométrique à complexité réduite.” *Comptes Rendus Mécanique*, 334(10), 634–638. https://doi.org/10.1016/j.crme.2006.06.007. Open PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf (open-access publisher PDF; retrieved and transcribed in §7; the article’s reference [1] dates the thesis 2007).
 - Brun, J.-M. & Mohammadi, B. (2008). “Reduced-Order Modelling of Dispersion.” In *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, chap. 14, pp. 245–256. https://doi.org/10.1007/978-1-4020-8758-5_14
   Accessible scan used for the transcription: https://www.sgo.fi/~j/baylie/Partial%20Differential%20Equations%20-%20Modelling%20and%20Numerical%20Simulation%20-%20R.%20Glowinski%2C%20P.%20Neittaanmaki%20%28Springer%2C%202008%29%20WW.pdf
 - Bozon, N. & Mohammadi, B. (2009). “GIS-based atmospheric dispersion modelling: Forecasting the pesticide atmospheric spray drift from a vineyard plot to a watershed.” *Applied Geomatics*, 1, 59–74. https://doi.org/10.1007/s12518-009-0006-0. Publisher version of record; its online text prints `2/3 = 0.636` and describes the factor as a stochastic averaged cosine.
