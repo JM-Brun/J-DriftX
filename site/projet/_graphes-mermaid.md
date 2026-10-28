@@ -134,11 +134,13 @@ graph TD
     experiences_uniforme["experiences/uniforme.py"]::module
     experiences_reconstruction_vent["experiences/reconstruction_vent.py"]::module
     experiences_cas_synthetiques["experiences/cas_synthetiques.py"]::module
+    experiences_superposition_sources["experiences/superposition_sources.py"]::module
     fields["fields.py"]::module
     terrain["terrain.py"]::module
     trajectories["trajectories.py"]::module
     figures_figure_01["figures/figure_01.py"]::module
     figures_figure_02["figures/figure_02.py"]::module
+    figures_figure_04["figures/figure_04.py"]::module
     figures_wind_field_explorer["figures/wind_field_explorer.py"]::module
     c_fcourant["Fonction de courant"]::concept
     c_champ["Champ de vent stationnaire"]::concept
@@ -187,6 +189,8 @@ graph TD
     t_trajectories["test_trajectories.py"]::test
     t_figure_01["test_figure_01.py"]::test
     t_figure_02["test_figure_02.py"]::test
+    t_superposition["test_superposition_sources.py"]::test
+    t_figure_04["test_figure_04.py"]::test
     t_wind_field["test_wind_field_explorer.py"]::test
     t_interactif["test_interactive_wind_page.py"]::test
     t_cas_synthetiques["test_cas_synthetiques.py"]::test
@@ -212,6 +216,8 @@ graph TD
   experiences_reconstruction_vent -->|"utilise"| c_fcourant
   figures_figure_01 -->|"utilise"| experiences_reconstruction_vent
   figures_figure_02 -->|"utilise"| experiences_uniforme
+  experiences_superposition_sources -->|"utilise"| c_fcourant
+  figures_figure_04 -->|"utilise"| experiences_superposition_sources
   figures_wind_field_explorer -->|"utilise"| fields
   fields -->|"contexte"| c_champ
   terrain -->|"contexte"| n0
@@ -242,6 +248,8 @@ graph TD
   t_trajectories -->|"couvre"| trajectories
   t_figure_01 -->|"couvre"| figures_figure_01
   t_figure_02 -->|"couvre"| figures_figure_02
+  t_superposition -->|"couvre"| experiences_superposition_sources
+  t_figure_04 -->|"couvre"| figures_figure_04
   t_wind_field -->|"couvre"| figures_wind_field_explorer
   t_interactif -->|"couvre"| figures_wind_field_explorer
   t_graphe -->|"couvre"| graphe_connaissances
@@ -265,6 +273,7 @@ graph TD
 | experiences/uniforme.py | Module de code | [uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/uniforme.py) |
 | experiences/reconstruction_vent.py | Module de code | [reconstruction_vent.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reconstruction_vent.py) |
 | experiences/cas_synthetiques.py | Module de code | [cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/cas_synthetiques.py) |
+| experiences/superposition_sources.py | Module de code | [superposition_sources.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/superposition_sources.py) |
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
 | constraints.py | Module de code | [constraints.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/constraints.py) |
@@ -275,6 +284,7 @@ graph TD
 | terrain.py | Module de code | [terrain.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/terrain.py) |
 | figures/figure_01.py | Module de code | [figure_01.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_01.py) |
 | figures/figure_02.py | Module de code | [figure_02.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_02.py) |
+| figures/figure_04.py | Module de code | [figure_04.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_04.py) |
 | figures/wind_field_explorer.py | Module de code | [wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/wind_field_explorer.py) |
 | Coût dirigé sur polyligne | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Temps de première arrivée (cas 1D exact) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
@@ -307,6 +317,8 @@ graph TD
 | test_trajectories.py | Test (CI) | [test_trajectories.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_trajectories.py) |
 | test_figure_01.py | Test (CI) | [test_figure_01.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_01.py) |
 | test_figure_02.py | Test (CI) | [test_figure_02.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_02.py) |
+| test_superposition_sources.py | Test (CI) | [test_superposition_sources.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_superposition_sources.py) |
+| test_figure_04.py | Test (CI) | [test_figure_04.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_04.py) |
 | test_wind_field_explorer.py | Test (CI) | [test_wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_wind_field_explorer.py) |
 | test_interactive_wind_page.py | Test (CI) | [test_interactive_wind_page.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_interactive_wind_page.py) |
 | test_cas_synthetiques.py | Test (CI) | [test_cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_cas_synthetiques.py) |
