@@ -412,6 +412,12 @@ libelle = "experiences/superposition_sources.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/superposition_sources.py"
 
 [[noeuds]]
+id = "experiences/relief"
+type = "module"
+libelle = "experiences/relief.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/relief.py"
+
+[[noeuds]]
 id = "similitude"
 type = "module"
 libelle = "similitude.py"
@@ -476,6 +482,12 @@ id = "figures/figure_04"
 type = "module"
 libelle = "figures/figure_04.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_04.py"
+
+[[noeuds]]
+id = "figures/figure_05"
+type = "module"
+libelle = "figures/figure_05.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/figures/figure_05.py"
 
 [[noeuds]]
 id = "figures/wind_field_explorer"
@@ -598,6 +610,18 @@ id = "t-figure-04"
 type = "test"
 libelle = "test_figure_04.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_04.py"
+
+[[noeuds]]
+id = "t-relief"
+type = "test"
+libelle = "test_relief.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_relief.py"
+
+[[noeuds]]
+id = "t-figure-05"
+type = "test"
+libelle = "test_figure_05.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_figure_05.py"
 
 [[noeuds]]
 id = "t-wind-field"
@@ -1102,6 +1126,21 @@ vers = "experiences/superposition_sources"
 relation = "utilise"
 
 [[aretes]]
+de = "experiences/relief"
+vers = "c-panache"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/relief"
+vers = "terrain"
+relation = "utilise"
+
+[[aretes]]
+de = "figures/figure_05"
+vers = "experiences/relief"
+relation = "utilise"
+
+[[aretes]]
 de = "figures/wind_field_explorer"
 vers = "fields"
 relation = "utilise"
@@ -1287,6 +1326,18 @@ de = "t-figure-04"
 vers = "figures/figure_04"
 relation = "couvre"
 justification = "tests/test_figure_04.py : rendu SVG synchronisé avec la tranche typée."
+
+[[aretes]]
+de = "t-relief"
+vers = "experiences/relief"
+relation = "couvre"
+justification = "tests/test_relief.py : collines sous le vent, coïncidence hors relief, régions avec et sans correction."
+
+[[aretes]]
+de = "t-figure-05"
+vers = "figures/figure_05"
+relation = "couvre"
+justification = "tests/test_figure_05.py : rendu SVG synchronisé avec la tranche typée."
 
 [[aretes]]
 de = "t-wind-field"
@@ -1565,11 +1616,12 @@ sens = "TD"
 noeuds = [
   "metric", "champ_analytique", "experiences/uniforme",
   "experiences/reconstruction_vent", "experiences/cas_synthetiques",
-  "experiences/superposition_sources",
+  "experiences/superposition_sources", "experiences/relief",
   "similitude", "stabilite",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
-  "figures/figure_02", "figures/figure_04", "figures/wind_field_explorer",
+  "figures/figure_02", "figures/figure_04", "figures/figure_05",
+  "figures/wind_field_explorer",
   "c-polyligne", "c-tpa", "c-pdist", "c-fcourant", "c-champ",
   "c-courant", "c-panache", "c-stabilite", "c-transport",
   "c-multiniveaux", "n0",
@@ -1578,7 +1630,8 @@ noeuds = [
   "t-metric", "t-similitude", "t-constraints", "t-champ", "t-recon",
   "t-uniforme", "t-advection", "t-fields", "t-periodic", "t-stabilite",
   "t-terrain", "t-trajectories", "t-figure-01", "t-figure-02",
-  "t-superposition", "t-figure-04", "t-wind-field", "t-interactif",
+  "t-superposition", "t-figure-04", "t-relief", "t-figure-05",
+  "t-wind-field", "t-interactif",
   "t-cas-synthetiques",
   "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
   "t-graphe", "t-extraction", "t-diagnostic",
@@ -1595,9 +1648,10 @@ noeuds = [
   noeuds = [
     "champ_analytique", "experiences/uniforme",
     "experiences/reconstruction_vent", "experiences/cas_synthetiques",
-    "experiences/superposition_sources",
+    "experiences/superposition_sources", "experiences/relief",
     "fields", "terrain",
     "trajectories", "figures/figure_01", "figures/figure_02", "figures/figure_04",
+    "figures/figure_05",
     "figures/wind_field_explorer", "c-fcourant", "c-champ", "c-courant",
     "c-multiniveaux", "n0",
   ]
@@ -1626,6 +1680,7 @@ noeuds = [
     "t-constraints", "t-champ", "t-recon", "t-uniforme", "t-advection",
     "t-fields", "t-periodic", "t-stabilite", "t-terrain", "t-trajectories",
     "t-figure-01", "t-figure-02", "t-superposition", "t-figure-04",
+    "t-relief", "t-figure-05",
     "t-wind-field", "t-interactif",
     "t-cas-synthetiques",
   ]
