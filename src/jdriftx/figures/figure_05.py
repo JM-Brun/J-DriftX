@@ -1,7 +1,7 @@
 """Génère la figure 5 : la correction de relief déplace le point de calcul.
 
 Le schéma est une reconstruction conceptuelle (niveau R1), étape D du
-plan de figures du chapitre de 2008 : un MNT synthétique de 2 km × 2 km
+plan de figures du chapitre de 2008 : un MNT synthétique de 2 km x 2 km
 (deux collines gaussiennes), une source de scalaire passif dans un vent
 uniforme du nord, et les régions affectées par un panache gaussien
 évalué sans correction (le relief est ignoré : le sol du modèle est le
@@ -309,7 +309,7 @@ def render_figure_05_svg() -> str:
         _text(
             745.0,
             728.0,
-            "des cellules qu'aux crêtes, et l'effet décroît quand σz croît.",
+            "des cellules qu'aux crêtes, et l'effet décroît quand \u03c3z croît.",
             size=15,
         ),
         _text(
