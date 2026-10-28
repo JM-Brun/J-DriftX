@@ -2,8 +2,8 @@
 
 ## Fichier
 
-- Actuel : <code>MO2009-PUB00026817.pdf</code> → renommage recommandé : <code>2009-bozon-sinfort-mohammadi-driftx-hal.pdf</code> (manuscrit auteur, 17 pages)
-- Extraction texte : <code>extracts/2009-bozon-sinfort-mohammadi-driftx-hal.txt</code> (texte intégral)
+- PDF actuellement présent : <code>../2009-bozon-sinfort-mohammadi-driftx-hal.pdf</code> (le renommage est déjà effectif ; <code>MO2009-PUB00026817.pdf</code> est le nom historique du fichier HAL). Manuscrit auteur de 17 pages.
+- Extraction texte : <code>../extracts/2009-bozon-sinfort-mohammadi-driftx-hal.txt</code> (extraction automatique de 17 pages ; mise en page, figures et équations non conservées).
 
 ## Référence
 
