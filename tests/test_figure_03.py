@@ -47,7 +47,7 @@ def test_les_valeurs_affichees_proviennent_de_la_tranche() -> None:
     r1_txt = f"{resultat.ratio_grossier:.1f}"
     r2_txt = f"{resultat.ratio_fin:.1f}"
     attendu_convergence = (
-        f"Convergence : \\u00d7{r1_txt} puis \\u00d7{r2_txt} en divisant dy par deux."
+        f"Convergence : \u00d7{r1_txt} puis \u00d7{r2_txt} en divisant dy par deux."
     )
     assert attendu_convergence in svg
     for maillage in resultat.maillages:
