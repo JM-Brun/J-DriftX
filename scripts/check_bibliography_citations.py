@@ -47,7 +47,7 @@ def _prose_lines(path: Path) -> list[tuple[int, str]]:
         if stripped.startswith("```") or stripped.startswith("~~~"):
             fence = stripped[:3]
             continue
-        line = re.sub(r"`+`.*?`+`", "", raw_line)
+        line = re.sub(r"`[^`]*`", "", raw_line)
         result.append((number, line))
     return result
 
