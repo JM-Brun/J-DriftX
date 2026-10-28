@@ -9,7 +9,7 @@
 
 | # | Source | Accès en ligne (oct. 2026) | Information extraite dans cette revue |
 |---|---|---|---|
-| 1 | Brun 2007 (thèse, année citée dans l'article primaire de 2006) | Non localisée lors des recherches consignées ; statut de dépôt/numérisation non établi | Métadonnées via citations croisées uniquement |
+| 1 | Brun, *Modélisation à complexité réduite de la dérive* (référence primaire citée en 2006 comme thèse Université Montpellier II, 2007) | Texte intégral non localisé dans les sources consultées ; statut de dépôt/numérisation non établi | Citation bibliographique primaire confirmée ; page de titre et année de soutenance non vérifiées |
 | 2 | Mohammadi & Brun 2006 (C. R. Mécanique) | **Papier relu intégralement** (PDF libre, archive ouverte Académie des sciences) | Résumés verbatim, définition complète de la pseudo-distance, benchmark de coût 10³–10⁴, adjoint Tapenade, références internes |
 | 3 | Mohammadi, Brun & Pironneau 2006 (chapitre) | Non localisé | Citation exacte via bibliographie du papier n° 7 |
 | 4 | Brun & Mohammadi 2008 (Springer, chap. 14) | Chapitre fourni par l'auteur ; relais public ResearchGate | Résumé + pages 245–246 (OCR) : introduction et début de la section ROM |
@@ -21,12 +21,12 @@ Points notables de cette campagne de relecture : la source n° 6 s'est révélé
 
 ## 1. Fiche — J.-M. Brun (thèse citée comme 2007), thèse de doctorat
 
-**Référence provisoire.** Brun, J.-M. *Modélisation à complexité réduite de la dérive*. Thèse de doctorat, Université Montpellier II. L'article primaire de Mohammadi & Brun (2006) la cite en 2007 ; certaines bibliographies secondaires donnent 2006. Retenir 2007 comme année citée par la source primaire jusqu'à vérification de la page de titre.
+**Référence selon la source primaire.** Brun, J.-M. *Modélisation à complexité réduite de la dérive*. Thèse, Université Montpellier II, citée en 2007 dans la bibliographie de l'article primaire de Mohammadi & Brun (2006). Cette source établit le libellé de la référence citée, mais ne vérifie pas indépendamment la page de titre ni l'année de soutenance. Certaines bibliographies secondaires donnent 2006 et un autre titre ; le texte intégral n'a pas été localisé dans les sources consultées.
 
 **Statut d'accès.** Non localisée dans les recherches consignées (theses.fr, HAL, moteur général) ; cela ne prouve pas qu'elle n'a jamais été numérisée ni déposée. Le document papier est indiqué comme étant en possession de l'auteur. Action roadmap : vérifier les métadonnées et les droits, puis envisager un dépôt HAL.
 
 **Ce que l'on sait par recoupement (sources vérifiables).**
-- Le titre est cité sous la forme « Modélisation à complexité réduite de la dérive ». L'année est contradictoire : l'article primaire de Mohammadi & Brun (2006) cite la thèse comme 2007, tandis que certaines bibliographies secondaires la donnent comme 2006. L'année de soutenance et l'intitulé officiel doivent être contrôlés sur la page de titre ou une notice institutionnelle.
+- L'article primaire de Mohammadi & Brun (2006) cite « J.-M. Brun, Modélisation à complexité réduite de la dérive, Thèse université Montpellier II, 2007 ». Certaines bibliographies secondaires donnent 2006 et un autre titre. La divergence concerne donc les métadonnées rapportées par les sources ; seule la page de titre ou une notice institutionnelle fiable pourrait établir l'intitulé officiel et l'année de soutenance.
 - Le résumé du C. R. Mécanique 2006 (source n° 2, mêmes auteurs, même année) décrit le contenu scientifique contemporain de la thèse : assimilation de données partielles, solutions de similitude dans une métrique non symétrique basée sur les temps de transport, sans EDP ni maillage, évaluation ponctuelle.
 - Le chapitre 2008 (source n° 4) précise que la hiérarchie multi-niveaux traite « du rang de plants de vigne aux bassins versants », avec le champ proche de la buse construit à partir d'observations expérimentales — soit la partie viticulture/ITAP du travail de thèse.
 
@@ -155,12 +155,12 @@ La lecture croisée du chapitre Brun & Mohammadi (2008) et du manuscrit Bozon, S
 ## 8. Découvertes bibliographiques de cette revue
 
 1. **Version journal JESA 2010 du papier plateforme** : *Journal Européen des Systèmes Automatisés* 44(4-5), 445–461, DOI 10.3166/jesa.44.445-461 — DOI vérifié (il résout vers la page revue, accès réservé) ; vol/pages/année confirmés par la notice ResearchGate de la publication. Ajoutée à <code>references.md</code> et <code>site/references.qmd</code>.
-2. **Titre de la thèse** cité dans deux bibliographies secondaires : « Modélisation à complexité réduite de la dérive ». L'année 2006 n'est pas établie : l'article primaire de 2006 la cite comme 2007 (voir §1).
+2. **Référence de la thèse.** L'article primaire de 2006 cite le titre « Modélisation à complexité réduite de la dérive », l'Université Montpellier II et l'année 2007 (voir §1). Des sources secondaires divergent ; la citation primaire ne remplace pas la vérification de la page de titre.
 3. **Lignée méthodologique confirmée** : les bibliographies des sources 4, 6 et 7 pointent toutes vers Borouchaki–George–Mohammadi 1997 (métriques de maillage), Mohammadi–Pironneau (k-epsilon, Applied Shape Optimization 2001) — la matrice intellectuelle « métrique + optimisation de forme + sensibilité » du projet est ainsi traçable dans les sources elles-mêmes.
 4. **Commanditaires académiques du papier plateforme** : affiliations Cemagref–UMR ITAP, Montpellier SupAgro–UMR ITAP et Université Montpellier 2–UMR5149 (I3M) — documentées pour la fiche « héritage » du site.
 
 5. **Soumission IJNMF jamais retrouvée** : la bibliographie du CR 2006 cite « B. Mohammadi, J.-M. Brun, Reduced-order geometrical modelling of dispersion, Int. J. Num. Meth. Fluids, 2006, submitted for publication » — aucune trace d'une publication sous ce titre n'a été trouvée (publication abandonnée, retitrée, ou jamais parue ?). À clarifier de mémoire d'auteur ; ce serait une huitième source potentielle du corpus.
-6. **Année de la thèse — discordance de citation** : l'article primaire de 2006 cite la thèse comme **2007**, tandis que certaines bibliographies secondaires indiquent 2006. Vérifier la page de titre ou une notice institutionnelle avant dépôt HAL.
+6. **Année de la thèse — discordance entre sources** : l'article primaire de 2006 cite **2007**, tandis que certaines bibliographies secondaires indiquent 2006. Traiter 2007 comme l'année de la référence bibliographique citée, pas comme année de soutenance indépendamment vérifiée ; vérifier la page de titre ou une notice institutionnelle avant de figer cette dernière.
 7. **Chaîne adjointe historique** : en 2006, le gradient était produit par différentiation automatique inverse via **Tapenade** (INRIA) — l'adjoint « analytique et gratuit » revendiqué ensuite s'est construit sur cette base.
 8. **Meilleur accès au CR 2006** : le PDF de l'article est en accès libre sur l'archive ouverte de l'Académie des sciences (comptes-rendus.academie-sciences.fr) — lien ajouté aux bibliographies et extraction texte brute archivée dans <code>raw/extracts/</code>.
 
