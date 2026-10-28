@@ -143,6 +143,30 @@ def test_la_region_avec_contient_la_region_sans() -> None:
                 assert c_avec >= scenario.seuil
 
 
+def test_la_grille_respecte_une_fenetre_non_carree(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Le nombre de cellules suit séparément largeur et hauteur de la fenêtre."""
+    scenario = replace(
+        SCENARIO_DEFAUT,
+        collines=(
+            CollineGaussienne(centre=(1000.0, 600.0), hauteur=40.0, echelle=90.0),
+            CollineGaussienne(centre=(1000.0, 400.0), hauteur=35.0, echelle=60.0),
+        ),
+        source=(1000.0, 900.0),
+        fenetre=Rectangle(coin=(0.0, 0.0), largeur=2000.0, hauteur=1000.0),
+    )
+    monkeypatch.setattr(
+        "jdriftx.experiences.relief.concentrations_au_point",
+        lambda _scenario, _x, _y: (1.0, 1.0),
+    )
+
+    resultat = resoudre_scenario(scenario)
+
+    nombre_x = int(scenario.fenetre.largeur / 50.0) + 1
+    nombre_y = int(scenario.fenetre.hauteur / 50.0) + 1
+    assert resultat.cellules_sans == nombre_x * nombre_y
+    assert resultat.cellules_avec == nombre_x * nombre_y
+
+
 def test_les_valeurs_du_scenario_defaut_sont_reproductibles() -> None:
     """Les agrégats du scénario par défaut sont déterministes et documentés."""
     resultat = resoudre_scenario(SCENARIO_DEFAUT)
