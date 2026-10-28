@@ -106,55 +106,41 @@ La page officielle (snapshot du 8 juin 2026) précise le périmètre de l'archiv
 | Moyenne | Télécharger ERIES (xlsx, txt, Matlab) et vérifier unités et incertitudes chiffrées | Fichiers non inspectés |
 | Moyenne | Fixer et documenter les partitions calibrage/évaluation ci-dessus | À figer avant tout entraînement |
 
-### Procédure reproductible — récupérer un fichier DIFLU sans télécharger les archives complètes
+### Procédure reproductible — téléchargement local des fichiers DIFLU
 
-Cette procédure est documentée mais **n’a pas pu être exécutée depuis l’environnement de rédaction** (résolution DNS/réseau externe indisponible). Elle doit être exécutée depuis une machine disposant d’un accès réseau. Elle cible d’abord le fichier tabulaire des prélèvements, sans télécharger les archives ZIP de ~381 Mo.
+Le script [`scripts/download_diflu.py`](../scripts/download_diflu.py) utilise uniquement la bibliothèque standard Python. Il interroge l'API native Dataverse, résout les identifiants des fichiers par leur nom (sans coder en dur des identifiants susceptibles de changer), télécharge les fichiers sélectionnés, vérifie la taille annoncée lorsqu'elle est disponible et produit des empreintes SHA-256 ainsi qu'un manifeste JSON.
 
-Prérequis : `curl`, `jq` et `sha256sum` (ou `shasum -a 256` sur macOS).
+**Le téléchargement n'a pas été exécuté depuis l'environnement de rédaction** : il faut donc lancer et vérifier le script depuis une machine disposant d'un accès réseau à Recherche Data Gouv. Le dépôt ne contient pas les données brutes. Elles sont écrites dans `data/raw/diflu/`, répertoire ignoré par Git.
+
+Depuis la racine du dépôt :
 
 ```bash
-set -euo pipefail
+# Lister les fichiers et leurs identifiants/taille annoncés par l'API, sans télécharger les mesures.
+uv run python scripts/download_diflu.py --list
 
-BASE='https://entrepot.recherche.data.gouv.fr'
-DATASET_PID='doi:10.57745/A9YC3C'
-FILE_NAME='DIFLU_helium_release_sampling.tab'
+# Télécharger le sous-ensemble initial pour l'audit : prélèvements, dictionnaire,
+# localisation/métadonnées des instruments et deux fichiers de suivi ambiant.
+uv run python scripts/download_diflu.py
 
-# Enregistrer la réponse API qui décrit les fichiers de la version publiée.
-curl --fail --location --show-error \
-  --get "$BASE/api/datasets/:persistentId/versions/:latest/files" \
-  --data-urlencode "persistentId=$DATASET_PID" \
-  --output diflu-files.json
-
-# Extraire l'identifiant Dataverse du fichier nommé, sans deviner son DOI.
-FILE_ID="$(jq -er --arg name "$FILE_NAME" '
-  [.data[] | select(.dataFile.filename == $name) | .dataFile.id]
-  | if length == 1 then .[0]
-    elif length == 0 then error("File not found: " + $name)
-    else error("Ambiguous filename; inspect diflu-files.json: " + $name)
-    end
-' diflu-files.json)"
-
-# Télécharger le fichier ciblé, puis conserver une empreinte locale.
-curl --fail --location --show-error \
-  "$BASE/api/access/datafile/$FILE_ID" \
-  --output "$FILE_NAME"
-
-if command -v sha256sum >/dev/null 2>&1; then
-  sha256sum "$FILE_NAME" | tee "$FILE_NAME.sha256"
-elif command -v shasum >/dev/null 2>&1; then
-  shasum -a 256 "$FILE_NAME" | tee "$FILE_NAME.sha256"
-else
-  printf "Need sha256sum or shasum to calculate SHA-256\n" >&2
-  exit 1
-fi
-wc -c "$FILE_NAME"
+# Optionnel : télécharger tous les fichiers annoncés par la version courante.
+# Attention : les archives originales représentent environ 381 Mo.
+uv run python scripts/download_diflu.py --all
 ```
 
-Si la requête API ou le filtre échoue, conserver le code HTTP, le corps d’erreur et la réponse JSON obtenue ; ne pas remplacer silencieusement l’identifiant ni considérer un fichier d’erreur comme les données. Le manifeste `diflu-files.json`, le fichier téléchargé, son empreinte et la date d’accès doivent être archivés ensemble. L’empreinte SHA-256 prouve l’identité des octets conservés pour les analyses ultérieures, pas l’exactitude scientifique des données.
+Le téléchargement par défaut cible :
 
-Après téléchargement, contrôler le statut HTTP, le type et la taille du fichier, l’encodage et le séparateur, puis examiner les en-têtes, unités, horodatages, identifiants d’expérience, valeurs manquantes et limites de détection. Cette seule table ne suffit pas à vérifier la cohérence avec les mesures météorologiques : télécharger ensuite uniquement les fichiers météo/instrument nécessaires, selon le même mécanisme. La valeur 19 ne doit être interprétée comme un nombre d’essais que si un champ et sa sémantique l’établissent explicitement.
+- `DIFLU_helium_release_sampling.tab` — mesures d'échantillonnage ;
+- `DIFLU_media_dictionary.tab` — dictionnaire des milieux ;
+- `DIFLU_instrument_locations.tab` et `DIFLU_instrument_metadata.tab` ;
+- `DIFLU_helium_ambient_real_time_ASM_1.tab` et `DIFLU_helium_ambient_real_time_ASM_2.tab`.
 
-Référence API : [FAQ officielle Recherche Data Gouv — accès aux fichiers par API](https://recherche.data.gouv.fr/fr/faq) ; [documentation de l’API native Dataverse — liste des fichiers d’une version](https://guides.dataverse.org/en/latest/api/native-api.html).
+Le script enregistre la réponse de listing API (`diflu-files.json`), les fichiers téléchargés, les fichiers `.sha256` et un `manifest.json` indiquant la date UTC, l'URL source, les tailles et les SHA-256. Il refuse les noms absents ou ambigus et les réponses qui ressemblent à des pages HTML/erreurs JSON. En cas d'écart entre la taille annoncée par l'API et les octets reçus, il **n'accepte pas** le fichier sous son nom canonique : il préserve le contenu reçu sous `NOM.size-mismatch` et les en-têtes/métadonnées dans `NOM.size-mismatch.json`, puis s'arrête avec une erreur explicite. Si l'API a évolué, commencer par `--list`, conserver la réponse API et adapter explicitement la liste des fichiers ; ne pas renommer un fichier inconnu pour faire passer l'étape.
+
+**Ne pas committer les données brutes** dans le dépôt : conserver les fichiers localement ou dans un stockage de données adapté, et partager le manifeste de provenance sans les octets des fichiers. Les empreintes identifient les octets conservés, mais ne démontrent ni la validité scientifique ni l'exhaustivité des mesures.
+
+Après récupération, vérifier le séparateur, l'encodage, les en-têtes, unités, horodatages, identifiants d'expérience, valeurs manquantes et limites de détection. Compléter ensuite le téléchargement avec les fichiers météorologiques nécessaires identifiés dans le listing, puis réconcilier les observations avec les 15 expériences annoncées par l'article. Ne pas interpréter les 19 lignes du dictionnaire comme 19 essais.
+
+Références : [FAQ officielle Recherche Data Gouv — accès aux fichiers par API](https://recherche.data.gouv.fr/fr/faq) ; [documentation de l'API native Dataverse](https://guides.dataverse.org/en/latest/api/native-api.html) ; [API d'accès aux fichiers Dataverse](https://guides.dataverse.org/en/latest/api/dataaccess.html).
 
 ## Sources de l'audit (consultées le 23 octobre 2026)
 

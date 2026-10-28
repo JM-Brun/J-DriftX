@@ -22,3 +22,6 @@ site/.quarto/
 .idea/
 .DS_Store
 /.serena/
+
+# Downloaded research data (keep raw corpus out of Git)
+/data/raw/
