@@ -59,7 +59,7 @@ Le coût d'une simulation se chiffre en (nombre de cellules) × (nombre de pas d
 
 - chaque scénario (météo, émission, terrain) exige une **simulation complète** : changer un paramètre, c'est tout recalculer ;
 - le **champ entier** est calculé même si un seul point est demandé ;
-- le **Monte Carlo massif**, l'analyse de sensibilité par perturbations et l'assimilation itérative deviennent hors de portée pour les usages visés (SIG, temps réel) — c'est l'argument fondateur de la page [Modèle direct](modele-direct.qmd) ;
+- le **Monte Carlo massif**, l'analyse de sensibilité par perturbations et l'assimilation itérative peuvent devenir coûteux lorsque chaque scénario exige une résolution complète ; leur faisabilité pour les usages visés (SIG, temps réel) dépend toutefois du domaine, du solveur, des ressources et du nombre de scénarios, et doit être mesurée plutôt que déclarée impossible a priori — voir la page [Modèle direct](modele-direct.qmd) ;
 - le **problème inverse** (identification de source) exige en outre le modèle **adjoint** du solveur — historiquement obtenu par différentiation automatique (Tapenade), au prix d'un développement considérable.
 
 ## Ce que la modélisation complète apporte en retour
