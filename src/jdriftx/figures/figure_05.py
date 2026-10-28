@@ -207,7 +207,10 @@ def render_figure_05_svg() -> str:
     hauteur_txt = f"{scenario.hauteur_source:.0f}"
     axe_txt = f"{resultat.altitude_axe:.1f}"
     evaluation_txt = f"{scenario.hauteur_evaluation:.0f}"
-    ligne_geometrie = f"h = {hauteur_txt} m ; axe à {axe_txt} m ; point à {evaluation_txt} m du sol."
+    ligne_geometrie = (
+        f"h = {hauteur_txt} m ; axe à {axe_txt} m ; "
+        f"point à {evaluation_txt} m du sol."
+    )
     ligne_seuil = f"Seuil : {scenario.seuil:.1e} kg m⁻³"
     surface_sans_txt = _entier_espace(int(resultat.surface_region_sans))
     ligne_sans = f"Région sans : {surface_sans_txt} m² ({resultat.cellules_sans} cellules)"
@@ -303,7 +306,12 @@ def render_figure_05_svg() -> str:
             "Hors des collines, les cartes coïncident ; la correction n'ajoute",
             size=15,
         ),
-        _text(745.0, 728.0, "des cellules qu'aux crêtes, et l'effet décroît quand σz croît.", size=15),
+        _text(
+            745.0,
+            728.0,
+            "des cellules qu'aux crêtes, et l'effet décroît quand σz croît.",
+            size=15,
+        ),
         _text(
             30.0,
             765.0,
@@ -313,6 +321,4 @@ def render_figure_05_svg() -> str:
         ),
         "</svg>",
     ]
-    return "
-".join(elements) + "
-"
+    return "\n".join(elements) + "\n"
