@@ -3,8 +3,8 @@
 ## Fichier
 
 - PDF actuellement présent : <code>../2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf</code> (le renommage est déjà effectif ; <code>PDF.js viewer.pdf</code> est l'ancien nom de téléchargement).
-- Attention : **extrait de 2 pages seulement** (p. 245–246), généré depuis un visualiseur PDF ; le chapitre complet est désormais disponible via le recueil Glowinski & Neittaanmäki 2008 ajouté dans <code>raw/</code> le 23 octobre 2026 (fiche : <code>fiches/2008-glowinski-neittaanmaki-recueil-springer.md</code>)
-- Extraction : pas de transcription OCR intégrale vérifiée du chapitre. Des notes analytiques existent dans <code>../extracts/2008-brun-mohammadi-springer-chap14-notes.txt</code> et sont croisées avec la revue du corpus. Le PDF séparé ne couvre que les pages 245–246 ; le recueil complet présent sur `main` permet théoriquement de consulter les pages 245–256, sous réserve de l'arbitrage sur les droits.
+- Attention : **extrait de 2 pages seulement** (p. 245–246), généré depuis un visualiseur PDF ; le recueil complet Glowinski & Neittaanmäki 2008 n'est plus versionné dans <code>raw/</code> après la PR #67. La fiche de provenance historique conserve la référence bibliographique, pas le binaire.
+- Extraction : pas de transcription OCR intégrale vérifiée du chapitre. Des notes analytiques existent dans <code>../extracts/2008-brun-mohammadi-springer-chap14-notes.txt</code> et sont croisées avec la revue du corpus. Le PDF local ne couvre que les pages 245–246 ; les pages 247–256 restent à examiner à partir d'une source légalement accessible.
 
 ## Référence
 
@@ -23,7 +23,7 @@ Brun, J.-M. & Mohammadi, B. (2008). « Reduced-Order Modelling of Dispersion ».
 
 ## Valeur pour J-DriftX
 
-Cahier des charges scientifique du noyau : multi-niveaux avec entrée/sortie de sous-couche, métrique τ non symétrique, quatre contraintes physiques (deux déjà testées dans le socle : conservation, non-symétrie), sensibilité/identification de source. Les pages restantes (exemples numériques, analyse de sensibilité) sont la prochaine extraction à faire — désormais possible depuis le recueil complet ajouté dans <code>raw/</code> (voir la fiche du recueil).
+Cahier des charges scientifique du noyau : multi-niveaux avec entrée/sortie de sous-couche, métrique τ non symétrique, quatre contraintes physiques (deux déjà testées dans le socle : conservation, non-symétrie), sensibilité/identification de source. Les pages restantes (exemples numériques, analyse de sensibilité) restent à examiner à partir d'une source légalement accessible ; le recueil complet n'est plus versionné (voir la fiche de provenance historique).
 
 ## Pour aller plus loin
 
