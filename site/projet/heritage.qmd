@@ -37,6 +37,8 @@ Le chapitre Springer 2008 [@brun2008] — *Reduced-Order Modelling of Dispersion
 
 ## Lecture guidée du chapitre Springer (2008)
 
+![Schéma original de synthèse reliant la réduction a priori, le champ de vent et le relief, l'identification inverse et les résultats numériques. Il s'agit d'une illustration conceptuelle, pas d'une figure extraite du manuscrit ni de résultats issus de données.](../images/springer-2008-correspondance.svg){#fig-springer-2008-correspondance fig-cap="Correspondance conceptuelle avec les sections 2 à 4 du chapitre de 2008."}
+
 Le chapitre complet est consultable dans le [recueil Springer *Partial Differential Equations: Modelling and Numerical Simulation* (2008)](https://www.sgo.fi/~j/baylie/Partial%20Differential%20Equations%20-%20Modelling%20and%20Numerical%20Simulation%20-%20R.%20Glowinski,%20P.%20Neittaanmaki%20(Springer,%202008)%20WW.pdf), chapitre « Reduced-Order Modelling of Dispersion », p. 245–255. La correspondance ci-dessous sert à retrouver le raisonnement historique dans la documentation J-DriftX ; elle ne signifie pas que toutes les composantes historiques sont déjà réimplémentées.
 
 | Chapitre 2008 | Rôle dans la méthode historique | Pages J-DriftX correspondantes | État dans la reprise |
