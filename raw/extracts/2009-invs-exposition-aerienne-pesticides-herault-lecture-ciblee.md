@@ -39,8 +39,20 @@ Sources précises : tableau 2, p. imprimée 12 (parseur PDF page 12) ; tableau 3
 - Les mesures sont ponctuelles, propres à certaines molécules et fenêtres de prélèvement. Elles ne forment pas, en l'état, un benchmark générique de dispersion atmosphérique ni une vérité terrain directement comparable à la sortie d'un modèle sans reconstruire le protocole, la géométrie des sites, les conditions météo et les incertitudes.
 - Les résultats sanitaires/toxicologiques ne sont pas repris ici ; cette note porte uniquement sur le protocole de mesure et les valeurs de concentration utiles à l'audit scientifique.
 
+## Décision d'applicabilité pour J-DriftX
+
+**Verdict actuel : contexte de plausibilité seulement ; exclu de tout benchmark quantitatif du MVP.**
+
+Motifs :
+- Les valeurs relevées sont des concentrations ambiantes de substances spécifiques, exprimées en ng/m³, issues de fenêtres d'échantillonnage et de sites réels. Elles ne sont pas encore reliées à un terme source quantifié et reproductible, à des conditions météorologiques complètes et synchronisées, ni à une incertitude de mesure suffisamment caractérisée pour reconstruire un cas de calcul.
+- La présence de plusieurs substances et l'observation de concentrations hors période de traitement montrent qu'une attribution causale à un épandage local ne peut pas être supposée.
+- Les valeurs ponctuelles extraites ici ne définissent ni une série complète, ni un protocole d'évaluation indépendant, ni une baseline. Les comparer directement à une sortie de J-DriftX donnerait une impression de validation non justifiée.
+- Le rapport pourrait redevenir pertinent pour une **étude de cas exploratoire** uniquement si l'on reconstruit au minimum la fenêtre temporelle de prélèvement, la géométrie et la localisation des sources, les conditions météo pertinentes, les propriétés de la substance et les incertitudes. Cette reconstruction n'est pas faite.
+
+Cette décision est indépendante de l'identité du PDF local : elle porte sur les informations effectivement extraites du PDF officiel consulté. La vérification de provenance du binaire local reste ouverte.
+
 ## Suite recommandée
 
 1. Comparer par SHA-256 le PDF local et le téléchargement officiel avant de qualifier la copie locale d'identique.
 2. Extraire l'intégralité du PDF local avec un outil déterministe, puis vérifier manuellement les tableaux et unités.
-3. Décider si les métadonnées disponibles suffisent pour une étude de cas de plausibilité, sans prétendre à une validation quantitative complète de J-DriftX.
+3. Ne reconsidérer le rapport comme étude de cas que si les données nécessaires à la reconstruction du protocole sont disponibles ; ne pas le traiter comme une validation quantitative du MVP sur la base des valeurs de cette note.
