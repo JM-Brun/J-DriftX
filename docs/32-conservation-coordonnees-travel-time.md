@@ -115,7 +115,59 @@ d_A(x,y)=\frac{x-x_A}{v(y_A)},
 \]
 For non-constant \(v\), the last expression is not identically one. Therefore this projected cost cannot simply be substituted for a global travel-time coordinate in (3)–(5).
 
-## 6. What remains to be established from the primary model
+## 6. Primary-source transcription and dimensional audit (2009 article)
+
+The publisher's open-access HTML for Bozon & Mohammadi (2009), *Applied Geomatics*, exposes the following statements and equations directly. They are transcribed here as printed; no suspected typo is silently repaired.
+
+### Published definitions
+
+The paper states that the total injected quantity over \\( [0,T] \\) is
+\\[
+K=\\int_0^T c_{\\rm inj}(t)\\,dt. \\tag{29}
+\\]
+It then defines the amount reaching the ground by
+\\[
+C_g(x,y)=\\int_{z\\leq z_0} c(x,y,z)\\,dz, \\tag{30}
+\\]
+and the amount remaining in the atmosphere beyond source distance \\(R_0\\) by
+\\[
+C_a=K-\\int_{R\\geq R_0} C_g(x,y)\\,dV, \\tag{31}
+\\]
+with \\(R=\\sqrt{x^2+y^2}\\). The printed integration element in Eq. (31) is \\(dV\\), not \\(dx\\,dy\\).
+
+### Dimensional audit under the conventional interpretation
+
+Assume, provisionally, that \\(c\\) is a volumetric mass concentration with units \\([M L^{-3}]\\), and that \\(c_{\\rm inj}\\) is a mass emission rate with units \\([M T^{-1}]\\). Then:
+
+| Quantity | Printed definition | Implied units | Assessment |
+|---|---|---|---|
+| \\(K\\) | \\(\\int c_{\\rm inj}(t)dt\\) | \\([M]\\) | Consistent with total emitted mass under the stated assumption |
+| \\(C_g\\) | \\(\\int c\\,dz\\) | \\([M L^{-2}]\\) | Areal mass density after vertical integration |
+| \\(\\int C_g\\,dV\\) in Eq. (31) | Integrates \\(C_g\\) against a volume element | \\([M L]\\) | **Dimensionally inconsistent with \\(K\\)** under this interpretation |
+| \\(\\int C_g\\,dx\\,dy\\) | Not what the paper prints | \\([M]\\) | Would be dimensionally compatible, but is only a possible correction, not an established authorial intent |
+
+The same paper's Eq. (28) states that the “total mass” in a subdomain satisfies
+\\[
+\\int_{\\omega^i} c^i\\,dV
+=
+\\int_{\\partial\\omega^i}
+c^i\\left(\\frac{\\vec u^i}{\\|\\vec u^i\\|}\\cdot\\vec n^i\\right)dS.
+\\tag{28}
+\\]
+With \\(c^i\\) interpreted as a volumetric concentration, the left side has units of mass, while the right side has units of mass per length: the normalized velocity and normal are dimensionless, leaving concentration times area. This is another dimensional mismatch as printed. The later Eqs. (38)–(40) also define an incoming quantity through an average of concentration multiplied by a dimensionless directional factor, then equate it to a volume integral of concentration; those expressions likewise need a clarification of the intended units/normalization.
+
+### What this establishes—and what it does not
+
+- **Established from the publisher text:** the equations above are printed in the 2009 article; the apparent unit mismatches are reproducible from their displayed definitions.
+- **Established conditionally:** under the conventional volumetric-concentration interpretation, Eqs. (28), (31), and the Eqs. (38)–(40) sequence are not dimensionally homogeneous as printed.
+- **Not established:** whether this reflects typographical errors, a nonstandard definition of \\(c\\), omitted normalization, or a deeper derivation issue. The text alone does not decide among these explanations.
+- **Not authorized:** silently replacing \\(dV\\) with \\(dx\\,dy\\), inserting a velocity factor, or treating the published equations as a validated mass-conservation proof.
+
+The article does describe the global velocity construction as divergence-free and presents conservation as a constraint, but divergence-free velocity alone does not imply conservation of a passive scalar. The displayed equations require a consistent scalar definition and measure before they can be used as a physical mass balance.
+
+The official 2006 article is available from *Comptes Rendus Mécanique* (DOI \\([10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007)\\)); its publisher PDF could not be retrieved through the current source interface for a reliable equation-by-equation transcription. The 2008 Springer chapter's full publisher text is also not available in the accessible record. Therefore, the 2009 transcription above must not be presented as if it resolved the exact notation in the 2006 paper or the 2008 chapter.
+
+## 7. What remains to be established from the primary model
 
 A complete historical reconstruction still requires the equations and assumptions of the near-/far-field model, not only the general balance law above.
 
@@ -130,13 +182,13 @@ A complete historical reconstruction still requires the equations and assumption
 | Treatment of source/sink, diffusion, deposition, ground reflection and open boundaries in the historical model | **Still to reconstruct** |
 | Correction factor printed as “2/3 = 0.636” in the accessible Bozon, Sinfort & Mohammadi (2010) manuscript; a related published paper by Bozon & Mohammadi (2009) also prints it | **Arithmetic inconsistency confirmed in published text**: $2/3 \approx 0.667$, whereas $0.636 \approx 2/\pi$. The 2009 paper describes the factor as a stochastic averaged cosine, but does not provide a formal derivation on the accessible page. This supports—but does not prove—the inference that $2/\pi$ was intended. Whether the same expression appears in Brun & Mohammadi (2008) remains unverified; do not silently rewrite any source. |
 
-## 7. Decision and next evidence required
+## 8. Decision and next evidence required
 
 This derivation establishes a conditional conservation statement for a regular coordinate chart; it does **not** validate the historical model or prove a universal iso-\(\tau\) conservation claim.
 
 To resolve the historical question:
 
-1. Transcribe the governing near-/far-field equations and definitions from Mohammadi & Brun (2006, §3) and Brun & Mohammadi (2008, §2.2), preserving their notation.
+1. Obtain verifiable full text for Mohammadi & Brun (2006, §3) and Brun & Mohammadi (2008, §2.2); transcribe their governing near-/far-field equations and definitions verbatim, preserving notation. The 2009 publisher equations above are a separate related source, not a substitute.
 2. Recover and inspect the thesis or an authoritative implementation if available; verify bibliographic metadata separately.
 3. Identify precisely what \(c^+\) and \(C\) denote, their units, and their integration domains.
 4. Derive the specific coordinate map and its Jacobian only if the historical equations define a regular map on the stated domain.
