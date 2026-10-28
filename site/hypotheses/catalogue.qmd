@@ -169,7 +169,7 @@ Le tableau récapitule les points d'application et les tests ; la [carte des niv
 | H1 | [Modèle direct](../theorie/modele-direct.qmd), contraintes | linéarité (test ciblé : un point, précision machine) |
 | H2 | [Similitude](../theorie/similitude.qmd) | benchmarks gaussiens |
 | H3, H4 | [Métrique](../theorie/metrique-travel-time.qmd) | garde umin (implémentée) ; divergence nulle : testée sur les champs analytiques à fonction de courant ([contraintes physiques](../theorie/contraintes-physiques.qmd)), hypothèse multi-niveaux historique non testée |
-| H5 | Métrique, multi-niveaux | assemblage par segments (mécanisme implémenté), paramètres par morceaux : à venir (jalon M2) |
+| H5 | Métrique, multi-niveaux | assemblage par segments (mécanisme implémenté), paramètres par morceaux : non implémentés ; aucun jalon attribué dans la roadmap actuelle |
 | H6 | [Réduction a priori](../theorie/reduction-a-priori.qmd) | estimateur d'erreur (jalon M2) |
 | H7 | [Assimilation](../theorie/assimilation-identification.qmd) | calibration bayésienne (jalon M3) |
 | H8 | [Contraintes](../theorie/contraintes-physiques.qmd) | superposition (test ciblé : un point ; bilans de masse à 0,1 %, y compris classes différentes) |
