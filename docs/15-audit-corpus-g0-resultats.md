@@ -6,7 +6,7 @@
 
 | Corpus | Piste | Verdict | Réserve principale |
 |---|---|---|---|
-| DIFLU | Champ proche (< 500 m) | **V** | La fiche actuelle du dépôt affiche la Licence Ouverte Etalab 2.0 ; vérifier la notice et trancher 19 lâchers catalogue vs 15 expériences du papier sur les fichiers |
+| DIFLU | Champ proche (< 500 m) | **V** | La fiche actuelle du dépôt affiche la Licence Ouverte Etalab 2.0 ; l’article décrit 15 expériences. La signification de la valeur 19 relevée dans des métadonnées indexées reste à identifier ; ne pas l’assimiler à des essais sans preuve |
 | NOAA DATEM | Far-field traceur | **V** | Campagnes anciennes et hétérogènes ; ETEX figure dans l'archive générale, mais est exclu de l'évaluation approfondie HYSPLIT |
 | ETEX (JRC) | Far-field continental | **V** | Deux lâchers indépendants seulement ; l'un doit être réservé comme test final (G3) |
 
@@ -23,10 +23,10 @@
 | 5. Observable et unités | Concentration d'hélium par échantillonnage discret et mesures continues (description Datacite) ; le papier associé dérive des coefficients de transfert atmosphérique | Conforme à l'observable primaire ratifié (b) ; unités à vérifier sur fichiers |
 | 6. Limites de détection | Discutées dans le papier associé | À vérifier sur fichiers |
 | 7. Données manquantes | — | À vérifier sur fichiers |
-| 8. Essais indépendants | Regroupement par lâcher obligatoire ; **19 lâchers annoncés par le catalogue, 15 expériences décrites dans le papier associé** (atmosphère instable, vent < 5 m s⁻¹) | Structure identifiable ; décompte exact à trancher sur fichiers |
+| 8. Essais indépendants | Regroupement par lâcher obligatoire ; **15 expériences décrites dans le papier associé** (atmosphère instable, vent < 5 m s⁻¹) ; la valeur 19 relevée dans des métadonnées indexées n’est pas établie comme nombre d’essais | Structure identifiable ; décompte exact à trancher sur fichiers |
 | 9. Reproductibilité des entrées | Terme source contrôlé + météo co-localisée + site documenté | Oui, en principe |
 
-**Verdict : V** (Licence Ouverte Etalab 2.0 affichée sur la fiche actuelle du dépôt ; conserver la preuve de licence avec l'inventaire). Le décompte des lâchers (19 au catalogue contre 15 dans le papier associé), les unités et les limites de détection restent à vérifier sur fichiers. Contexte : le papier associé compare déjà des panaches gaussiens (Doury, Briggs) aux mesures — utile pour la baseline gaussien simple du test discriminant.
+**Verdict : V** (Licence Ouverte Etalab 2.0 affichée sur la fiche actuelle du dépôt ; conserver la preuve de licence avec l'inventaire). La signification de la valeur 19 relevée dans des métadonnées indexées, les unités et les limites de détection restent à vérifier sur fichiers ; le papier atteste 15 expériences. Contexte : le papier associé compare déjà des panaches gaussiens (Doury, Briggs) aux mesures — utile pour la baseline gaussien simple du test discriminant.
 
 ## 2. NOAA DATEM — archive longue distance
 
@@ -63,7 +63,7 @@
 2. **Corpus principal du test discriminant : DIFLU** (champ proche, terme source contrôlé, météo co-localisée, observable conforme). **DATEM/ETEX** sont retenus en far-field pour la généralisation (G3).
 3. Prérequis G1 avant tout benchmark, sans entraînement de modèle :
    - télécharger DIFLU, conserver la fiche indiquant la Licence Ouverte Etalab 2.0 et vérifier les métadonnées des fichiers ;
-   - trancher le décompte des lâchers (19 annoncés vs 15 décrits) et documenter unités, limites de détection, données manquantes ;
+   - identifier le champ source de la valeur 19 sans l’assimiler à des essais, puis documenter unités, limites de détection et données manquantes ;
    - fixer la partition calibrage/évaluation par lâcher (jamais par point de mesure isolé) ;
    - réserver un lâcher ETEX (ou un sous-ensemble disjoint) comme test final jamais utilisé pour le calibrage.
 
