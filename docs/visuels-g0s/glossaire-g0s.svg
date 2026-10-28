@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="940" viewBox="0 0 1440 940" role="img" aria-labelledby="title desc">
 <title id="title">Temps de parcours dirigés : semi-groupe, première arrivée et projection en 2D</title>
-<desc id="desc">Schéma pédagogique des propriétés du flot autonome, du temps dirigé sur une orbite circulaire, du contre-exemple sans unicité et de la projection V2 en deux dimensions.</desc>
+<desc id="desc">Schéma pédagogique des propriétés du flot autonome, du temps dirigé sur une orbite circulaire, du contre-exemple sans unicité et de la projection T_proj en deux dimensions.</desc>
 <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#21834a"/></marker><marker id="redarrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#c43d3d"/></marker></defs>
 <rect width="1440" height="940" fill="#f7fafc"/>
 <text x="48" y="55" font-family="sans-serif" font-size="30" font-weight="700" fill="#14532d">J-DriftX — Comprendre les temps de parcours dirigés</text>
 <text x="48" y="85" font-family="sans-serif" font-size="16" fill="#40576b">Les schémas illustrent les hypothèses du glossaire ; ils ne remplacent ni les preuves ni les tests.</text>
 <!-- panel 1 -->
 <rect x="35" y="115" width="670" height="330" rx="14" fill="white" stroke="#9ac8a8" stroke-width="2"/>
-<text x="60" y="151" font-family="sans-serif" font-size="22" font-weight="700" fill="#21834a">1. Semi-groupe ⇒ inégalité triangulaire (V1)</text>
+<text x="60" y="151" font-family="sans-serif" font-size="22" font-weight="700" fill="#21834a">1. Semi-groupe ⇒ inégalité triangulaire (T_arr)</text>
 <text x="60" y="184" font-family="serif" font-size="19" fill="#17324d">X(s+t; A) = X(t; X(s; A))</text>
 <line x1="90" y1="248" x2="645" y2="248" stroke="#647b8e" stroke-width="2" marker-end="url(#arrow)"/>
 <circle cx="110" cy="248" r="7" fill="#21834a"/><circle cx="350" cy="248" r="7" fill="#2f9e44"/><circle cx="620" cy="248" r="7" fill="#c43d3d"/>
@@ -54,8 +54,8 @@
 <text x="1125" y="595" font-family="sans-serif" font-size="16" fill="#21834a">B = (2,1)</text>
 <text x="1125" y="702" font-family="sans-serif" font-size="16" fill="#c43d3d">C = (2,−1)</text>
 <text x="755" y="730" font-family="sans-serif" font-size="15" fill="#40576b">La projection de C sur la caractéristique y=1 passant par B est B.</text>
-<text x="755" y="752" font-family="sans-serif" font-size="15" font-weight="700" fill="#14532d">Donc V2(B,C)=0 malgré B ≠ C : la séparation échoue.</text>
+<text x="755" y="752" font-family="sans-serif" font-size="15" font-weight="700" fill="#14532d">Donc T_proj(B,C)=0 malgré B ≠ C : la séparation échoue.</text>
 <rect x="35" y="795" width="1370" height="105" rx="12" fill="#eaf6ec" stroke="#9ac8a8" stroke-width="1.5"/>
 <text x="60" y="831" font-family="sans-serif" font-size="19" font-weight="700" fill="#21834a">À retenir</text>
-<text x="60" y="860" font-family="sans-serif" font-size="16" fill="#17324d">Exemples illustratifs, non preuves. V1/V2 gardent leurs hypothèses ; aucun solveur général de champ variable n’est revendiqué.</text>
+<text x="60" y="860" font-family="sans-serif" font-size="16" fill="#17324d">Exemples illustratifs, non preuves. T_arr/T_proj gardent leurs hypothèses ; aucun solveur général de champ variable n’est revendiqué.</text>
 </svg>
