@@ -52,6 +52,10 @@ La CI refuse un registre où un type sémantique serait inconnu, ou où une arê
 
 Ce typage est aligné sur la source unique des statuts ([contraintes physiques](../theorie/contraintes-physiques.qmd)) et sur la [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) : une propriété du graphe ne porte jamais un statut plus favorable que celui de la carte des preuves.
 
+## Registre des preuves
+
+Pour le détail des relations propriété → tests, avec localisateurs et limites explicites, consulter le [registre de traçabilité des preuves](registre-preuves.qmd). Ce registre est une revue manuelle complémentaire : il ne transforme pas un test logiciel en preuve physique générale.
+
 ## Étendre la carte
 
 Éditer `site/data/graphe-connaissances.toml` (nœuds, arêtes, vues), puis :
