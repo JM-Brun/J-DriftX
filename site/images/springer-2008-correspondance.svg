@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
+<title id="title">Du modèle réduit à l’identification de source : architecture Drift-X historique</title>
+<desc id="desc">Quatre panneaux schématiques : réduction a priori et transport proche-lointain, champ de vent et relief, identification inverse, comparaison de résultats numériques. Schéma conceptuel, non issu de données mesurées.</desc>
+<defs>
+  <linearGradient id="plume" x1="0" x2="1"><stop offset="0" stop-color="#2563eb" stop-opacity=".18"/><stop offset=".55" stop-color="#06b6d4" stop-opacity=".6"/><stop offset="1" stop-color="#f59e0b" stop-opacity=".8"/></linearGradient>
+  <linearGradient id="terrain" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a3c98a"/><stop offset="1" stop-color="#3b7c69"/></linearGradient>
+  <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/></marker>
+  <style>
+    .panel{fill:#fff;stroke:#cbd5e1;stroke-width:2}.head{font:700 23px sans-serif;fill:#17365d}.sub{font:16px sans-serif;fill:#475569}.label{font:17px sans-serif;fill:#1e293b}.small{font:14px sans-serif;fill:#475569}.wind{stroke:#2563eb;stroke-width:3;fill:none;marker-end:url(#arrow)}.axis{stroke:#64748b;stroke-width:1.5;fill:none}
+  </style>
+</defs>
+<rect width="1200" height="640" rx="20" fill="#f8fafc"/>
+<text x="32" y="42" font-family="sans-serif" font-size="28" font-weight="700" fill="#17365d">J-DriftX — lecture guidée du chapitre Springer (2008)</text>
+<text x="32" y="69" class="sub">Schéma conceptuel des liens entre réduction, transport, identification et résultats — pas une reproduction des figures originales.</text>
+<!-- panel 1 -->
+<rect class="panel" x="24" y="92" width="566" height="245" rx="14"/>
+<text class="head" x="46" y="126">1 · Réduction a priori</text>
+<text class="sub" x="46" y="150">Champ proche → transport à longue distance</text>
+<path d="M50 282 Q120 235 190 260 T330 265 T560 279 L560 312 L50 312Z" fill="#dce7d5"/>
+<g stroke="#6b8f71" stroke-width="2"><path d="M70 282v-26m-8 8 8-8 8 8M108 275v-26m-8 8 8-8 8 8M146 270v-26m-8 8 8-8 8 8"/></g>
+<rect x="66" y="220" width="46" height="25" rx="4" fill="#64748b"/><circle cx="77" cy="248" r="7" fill="#334155"/><circle cx="101" cy="248" r="7" fill="#334155"/>
+<path d="M112 229 C170 204 205 214 253 229 C326 251 393 263 535 275 C407 291 316 278 246 256 C188 238 151 236 112 229Z" fill="url(#plume)"/>
+<path class="wind" d="M145 199 Q230 180 315 204"/><path class="wind" d="M215 215 Q330 214 438 242"/>
+<text class="label" x="50" y="184">Entrée physique</text><text class="small" x="50" y="324">Interface et hypothèses à expliciter</text>
+<text class="label" x="350" y="184">Profil approché</text>
+<!-- panel 2 -->
+<rect class="panel" x="610" y="92" width="566" height="245" rx="14"/>
+<text class="head" x="632" y="126">2 · Vent, temps de migration, relief</text>
+<text class="sub" x="632" y="150">Champ non uniforme et correction topographique</text>
+<path d="M634 285 L690 251 L739 268 L796 205 L843 226 L903 177 L955 220 L1020 193 L1150 279 L1150 311 L634 311Z" fill="url(#terrain)" stroke="#4b8068" stroke-width="2"/>
+<g class="wind"><path d="M660 206 Q738 180 812 204"/><path d="M728 229 Q822 197 906 214"/><path d="M845 250 Q938 221 1050 243"/></g>
+<path d="M664 288 C730 260 776 258 827 232 S941 205 1038 237" fill="none" stroke="#f59e0b" stroke-width="4" stroke-dasharray="8 6"/>
+<circle cx="664" cy="288" r="7" fill="#dc2626"/><circle cx="1038" cy="237" r="7" fill="#7c3aed"/>
+<text class="small" x="648" y="324">Source</text><text class="small" x="1000" y="324">Point cible</text>
+<!-- panel 3 -->
+<rect class="panel" x="24" y="356" width="566" height="245" rx="14"/>
+<text class="head" x="46" y="390">3 · Identification inverse</text>
+<text class="sub" x="46" y="414">Mesures partielles → paramètres et source candidate</text>
+<g fill="#dbeafe" stroke="#2563eb" stroke-width="2">
+<circle cx="90" cy="468" r="10"/><circle cx="145" cy="450" r="10"/><circle cx="188" cy="486" r="10"/><circle cx="130" cy="523" r="10"/><circle cx="211" cy="536" r="10"/><circle cx="245" cy="465" r="10"/>
+</g>
+<g stroke="#93c5fd" stroke-width="2"><path d="M90 468L145 450L188 486L130 523L211 536L245 465L188 486L90 468"/></g>
+<path d="M112 499 C134 468 167 470 195 493 C218 512 197 538 167 536 C139 534 122 521 112 499Z" fill="#f97316" opacity=".6"/>
+<path d="M159 499 l10 18 h-20z" fill="#dc2626"/>
+<text class="small" x="64" y="570">Capteurs</text><text class="small" x="162" y="570">Source candidate</text>
+<path class="axis" d="M310 544V446H554"/><path d="M318 466 C360 478 390 498 420 515 S488 533 544 538" fill="none" stroke="#2563eb" stroke-width="3"/><path d="M318 470 C363 489 395 510 427 525 S493 540 544 544" fill="none" stroke="#ea580c" stroke-width="3" stroke-dasharray="7 5"/>
+<text class="small" x="326" y="440">Résidu observé / prédit</text><text class="small" x="320" y="570">Itérations d’ajustement →</text>
+<!-- panel 4 -->
+<rect class="panel" x="610" y="356" width="566" height="245" rx="14"/>
+<text class="head" x="632" y="390">4 · Résultats numériques</text>
+<text class="sub" x="632" y="414">Illustrations historiques à distinguer d’une validation générale</text>
+<g transform="translate(642 444)">
+<rect width="220" height="120" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+<path d="M10 95 C40 70 55 48 82 52 S127 78 151 57 S186 32 210 30" fill="none" stroke="#2563eb" stroke-width="2"/>
+<path d="M10 105 C45 87 60 62 88 64 S128 90 158 70 S190 48 210 44" fill="none" stroke="#0891b2" stroke-width="2"/>
+<path d="M10 114 C45 101 64 80 90 78 S130 101 161 83 S190 64 210 58" fill="none" stroke="#f59e0b" stroke-width="2"/>
+<text class="small" x="12" y="18">Champ / panache schématique</text>
+</g>
+<g transform="translate(884 444)">
+<rect width="260" height="120" rx="8" fill="#eff6ff" stroke="#bfdbfe"/>
+<rect x="14" y="18" width="100" height="85" rx="5" fill="#dbeafe"/>
+<ellipse cx="64" cy="60" rx="35" ry="24" fill="#60a5fa"/><ellipse cx="64" cy="60" rx="23" ry="15" fill="#fbbf24"/><ellipse cx="64" cy="60" rx="10" ry="7" fill="#ef4444"/>
+<rect x="142" y="18" width="100" height="85" rx="5" fill="#dbeafe"/>
+<ellipse cx="192" cy="60" rx="34" ry="23" fill="#60a5fa"/><ellipse cx="192" cy="60" rx="22" ry="15" fill="#fbbf24"/><ellipse cx="192" cy="60" rx="10" ry="7" fill="#ef4444"/>
+<text class="small" x="30" y="115">EDP</text><text class="small" x="158" y="115">Modèle réduit</text>
+</g>
+<text class="small" x="632" y="584">Comparer erreur, domaine de validité, données et coût total — pas seulement l’aspect visuel.</text>
+</svg>
