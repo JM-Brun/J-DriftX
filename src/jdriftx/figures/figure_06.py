@@ -25,8 +25,8 @@ import math
 from html import escape
 
 from jdriftx.experiences.identification_source import (
-    ResultatIdentification,
     SCENARIO_DEFAUT,
+    ResultatIdentification,
     ScenarioIdentification,
     concentration,
     resoudre_scenario,

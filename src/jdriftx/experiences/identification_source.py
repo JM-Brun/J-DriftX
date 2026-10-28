@@ -359,8 +359,7 @@ def _cout_minimal(
         return cout_nul, 0.0
     produit = sum(r * c for r, c in zip(reponses, observees, strict=True))
     cout = cout_nul - (produit * produit) / norme
-    if cout < 0.0:
-        cout = 0.0
+    cout = max(cout, 0.0)
     return cout, produit / norme
 
 
