@@ -1,0 +1,324 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="780" viewBox="0 0 1100 780" role="img" aria-labelledby="title desc">
+<title id="title">Figure 4 : les champs s'ajoutent, pas les régions</title>
+<desc id="desc">Deux sources gaussiennes dans un champ de vent incompressible : contributions individuelles et somme.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="32.0" y="38.0" font-size="22" font-weight="bold" fill="#202833">Figure 4 — Deux sources : les champs s&#x27;ajoutent, pas les régions</text>
+<text x="32.0" y="66.0" font-size="16" font-weight="normal" fill="#202833">Deux sources gaussiennes dans un champ de vent incompressible : contributions individuelles et somme.</text>
+<defs>
+<marker id="flecheA" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#2c7a55"/></marker>
+<marker id="flecheB" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#2c7a55"/></marker>
+<marker id="flecheC" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#2c7a55"/></marker>
+<marker id="flecheM" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#202833"/></marker>
+</defs>
+<text x="35.0" y="92.0" font-size="16" font-weight="bold" fill="#202833">A. Source S1 seule</text>
+<rect x="30" y="100" width="330" height="330" fill="#f6f8f6" stroke="#d5dbe3" stroke-width="2"/>
+<line x1="45.0" y1="415.0" x2="53.9" y2="423.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="45.0" y1="375.0" x2="41.3" y2="396.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="45.0" y1="335.0" x2="36.1" y2="326.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="45.0" y1="295.0" x2="48.7" y2="273.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="45.0" y1="255.0" x2="53.9" y2="263.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="45.0" y1="215.0" x2="41.3" y2="236.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="45.0" y1="175.0" x2="36.1" y2="166.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="45.0" y1="135.0" x2="48.7" y2="113.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="85.0" y1="415.0" x2="106.5" y2="411.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="85.0" y1="375.0" x2="76.1" y2="366.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="85.0" y1="335.0" x2="63.5" y2="338.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="85.0" y1="295.0" x2="93.9" y2="303.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="85.0" y1="255.0" x2="106.5" y2="251.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="85.0" y1="215.0" x2="76.1" y2="206.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="85.0" y1="175.0" x2="63.5" y2="178.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="85.0" y1="135.0" x2="93.9" y2="143.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="125.0" y1="415.0" x2="116.1" y2="406.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="125.0" y1="375.0" x2="128.7" y2="353.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="125.0" y1="335.0" x2="133.9" y2="343.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="125.0" y1="295.0" x2="121.3" y2="316.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="125.0" y1="255.0" x2="116.1" y2="246.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="125.0" y1="215.0" x2="128.7" y2="193.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="125.0" y1="175.0" x2="133.9" y2="183.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="125.0" y1="135.0" x2="121.3" y2="156.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="165.0" y1="415.0" x2="143.5" y2="418.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="165.0" y1="375.0" x2="173.9" y2="383.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="165.0" y1="335.0" x2="186.5" y2="331.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="165.0" y1="295.0" x2="156.1" y2="286.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="165.0" y1="255.0" x2="143.5" y2="258.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="165.0" y1="215.0" x2="173.9" y2="223.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="165.0" y1="175.0" x2="186.5" y2="171.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="165.0" y1="135.0" x2="156.1" y2="126.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="205.0" y1="415.0" x2="213.9" y2="423.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="205.0" y1="375.0" x2="201.3" y2="396.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="205.0" y1="335.0" x2="196.1" y2="326.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="205.0" y1="295.0" x2="208.7" y2="273.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="205.0" y1="255.0" x2="213.9" y2="263.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="205.0" y1="215.0" x2="201.3" y2="236.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="205.0" y1="175.0" x2="196.1" y2="166.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="205.0" y1="135.0" x2="208.7" y2="113.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="245.0" y1="415.0" x2="266.5" y2="411.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="245.0" y1="375.0" x2="236.1" y2="366.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="245.0" y1="335.0" x2="223.5" y2="338.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="245.0" y1="295.0" x2="253.9" y2="303.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="245.0" y1="255.0" x2="266.5" y2="251.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="245.0" y1="215.0" x2="236.1" y2="206.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="245.0" y1="175.0" x2="223.5" y2="178.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="245.0" y1="135.0" x2="253.9" y2="143.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="285.0" y1="415.0" x2="276.1" y2="406.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="285.0" y1="375.0" x2="288.7" y2="353.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="285.0" y1="335.0" x2="293.9" y2="343.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="285.0" y1="295.0" x2="281.3" y2="316.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="285.0" y1="255.0" x2="276.1" y2="246.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="285.0" y1="215.0" x2="288.7" y2="193.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="285.0" y1="175.0" x2="293.9" y2="183.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="285.0" y1="135.0" x2="281.3" y2="156.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="325.0" y1="415.0" x2="303.5" y2="418.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="325.0" y1="375.0" x2="333.9" y2="383.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="325.0" y1="335.0" x2="346.5" y2="331.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="325.0" y1="295.0" x2="316.1" y2="286.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="325.0" y1="255.0" x2="303.5" y2="258.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="325.0" y1="215.0" x2="333.9" y2="223.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="325.0" y1="175.0" x2="346.5" y2="171.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<line x1="325.0" y1="135.0" x2="316.1" y2="126.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheA)"/>
+<circle cx="147.0" cy="233.0" r="40.0" fill="#dbe9f7" stroke="#2864a5" stroke-width="2"/>
+<circle cx="243.0" cy="233.0" r="6" fill="#ffffff" stroke="#8a94a3" stroke-width="2" stroke-dasharray="4 3"/>
+<circle cx="147.0" cy="233.0" r="6" fill="#2864a5"/>
+<text x="131.0" y="221.0" font-size="14" font-weight="bold" fill="#202833">S1</text>
+<text x="253.0" y="223.0" font-size="13" font-weight="normal" fill="#202833">S2</text>
+<circle cx="99.0" cy="361.0" r="5" fill="#202833"/>
+<line x1="99.0" y1="361.0" x2="87.0" y2="349.0" stroke="#202833" stroke-width="3" marker-end="url(#flecheM)"/>
+<text x="108.0" y="352.0" font-size="14" font-weight="bold" fill="#202833">M1</text>
+<circle cx="195.0" cy="361.0" r="5" fill="#202833"/>
+<line x1="195.0" y1="361.0" x2="195.0" y2="375.8" stroke="#202833" stroke-width="3" marker-end="url(#flecheM)"/>
+<text x="204.0" y="352.0" font-size="14" font-weight="bold" fill="#202833">M2</text>
+<circle cx="291.0" cy="361.0" r="5" fill="#202833"/>
+<line x1="291.0" y1="361.0" x2="303.0" y2="349.0" stroke="#202833" stroke-width="3" marker-end="url(#flecheM)"/>
+<text x="300.0" y="352.0" font-size="14" font-weight="bold" fill="#202833">M3</text>
+<text x="390.0" y="92.0" font-size="16" font-weight="bold" fill="#202833">B. Source S2 seule</text>
+<rect x="385" y="100" width="330" height="330" fill="#f6f8f6" stroke="#d5dbe3" stroke-width="2"/>
+<line x1="400.0" y1="415.0" x2="408.9" y2="423.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="400.0" y1="375.0" x2="396.3" y2="396.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="400.0" y1="335.0" x2="391.1" y2="326.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="400.0" y1="295.0" x2="403.7" y2="273.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="400.0" y1="255.0" x2="408.9" y2="263.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="400.0" y1="215.0" x2="396.3" y2="236.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="400.0" y1="175.0" x2="391.1" y2="166.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="400.0" y1="135.0" x2="403.7" y2="113.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="440.0" y1="415.0" x2="461.5" y2="411.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="440.0" y1="375.0" x2="431.1" y2="366.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="440.0" y1="335.0" x2="418.5" y2="338.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="440.0" y1="295.0" x2="448.9" y2="303.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="440.0" y1="255.0" x2="461.5" y2="251.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="440.0" y1="215.0" x2="431.1" y2="206.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="440.0" y1="175.0" x2="418.5" y2="178.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="440.0" y1="135.0" x2="448.9" y2="143.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="480.0" y1="415.0" x2="471.1" y2="406.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="480.0" y1="375.0" x2="483.7" y2="353.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="480.0" y1="335.0" x2="488.9" y2="343.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="480.0" y1="295.0" x2="476.3" y2="316.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="480.0" y1="255.0" x2="471.1" y2="246.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="480.0" y1="215.0" x2="483.7" y2="193.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="480.0" y1="175.0" x2="488.9" y2="183.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="480.0" y1="135.0" x2="476.3" y2="156.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="520.0" y1="415.0" x2="498.5" y2="418.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="520.0" y1="375.0" x2="528.9" y2="383.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="520.0" y1="335.0" x2="541.5" y2="331.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="520.0" y1="295.0" x2="511.1" y2="286.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="520.0" y1="255.0" x2="498.5" y2="258.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="520.0" y1="215.0" x2="528.9" y2="223.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="520.0" y1="175.0" x2="541.5" y2="171.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="520.0" y1="135.0" x2="511.1" y2="126.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="560.0" y1="415.0" x2="568.9" y2="423.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="560.0" y1="375.0" x2="556.3" y2="396.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="560.0" y1="335.0" x2="551.1" y2="326.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="560.0" y1="295.0" x2="563.7" y2="273.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="560.0" y1="255.0" x2="568.9" y2="263.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="560.0" y1="215.0" x2="556.3" y2="236.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="560.0" y1="175.0" x2="551.1" y2="166.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="560.0" y1="135.0" x2="563.7" y2="113.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="600.0" y1="415.0" x2="621.5" y2="411.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="600.0" y1="375.0" x2="591.1" y2="366.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="600.0" y1="335.0" x2="578.5" y2="338.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="600.0" y1="295.0" x2="608.9" y2="303.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="600.0" y1="255.0" x2="621.5" y2="251.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="600.0" y1="215.0" x2="591.1" y2="206.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="600.0" y1="175.0" x2="578.5" y2="178.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="600.0" y1="135.0" x2="608.9" y2="143.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="640.0" y1="415.0" x2="631.1" y2="406.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="640.0" y1="375.0" x2="643.7" y2="353.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="640.0" y1="335.0" x2="648.9" y2="343.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="640.0" y1="295.0" x2="636.3" y2="316.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="640.0" y1="255.0" x2="631.1" y2="246.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="640.0" y1="215.0" x2="643.7" y2="193.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="640.0" y1="175.0" x2="648.9" y2="183.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="640.0" y1="135.0" x2="636.3" y2="156.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="680.0" y1="415.0" x2="658.5" y2="418.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="680.0" y1="375.0" x2="688.9" y2="383.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="680.0" y1="335.0" x2="701.5" y2="331.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="680.0" y1="295.0" x2="671.1" y2="286.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="680.0" y1="255.0" x2="658.5" y2="258.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="680.0" y1="215.0" x2="688.9" y2="223.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="680.0" y1="175.0" x2="701.5" y2="171.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<line x1="680.0" y1="135.0" x2="671.1" y2="126.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheB)"/>
+<circle cx="598.0" cy="233.0" r="40.0" fill="#dbe9f7" stroke="#2864a5" stroke-width="2"/>
+<circle cx="502.0" cy="233.0" r="6" fill="#ffffff" stroke="#8a94a3" stroke-width="2" stroke-dasharray="4 3"/>
+<circle cx="598.0" cy="233.0" r="6" fill="#2864a5"/>
+<text x="582.0" y="221.0" font-size="14" font-weight="bold" fill="#202833">S2</text>
+<text x="512.0" y="223.0" font-size="13" font-weight="normal" fill="#202833">S1</text>
+<circle cx="454.0" cy="361.0" r="5" fill="#202833"/>
+<line x1="454.0" y1="361.0" x2="442.0" y2="349.0" stroke="#202833" stroke-width="3" marker-end="url(#flecheM)"/>
+<text x="463.0" y="352.0" font-size="14" font-weight="bold" fill="#202833">M1</text>
+<circle cx="550.0" cy="361.0" r="5" fill="#202833"/>
+<line x1="550.0" y1="361.0" x2="550.0" y2="375.8" stroke="#202833" stroke-width="3" marker-end="url(#flecheM)"/>
+<text x="559.0" y="352.0" font-size="14" font-weight="bold" fill="#202833">M2</text>
+<circle cx="646.0" cy="361.0" r="5" fill="#202833"/>
+<line x1="646.0" y1="361.0" x2="658.0" y2="349.0" stroke="#202833" stroke-width="3" marker-end="url(#flecheM)"/>
+<text x="655.0" y="352.0" font-size="14" font-weight="bold" fill="#202833">M3</text>
+<text x="745.0" y="92.0" font-size="16" font-weight="bold" fill="#202833">C. Somme c1 + c2 (grille 100 m)</text>
+<rect x="740" y="100" width="330" height="330" fill="#f6f8f6" stroke="#d5dbe3" stroke-width="2"/>
+<line x1="755.0" y1="415.0" x2="763.9" y2="423.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="755.0" y1="375.0" x2="751.3" y2="396.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="755.0" y1="335.0" x2="746.1" y2="326.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="755.0" y1="295.0" x2="758.7" y2="273.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="755.0" y1="255.0" x2="763.9" y2="263.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="755.0" y1="215.0" x2="751.3" y2="236.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="755.0" y1="175.0" x2="746.1" y2="166.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="755.0" y1="135.0" x2="758.7" y2="113.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="795.0" y1="415.0" x2="816.5" y2="411.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="795.0" y1="375.0" x2="786.1" y2="366.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="795.0" y1="335.0" x2="773.5" y2="338.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="795.0" y1="295.0" x2="803.9" y2="303.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="795.0" y1="255.0" x2="816.5" y2="251.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="795.0" y1="215.0" x2="786.1" y2="206.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="795.0" y1="175.0" x2="773.5" y2="178.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="795.0" y1="135.0" x2="803.9" y2="143.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="835.0" y1="415.0" x2="826.1" y2="406.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="835.0" y1="375.0" x2="838.7" y2="353.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="835.0" y1="335.0" x2="843.9" y2="343.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="835.0" y1="295.0" x2="831.3" y2="316.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="835.0" y1="255.0" x2="826.1" y2="246.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="835.0" y1="215.0" x2="838.7" y2="193.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="835.0" y1="175.0" x2="843.9" y2="183.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="835.0" y1="135.0" x2="831.3" y2="156.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="875.0" y1="415.0" x2="853.5" y2="418.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="875.0" y1="375.0" x2="883.9" y2="383.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="875.0" y1="335.0" x2="896.5" y2="331.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="875.0" y1="295.0" x2="866.1" y2="286.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="875.0" y1="255.0" x2="853.5" y2="258.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="875.0" y1="215.0" x2="883.9" y2="223.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="875.0" y1="175.0" x2="896.5" y2="171.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="875.0" y1="135.0" x2="866.1" y2="126.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="915.0" y1="415.0" x2="923.9" y2="423.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="915.0" y1="375.0" x2="911.3" y2="396.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="915.0" y1="335.0" x2="906.1" y2="326.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="915.0" y1="295.0" x2="918.7" y2="273.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="915.0" y1="255.0" x2="923.9" y2="263.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="915.0" y1="215.0" x2="911.3" y2="236.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="915.0" y1="175.0" x2="906.1" y2="166.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="915.0" y1="135.0" x2="918.7" y2="113.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="955.0" y1="415.0" x2="976.5" y2="411.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="955.0" y1="375.0" x2="946.1" y2="366.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="955.0" y1="335.0" x2="933.5" y2="338.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="955.0" y1="295.0" x2="963.9" y2="303.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="955.0" y1="255.0" x2="976.5" y2="251.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="955.0" y1="215.0" x2="946.1" y2="206.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="955.0" y1="175.0" x2="933.5" y2="178.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="955.0" y1="135.0" x2="963.9" y2="143.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="995.0" y1="415.0" x2="986.1" y2="406.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="995.0" y1="375.0" x2="998.7" y2="353.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="995.0" y1="335.0" x2="1003.9" y2="343.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="995.0" y1="295.0" x2="991.3" y2="316.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="995.0" y1="255.0" x2="986.1" y2="246.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="995.0" y1="215.0" x2="998.7" y2="193.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="995.0" y1="175.0" x2="1003.9" y2="183.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="995.0" y1="135.0" x2="991.3" y2="156.5" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="1035.0" y1="415.0" x2="1013.5" y2="418.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="1035.0" y1="375.0" x2="1043.9" y2="383.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="1035.0" y1="335.0" x2="1056.5" y2="331.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="1035.0" y1="295.0" x2="1026.1" y2="286.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="1035.0" y1="255.0" x2="1013.5" y2="258.7" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="1035.0" y1="215.0" x2="1043.9" y2="223.9" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="1035.0" y1="175.0" x2="1056.5" y2="171.3" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<line x1="1035.0" y1="135.0" x2="1026.1" y2="126.1" stroke="#2c7a55" stroke-width="2" marker-end="url(#flecheC)"/>
+<rect x="817.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="817.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="817.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="833.0" y="257.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="833.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="833.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="833.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="833.0" y="193.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="849.0" y="257.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="849.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="849.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="849.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="849.0" y="193.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="865.0" y="257.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="865.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="865.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="865.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="865.0" y="193.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="881.0" y="257.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="881.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="881.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="881.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="881.0" y="193.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="897.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="897.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="897.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="913.0" y="257.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="913.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="913.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="913.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="913.0" y="193.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="929.0" y="257.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="929.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="929.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="929.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="929.0" y="193.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="945.0" y="257.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="945.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="945.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="945.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="945.0" y="193.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="961.0" y="257.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="961.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="961.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="961.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="961.0" y="193.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="977.0" y="241.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="977.0" y="225.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<rect x="977.0" y="209.0" width="16.0" height="16.0" fill="#cfe0f2" stroke="#8fb3d9" stroke-width="1"/>
+<circle cx="857.0" cy="233.0" r="40.0" fill="none" stroke="#2864a5" stroke-width="2" stroke-dasharray="6 5"/>
+<circle cx="953.0" cy="233.0" r="40.0" fill="none" stroke="#2864a5" stroke-width="2" stroke-dasharray="6 5"/>
+<circle cx="857.0" cy="233.0" r="6" fill="#2864a5"/>
+<text x="841.0" y="221.0" font-size="14" font-weight="bold" fill="#202833">S1</text>
+<circle cx="953.0" cy="233.0" r="6" fill="#2864a5"/>
+<text x="937.0" y="221.0" font-size="14" font-weight="bold" fill="#202833">S2</text>
+<circle cx="809.0" cy="361.0" r="5" fill="#202833"/>
+<line x1="809.0" y1="361.0" x2="797.0" y2="349.0" stroke="#202833" stroke-width="3" marker-end="url(#flecheM)"/>
+<text x="818.0" y="352.0" font-size="14" font-weight="bold" fill="#202833">M1</text>
+<circle cx="905.0" cy="361.0" r="5" fill="#202833"/>
+<line x1="905.0" y1="361.0" x2="905.0" y2="375.8" stroke="#202833" stroke-width="3" marker-end="url(#flecheM)"/>
+<text x="914.0" y="352.0" font-size="14" font-weight="bold" fill="#202833">M2</text>
+<circle cx="1001.0" cy="361.0" r="5" fill="#202833"/>
+<line x1="1001.0" y1="361.0" x2="1013.0" y2="349.0" stroke="#202833" stroke-width="3" marker-end="url(#flecheM)"/>
+<text x="1010.0" y="352.0" font-size="14" font-weight="bold" fill="#202833">M3</text>
+<text x="32.0" y="470.0" font-size="17" font-weight="bold" fill="#202833">Trois mesures de vent évaluées</text>
+<text x="32.0" y="498.0" font-size="15" font-weight="normal" fill="#202833">u(M1) = (-2.39, +2.39) m/s</text>
+<text x="32.0" y="526.0" font-size="15" font-weight="normal" fill="#202833">u(M2) = (0.00, -2.95) m/s</text>
+<text x="32.0" y="554.0" font-size="15" font-weight="normal" fill="#202833">u(M3) = (+2.39, +2.39) m/s</text>
+<text x="32.0" y="590.0" font-size="15" font-weight="normal" fill="#202833">Champ analytique incompressible :</text>
+<text x="32.0" y="614.0" font-size="15" font-weight="normal" fill="#202833">∇·u &lt; 1e-12 s⁻¹ (grille 100 m)</text>
+<text x="32.0" y="638.0" font-size="15" font-weight="normal" fill="#202833">Trois mesures ne rendent pas le champ unique.</text>
+<text x="400.0" y="470.0" font-size="17" font-weight="bold" fill="#202833">Seuil et régions affectées</text>
+<text x="400.0" y="498.0" font-size="15" font-weight="normal" fill="#202833">Seuil : 0.5 (concentration relative)</text>
+<text x="400.0" y="526.0" font-size="15" font-weight="normal" fill="#202833">r1 = r2 = 249.8 m</text>
+<text x="400.0" y="554.0" font-size="15" font-weight="normal" fill="#202833">S1 = S2 = 195 982 m²</text>
+<text x="400.0" y="590.0" font-size="15" font-weight="normal" fill="#202833">Région totale (grille 100 m) : 490 000 m²</text>
+<text x="400.0" y="614.0" font-size="15" font-weight="normal" fill="#202833">Région totale &gt; S1 + S2 : dans le pont,</text>
+<text x="400.0" y="638.0" font-size="15" font-weight="normal" fill="#202833">chaque contribution seule est sous le seuil.</text>
+<text x="742.0" y="470.0" font-size="17" font-weight="bold" fill="#202833">Additivité supposée</text>
+<text x="742.0" y="498.0" font-size="15" font-weight="normal" fill="#202833">c = c1 + c2 exact (équation de transport linéaire) ;</text>
+<text x="742.0" y="526.0" font-size="15" font-weight="normal" fill="#202833">les régions affectées, elles, ne s&#x27;ajoutent pas.</text>
+<text x="742.0" y="554.0" font-size="15" font-weight="normal" fill="#202833">Contribution de S2 en S1 : 0.0183</text>
+<text x="742.0" y="582.0" font-size="15" font-weight="normal" fill="#202833">Concentration max (somme, grille) : 1.018</text>
+<text x="742.0" y="616.0" font-size="15" font-weight="normal" fill="#202833">Aucune donnée historique : niveau R1.</text>
+<text x="30.0" y="760.0" font-size="13" font-weight="normal" fill="#202833">Reconstruction conceptuelle (R1) ; cas synthétique ; pas une reproduction quantitative du chapitre de 2008 (p. 254).</text>
+</svg>
