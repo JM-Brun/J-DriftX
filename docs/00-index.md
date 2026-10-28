@@ -42,7 +42,7 @@ fusionnée, est désormais sur main).
 | `09-fallback-modele-jouet.md` | Fallback « modèle jouet » |
 | `12-catalogue-donnees-transport-dispersion.md` | Catalogue de jeux de données transport/dispersion |
 | `18-carte-articulation-scientifique.md` | Carte d'articulation scientifique |
-| `19-investigation-g0s-temps-de-parcours.md` | Investigation G0-S : temps de parcours dirigé (V1/V2) |
+| `19-investigation-g0s-temps-de-parcours.md` | Investigation G0-S : temps de parcours dirigé ($T_{\mathrm{arr}}$/$T_{\mathrm{proj}}$) |
 | `20-audit-technique-jeux-donnees.md` | Audit technique des jeux de données (ERIES, DIFLU, DATEM, ETEX) |
 | `22-audit-package-code.md` | Audit du package au regard de la charte qualité |
 | `23-figure-01-reconstruction-vent.md` | Figure 1 : reconstruction du vent à deux mesures |

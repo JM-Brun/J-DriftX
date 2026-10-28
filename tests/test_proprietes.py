@@ -66,7 +66,7 @@ def _scenarios_aval(draw):
 def test_temps_dirige_invariant_par_translation(scenario, translation) -> None:
     """Translater origine et cible ne change pas le temps dirigé.
 
-    Référence : docs/30, section 1 — la V2 uniforme projetée ne dépend que
+    Référence : docs/30, section 1 — la construction T_proj (temps après projection) uniforme ne dépend que
     du déplacement cible - origine (carte de la section 9). Cas fixé
     voisin : test_uniform_pseudodistance_is_rotation_invariant dans
     tests/test_metric.py. Hypothèse : champ uniforme indépendant du temps.
@@ -138,7 +138,7 @@ def test_cible_amont_temps_infini(scenario) -> None:
     """Une cible en amont reçoit le temps infini de la convention locale.
 
     Référence : docs/30, section 9 (« Atteignabilité et temps infini ») —
-    V2 n'est pas symétrique ; la convention amont +inf est une limite
+    T_proj n'est pas symétrique ; la convention amont +inf est une limite
     documentée du manifeste de l'expérience champ uniforme. Cas fixé
     voisin : test_uniform_pseudodistance_is_infinite_upwind dans
     tests/test_metric.py.
