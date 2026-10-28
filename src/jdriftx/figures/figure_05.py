@@ -202,23 +202,17 @@ def render_figure_05_svg() -> str:
     u_txt = formate_composante(u)
     v_txt = formate_composante(v)
     ligne_vent = f"u = ({u_txt}, {v_txt}) m/s, identique dans les deux calculs."
-    ligne_panache = (
-        f"Panache gaussien (Briggs, classe {scenario.classe}) : "
-        f"Q = {scenario.debit:.1f} kg/s,"
-    )
-    ligne_geometrie = (
-        f"h = {scenario.hauteur_source:.0f} m ; axe à {resultat.altitude_axe:.1f} m ; "
-        f"point à {scenario.hauteur_evaluation:.0f} m du sol."
-    )
+    debit_txt = f"{scenario.debit:.1f}"
+    ligne_panache = f"Panache gaussien (Briggs, classe {scenario.classe}) : Q = {debit_txt} kg/s,"
+    hauteur_txt = f"{scenario.hauteur_source:.0f}"
+    axe_txt = f"{resultat.altitude_axe:.1f}"
+    evaluation_txt = f"{scenario.hauteur_evaluation:.0f}"
+    ligne_geometrie = f"h = {hauteur_txt} m ; axe à {axe_txt} m ; point à {evaluation_txt} m du sol."
     ligne_seuil = f"Seuil : {scenario.seuil:.1e} kg m⁻³"
-    ligne_sans = (
-        f"Région sans : {_entier_espace(int(resultat.surface_region_sans))} m² "
-        f"({resultat.cellules_sans} cellules)"
-    )
-    ligne_avec = (
-        f"Région avec : {_entier_espace(int(resultat.surface_region_avec))} m² "
-        f"({resultat.cellules_avec} cellules)"
-    )
+    surface_sans_txt = _entier_espace(int(resultat.surface_region_sans))
+    ligne_sans = f"Région sans : {surface_sans_txt} m² ({resultat.cellules_sans} cellules)"
+    surface_avec_txt = _entier_espace(int(resultat.surface_region_avec))
+    ligne_avec = f"Région avec : {surface_avec_txt} m² ({resultat.cellules_avec} cellules)"
     ligne_cmax_sans = f"c max sans : {resultat.concentration_max_sans:.1e} kg m⁻³"
     ligne_cmax_avec = f"c max avec : {resultat.concentration_max_avec:.1e} kg m⁻³"
     ligne_ratio_1 = f"Ratio au sommet A : ×{resultat.ratio_sommet_1:.2f}"
@@ -258,7 +252,13 @@ def render_figure_05_svg() -> str:
         '<rect x="385" y="95" width="310" height="310" fill="#f6f8f6" '
         'stroke="#d5dbe3" stroke-width="2"/>',
         *_fleches_uniformes(PANEL_B_X, LIGNE1_Y, u, v),
-        _text(35.0, 432.0, "C. Sans correction : relief ignoré (grille 50 m)", size=16, weight="bold"),
+        _text(
+            35.0,
+            432.0,
+            "C. Sans correction : relief ignoré (grille 50 m)",
+            size=16,
+            weight="bold",
+        ),
         '<rect x="30" y="435" width="310" height="310" fill="#f6f8f6" '
         'stroke="#d5dbe3" stroke-width="2"/>',
         *panneau_c,

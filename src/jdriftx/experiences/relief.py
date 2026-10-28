@@ -260,11 +260,7 @@ SCENARIO_DEFAUT = ScenarioRelief(
 )
 
 
-def concentrations_au_point(
-    scenario: ScenarioRelief,
-    x: float,
-    y: float,
-) -> tuple[float, float]:
+def concentrations_au_point(scenario: ScenarioRelief, x: float, y: float) -> tuple[float, float]:
     """Évalue les concentrations (kg m^-3) sans et avec correction au point (x, y).
 
     Sans correction, le sol du modèle est le plan z = 0 : le point de calcul
@@ -465,6 +461,9 @@ def construire_manifeste(
         version_code = metadata.version("jdriftx")
     except metadata.PackageNotFoundError:
         version_code = "non-installe"
+    description_manifeste = (
+        "Relief synthétique : la correction déplace le point de calcul, pas le panache."
+    )
     return ManifesteRelief(
         identifiant="jdriftx-relief-001",
         niveau_fidelite="R1",
@@ -472,16 +471,12 @@ def construire_manifeste(
             "Brun, J.-M. & Mohammadi, B. (2008), « Reduced-Order Modelling of Dispersion », "
             "chapitre 14, pp. 254-255, DOI 10.1007/978-1-4020-8758-5_14."
         ),
-        description=(
-            "Relief synthétique : la correction déplace le point de calcul, "
-            "pas le panache."
-        ),
+        description=description_manifeste,
         hypothese=(
             "Vent uniforme, identique dans les deux calculs.",
             "Panache gaussien de similitude (Briggs, classe C) ; réflexion au "
             "sol du modèle référée à z = 0.",
-            "MNT synthétique : deux collines gaussiennes, aucune topographie "
-            "mesurée.",
+            "MNT synthétique : deux collines gaussiennes, aucune topographie mesurée.",
         ),
         limites=(
             "Correction minimale : ni déviation du panache, ni allongement du "

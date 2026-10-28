@@ -9,9 +9,7 @@ from jdriftx.experiences.relief import SCENARIO_DEFAUT, resoudre_scenario
 from jdriftx.figures import figure_05
 from jdriftx.figures.figure_05 import formate_composante, render_figure_05_svg
 
-CHEMIN_ASSET = (
-    Path(__file__).resolve().parents[1] / "site" / "images" / "figure-05-relief.svg"
-)
+CHEMIN_ASSET = Path(__file__).resolve().parents[1] / "site" / "images" / "figure-05-relief.svg"
 
 
 def test_le_svg_est_bien_forme_et_annote() -> None:
@@ -45,7 +43,9 @@ def test_les_valeurs_affichees_proviennent_de_la_tranche() -> None:
     assert attendu_cmax_avec in svg
     assert f"Ratio au sommet A : ×{resultat.ratio_sommet_1:.2f}" in svg
     assert f"Ratio au sommet B : ×{resultat.ratio_sommet_2:.2f}" in svg
-    attendu_axe = f"h = {SCENARIO_DEFAUT.hauteur_source:.0f} m ; axe à {resultat.altitude_axe:.1f} m"
+    attendu_axe = (
+        f"h = {SCENARIO_DEFAUT.hauteur_source:.0f} m ; axe à {resultat.altitude_axe:.1f} m"
+    )
     assert attendu_axe in svg
     assert "Réflexion au sol du modèle référée à z = 0." in svg
 
