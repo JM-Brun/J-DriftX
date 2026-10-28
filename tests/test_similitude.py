@@ -257,10 +257,7 @@ def test_erreur_discretisation_domaine_fixe() -> None:
         erreurs_quadrature.append(abs(flux - flux_tronque_exact) / debit)
 
     # Then — l'étendue reste identique ; seule la résolution change.
-    assert all(
-        precedente > suivante
-        for precedente, suivante in pairwise(erreurs_quadrature)
-    )
+    assert all(precedente > suivante for precedente, suivante in pairwise(erreurs_quadrature))
 
 
 def test_positivite_puff() -> None:
