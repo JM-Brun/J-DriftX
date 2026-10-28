@@ -207,7 +207,7 @@ Les entrées suivantes ont été contrôlées sur source primaire et corresponde
 - HAL hal-04310899 (ECCOMAS UNCE 2024) ; CMAME 2024 (Bologne) ; cea-04810109 (MCxM) ; Ayoub et al. 2024 (DOI 10.1007/s00477-024-02738-8) ; chapitre Springer 2025 (DOI 10.1007/978-3-032-02728-3_53) ; Hutchinson 2017 (*Information Fusion* 36, 130-148) ; MDPI *Appl. Sci.* 16(4):1833 (2026) ; plugin QGIS Sebapac90 (README : « based on Masters and Ela (2008) »).
 - SICC 2026 session 3 ; NARAC ; ADMLC ; OIEau ; APSI ; revue IJRISS AERMOD (Shafie) ; TIERRAS (Zenodo 15794259, >400 essais) ; ERIES (4TU, Sofia, éthylène, 76 points, S1/S2) ; CAPRIV (Perriot et al. 2024, *Data in Brief* 54:110366, DOI vérifié) ; DIFLU (campagne hélium IRSN/ASNR confirmée institutionnellement) ; arrêté du 4 mai 2017 (LEGI + agriculture.gouv.fr) ; rapport InVS « quatre sites de l'Hérault en 2006 » (Santé publique France).
 
-Réserves : les effectifs de CAPRIV (« 3 792 observations / 38 variables », `docs/11` l. 34) et les détails de DIFLU (« 19 lâchers / ~560 m », `docs/12` l. 11 ; DOI 10.57745/A9YC3C non résolu depuis l'audit) restent à recontrôler sur le document primaire.
+Réserves : les effectifs de CAPRIV (« 3 792 observations / 38 variables », `docs/11` l. 34) et les détails de DIFLU restent à recontrôler sur les sources primaires. Mise à jour du 28/10/2026 : la fiche Recherche Data Gouv est désormais consultable via indexation et confirme le DOI, la licence Etalab 2.0, 114 fichiers et leurs métadonnées descriptives ; l’article associé décrit 15 expériences. La valeur 19 correspond au nombre d’observations du fichier `DIFLU_media_dictionary.tab`, pas à un décompte établi d’expériences. Les fichiers bruts restent non inspectés.
 
 ## 9. Couverture et limites de la deuxième passe
 
