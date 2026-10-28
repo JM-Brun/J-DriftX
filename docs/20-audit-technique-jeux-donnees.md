@@ -21,7 +21,7 @@ Consulté le 23 octobre 2026, en sources primaires uniquement :
 - **ETEX** : les pages JRC (remon.jrc.ec.europa.eu) sont accessibles et ont été lues directement ; la notice de copyright open data JRC est constatée sur le portail open data (jeux voisins), pas sur les fichiers ETEX eux-mêmes.
 - **ERIES** : métadonnées Datacite complètes du DOI 10.4121/e7f87f46-1d17-43ed-be81-60bee65081bf, incluant licence, description détaillée, formats et liens de financement ; la page 4TU.ResearchData elle-même est illisible pour les outils.
 
-**Aucun fichier de données n'a donc été ouvert** : tout ce qui suit portant sur le contenu des fichiers (unités, limites de détection, trous) est une attente à vérifier, pas une constatation. Conformément au critère de l'issue #13, ces points sont déclarés non vérifiés faute d'accès automatisé, et non validés.
+**Les octets des fichiers de données n'ont pas pu être téléchargés ni inspectés** dans cette passe. Précision du 28/10/2026 pour ETEX : l'index de téléchargement et le répertoire de la deuxième campagne sont lisibles et donnent noms, tailles et dates des fichiers, mais le navigateur ne restitue pas le contenu des fichiers binaires et le téléchargement direct depuis l'environnement d'audit a échoué. Le répertoire de la première campagne a expiré en accès automatisé. Les unités, limites de détection, trous et formats internes restent donc non vérifiés : la visibilité d'un listing n'est pas une inspection du corpus. Conformément au critère de l'issue #13, ces points sont déclarés non vérifiés, et non validés.
 
 ## 1. DIFLU — traceur hélium contrôlé, Beuvry (France) : corpus principal du test discriminant
 
