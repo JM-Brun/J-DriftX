@@ -115,7 +115,89 @@ d_A(x,y)=\frac{x-x_A}{v(y_A)},
 \]
 For non-constant \(v\), the last expression is not identically one. Therefore this projected cost cannot simply be substituted for a global travel-time coordinate in (3)–(5).
 
-## 6. What remains to be established from the primary model
+## 6. Primary-source transcription and dimensional audit (2009 article)
+
+The publisher's open-access HTML for Bozon & Mohammadi (2009), *Applied Geomatics*, exposes the following statements and equations directly. They are transcribed here as printed; no suspected typo is silently repaired.
+
+### Published definitions
+
+The paper states that the total injected quantity over \( [0,T] \) is
+\[
+K=\int_0^T c_{\rm inj}(t)\,dt. \tag{29}
+\]
+It then defines the amount reaching the ground by
+\[
+C_g(x,y)=\int_{z\leq z_0} c(x,y,z)\,dz, \tag{30}
+\]
+and the amount remaining in the atmosphere beyond source distance \(R_0\) by
+\[
+C_a=K-\int_{R\geq R_0} C_g(x,y)\,dV, \tag{31}
+\]
+with \(R=\sqrt{x^2+y^2}\). The printed integration element in Eq. (31) is \(dV\), not \(dx\,dy\).
+
+### 2008 chapter: definition of the conserved quantity
+
+The accessible scan of Brun & Mohammadi (2008), §2.1–2.2 (printed pp. 247–248; chapter PDF pp. 244–245), provides a more direct comparison. In §2.1, Eq. (2), the local model imposes
+\[
+\nabla\cdot u_l=0,\qquad u_l\cdot\nabla c_l=0,\qquad
+\int_{\mathbb R^3}c_l\,dV=\text{given}.
+\tag{BM08-2}
+\]
+The last condition identifies the local integral of \(c_l\) over volume as the given quantity. Under the usual mass-concentration interpretation, \(c_l\) therefore has units \([M L^{-3}]\) and the integral has units of mass. The first two conditions state incompressibility and steady advection of the scalar along the local velocity; they are not, by themselves, a full advection–diffusion balance with sources, deposition, or boundary losses.
+
+In §2.2, the chapter then prints two alternatives for the quantity supplied to the long-range model:
+\[
+c^+(x,y)=\int_{z>H}c_l\,dz
+\quad\text{or}\quad
+c^+(x,y)=u_l^+c_l,
+\qquad
+u_l^+=\max\left(0,\frac{u\cdot z}{\|u\|}\right),
+\tag{BM08-3}
+\]
+followed by
+\[
+C=\int_{\mathbb R^2}c^+(x,y)\,d\sigma,
+\tag{BM08-4}
+\]
+which “should be conserved” by the reduced-order transport model (the chapter's Eq. (2.2), printed p. 248). The factor \(u_l^+\) as defined is dimensionless.
+
+With \(c_l\) in \([M L^{-3}]\), the first alternative for \(c^+\) has units \([M L^{-2}]\), and its integral over \(d\sigma\) has units of mass. The second alternative \(u_l^+c_l\) retains units \([M L^{-3}]\), so its integral over an area has units \([M L^{-1}]\), not mass. **The two printed alternatives are therefore not dimensionally equivalent under the same conventional definition of \(c_l\).** The source does not explain a different convention or an additional length factor in the displayed definition.
+
+This does not establish which alternative the authors intended or prove that the implementation is invalid. It establishes that the conservation target is stated, but the notation as transcribed does not uniquely specify a dimensionally consistent conserved quantity without an additional definition or correction from the authors/source.
+
+### Dimensional audit under the conventional interpretation
+
+Assume, provisionally, that \(c\) is a volumetric mass concentration with units \([M L^{-3}]\), and that \(c_{\rm inj}\) is a mass emission rate with units \([M T^{-1}]\). Then:
+
+| Quantity | Printed definition | Implied units | Assessment |
+|---|---|---|---|
+| \(K\) | \(\int c_{\rm inj}(t)dt\) | \([M]\) | Consistent with total emitted mass under the stated assumption |
+| \(C_g\) | \(\int c\,dz\) | \([M L^{-2}]\) | Areal mass density after vertical integration |
+| \(\int C_g\,dV\) in Eq. (31) | Integrates \(C_g\) against a volume element | \([M L]\) | **Dimensionally inconsistent with \(K\)** under this interpretation |
+| \(\int C_g\,dx\,dy\) | Not what the paper prints | \([M]\) | Would be dimensionally compatible, but is only a possible correction, not an established authorial intent |
+
+The same paper's Eq. (28) states that the “total mass” in a subdomain satisfies
+\[
+\int_{\omega^i} c^i\,dV
+=
+\int_{\partial\omega^i}
+c^i\left(\frac{\vec u^i}{\|\vec u^i\|}\cdot\vec n^i\right)dS.
+\tag{28}
+\]
+With \(c^i\) interpreted as a volumetric concentration, the left side has units of mass, while the right side has units of mass per length: the normalized velocity and normal are dimensionless, leaving concentration times area. This is another dimensional mismatch as printed. The later Eqs. (38)–(40) also define an incoming quantity through an average of concentration multiplied by a dimensionless directional factor, then equate it to a volume integral of concentration; those expressions likewise need a clarification of the intended units/normalization.
+
+### What this establishes—and what it does not
+
+- **Established from the publisher text:** the equations above are printed in the 2009 article; the apparent unit mismatches are reproducible from their displayed definitions.
+- **Established conditionally:** under the conventional volumetric-concentration interpretation, Eqs. (28), (31), and the Eqs. (38)–(40) sequence are not dimensionally homogeneous as printed.
+- **Not established:** whether this reflects typographical errors, a nonstandard definition of \(c\), omitted normalization, or a deeper derivation issue. The text alone does not decide among these explanations.
+- **Not authorized:** silently replacing \(dV\) with \(dx\,dy\), inserting a velocity factor, or treating the published equations as a validated mass-conservation proof.
+
+The article does describe the global velocity construction as divergence-free and presents conservation as a constraint, but divergence-free velocity alone does not imply conservation of a passive scalar. The displayed equations require a consistent scalar definition and measure before they can be used as a physical mass balance.
+
+The official 2006 article is available from *Comptes Rendus Mécanique* (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007)); its publisher PDF could not be retrieved through the current source interface for a reliable equation-by-equation transcription. The 2008 Springer chapter has been inspected from an accessible third-party-hosted scan of the book (chapter pp. 245–256; the Springer landing page provides the bibliographic record, DOI [10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14)). The scan is useful for transcription but is not itself a publisher-hosted copy. The 2009 article remains a separate source and must not be conflated with either the 2006 paper or the 2008 chapter.
+
+## 7. What remains to be established from the primary model
 
 A complete historical reconstruction still requires the equations and assumptions of the near-/far-field model, not only the general balance law above.
 
@@ -128,15 +210,15 @@ A complete historical reconstruction still requires the equations and assumption
 | Historical definition of \(C\), its units and integration domain reconciled across sources | **Still to reconstruct** |
 | Applicability of a regular \((\tau,\eta_1,\eta_2)\) chart to the historical projected pseudo-distance | **Not established; counterexamples show it cannot be assumed generally** |
 | Treatment of source/sink, diffusion, deposition, ground reflection and open boundaries in the historical model | **Still to reconstruct** |
-| Correction factor printed as “2/3 = 0.636” in the accessible Bozon, Sinfort & Mohammadi (2010) manuscript; a related published paper by Bozon & Mohammadi (2009) also prints it | **Arithmetic inconsistency confirmed in published text**: $2/3 \approx 0.667$, whereas $0.636 \approx 2/\pi$. The 2009 paper describes the factor as a stochastic averaged cosine, but does not provide a formal derivation on the accessible page. This supports—but does not prove—the inference that $2/\pi$ was intended. Whether the same expression appears in Brun & Mohammadi (2008) remains unverified; do not silently rewrite any source. |
+| Correction factor printed as “2/3 = 0.636” in Brun & Mohammadi (2008, chapter p. 251) and Bozon & Mohammadi (2009, publisher version of record); also present in the accessible Bozon, Sinfort & Mohammadi (2010) author manuscript | **Arithmetic inconsistency confirmed in two published sources**: $2/3 \approx 0.667$, whereas $0.636 \approx 2/\pi$. Both 2008 and 2009 describe the factor as a stochastic averaged cosine for angles between 0 and $\pi$, but neither inspected passage supplies a derivation of the averaging distribution that resolves the discrepancy. $2/\pi$ is plausible, not proven as the intended factor; do not silently rewrite any source. |
 
-## 7. Decision and next evidence required
+## 8. Decision and next evidence required
 
 This derivation establishes a conditional conservation statement for a regular coordinate chart; it does **not** validate the historical model or prove a universal iso-\(\tau\) conservation claim.
 
 To resolve the historical question:
 
-1. Transcribe the governing near-/far-field equations and definitions from Mohammadi & Brun (2006, §3) and Brun & Mohammadi (2008, §2.2), preserving their notation.
+1. Obtain verifiable full text for Mohammadi & Brun (2006, §3) and Brun & Mohammadi (2008, §2.2); transcribe their governing near-/far-field equations and definitions verbatim, preserving notation. The 2009 publisher equations above are a separate related source, not a substitute.
 2. Recover and inspect the thesis or an authoritative implementation if available; verify bibliographic metadata separately.
 3. Identify precisely what \(c^+\) and \(C\) denote, their units, and their integration domains.
 4. Derive the specific coordinate map and its Jacobian only if the historical equations define a regular map on the stated domain.
@@ -149,6 +231,7 @@ No variable-field solver or new benchmark should be justified by this note alone
 
 - Mohammadi, B. & Brun, J.-M. (2006). “Similitude généralisée et modélisation géométrique à complexité réduite.” *Comptes Rendus Mécanique*, 334(10), 634–638. https://doi.org/10.1016/j.crme.2006.06.007. Open PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf
 - Brun, J.-M. & Mohammadi, B. (2008). “Reduced-Order Modelling of Dispersion.” In *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, chap. 14, pp. 245–256. https://doi.org/10.1007/978-1-4020-8758-5_14
+  Accessible scan used for the transcription: https://www.sgo.fi/~j/baylie/Partial%20Differential%20Equations%20-%20Modelling%20and%20Numerical%20Simulation%20-%20R.%20Glowinski%2C%20P.%20Neittaanmaki%20%28Springer%2C%202008%29%20WW.pdf
 - Bozon, N. & Mohammadi, B. (2009). “GIS-based atmospheric dispersion modelling: Forecasting the pesticide atmospheric spray drift from a vineyard plot to a watershed.” *Applied Geomatics*, 1, 59–74. https://doi.org/10.1007/s12518-009-0006-0. Publisher version of record; its online text prints `2/3 = 0.636` and describes the factor as a stochastic averaged cosine.
 - Project source reconciliation and shear counterexample: [PR #122](https://github.com/JM-Brun/J-DriftX/pull/122).
 - Follow-up tracking issue: [#123](https://github.com/JM-Brun/J-DriftX/issues/123).
