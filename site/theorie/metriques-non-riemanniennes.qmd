@@ -10,7 +10,7 @@ Le travel-time de Drift-X est un **objet de coût orienté construit à partir d
 
 Cette page intervient **après la définition du travel-time** : elle classe les objets voisins et compare leurs axiomes, sans conclure qu'ils sont équivalents parce qu'ils partagent une intuition de coût orienté.
 
-- **Prérequis :** les trois constructions distinguées dans [Métrique travel-time](metrique-travel-time.qmd) : intégrale le long d'une courbe, temps de première arrivée, et pseudo-distance projetée historique.
+- **Prérequis :** les trois constructions distinguées dans [Métrique travel-time](metrique-travel-time.qmd) : intégrale le long d'une courbe, temps de première arrivée (V1), et pseudo-distance projetée historique (V2, temps après projection).
 - **Question traitée ici :** quelles propriétés définissent les familles géométriques voisines et lesquelles sont effectivement établies pour la construction étudiée ?
 - **Résultat transmis :** une analogie avec une quasi-métrique, Finsler ou Randers reste une piste de positionnement tant que les axiomes et les hypothèses ne sont pas démontrés pour l'objet exact.
 - **Limite actuelle :** la construction projetée historique peut échouer à la séparation et à l'inégalité triangulaire ; elle ne doit donc pas être qualifiée de quasi-métrique au sens usuel sans une définition différente ou une preuve correspondante.

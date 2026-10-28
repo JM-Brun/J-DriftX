@@ -11,7 +11,7 @@ La question de l'issue #41 est : **quelles propriétés possède une fonction de
 Réponse courte, démontrée dans les sections 3 à 7 :
 
 1. Sous les hypothèses du cadre de base (§ 2.1–2.2), le **temps de première arrivée** (variante V1, définition 2.3) vérifie la non-négativité, la séparation des points et l'inégalité triangulaire dirigée (propositions 3.2 et 3.3). Ces propriétés reposent sur la continuité des trajectoires et, pour la triangulation, sur l'unicité et la propriété de semi-groupe du flot autonome ; elles ne découlent pas de la seule notation d'un infimum. Il ne satisfait pas, en général : la symétrie (structurellement), ni la finitude (points inaccessibles). C'est une **quasi-distance étendue** au sens des axiomes (D1)–(D4) ci-dessous.
-2. La **construction projetée historique V2** (définition 2.4, Mohammadi & Brun 2006) reste non négative et vérifie \(d(A,A)=0\) lorsque la projection de \(A\) sur sa propre caractéristique est bien définie. En dimension 2, elle ne vérifie toutefois pas en général la séparation (§ 5.2) ni l'inégalité triangulaire (§ 5.4–5.6) ; sa valeur peut aussi être non unique lorsque la projection l'est (§ 6.1). Il faut donc préciser quelles propriétés sont conservées et lesquelles échouent, plutôt que dire qu'aucun axiome de distance ne subsiste. En dimension 1, V2 coïncide avec V1 sous les hypothèses explicitées en proposition 5.1.
+2. La **construction projetée historique**, ou **temps après projection (V2)** (définition 2.4, Mohammadi & Brun 2006) reste non négative et vérifie \(d(A,A)=0\) lorsque la projection de \(A\) sur sa propre caractéristique est bien définie. En dimension 2, elle ne vérifie toutefois pas en général la séparation (§ 5.2) ni l'inégalité triangulaire (§ 5.4–5.6) ; sa valeur peut aussi être non unique lorsque la projection l'est (§ 6.1). Il faut donc préciser quelles propriétés sont conservées et lesquelles échouent, plutôt que dire qu'aucun axiome de distance ne subsiste. En dimension 1, V2 coïncide avec V1 sous les hypothèses explicitées en proposition 5.1.
 3. Aucune des deux variantes n'entraîne de propriété physique (conservation de masse, positivité d'une concentration) : ces propriétés relèvent de l'équation de transport et de ses hypothèses, pas du temps de parcours (renvoi à [14-revue-mathematique-ciblee.md](14-revue-mathematique-ciblee.md), § 3.4).
 4. Le risque de nouveauté est tranché (§ 7) : l'intégrale de temps le long d'une ligne de courant est un objet classique (time-of-flight des méthodes streamline, distances-temps en géographie) ; la construction projetée par paires et son statut de pseudo-distance sont annoncés dans la source primaire de 2006 elle-même. Conclusion du MVP : **idée connue, utile pédagogiquement, désormais délimitée précisément** — l'une des conclusions autorisées par le document MVP (§ 3).
 
@@ -33,7 +33,7 @@ Pour \(A \in \Omega\), la **trajectoire** issue de \(A\) est l'unique solution m
 
 définie sur un intervalle ouvert \(I_A\) contenant 0 (unicité : Cauchy–Lipschitz, \(\mathbf u\) de classe \(C^1\)). On note \(\gamma_A = \{X(t; A) : t \in I_A\}\) la courbe trajectoire et \(\gamma_A^+ = \{X(t; A) : t \in I_A \cap [0,+\infty[\}\) l'**orbite positive**. Champ stationnaire : la courbe trajectoire coïncide avec la ligne de courant et sert de caractéristique à l'équation d'advection ; ces trois notions ne doivent pas être confondues en instationnaire (revue ciblée, § 2).
 
-### 2.3 Variante V1 — temps de parcours dirigé (première arrivée)
+### 2.3 Variante V1 — temps de première arrivée
 
 Pour \(A, B \in \Omega\) :
 
@@ -43,7 +43,7 @@ T(A, B) = \inf\{\, t \in I_A \cap [0,+\infty[ : X(t; A) = B \,\}, \qquad \inf \v
 
 \(T(A,B)\) est le **temps de première arrivée** de \(B\) sur l'orbite positive de \(A\). Unités : \([\mathbf u] = \mathrm{m\,s^{-1}}\), \([T] = \mathrm{s}\).
 
-### 2.4 Variante V2 — pseudo-distance projetée historique
+### 2.4 Variante V2 — temps après projection (pseudo-distance projetée historique)
 
 (Mohammadi & Brun 2006, § 3.) Pour \(A, B \in \Omega\) :
 
@@ -60,7 +60,7 @@ où \(B^\perp\) est la projection (euclidienne, dans les cas du § 5) de \(B\) s
 - **(C3)** \(t = 0\) est admis dans l'infimum : \(T(A,A) = 0\). Le « temps de retour » sur une orbite fermée est une autre grandeur (§ 6.3).
 - **Axiomes.** (D1) \(T(x,x)=0\) ; (D2) \(T(x,y) \ge 0\) ; (D3) inégalité triangulaire dirigée \(T(x,z) \le T(x,y) + T(y,z)\) au sens étendu ; (D4) séparation : \(T(x,y) = 0 \Rightarrow x = y\). Une **quasi-distance étendue** vérifie (D1)–(D4) ; une distance vérifie en outre la symétrie et la finitude.
 
-## 3. V1 : ce qui découle de la seule définition
+## 3. V1 — temps de première arrivée : ce qui découle de la seule définition
 
 **Lemme 3.1 (le temps de première arrivée est atteint).** Si l'ensemble des temps d'atteinte \(H_{A,B}=\{t\ge0:X(t;A)=B\}\) est non vide, alors son infimum est atteint.
 
@@ -140,7 +140,7 @@ Ce critère tranche la question de convergence de l'intégrale : la singularité
 
 **Remarque 4.7 (limites et sortie de domaine).** Sur `Omega = (0,1)` avec `u = U`, pour `U > 0` et `a` dans `Omega`, l'intervalle maximal positif dans le domaine a pour extrémité `sigma_Omega(a) = (1-a)/U` : ici, cette fin de validité correspond bien à l'approche de la frontière droite. Les points situés au-delà de 1 sont hors de `Omega` et ne sont donc pas des cibles admissibles pour la définition de V1 telle qu'énoncée avec `A,B` dans `Omega` ; les traiter comme cibles exige d'étendre explicitement le domaine du modèle. En général, une extrémité maximale finie ne prouve pas à elle seule une sortie géométrique par la frontière : elle peut aussi refléter une explosion en temps fini.
 
-## 5. V2 : champ uniforme et champs de cisaillement (2D, calculables à la main)
+## 5. V2 — temps après projection : champ uniforme et champs de cisaillement (2D, calculables à la main)
 
 **Proposition 5.1 (V2 = V1 en dimension 1).** Supposons \(d=1\), les hypothèses (H1)–(H2) de la définition 2.4 satisfaites, et \(a,b\) dans la même composante connexe de \(\Omega\setminus\{x:u(x)=0\}\). Sur cette composante, \(u\) ne s'annule pas et la trajectoire maximale parcourt toute la composante (le temps pour atteindre tout point intérieur est fini). La projection de \(b\) sur \(\gamma_a\) est donc \(b\) lui-même, \(b^\perp=b\), et \(d(a,b)=T(a,b)\). Si la composante se réduit à un point de stagnation, cette conclusion ne s'applique pas. Toutes les pathologies de V2 (séparation, triangulation, unicité) sont donc des phénomènes de dimension supérieure ou égale à 2. La restriction n'est pas décorative : en 1D, une source stagnante \(u(a)=0\) réduit \(\gamma_a\) à un point et fait échouer la séparation — c'est exactement ce qu'exclut (H1). ∎
 
@@ -228,7 +228,7 @@ Point selle \(\mathbf u = (x, -y)\) : depuis \(A = (0,1)\), la trajectoire est \
 
 ## 8. Réponse à la question de l'issue : ce qui découle de la seule définition
 
-| Propriété | V1 (première arrivée) | V2 (projetée historique) | Où |
+| Propriété | V1 (temps de première arrivée) | V2 (temps après projection) | Où |
 |---|---|---|---|
 | (D1) \(T(x,x)=0\) | oui, par définition | oui (hérite de V1) | 3.2 |
 | (D2) positivité | oui, par définition | oui | 3.2 |

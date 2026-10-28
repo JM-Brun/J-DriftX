@@ -10,7 +10,7 @@ Les publications historiques de Drift-X décrivent des propriétés physiques so
 2. **Test numérique ciblé** : un calcul vérifie cette propriété pour une fonction, un jeu de paramètres, une grille et une tolérance donnés.
 3. **Propriété démontrée du modèle** : une preuve analytique, ou une validation numérique avec domaine de validité explicite, justifie la conclusion recherchée.
 
-La CI verte ne suffit pas à passer du niveau 2 au niveau 3. Le code actuel est un socle de panache/puff gaussien en vent uniforme et trois primitives de métrique de portée limitée (coût de polyligne, temps de première arrivée 1D, référence uniforme) ; il ne reconstruit pas encore le champ de vent multi-niveaux historique.
+La CI verte ne suffit pas à passer du niveau 2 au niveau 3. Le code actuel est un socle de panache/puff gaussien en vent uniforme et trois primitives de métrique de portée limitée (coût de polyligne, cas 1D du temps de première arrivée V1, référence uniforme du temps après projection V2) ; il ne reconstruit pas encore le champ de vent multi-niveaux historique.
 
 ## État des tests dans le dépôt
 

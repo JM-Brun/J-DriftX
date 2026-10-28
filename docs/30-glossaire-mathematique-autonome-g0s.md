@@ -10,6 +10,8 @@ Cette page fait partie du dépôt public **J-DriftX**. Elle rassemble les défin
 
 **Comment lire le nom « G0-S ».** « G0-S » n'est pas une notion mathématique : c'est le repère d'un chantier dans la feuille de route du projet, à lire « G zéro S ». **G0** désigne le premier jalon de cadrage ; le suffixe **S** désigne l'axe **scientifique**, par opposition à l'axe applicatif **G0-A**, dont l'objet — l'utilité pratique — reste non démontré (détail dans la [carte d'articulation scientifique](18-carte-articulation-scientifique.md), section 3). En clair, « G0-S » désigne ici l'**étude des temps de parcours dirigés** : dans un vent donné, combien de temps faut-il pour aller d'un point $A$ à un point $B$ en suivant le courant, et quelles propriétés ce temps vérifie-t-il ? Dans toute la page, ce nom de code peut se lire comme « l'étude des temps de parcours dirigés ».
 
+**Nomenclature des variantes V1 et V2.** Les documents du socle G0-S désignent par deux identifiants courts les constructions étudiées : **V1** est le **temps de première arrivée** (définition 2.3 de l'[investigation G0-S](19-investigation-g0s-temps-de-parcours.md) : premier instant auquel la trajectoire issue de $A$ atteint exactement $B$) et **V2** le **temps après projection** (définition 2.4 : construction historique de Mohammadi & Brun 2006, où $B$ est d'abord projeté sur la caractéristique passant par $A$ — d'où son nom historique de « pseudo-distance »). Convention d'écriture : à sa première occurrence dans un document ou une page, chaque identifiant est accompagné de son étiquette sémantique — « temps de première arrivée (V1) » ou « temps après projection (V2) » — puis les occurrences suivantes emploient l'identifiant seul.
+
 ## 1. Distance, métrique et variantes
 
 Soit $E$ un ensemble. Une fonction $d:E\times E\to[0,+\infty[$ est une **métrique** si, pour tous $x,y,z\in E$, elle vérifie les cinq axiomes suivants.
@@ -34,7 +36,7 @@ Le tableau explicite les recouvrements : chaque notion reprend les axiomes indiq
 | **Pseudo-métrique** | $[0,+\infty[$ | Oui | Oui | **Non** | Oui | Oui | Peut attribuer une distance nulle à deux points distincts. |
 | **Quasi-métrique dirigée** | $[0,+\infty[$ | Oui | Oui | Oui selon la convention stricte | **Non** | Oui, dans le sens dirigé | Le terme est polysémique ; vérifier la définition de chaque source. |
 | **Quasi-distance étendue dirigée (V1 ici)** | $[0,+\infty]$ | Oui | Oui | Oui dans le cadre retenu | **Non exigée** | Oui, dans le sens dirigé | Autorise $+\infty$ pour une cible non atteinte. |
-| **V2 après projection** | $[0,+\infty]$ selon la convention | Oui si le temps projeté est défini | Oui si la projection de $A$ est bien définie | **Pas garantie en 2D** | Pas garantie | Pas garantie en général | Construction particulière, pas une classe métrique standard. |
+| **V2 — temps après projection** | $[0,+\infty]$ selon la convention | Oui si le temps projeté est défini | Oui si la projection de $A$ est bien définie | **Pas garantie en 2D** | Pas garantie | Pas garantie en général | Construction particulière, pas une classe métrique standard. |
 
 La pseudo-métrique abandonne précisément l’axiome de séparation. Une quasi-distance dirigée abandonne la symétrie, et la version étendue autorise en plus la valeur infinie. V2 peut perdre la séparation parce que la projection ignore un décalage transversal.
 

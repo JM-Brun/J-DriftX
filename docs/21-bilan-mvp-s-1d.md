@@ -10,7 +10,7 @@ Le noyau de référence contient trois objets qui ne doivent pas être confondus
 - `pseudo_distance_uniforme(a, b, vent)` : référence analytique projetée dans un champ uniforme 2D ; le coût transversal est nul et la convention locale pour une cible en amont est `+inf`.
 - `temps_transport(ligne, vent)` : somme discrète longueur/norme de vitesse sur une polyligne fournie ; cette fonction ignore le signe du vent et n'est pas un solveur de caractéristiques.
 
-La première primitive rend le cas V1 constant 1D exécutable. Aucune de ces primitives ne constitue un solveur général de champ variable, une implémentation complète de la projection historique en 2D, ni une validation physique du modèle de dispersion.
+La première primitive rend le cas constant 1D du temps de première arrivée (V1) exécutable. Aucune de ces primitives ne constitue un solveur général de champ variable, une implémentation complète de la projection historique en 2D, ni une validation physique du modèle de dispersion.
 
 ## 2. Reproduction locale
 
@@ -45,7 +45,7 @@ Le rendu Quarto et la construction du paquet Pyodide requièrent l'environnement
 | Cas 1D et cas uniformes ciblés | **Testé en CI** | Tests déterministes du dépôt ; pas une validation de tous les champs possibles |
 | Construction projetée uniforme 2D | **Implémentée et testée** | Convention locale documentée ; fidélité historique complète non établie |
 | Coût de polyligne | **Implémenté et testé** | Somme longueur/norme, sans directionnalité physique |
-| Limites mathématiques et contre-exemples de la définition V2 | **Démontrés dans le périmètre analytique documenté** | Ne pas transférer ces résultats à un solveur de champ variable inexistant |
+| Limites mathématiques et contre-exemples de la définition V2 (temps après projection) | **Démontrés dans le périmètre analytique documenté** | Ne pas transférer ces résultats à un solveur de champ variable inexistant |
 | Exécution du workflow qualité | **Reproduite en CI** | Run [#440](https://github.com/JM-Brun/J-DriftX/actions/runs/40239614200), succès sur le head synchronisé de la PR #81 |
 | Comparaison exhaustive aux antécédents | **Non achevée** | Pas de revendication de nouveauté |
 | Utilité applicative / performance prédictive | **Inconnue, G0-A non franchi** | Aucun benchmark applicatif autorisé par ce bilan |
