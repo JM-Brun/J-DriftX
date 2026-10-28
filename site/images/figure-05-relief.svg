@@ -250,7 +250,7 @@
 <text x="745.0" y="200.0" font-size="15" font-weight="normal" fill="#202833">Source posée sur un sol quasi plat (relief &lt; 0,5 m).</text>
 <text x="745.0" y="232.0" font-size="17" font-weight="bold" fill="#202833">Vent et panache</text>
 <text x="745.0" y="260.0" font-size="15" font-weight="normal" fill="#202833">u = (0.00, -3.00) m/s, identique dans les deux calculs.</text>
-<text x="745.0" y="284.0" font-size="15" font-weight="normal" fill="#202833">Panache gaussien (Briggs, classe C) : Q = 2 kg/s,</text>
+<text x="745.0" y="284.0" font-size="15" font-weight="normal" fill="#202833">Panache gaussien (Briggs, classe C) : Q = 2.0 kg/s,</text>
 <text x="745.0" y="308.0" font-size="15" font-weight="normal" fill="#202833">h = 50 m ; axe à 50.2 m ; point à 3 m du sol.</text>
 <text x="745.0" y="332.0" font-size="15" font-weight="normal" fill="#202833">Réflexion au sol du modèle référée à z = 0.</text>
 <text x="745.0" y="364.0" font-size="17" font-weight="bold" fill="#202833">Sans / avec correction</text>
