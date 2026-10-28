@@ -111,7 +111,7 @@ A previously documented shear counterexample illustrates one obstruction. For \(
 \[
 d_A(x,y)=\frac{x-x_A}{v(y_A)},
 \qquad
-u\cdot\nabla d_A=\frac{v(y)}{v(y_A)}.
+ u\cdot\nabla d_A=\frac{v(y)}{v(y_A)}.
 \]
 For non-constant \(v\), the last expression is not identically one. Therefore this projected cost cannot simply be substituted for a global travel-time coordinate in (3)–(5).
 
