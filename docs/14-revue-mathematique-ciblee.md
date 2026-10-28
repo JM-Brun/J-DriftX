@@ -153,6 +153,36 @@ $$
 
 Ce résultat diffère de $1$ dès que $v(y)\ne v(y_A)$. Il vaut $1$ sur la caractéristique source, mais pas globalement sur le domaine. Ainsi, même pour un champ $C^1$, stationnaire, positif et de divergence nulle, la pseudo-distance projetée par paires n'est pas généralement un champ de temps d'arrivée satisfaisant l'équation locale $\mathbf u\cdot\nabla d_A=1$. Cela ne réfute pas toute construction historique de concentration, mais interdit de justifier la généralisation par la seule identité de temps de parcours. Il faut dériver séparément le modèle de concentration et ses contraintes.
 
+
+### 3.4.1.1 Portée logique du contre-exemple et décision de test
+
+Le contre-exemple établit une non-implication précise, et rien de plus :
+
+| Propriété / affirmation | Ce qui est établi | Ce qui n'en découle pas |
+|---|---|---|
+| Incompressibilité, \(\nabla\cdot\mathbf u=0\) | Pour \(\mathbf u=(v(y),0)\), la divergence vaut zéro car \(u_x=v(y)\) ne dépend pas de \(x\) et \(u_y=0\) | Ni conservation du scalaire, ni identité locale de temps, ni conservation du flux sur toute surface |
+| Identité locale d'un temps d'arrivée régulier | Le long d'une trajectoire régulière, une coordonnée d'arrivée compatible vérifie \(\mathbf u\cdot\nabla\tau=1\) sur son domaine de validité | Cette identité ne peut pas être attribuée automatiquement à toute fonction appelée « temps » |
+| Coût projeté historique | Pour la cible aval, \(d_A=(x-x_A)/v(y_A)\) et \(\mathbf u\cdot\nabla d_A=v(y)/v(y_A)\) | Hors de \(y=y_A\), cette dérivée n'est généralement pas égale à \(1\) |
+| Axiomes de distance | La source historique qualifie l'objet de pseudo-distance; séparation, symétrie et triangle doivent être examinés séparément | Un échec d'axiome ne signifie pas que la formule est mal implémentée si cet échec appartient à sa définition |
+| Conservation du débit volumique | Pour un tube de courant régulier sans singularité, \(\nabla\cdot\mathbf u=0\) implique l'égalité des débits signés à travers ses sections | Ce résultat ne vaut pas automatiquement pour le flux de polluant \(c\mathbf u\), et n'identifie pas ce flux à la quantité émise \(Q\) |
+| Conservation de masse du scalaire | Elle relève d'un bilan du type \(\partial_t c+\nabla\cdot(c\mathbf u-D\nabla c)=s\) | Elle ne se déduit ni de la pseudo-distance seule ni de la seule incompressibilité |
+
+Le contre-exemple ne prouve donc pas que le modèle de concentration historique est faux. Il montre que la chaîne d'arguments « champ incompressible → coût projeté → équation locale de temps → conservation du scalaire » contient des implications qui doivent être démontrées séparément.
+
+#### Faut-il coder le contre-exemple maintenant ?
+
+**Pas comme test de régression de l'API actuelle.** Le code Python actuel expose un temps de parcours sur polyligne et un cas 1D de première arrivée; il ne fournit pas encore une API de référence qui calcule, pour un champ 2D variable, la projection historique \(B\mapsto B^\perp\) et son coût. Un test ajouté aujourd'hui risquerait donc de tester une formule recopiée dans le test plutôt qu'un comportement réel du logiciel.
+
+Décision de travail :
+
+1. **Maintenant — preuve documentaire/analytique :** conserver le calcul exact ci-dessus comme contre-exemple mathématique, avec les hypothèses explicites \(v\in C^1\), \(v(y)>0\), champ stationnaire, source et cible aval. Ce résultat est déjà vérifiable à la main.
+2. **Avant toute implémentation de la projection historique — test de spécification :** fixer la convention de projection, l'accessibilité amont/aval, les cibles hors domaine, les projections non uniques et les unités.
+3. **Après implémentation d'une API dédiée — test automatisé :** choisir par exemple \(v(y)=1+y\) sur un domaine où \(v>0\), avec \(y_A=0\) et une cible \(y=1\). Vérifier la valeur analytique \(d_A=x-x_A\) et la dérivée directionnelle \(\mathbf u\cdot\nabla d_A=2\), donc différente de \(1\). Vérifier séparément que sur la caractéristique \(y=y_A\), cette dérivée vaut \(1\). Le test doit appeler l'API de production, non une copie de la formule écrite uniquement dans le test.
+4. **Ne pas faire échouer le test de l'implémentation de polyligne** sur cette identité : cette fonction représente un autre objet mathématique et n'est pas censée résoudre le problème de projection en champ variable.
+
+Le test futur vérifiera la fidélité à la définition projetée et son domaine de validité; il ne « corrigera » pas la pseudo-distance pour la forcer à être un vrai temps d'arrivée. Si le projet choisit plutôt d'implémenter un véritable solveur de temps d'arrivée, ce sera une API distincte avec ses propres hypothèses et tests.
+
+
 ## 3.4.2 Résultat conditionnel démontrable par le théorème de la divergence
 
 On peut établir une conservation de flux entre deux sections transverses d'un même tube de courant sans supposer d'emblée une formule particulière pour le jacobien. Soit \(V\) le volume borné par deux sections \(S_1\) et \(S_2\), et par une surface latérale \(\Sigma\) formée de lignes de courant. Si le champ \(\mathbf u\) est suffisamment régulier dans \(V\), si \(\nabla\cdot\mathbf u=0\), et si aucune singularité ou ouverture supplémentaire n'intersecte la frontière, le théorème de la divergence donne
