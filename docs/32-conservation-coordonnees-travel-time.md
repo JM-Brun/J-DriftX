@@ -135,6 +135,36 @@ C_a=K-\int_{R\geq R_0} C_g(x,y)\,dV, \tag{31}
 \]
 with \(R=\sqrt{x^2+y^2}\). The printed integration element in Eq. (31) is \(dV\), not \(dx\,dy\).
 
+### 2008 chapter: definition of the conserved quantity
+
+The accessible scan of Brun & Mohammadi (2008), §2.1–2.2 (printed pp. 247–248; chapter PDF pp. 244–245), provides a more direct comparison. In §2.1, Eq. (2), the local model imposes
+\[
+\nabla\cdot u_l=0,\qquad u_l\cdot\nabla c_l=0,\qquad
+\int_{\mathbb R^3}c_l\,dV=\text{given}.
+\tag{BM08-2}
+\]
+The last condition identifies the local integral of \(c_l\) over volume as the given quantity. Under the usual mass-concentration interpretation, \(c_l\) therefore has units \([M L^{-3}]\) and the integral has units of mass. The first two conditions state incompressibility and steady advection of the scalar along the local velocity; they are not, by themselves, a full advection–diffusion balance with sources, deposition, or boundary losses.
+
+In §2.2, the chapter then prints two alternatives for the quantity supplied to the long-range model:
+\[
+c^+(x,y)=\int_{z>H}c_l\,dz
+\quad\text{or}\quad
+c^+(x,y)=u_l^+c_l,
+\qquad
+u_l^+=\max\left(0,\frac{u\cdot z}{\|u\|}\right),
+\tag{BM08-3}
+\]
+followed by
+\[
+C=\int_{\mathbb R^2}c^+(x,y)\,d\sigma,
+\tag{BM08-4}
+\]
+which “should be conserved” by the reduced-order transport model (the chapter's Eq. (2.2), printed p. 248). The factor \(u_l^+\) as defined is dimensionless.
+
+With \(c_l\) in \([M L^{-3}]\), the first alternative for \(c^+\) has units \([M L^{-2}]\), and its integral over \(d\sigma\) has units of mass. The second alternative \(u_l^+c_l\) retains units \([M L^{-3}]\), so its integral over an area has units \([M L^{-1}]\), not mass. **The two printed alternatives are therefore not dimensionally equivalent under the same conventional definition of \(c_l\).** The source does not explain a different convention or an additional length factor in the displayed definition.
+
+This does not establish which alternative the authors intended or prove that the implementation is invalid. It establishes that the conservation target is stated, but the notation as transcribed does not uniquely specify a dimensionally consistent conserved quantity without an additional definition or correction from the authors/source.
+
 ### Dimensional audit under the conventional interpretation
 
 Assume, provisionally, that \(c\) is a volumetric mass concentration with units \([M L^{-3}]\), and that \(c_{\rm inj}\) is a mass emission rate with units \([M T^{-1}]\). Then:
@@ -165,7 +195,7 @@ With \(c^i\) interpreted as a volumetric concentration, the left side has units 
 
 The article does describe the global velocity construction as divergence-free and presents conservation as a constraint, but divergence-free velocity alone does not imply conservation of a passive scalar. The displayed equations require a consistent scalar definition and measure before they can be used as a physical mass balance.
 
-The official 2006 article is available from *Comptes Rendus Mécanique* (DOI \([10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007)\)); its publisher PDF could not be retrieved through the current source interface for a reliable equation-by-equation transcription. The 2008 Springer chapter's full publisher text is also not available in the accessible record. Therefore, the 2009 transcription above must not be presented as if it resolved the exact notation in the 2006 paper or the 2008 chapter.
+The official 2006 article is available from *Comptes Rendus Mécanique* (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007)); its publisher PDF could not be retrieved through the current source interface for a reliable equation-by-equation transcription. The 2008 Springer chapter has been inspected from an accessible third-party-hosted scan of the book (chapter pp. 245–256; the Springer landing page provides the bibliographic record, DOI [10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14)). The scan is useful for transcription but is not itself a publisher-hosted copy. The 2009 article remains a separate source and must not be conflated with either the 2006 paper or the 2008 chapter.
 
 ## 7. What remains to be established from the primary model
 
@@ -201,6 +231,7 @@ No variable-field solver or new benchmark should be justified by this note alone
 
 - Mohammadi, B. & Brun, J.-M. (2006). “Similitude généralisée et modélisation géométrique à complexité réduite.” *Comptes Rendus Mécanique*, 334(10), 634–638. https://doi.org/10.1016/j.crme.2006.06.007. Open PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf
 - Brun, J.-M. & Mohammadi, B. (2008). “Reduced-Order Modelling of Dispersion.” In *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, chap. 14, pp. 245–256. https://doi.org/10.1007/978-1-4020-8758-5_14
+  Accessible scan used for the transcription: https://www.sgo.fi/~j/baylie/Partial%20Differential%20Equations%20-%20Modelling%20and%20Numerical%20Simulation%20-%20R.%20Glowinski%2C%20P.%20Neittaanmaki%20%28Springer%2C%202008%29%20WW.pdf
 - Bozon, N. & Mohammadi, B. (2009). “GIS-based atmospheric dispersion modelling: Forecasting the pesticide atmospheric spray drift from a vineyard plot to a watershed.” *Applied Geomatics*, 1, 59–74. https://doi.org/10.1007/s12518-009-0006-0. Publisher version of record; its online text prints `2/3 = 0.636` and describes the factor as a stochastic averaged cosine.
 - Project source reconciliation and shear counterexample: [PR #122](https://github.com/JM-Brun/J-DriftX/pull/122).
 - Follow-up tracking issue: [#123](https://github.com/JM-Brun/J-DriftX/issues/123).
