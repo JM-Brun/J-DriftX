@@ -128,7 +128,7 @@ A complete historical reconstruction still requires the equations and assumption
 | Historical definition of \(C\), its units and integration domain reconciled across sources | **Still to reconstruct** |
 | Applicability of a regular \((\tau,\eta_1,\eta_2)\) chart to the historical projected pseudo-distance | **Not established; counterexamples show it cannot be assumed generally** |
 | Treatment of source/sink, diffusion, deposition, ground reflection and open boundaries in the historical model | **Still to reconstruct** |
-| Correction factor printed as “2/3 = 0.636” in the accessible Bozon, Sinfort & Mohammadi (2010) manuscript | **Numerically inconsistent as written**: \\(2/3\\approx0.667\\), while \\(2/\\pi\\approx0.637\\). Whether the same expression appears in Brun & Mohammadi (2008) remains unverified against the publisher text; do not silently correct either source. |
+| Correction factor printed as “2/3 = 0.636” in the accessible Bozon, Sinfort & Mohammadi (2010) manuscript | **Numerically inconsistent as written**: $2/3 \approx 0.667$, while $2/\pi \approx 0.637$. Whether the same expression appears in Brun & Mohammadi (2008) remains unverified against the publisher text; do not silently correct either source. |
 
 ## 7. Decision and next evidence required
 
