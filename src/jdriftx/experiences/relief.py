@@ -153,10 +153,6 @@ def _valide_source(scenario: ScenarioRelief) -> None:
     if not scenario.fenetre.contient(scenario.source):
         msg = "La source doit être dans la fenêtre."
         raise ValueError(msg)
-    relief_source = scenario.altitude_sol(*scenario.source)
-    if relief_source > _TOLERANCE_SOL_PLAT:
-        msg = "La source doit être posée sur un sol quasi plat (relief < 0,5 m)."
-        raise ValueError(msg)
     u, v = scenario.vent
     for colline in scenario.collines:
         dx = colline.centre[0] - scenario.source[0]
@@ -164,6 +160,10 @@ def _valide_source(scenario: ScenarioRelief) -> None:
         if dx * u + dy * v <= 0.0:
             msg = "Les collines doivent être sous le vent de la source."
             raise ValueError(msg)
+    relief_source = scenario.altitude_sol(*scenario.source)
+    if relief_source > _TOLERANCE_SOL_PLAT:
+        msg = "La source doit être posée sur un sol quasi plat (relief < 0,5 m)."
+        raise ValueError(msg)
 
 
 @dataclass(frozen=True)
