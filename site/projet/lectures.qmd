@@ -6,11 +6,7 @@ title: "Lectures des sources"
 
 Cette page organise les sources historiques par rôle scientifique : fondements mathématiques, modèle multi-niveaux et extensions applicatives. Elle distingue le contenu directement vérifié, les extraits partiels et les hypothèses de synthèse propres à J-DriftX. Les fiches détaillées et les statuts d'accès sont dans <code>docs/04-revues-papiers-sources.md</code> et les archives disponibles dans <code>raw/</code>. Le but est une vue d'ensemble cohérente, pas une uniformisation artificielle des notations ni une liste exhaustive de détails d'implémentation.
 
-::: {.callout-note}
-::: {.callout-note}
 **Statut documentaire.** Les notices bibliographiques peuvent être confirmées sans que le texte intégral ait été lu. Les équations et conclusions sont présentées au niveau de détail permis par l'accès réellement vérifié ; les écarts de notation entre sources sont conservés lorsqu'ils correspondent à des objets différents, et rapprochés lorsqu'une définition commune peut être établie.
-:::
-:::
 
 ## La thèse de J.-M. Brun (notice localisée, texte intégral en attente)
 
