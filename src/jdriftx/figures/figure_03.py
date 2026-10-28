@@ -156,8 +156,7 @@ def _panneau_convergence(resultat: ResultatComparaison) -> list[str]:
         'stroke-width="2" stroke-dasharray="6 4"/>'
     )
     elements.append(
-        '<line x1="560" y1="280" x2="1060" y2="280" stroke="#7c8894" '
-        'stroke-width="1.5"/>'
+        '<line x1="560" y1="280" x2="1060" y2="280" stroke="#7c8894" stroke-width="1.5"/>'
     )
     for pas, px, py, erreur in marqueurs:
         elements.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="6" fill="#2864a5"/>')
