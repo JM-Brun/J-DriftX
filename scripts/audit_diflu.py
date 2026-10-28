@@ -192,17 +192,17 @@ def run(output_dir: Path, timeout: float) -> dict[str, Any]:  # noqa: PLR0915
         local_by_remote_name[remote_name] = destination
         records.append(
             {
-            "dataverse_label": remote_name,
-            "dataverse_file_id": file_id,
-            "metadata_url": metadata_url,
-            "metadata_final_url": metadata_final_url,
-            "download_url": download_url,
-            "final_url": final_url,
-            "original_filename": original_name,
-            "original_format": metadata.get("originalFormatLabel"),
-            "dataverse_export_filename": metadata.get("filename"),
-            "dataverse_export_size_bytes": metadata.get("filesize"),
-            "integrity": integrity,
+                "dataverse_label": remote_name,
+                "dataverse_file_id": file_id,
+                "metadata_url": metadata_url,
+                "metadata_final_url": metadata_final_url,
+                "download_url": download_url,
+                "final_url": final_url,
+                "original_filename": original_name,
+                "original_format": metadata.get("originalFormatLabel"),
+                "dataverse_export_filename": metadata.get("filename"),
+                "dataverse_export_size_bytes": metadata.get("filesize"),
+                "integrity": integrity,
                 "local_path": str(destination),
             }
         )
@@ -222,9 +222,18 @@ def run(output_dir: Path, timeout: float) -> dict[str, Any]:  # noqa: PLR0915
         "files": records,
         "sampling_audit": audit,
         "limitations": [
-            "The report checks transport integrity and documented structural invariants; it does not establish scientific validity.",
-            "Original-file checks are only enforced when Dataverse publishes original size and MD5 metadata.",
-            "The current semantic check covers the documented EA/VEGA sampling_bag_id rule, not all scientific quality criteria.",
+            (
+                "The report checks transport integrity and documented structural invariants; "
+                "it does not establish scientific validity."
+            ),
+            (
+                "Original-file checks are only enforced when Dataverse publishes original size "
+                "and MD5 metadata."
+            ),
+            (
+                "The current semantic check covers the documented EA/VEGA sampling_bag_id "
+                "rule, not all scientific quality criteria."
+            ),
         ],
     }
     (output_dir / "audit-report.json").write_text(
