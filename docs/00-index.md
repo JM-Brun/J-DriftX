@@ -11,7 +11,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 33 (la note 32, ajoutée par la PR #173,
+Prochain numéro libre sur main : 34 (la note 33, figure 4 du chapitre 2008,
 est désormais sur main).
 
 ## Numéros en double
@@ -55,6 +55,7 @@ est désormais sur main).
 | `30-glossaire-mathematique-autonome-g0s.md` | Glossaire mathématique autonome G0-S |
 | `31-investigation-champ-multiniveaux.md` | Investigation du champ de vent multi-niveaux historique |
 | `32-conservation-coordonnees-travel-time.md` | Bilan de conservation dans des coordonnées travel-time : dérivation conditionnelle et transcriptions des sources (2006, 2008, 2009) |
+| `33-figure-04-superposition-sources.md` | Figure 4 du chapitre 2008 : superposition de deux sources, champ à trois mesures |
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
 | `bibliographie/` | Dossier bibliographique |
