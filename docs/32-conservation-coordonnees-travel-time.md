@@ -128,7 +128,7 @@ A complete historical reconstruction still requires the equations and assumption
 | Historical definition of \(C\), its units and integration domain reconciled across sources | **Still to reconstruct** |
 | Applicability of a regular \((\tau,\eta_1,\eta_2)\) chart to the historical projected pseudo-distance | **Not established; counterexamples show it cannot be assumed generally** |
 | Treatment of source/sink, diffusion, deposition, ground reflection and open boundaries in the historical model | **Still to reconstruct** |
-| Exact historical correction coefficient printed as “2/3 = 0.636” in the 2008 chapter | **Unresolved; do not silently correct** |
+| Correction factor printed as “2/3 = 0.636” in the accessible Bozon, Sinfort & Mohammadi (2010) manuscript | **Numerically inconsistent as written**: \\(2/3\\approx0.667\\), while \\(2/\\pi\\approx0.637\\). Whether the same expression appears in Brun & Mohammadi (2008) remains unverified against the publisher text; do not silently correct either source. |
 
 ## 7. Decision and next evidence required
 
@@ -149,5 +149,6 @@ No variable-field solver or new benchmark should be justified by this note alone
 
 - Mohammadi, B. & Brun, J.-M. (2006). “Similitude généralisée et modélisation géométrique à complexité réduite.” *Comptes Rendus Mécanique*, 334(10), 634–638. https://doi.org/10.1016/j.crme.2006.06.007. Open PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf
 - Brun, J.-M. & Mohammadi, B. (2008). “Reduced-Order Modelling of Dispersion.” In *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, chap. 14, pp. 245–256. https://doi.org/10.1007/978-1-4020-8758-5_14
+- Bozon, N., Sinfort, C. & Mohammadi, B. (2010). “A GIS-based atmospheric dispersion model.” *Journal Européen des Systèmes Automatisés*, 44(4), 445–461. https://doi.org/10.3166/jesa.44.445-461. The accessible copy is the HAL author manuscript `hal-00468863` (version 1, 31 March 2010), not an authenticated publisher version of record; use it for provisional source attribution only.
 - Project source reconciliation and shear counterexample: [PR #122](https://github.com/JM-Brun/J-DriftX/pull/122).
 - Follow-up tracking issue: [#123](https://github.com/JM-Brun/J-DriftX/issues/123).
