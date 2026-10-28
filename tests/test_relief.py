@@ -54,7 +54,7 @@ def test_le_scenario_rejette_une_colline_hors_fenetre() -> None:
     """Une colline hors de la fenêtre d'affichage est une erreur de configuration."""
     colline = CollineGaussienne(centre=(2500.0, 1600.0), hauteur=40.0, echelle=90.0)
     with pytest.raises(ValueError, match="dans la fenêtre"):
-        _scenario_modifie(collines=(colline, COLLINE_2_DEFAUT))
+        _scenario_modifie(source=(500.0, 1900.0), collines=(colline, COLLINE_2_DEFAUT))
 
 
 def test_le_scenario_rejette_une_colline_en_amont() -> None:
