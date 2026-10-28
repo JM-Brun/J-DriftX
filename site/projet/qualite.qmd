@@ -41,12 +41,13 @@ Le projet ne doit donc pas annoncer une propriété comme « vérifiée systéma
 - **superposition :** test ponctuel du panache gaussien et bilans de masse de superpositions multi-configurations (panaches et puffs de classes différentes) ;
 - **conservation :** intégrales numériques du panache (six classes, plusieurs distances, hauteur non nulle), du puff et d’une superposition, tolérance 0,1 % sur grilles adaptées à quatre écarts-types ; troncature et discrétisation sont évaluées séparément dans deux tests dédiés ;
 - **divergence nulle :** testée par des tests ciblés sur les champs analytiques à fonction de courant et sur la reconstruction à deux mesures ; le champ de vent multi-niveaux historique, lui, n'est pas implémenté ;
-- **métrique historique :** seule une référence analytique de champ uniforme est testée ; la fonction générale de temps de transport sur polyligne est une primitive distincte.
+- **métrique historique :** seule une référence analytique de champ uniforme est testée ; la fonction générale de temps de transport sur polyligne est une primitive distincte ;
+- **non-symétrie :** testée pour la référence uniforme (coût fini dans le sens aval, infini en amont, borne transversale nulle des deux côtés) ; la pseudo-distance historique en champ variable n’est pas couverte, et la primitive de polyligne ignore le sens du vent ;
 - **adjoint (sensibilité) :** gradient exact testé pour la référence uniforme (vecteur adjoint, gradients par rapport au vent et aux points) et pour le cas 1D ; pas d’état adjoint en champ variable ;
 
 ## Priorités qualité avant le benchmark
 
-1. Conservation étendue (classes, distances, hauteur, puff, superposition — y compris multi-configurations —, élargissement de grille) : couverte ; restent le raffinement du pas et la conservation en champ variable.
+1. Conservation étendue (classes, distances, hauteur, puff, superposition — y compris multi-configurations —, élargissement de grille) : couverte ; le raffinement du pas à domaine fixé est désormais couvert par le test d’erreur de quadrature, reste la conservation en champ variable.
 2. Ajouter des tests de convergence et des cas limites indépendants des formules de production : les gradients d’adjoint (référence uniforme et cas 1D) sont désormais couverts par différences finies ; restent des cas limites supplémentaires.
 3. Formaliser la métrique historique et séparer explicitement son API de la primitive de polyligne.
 4. Les tests de divergence existants couvrent les champs analytiques à fonction de courant ; pour le champ de vent multi-niveaux historique, ne créer les tests qu'après l'avoir défini et implémenté.
