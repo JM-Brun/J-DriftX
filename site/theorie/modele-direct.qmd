@@ -147,7 +147,35 @@ $$
 $$
 avant prise en compte de la condition de sol et d'autres effets. Cette relation est une conséquence de ce **cas simplifié**, pas une formule universelle de dispersion atmosphérique. Elle relève de la limite diffusive classique attribuée à Taylor (1921), dont le rôle dans le passage vers les lois de dispersion empiriques est rappelé dans [Solutions de similitude](similitude.qmd).
 
-Les formules empiriques de Pasquill–Gifford/Briggs fournissent des courbes ou relations pour estimer $\sigma_y(x)$ et $\sigma_z(x)$ dans des contextes spécifiés. Elles ne sont pas « produites automatiquement » par toute fermeture gradient : il faut ajouter les hypothèses, la géométrie, les conditions aux limites et la paramétrisation. La dérivation détaillée du cas gaussien et ses limites sont données dans [Solutions de similitude](similitude.qmd).
+Le code actuel implémente explicitement des lois de dispersion de type **Briggs pour site rural**, indexées par les classes A–F : voir les fonctions \`sigma_y\` et \`sigma_z\` dans [\`src/jdriftx/similitude.py\`](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) et les coefficients centralisés dans [\`src/jdriftx/stabilite.py\`](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py). La classe est fournie en entrée par l'appelant ; **le code ne la déduit pas automatiquement** des mesures météorologiques. Les coefficients ci-dessous décrivent la configuration implémentée, pas une loi universelle ni une validation de son adéquation à un site donné.
+
+Pour \(x\) en mètres, les lois codées sont :
+\[
+\sigma_y(x)=\frac{a x}{\sqrt{1+d_y x}},
+\]
+et, selon la classe,
+\[
+\sigma_z(x)=
+\begin{cases}
+b x, & \text{classes A–B},\\
+\dfrac{b x}{\sqrt{1+d_z x}}, & \text{classes C–D},\\
+\dfrac{b x}{1+d_z x}, & \text{classes E–F}.
+\end{cases}
+\]
+Les coefficients \(a\) et \(b\) sont sans dimension ; \(d_y\) et \(d_z\) sont en \(\mathrm{m}^{-1}\), afin que les deux écarts-types soient en mètres.
+
+| Classe | Régime conventionnel | \(a\) dans \(\sigma_y\) | \(d_y\) (\(\mathrm{m}^{-1}\)) | Forme de \(\sigma_z\) | \(b\) | \(d_z\) (\(\mathrm{m}^{-1}\)) |
+|---|---|---:|---:|---|---:|---:|
+| A | Très instable | 0,22 | 0,0001 | Linéaire | 0,20 | 0 |
+| B | Modérément instable | 0,16 | 0,0001 | Linéaire | 0,12 | 0 |
+| C | Faiblement instable | 0,11 | 0,0001 | Racine | 0,08 | 0,0002 |
+| D | Neutre | 0,08 | 0,0001 | Racine | 0,06 | 0,0015 |
+| E | Faiblement stable | 0,06 | 0,0001 | Inverse | 0,03 | 0,0003 |
+| F | Stable | 0,04 | 0,0001 | Inverse | 0,016 | 0,0003 |
+
+Les classes et coefficients sont définis comme objets dans le module \`stabilite\`, puis évalués dans \`similitude\` ; cela évite de dupliquer les constantes dans le calcul de concentration. Le module attribue ces relations aux formules rurales de Briggs et mentionne Martin (1976) comme référence secondaire, tandis que la documentation scientifique du projet renvoie aussi au chapitre [Brun & Mohammadi (2008)](../references.bib). La référence primaire/secondaire exacte des coefficients doit être vérifiée avant toute revendication de conformité réglementaire. Le domaine indiqué par l'implémentation est **rural** ; ne pas transférer ces coefficients à un site urbain, à une topographie complexe ou à une autre convention sans justification.
+
+Cette paramétrisation empirique ne découle pas automatiquement de la fermeture gradient : il faut ajouter les hypothèses, la géométrie, les conditions aux limites et la loi de dispersion. La dérivation détaillée du cas gaussien idéal et ses limites sont données dans [Solutions de similitude](similitude.qmd).
 
 ## 7. Champ de vent incompressible et divergence nulle
 
