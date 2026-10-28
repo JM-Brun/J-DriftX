@@ -97,7 +97,7 @@ def _panneau_champ(
     elements: list[str] = []
     cellules = 0
     nombre_y = int(2.0 * demi_largeur / PAS_CELLULE_Y)
-    for tranche in tranches:
+    for tranche in tranches[:-1]:
         for j in range(nombre_y):
             y = -demi_largeur + j * PAS_CELLULE_Y
             k = 2 * j
@@ -124,7 +124,7 @@ def _panneau_ecart(
     elements: list[str] = []
     cellules = 0
     nombre_y = int(2.0 * demi_largeur / PAS_CELLULE_Y)
-    for tranche in tranches:
+    for tranche in tranches[:-1]:
         for j in range(nombre_y):
             y = -demi_largeur + j * PAS_CELLULE_Y
             k = 2 * j
