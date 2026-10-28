@@ -5,9 +5,7 @@ from __future__ import annotations
 import importlib.util
 from pathlib import Path
 
-_checker_path = (
-    Path(__file__).resolve().parents[1] / "scripts" / "check_bibliography_citations.py"
-)
+_checker_path = Path(__file__).resolve().parents[1] / "scripts" / "check_bibliography_citations.py"
 _checker_spec = importlib.util.spec_from_file_location(
     "check_bibliography_citations", _checker_path
 )
