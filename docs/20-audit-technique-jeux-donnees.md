@@ -126,9 +126,13 @@ curl --fail --location --show-error \
   --output diflu-files.json
 
 # Extraire l'identifiant Dataverse du fichier nommé, sans deviner son DOI.
-FILE_ID="$(jq -er --arg name "$FILE_NAME" \
-  '.data[] | select(.dataFile.filename == $name) | .dataFile.id' \
-  diflu-files.json)"
+FILE_ID="$(jq -er --arg name "$FILE_NAME" '
+  [.data[] | select(.dataFile.filename == $name) | .dataFile.id]
+  | if length == 1 then .[0]
+    elif length == 0 then error("File not found: " + $name)
+    else error("Ambiguous filename; inspect diflu-files.json: " + $name)
+    end
+' diflu-files.json)"
 
 # Télécharger le fichier ciblé, puis conserver une empreinte locale.
 curl --fail --location --show-error \
