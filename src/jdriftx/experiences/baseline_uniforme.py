@@ -228,8 +228,7 @@ def construire_manifeste(
             "par la solution de référence concentration_panache sur la grille du cas S0 figé."
         ),
         extension=(
-            "Aucune : ni champ multi-niveaux, ni évaluation réduite revendiquée, "
-            "ni assimilation."
+            "Aucune : ni champ multi-niveaux, ni évaluation réduite revendiquée, ni assimilation."
         ),
         hypothese=(
             "Vent uniforme horizontal (U, 0, 0), U > 0 strictement (docs/48 §2.1).",
