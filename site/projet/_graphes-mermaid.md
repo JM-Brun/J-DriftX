@@ -138,6 +138,7 @@ graph TD
     experiences_relief["experiences/relief.py"]::module
     experiences_modele_reduit_edp["experiences/modele_reduit_edp.py"]::module
     experiences_identification_source["experiences/identification_source.py"]::module
+    experiences_reference_independante["experiences/reference_independante.py"]::module
     fields["fields.py"]::module
     terrain["terrain.py"]::module
     trajectories["trajectories.py"]::module
@@ -211,6 +212,7 @@ graph TD
     t_wind_field["test_wind_field_explorer.py"]::test
     t_interactif["test_interactive_wind_page.py"]::test
     t_cas_synthetiques["test_cas_synthetiques.py"]::test
+    t_reference_independante["test_reference_independante.py"]::test
   end
   subgraph ben["Benchmarks de référence"]
     benchmarks_cas["benchmarks/cas.py"]::module
@@ -308,6 +310,12 @@ graph TD
   contrats -->|"utilise"| champ_analytique
   contrats -->|"utilise"| source
   contrats -->|"utilise"| similitude
+  experiences_reference_independante -->|"utilise"| benchmarks_cas
+  experiences_reference_independante -->|"utilise"| benchmarks_metriques
+  experiences_reference_independante -->|"utilise"| similitude
+  experiences_reference_independante -->|"utilise"| stabilite
+  experiences_reference_independante -->|"utilise"| contrats
+  t_reference_independante -->|"couvre"| experiences_reference_independante
   classDef niveau fill:#ddd0f0,stroke:#495057,color:#212529;
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
   classDef propriete fill:#ffd9b3,stroke:#495057,color:#212529;
@@ -328,6 +336,7 @@ graph TD
 | experiences/relief.py | Module de code | [relief.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/relief.py) |
 | experiences/modele_reduit_edp.py | Module de code | [modele_reduit_edp.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/modele_reduit_edp.py) |
 | experiences/identification_source.py | Module de code | [identification_source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/identification_source.py) |
+| experiences/reference_independante.py | Module de code | [reference_independante.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reference_independante.py) |
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
 | source.py | Module de code | [source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/source.py) |
@@ -388,6 +397,7 @@ graph TD
 | test_wind_field_explorer.py | Test (CI) | [test_wind_field_explorer.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_wind_field_explorer.py) |
 | test_interactive_wind_page.py | Test (CI) | [test_interactive_wind_page.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_interactive_wind_page.py) |
 | test_cas_synthetiques.py | Test (CI) | [test_cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_cas_synthetiques.py) |
+| test_reference_independante.py | Test (CI) | [test_reference_independante.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reference_independante.py) |
 | graphe_connaissances.py | Module de code | [graphe_connaissances.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/graphe_connaissances.py) |
 | extraction_graphe.py | Module de code | [src/jdriftx/extraction_graphe.py](../../src/jdriftx/extraction_graphe.py) |
 | diagnostic_graphe.py | Module de code | [src/jdriftx/diagnostic_graphe.py](../../src/jdriftx/diagnostic_graphe.py) |

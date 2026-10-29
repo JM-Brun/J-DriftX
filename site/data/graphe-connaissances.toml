@@ -430,6 +430,12 @@ libelle = "experiences/identification_source.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/identification_source.py"
 
 [[noeuds]]
+id = "experiences/reference_independante"
+type = "module"
+libelle = "experiences/reference_independante.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reference_independante.py"
+
+[[noeuds]]
 id = "similitude"
 type = "module"
 libelle = "similitude.py"
@@ -741,6 +747,12 @@ id = "t-benchmarks"
 type = "test"
 libelle = "test_benchmarks_reference.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_benchmarks_reference.py"
+
+[[noeuds]]
+id = "t-reference-independante"
+type = "test"
+libelle = "test_reference_independante.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reference_independante.py"
 
 # ---------- Nœuds : références (clés de site/references.bib) ----------
 
@@ -1783,6 +1795,39 @@ de = "contrats"
 vers = "similitude"
 relation = "utilise"
 
+# ---------- Arêtes : référence indépendante (étape 5) ----------
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "benchmarks/cas"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "benchmarks/metriques"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "similitude"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "stabilite"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "contrats"
+relation = "utilise"
+
+[[aretes]]
+de = "t-reference-independante"
+vers = "experiences/reference_independante"
+relation = "couvre"
+justification = "tests/test_reference_independante.py : comparaison EDP/fermée sur le cas S0 figé — calibrage, symétrie, convergence, entrée partagée, export JSON."
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1828,6 +1873,7 @@ noeuds = [
   "experiences/superposition_sources", "experiences/relief",
   "experiences/modele_reduit_edp",
   "experiences/identification_source",
+  "experiences/reference_independante",
   "similitude", "stabilite", "source", "contrats",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
@@ -1847,6 +1893,7 @@ noeuds = [
   "t-identification", "t-figure-06",
   "t-wind-field", "t-interactif",
   "t-cas-synthetiques",
+  "t-reference-independante",
   "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
   "t-graphe", "t-extraction", "t-diagnostic",
   "benchmarks/cas", "benchmarks/metriques", "benchmarks/reference",
@@ -1867,6 +1914,7 @@ noeuds = [
     "experiences/superposition_sources", "experiences/relief",
     "experiences/modele_reduit_edp",
     "experiences/identification_source",
+    "experiences/reference_independante",
     "fields", "terrain",
     "trajectories", "figures/figure_01", "figures/figure_02", "figures/figure_03",
     "figures/figure_04",
@@ -1909,6 +1957,7 @@ noeuds = [
     "t-identification", "t-figure-06",
     "t-wind-field", "t-interactif",
     "t-cas-synthetiques",
+    "t-reference-independante",
   ]
 
   [[graphes.groupes]]
