@@ -28,6 +28,28 @@
 
 Ces statuts décrivent la reproductibilité documentaire, pas l'utilité de la méthode ni la validité globale de Drift-X.
 
+## 3.1 Registre de comparaison des versions (JESA 2010 / manuscrit 2009)
+
+**État au 29 octobre 2026 : comparaison non effectuée sur les deux fac-similés dans cette session.** La source publiée JESA est identifiée par HAL `hal-02594312` et DOI `10.3166/jesa.44.445-461`. Le manuscrit auteur de 17 pages identifié par HAL `hal-00468863` est un document distinct. Son extraction texte versionnée ne constitue pas une preuve du contenu de l'article final.
+
+Le PDF JESA a déjà été obtenu par le mainteneur par une voie appropriée : **ne pas relancer l'acquisition**. Le fichier n'est pas présent dans le corpus `raw/` répertorié par le README, et le PDF local déjà obtenu n'était pas accessible dans l'environnement d'exécution de cette session. En conséquence, aucun verdict de différence entre les versions n'est attribué ci-dessous.
+
+| Domaine | Manuscrit 2009 : repère existant | Contrôle requis sur JESA 2010 | Verdict actuel |
+|---|---|---|---|
+| Identité/version | Front matter de l'extraction : `hal-00468863, version 1`; STIC & Environnement 2009 | Vérifier page de titre, pagination imprimée, revue, volume, pages et DOI sur le PDF déjà obtenu | Versions bibliographiquement distinctes ; identité du binaire JESA non vérifiée ici |
+| Temps de migration/projection | §2, équations (1)–(3) selon la pagination de l'extraction | Relever équation, orientation, intégrande, hypothèses sur champ et projection | Non comparé |
+| Concentration/similitude | §2.1, équations (4)–(7) | Comparer expression exacte, variables, coefficients et dimensions | Non comparé |
+| Champ multi-niveaux | §2.1.1, équations (4)–(8) dans l'extraction ; vérifier la numérotation sur le fac-similé | Comparer restrictions, interpolation, corrections de vitesse et conservation locale revendiquée | Non comparé |
+| Sources/puits et quantité injectée | §2.1.2 : quantité injectée intégrée sur `[0,T]`, dépôt au sol et quantité atmosphérique résiduelle | Vérifier si les termes, domaines et définitions sont identiques ou révisés | Non comparé |
+| Conditions aux limites | Flux entrant/sortant aux sous-domaines et normales dans §2.1.1–2.2 | Relever toutes les frontières, normales, hypothèses d'entrée/sortie et conditions au sol | Non comparé |
+| Unités | L'extraction dégradée ne suffit pas à certifier toutes les dimensions | Refaire l'analyse dimensionnelle sur les équations lisibles et les définitions associées | Non certifié |
+
+### Procédure de clôture
+
+Pour chaque ligne, enregistrer les deux transcriptions, page imprimée, numéro d'équation, unités, hypothèses et catégorie de différence : **identique**, **changement éditorial**, **changement mathématique**, **ambiguïté** ou **non vérifiable**. Toute formule extraite par OCR doit être contrôlée sur le fac-similé. Si la page imprimée diffère de la page PDF, conserver les deux repères. Les écarts affectant le bilan de masse doivent pointer vers [32](32-conservation-coordonnees-travel-time.md), [43](43-audit-these-brun-conservation-g0s.md) et [46](46-registre-erreurs-incoherences-documentaires.md), sans dupliquer leur raisonnement.
+
+Ce registre est un protocole de preuve, pas un résultat de comparaison. Les statuts CL-08 et les conclusions de conservation ne doivent pas être relevés avant l'inspection du PDF JESA.
+
 ## 3. Incertitudes prioritaires
 
 1. Contrôler visuellement les équations 2006 (1), (2) et (4) depuis le PDF éditeur déjà versionné ; enregistrer la transcription exacte et les incertitudes de lecture. Ne pas relancer l'acquisition du document ni inférer les équations depuis le code actuel.
