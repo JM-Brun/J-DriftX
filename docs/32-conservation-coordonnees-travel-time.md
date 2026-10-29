@@ -117,7 +117,7 @@ For non-constant \(v\), the last expression is not identically one. Therefore th
 
 The analytical regression test for this example is documented in [the shear-counterexample test note](33-test-contre-exemple-cisaillement.md). The dimensional consequences of the audited 2008/2009 formulas are covered separately, under explicit conventional-unit assumptions, in [the documentary dimensional audit tests](../tests/test_documentary_dimensional_audit.py). It checks the closed-form projected cost, the non-unit transport residual for a non-constant profile, and the uniform-flow control case. The test is deliberately independent of a numerical solver; it freezes this mathematical counterexample rather than validating the full historical model.
 
-## 6. Primary-source transcription and dimensional audit (2009 article)
+## 6. Provisional publisher-text equations and dimensional audit (source identity unresolved)
 
 **Source-identity caveat added 29 October 2026:** the equations numbered (28)–(31) below are not present in the accessible 17-page STIC & Environnement manuscript `hal-00468863`, which uses bracketed equation labels [1]–[7] in §2. The earlier attribution in this note to “Bozon & Mohammadi (2009), *Applied Geomatics*” has not been reconciled with the distinct JESA 2010 record (`hal-02594312`, DOI `10.3166/jesa.44.445-461`) or backed by a source PDF in the current project files. Therefore, treat the following as a provisional transcription from a previously consulted publisher-text source whose exact bibliographic identity still needs verification; do **not** cite Eqs. (28)–(31) as equations of either the STIC 2009 manuscript or JESA 2010 until that identity is resolved. No new acquisition was performed for this audit.
 
@@ -144,7 +144,7 @@ Under the same conventional volumetric-concentration interpretation, the left si
 
 In the inspected §2 equations, the source is represented through \(c_{inj}(t)\); no explicit deposition/sink term appears in the reduced equations [1]–[7]. The boundary conditions for the reduced model are not fully specified there. The free inlet/outlet boundaries and calibrated deposition sink described in the 2006 paper's *PDE reference comparison* belong to that 2006 comparison and must not be silently transferred to the STIC 2009 manuscript or assumed to be the JESA 2010 conditions.
 
-### Published definitions
+### Provisional equations from the unresolved publisher-text source
 
 The paper states that the total injected quantity over \( [0,T] \) is
 \[
@@ -201,7 +201,7 @@ Assume, provisionally, that \(c\) is a volumetric mass concentration with units 
 | \(\int C_g\,dV\) in Eq. (31) | Integrates \(C_g\) against a volume element | \([M L]\) | **Dimensionally inconsistent with \(K\)** under this interpretation |
 | \(\int C_g\,dx\,dy\) | Not what the paper prints | \([M]\) | Would be dimensionally compatible, but is only a possible correction, not an established authorial intent |
 
-The same paper's Eq. (28) states that the “total mass” in a subdomain satisfies
+The same unresolved publisher-text source's Eq. (28) states that the “total mass” in a subdomain satisfies
 \[
 \int_{\omega^i} c^i\,dV
 =
@@ -218,7 +218,7 @@ With \(c^i\) interpreted as a volumetric concentration, the left side has units 
 - **Not established:** whether this reflects typographical errors, a nonstandard definition of \(c\), omitted normalization, or a deeper derivation issue. The text alone does not decide among these explanations.
 - **Not authorized:** silently replacing \(dV\) with \(dx\,dy\), inserting a velocity factor, or treating the published equations as a validated mass-conservation proof.
 
-The article does describe the global velocity construction as divergence-free and presents conservation as a constraint, but divergence-free velocity alone does not imply conservation of a passive scalar. The displayed equations require a consistent scalar definition and measure before they can be used as a physical mass balance.
+The unresolved publisher-text source describes its global velocity construction as divergence-free and presents conservation as a constraint, but its exact bibliographic identity is not established here. Independently of that attribution, divergence-free velocity alone does not imply conservation of a passive scalar. The displayed equations require a consistent scalar definition and measure before they can be used as a physical mass balance.
 
 The versioned 2006 PDF is now visually inspected for equations (1), (2) and (4); the audit in [45](45-audit-article-mohammadi-brun-2006.md) records the literal transcription and the ambiguity in (4). The 2008 Springer chapter has been inspected from an accessible scan, but that scan is not a publisher-hosted copy. The accessible STIC 2009 manuscript is a separate source. The JESA 2010 PDF has not been made available in the current project-file context, and the earlier publisher-text attribution for equations (28)–(31) remains unresolved; do not conflate these sources.
 
