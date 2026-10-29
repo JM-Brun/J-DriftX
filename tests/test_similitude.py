@@ -12,6 +12,7 @@ from jdriftx.similitude import (
     sigma_y,
     sigma_z,
 )
+from jdriftx.stabilite import ClasseStabilite
 
 
 @pytest.fixture
@@ -279,8 +280,8 @@ def test_puff_temps_invalide() -> None:
 def test_panache_against_closed_form_oracle_independent_of_package() -> None:
     """La formule scalaire indépendante recoupe l'implémentation vectorisée.
 
-    Les coefficients de Briggs C et la formule gaussienne sont explicités
-    dans ce test, sans appeler sigma_y, sigma_z ni recopier leur résultat.
+    Les coefficients viennent de l'objet canonique ClasseStabilite.C ; la
+    formule scalaire reste distincte du chemin d'execution vectorise.
     Ce test est un oracle d'implémentation, pas une validation terrain ni
     une comparaison à un solveur EDP indépendant.
     """
@@ -290,10 +291,12 @@ def test_panache_against_closed_form_oracle_independent_of_package() -> None:
     zs = (0.0, 1.5, 12.0)
     debit, u, hauteur = 2.0, 3.0, 1.0
 
-    # When — la référence est évaluée par une expression scalaire autonome.
-    # Coefficients ruraux de Briggs classe C, fixés pour ce test de régression.
-    sy = 0.11 * x / sqrt(1.0 + 0.0001 * x)
-    sz = 0.08 * x / sqrt(1.0 + 0.0002 * x)
+    # When — les coefficients sont lus depuis la source de vérité du projet.
+    a, d_y = ClasseStabilite.C.coeff_sigma_y
+    forme_z, b, d_z = ClasseStabilite.C.coeff_sigma_z
+    assert forme_z.value == "sqrt"
+    sy = a * x / sqrt(1.0 + d_y * x)
+    sz = b * x / sqrt(1.0 + d_z * x)
     reference = np.array(
         [
             debit
