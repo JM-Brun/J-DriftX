@@ -19,11 +19,11 @@ Les définitions suivantes figent le vocabulaire de l’étape 2. Elles qualifie
 
 | Capacité historique | Statut figé | Verrou principal | Références |
 |---|---|---|---|
-| Similitude (profils de panache) | Partiellement définie | Formule exacte de l’équation (2) de 2006 non certifiée sur fac-similé ; champ proche lié aux mesures non intégralement transcrit | [note 45](45-audit-article-mohammadi-brun-2006.md) §1 ; [note 43](43-audit-these-brun-conservation-g0s.md) §3 |
+| Similitude (profils de panache) | Partiellement définie | Équation (2) de 2006 certifiée visuellement (PR #277, 29/10/2026) ; champ proche lié aux mesures non intégralement transcrit ; interprétation des paramètres de (2) non précisée dans la source | [note 45](45-audit-article-mohammadi-brun-2006.md) §1 ; [note 43](43-audit-these-brun-conservation-g0s.md) §3 |
 | Transport dirigé (temps de transport, pseudo-distance) | Partiellement définie | Existence/unicité des caractéristiques et règle de départage des projections non formalisées dans les sources | [note 45](45-audit-article-mohammadi-brun-2006.md) §2 ; [note 19](19-investigation-g0s-temps-de-parcours.md) ; DRX-ERR-001/002/015 |
 | Champ multi-niveaux | Partiellement définie | Lecture R3 arbitrée mais base non fixée ; formulation non vérifiée entre les versions 2009–2010 | [note 31](31-investigation-champ-multiniveaux.md) ; DRX-ERR-012 |
 | Évaluation réduite (coût ponctuel) | Annoncée seulement | Facteur 10³–10⁴ rapporté sans protocole récupérable | [note 45](45-audit-article-mohammadi-brun-2006.md) §5 ; DRX-ERR-005 |
-| Assimilation (calibration, identification) | Annoncée seulement | Équations (1) et (4) de 2006 non certifiables depuis l’extraction ; identifiabilité non établie | [note 45](45-audit-article-mohammadi-brun-2006.md) §1 et §4 ; DRX-ERR-004 |
+| Assimilation (calibration, identification) | Partiellement définie (requalifiée le 29/10/2026, cf. §7) | Équations (1) et (4) transcrites visuellement (PR #277), mais l’équation (4) imprimée reste ambiguë et sous-spécifiée (DRX-ERR-016) ; identifiabilité non établie | [note 45](45-audit-article-mohammadi-brun-2006.md) §1 et §4 ; DRX-ERR-004/016 |
 | Bilan sources/puits (conservation, diffusion, dépôt) | Non reproductible avec les sources disponibles | Incompatibilités dimensionnelles confirmées dans les bilans imprimés ; aucun bilan complet source–diffusion–dépôt–frontières | [note 46](46-registre-erreurs-incoherences-documentaires.md) ; DRX-ERR-003/007/008/009/011/014 |
 
 **Constat central : aucune capacité historique n’atteint le statut « définie ».** La baseline est donc entièrement une reconstruction au sens de la [note 44](44-strategie-reprise-et-elargissement-scientifique.md) §2 ; les cas exacts déjà implémentés et testés (champ uniforme, 1D à vitesse constante) sont des reconstructions vérifiées, pas des transcriptions.
@@ -34,13 +34,13 @@ Les définitions suivantes figent le vocabulaire de l’étape 2. Elles qualifie
 
 Ce que les sources impriment :
 
-- 2006, équation (2) : profil c(x,y) = c_c(x) f(y, δ(x)), avec décroissance axiale et profil transversal dépendant de l’épaisseur δ(x) ; la formule exacte et les paramètres ne sont pas certifiés depuis l’extraction et doivent être contrôlés sur le fac-similé ([note 45](45-audit-article-mohammadi-brun-2006.md) §1).
+- 2006, équation (2) : profil c(x,y) = c_c(x) f(y, δ(x)), avec décroissance axiale et profil transversal dépendant de l’épaisseur δ(x) ; la formule exacte a été certifiée visuellement sur le fac-similé versionné le 29/10/2026 (PR #277 : c(x,y) = c_c(x) f(y, δ(x)) avec décroissances exponentielles imprimées) ; l’interprétation des paramètres reste à préciser ([note 45](45-audit-article-mohammadi-brun-2006.md) §1).
 - Thèse, chapitre 5 (§5.6.3, p. 101) : le modèle local fixe les unités (concentration kg·m⁻³, coefficient de calibration s⁻¹) et calcule des pertes de masse par intégration volumique ou par flux vertical intégré dans le temps ([note 43](43-audit-these-brun-conservation-g0s.md) §3).
 - 2008, p. 245–246 (OCR) : le champ proche de la buse est construit sur des observations expérimentales ; les solutions de similitude pour couches de mélange et panaches sont « connues en métrique cartésienne », la contribution originale étant leur généralisation en métrique travel-time ([fiche chapitre 2008](bibliographie/sources/brun-mohammadi-2008-chapitre.md)).
 
 Ce qui est vérifié côté dépôt : une famille de profils reconstruite (panache gaussien, classes de Pasquill, formes de Briggs, réflexion au sol) est implémentée et testée, bilan de masse compris ([tests/test_similitude.py](../tests/test_similitude.py)). Ces tests valident la reconstruction moderne, pas une transcription historique.
 
-Verrous : transcription visuelle de l’équation (2) de 2006 ; transcription intégrale du chapitre 5 de la thèse (seuls les passages dimensionnels ont été audités) ; le champ proche « construit sur mesures » n’est pas défini précisément dans le corpus accessible.
+Verrous : transcription visuelle de l’équation (2) de 2006 levée le 29/10/2026 (PR #277) ; transcription intégrale du chapitre 5 de la thèse (seuls les passages dimensionnels ont été audités) ; le champ proche « construit sur mesures » n’est pas défini précisément dans le corpus accessible.
 
 Premier sous-ensemble exécutable : la reconstruction gaussienne existante, étiquetée reconstruction, sur le cas de référence à champ uniforme (étape 3 de l’ordre #232).
 
@@ -72,15 +72,15 @@ Ce qui manque : paramètres, code, tailles exactes, tolérances, coûts de prép
 
 Distinction de contrat : le mécanisme (évaluer un profil de similitude en un point via le coût dirigé) est exécutable comme reconstruction et sera mesuré par le benchmark de l’étape 5 de l’ordre #232, avec coûts de préparation, calibration, coût par requête, coût de champ complet, mémoire et erreur rapportés séparément. La revendication historique de coût, elle, reste « annoncée seulement » : le benchmark mesurera la reconstruction, il ne validera pas le chiffre historique.
 
-### 3.5 Assimilation — annoncée seulement
+### 3.5 Assimilation — partiellement définie (requalifiée le 29/10/2026, cf. §7)
 
 Ce que les sources impriment : 2006 présente l’équation (1) comme un problème d’assimilation des paramètres du modèle à partir d’observations de vitesse et de concentration, et l’équation (4) comme reconstruction du champ de vitesse dérivé d’un potentiel avec formulation d’optimisation ; 2008 (résumé) : l’identification des paramètres est fondée sur l’assimilation de données, avec renvoi à la sensibilité incomplète ; Applied Geomatics 2009 (résumé) reprend la même revendication.
 
-Ce qui manque : l’extraction de 2006 ne permet de certifier ni les termes, signes, normes ou pondérations de l’équation (1), ni l’opérateur, le fonctionnel, les contraintes et les conditions aux limites de l’équation (4) (DRX-ERR-004, [note 45](45-audit-article-mohammadi-brun-2006.md) §1 et §4) ; l’identifiabilité des objectifs et paramètres n’est établie nulle part dans le corpus accessible.
+Ce qui manque : les équations (1) et (4) sont désormais transcrites visuellement (PR #277, 29/10/2026) — (1) comme somme de deux normes sans pondération visible ; mais l’équation (4) imprimée reste ambiguë et sous-spécifiée : indice d’observation absent sous la somme, incompatibilité dimensionnelle conditionnelle et divergence non nulle en général (DRX-ERR-016, [note 45](45-audit-article-mohammadi-brun-2006.md) §1 et §4) ; conditions aux limites, espaces fonctionnels et identifiabilité des objectifs et paramètres ne sont établis nulle part dans le corpus accessible.
 
 Distinction de contrat : le module d’identification de source du dépôt (forme fermée sur cas synthétique, [note 36](36-identification-source.md)) est une extension R1 du projet, pas une reconstruction de l’assimilation historique ; il ne peut pas être cité comme reproduction de cette capacité.
 
-Verrous : transcription visuelle des équations (1) et (4) depuis le fac-similé 2006 ; définition des objectifs et paramètres identifiables — condition préalable à toute reconstruction.
+Verrous : formulation mathématique non ambiguë de l’équation (4) (toute correction est une hypothèse distincte, DRX-ERR-016) ; définition des objectifs et paramètres identifiables — condition préalable à toute reconstruction.
 
 ### 3.6 Bilan sources/puits — non reproductible avec les sources disponibles
 
@@ -94,12 +94,12 @@ Conséquence de contrat : le bilan historique n’entre pas dans la baseline com
 
 | Source | Accès | État de vérification |
 |---|---|---|
-| Mohammadi & Brun (2006), C. R. Mécanique | Texte intégral via le site de l’éditeur ; extraction versionnée dans le dépôt | Équations dégradées dans l’extraction ; fac-similé non vérifié visuellement ; empreinte du binaire non comparée au PDF officiel ([note 45](45-audit-article-mohammadi-brun-2006.md) §8) |
+| Mohammadi & Brun (2006), C. R. Mécanique | Texte intégral via le site de l’éditeur ; extraction versionnée dans le dépôt | Équations (1), (2) p. 635 et (4) p. 636 vérifiées visuellement sur le binaire versionné le 29/10/2026 (PR #277) ; autres équations non certifiées ; empreinte du binaire non comparée au PDF officiel ([note 45](45-audit-article-mohammadi-brun-2006.md) §8) |
 | Thèse de Brun | Texte consulté via une copie miroir tierce ; PDF présent dans le dépôt | Page de titre, pagination, identité binaire avec HAL et droits non vérifiés (DRX-ERR-013) ; métadonnées divergentes entre notices ([fiche thèse](bibliographie/sources/these-brun.md)) |
 | Brun & Mohammadi (2008), chapitre Springer | OCR des p. 245–246 uniquement | p. 247–256 non transcrites ; accès légal à une transcription intégrale à établir ([fiche chapitre 2008](bibliographie/sources/brun-mohammadi-2008-chapitre.md)) |
 | Manuscrit HAL 2009 (Bozon, Sinfort, Mohammadi) | Extraction versionnée dans le dépôt ; PDF HAL comme référence | Base de travail de la [note 31](31-investigation-champ-multiniveaux.md) ; l’extraction ne conserve ni mise en page ni équations |
 | Bozon & Mohammadi (2009), Applied Geomatics | Résumé et extraits uniquement | Texte intégral sur abonnement ([fiche Applied Geomatics](bibliographie/sources/bozon-mohammadi-2009-applied-geomatics.md)) |
-| JESA 2010 | PDF obtenu par une voie appropriée, mais non versionné dans `raw/` ; comparaison du contenu avec le manuscrit 2009 non effectuée | Réutiliser le fichier déjà obtenu pour comparer les versions ; ne pas relancer l'acquisition ni fusionner leurs anomalies avant comparaison (DRX-ERR-012) |
+| JESA 2010 | PDF obtenu par une voie appropriée, mais non versionné dans `raw/` ; le mainteneur désigne le manuscrit HAL `hal-00468863` comme texte JESA de comparaison (PR #277), l’identité avec la version de record restant non certifiée | Réutiliser le fichier déjà obtenu pour comparer les versions ; ne pas relancer l'acquisition ni fusionner leurs anomalies avant comparaison (DRX-ERR-012) |
 
 Cet instantané justifie la règle de progression : la baseline ne peut pas attendre l’authentification parfaite de toutes les sources.
 
@@ -121,6 +121,15 @@ La matrice ligne par ligne des revendications, versions, unités, hypothèses et
 - Il n’ajoute aucune entrée au registre ([note 46](46-registre-erreurs-incoherences-documentaires.md)) : aucun fait nouveau n’y est consigné.
 - Il ne clôt pas l’[issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) : les critères d’acceptation (matrice de traçabilité versionnée, cas analytique reproductible, comparaison à référence indépendante) restent à produire dans les étapes 3 à 6.
 - Les statuts figés peuvent être requalifiés par le propriétaire sur preuve (transcription fac-similé, authentification de version, démonstration), avec trace dans cette note et, le cas échéant, dans le registre.
+
+## 7. Trace de requalification (29 octobre 2026)
+
+Conformément à la section 6, les statuts et verrous ci-dessus sont amendés par décision du propriétaire, sur preuve :
+
+- **Preuve.** Contrôle visuel du PDF éditeur 2006 versionné (équations (1), (2) p. 635 et (4) p. 636) et du texte JESA de comparaison désigné (HAL `hal-00468863`, équations [1]–[7]), intégré par la PR #277 (fusionnée), transcription littérale et sans réparation conjecturale.
+- **Décision du propriétaire.** La même PR relève CL-03 et CL-04 de la [note 49](49-matrice-revendications-baseline.md) à « partiellement définie » ; le registre enregistre les anomalies conditionnelles nouvelles (DRX-ERR-016/017/018, PR #278) et requalifie DRX-ERR-004/008/009/012.
+- **Amendements de cette note.** (a) similitude : le verrou de transcription visuelle de l’équation (2) est levé, le statut « partiellement définie » est inchangé (champ proche et interprétation des paramètres restent ouverts) ; (b) assimilation : « annoncée seulement » devient « partiellement définie » — les équations sont transcrites, mais la formulation imprimée de (4) reste ambiguë (DRX-ERR-016) et l’identifiabilité n’est pas établie ; (c) instantané de la section 4 actualisé (fac-similé partiellement vérifié, texte JESA désigné).
+- Les statuts « annoncée seulement » de l’évaluation réduite et « non reproductible » du bilan sources/puits sont inchangés.
 
 ## Références internes
 
