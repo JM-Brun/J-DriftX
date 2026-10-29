@@ -12,7 +12,6 @@ from jdriftx.similitude import (
     sigma_y,
     sigma_z,
 )
-
 from jdriftx.stabilite import ClasseStabilite
 
 
