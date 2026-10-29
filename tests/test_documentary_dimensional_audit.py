@@ -39,7 +39,7 @@ def _integrate_over_time(quantity: Dimension) -> Dimension:
 
 
 def _integrate_over_area(quantity: Dimension) -> Dimension:
-    """Apply an area measure dσ to a dimensional quantity."""
+    """Apply an area measure d_sigma to a dimensional quantity."""
     return _multiply_dimensions(quantity, (0, 2, 0))
 
 
@@ -65,7 +65,7 @@ def test_2008_alternative_definitions_of_c_plus_are_not_dimensionally_equivalent
 
 
 def test_2009_equation_31_volume_measure_is_incompatible_with_injected_mass() -> None:
-    """C_g dV has mass×length units, unlike K, under conventional definitions."""
+    """C_g dV has mass times length units, unlike K, under conventional definitions."""
     # Given — c_inj is a mass flow rate and c is mass per volume.
     injected_quantity = _integrate_over_time(MASS_FLOW_RATE)
     ground_column = _integrate_over_length(VOLUMETRIC_CONCENTRATION)
@@ -73,7 +73,7 @@ def test_2009_equation_31_volume_measure_is_incompatible_with_injected_mass() ->
     # When — the printed Eq. (31) measure dV is applied to C_g.
     printed_integral = _integrate_over_volume(ground_column)
 
-    # Then — K is mass while the printed integral is mass×length.
+    # Then — K is mass while the printed integral is mass times length.
     assert injected_quantity == MASS
     assert printed_integral == (1, 1, 0)
     assert injected_quantity != printed_integral
