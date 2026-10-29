@@ -6,13 +6,14 @@ from math import erf, exp, pi, sqrt
 import numpy as np
 import pytest
 
-from jdriftx.stabilite import ClasseStabilite
 from jdriftx.similitude import (
     concentration_panache,
     concentration_puff,
     sigma_y,
     sigma_z,
 )
+
+from jdriftx.stabilite import ClasseStabilite
 
 
 @pytest.fixture
