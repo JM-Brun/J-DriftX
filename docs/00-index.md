@@ -11,9 +11,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 41 (la note 39, squelette benchmarks S0, et
-la note 40, standards qualité et tests de propriété, sont désormais sur
-main).
+Prochain numéro libre sur cette branche : 42 (la note 41, audit de la thèse de Brun sur la conservation G0-S, est ajoutée dans la PR en cours).
 
 ## Numéros en double
 
