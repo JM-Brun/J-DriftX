@@ -29,4 +29,4 @@ Ce passage a été déplacé dans la [fiche source de la plateforme Drift-X 2009
 - « Non retrouvé » n'est pas équivalent à « inexistant ».
 - Une fiche d'une version auteur ne prouve pas que le texte éditeur a été consulté.
 - Les citations verbatim et les extraits doivent rester proportionnés à la source consultée ; les résultats scientifiques stabilisés doivent être décrits dans les pages théoriques publiques.
-- Les tâches courantes d'antécédents sont suivies dans les issues publiques [#44](https://github.com/JM-Brun/J-DriftX/issues/44) et les issues privées [#130–#132](https://github.com/JM-Brun/career-knowledge/issues/130) ; ce dernier lien est destiné au pilotage interne.
+- L'issue publique [#44](https://github.com/JM-Brun/J-DriftX/issues/44) correspond à l'ancien état M0 et est historique, pas un backlog courant. Les décisions de recherche en cours ont leurs propriétaires dans le pilotage interne ; aucune issue privée n'est liée depuis cette documentation publique.
