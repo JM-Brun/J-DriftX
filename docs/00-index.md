@@ -21,7 +21,7 @@ unification de la source du panache, sont désormais sur main).
 |---|---|---|
 | 14 | `14-protocole-audit-corpus-g0.md` | Protocole de l'audit du corpus historique G0 |
 | 14 | `14-revue-mathematique-ciblee.md` | Revue mathématique ciblée de la métrique |
-| 15 | `15-audit-adversarial-hallucinations.md` | Traque des fausses références (audit adversarial) |
+| 15 | `15-audit-adversarial-hallucinations.md` | Index de l'audit adversarial ; constats détaillés répartis dans `docs/audits/` |
 | 15 | `15-audit-corpus-g0-resultats.md` | Résultats de l'audit du corpus G0 |
 | 16 | `16-chapitre-2008-reconstruction-figures.md` | Reconstruction des figures du chapitre 2008 |
 | 16 | `16-note-burgers-jdriftx.md` | Note Burgers appliquée à J-DriftX |
@@ -37,6 +37,10 @@ unification de la source du panache, sont désormais sur main).
 | `01-audit-heritage-driftx.md` | Audit de l'héritage Drift-X (2006-2009) |
 | `02-revue-etat-art-2026.md` | Revue de l'état de l'art (2026) |
 | `04-revues-papiers-sources.md` | Fiches de lecture par papier source |
+| `15-audit-adversarial-hallucinations.md` | Index des constats adversariaux et liens vers les dossiers spécialisés |
+| `audits/15a-audit-bibliographique.md` | Constats bibliographiques, versions et métadonnées |
+| `audits/15b-audit-portee-scientifique.md` | Constats sur la portée scientifique, hypothèses et revendications |
+| `audits/15c-audit-methodologie-et-coherence.md` | Méthodologie de l'audit, niveau de preuve et cohérence documentaire |
 | `05-plan-validation-et-integration.md` | Protocole public de validation et d'intégration |
 | `06-choix-methode-revue-systematique.md` | Choix de la méthode de revue systématique |
 | `08-decision-utilite-et-preuve.md` | Cadre de décision et de preuve |
@@ -70,4 +74,4 @@ unification de la source du panache, sont désormais sur main).
 | `bibliographie/` | Dossier bibliographique |
 | `visuels-g0s/` | Visuels G0-S (SVG source et générés) |
 
-Les notes numérotées en double figurent dans le tableau dédié ci-dessus.
+Les notes numérotées en double figurent dans le tableau dédié ci-dessus. L'audit adversarial a été découpé par rôle : son fichier numéroté est désormais un index ; les constats restent dans `docs/audits/`.
