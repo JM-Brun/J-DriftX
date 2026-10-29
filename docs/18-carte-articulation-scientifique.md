@@ -1,6 +1,6 @@
 # Carte d'articulation scientifique et technique
 
-> **Rôle de cette page :** point d'entrée pour comprendre ce que le dépôt contient, ce que les expériences démontrent réellement, ce qui reste une hypothèse et dans quel ordre poursuivre. Ce document ne remplace ni la feuille de route ni les preuves détaillées ; il les relie.
+> **Rôle de cette page :** note technique de référence pour comprendre ce que le dépôt contient, ce que les expériences démontrent réellement, ce qui reste une hypothèse et dans quel ordre poursuivre. Elle développe les niveaux de preuve, les portes et les laboratoires ; elle ne remplace ni la feuille de route ni les preuves détaillées. Pour le parcours de lecture public, plus court et orienté visiteur, voir la [carte d'articulation du site](../site/projet/carte-articulation.qmd). Les recouvrements sur les niveaux de preuve et les portes sont intentionnels ; les détails techniques appartiennent à cette note.
 
 ## 1. Résumé de l'état actuel
 
