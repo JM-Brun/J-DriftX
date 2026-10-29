@@ -4,6 +4,8 @@
 
 J-DriftX étudie l'hypothèse qu'une représentation fondée sur des solutions de similitude et des temps de transport dirigés puisse permettre d'évaluer certains problèmes de dispersion à moindre coût, sans résoudre directement une EDP ni construire un maillage. La validité mathématique, le gain prédictif, le coût total et l'utilité applicative de cette approche **ne sont pas encore établis**. La calibration par assimilation de données, l'évaluation ponctuelle et l'identification de source restent des pistes conditionnelles, non des capacités validées.
 
+Le projet historique est un **socle à reconstruire et à auditer, pas un carcan** : ses idées originales doivent être préservées et testées, ses erreurs éventuelles explicitement consignées puis corrigées dans la reconstruction, et les méthodes récentes intégrées si elles apportent un gain vérifiable. Le cas historique pesticides/viticulture est un point de référence ; l'élargissement à d'autres pollutions industrielles, urbaines, chimiques ou radiologiques ou nucléaires est une direction de recherche, sous réserve de modèles physiques et validations adaptés. Voir la [stratégie de reprise et d'élargissement](docs/42-strategie-reprise-et-elargissement-scientifique.md).
+
 ![Schéma conceptuel historique : panache dans une représentation de temps de transport.](site/images/panache-travel-time.svg)
 
 > **Statut scientifique :** hypothèse de recherche en phase de cadrage et de validation. La figure et la documentation conceptuelle illustrent l'approche envisagée ; elles ne constituent pas une validation de ses performances.
@@ -12,7 +14,7 @@ J-DriftX étudie l'hypothèse qu'une représentation fondée sur des solutions d
 
 | Année | Référence | Support |
 |---|---|---|
-| — | Thèse de J.-M. Brun sur la modélisation à complexité réduite de la dérive (titre de travail, intitulé officiel à confirmer) | L'article primaire de Mohammadi & Brun (2006) la cite comme 2007 ; certaines bibliographies secondaires donnent 2006. Thèse non localisée dans les recherches consignées ; le statut de dépôt reste inconnu |
+| 2007 (année à authentifier) | [Modèles à complexité réduite de transport pour applications environnementales](https://hal.inrae.fr/tel-02589999/document) — J.-M. Brun | Thèse signalée par [AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c) ; PDF présent dans la branche de travail. Page de titre, pagination, année exacte et identité du binaire avec HAL encore à vérifier |
 | 2006 | [Similitude généralisée et modélisation géométrique à complexité réduite](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) — B. Mohammadi & J.-M. Brun | *C. R. Mécanique* 334(10), 634–638 (PDF libre, Académie des sciences) |
 | — | *Reduced order modelling of dispersion* — référence citée avec Mohammadi, Brun & Pironneau (2006) | Référence secondaire attestée, mais recueil et métadonnées éditoriales non confirmés |
 | 2008 | [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14) — J.-M. Brun & B. Mohammadi | Springer, CSM vol. 16, chap. 14, p. 245 et s. |
