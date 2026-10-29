@@ -30,7 +30,7 @@ def test_panache_objet_coherent_avec_api_vectorisee() -> None:
         point.z,
         debit=parametres.debit,
         u=parametres.u,
-        classe=parametres.classe.value,
+        classe=ClasseStabilite(parametres.classe).value,
         hauteur=parametres.hauteur,
     )
     assert math.isfinite(obtenu)
@@ -53,7 +53,7 @@ def test_puff_objet_coherent_avec_api_vectorisee() -> None:
         t=parametres.t,
         masse=parametres.masse,
         u=parametres.u,
-        classe=parametres.classe.value,
+        classe=ClasseStabilite(parametres.classe).value,
         x0=parametres.x0,
     )
     assert math.isfinite(obtenu)
