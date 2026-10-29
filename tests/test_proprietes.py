@@ -641,9 +641,9 @@ def test_terrain_colline_symetrique(hauteur, largeur, dx, dy, centre_x, centre_y
     """La colline est symétrique par rapport à son centre en x et en y.
 
     Référence : la forme "hill" ne dépend que de la somme des carrés des
-    écarts au centre ; le carré d'un réel et de son opposé coïncident
-    exactement en virgule flottante, donc le point symétrique a la même
-    altitude au bit près.
+    écarts au centre ; le point symétrique a la même altitude à
+    l'arrondi près : l'écart recalculé (centre + déplacement) - centre
+    n'est pas exact en virgule flottante, l'égalité est donc relative.
     """
     # Given — un point et son symétrique par rapport au centre.
     x_plus = np.asarray([centre_x + dx])
@@ -669,8 +669,8 @@ def test_terrain_colline_symetrique(hauteur, largeur, dx, dy, centre_x, centre_y
         center_x=centre_x,
         center_y=centre_y,
     )
-    # Then — les deux altitudes coïncident exactement.
-    assert altitude_plus[0] == altitude_moins[0]
+    # Then — les deux altitudes coïncident à l'arrondi près.
+    assert altitude_plus[0] == pytest.approx(altitude_moins[0], rel=1e-12)
 
 
 @settings(deadline=None)
