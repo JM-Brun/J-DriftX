@@ -460,6 +460,12 @@ libelle = "experiences/evaluation_puff.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/evaluation_puff.py"
 
 [[noeuds]]
+id = "experiences/transitoire_puff"
+type = "module"
+libelle = "experiences/transitoire_puff.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff.py"
+
+[[noeuds]]
 id = "stabilite"
 type = "module"
 libelle = "stabilite.py"
@@ -783,6 +789,12 @@ id = "t-evaluation-puff"
 type = "test"
 libelle = "test_evaluation_puff.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_evaluation_puff.py"
+
+[[noeuds]]
+id = "t-transitoire-puff"
+type = "test"
+libelle = "test_transitoire_puff.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_transitoire_puff.py"
 
 # ---------- Nœuds : références (clés de site/references.bib) ----------
 
@@ -1909,6 +1921,32 @@ vers = "experiences/evaluation_puff"
 relation = "couvre"
 justification = "tests/test_evaluation_puff.py : évaluation dirigée du puff sur la grille S0 — temps dirigé, pic temporel, symétrie latérale, manifeste étiqueté, export JSON."
 
+[[aretes]]
+de = "experiences/transitoire_puff"
+vers = "experiences/reference_independante"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff"
+vers = "experiences/evaluation_puff"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff"
+vers = "similitude"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff"
+vers = "benchmarks/cas"
+relation = "utilise"
+
+[[aretes]]
+de = "t-transitoire-puff"
+vers = "experiences/transitoire_puff"
+relation = "couvre"
+justification = "tests/test_transitoire_puff.py : EDP transitoire du puff sur la grille S0 — calibration fine et grossière, entrée partagée, convergence, rejets, temps dirigé, manifeste étiqueté, export JSON."
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1957,6 +1995,7 @@ noeuds = [
   "experiences/identification_source",
   "experiences/reference_independante",
   "experiences/evaluation_puff",
+  "experiences/transitoire_puff",
   "similitude", "similitude_objets", "stabilite", "source", "contrats",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
@@ -1979,6 +2018,7 @@ noeuds = [
   "t-cas-synthetiques",
   "t-reference-independante",
   "t-evaluation-puff",
+  "t-transitoire-puff",
   "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
   "t-graphe", "t-extraction", "t-diagnostic",
   "benchmarks/cas", "benchmarks/metriques", "benchmarks/reference",
@@ -2002,6 +2042,7 @@ noeuds = [
     "experiences/identification_source",
     "experiences/reference_independante",
     "experiences/evaluation_puff",
+    "experiences/transitoire_puff",
     "fields", "terrain",
     "trajectories", "figures/figure_01", "figures/figure_02", "figures/figure_03",
     "figures/figure_04",
@@ -2047,6 +2088,7 @@ noeuds = [
     "t-cas-synthetiques",
     "t-reference-independante",
     "t-evaluation-puff",
+    "t-transitoire-puff",
   ]
 
   [[graphes.groupes]]
