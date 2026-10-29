@@ -121,32 +121,36 @@ def _audit_detection_flags(
         corrected = _value(row, corrected_column) if corrected_column in fieldnames else ""
         passage = _value(row, passage_column) if passage_column in fieldnames else ""
         if flag == "< LC" and corrected_column in fieldnames and corrected != "NA":
-            violations.append({
-                "row": row_number,
-                "rule": "< LC flag requires literal NA in background-corrected concentration",
-            })
+            violations.append(
+                {
+                    "row": row_number,
+                    "rule": "< LC flag requires literal NA in background-corrected concentration",
+                }
+            )
         elif (
             flag == "significant"
             and corrected_column in fieldnames
             and corrected in {"", "NA", "< LC"}
         ):
-                violations.append({
+            violations.append(
+                {
                     "row": row_number,
                     "rule": (
-                    "significant flag requires a numeric background-corrected concentration"
-                ),
-                })
+                        "significant flag requires a numeric background-corrected concentration"
+                    ),
+                }
+            )
         if flag == "< LC" and passage_column in fieldnames and passage != "NA":
-            violations.append({
-                "row": row_number,
-                "rule": "< LC flag requires literal NA in passage-corrected concentration",
-            })
+            violations.append(
+                {
+                    "row": row_number,
+                    "rule": "< LC flag requires literal NA in passage-corrected concentration",
+                }
+            )
     return flag_counts, violations
 
 
-def _audit_times(
-    rows: list[dict[str, str | None]], fieldnames: list[str]
-) -> dict[str, Any]:
+def _audit_times(rows: list[dict[str, str | None]], fieldnames: list[str]) -> dict[str, Any]:
     """Summarize sampling durations and report malformed or reversed time intervals."""
     start_column, end_column = "sampling_start_time", "sampling_end_time"
     if start_column not in fieldnames or end_column not in fieldnames:
@@ -175,8 +179,12 @@ def _audit_duplicate_keys(
 ) -> dict[str, Any]:
     """Count repeated sample keys without assuming they are scientifically independent."""
     columns = [
-        "experiment_id", "sampling_type", "sampling_id", "sampling_bag_id",
-        "sampling_start_time", "sampling_end_time",
+        "experiment_id",
+        "sampling_type",
+        "sampling_id",
+        "sampling_bag_id",
+        "sampling_start_time",
+        "sampling_end_time",
     ]
     if not all(column in fieldnames for column in columns):
         return {}
@@ -189,8 +197,12 @@ def _numeric_ranges(
 ) -> dict[str, dict[str, float | int]]:
     """Summarize observed numeric ranges without imputing or coercing nonnumeric markers."""
     columns = [
-        "helium_release_height", "helium_release_flow", "sampling_latitude",
-        "sampling_longitude", "sampling_height", "sampling_flowrate",
+        "helium_release_height",
+        "helium_release_flow",
+        "sampling_latitude",
+        "sampling_longitude",
+        "sampling_height",
+        "sampling_flowrate",
         "helium_concentration_decision_threshold",
         "helium_concentration_sampling_bg_corrected",
         "helium_concentration_sampling_bg_passage_corrected",
@@ -240,15 +252,19 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
     for row_number, row in enumerate(rows, start=2):
         kind, bag = _value(row, "sampling_type"), _value(row, "sampling_bag_id")
         if kind == "EA" and bag != "NA":
-            bag_violations.append({
-                "row": row_number,
-                "rule": "EA sampling_bag_id must be literal NA",
-            })
+            bag_violations.append(
+                {
+                    "row": row_number,
+                    "rule": "EA sampling_bag_id must be literal NA",
+                }
+            )
         elif kind == "VEGA" and (not bag or bag == "NA"):
-            bag_violations.append({
-                "row": row_number,
-                "rule": "VEGA sampling_bag_id must be populated",
-            })
+            bag_violations.append(
+                {
+                    "row": row_number,
+                    "rule": "VEGA sampling_bag_id must be populated",
+                }
+            )
 
     experiment_counts = {}
     if "experiment_id" in fieldnames:
