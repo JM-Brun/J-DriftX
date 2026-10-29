@@ -279,7 +279,7 @@ class TestMetriques:
     def test_refuse_aucune_metrique(self) -> None:
         """Given aucune metrique, When calcul, Then refus."""
         vrais = np.array([1.0])
-        with pytest.raises(ValueError, match="au moins une metrique"):
+        with pytest.raises(ValueError, match="Au moins une metrique"):
             calculer_metriques(vrais, vrais, metriques=())
 
     def test_enregistrement_puis_retrait(self) -> None:
