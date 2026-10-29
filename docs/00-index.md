@@ -5,11 +5,11 @@ Index de navigation de `docs/`, établi le 27 octobre 2026 et maintenu pour orie
 ## Règle de numérotation
 
 Avant de créer une note `docs/NN-…`, **lister le dossier `docs/` et prendre le
-plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21, 33 et 47 existent en double
+plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21, 33, 47 et 51 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-uniforme.md` (oracle indépendant et protocole de coûts S0 uniforme) et le numéro 51 à `51-reference-independante-cas-s0.md` (comparaison à référence indépendante EDP du cas S0) et le numéro 53 à `53-evaluation-puff-source-impulsionnelle.md` (évaluation dirigée d'une source impulsionnelle) et le numéro 54 à `54-transitoire-puff-edp-transitoire-marginale.md` (EDP transitoire du puff : marche en temps de la marginale transverse). Prochain numéro disponible après cette attribution : 55. Les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques.
+Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-uniforme.md` (oracle indépendant et protocole de coûts S0 uniforme) et le numéro 51 à `51-reference-independante-cas-s0.md` (comparaison à référence indépendante EDP du cas S0 ; partagé avec `51-niveaux-preuve-mesures-benchmark.md`) et le numéro 53 à `53-evaluation-puff-source-impulsionnelle.md` (évaluation dirigée d'une source impulsionnelle) et le numéro 54 à `54-transitoire-puff-edp-transitoire-marginale.md` (EDP transitoire du puff : marche en temps de la marginale transverse). Prochain numéro disponible après cette attribution : 55. Les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques.
 
 ## Numéros en double
 
@@ -29,6 +29,8 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | 33 | `33-figure-04-superposition-sources.md` | Figure 4 du chapitre 2008 : superposition de deux sources |
 | 47 | `47-contrat-minimal-baseline.md` | Contrat minimal de la baseline : statuts figés par capacité historique |
 | 47 | `47-synthese-preuves-conservation-g0s.md` | Synthèse des preuves — conservation G0-S et temps de transport |
+| 51 | `51-reference-independante-cas-s0.md` | Comparaison EDP/solution fermée du cas S0, convergence, métriques et limites |
+| 51 | `51-niveaux-preuve-mesures-benchmark.md` | Niveaux de preuve des mesures de coût et artefacts de benchmark |
 
 ## Notes et ressources de référence
 
@@ -80,6 +82,7 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `49-matrice-revendications-baseline.md` | Matrice initiale des revendications historiques : source/version/localisation, unités, hypothèses, preuves et statut de définition |
 | `50-protocole-oracle-couts-baseline-uniforme.md` | Oracle indépendant et protocole de coûts pour le cas S0 uniforme ; protocole implémenté, mesures à exécuter |
 | `51-reference-independante-cas-s0.md` | Comparaison EDP/solution fermée du cas S0, convergence, métriques et limites |
+| `51-niveaux-preuve-mesures-benchmark.md` | Niveaux de preuve des mesures de coût et artefacts de benchmark ; protocole, exécution et artefact versionnés |
 | `52-gouvernance-documentaire.md` | Frontière public/privé, sources canoniques, scopes, règles anti-redondance et validation des références |
 | `53-evaluation-puff-source-impulsionnelle.md` | Évaluation dirigée d'une source impulsionnelle (puff) : temps dirigé t = τ, maximum temporel C(t), écart quantifié |
 | `54-transitoire-puff-edp-transitoire-marginale.md` | EDP transitoire du puff : marche en temps de la marginale transverse, structure longitudinale analytique, écarts calibrés |
