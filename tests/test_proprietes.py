@@ -305,7 +305,7 @@ def test_fac2_nmse_invariants_par_homothetie_commune(couple, echelle) -> None:
     """
     verite, ratios = couple
     # Given — une vérité, sa prédiction à ratios bornés, une échelle commune.
-    prediction = [v * r for v, r in zip(verite, ratios)]
+    prediction = [v * r for v, r in zip(verite, ratios, strict=True)]
     # When — on évalue les métriques, puis après homothétie commune.
     fac2_reference = fac2(verite, prediction)
     nmse_reference = nmse(verite, prediction)
