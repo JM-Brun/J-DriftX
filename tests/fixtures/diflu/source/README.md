@@ -3,9 +3,9 @@
 This directory is intended to contain the **exact original bytes** of the three small
 Dataverse files needed for offline audits:
 
-- `DIFLU_helium_release_sampling.tab`
-- `DIFLU_media_dictionary.tab`
-- `DIFLU_variables_dictionary.tab`
+- `DIFLU_helium_release_sampling.csv`
+- `DIFLU_media_dictionary.csv`
+- `DIFLU_variables_dictionary.csv`
 
 The binary/text payloads must not be edited, normalized, re-exported, or truncated.
 In particular, preserve the literal `NA` values in the source data. The generated
