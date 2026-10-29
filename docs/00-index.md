@@ -36,7 +36,7 @@ unification de la source du panache, sont désormais sur main).
 |---|---|
 | `01-audit-heritage-driftx.md` | Audit de l'héritage Drift-X (2006-2009) |
 | `02-revue-etat-art-2026.md` | Revue de l'état de l'art (2026) |
-| `04-revues-papiers-sources.md` | Fiches de lecture par papier source |
+| `04-revues-papiers-sources.md` | Index des fiches de lecture source par source |
 | `15-audit-adversarial-hallucinations.md` | Index des constats adversariaux et liens vers les dossiers spécialisés |
 | `audits/15a-audit-bibliographique.md` | Constats bibliographiques, versions et métadonnées |
 | `audits/15b-audit-portee-scientifique.md` | Constats sur la portée scientifique, hypothèses et revendications |
@@ -69,9 +69,17 @@ unification de la source du panache, sont désormais sur main).
 | `39-squelette-benchmarks-s0.md` | Squelette de benchmarks : cas analytique S0, registres de cas et de métriques, évaluation reproductible, standards (MVK, ASTM D6589, CF, PDEBench) |
 | `40-standards-qualite-tests-proprietes.md` | Standards qualité : tests de propriété (Hypothesis), objet et domaine (OOP/DDD), diagnostic architecture et recommandations |
 | `41-unification-source-panache.md` | Unification de la source du panache : objet SourcePanache partagé par les familles S0, carte concepts-modules et recommandations P2/P3 |
+| `bibliographie/sources/these-brun.md` | Fiche source : thèse de J.-M. Brun (année/titre à confirmer sur la page de titre) |
+| `bibliographie/sources/mohammadi-brun-2006-cr-mecanique.md` | Fiche source : Mohammadi & Brun (2006), C. R. Mécanique |
+| `bibliographie/sources/mohammadi-brun-pironneau-2006.md` | Fiche de traçabilité d'une référence non retrouvée |
+| `bibliographie/sources/brun-mohammadi-2008-chapitre.md` | Fiche source : chapitre Springer 2008 |
+| `bibliographie/sources/bozon-mohammadi-sinfort-2008-esta.md` | Fiche source : e-sta 2008 |
+| `bibliographie/sources/bozon-sinfort-mohammadi-2009-driftx.md` | Fiche source : plateforme Drift-X 2009 / manuscrit HAL |
+| `bibliographie/sources/bozon-mohammadi-2009-applied-geomatics.md` | Fiche source : Applied Geomatics 2009 |
+| `bibliographie/synthese-acces-sources-historique-2026-10.md` | Découvertes bibliographiques et instantané historique d'accès aux sources |
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
-| `bibliographie/` | Dossier bibliographique |
+| `bibliographie/` | Synthèses thématiques et fiches source par source sous `bibliographie/sources/` |
 | `visuels-g0s/` | Visuels G0-S (SVG source et générés) |
 
 Les notes numérotées en double figurent dans le tableau dédié ci-dessus. L'audit adversarial a été découpé par rôle : son fichier numéroté est désormais un index ; les constats restent dans `docs/audits/`.
