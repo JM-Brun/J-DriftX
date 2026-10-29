@@ -2,6 +2,8 @@
 
 Cette procédure automatise le travail de récupération et les vérifications qui ont servi à établir les constats de l’issue [#204](https://github.com/JM-Brun/J-DriftX/issues/204). Elle évite de demander à chaque contributeur de retrouver les identifiants de fichiers, de comparer manuellement les formats ou de recompter les catégories.
 
+**Noms des fichiers versionnés :** les trois originaux sont conservés sous leurs noms `*.csv` dans `tests/fixtures/diflu/source/`. Les libellés `*.tab` ci-dessous désignent les entrées Dataverse utilisées pour résoudre les fichiers distants ; ils ne sont pas les noms des octets originaux stockés dans le fixture. La procédure de staging et le manifeste préservent cette distinction.
+
 ## Prérequis
 
 - Python 3.12 ou supérieur ;
