@@ -245,7 +245,7 @@ def resoudre_edp(cas: CasS0, parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT) 
         raise ValueError(msg)
 
     dx = _pas_longitudinal(classe, x_entree, x_fin, parametres)
-    for precedent, arc in zip((x_entree, *cas.arcs[1:]), cas.arcs[1:], strict=True):
+    for precedent, arc in zip(cas.arcs[:-1], cas.arcs[1:], strict=True):
         if abs((arc - precedent) / dx - round((arc - precedent) / dx)) > 1e-9:
             msg = "Les arcs doivent être des multiples entiers du pas longitudinal depuis l'entrée."
             raise ValueError(msg)
