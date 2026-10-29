@@ -11,10 +11,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 43 (la note 40, standards qualité et tests de
-propriété, la note 41, unification de la source du panache, et la note 42,
-contrats d'interopérabilité entre relief, vent et concentrations, sont
-désormais sur main).
+Prochain numéro libre sur main : 47 (les notes 43 à 46 documentent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006 et le registre des anomalies).
 
 ## Numéros en double
 
@@ -71,6 +68,10 @@ désormais sur main).
 | `40-standards-qualite-tests-proprietes.md` | Standards qualité : tests de propriété (Hypothesis), objet et domaine (OOP/DDD), diagnostic architecture et recommandations |
 | `41-unification-source-panache.md` | Unification de la source du panache : objet SourcePanache partagé par les familles S0, carte concepts-modules et recommandations P2/P3 |
 | `42-contrats-interoperabilite.md` | Contrats d'interopérabilité : protocoles PEP 544 (relief, vent 2D/3D, concentrations), MNT ESRI ASCII Grid, profil de vent en loi de puissance |
+| `43-audit-these-brun-conservation-g0s.md` | Audit de la thèse de Brun : équations (7.12)–(7.13), conservation du transport lointain et contrôle dimensionnel |
+| `44-strategie-reprise-et-elargissement-scientifique.md` | Stratégie : reconstruire la base historique, corriger les erreurs de façon traçable, puis élargir les méthodes et domaines applicatifs |
+| `45-audit-article-mohammadi-brun-2006.md` | Audit critique de la source fondatrice 2006 : pseudo-distance orientée, conservation globale, assimilation et coûts rapportés |
+| `46-registre-erreurs-incoherences-documentaires.md` | Registre central des erreurs, anomalies, ambiguïtés et incohérences entre documents |
 | `bibliographie/sources/these-brun.md` | Fiche source : thèse de J.-M. Brun (année/titre à confirmer sur la page de titre) |
 | `bibliographie/sources/mohammadi-brun-2006-cr-mecanique.md` | Fiche source : Mohammadi & Brun (2006), C. R. Mécanique |
 | `bibliographie/sources/mohammadi-brun-pironneau-2006.md` | Fiche de traçabilité d'une référence non retrouvée |

@@ -1,7 +1,7 @@
 # Conservation in travel-time coordinates: what can be derived
 
 > **Status — partial mathematical result, not a reconstruction of the historical Drift-X model.**  
-> This note derives the general balance law under a regular change of coordinates. It does not establish that the historical construction satisfies the assumptions below, nor that the pollutant flux through every iso-travel-time surface equals the emitted quantity.
+> This note derives the general balance law under a regular change of coordinates. It does not establish that the historical construction satisfies the assumptions below, nor that the pollutant flux through every iso-travel-time surface equals the emitted quantity. The 2006 paper explicitly states a global volume-integral constraint, which is not the same proposition as constant flux through every iso-travel-time surface; see the [critical audit of the 2006 source](45-audit-article-mohammadi-brun-2006.md).
 
 ## 1. Question and quantities that must not be conflated
 
@@ -115,7 +115,7 @@ d_A(x,y)=\frac{x-x_A}{v(y_A)},
 \]
 For non-constant \(v\), the last expression is not identically one. Therefore this projected cost cannot simply be substituted for a global travel-time coordinate in (3)–(5).
 
-The analytical regression test for this example is documented in [the shear-counterexample test note](33-test-contre-exemple-cisaillement.md). It checks the closed-form projected cost, the non-unit transport residual for a non-constant profile, and the uniform-flow control case. The test is deliberately independent of a numerical solver; it freezes this mathematical counterexample rather than validating the full historical model.
+The analytical regression test for this example is documented in [the shear-counterexample test note](33-test-contre-exemple-cisaillement.md). The dimensional consequences of the audited 2008/2009 formulas are covered separately, under explicit conventional-unit assumptions, in [the documentary dimensional audit tests](../tests/test_documentary_dimensional_audit.py). It checks the closed-form projected cost, the non-unit transport residual for a non-constant profile, and the uniform-flow control case. The test is deliberately independent of a numerical solver; it freezes this mathematical counterexample rather than validating the full historical model.
 
 ## 6. Primary-source transcription and dimensional audit (2009 article)
 
@@ -288,7 +288,7 @@ A complete historical reconstruction still requires the equations and assumption
 | Coordinate transformation and Jacobian terms for a regular chart | Derived conditionally on a time-independent diffeomorphism |
 | Conditions for constant integrated flux across coordinate surfaces | Derived conditionally in (5) |
 | Identification of that flux with emitted quantity \(Q\) | **Not established** |
-| Historical definition of \(C\), its units and integration domain reconciled across sources | **Still to reconstruct** — three formulations now transcribed (2006 §7, 2008 and 2009 §6) state different objects as printed; none is silently privileged |
+| Historical definition of \\(C\\), its units and integration domain reconciled across sources | **Partially reconstructed** — the thesis (2007 per bibliographic records), §7.3, Eqs. (7.12)–(7.13), p. 129, confirms the two alternative definitions of \\(c^+\\) and the intended conservation of \\(M_C\\); their dimensional mismatch remains unresolved. See [thesis audit](43-audit-these-brun-conservation-g0s.md). |
 | Applicability of a regular \((\tau,\eta_1,\eta_2)\) chart to the historical projected pseudo-distance | **Not established; counterexamples show it cannot be assumed generally** |
 | Treatment of source/sink, diffusion, deposition, ground reflection and open boundaries in the historical model | **Still to reconstruct** |
 | Correction factor printed as “2/3 = 0.636” in Brun & Mohammadi (2008, chapter p. 251) and Bozon & Mohammadi (2009, publisher version of record); also present in the accessible Bozon, Sinfort & Mohammadi (2010) author manuscript | **Arithmetic inconsistency confirmed in two published sources**: $2/3 \approx 0.667$, whereas $0.636 \approx 2/\pi$. Both 2008 and 2009 describe the factor as a stochastic averaged cosine for angles between 0 and $\pi$, but neither inspected passage supplies a derivation of the averaging distribution that resolves the discrepancy. $2/\pi$ is plausible, not proven as the intended factor; do not silently rewrite any source. |
@@ -299,8 +299,8 @@ This derivation establishes a conditional conservation statement for a regular c
 
 To resolve the historical question:
 
-1. Obtain verifiable full text for the primary sources and transcribe their governing near-/far-field equations and definitions verbatim, preserving notation. Status after this note: 2006 §1–§5 transcribed from the open-access publisher PDF (§7 above), with text-layer caveats; 2008 §2.1–2.2 transcribed from an accessible scan (§6; publisher-hosted copy still unavailable); 2009 transcribed from the publisher version of record (§6). Still to transcribe: the thesis (2007), the JESA 2010 version of record, and any equation affected by the extraction caveats.
-2. Recover and inspect the thesis or an authoritative implementation if available; verify bibliographic metadata separately. The 2006 article’s reference [1] dates the thesis 2007 (§7).
+1. Obtain verifiable full text for the primary sources and transcribe their governing near-/far-field equations and definitions verbatim, preserving notation. Status: 2006 §1–§5 transcribed from the open-access publisher PDF (§7 above), with text-layer caveats; 2008 §2.1–2.2 transcribed from an accessible scan (§6; publisher-hosted copy still unavailable); 2009 transcribed from the publisher version of record (§6); thesis §7.1.3 and §7.3 transcribed from a third-party mirror and summarized in [the thesis audit](43-audit-these-brun-conservation-g0s.md). Still to authenticate the thesis binary in Git against HAL and to transcribe the JESA 2010 version of record.
+2. Inspect the versioned thesis binary and verify its title page, pagination, identity and redistribution rights. The thesis text found in the mirror explicitly gives Eqs. (7.12)–(7.13), p. 129, but the mirror is not proof that the Git binary is identical to the HAL file.
 3. Identify precisely what \(c^+\) and \(C\) denote, their units, and their integration domains.
 4. Derive the specific coordinate map and its Jacobian only if the historical equations define a regular map on the stated domain. The one setting where the map is fully explicit — the uniform reference field — is now constructed in [docs/37](37-transformation-tau-eta-cas-uniforme.md), together with the conditional flux theorem and the rate/inventory distinction.
 5. Add each physical source, sink and boundary term to the balance before claiming conservation.
@@ -311,6 +311,7 @@ No variable-field solver or new benchmark should be justified by this note alone
 ## References
 
 - Mohammadi, B. & Brun, J.-M. (2006). “Similitude généralisée et modélisation géométrique à complexité réduite.” *Comptes Rendus Mécanique*, 334(10), 634–638. https://doi.org/10.1016/j.crme.2006.06.007. Open PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf (open-access publisher PDF; retrieved and transcribed in §7; the article’s reference [1] dates the thesis 2007).
+- Brun, J.-M. (2007 according to bibliographic records). *Modèles à complexité réduite de transport pour applications environnementales*, thesis, Université Montpellier II. AGRIS/INRAE: https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c. Thesis audit of Eqs. (7.12)–(7.13): [docs/43](43-audit-these-brun-conservation-g0s.md). The equations were read from a third-party mirror, not authenticated against the Git binary.
 - Brun, J.-M. & Mohammadi, B. (2008). “Reduced-Order Modelling of Dispersion.” In *Partial Differential Equations: Modelling and Numerical Simulation*, CSM vol. 16, chap. 14, pp. 245–256. https://doi.org/10.1007/978-1-4020-8758-5_14
   Accessible scan used for the transcription: https://www.sgo.fi/~j/baylie/Partial%20Differential%20Equations%20-%20Modelling%20and%20Numerical%20Simulation%20-%20R.%20Glowinski%2C%20P.%20Neittaanmaki%20%28Springer%2C%202008%29%20WW.pdf
 - Bozon, N. & Mohammadi, B. (2009). “GIS-based atmospheric dispersion modelling: Forecasting the pesticide atmospheric spray drift from a vineyard plot to a watershed.” *Applied Geomatics*, 1, 59–74. https://doi.org/10.1007/s12518-009-0006-0. Publisher version of record; its online text prints `2/3 = 0.636` and describes the factor as a stochastic averaged cosine.
