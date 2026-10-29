@@ -1,9 +1,6 @@
 # 00 — Index de navigation des notes techniques
 
-Index de navigation de `docs/`, établi le 27 octobre 2026 pour lever l'ambiguïté des
-numéros en double et fixer la règle de numérotation. Il décrit les notes de référence
-et les ressources sélectionnées, mais ne constitue pas un inventaire exhaustif de chaque
-fichier du dépôt. Il ne résume ni ne remplace les documents référencés.
+Index de navigation de `docs/`, établi le 27 octobre 2026 et maintenu pour orienter vers les documents de référence. Il ne remplace pas les documents référencés. La gouvernance des scopes, des sources canoniques et des règles anti-redondance est définie dans [52 — Gouvernance documentaire](52-gouvernance-documentaire.md). Cet index est un parcours de navigation ; il ne constitue pas à lui seul l'inventaire de disposition fichier par fichier demandé par l'audit croisé.
 
 ## Règle de numérotation
 
@@ -12,7 +9,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21 et 33 existent en do
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-uniforme.md` (oracle indépendant et protocole de coûts S0 uniforme) et le numéro 51 à `51-reference-independante-cas-s0.md` (comparaison à référence indépendante EDP du cas S0). Prochain numéro libre sur main : 52. Les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques.
+Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-uniforme.md` (oracle indépendant et protocole de coûts S0 uniforme) et le numéro 51 à `51-reference-independante-cas-s0.md` (comparaison à référence indépendante EDP du cas S0). Prochain numéro disponible après cette attribution : 53. Les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques.
 
 ## Numéros en double
 
@@ -80,6 +77,7 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `49-matrice-revendications-baseline.md` | Matrice initiale des revendications historiques : source/version/localisation, unités, hypothèses, preuves et statut de définition |
 | `50-protocole-oracle-couts-baseline-uniforme.md` | Oracle indépendant et protocole de coûts pour le cas S0 uniforme ; protocole implémenté, mesures à exécuter |
 | `51-reference-independante-cas-s0.md` | Comparaison EDP/solution fermée du cas S0, convergence, métriques et limites |
+| `52-gouvernance-documentaire.md` | Frontière public/privé, sources canoniques, scopes, règles anti-redondance et validation des références |
 | `bibliographie/fondements-et-heritage.md` | Synthèse bibliographique : fondements et héritage |
 | `bibliographie/identification-source-assimilation.md` | Bibliographie thématique : identification de source et assimilation |
 | `bibliographie/metriques-et-analogies.md` | Bibliographie thématique : métriques et analogies |
@@ -101,4 +99,4 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `visuels-g0s/prompts/infographie-glossaire-g0s.md` | Prompt source de l'infographie du glossaire G0-S |
 | `visuels-g0s/` | Visuels G0-S (SVG source et générés) |
 
-Les notes numérotées en double figurent dans le tableau dédié ci-dessus. L'audit adversarial a été découpé par rôle : son fichier numéroté est désormais un index ; les constats restent dans `docs/audits/`.
+Les notes numérotées en double figurent dans le tableau dédié ci-dessus. L'audit adversarial a été découpé par rôle : son fichier numéroté est désormais un index ; les constats restent dans `docs/audits/`. Pour décider si un document est canonique, redondant ou historique, appliquer [la gouvernance documentaire](52-gouvernance-documentaire.md) et le registre d'audit croisé privé [career-knowledge #167](https://github.com/JM-Brun/career-knowledge/issues/167).
