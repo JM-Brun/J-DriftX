@@ -45,9 +45,9 @@ def _slug_heading(heading: str) -> str:
     heading = heading.replace("&", "-")
     # GitHub anchors retain a double separator around an em dash while
     # typographic quotes are removed without introducing extra separators.
-    heading = re.sub(r"\\s*[‐‑‒–—]\\s*", "--", heading)
-    heading = re.sub(r"[^\\w\\-\\s]", "", heading, flags=re.UNICODE)
-    heading = re.sub(r"\\s+", "-", heading.strip().lower())
+    heading = re.sub(r"\s*[‐‑‒–—]\s*", "--", heading)
+    heading = re.sub(r"[^\w\-\s]", "", heading, flags=re.UNICODE)
+    heading = re.sub(r"\s+", "-", heading.strip().lower())
     return heading.strip("-")
 
 
