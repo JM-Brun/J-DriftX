@@ -224,18 +224,18 @@ The versioned 2006 PDF is now visually inspected for equations (1), (2) and (4);
 
 ## 7. Primary-source transcription: Mohammadi & Brun (2006)
 
-The open-access publisher PDF of the founding Note is available from the Comptes Rendus site (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007); direct PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) and was retrieved and transcribed on 28 October 2026. **Extraction caveat:** the PDF text layer garbles some math glyphs (integrals, radicals, exponents, sum signs); the equations below are reconstructions from the text layer and the surrounding prose, and this is flagged wherever it matters. They must be checked against the typeset PDF before being cited as verbatim. No suspected typo is silently repaired.
+The versioned publisher PDF of the founding Note is available from the Comptes Rendus site (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007); direct PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf). Equations (1) and (2), p. 635, and equation (4), p. 636, were visually checked against the already-versioned PDF on 29 October 2026. Other equations in this section remain transcriptions/reconstructions from the text layer and surrounding prose, not visually certified verbatim. No suspected typo is silently repaired.
 
 ### Assimilation setting and transport assumption (§1)
 
 The model parameters \(p\) — computation-domain definition, topography, meteo conditions, source locations, nozzle characteristics — are determined through the assimilation objective
 
 \[
-\min_{p\in\mathcal O} J(p)=\|\vec u(p)-\vec u_{\rm obs}\|^2+\|c(p,\vec u(p))-c_{\rm obs}\|^2,
+\min_{p\in\mathcal O} J(p)=\|\vec u(p)-\vec u_{\rm obs}\|+\|c(p,\vec u(p))-c_{\rm obs}\|,
 \tag{MB06-1}
 \]
 
-(the exponents and norm bars are not visible in the text layer; the printed equation is a sum of two norms). The article then states that \(\vec u(p)\) est « un champ de vitesse à divergence nulle servant au transport de \(c(p,\vec u(p))\) »: the transport velocity is divergence-free **by assumption** in this Note, not by a construction given there.
+(visually checked: the printed equation is a sum of two norms without explicit squares or weights). The article then states that \(\vec u(p)\) est « un champ de vitesse à divergence nulle servant au transport de \(c(p,\vec u(p))\) »: the transport velocity is divergence-free **by assumption** in this Note, not by a construction given there.
 
 ### Similitude solution in a uniform flow (§2)
 
@@ -277,7 +277,7 @@ The article then states explicitly that the construction is **not** a distance: 
 \tag{MB06-4}
 \]
 
-as extracted (the text layer does not show how the observation points enter the terms inside the sum); the article presents this as the completion of the velocity field from \(n_{\rm obs}\) observation points, and offers as an alternative a coarse migration-time grid with interpolation. The equation is not dimensionally homogeneous as reconstructed — a pointwise-source or optimality reading may be intended — and is transcribed without repair.
+as printed in the facsimile. The term \(\vec u_{\rm obs}\) inside the sum has no visible observation index, even though the text defines \(n_{\rm obs}\) observation points. Under conventional units, \(\Delta\varphi\) has units \(s^{-1}\) if \(\nabla\varphi\) is a velocity, whereas the residual norm has units \(m\,s^{-1}\); additionally, \(\nabla\cdot\vec u=\Delta\varphi\) is not zero in general for the printed nonzero right-hand side. This conflicts conditionally with the preceding description of a divergence-free field. The article offers a coarse migration-time grid with interpolation as an alternative. The displayed equation is preserved literally, without adding an index or silently changing its mathematical form.
 
 ### Generalized similitude ansatz (§3, Eq. 5)
 
@@ -295,7 +295,7 @@ In the validation examples, the reference PDE (transport–diffusion–depositio
 ### What the 2006 source adds to the conservation question
 
 1. **The 2006 conservation statement is global, not per-surface.** It is a volume integral of \(c\) over \(\mathbb R^3\), set equal to the total emitted quantity. **No flux conservation across iso-\(\tau\) surfaces is claimed anywhere in the article.** The per-surface reading is therefore not supported by the founding source.
-2. **It is dimensionally consistent as printed** — under the conventional \(c\in[M\,L^{-3}]\), the integral is a mass — in contrast with the printed Eqs. (28)/(31) of the 2009 article transcribed in the previous section.
+2. **It is dimensionally consistent as printed** — under the conventional \(c\in[M\,L^{-3}]\), the integral is a mass — in contrast with the provisional publisher-text Eqs. (28)/(31) whose bibliographic identity remains unresolved in §6; those equations are not in the accessible STIC 2009 manuscript.
 3. **As a physical claim it conflicts with deposition.** §5 calibrates a deposition sink; with a sink active, the atmospheric inventory \(\int_{\mathbb R^3}c\,dV\) falls below the emitted mass once deposition starts. Pending the thesis [1], the constraint is therefore best read as a **normalization/calibration convention of the reduced model** — the emitted quantity being itself « solution d'un modèle de traitement au niveau du rang de culture » — not as a theorem derived from a balance law.
 4. **The three audited sources state three different conservation objects as printed:** 2006 — global volume integral of \(c\) over \(\mathbb R^3\); 2008 — \(C=\int_{\mathbb R^2}c^+\,d\sigma\) with two printed alternatives for \(c^+\) (not dimensionally equivalent); 2009 — \(K\), \(C_g\), \(C_a\) with printed element mismatches. A single unambiguous historical conserved quantity has **not** been identified across the corpus as printed; the reconstruction must not average or silently reconcile the three.
 5. **The founding Note itself documents the metric failures** (non-separation, non-symmetry, triangle inequality), consistent with the project's audited understanding of \(T_{\rm proj}\).
