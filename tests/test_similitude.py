@@ -1,7 +1,7 @@
 """Tests physiques et numeriques des solutions de similitude."""
 
 from itertools import pairwise
-from math import erf, sqrt
+from math import erf, exp, pi, sqrt
 
 import numpy as np
 import pytest
@@ -274,3 +274,47 @@ def test_puff_temps_invalide() -> None:
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="strictement positif"):
         concentration_puff(100.0, 0.0, 0.0, t=0.0, masse=1.0, u=2.0, classe="D")
+
+
+def test_panache_against_closed_form_oracle_independent_of_package() -> None:
+    """La formule scalaire indépendante recoupe l'implémentation vectorisée.
+
+    Les coefficients de Briggs C et la formule gaussienne sont explicités
+    dans ce test, sans appeler sigma_y, sigma_z ni recopier leur résultat.
+    Ce test est un oracle d'implémentation, pas une validation terrain ni
+    une comparaison à un solveur EDP indépendant.
+    """
+    # Given — paramètres et points fixés, avec réflexion au sol.
+    x = 500.0
+    ys = (-20.0, 0.0, 35.0)
+    zs = (0.0, 1.5, 12.0)
+    debit, u, hauteur = 2.0, 3.0, 1.0
+
+    # When — la référence est évaluée par une expression scalaire autonome.
+    # Coefficients ruraux de Briggs classe C, fixés pour ce test de régression.
+    sy = 0.11 * x / sqrt(1.0 + 0.0001 * x)
+    sz = 0.08 * x / sqrt(1.0 + 0.0002 * x)
+    reference = np.array(
+        [
+            debit
+            / (2.0 * pi * u * sy * sz)
+            * exp(-(y**2) / (2.0 * sy**2))
+            * (
+                exp(-((z - hauteur) ** 2) / (2.0 * sz**2))
+                + exp(-((z + hauteur) ** 2) / (2.0 * sz**2))
+            )
+            for y, z in zip(ys, zs, strict=True)
+        ]
+    )
+    obtenu = concentration_panache(
+        x=x,
+        y=np.asarray(ys),
+        z=np.asarray(zs),
+        debit=debit,
+        u=u,
+        classe="C",
+        hauteur=hauteur,
+    )
+
+    # Then — accord au niveau de l'arrondi flottant, sans auto-comparaison.
+    np.testing.assert_allclose(obtenu, reference, rtol=1e-13, atol=0.0)
