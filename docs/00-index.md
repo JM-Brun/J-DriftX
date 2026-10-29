@@ -11,7 +11,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur cette branche : 43 (la note 42, stratégie de reprise et d'élargissement scientifique, est ajoutée dans la PR en cours).
+Prochain numéro libre sur cette branche : 44 (la note 43, audit de l'article Mohammadi & Brun 2006, est ajoutée dans la PR en cours).
 
 ## Numéros en double
 
@@ -64,6 +64,7 @@ Prochain numéro libre sur cette branche : 43 (la note 42, stratégie de reprise
 | `40-standards-qualite-tests-proprietes.md` | Standards qualité : tests de propriété (Hypothesis), objet et domaine (OOP/DDD), diagnostic architecture et recommandations |
 | `41-audit-these-brun-conservation-g0s.md` | Audit de la thèse de Brun : équations (7.12)–(7.13), conservation du transport lointain et contrôle dimensionnel |
 | `42-strategie-reprise-et-elargissement-scientifique.md` | Stratégie : reconstruire la base historique, corriger les erreurs de façon traçable, puis élargir les méthodes et domaines applicatifs |
+| `43-audit-article-mohammadi-brun-2006.md` | Audit critique de la source fondatrice 2006 : pseudo-distance orientée, conservation globale, assimilation et coûts rapportés |
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
 | `bibliographie/` | Dossier bibliographique |
