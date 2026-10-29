@@ -16,7 +16,7 @@ L'oracle recalcule directement la solution gaussienne pour la classe C avec les 
 - **Tolérance :** `abs_error <= 1e-15 kg/m^3 + 1e-12 * abs(C_oracle)`. L'erreur relative utilise `max(abs(C_oracle), 1e-15 kg/m^3)` au dénominateur ; le plancher est explicite.
 - **Répétitions :** au moins 5 ; défaut 1000. Une invocation d'échauffement est exclue des mesures. Toutes les durées brutes et statistiques médiane, moyenne, écart-type, minimum et maximum sont émises.
 - **Coûts :** préparation (construction de la source et de la grille), inférence sur un point (médiane du coût grille / 12), coût total d'une charge de 12 requêtes et pic d'allocations Python suivies par `tracemalloc`. Aucun calibrage n'existe dans ce cas : il ne faut pas présenter la préparation comme un coût de calibration.
-- **Environnement :** version Python, plateforme, NumPy, Pydantic et version du package consignées dans le JSON.
+- **Environnement :** version Python, plateforme, NumPy, Pydantic et version du package consignées dans le JSON. Le bloc `execution` ajoute l'horodatage UTC de début, la commande, le commit Git, l'état propre/sale du worktree et la destination déclarée ; si Git est indisponible, la révision est `null` et l'état `unknown`.
 
 ## 3. Reproduction
 
