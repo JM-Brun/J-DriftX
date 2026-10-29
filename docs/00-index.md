@@ -11,7 +11,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 51 (les notes 43 à 49 documentent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice des revendications historiques ; la note 50 documente la comparaison à référence indépendante du cas S0).
+Prochain numéro libre sur main : 51 (les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques ; la note 50 documente la comparaison à référence indépendante du cas S0).
 
 ## Numéros en double
 

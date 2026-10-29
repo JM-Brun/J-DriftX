@@ -132,6 +132,7 @@ graph TD
   subgraph chp["Champs, expériences et rendu"]
     champ_analytique["champ_analytique.py"]::module
     experiences_uniforme["experiences/uniforme.py"]::module
+    experiences_baseline_uniforme["experiences/baseline_uniforme.py"]::module
     experiences_reconstruction_vent["experiences/reconstruction_vent.py"]::module
     experiences_cas_synthetiques["experiences/cas_synthetiques.py"]::module
     experiences_superposition_sources["experiences/superposition_sources.py"]::module
@@ -158,6 +159,7 @@ graph TD
   end
   subgraph sol["Socle gaussien"]
     similitude["similitude.py"]::module
+    similitude_objets["similitude_objets.py"]::module
     stabilite["stabilite.py"]::module
     source["source.py"]::module
     c_panache["Panache gaussien (similitude)"]::concept
@@ -193,6 +195,7 @@ graph TD
     t_champ["test_champ_analytique.py"]::test
     t_recon["test_reconstruction_vent.py"]::test
     t_uniforme["test_experience_uniforme.py"]::test
+    t_baseline_uniforme["test_baseline_uniforme.py"]::test
     t_advection["test_advection_diffusion.py"]::test
     t_fields["test_fields.py"]::test
     t_periodic["test_periodic_transport.py"]::test
@@ -310,6 +313,11 @@ graph TD
   contrats -->|"utilise"| champ_analytique
   contrats -->|"utilise"| source
   contrats -->|"utilise"| similitude
+  experiences_baseline_uniforme -->|"utilise"| c_pdist
+  experiences_baseline_uniforme -->|"utilise"| benchmarks_cas
+  experiences_baseline_uniforme -->|"utilise"| source
+  experiences_baseline_uniforme -->|"utilise"| contrats
+  t_baseline_uniforme -->|"couvre"| experiences_baseline_uniforme
   experiences_reference_independante -->|"utilise"| benchmarks_cas
   experiences_reference_independante -->|"utilise"| benchmarks_metriques
   experiences_reference_independante -->|"utilise"| similitude
@@ -330,6 +338,7 @@ graph TD
 | metric.py | Module de code | [metric.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/metric.py) |
 | champ_analytique.py | Module de code | [champ_analytique.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/champ_analytique.py) |
 | experiences/uniforme.py | Module de code | [uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/uniforme.py) |
+| experiences/baseline_uniforme.py | Module de code | [baseline_uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/baseline_uniforme.py) |
 | experiences/reconstruction_vent.py | Module de code | [reconstruction_vent.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reconstruction_vent.py) |
 | experiences/cas_synthetiques.py | Module de code | [cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/cas_synthetiques.py) |
 | experiences/superposition_sources.py | Module de code | [superposition_sources.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/superposition_sources.py) |
@@ -338,6 +347,7 @@ graph TD
 | experiences/identification_source.py | Module de code | [identification_source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/identification_source.py) |
 | experiences/reference_independante.py | Module de code | [reference_independante.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reference_independante.py) |
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
+| similitude_objets.py | Module de code | [similitude_objets.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude_objets.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
 | source.py | Module de code | [source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/source.py) |
 | contrats.py | Module de code | [contrats.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/contrats.py) |
@@ -378,6 +388,7 @@ graph TD
 | test_champ_analytique.py | Test (CI) | [test_champ_analytique.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_champ_analytique.py) |
 | test_reconstruction_vent.py | Test (CI) | [test_reconstruction_vent.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reconstruction_vent.py) |
 | test_experience_uniforme.py | Test (CI) | [test_experience_uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_experience_uniforme.py) |
+| test_baseline_uniforme.py | Test (CI) | [test_baseline_uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_baseline_uniforme.py) |
 | test_advection_diffusion.py | Test (CI) | [test_advection_diffusion.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_advection_diffusion.py) |
 | test_fields.py | Test (CI) | [test_fields.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_fields.py) |
 | test_periodic_transport.py | Test (CI) | [test_periodic_transport.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_periodic_transport.py) |
