@@ -10,10 +10,10 @@ L'oracle recalcule directement la solution gaussienne pour la classe C avec les 
 
 ## 2. Protocole pré-enregistré
 
-- **Cas :** vent uniforme (U=3{,}0\,\mathrm{m\,s^{-1}}), débit (Q=2{,}0\,\mathrm{kg\,s^{-1}}), classe C, hauteur effective (H=1{,}0\,\mathrm m), altitude de mesure (z=1{,}5\,\mathrm m).
-- **Grille :** (x\in\{100,200,400,800\}\,\mathrm m), (y\in\{-50,0,50\}\,\mathrm m), soit 12 points ; grille inchangée.
-- **Formules indépendantes :** (sigma_y=0{,}11x/\sqrt{1+0{,}0001x}), (sigma_z=0{,}08x/\sqrt{1+0{,}0002x}), puis formule gaussienne avec réflexion au sol.
-- **Tolérance :** erreur absolue (le 10^{-15}\,\mathrm{kg\,m^{-3}}+10^{-12}|C_{oracle}|). L'erreur relative est calculée avec le dénominateur (max(|C_{oracle}|,10^{-15}\,\mathrm{kg\,m^{-3}})) ; le plancher est explicite.
+- **Cas :** vent uniforme `U = 3.0 m/s`, débit `Q = 2.0 kg/s`, classe C, hauteur effective `H = 1.0 m`, altitude de mesure `z = 1.5 m`.
+- **Grille :** `x = {100, 200, 400, 800} m`, `y = {-50, 0, 50} m`, soit 12 points ; grille inchangée.
+- **Formules indépendantes :** `sigma_y = 0.11 x / sqrt(1 + 0.0001 x)` et `sigma_z = 0.08 x / sqrt(1 + 0.0002 x)`, puis formule gaussienne avec réflexion au sol.
+- **Tolérance :** `abs_error <= 1e-15 kg/m^3 + 1e-12 * abs(C_oracle)`. L'erreur relative utilise `max(abs(C_oracle), 1e-15 kg/m^3)` au dénominateur ; le plancher est explicite.
 - **Répétitions :** au moins 5 ; défaut 1000. Une invocation d'échauffement est exclue des mesures. Toutes les durées brutes et statistiques médiane, moyenne, écart-type, minimum et maximum sont émises.
 - **Coûts :** préparation (construction de la source et de la grille), inférence sur un point (médiane du coût grille / 12), coût total d'une charge de 12 requêtes et pic d'allocations Python suivies par `tracemalloc`. Aucun calibrage n'existe dans ce cas : il ne faut pas présenter la préparation comme un coût de calibration.
 - **Environnement :** version Python, plateforme, NumPy, Pydantic et version du package consignées dans le JSON.
@@ -35,5 +35,5 @@ Le JSON produit contient les valeurs par point, les erreurs, toutes les répéti
 2. L'égalité numérique sur 12 points établit une cohérence entre deux implémentations de la formule, pas une validation météorologique, expérimentale ou applicative.
 3. `tracemalloc` rapporte le pic d'allocations Python tracées, pas la mémoire résidente du processus ni toutes les allocations natives de NumPy.
 4. Les durées dépendent de la machine, de la charge et du runtime ; elles sont descriptives, non un résultat universel.
-5. Aucun facteur d'accélération historique (10^3\)–(10^4\) n'est validé : le coût de préparation et la comparaison avec un solveur maillé historiquement comparable ne sont pas établis.
+5. Aucun facteur d'accélération historique `10^3–10^4` n'est validé : le coût de préparation et la comparaison avec un solveur maillé historiquement comparable ne sont pas établis.
 6. Le contre-exemple de cisaillement reste séparé ([note 33](33-test-contre-exemple-cisaillement.md)). Rien ici ne permet d'extrapoler à un champ variable, au multi-niveaux, à des données terrain ou à DIFLU.
