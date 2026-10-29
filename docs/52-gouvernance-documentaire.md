@@ -45,7 +45,7 @@ Un document historique peut être conservé sans être actif, à condition d'êt
 
 ## Numérotation et références
 
-- Les six collisions historiques de numérotation (14, 15, 16, 17, 21, 33) restent documentées dans [l'index docs/00](00-index.md). Ne pas renuméroter en masse sans inventaire des liens entrants, ancres, références de code et pages du site.
+- Les sept collisions historiques de numérotation (14, 15, 16, 17, 21, 33, 47) restent documentées dans [l'index docs/00](00-index.md). Ne pas renuméroter en masse sans inventaire des liens entrants, ancres, références de code et pages du site.
 - Dans les liens, utiliser le **nom de fichier complet** plutôt qu'un numéro seul.
 - Chaque changement de nom ou suppression exige une recherche des références internes, du site, des tests, des issues et des PR.
 - Les chemins locaux, ancres et URL externes sont des catégories de validation distinctes ; la réussite d'un contrôle de chemins ne prouve pas la validité des autres.
