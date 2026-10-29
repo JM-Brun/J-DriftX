@@ -58,17 +58,13 @@ def solution(arcs: tuple[float, ...]) -> SolutionTransitoire:
 
 
 @pytest.fixture(scope="module")
-def comparaison(
-    arcs: tuple[float, ...], grille: tuple[PointMesure, ...]
-) -> ComparaisonTransitoire:
+def comparaison(arcs: tuple[float, ...], grille: tuple[PointMesure, ...]) -> ComparaisonTransitoire:
     """Comparaison de la grille fine, calculée une seule fois."""
     return comparer_transitoire(PUFF_DEFAUT, arcs, grille)
 
 
 @pytest.fixture(scope="module")
-def grossier(
-    arcs: tuple[float, ...], grille: tuple[PointMesure, ...]
-) -> ComparaisonTransitoire:
+def grossier(arcs: tuple[float, ...], grille: tuple[PointMesure, ...]) -> ComparaisonTransitoire:
     """Comparaison de la grille grossière (contrôle de convergence)."""
     parametres = ParametresEdp(5.0, 4.0, 340.0, 240.0)
     return comparer_transitoire(PUFF_DEFAUT, arcs, grille, parametres)
@@ -112,14 +108,13 @@ def test_l_entree_est_partagee_avec_la_marginale_fermee(
 ) -> None:
     """La condition d'entrée est exactement la marginale fermée, bords nuls."""
     # Given — la solution et la marginale fermée évaluée à l'instant d'entrée.
-    mailles_y, mailles_z = np.meshgrid(
-        solution.abscisses_y, solution.abscisses_z, indexing="ij"
-    )
+    mailles_y, mailles_z = np.meshgrid(solution.abscisses_y, solution.abscisses_z, indexing="ij")
     distance = PUFF_DEFAUT.u * solution.t_entree
     sy = sigma_y(distance, PUFF_DEFAUT.classe)
     sz = sigma_z(distance, PUFF_DEFAUT.classe)
     attendu_brut = (
-        PUFF_DEFAUT.masse / (2.0 * np.pi * sy * sz)
+        PUFF_DEFAUT.masse
+        / (2.0 * np.pi * sy * sz)
         * np.exp(-(mailles_y**2) / (2.0 * sy**2))
         * np.exp(-(mailles_z**2) / (2.0 * sz**2))
     )
@@ -311,9 +306,7 @@ def test_le_modele_de_diffusion_est_injectable() -> None:
 
     parametres = ParametresEdp(5.0, 4.0, 340.0, 240.0)
     # When — la même géométrie est résolue avec le modèle doublé et Briggs.
-    double = resoudre_transitoire(
-        PUFF_DEFAUT, (100.0, 200.0), parametres, ModeleTransverseDouble()
-    )
+    double = resoudre_transitoire(PUFF_DEFAUT, (100.0, 200.0), parametres, ModeleTransverseDouble())
     reference = resoudre_transitoire(PUFF_DEFAUT, (100.0, 200.0), parametres)
     # Then — le pas de temps est réduit (Fourier transverse doublé).
     assert double.pas_temps < reference.pas_temps
