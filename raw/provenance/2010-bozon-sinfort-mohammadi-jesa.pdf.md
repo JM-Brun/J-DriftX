@@ -1,6 +1,6 @@
 # Provenance — version JESA 2010 (fichier attendu)
 
-**État :** fiche préparatoire ; le binaire de la version finale JESA n'est pas encore présent ni authentifié.
+**État :** notice bibliographique listée ; le PDF de la version finale JESA n'est pas encore présent ni authentifié.
 
 ## Référence bibliographique
 
@@ -14,7 +14,7 @@ Bozon, N., Sinfort, C. & Mohammadi, B. “A GIS-based atmospheric dispersion mod
 
 Le manuscrit auteur accessible sur HAL sous l'identifiant [hal-00468863](https://hal.science/hal-00468863) porte sur la communication STIC & Environnement 2009. Ce document n'est **pas** automatiquement la version finale publiée par JESA en 2010. Ne pas copier ou renommer le PDF du manuscrit 2009 sous le nom `2010-bozon-sinfort-mohammadi-jesa.pdf` sans preuve d'identité éditoriale.
 
-Au contrôle du 29 octobre 2026, la notice bibliographique et le DOI ont été repérés, mais la version éditeur finale n'a pas été obtenue ni authentifiée. Aucune URL directe du fichier PDF final n'est affirmée dans cette fiche.
+Au contrôle du 29 octobre 2026, les liens bibliographiques demandés sont recensés : [notice HAL hal-02594312](https://hal.inrae.fr/hal-02594312), [notice AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/6798c27ed6a63682f045645d) et [DOI éditeur](https://doi.org/10.3166/jesa.44.445-461). La version finale éditeur n'a pas été obtenue/authentifiée et aucune URL directe de son PDF n'est confirmée. Le PDF [HAL v1 du manuscrit 2009](https://hal.science/hal-00468863v1/file/MO2009-PUB00026817.pdf) est documenté séparément et ne remplace pas la version JESA.
 
 ## À compléter après ajout du fichier
 
