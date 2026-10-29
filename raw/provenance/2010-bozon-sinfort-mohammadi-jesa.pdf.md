@@ -1,6 +1,6 @@
-# Provenance — version JESA 2010 (fichier attendu)
+# Provenance — article JESA 2010 déposé sur HAL
 
-**État :** notice bibliographique listée ; le PDF de la version finale JESA n'est pas encore présent ni authentifié.
+**État :** notice HAL `hal-02594312` identifiée et documentée ; la source est disponible via HAL. Le binaire correspondant n'est pas actuellement versionné dans `raw/` et aucune extraction locale dédiée n'y figure. Cet état du dépôt ne signifie pas que la source HAL est introuvable ni qu'il faut recommencer sa recherche.
 
 ## Référence bibliographique
 
@@ -12,18 +12,20 @@ Bozon, N., Sinfort, C. & Mohammadi, B. “A GIS-based atmospheric dispersion mod
 
 ## Distinction impérative entre versions
 
-Le manuscrit auteur accessible sur HAL sous l'identifiant [hal-00468863](https://hal.science/hal-00468863) porte sur la communication STIC & Environnement 2009. Ce document n'est **pas** automatiquement la version finale publiée par JESA en 2010. Ne pas copier ou renommer le PDF du manuscrit 2009 sous le nom `2010-bozon-sinfort-mohammadi-jesa.pdf` sans preuve d'identité éditoriale.
+Deux dépôts HAL distincts sont concernés :
 
-Au contrôle du 29 octobre 2026, les liens bibliographiques demandés sont recensés : [notice HAL hal-02594312](https://hal.inrae.fr/hal-02594312), [notice AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/6798c27ed6a63682f045645d) et [DOI éditeur](https://doi.org/10.3166/jesa.44.445-461). La version finale éditeur n'a pas été obtenue/authentifiée et aucune URL directe de son PDF n'est confirmée. Le PDF [HAL v1 du manuscrit 2009](https://hal.science/hal-00468863v1/file/MO2009-PUB00026817.pdf) est documenté séparément et ne remplace pas la version JESA.
+- **Article JESA 2010** : [notice HAL `hal-02594312`](https://hal.inrae.fr/hal-02594312), *Journal Européen des Systèmes Automatisés*, 44(4), 445–461, DOI [10.3166/jesa.44.445-461](https://doi.org/10.3166/jesa.44.445-461). C'est la source à utiliser pour l'article de revue.
+- **Manuscrit STIC & Environnement 2009** : [notice HAL `hal-00468863`](https://hal.science/hal-00468863), manuscrit auteur de 17 pages. Il s'agit d'un objet bibliographique distinct et il ne doit pas être substitué au dépôt JESA 2010.
 
-## À compléter après ajout du fichier
+Le dépôt JESA sur HAL est déjà identifié ; ne pas requalifier la source comme « introuvable » ni relancer une recherche générique. La tâche restante est d'exploiter le fichier associé à `hal-02594312` et de comparer les passages pertinents au manuscrit 2009.
 
-- [ ] Vérifier la page de titre, le nom de la revue, l'année, le volume, le numéro et les pages 445–461.
-- [ ] Vérifier le DOI et comparer le contenu avec le manuscrit auteur de 2009 ; consigner les différences sans présumer qu'il s'agit d'un simple doublon.
-- [ ] Noter le nom original, la provenance effective, l'URL réellement utilisée et la date d'obtention.
-- [ ] Vérifier les droits de redistribution du fichier éditeur. Si la redistribution n'est pas autorisée, retirer le binaire et conserver la référence, le DOI et un lien autorisé.
-- [ ] Enregistrer une empreinte SHA-256 du fichier reçu, si l'outillage local le permet.
-- [ ] Produire une extraction texte versionnée uniquement après confirmation de l'identité du PDF.
-- [ ] Comparer les définitions, les domaines d'intégration, les unités et les termes de source/puits avec les transcriptions existantes dans [la note de conservation](../../docs/32-conservation-coordonnees-travel-time.md).
+## Travail restant — sans refaire l'obtention HAL
 
-Ne pas présenter une comparaison ligne à ligne comme effectuée tant que le fichier final authentifié n'a pas été examiné.
+- [ ] Vérifier les métadonnées et le fichier associé à `hal-02594312` : titre, auteurs, revue, volume, numéro, pages et DOI.
+- [ ] Comparer l'article JESA 2010 au manuscrit HAL 2009 : définition du temps de migration, projection, champ de vitesse, équations de concentration et conservation, intégrales, unités, sources/puits et conditions aux limites.
+- [ ] Pour chaque différence, enregistrer page imprimée/équation et classer : identique, changement éditorial, changement mathématique, ambiguïté ou non vérifiable.
+- [ ] Réutiliser le PDF HAL déjà obtenu et sa provenance documentée ; ne pas lancer une nouvelle recherche générique.
+- [ ] Avant d'ajouter un PDF à `raw/`, vérifier les conditions de dépôt et de redistribution. À défaut, conserver le lien HAL et une extraction dont l'usage est autorisé.
+- [ ] Produire une extraction texte avec méthode et pagination, puis relier chaque anomalie à l'extraction et au fac-similé.
+
+Ne pas présenter la comparaison comme terminée tant que les deux versions n'ont pas été confrontées. La disponibilité de la source HAL est établie ; l'absence d'un PDF JESA et d'une extraction dédiée dans `raw/` est un état du dépôt, pas une absence de source.
