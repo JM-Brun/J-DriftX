@@ -14,14 +14,14 @@ Le projet historique est un **socle à reconstruire et à auditer, pas un carcan
 
 | Année | Référence | Support |
 |---|---|---|
-| 2007 (année à authentifier) | [Modèles à complexité réduite de transport pour applications environnementales](https://hal.inrae.fr/tel-02589999/document) — J.-M. Brun | Thèse signalée par [AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c) ; PDF présent dans la branche de travail. Page de titre, pagination, année exacte et identité du binaire avec HAL encore à vérifier |
+| 2007 (année bibliographique à confirmer sur le binaire) | [Modèles à complexité réduite de transport pour applications environnementales](https://hal.inrae.fr/tel-02589999/document) — J.-M. Brun | Thèse signalée par [AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c) ; PDF versionné dans `raw/`, obtenu par une voie appropriée déjà documentée. La vérification de l'identité binaire avec HAL et des métadonnées exactes est distincte ; ne pas relancer l'acquisition |
 | 2006 | [Similitude généralisée et modélisation géométrique à complexité réduite](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) — B. Mohammadi & J.-M. Brun | *C. R. Mécanique* 334(10), 634–638 (PDF libre, Académie des sciences) |
 | — | *Reduced order modelling of dispersion* — référence citée avec Mohammadi, Brun & Pironneau (2006) | Référence secondaire attestée, mais recueil et métadonnées éditoriales non confirmés |
 | 2008 | [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14) — J.-M. Brun & B. Mohammadi | Springer, CSM vol. 16, chap. 14, p. 245 et s. |
 | 2008 | *Similitude and non symmetric geometry for dispersion modelling* — N. Bozon, B. Mohammadi & C. Sinfort | e-sta vol. 5 (STIC & Environnement'07) |
-| 2009 | [A GIS-based atmospheric dispersion model — plateforme Drift-X](https://hal.science/hal-00468863) — N. Bozon, C. Sinfort & B. Mohammadi | Actes STIC & Environnement, HAL hal-00468863 |
+| 2009 | [A GIS-based atmospheric dispersion model — plateforme Drift-X](https://hal.science/hal-00468863) — N. Bozon, C. Sinfort & B. Mohammadi | Manuscrit auteur pour STIC & Environnement 2009, HAL hal-00468863 ; PDF versionné dans `raw/` |
 | 2009 | [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0) — N. Bozon & B. Mohammadi | *Applied Geomatics* 1, 59–74 |
-| 2010 | [A GIS-based atmospheric dispersion model](https://doi.org/10.3166/jesa.44.445-461) — N. Bozon, C. Sinfort & B. Mohammadi | *JESA* 44(4-5), 445–461 (version journal du papier STIC & Environnement 2009 / HAL hal-00468863) |
+| 2010 | [A GIS-based atmospheric dispersion model](https://doi.org/10.3166/jesa.44.445-461) — N. Bozon, C. Sinfort & B. Mohammadi | *JESA* 44(4–5), 445–461 ; notice HAL distincte [hal-02594312](https://hal.inrae.fr/hal-02594312). Ne pas confondre avec le manuscrit auteur 2009 `hal-00468863` ; comparaison des deux versions à documenter |
 
 Détails : [docs/references.md](docs/references.md) — [fiches de lecture par papier source](docs/04-revues-papiers-sources.md) — [audit critique de l'article fondateur de 2006](docs/45-audit-article-mohammadi-brun-2006.md) — [sources primaires et extractions](raw/).
 
