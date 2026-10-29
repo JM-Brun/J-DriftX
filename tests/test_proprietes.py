@@ -13,7 +13,17 @@ sans recalcul local.
 
 Chaque propriété reste énoncée sous les hypothèses exactes de l'objet
 concerné : champ uniforme non nul pour la référence dirigée, famille de
-similitude gaussienne (Briggs, site rural) pour le panache. La carte
+similitude gaussienne (Briggs, site rural) pour le panache.
+
+L'extension du 29 octobre 2026 étend ces propriétés générées aux zones
+couvertes jusque-là seulement par des cas fixes : métriques FAC2/NMSE et
+cas S0 du registre de benchmarks (docs/39), partition 70/30 des jeux
+synthétiques (docs/21), temps de première arrivée 1D (docs/27 et
+docs/30), écarts-types de Briggs (docs/24) et solutions exactes de
+référence (advection-diffusion 1D, transport périodique). Les standards
+de test correspondants — ISO/IEC/IEEE 29119 pour le test logiciel,
+Hypothesis pour les tests de propriété en Python — sont passés en revue
+dans docs/40. La carte
 notions / documentation / code est tenue dans docs/30 (section 9, « Carte
 explicite ») et la matrice de traçabilité docs/27 ; pourquoi tester chaque
 propriété séparément : docs/30, section 2. Aucune de ces propriétés ne
@@ -22,12 +32,19 @@ constitue une validation physique.
 
 import math
 
+import numpy as np
 import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
+from jdriftx.advection_diffusion import gaussian_advection_diffusion
+from jdriftx.benchmarks.cas import CasS0
+from jdriftx.benchmarks.metriques import fac2, nmse
+from jdriftx.experiences.cas_synthetiques import FRACTION_CALIBRATION, construire_partition
 from jdriftx.experiences.uniforme import ChampUniforme, ScenarioUniforme, resoudre_scenario
-from jdriftx.similitude import concentration_panache
+from jdriftx.metric import temps_premiere_arrivee_1d
+from jdriftx.periodic_transport import periodic_sine_solution
+from jdriftx.similitude import concentration_panache, sigma_y, sigma_z
 from jdriftx.stabilite import ClasseStabilite
 
 
@@ -191,3 +208,345 @@ def test_panache_positif_et_symetrique_en_y(y, classe) -> None:
     # Then — les deux valeurs sont positives et identiques (y entre au carré).
     assert float(c_y) > 0.0
     assert float(c_y) == float(c_symetrique)
+
+
+@st.composite
+def _verites_et_predictions(draw):
+    """Génère un couple (vérité, prédiction) de même taille, vérité positive.
+
+    La prédiction reste positive (ce sont des concentrations) mais sans
+    lien imposé avec la vérité : les ratios visitent les deux côtés des
+    bornes FAC2 (0,5 et 2).
+    """
+    taille = draw(st.integers(min_value=1, max_value=20))
+    verite = draw(st.lists(st.floats(0.1, 10.0), min_size=taille, max_size=taille))
+    prediction = draw(st.lists(st.floats(0.01, 20.0), min_size=taille, max_size=taille))
+    return verite, prediction
+
+
+@settings(deadline=None)
+@given(verite=st.lists(st.floats(0.1, 10.0), min_size=1, max_size=20))
+def test_fac2_nmse_identite_sur_prediction_parfaite(verite) -> None:
+    """Une prédiction confondue avec la vérité reçoit FAC2 = 1 et NMSE = 0.
+
+    Référence : contrôle d'auto-cohérence du pipeline de benchmarks (docs/39,
+    section 4). Cas fixé voisin : le passage à vide de la commande dans
+    tests/test_benchmarks_reference.py. Hypothèse : vérité strictement
+    positive (conventions de l'issue #43).
+    """
+    # Given — une vérité positive et sa copie exacte.
+    prediction = list(verite)
+    # When — on évalue les deux métriques préenregistrées.
+    # Then — FAC2 vaut 1 et NMSE vaut 0.
+    assert fac2(verite, prediction) == pytest.approx(1.0)
+    assert nmse(verite, prediction) == pytest.approx(0.0)
+
+
+@settings(deadline=None)
+@given(couple=_verites_et_predictions())
+def test_fac2_nmse_restant_dans_leurs_bornes(couple) -> None:
+    """FAC2 reste une fraction et NMSE reste positif ou nul, sans autre hypothèse.
+
+    Référence : définitions préenregistrées (docs/39, section 3) : FAC2
+    compte des points (fraction dans [0, 1]), NMSE est un rapport de carrés.
+    Aucun rapport de qualité n'est affirmé ici.
+    """
+    verite, prediction = couple
+    # Given — une vérité positive et une prédiction positive de même taille.
+    # When — on évalue les deux métriques.
+    valeur_fac2 = fac2(verite, prediction)
+    valeur_nmse = nmse(verite, prediction)
+    # Then — FAC2 est dans [0, 1] et NMSE est positif ou nul.
+    assert 0.0 <= valeur_fac2 <= 1.0
+    assert valeur_nmse >= 0.0
+
+
+@settings(deadline=None)
+@given(verite=st.lists(st.floats(0.1, 10.0), min_size=1, max_size=20))
+def test_nmse_vaut_un_pour_le_double_exact(verite) -> None:
+    """Prédire exactement le double de la vérité donne NMSE = 1 et FAC2 = 1.
+
+    Référence : NMSE = somme((p - v)^2)/somme(v^2) (docs/39, section 3) :
+    p = 2v donne numérateur = dénominateur. Le ratio 2v/v est exact en
+    virgule flottante (2v est exact), donc la borne FAC2 incluse (ratio 2)
+    ne dépend pas de l'arrondi.
+    """
+    # Given — une vérité positive et sa prédiction au double exact.
+    prediction = [2.0 * v for v in verite]
+    # When — on évalue les deux métriques.
+    # Then — NMSE vaut exactement 1 et FAC2 vaut 1 (borne 2 incluse).
+    assert nmse(verite, prediction) == pytest.approx(1.0)
+    assert fac2(verite, prediction) == pytest.approx(1.0)
+
+
+@st.composite
+def _verites_et_ratios(draw):
+    """Génère une vérité positive et des ratios prédiction/vérité bornés.
+
+    Les ratios évitent une bande autour des bornes FAC2 (0,5 et 2) : une
+    homothétie commune ne fait alors franchir aucune borne par arrondi,
+    et FAC2 peut visiter 0 comme 1.
+    """
+    taille = draw(st.integers(min_value=1, max_value=20))
+    plage_ratios = st.one_of(st.floats(0.3, 0.45), st.floats(0.55, 1.9), st.floats(2.1, 3.0))
+    verite = draw(st.lists(st.floats(0.1, 10.0), min_size=taille, max_size=taille))
+    ratios = draw(st.lists(plage_ratios, min_size=taille, max_size=taille))
+    return verite, ratios
+
+
+@settings(deadline=None)
+@given(couple=_verites_et_ratios(), echelle=st.floats(0.5, 2.0))
+def test_fac2_nmse_invariants_par_homothetie_commune(couple, echelle) -> None:
+    """Mettre vérité et prédiction à la même échelle ne change ni FAC2 ni NMSE.
+
+    Référence : FAC2 est un ratio point à point et NMSE un rapport de carrés
+    (docs/39, section 3) : un changement d'unités commun ne doit rien
+    changer. Les ratios évitent une bande autour des bornes FAC2 pour que
+    la comparaison ne dépende pas d'un arrondi à la borne.
+    """
+    verite, ratios = couple
+    # Given — une vérité, sa prédiction à ratios bornés, une échelle commune.
+    prediction = [v * r for v, r in zip(verite, ratios, strict=True)]
+    # When — on évalue les métriques, puis après homothétie commune.
+    fac2_reference = fac2(verite, prediction)
+    nmse_reference = nmse(verite, prediction)
+    verite_echelle = [v * echelle for v in verite]
+    prediction_echelle = [p * echelle for p in prediction]
+    # Then — les deux métriques sont inchangées.
+    assert fac2(verite_echelle, prediction_echelle) == pytest.approx(fac2_reference)
+    assert nmse(verite_echelle, prediction_echelle) == pytest.approx(nmse_reference, rel=1e-9)
+
+
+@st.composite
+def _cas_s0(draw):
+    """Génère des CasS0 valides : arcs croissants, positions et physiques bornées.
+
+    Les arcs sont tirés comme un ensemble (unicité) puis triés (ordre
+    croissant strict du contrat) ; les plages bornées contiennent le coût
+    de la CI.
+    """
+    nombre_arcs = draw(st.integers(min_value=1, max_value=6))
+    arcs_tires = draw(st.sets(st.floats(100.0, 2000.0), min_size=nombre_arcs, max_size=nombre_arcs))
+    positions = draw(st.lists(st.floats(-100.0, 100.0), min_size=1, max_size=5))
+    return CasS0(
+        debit=draw(st.floats(0.1, 5.0)),
+        u=draw(st.floats(0.5, 10.0)),
+        classe=draw(st.sampled_from(tuple(ClasseStabilite))),
+        hauteur=draw(st.floats(0.0, 50.0)),
+        arcs=tuple(sorted(arcs_tires)),
+        positions_laterales=tuple(positions),
+        z_mesure=draw(st.floats(0.0, 20.0)),
+    )
+
+
+@settings(deadline=None)
+@given(cas=_cas_s0())
+def test_cas_s0_grille_croisee_et_verite_positive(cas) -> None:
+    """Tout cas S0 valide expose la grille croisée et une vérité strictement positive.
+
+    Référence : contrat CasSynthetique (docs/39, section 1) — grille non
+    vide, vérité strictement positive. Le cas n'est ici pas enregistré :
+    la propriété porte sur l'objet lui-même, l'enregistrement ne fait que
+    la vérifier une fois de plus.
+    """
+    # Given — un cas S0 valide généré (arcs croissants, positions libres).
+    # When — on construit la grille et la vérité du cas.
+    points = cas.points()
+    verite = cas.verite(points)
+    # Then — la grille est le produit arcs x positions et la vérité est positive.
+    assert len(points) == len(cas.arcs) * len(cas.positions_laterales)
+    assert all(p.z == cas.z_mesure for p in points)
+    assert np.all(verite > 0.0)
+
+
+@settings(deadline=None)
+@given(
+    nombre_points=st.integers(min_value=2, max_value=300),
+    graine=st.integers(min_value=0, max_value=10**9),
+)
+def test_partition_s0_couvrante_et_disjointe(nombre_points, graine) -> None:
+    """La partition S0 est couvrante et disjointe pour toute taille et graine.
+
+    Référence : invariants de PartitionS0 (docs/21, famille S0) :
+    calibration et évaluation sont disjointes et couvrent tous les
+    indices. Cas fixé voisin : tests/test_cas_synthetiques.py.
+    """
+    # Given — un jeu de n points et une graine quelconques.
+    # When — on construit la partition figée 70/30.
+    partition = construire_partition(nombre_points, graine)
+    # Then — la réunion couvre tous les indices, sans recouvrement.
+    reunion = partition.calibration + partition.evaluation
+    assert sorted(reunion) == list(range(nombre_points))
+    assert not set(partition.calibration) & set(partition.evaluation)
+    assert len(partition.calibration) == int(FRACTION_CALIBRATION * nombre_points)
+
+
+@settings(deadline=None)
+@given(a=st.floats(-1000.0, 1000.0), b=st.floats(-1000.0, 1000.0), vitesse=st.floats(-10.0, 10.0))
+def test_temps_premiere_arrivee_symetrique_par_inversion(a, b, vitesse) -> None:
+    """Inverser le trajet et la vitesse échange aval et amont sans changer le temps.
+
+    Référence : la dynamique constante dx/dt = v (docs/27, ligne T_arr 1D)
+    donne t(a, b, v) = t(b, a, -v), l'infini compris : les conventions
+    d'inaccessibilité se correspondent. Cas fixé voisin : les propriétés
+    analytiques de tests/test_metric.py (PR #70 et #98).
+    """
+    # Given — un trajet a -> b et la même dynamique inversée.
+    # When — on évalue les deux sens de parcours.
+    direct = temps_premiere_arrivee_1d(a, b, vitesse)
+    inverse = temps_premiere_arrivee_1d(b, a, -vitesse)
+    # Then — les deux temps coïncident (l'infini compris).
+    assert direct == pytest.approx(inverse)
+
+
+@settings(deadline=None)
+@given(a=st.floats(-1000.0, 1000.0), b=st.floats(-1000.0, 1000.0), vitesse=st.floats(0.01, 10.0))
+def test_temps_premiere_arrivee_exact_en_aval(a, b, vitesse) -> None:
+    """En vent algébrique positif : temps exact en aval, infini en amont, zéro à la source.
+
+    Référence : docs/27 (ligne T_arr 1D) et la convention d'inaccessibilité
+    du module metric (docstring). Hypothèse : vitesse strictement
+    positive ; le trajet est en aval ou en amont selon le signe du
+    déplacement.
+    """
+    # Given — un trajet et un vent algébrique strictement positifs.
+    deplacement = b - a
+    # When — on évalue le temps de première arrivée.
+    temps = temps_premiere_arrivee_1d(a, b, vitesse)
+    # Then — aval : distance sur vitesse ; amont : infini ; source : zéro.
+    if deplacement > 0.0:
+        assert temps == pytest.approx(deplacement / vitesse)
+    elif deplacement < 0.0:
+        assert math.isinf(temps)
+    else:
+        assert temps == 0.0
+
+
+@settings(deadline=None)
+@given(x=st.floats(1.0, 10000.0), classe=st.sampled_from(tuple(ClasseStabilite)))
+def test_sigma_strictement_positifs(x, classe) -> None:
+    """Les écarts-types de Briggs sont strictement positifs à toute distance utile.
+
+    Référence : les trois formes de docs/24 (linéaire, racine, rationnel)
+    multiplient la distance par des coefficients strictement positifs
+    (ClasseStabilite, source unique de vérité). Cas fixé voisin :
+    tests/test_stabilite.py et tests/test_similitude.py.
+    """
+    # Given — une distance sous le vent strictement positive, pour chaque classe.
+    # When — on évalue les deux écarts-types.
+    # Then — chacun est strictement positif.
+    assert float(sigma_y(x, classe)) > 0.0
+    assert float(sigma_z(x, classe)) > 0.0
+
+
+@settings(deadline=None)
+@given(
+    x1=st.floats(1.0, 5000.0),
+    avancee=st.floats(1.0, 5000.0),
+    classe=st.sampled_from(tuple(ClasseStabilite)),
+)
+def test_sigma_strictement_croissants(x1, avancee, classe) -> None:
+    """Le panache s'élargit : les écarts-types croissent strictement avec la distance.
+
+    Référence : les trois formes de docs/24 dérivent en des expressions
+    strictement positives (coefficients strictement positifs) ; l'avancée
+    d'au moins 1 m écarte les deux distances au-delà de l'arrondi. Cas
+    fixé voisin : tests/test_stabilite.py.
+    """
+    # Given — deux distances sous le vent séparées d'au moins 1 m.
+    x2 = x1 + avancee
+    # When — on évalue les écarts-types aux deux distances.
+    # Then — chacun croît strictement.
+    assert sigma_y(x1, classe) < sigma_y(x2, classe)
+    assert sigma_z(x1, classe) < sigma_z(x2, classe)
+
+
+@settings(deadline=None)
+@given(
+    temps=st.floats(0.0, 100.0),
+    centre_initial=st.floats(-50.0, 50.0),
+    vitesse=st.floats(-5.0, 5.0),
+    diffusivite=st.floats(0.0, 1.0),
+    sigma_initial=st.floats(0.1, 2.0),
+)
+def test_gaussienne_1d_pic_central_et_symetrie(
+    temps, centre_initial, vitesse, diffusivite, sigma_initial
+) -> None:
+    """La gaussienne 1D garde son pic au centre advecté et sa symétrie autour de lui.
+
+    Référence : solution exacte de advection_diffusion (docstring du
+    module) : centre = x0 + u·t et variance = sigma0² + 2·K·t ; le pic
+    vaut masse sur racine de (2·pi·variance). Cas fixé voisin :
+    tests/test_advection_diffusion.py.
+    """
+    # Given — les paramètres, le centre advecté et la variance attendue.
+    centre = centre_initial + vitesse * temps
+    variance = sigma_initial**2 + 2.0 * diffusivite * temps
+    abcisses = np.asarray([centre - 1.0, centre, centre + 1.0])
+    # When — on évalue la solution exacte aux trois points.
+    concentrations = gaussian_advection_diffusion(
+        abcisses,
+        temps,
+        mass=2.0,
+        initial_center=centre_initial,
+        velocity=vitesse,
+        diffusivity=diffusivite,
+        initial_sigma=sigma_initial,
+    )
+    # Then — le pic est au centre, symétrique, à la valeur attendue.
+    assert concentrations[1] > concentrations[0]
+    assert concentrations[0] == pytest.approx(concentrations[2], rel=1e-9)
+    assert concentrations[1] == pytest.approx(2.0 / math.sqrt(2.0 * math.pi * variance), rel=1e-9)
+
+
+@st.composite
+def _parametres_periodiques(draw):
+    """Génère (moyenne, amplitude) avec moyenne positive et amplitude dans [0, moyenne].
+
+    Le profil reste ainsi non négatif, condition d'admission de la solution
+    exacte (docstring du module periodic_transport).
+    """
+    moyenne = draw(st.floats(1.0, 10.0))
+    fraction = draw(st.floats(0.0, 1.0))
+    return moyenne, fraction * moyenne
+
+
+@settings(deadline=None)
+@given(
+    couple=_parametres_periodiques(),
+    temps=st.floats(0.0, 50.0),
+    longueur=st.floats(1.0, 100.0),
+    vitesse=st.floats(-5.0, 5.0),
+    diffusivite=st.floats(0.0, 1.0),
+)
+def test_sine_periodique_bornee_et_periodique(
+    couple, temps, longueur, vitesse, diffusivite
+) -> None:
+    """La solution sinusoïdale périodique reste dans son enveloppe et est périodique en espace.
+
+    Référence : moyenne + amplitude·exp(-K k² t)·sin(k (x - u t)), k = 2
+    pi / L (docstring du module periodic_transport) : l'enveloppe est
+    [moyenne - amplitude·amortissement, moyenne + amplitude·amortissement]
+    et la solution est L-périodique en espace. Les solveurs itératifs du
+    module restent exclus : leur stabilité numérique n'est pas une
+    propriété de la solution exacte.
+    """
+    moyenne, amplitude = couple
+    # Given — une grille couvrant un domaine périodique complet [0, L].
+    abcisses = np.linspace(0.0, longueur, 41)
+    # When — on évalue la solution exacte et son amortissement attendu.
+    concentrations = periodic_sine_solution(
+        abcisses,
+        temps,
+        length=longueur,
+        mean_concentration=moyenne,
+        amplitude=amplitude,
+        velocity=vitesse,
+        diffusivity=diffusivite,
+    )
+    nombre_d_onde = 2.0 * math.pi / longueur
+    amortissement = math.exp(-diffusivite * nombre_d_onde**2 * temps)
+    # Then — l'enveloppe tient et les extrémités du domaine coïncident.
+    assert np.all(concentrations >= moyenne - amplitude * amortissement - 1e-9)
+    assert np.all(concentrations <= moyenne + amplitude * amortissement + 1e-9)
+    assert concentrations[0] == pytest.approx(concentrations[-1], abs=1e-9)
