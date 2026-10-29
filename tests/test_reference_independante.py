@@ -11,7 +11,9 @@ import jdriftx.experiences.reference_independante as module_reference
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, CasS0
 from jdriftx.contrats import PanacheGaussien
 from jdriftx.experiences.reference_independante import (
+    DIFFUSION_BRIGGS,
     PARAMETRES_EDP_DEFAUT,
+    CoefficientsDiffusion,
     ComparaisonReference,
     ParametresEdp,
     PointComparaison,
@@ -308,3 +310,32 @@ def test_la_version_non_installee_est_supportee(
     manifeste = construire_manifeste(CAS_S0_DEFAUT, comparaison)
     # Then — la version de repli est explicite.
     assert manifeste.version_code == "non-installe"
+
+
+def test_le_modele_de_diffusion_est_injectable() -> None:
+    """Un modèle alternatif change la marche, pas l'entrée partagée."""
+    # Given — un cas réduit à deux arcs et un modèle transverse doublé (jouet).
+    cas = CasS0(
+        source=SourcePanache(debit=2.0, u=3.0, classe="C", hauteur=1.0),
+        arcs=(100.0, 200.0),
+        positions_laterales=(0.0,),
+        z_mesure=1.5,
+    )
+
+    class ModeleTransverseDouble:
+        """Modèle jouet : diffusion transverse doublée, verticale inchangée."""
+
+        def coefficients(self, classe: str, x: float) -> CoefficientsDiffusion:
+            base = DIFFUSION_BRIGGS.coefficients(classe, x)
+            return CoefficientsDiffusion(base.a_y * 2.0, base.d_y, base.b_z, base.d_z)
+
+    parametres = ParametresEdp(5.0, 4.0, 340.0, 240.0)
+    # When — la même géométrie est résolue avec le modèle doublé et Briggs.
+    double = resoudre_edp(cas, parametres, ModeleTransverseDouble())
+    reference = resoudre_edp(cas, parametres)
+    # Then — le pas longitudinal est réduit (Fourier transverse doublé).
+    assert double.pas_longitudinal < reference.pas_longitudinal
+    # Then — l'entrée partagée ne dépend pas du modèle de diffusion.
+    assert np.array_equal(double.tranches[0].champ, reference.tranches[0].champ)
+    # Then — la tranche du dernier arc diffère : le point d'extension est effectif.
+    assert not np.array_equal(double.tranches[-1].champ, reference.tranches[-1].champ)
