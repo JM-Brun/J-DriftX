@@ -205,6 +205,7 @@ def test_la_version_non_installee_est_supportee(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Le manifeste reste constructible quand le package n'est pas installé."""
+
     # Given — l'évaluation de la grille et un environnement non installé.
     def _introuvable(nom: str) -> str:
         raise module_puff.metadata.PackageNotFoundError(nom)
