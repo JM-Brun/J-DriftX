@@ -27,7 +27,7 @@ Cahier des charges scientifique du noyau : multi-niveaux avec entrée/sortie de 
 
 ## Pour aller plus loin
 
-Fiche détaillée : <code>docs/04-revues-papiers-sources.md</code>, section 4.
+Fiche source détaillée : [Brun & Mohammadi (2008), chapitre Springer](../../docs/bibliographie/sources/brun-mohammadi-2008-chapitre.md). L'index général est [docs/04](../../docs/04-revues-papiers-sources.md).
 
 
 ## Complément d'analyse — sens de la hiérarchie multi-niveaux
