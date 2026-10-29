@@ -76,3 +76,20 @@ def test_parametres_normalisent_la_classe_en_enum() -> None:
     parametres = ParametresPanache(debit=1.0, u=2.0, classe="D")
 
     assert parametres.classe is ClasseStabilite.D
+
+
+@pytest.mark.parametrize(
+    ("kwargs", "message"),
+    [
+        ({"t": 0.0, "masse": 1.0, "u": 2.0, "classe": "D"}, "temps"),
+        ({"t": 1.0, "masse": -1.0, "u": 2.0, "classe": "D"}, "masse"),
+        ({"t": 1.0, "masse": 1.0, "u": 0.0, "classe": "D"}, "vitesse"),
+        ({"t": 1.0, "masse": 1.0, "u": 2.0, "classe": "Z"}, "Classe de stabilite"),
+    ],
+)
+def test_parametres_puff_valident_les_invariants(
+    kwargs: dict[str, object], message: str
+) -> None:
+    """Les paramètres du puff valident temps, masse, vent et classe."""
+    with pytest.raises(ValueError, match=message):
+        ParametresPuff(**kwargs)  # type: ignore[arg-type]
