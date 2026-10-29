@@ -1,6 +1,6 @@
 # Protocole d'audit des corpus de validation G0
 
-> **Statut : protocole proposé, à exécuter sous l'issue #13.** Audit documentaire uniquement : aucun entraînement de modèle, aucun benchmark avant la conclusion. Objectif : trancher le critère **(e)** de la [fiche G0](13-fiche-g0-cadrage-besoin.md) — données de validation indépendantes.
+> **Statut : protocole historique, à ne pas utiliser comme backlog actif.** L'issue #13 est close comme remplacée ; le suivi opérationnel est réparti entre [#204 (DIFLU)](https://github.com/JM-Brun/J-DriftX/issues/204), [#205 (ETEX/DATEM)](https://github.com/JM-Brun/J-DriftX/issues/205), [#206 (ERIES)](https://github.com/JM-Brun/J-DriftX/issues/206) et [#207 (priorisation et stratégie)](https://github.com/JM-Brun/J-DriftX/issues/207). Ce document conserve les critères d'audit de référence : aucun benchmark avant conclusion sur les fichiers, les licences et l'indépendance des essais.
 
 ## 1. Règles communes
 
