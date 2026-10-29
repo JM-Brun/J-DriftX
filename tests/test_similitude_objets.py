@@ -95,10 +95,10 @@ def test_parametres_puff_valident_les_invariants(
     x=hypothesis.strategies.floats(
         min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
     ),
-    y=st.floats(
+    y=hypothesis.strategies.floats(
         min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
     ),
-    z=st.floats(
+    z=hypothesis.strategies.floats(
         min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False
     ),
 )
@@ -111,27 +111,27 @@ def test_point3d_accepte_toutes_coordonnees_finies_dans_le_domaine(
     assert (point.x, point.y, point.z) == (x, y, z)
 
 
-@given(
-    x=st.floats(
+@hypothesis.given(
+    x=hypothesis.strategies.floats(
         min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
     ),
-    y=st.floats(
+    y=hypothesis.strategies.floats(
         min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
     ),
-    z=st.floats(
+    z=hypothesis.strategies.floats(
         min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False
     ),
-    t=st.floats(
+    t=hypothesis.strategies.floats(
         min_value=1.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
     ),
-    masse=st.floats(
+    masse=hypothesis.strategies.floats(
         min_value=0.0, max_value=100.0, allow_nan=False, allow_infinity=False
     ),
-    u=st.floats(
+    u=hypothesis.strategies.floats(
         min_value=0.1, max_value=20.0, allow_nan=False, allow_infinity=False
     ),
     classe=hypothesis.strategies.sampled_from(list(ClasseStabilite)),
-    x0=st.floats(
+    x0=hypothesis.strategies.floats(
         min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False
     ),
 )
@@ -165,20 +165,20 @@ def test_puff_objet_equivaut_au_noyau_pour_entrees_valides(
     assert obtenu == pytest.approx(float(attendu), rel=1e-12, abs=0.0)
 
 
-@given(
-    t=st.floats(
+@hypothesis.given(
+    t=hypothesis.strategies.floats(
         min_value=1.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
     ),
-    u=st.floats(
+    u=hypothesis.strategies.floats(
         min_value=0.1, max_value=20.0, allow_nan=False, allow_infinity=False
     ),
-    masse=st.floats(
+    masse=hypothesis.strategies.floats(
         min_value=0.01, max_value=100.0, allow_nan=False, allow_infinity=False
     ),
-    facteur=st.floats(
+    facteur=hypothesis.strategies.floats(
         min_value=0.1, max_value=10.0, allow_nan=False, allow_infinity=False
     ),
-    classe=st.sampled_from(list(ClasseStabilite)),
+    classe=hypothesis.strategies.sampled_from(list(ClasseStabilite)),
 )
 def test_puff_est_lineaire_en_masse(
     t: float, u: float, masse: float, facteur: float, classe: ClasseStabilite
