@@ -1,6 +1,6 @@
 # Références — J-DriftX
 
-Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX, consulter la [bibliographie annotée](bibliographie-annotee-jdriftx.md). Cette page reste la liste bibliographique générale ; les fiches annotées expliquent les relations et les limites de preuve.
+Cette page est la **liste bibliographique générale** du projet, organisée par thème ; elle n'est ni le registre de statut des sources ni la revue détaillée de chaque publication. Pour le statut d'accès et le contenu effectivement consulté, partir de l'[index des fiches source par source](04-revues-papiers-sources.md). Pour les liens entre littérature, hypothèses et décisions J-DriftX, consulter la [bibliographie annotée](bibliographie-annotee-jdriftx.md). Les synthèses thématiques détaillées sont dans [`bibliographie/`](bibliographie/).
 
 ## Corpus historique (Drift-X, 2006–2009)
 
