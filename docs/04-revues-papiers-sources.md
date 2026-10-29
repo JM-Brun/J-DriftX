@@ -16,7 +16,7 @@ Ce fichier est l'**index canonique des fiches de lecture source par source** ; c
 
 ## Complément d'analyse — deux sens distincts de « multi-niveaux »
 
-Ce passage a été déplacé dans la [fiche source de la plateforme Drift-X 2009](bibliographie/sources/bozon-sinfort-mohammadi-2009-driftx.md#complment-danalyse--deux-sens-distincts-de-multi-niveaux). Ce titre est conservé ici comme point d'entrée pour les liens historiques qui pointaient vers l'ancien document monolithique.
+Ce passage a été déplacé dans la [fiche source de la plateforme Drift-X 2009](bibliographie/sources/bozon-sinfort-mohammadi-2009-driftx.md#complement-danalyse--deux-sens-distincts-de-multi-niveaux). Ce titre est conservé ici comme point d'entrée pour les liens historiques qui pointaient vers l'ancien document monolithique.
 
 ## Synthèse transversale
 
