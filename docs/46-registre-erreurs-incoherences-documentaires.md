@@ -4,7 +4,7 @@
 
 **Règle de conservation :** ne jamais corriger silencieusement une transcription historique. Conserver la forme publiée ou manuscrite, identifier la version exacte, puis documenter séparément l'analyse, la correction proposée et la reconstruction retenue pour J-DriftX.
 
-**Suivi :** [issue #233 — registre central](https://github.com/JM-Brun/J-DriftX/issues/233). La [matrice de l'issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) suit les revendications et leur vérification ; ce registre suit les problèmes documentaires, leurs preuves, impacts et résolutions.
+**Suivi :** [issue #233 — registre central](https://github.com/JM-Brun/J-DriftX/issues/233). La [matrice de l'issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) suit les revendications et leur vérification ; ce registre suit les problèmes documentaires, leurs preuves, impacts et résolutions. Elle est opérationnalisée par la [matrice des revendications historiques](49-matrice-revendications-baseline.md), qui suit les statuts de définition par revendication.
 
 ## 1. Statuts et niveaux de preuve
 
