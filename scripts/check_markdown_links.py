@@ -38,9 +38,7 @@ def _slug_heading(heading: str) -> str:
     heading = re.sub(r"\x60([^\x60]*)\x60", r"\1", heading)
     heading = re.sub(r"<[^>]+>", "", heading)
     heading = "".join(
-        char
-        for char in unicodedata.normalize("NFKD", heading)
-        if not unicodedata.combining(char)
+        char for char in unicodedata.normalize("NFKD", heading) if not unicodedata.combining(char)
     )
     heading = heading.replace("&", "-")
     # GitHub anchors retain a double separator around an em dash while
@@ -74,9 +72,7 @@ def _target_path(raw_target: str, source: Path, root: Path) -> tuple[Path | None
     if not path_text:
         return source, unquote(parsed.fragment)
     target = (
-        root / path_text.lstrip("/")
-        if path_text.startswith("/")
-        else source.parent / path_text
+        root / path_text.lstrip("/") if path_text.startswith("/") else source.parent / path_text
     )
     try:
         target = target.resolve()
@@ -104,16 +100,10 @@ def check_markdown_links(root: Path, markdown_files: list[Path]) -> list[str]:
                     f"{source.relative_to(root)}: local target not found: {raw_target}"
                 )
                 continue
-            if (
-                fragment
-                and target.is_file()
-                and target.suffix.lower() in {".md", ".markdown"}
-            ):
+            if fragment and target.is_file() and target.suffix.lower() in {".md", ".markdown"}:
                 if target not in anchors_cache:
                     try:
-                        anchors_cache[target] = _heading_anchors(
-                            target.read_text(encoding="utf-8")
-                        )
+                        anchors_cache[target] = _heading_anchors(target.read_text(encoding="utf-8"))
                     except (OSError, UnicodeDecodeError):
                         diagnostics.append(
                             f"{source.relative_to(root)}: cannot read anchor target: {raw_target}"
