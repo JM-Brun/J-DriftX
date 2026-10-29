@@ -22,6 +22,7 @@ from jdriftx.experiences import (
 )
 from jdriftx.metric import pseudo_distance_uniforme, temps_transport
 from jdriftx.similitude import concentration_panache, concentration_puff, sigma_y, sigma_z
+from jdriftx.source import SourcePanache
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
 __version__ = "0.1.0"
@@ -39,6 +40,7 @@ __all__ = [
     "ResultatReconstruction",
     "ScenarioReconstruction",
     "ScenarioUniforme",
+    "SourcePanache",
     "SuperpositionChamps",
     "__version__",
     "concentration_panache",

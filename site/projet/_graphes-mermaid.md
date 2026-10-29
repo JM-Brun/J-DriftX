@@ -158,6 +158,7 @@ graph TD
   subgraph sol["Socle gaussien"]
     similitude["similitude.py"]::module
     stabilite["stabilite.py"]::module
+    source["source.py"]::module
     c_panache["Panache gaussien (similitude)"]::concept
     c_stabilite["Classes de Pasquill et lois de Briggs"]::concept
   end
@@ -297,6 +298,9 @@ graph TD
   t_benchmarks -->|"couvre"| benchmarks_metriques
   benchmarks_reference -->|"utilise"| benchmarks_cas
   benchmarks_reference -->|"utilise"| benchmarks_metriques
+  source -->|"utilise"| stabilite
+  benchmarks_cas -->|"utilise"| source
+  experiences_cas_synthetiques -->|"utilise"| source
   classDef niveau fill:#ddd0f0,stroke:#495057,color:#212529;
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
   classDef propriete fill:#ffd9b3,stroke:#495057,color:#212529;
@@ -319,6 +323,7 @@ graph TD
 | experiences/identification_source.py | Module de code | [identification_source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/identification_source.py) |
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
+| source.py | Module de code | [source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/source.py) |
 | constraints.py | Module de code | [constraints.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/constraints.py) |
 | periodic_transport.py | Module de code | [periodic_transport.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/periodic_transport.py) |
 | advection_diffusion.py | Module de code | [advection_diffusion.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/advection_diffusion.py) |
@@ -589,3 +594,4 @@ graph LR
 | [Bonicelli et al. 2012 — dérive des pesticides](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Defra 2011 — PS2024 (exposition des riverains)](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Garbaczewski et al. 1997 — équation de Burgers](../references.qmd) | [Équation de Burgers : lien avec J-DriftX](../theorie/burgers-et-jdriftx.qmd) |
+

@@ -20,6 +20,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from jdriftx.similitude import concentration_panache
+from jdriftx.source import SourcePanache
 
 VERSION_GENERATEUR = "s0-1"
 
@@ -37,10 +38,8 @@ class CasSynthetiqueS0:
 
     Attributes:
         identifiant: identifiant stable du cas, repris dans le manifeste.
-        classe: classe de stabilité de Pasquill (A à F).
-        debit: émission massique (kg s^-1), strictement positive.
-        u: vitesse du vent (m s^-1), strictement positive.
-        hauteur: hauteur effective de la source (m), positive ou nulle.
+        source: valeur source du panache (débit, vent, classe, hauteur),
+            dont les invariants sont portés par SourcePanache (docs/41).
         altitude: altitude du plan de mesure (m).
         graine: graine du générateur, figée par cas.
         nombre_points: nombre de points du jeu, au moins 2.
@@ -50,10 +49,7 @@ class CasSynthetiqueS0:
     """
 
     identifiant: str
-    classe: str
-    debit: float
-    u: float
-    hauteur: float
+    source: SourcePanache
     altitude: float
     graine: int
     nombre_points: int
@@ -62,18 +58,15 @@ class CasSynthetiqueS0:
     y_max: float
 
     def __post_init__(self) -> None:
-        """Valide les invariants du cas à la construction."""
+        """Valide les invariants du cas à la construction.
+
+        Les invariants de la source (débit, vent, classe, hauteur) sont
+        portés par SourcePanache : la validation de la classe de stabilité,
+        absente de la configuration plate historique, est désormais
+        garantie à la construction (docs/41).
+        """
         if not self.identifiant:
             msg = "L'identifiant du cas doit être non vide."
-            raise ValueError(msg)
-        if self.debit <= 0.0:
-            msg = "Le débit doit être strictement positif."
-            raise ValueError(msg)
-        if self.u <= 0.0:
-            msg = "La vitesse du vent doit être strictement positive."
-            raise ValueError(msg)
-        if self.hauteur < 0.0:
-            msg = "La hauteur de la source doit être positive ou nulle."
             raise ValueError(msg)
         if self.nombre_points < 2:
             msg = "Le cas doit contenir au moins 2 points."
@@ -120,10 +113,10 @@ class DatasetS0:
             "version_generateur": VERSION_GENERATEUR,
             "clause": CLAUSE_NON_VALIDATION,
             "cas": {
-                "classe": self.cas.classe,
-                "debit": self.cas.debit,
-                "u": self.cas.u,
-                "hauteur": self.cas.hauteur,
+                "classe": self.cas.source.classe,
+                "debit": self.cas.source.debit,
+                "u": self.cas.source.u,
+                "hauteur": self.cas.source.hauteur,
                 "altitude": self.cas.altitude,
                 "graine": self.cas.graine,
                 "nombre_points": self.cas.nombre_points,
@@ -168,10 +161,10 @@ def generer_dataset_s0(cas: CasSynthetiqueS0) -> DatasetS0:
         points_x,
         points_y,
         cas.altitude,
-        cas.debit,
-        cas.u,
-        cas.classe,
-        cas.hauteur,
+        cas.source.debit,
+        cas.source.u,
+        cas.source.classe,
+        cas.source.hauteur,
     )
     partition = construire_partition(cas.nombre_points, cas.graine)
     return DatasetS0(
@@ -185,10 +178,7 @@ def generer_dataset_s0(cas: CasSynthetiqueS0) -> DatasetS0:
 
 CAS_S0_DEFAUT = CasSynthetiqueS0(
     identifiant="jdriftx-s0-panache-d-001",
-    classe="D",
-    debit=1.0,
-    u=3.0,
-    hauteur=10.0,
+    source=SourcePanache(classe="D", debit=1.0, u=3.0, hauteur=10.0),
     altitude=2.0,
     graine=20261027,
     nombre_points=200,

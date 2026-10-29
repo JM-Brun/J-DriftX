@@ -442,6 +442,12 @@ libelle = "stabilite.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py"
 
 [[noeuds]]
+id = "source"
+type = "module"
+libelle = "source.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/source.py"
+
+[[noeuds]]
 id = "constraints"
 type = "module"
 libelle = "constraints.py"
@@ -1733,6 +1739,23 @@ de = "benchmarks/reference"
 vers = "benchmarks/metriques"
 relation = "utilise"
 
+# ---------- Arêtes : source du panache ----------
+
+[[aretes]]
+de = "source"
+vers = "stabilite"
+relation = "utilise"
+
+[[aretes]]
+de = "benchmarks/cas"
+vers = "source"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/cas_synthetiques"
+vers = "source"
+relation = "utilise"
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1778,7 +1801,7 @@ noeuds = [
   "experiences/superposition_sources", "experiences/relief",
   "experiences/modele_reduit_edp",
   "experiences/identification_source",
-  "similitude", "stabilite",
+  "similitude", "stabilite", "source",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
   "figures/figure_02", "figures/figure_03", "figures/figure_04", "figures/figure_05", "figures/figure_06",
@@ -1829,7 +1852,7 @@ noeuds = [
   [[graphes.groupes]]
   id = "sol"
   titre = "Socle gaussien"
-  noeuds = ["similitude", "stabilite", "c-panache", "c-stabilite"]
+  noeuds = ["similitude", "stabilite", "source", "c-panache", "c-stabilite"]
 
   [[graphes.groupes]]
   id = "rfs"
@@ -1944,3 +1967,4 @@ noeuds = [
   id = "cible"
   titre = "Niveaux visés"
   noeuds = ["n5", "n6"]
+

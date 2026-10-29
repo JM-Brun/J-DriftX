@@ -1,7 +1,7 @@
 """Tests de la famille de cas synthétiques S0 (docs/21)."""
 
 import json
-from dataclasses import FrozenInstanceError
+from dataclasses import FrozenInstanceError, replace
 
 import numpy as np
 import pytest
@@ -16,23 +16,21 @@ from jdriftx.experiences.cas_synthetiques import (
     CLAUSE_NON_VALIDATION,
     VERSION_GENERATEUR,
 )
+from jdriftx.source import SourcePanache
 
 
-def _configuration_valide() -> dict[str, object]:
-    """Retourne une configuration de cas S0 valide, à modifier dans les rejets."""
-    return {
-        "identifiant": "jdriftx-s0-test",
-        "classe": "D",
-        "debit": 1.0,
-        "u": 3.0,
-        "hauteur": 10.0,
-        "altitude": 2.0,
-        "graine": 42,
-        "nombre_points": 20,
-        "x_min": 50.0,
-        "x_max": 5000.0,
-        "y_max": 200.0,
-    }
+def _cas_valide() -> CasSynthetiqueS0:
+    """Retourne un cas S0 valide, à modifier dans les rejets."""
+    return CasSynthetiqueS0(
+        identifiant="jdriftx-s0-test",
+        source=SourcePanache(classe="D", debit=1.0, u=3.0, hauteur=10.0),
+        altitude=2.0,
+        graine=42,
+        nombre_points=20,
+        x_min=50.0,
+        x_max=5000.0,
+        y_max=200.0,
+    )
 
 
 def test_generation_deterministe() -> None:
@@ -85,10 +83,14 @@ def test_manifeste_exploitable_en_json() -> None:
     jeu = generer_dataset_s0(CAS_S0_DEFAUT)
     # When — on exporte le manifeste.
     manifeste = jeu.vers_dict()
-    # Then — identifiant, version et clause sont présents et sérialisables.
+    # Then — identifiant, version, clause et source sont présents et sérialisables.
     assert manifeste["identifiant"] == CAS_S0_DEFAUT.identifiant
     assert manifeste["version_generateur"] == VERSION_GENERATEUR
     assert manifeste["clause"] == CLAUSE_NON_VALIDATION
+    assert manifeste["cas"]["classe"] == CAS_S0_DEFAUT.source.classe
+    assert manifeste["cas"]["debit"] == CAS_S0_DEFAUT.source.debit
+    assert manifeste["cas"]["u"] == CAS_S0_DEFAUT.source.u
+    assert manifeste["cas"]["hauteur"] == CAS_S0_DEFAUT.source.hauteur
     json.dumps(manifeste)
 
 
@@ -97,26 +99,46 @@ def test_cas_immuable() -> None:
     # Given — le cas par défaut.
     # When / Then — toute mutation est refusée (dataclass figée).
     with pytest.raises(FrozenInstanceError):
-        CAS_S0_DEFAUT.debit = 2.0  # type: ignore[misc]
+        CAS_S0_DEFAUT.graine = 43  # type: ignore[misc]
 
 
 @pytest.mark.parametrize(
-    ("modifications", "message_attendu"),
+    ("champ", "valeur", "message_attendu"),
     [
-        ({"identifiant": ""}, "non vide"),
-        ({"debit": 0.0}, "débit"),
-        ({"u": 0.0}, "vent"),
-        ({"hauteur": -1.0}, "hauteur"),
-        ({"nombre_points": 1}, "2 points"),
-        ({"x_min": 0.0}, "x_min"),
-        ({"y_max": 0.0}, "y_max"),
+        ("identifiant", "", "non vide"),
+        ("nombre_points", 1, "2 points"),
+        ("x_min", 0.0, "x_min"),
+        ("y_max", 0.0, "y_max"),
     ],
 )
-def test_rejets_de_configurations_invalides(modifications, message_attendu) -> None:
-    """Une configuration invalide est rejetée à la construction du cas."""
-    # Given — une configuration de référence valide.
-    parametres = _configuration_valide()
-    # When — un paramètre est rendu invalide.
+def test_refuse_configurations_de_cas_invalides(champ, valeur, message_attendu) -> None:
+    """Un paramètre propre au cas invalide est refusé à la construction."""
+    # Given — un cas de référence valide.
+    cas = _cas_valide()
+    # When — un paramètre du cas est rendu invalide.
     # Then — la construction est refusée avec le message correspondant.
     with pytest.raises(ValueError, match=message_attendu):
-        CasSynthetiqueS0(**{**parametres, **modifications})
+        replace(cas, **{champ: valeur})
+
+
+@pytest.mark.parametrize(
+    ("champ", "valeur", "message_attendu"),
+    [
+        ("debit", 0.0, "debit"),
+        ("u", 0.0, "vent"),
+        ("hauteur", -1.0, "hauteur"),
+        ("classe", "Z", "Z"),
+    ],
+)
+def test_refuse_sources_invalides(champ, valeur, message_attendu) -> None:
+    """Une source invalide est refusée à la construction du cas (docs/41).
+
+    Le partage de la valeur source valide désormais la classe de stabilité
+    à la construction : l'écart documenté en docs/41 est comblé.
+    """
+    # Given — un cas de référence valide.
+    cas = _cas_valide()
+    # When — un champ de la source est rendu invalide.
+    # Then — la construction est refusée avec le message correspondant.
+    with pytest.raises(ValueError, match=message_attendu):
+        replace(cas, source=replace(cas.source, **{champ: valeur}))
