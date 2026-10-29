@@ -4,6 +4,8 @@
 
 > **Guide de lecture.** Une *définition* fixe l'objet étudié; une *hypothèse* précise quand il est défini; une *proposition démontrée* découle de ces éléments; une *illustration* aide à l'interpréter sans constituer une validation physique.
 
+**Périmètre par rapport aux notes canoniques actuelles :** cette revue conserve la lecture critique des sources historiques, leurs formulations et les questions qui en découlent. Pour les définitions formelles et les propriétés de $T_{\\mathrm{arr}}$ et $T_{\\mathrm{proj}}$, utiliser l'[investigation G0-S](19-investigation-g0s-temps-de-parcours.md) ; pour la dérivation conditionnelle de conservation, utiliser [docs/32](32-conservation-coordonnees-travel-time.md). Les recouvrements historiques sont conservés pour la traçabilité, mais ces deux documents sont les références actuelles pour leurs sujets respectifs.
+
 ## 1. Question examinée
 
 La page [Métrique travel-time](../site/theorie/metrique-travel-time.qmd) définit
