@@ -5,12 +5,12 @@ Cette procédure automatise le travail de récupération et les vérifications q
 ## Prérequis
 
 - Python 3.12 ou supérieur ;
-- accès HTTPS à Recherche Data Gouv ;
+- accès HTTPS à Recherche Data Gouv pour récupérer les originaux ;
 - clone du dépôt J-DriftX.
 
-Aucune donnée brute n’est nécessaire dans Git. Les fichiers récupérés et le rapport sont écrits dans un répertoire local ignoré ou choisi par l’utilisateur.
+Le téléchargement et les tests hors ligne sont deux opérations distinctes. Les données téléchargées sont conservées localement dans un répertoire ignoré par Git.
 
-## Exécuter
+## Télécharger et auditer
 
 Depuis la racine du dépôt :
 
@@ -26,7 +26,21 @@ uv run python scripts/audit_diflu.py --output-dir /tmp/diflu-audit --timeout 90
 
 Le script résout les fichiers par leur nom dans le listing Dataverse, récupère les métadonnées détaillées, demande explicitement les octets originaux avec `?format=original`, vérifie la taille et le MD5 publiés quand disponibles, calcule un SHA-256, puis écrit `audit-report.json`.
 
-Les trois fichiers de départ sont le tableau des prélèvements, le dictionnaire des médias et le dictionnaire des variables. Le rapport conserve les noms et identifiants Dataverse ainsi que les noms originaux, les URL, les tailles et les contrôles d’intégrité. Il n’inclut pas les octets des données.
+Les trois fichiers de départ sont le tableau des prélèvements, le dictionnaire des médias et le dictionnaire des variables. Le rapport conserve les noms et identifiants Dataverse ainsi que les noms originaux, les URL, les tailles et les contrôles d’intégrité.
+
+## Préparer un corpus de référence versionnable
+
+Les trois fichiers compacts peuvent être versionnés afin que les audits sémantiques et les tests hors ligne ne dépendent pas de la disponibilité du réseau. Le dossier `/data/raw/` reste ignoré : aucun téléchargement local ne doit y être ajouté directement.
+
+Après un audit réussi, exécuter :
+
+```bash
+uv run python scripts/vendor_diflu_reference.py
+```
+
+Le script lit le rapport de l’audit et vérifie à nouveau les octets sources contre la taille, le MD5 et le SHA-256 enregistrés avant de les copier vers `tests/fixtures/diflu/source/`. Il refuse de continuer si les sources ont changé depuis l’audit, si les contrôles officiels de taille/MD5 ne sont pas confirmés, ou si un fichier de destination existant contient d’autres octets. Les fichiers ne sont jamais transformés. Un `manifest.json` déterministe documente provenance, URL, identifiants Dataverse, taille, MD5 et SHA-256.
+
+Les fichiers copiés et le manifeste doivent être inspectés puis ajoutés à Git dans une PR. Le dépôt ne doit pas inclure le ZIP complet, les séries temporelles météo/micrométéo, ni les médias volumineux par défaut. Voir aussi [le README du corpus de référence](../tests/fixtures/diflu/source/README.md).
 
 ## Contrôles inclus
 
@@ -41,10 +55,10 @@ Le CSV original et l’export TSV transformé de Dataverse ne sont pas interchan
 ## Tests hors ligne
 
 ```bash
-uv run pytest tests/test_audit_diflu.py
+uv run pytest tests/test_audit_diflu.py tests/test_vendor_diflu_reference.py
 ```
 
-Ces tests simulent les cas de taille/MD5 conformes et non conformes ainsi que la règle sémantique EA/VEGA. Ils n’appellent pas le réseau. L’exécution complète du script constitue, elle, une vérification d’intégration dépendante de la disponibilité de la source.
+Ces tests simulent les cas de taille/MD5 conformes et non conformes, la règle sémantique EA/VEGA et les garanties du processus de staging. Ils n’appellent pas le réseau. L’exécution complète des scripts constitue, elle, une vérification d’intégration dépendante de la disponibilité de la source.
 
 ## Limites
 
