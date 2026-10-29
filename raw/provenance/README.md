@@ -26,11 +26,11 @@
 
 Le rapport InVS 2009 dispose désormais d'une lecture ciblée versionnée, mais pas encore d'une extraction intégrale reproductible. Pour les extractions disponibles, les en-têtes indiquent la source, le périmètre et la méthode connue ; les formules, figures et équations doivent être contrôlées sur les originaux.
 
-## Version JESA 2010 — notice identifiée, PDF final non obtenu
+## Version JESA 2010 — source obtenue, PDF non versionné dans raw
 
 La référence publiée est confirmée par la [notice AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/6798c27ed6a63682f045645d) : Bozon, Sinfort & Mohammadi, *A GIS-based atmospheric dispersion model*, *Journal Européen des Systèmes Automatisés*, 44(4), 445–461, DOI [10.3166/jesa.44.445-461](https://doi.org/10.3166/jesa.44.445-461). La notice HAL [hal-02594312](https://hal.inrae.fr/hal-02594312) est distincte du manuscrit auteur de communication [hal-00468863](https://hal.science/hal-00468863), dont le PDF porte l'en-tête STIC & Environnement 2009.
 
-La notice HAL [hal-02594312](https://hal.inrae.fr/hal-02594312), la notice AGRIS/INRAE et le DOI sont recensés comme références bibliographiques de cette version. La version éditée finale JESA **n'est pas encore présente dans `raw/` et n'a pas été authentifiée** au 29 octobre 2026. Une piste d'accès institutionnel via [ISTEX/Mir@bel](https://reseau-mirabel.info/revue/4637/Journal-europeen-des-systemes-automatises-JESA) reste à essayer avec un accès autorisé. Ne pas traiter le manuscrit HAL 2009 comme la version finale JESA et ne pas prétendre à une comparaison ligne à ligne avant récupération du bon fichier.
+La notice HAL [hal-02594312](https://hal.inrae.fr/hal-02594312), la notice AGRIS/INRAE et le DOI identifient la version JESA. Selon la clarification du propriétaire du projet, le PDF JESA a déjà été obtenu par une voie appropriée ; il n'est toutefois pas versionné dans `raw/`. Ne pas relancer une recherche générique ni l'acquisition. La tâche restante consiste à exploiter le fichier déjà obtenu, consigner son identité/version et comparer son contenu au manuscrit auteur HAL 2009. Ne pas traiter ce manuscrit comme le PDF JESA.
 
 ## Pistes de récupération identifiées — binaires pas encore vérifiés
 
@@ -38,7 +38,7 @@ Les liens ci-dessous sont des pistes documentaires, pas la preuve que le fichier
 
 | Fichier attendu | Notice / lien de récupération | État au 29 octobre 2026 |
 |---|---|---|
-| `../2010-bozon-sinfort-mohammadi-jesa.pdf` | [Notice AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/6798c27ed6a63682f045645d) ; [notice HAL hal-02594312](https://hal.inrae.fr/hal-02594312) ; [DOI éditeur](https://doi.org/10.3166/jesa.44.445-461) | Métadonnées bibliographiques retrouvées, mais version finale JESA non obtenue ni authentifiée dans ce contrôle. Le manuscrit auteur HAL [hal-00468863](https://hal.science/hal-00468863) est une source distincte (STIC & Environnement 2009) et ne doit pas être renommé ou présenté comme le PDF JESA 2010. L'URL directe du fichier final n'est pas confirmée ici. |
+| `../2010-bozon-sinfort-mohammadi-jesa.pdf` (fichier attendu, pas encore versionné dans `raw/`) | [Notice AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/6798c27ed6a63682f045645d) ; [notice HAL hal-02594312](https://hal.inrae.fr/hal-02594312) ; [DOI éditeur](https://doi.org/10.3166/jesa.44.445-461) | PDF déjà obtenu par une voie appropriée selon le propriétaire du projet, mais pas présent dans `raw/`. Réutiliser le fichier déjà obtenu pour vérifier version/pagination et comparer le contenu ; ne pas recommencer l'acquisition. Le manuscrit HAL [hal-00468863](https://hal.science/hal-00468863) est distinct et ne doit pas être renommé comme version JESA. |
 
 Lorsqu'un binaire est ajouté, vérifier son identité et sa provenance, calculer une empreinte cryptographique locale si l'outillage du dépôt le permet, et compléter le sidecar associé avec le nom original, l'URL réellement utilisée, la date d'obtention, la pagination, les fichiers dérivés et les conditions de redistribution. Ne pas inventer ces champs a posteriori.
 
