@@ -4,8 +4,6 @@
 
 > Le registre d'entrée est [`docs/15-audit-adversarial-hallucinations.md`](../15-audit-adversarial-hallucinations.md). Les constats bibliographiques sont dans [l'audit des références](15a-audit-bibliographique.md), et les constats de portée scientifique dans [l'audit des affirmations](15b-audit-portee-scientifique.md).
 
-## Registre des constats
-
 
 ## Échelle de confiance à utiliser dans les futures fiches
 
