@@ -79,3 +79,21 @@ def test_directory_links_and_accented_heading_anchors(tmp_path: Path) -> None:
     )
 
     assert check_markdown_links(tmp_path, [source]) == []
+
+def test_em_dash_and_quotes_match_github_heading_slug(tmp_path: Path) -> None:
+    """Em dashes remain separators; typographic quotes do not add separators."""
+    docs = tmp_path / "docs"
+    docs.mkdir()
+    target = docs / "target.md"
+    target.write_text(
+        "### Complément d'analyse — deux sens distincts de « multi-niveaux »\n",
+        encoding="utf-8",
+    )
+    source = docs / "source.md"
+    source.write_text(
+        "[heading](target.md#complement-danalyse--deux-sens-distincts-de-multi-niveaux)\n",
+        encoding="utf-8",
+    )
+
+    assert check_markdown_links(tmp_path, [source]) == []
+
