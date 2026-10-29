@@ -1,4 +1,4 @@
-"J-DriftX : reprise de recherche sur la dispersion atmosphérique à complexité réduite.
+"""J-DriftX : reprise de recherche sur la dispersion atmosphérique à complexité réduite.
 
 Le projet étudie les formulations historiques de Drift-X (J.-M. Brun et
 B. Mohammadi, 2006-2009). La primitive actuelle de temps de parcours calcule
