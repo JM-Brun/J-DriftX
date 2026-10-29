@@ -268,9 +268,9 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
 
     experiment_counts = {}
     if "experiment_id" in fieldnames:
-        experiment_counts = dict(sorted(
-            Counter(_value(row, "experiment_id") for row in rows).items()
-        ))
+        experiment_counts = dict(
+            sorted(Counter(_value(row, "experiment_id") for row in rows).items())
+        )
     flag_counts, flag_violations = _audit_detection_flags(rows, fieldnames)
     return {
         "file": path.name,

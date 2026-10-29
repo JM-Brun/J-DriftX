@@ -67,7 +67,9 @@ def test_audit_reports_invalid_vega_bag_id(tmp_path: Path) -> None:
 
 
 
-def test_audit_reports_descriptive_counts_and_detection_flag_consistency(tmp_path: Path) -> None:
+def test_audit_reports_descriptive_counts_and_detection_flag_consistency(
+    tmp_path: Path,
+) -> None:
     path = tmp_path / "sampling.csv"
     path.write_text(
         "experiment_id,sampling_type,sampling_bag_id,sampling_id,sampling_start_time,"
