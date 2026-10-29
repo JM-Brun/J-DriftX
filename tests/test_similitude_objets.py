@@ -2,8 +2,8 @@
 
 import math
 
+import hypothesis
 import pytest
-from hypothesis import given, strategies as st
 
 from jdriftx.similitude import concentration_panache, concentration_puff
 from jdriftx.similitude_objets import (
@@ -91,8 +91,8 @@ def test_parametres_puff_valident_les_invariants(
         ParametresPuff(**kwargs)  # type: ignore[arg-type]
 
 
-@given(
-    x=st.floats(
+@hypothesis.given(
+    x=hypothesis.strategies.floats(
         min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
     ),
     y=st.floats(
@@ -130,7 +130,7 @@ def test_point3d_accepte_toutes_coordonnees_finies_dans_le_domaine(
     u=st.floats(
         min_value=0.1, max_value=20.0, allow_nan=False, allow_infinity=False
     ),
-    classe=st.sampled_from(list(ClasseStabilite)),
+    classe=hypothesis.strategies.sampled_from(list(ClasseStabilite)),
     x0=st.floats(
         min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False
     ),
@@ -218,7 +218,7 @@ def test_parametres_puff_refusent_les_valeurs_non_finies(
     }
     valeurs[champ] = valeur
 
-    with pytest.raises(ValueError, match="fini|finie|strictement"):
+    with pytest.raises(ValueError, match=r"fini|finie|strictement"):
         ParametresPuff(**valeurs)  # type: ignore[arg-type]
 
 
