@@ -27,6 +27,9 @@ uv run python benchmarks/cout_evaluation.py --repetitions 7
   CFD. La référence « EDP/maillage » des jalons G1+ reste à instancier.
 - Les protocoles G1 (jeux de données réels, baselines) sont hors périmètre de
   ce squelette ; voir `docs/20` et `docs/21`, puis les issues opérationnelles
-  [#204–#207](https://github.com/JM-Brun/J-DriftX/issues/204). L'ancienne
-  issue #13 est close comme remplacée.
+  [#204](https://github.com/JM-Brun/J-DriftX/issues/204),
+  [#205](https://github.com/JM-Brun/J-DriftX/issues/205),
+  [#206](https://github.com/JM-Brun/J-DriftX/issues/206) et
+  [#207](https://github.com/JM-Brun/J-DriftX/issues/207). L'ancienne issue #13
+  est close comme remplacée.
 - Ce squelette n'établit aucune propriété physique ni aucun gain prédictif.
