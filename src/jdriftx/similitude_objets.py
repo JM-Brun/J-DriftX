@@ -14,6 +14,7 @@ from numpy.typing import NDArray
 import numpy as np
 
 from jdriftx.similitude import concentration_panache, concentration_puff
+from jdriftx.source import SourcePanache
 from jdriftx.stabilite import ClasseStabilite
 
 
@@ -33,33 +34,6 @@ class Point3D:
     def __post_init__(self) -> None:
         if not all(math.isfinite(value) for value in (self.x, self.y, self.z)):
             raise ValueError("Les coordonnees du point doivent etre finies.")
-
-
-@dataclass(frozen=True, slots=True)
-class ParametresPanache:
-    """Parametres physiques d'un panache stationnaire gaussien.
-
-    debit en kg/s, u en m/s, hauteur effective en m. Le debit nul est admis
-    afin de representer explicitement une source eteinte.
-    """
-
-    debit: float
-    u: float
-    classe: ClasseStabilite | str
-    hauteur: float = 0.0
-
-    def __post_init__(self) -> None:
-        if not math.isfinite(self.debit) or self.debit < 0.0:
-            raise ValueError("Le debit doit etre fini et positif ou nul.")
-        if not math.isfinite(self.u) or self.u <= 0.0:
-            raise ValueError("La vitesse du vent doit etre finie et strictement positive.")
-        if not math.isfinite(self.hauteur) or self.hauteur < 0.0:
-            raise ValueError("La hauteur de source doit etre finie et positive ou nulle.")
-        try:
-            classe = ClasseStabilite(self.classe)
-        except ValueError as err:
-            raise ValueError(f"Classe de stabilite inconnue : {self.classe!r}") from err
-        object.__setattr__(self, "classe", classe)
 
 
 @dataclass(frozen=True, slots=True)
@@ -89,7 +63,7 @@ class ParametresPuff:
 
 
 def concentration_panache_au_point(
-    point: Point3D, parametres: ParametresPanache
+    point: Point3D, source: SourcePanache
 ) -> float:
     """Evalue le panache en un point et retourne une concentration en kg/m^3.
 
@@ -100,10 +74,10 @@ def concentration_panache_au_point(
         x=point.x,
         y=point.y,
         z=point.z,
-        debit=parametres.debit,
-        u=parametres.u,
-        classe=ClasseStabilite(parametres.classe).value,
-        hauteur=parametres.hauteur,
+        debit=source.debit,
+        u=source.u,
+        classe=ClasseStabilite(source.classe).value,
+        hauteur=source.hauteur,
     )
     return float(np.asarray(valeur).item())
 
@@ -130,7 +104,6 @@ def concentration_puff_au_point(
 
 __all__ = [
     "Point3D",
-    "ParametresPanache",
     "ParametresPuff",
     "concentration_panache_au_point",
     "concentration_puff_au_point",
