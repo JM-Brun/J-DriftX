@@ -36,7 +36,6 @@ from jdriftx.experiences import (
 from jdriftx.metric import pseudo_distance_uniforme, temps_transport
 from jdriftx.similitude import concentration_panache, concentration_puff, sigma_y, sigma_z
 from jdriftx.similitude_objets import (
-    ParametresPanache,
     ParametresPuff,
     Point3D,
     concentration_panache_au_point,
@@ -57,7 +56,6 @@ __all__ = [
     "ManifesteScenario",
     "ModeleConcentration",
     "PanacheGaussien",
-    "ParametresPanache",
     "ParametresPuff",
     "Point3D",
     "Rectangle",
