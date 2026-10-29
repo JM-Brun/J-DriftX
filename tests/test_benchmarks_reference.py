@@ -159,9 +159,7 @@ class TestGrilleEtVerite:
 
     def test_verite_positive_et_decroissante_sur_l_axe(self) -> None:
         """Given des mesures sur l axe, When verite, Then positive decroissante."""
-        cas = replace(
-            _cas_valide(), arcs=(100.0, 200.0, 400.0, 800.0), positions_laterales=(0.0,)
-        )
+        cas = replace(_cas_valide(), arcs=(100.0, 200.0, 400.0, 800.0), positions_laterales=(0.0,))
         vrais = cas.verite(cas.points())
         assert np.all(vrais > 0.0)
         assert np.all(np.diff(vrais) < 0.0)
