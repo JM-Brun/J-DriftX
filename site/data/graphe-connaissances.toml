@@ -537,6 +537,24 @@ type = "module"
 libelle = "diagnostic_graphe.py"
 lien = "src/jdriftx/diagnostic_graphe.py"
 
+[[noeuds]]
+id = "benchmarks/reference"
+type = "module"
+libelle = "benchmarks/reference.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/reference.py"
+
+[[noeuds]]
+id = "benchmarks/cas"
+type = "module"
+libelle = "benchmarks/cas.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/cas.py"
+
+[[noeuds]]
+id = "benchmarks/metriques"
+type = "module"
+libelle = "benchmarks/metriques.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/metriques.py"
+
 # ---------- Nœuds : tests ----------
 
 [[noeuds]]
@@ -706,6 +724,12 @@ id = "t-cas-synthetiques"
 type = "test"
 libelle = "test_cas_synthetiques.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_cas_synthetiques.py"
+
+[[noeuds]]
+id = "t-benchmarks"
+type = "test"
+libelle = "test_benchmarks_reference.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_benchmarks_reference.py"
 
 # ---------- Nœuds : références (clés de site/references.bib) ----------
 
@@ -1676,6 +1700,39 @@ vers = "experiences/cas_synthetiques"
 relation = "couvre"
 justification = "tests/test_cas_synthetiques.py : génération des cas synthétiques à vérité exacte."
 
+[[aretes]]
+de = "benchmarks/cas"
+vers = "similitude"
+relation = "utilise"
+
+[[aretes]]
+de = "t-benchmarks"
+vers = "benchmarks/reference"
+relation = "couvre"
+justification = "tests/test_benchmarks_reference.py : cas S0, métriques FAC2/NMSE et commande auto-cohérence."
+
+[[aretes]]
+de = "t-benchmarks"
+vers = "benchmarks/cas"
+relation = "couvre"
+justification = "tests/test_benchmarks_reference.py : contrat du cas, registre et grille exercés."
+
+[[aretes]]
+de = "t-benchmarks"
+vers = "benchmarks/metriques"
+relation = "couvre"
+justification = "tests/test_benchmarks_reference.py : conventions FAC2/NMSE et registre exercés."
+
+[[aretes]]
+de = "benchmarks/reference"
+vers = "benchmarks/cas"
+relation = "utilise"
+
+[[aretes]]
+de = "benchmarks/reference"
+vers = "benchmarks/metriques"
+relation = "utilise"
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1742,6 +1799,8 @@ noeuds = [
   "t-cas-synthetiques",
   "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
   "t-graphe", "t-extraction", "t-diagnostic",
+  "benchmarks/cas", "benchmarks/metriques", "benchmarks/reference",
+  "t-benchmarks",
 ]
 
   [[graphes.groupes]]
@@ -1795,6 +1854,14 @@ noeuds = [
     "t-identification", "t-figure-06",
     "t-wind-field", "t-interactif",
     "t-cas-synthetiques",
+  ]
+
+  [[graphes.groupes]]
+  id = "ben"
+  titre = "Benchmarks de référence"
+  noeuds = [
+    "benchmarks/cas", "benchmarks/metriques", "benchmarks/reference",
+    "t-benchmarks",
   ]
 
 [[graphes]]
