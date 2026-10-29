@@ -36,6 +36,7 @@ Choisir un ou plusieurs modes et les indiquer dans la PR.
 - Chaque nouveau test sépare visiblement donnée d'entrée (`# Given`), action (`# When`) et assertion (`# Then`).
 - La CI applique un seuil de couverture `--cov-fail-under=91`. Viser une couverture élevée sur le cœur sans écrire de tests creux.
 - Conserver des sorties de référence légères et tolérances documentées ; comparer des champs et métriques, jamais des captures d'écran.
+- Les tests de propriétés générées (Hypothesis) énoncent la propriété sous ses hypothèses exactes, avec des stratégies bornées (coût de CI maîtrisé) et `@settings(deadline=None)` ; un contre-exemple généré est un bogue, une absence de contre-exemple n'est ni une preuve mathématique ni une validation physique (règles détaillées : docs/40).
 - Les tests de propriétés mathématiques et physiques ne valident que **sous les hypothèses qui les garantissent** ; un test ne démontre ni exactitude empirique ni utilité applicative.
 
 ## Contributions scientifiques
