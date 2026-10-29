@@ -54,7 +54,7 @@ __all__ = [
 ]
 
 _TAILLE_GRILLE: int = 256
-"""Taille de chaque niveau de la grille temporelle déterministe (2 × 256)."""
+"""Taille de chaque niveau de la grille temporelle déterministe (2 x 256)."""
 
 
 class SourceImpulsionnelle(BaseModel):
@@ -98,7 +98,7 @@ class EvaluationPuff(BaseModel):
         t_pic : instant du maximum temporel de grille (s).
         concentration_tau : concentration au temps dirigé C(τ) (kg m⁻³).
         concentration_pic : concentration au maximum de grille (kg m⁻³).
-        ecart_relatif : écart C(τ)/C(t_pic) − 1, sans unité, négatif ou nul.
+        ecart_relatif : écart C(τ)/C(t_pic) - 1, sans unité, négatif ou nul.
     """
 
     model_config = ConfigDict(frozen=True)

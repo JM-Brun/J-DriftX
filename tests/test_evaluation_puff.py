@@ -112,7 +112,7 @@ def test_la_grille_du_cas_est_couverte(
 def test_l_ecart_relatif_reste_dans_la_bande(
     evaluations: tuple[EvaluationPuff, ...],
 ) -> None:
-    """Chaque écart C(τ)/C(pic) − 1 reste dans la bande calibrée [−5 %, 0]."""
+    """Chaque écart C(τ)/C(pic) - 1 reste dans la bande calibrée [-5 %, 0]."""
     # Given — les évaluations de la grille (12 points).
     # When — les écarts relatifs sont observés.
     # Then — l'évaluation dirigée capture au moins 95 % du pic, sans dépassement.
@@ -123,7 +123,7 @@ def test_l_ecart_relatif_reste_dans_la_bande(
 def test_le_retard_du_pic_reste_sous_le_seuil(
     evaluations: tuple[EvaluationPuff, ...],
 ) -> None:
-    """Le retard du pic (τ − t_pic)/τ reste sous 5 % sur la grille."""
+    """Le retard du pic (τ - t_pic)/τ reste sous 5 % sur la grille."""
     # Given — les évaluations de la grille (12 points).
     # When — les retards sont observés.
     # Then — aucun retard ne dépasse le seuil calibré (pire cas : 3,30 %).
@@ -164,7 +164,7 @@ def test_le_pic_est_au_passage_sur_les_arcs_proches(
 def test_le_pire_ecart_est_sur_l_axe_du_premier_arc(
     evaluations: tuple[EvaluationPuff, ...],
 ) -> None:
-    """Le pire écart de la grille est sur l'axe au premier arc (−4,90 %)."""
+    """Le pire écart de la grille est sur l'axe au premier arc (-4,90 %)."""
     # Given — les évaluations de la grille (12 points).
     # When — le pire écart est recherché.
     # Then — il se situe à l'arc 100 m sur l'axe, capture ≥ 95,1 % du pic.
