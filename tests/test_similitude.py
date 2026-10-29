@@ -276,7 +276,6 @@ def test_puff_temps_invalide() -> None:
         concentration_puff(100.0, 0.0, 0.0, t=0.0, masse=1.0, u=2.0, classe="D")
 
 
-
 def test_panache_against_closed_form_oracle_independent_of_package() -> None:
     """La formule scalaire indépendante recoupe l'implémentation vectorisée.
 
