@@ -280,8 +280,8 @@ def test_puff_temps_invalide() -> None:
 def test_panache_against_closed_form_oracle_independent_of_package() -> None:
     """La formule scalaire indépendante recoupe l'implémentation vectorisée.
 
-    Les coefficients de Briggs C et la formule gaussienne sont explicités
-    dans ce test, sans appeler sigma_y, sigma_z ni recopier leur résultat.
+    Les coefficients viennent de l'objet canonique ClasseStabilite.C ; la
+    formule scalaire reste distincte du chemin d'execution vectorise.
     Ce test est un oracle d'implémentation, pas une validation terrain ni
     une comparaison à un solveur EDP indépendant.
     """
