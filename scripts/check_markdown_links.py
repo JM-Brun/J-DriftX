@@ -73,7 +73,11 @@ def _target_path(raw_target: str, source: Path, root: Path) -> tuple[Path | None
     path_text = unquote(parsed.path)
     if not path_text:
         return source, unquote(parsed.fragment)
-    target = root / path_text.lstrip("/") if path_text.startswith("/") else source.parent / path_text
+    target = (
+        root / path_text.lstrip("/")
+        if path_text.startswith("/")
+        else source.parent / path_text
+    )
     try:
         target = target.resolve()
         target.relative_to(root.resolve())
