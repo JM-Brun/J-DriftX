@@ -75,9 +75,7 @@ def test_la_grille_fine_est_calibree(solution: SolutionEdp) -> None:
 def test_l_entree_est_partagee_avec_la_forme_fermee(solution: SolutionEdp) -> None:
     """La condition d'entrée est exactement la solution fermée du contrat."""
     # Given — le contrat de concentration partagé, sur la grille de la solution.
-    mailles_y, mailles_z = np.meshgrid(
-        solution.abscisses_y, solution.abscisses_z, indexing="ij"
-    )
+    mailles_y, mailles_z = np.meshgrid(solution.abscisses_y, solution.abscisses_z, indexing="ij")
     attendu = np.asarray(
         PanacheGaussien(source=CAS_S0_DEFAUT.source).concentration(
             solution.x_entree, mailles_y, mailles_z
@@ -149,7 +147,8 @@ def test_la_symetrie_laterale_est_exacte(
         par_arc.setdefault(point.x, {})[point.y] = point
     # Then — à chaque arc, y = -50 m et y = +50 m coïncident exactement.
     for par_y in par_arc.values():
-        assert -50.0 in par_y and 50.0 in par_y
+        assert -50.0 in par_y
+        assert 50.0 in par_y
         assert par_y[-50.0].edp == par_y[50.0].edp
         assert par_y[-50.0].fermee == par_y[50.0].fermee
 
@@ -174,13 +173,9 @@ def test_la_derivee_rejoint_la_parametrisation_partagee() -> None:
     h = 0.01
     for x in (50.0, 100.0, 200.0, 400.0, 800.0):
         # When — la dérivée exacte est confrontée aux différences finies.
-        dfy = (float(sigma_y(x + h, "C")) ** 2 - float(sigma_y(x - h, "C")) ** 2) / (
-            2.0 * h
-        )
+        dfy = (float(sigma_y(x + h, "C")) ** 2 - float(sigma_y(x - h, "C")) ** 2) / (2.0 * h)
         assert derivee_sigma_carre(x, 0.11, 0.0001) == pytest.approx(dfy, rel=1e-6)
-        dfz = (float(sigma_z(x + h, "C")) ** 2 - float(sigma_z(x - h, "C")) ** 2) / (
-            2.0 * h
-        )
+        dfz = (float(sigma_z(x + h, "C")) ** 2 - float(sigma_z(x - h, "C")) ** 2) / (2.0 * h)
         assert derivee_sigma_carre(x, 0.08, 0.0002) == pytest.approx(dfz, rel=1e-6)
 
 
@@ -227,7 +222,7 @@ def test_les_parametres_invalides_sont_rejetes(
     """Positivité et multiplicité des pas sont exigées à la construction."""
     # Given — des paramètres numériques invalides.
     # Then — la construction lève une ValueError.
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="doit être"):
         ParametresEdp(pas_y, pas_z, demi_largeur, hauteur)
 
 
@@ -235,9 +230,9 @@ def test_la_derivee_rejette_les_distances_non_posives() -> None:
     """La dérivée de sigma² n'est définie que pour des distances positives."""
     # Given — des distances sous le vent nulles ou négatives.
     # Then — la dérivée lève une ValueError dans les deux cas.
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="strictement positive"):
         derivee_sigma_carre(0.0, 0.11, 0.0001)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="strictement positive"):
         derivee_sigma_carre(-100.0, 0.08, 0.0002)
 
 
@@ -276,7 +271,7 @@ def test_le_manifeste_est_etiquete(comparaison: ComparaisonReference) -> None:
     assert manifeste.extension.startswith("Aucune")
     # Then — limites : facteur historique non revendiqué, pas une validation.
     limites = " ".join(manifeste.limites)
-    assert "10³–10⁴" in limites
+    assert "10³-10⁴" in limites
     assert "n'est pas revendiqué" in limites
     assert "pas une validation physique" in limites
 

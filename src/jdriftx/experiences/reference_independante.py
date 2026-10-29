@@ -6,7 +6,7 @@ et verticale) marchée en longitude sous l'hypothèse de vent uniforme, et
 compare ses résultats ponctuels à la solution fermée du package sur le cas S0
 figé (docs/48 §2.2). La méthodologie suit la note 35 (cost model étape par
 étape : les coûts des deux routes sont mesurés séparément ; le facteur
-historique 10³–10⁴ de l'ouvrage de 2008 n'est ni reconstruit ni revendiqué).
+historique 10³-10⁴ de l'ouvrage de 2008 n'est ni reconstruit ni revendiqué).
 
 Étiquetage explicite, conformément à l'ordre confirmé de l'issue #232 :
 
@@ -16,7 +16,7 @@ historique 10³–10⁴ de l'ouvrage de 2008 n'est ni reconstruit ni revendiqué
   aucun chiffre de l'ouvrage n'est utilisé comme cible.
 - Reconstruction : schéma explicite FTCS (forward en longitude, centré en
   transverse et vertical) marchant en x sur l'équation de diffusion
-  K = (U/2)·dσ²/dx, avec nombre de Fourier borné à 1/3, condition au sol de
+  K = (U/2)·d(sigma²)/dx, avec nombre de Fourier borné à 1/3, condition au sol de
   type miroir (Neumann), Dirichlet aux bords de fenêtre, entrée partagée
   (solution fermée du package à x d'entrée) et tranches prélevées aux arcs.
 - Extension : aucune.
@@ -44,11 +44,11 @@ from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
 __all__ = [
     "PARAMETRES_EDP_DEFAUT",
+    "SEUIL_FOURIER",
     "ComparaisonReference",
     "ManifesteReference",
     "ParametresEdp",
     "PointComparaison",
-    "SEUIL_FOURIER",
     "SolutionEdp",
     "TrancheEdp",
     "comparer_reference",
@@ -122,10 +122,10 @@ au dernier arc (800 m) pour la classe C, pas transverse 2,5 m, pas vertical
 
 
 def derivee_sigma_carre(x: float, coefficient: float, d: float) -> float:
-    """Dérivée exacte de σ² = (coefficient·x)²/(1 + d·x) en x (m), positive.
+    """Dérivée exacte de sigma² = (coefficient·x)²/(1 + d·x) en x (m), positive.
 
     Formes couvertes : LINEAIRE (d = 0) et RACINE (d > 0) des lois de Briggs
-    rurales (jdriftx.stabilite) ; la forme INVERSE (σ = b·x/(1 + d·x)) n'est
+    rurales (jdriftx.stabilite) ; la forme INVERSE (sigma = b·x/(1 + d·x)) n'est
     pas celle évaluée ici et est rejetée en amont.
 
     Lever une ValueError si x n'est pas strictement positif.
@@ -170,12 +170,10 @@ class SolutionEdp:
     tranches: tuple[TrancheEdp, ...]
 
 
-def _coefficients_diffusion(
-    classe: str, x: float
-) -> tuple[float, float, float, float]:
+def _coefficients_diffusion(classe: str, x: float) -> tuple[float, float, float, float]:
     """Coefficients (a_y, d_y, b_z, d_z) de la classe, forme INVERSE rejetée.
 
-    La dérivée de σ² est porteuse de la diffusion effective : seules les
+    La dérivée de sigma² est porteuse de la diffusion effective : seules les
     formes LINEAIRE et RACINE des lois de Briggs (jdriftx.stabilite) sont
     couvertes ; la forme INVERSE (classes E et F) est explicitement hors
     périmètre et lève une ValueError pour rester sans ambiguïté.
@@ -197,7 +195,7 @@ def _pas_longitudinal(
 ) -> float:
     """Plus grand pas en base/2^k stable au dernier arc (nombre de Fourier).
 
-    Le nombre de Fourier est évalué au dernier arc, là où σ² croît le plus ;
+    Le nombre de Fourier est évalué au dernier arc, là où sigma² croît le plus ;
     le pas de base est la distance d'entrée (100 m pour le cas S0 figé) et
     il est divisé par deux jusqu'à ce que la somme des contributions
     transverse et verticale passe sous SEUIL_FOURIER.
@@ -217,13 +215,11 @@ def _pas_longitudinal(
     raise ValueError(msg)
 
 
-def resoudre_edp(
-    cas: CasS0, parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT
-) -> SolutionEdp:
+def resoudre_edp(cas: CasS0, parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT) -> SolutionEdp:
     """Résout l'EDP de diffusion marchée en x, du premier au dernier arc.
 
     Méthodologie (note 35, étape 5 de l'issue #232) : schéma explicite FTCS
-    marché en longitude sur K = (U/2)·dσ²/dx (U disparaît du champ), entrée
+    marché en longitude sur K = (U/2)·d(sigma²)/dx (U disparaît du champ), entrée
     partagée à x du premier arc (solution fermée du package sur la grille),
     condition au sol de type miroir (Neumann : ∂C/∂z = 0 au sol), Dirichlet
     nul aux bords latéraux et au sommet de fenêtre, tranches prélevées aux
@@ -264,9 +260,7 @@ def resoudre_edp(
 
     mailles_y, mailles_z = np.meshgrid(abscisses_y, abscisses_z, indexing="ij")
     panache = PanacheGaussien(source=cas.source)
-    champ = np.asarray(
-        panache.concentration(x_entree, mailles_y, mailles_z), dtype=float
-    )
+    champ = np.asarray(panache.concentration(x_entree, mailles_y, mailles_z), dtype=float)
     champ[0, :] = 0.0
     champ[-1, :] = 0.0
     champ[:, -1] = 0.0
@@ -282,13 +276,17 @@ def resoudre_edp(
         c_y = 0.5 * derivee_sigma_carre(x_milieu, a_y, d_y) * dx / pas_y**2
         c_z = 0.5 * derivee_sigma_carre(x_milieu, b_z, d_z) * dx / pas_z**2
         interieur = champ[1:-1, 1:-1]
-        suivant[1:-1, 1:-1] = interieur + c_y * (
-            champ[2:, 1:-1] - 2.0 * interieur + champ[:-2, 1:-1]
-        ) + c_z * (champ[1:-1, 2:] - 2.0 * interieur + champ[1:-1, :-2])
+        suivant[1:-1, 1:-1] = (
+            interieur
+            + c_y * (champ[2:, 1:-1] - 2.0 * interieur + champ[:-2, 1:-1])
+            + c_z * (champ[1:-1, 2:] - 2.0 * interieur + champ[1:-1, :-2])
+        )
         sol = champ[1:-1, 0]
-        suivant[1:-1, 0] = sol + c_y * (
-            champ[2:, 0] - 2.0 * sol + champ[:-2, 0]
-        ) + c_z * 2.0 * (champ[1:-1, 1] - sol)
+        suivant[1:-1, 0] = (
+            sol
+            + c_y * (champ[2:, 0] - 2.0 * sol + champ[:-2, 0])
+            + c_z * 2.0 * (champ[1:-1, 1] - sol)
+        )
         suivant[0, :] = 0.0
         suivant[-1, :] = 0.0
         suivant[:, -1] = 0.0
@@ -308,8 +306,7 @@ def resoudre_edp(
 
 
 def _interp_bilineaire(
-    tranche: TrancheEdp, abscisses_y: np.ndarray, abscisses_z: np.ndarray,
-    y: float, z: float,
+    tranche: TrancheEdp, abscisses_y: np.ndarray, abscisses_z: np.ndarray, y: float, z: float
 ) -> float:
     """Interpole bilinéairement la concentration au point (y, z) (m).
 
@@ -343,9 +340,7 @@ def _flux_tranche(
     tranche: TrancheEdp, abscisses_y: np.ndarray, abscisses_z: np.ndarray, u: float
 ) -> float:
     """Flux massique transverse (kg/s) d'une tranche : U·∫∫ C dy dz."""
-    integrale = np.trapezoid(
-        np.trapezoid(tranche.champ, x=abscisses_z, axis=1), x=abscisses_y
-    )
+    integrale = np.trapezoid(np.trapezoid(tranche.champ, x=abscisses_z, axis=1), x=abscisses_y)
     return float(u * integrale)
 
 
@@ -446,16 +441,10 @@ def comparer_reference(
     flux_entree = _flux_tranche(
         solution.tranches[0], solution.abscisses_y, solution.abscisses_z, cas.source.u
     )
-    ecarts_flux = [
-        abs(
-            _flux_tranche(
-                tranche, solution.abscisses_y, solution.abscisses_z, cas.source.u
-            )
-            - flux_entree
-        )
-        / flux_entree
-        for tranche in solution.tranches[1:]
-    ]
+    ecarts_flux: list[float] = []
+    for tranche in solution.tranches[1:]:
+        flux = _flux_tranche(tranche, solution.abscisses_y, solution.abscisses_z, cas.source.u)
+        ecarts_flux.append(abs(flux - flux_entree) / flux_entree)
     cout_edp = time.perf_counter() - debut_edp
 
     fermee = [float(v) for v in verite]
@@ -470,9 +459,7 @@ def comparer_reference(
         )
         for point, v, e in zip(points, fermee, edp, strict=True)
     )
-    ecarts_relatifs = [
-        abs(point.edp - point.fermee) / point.fermee for point in comparaisons
-    ]
+    ecarts_relatifs = [abs(point.edp - point.fermee) / point.fermee for point in comparaisons]
     return ComparaisonReference(
         cas_source=(
             f"debit={cas.source.debit} kg/s, u={cas.source.u} m/s, "
@@ -489,9 +476,7 @@ def comparer_reference(
     )
 
 
-def construire_manifeste(
-    cas: CasS0, comparaison: ComparaisonReference
-) -> ManifesteReference:
+def construire_manifeste(cas: CasS0, comparaison: ComparaisonReference) -> ManifesteReference:
     """Construit le manifeste étiqueté de la comparaison (statuts figés).
 
     Le manifeste porte l'étiquetage héritage/reconstruction/extension et
@@ -514,7 +499,7 @@ def construire_manifeste(
         ),
         reconstruction=(
             "Schéma explicite FTCS marché en longitude (nombre de Fourier "
-            "≤ 1/3, miroir au sol, Dirichlet aux bords, fenêtre 4σ, tranches "
+            "≤ 1/3, miroir au sol, Dirichlet aux bords, fenêtre 4 sigma, tranches "
             "aux arcs, entrée partagée avec la solution fermée)."
         ),
         extension="Aucune (l'évaluation du puff et le multi-niveaux restent "
@@ -522,7 +507,7 @@ def construire_manifeste(
         limites=(
             "Contrôle d'auto-cohérence entre deux routes du même package sur "
             "un cas synthétique : pas une validation physique.",
-            "Le facteur historique 10³–10⁴ n'est pas revendiqué : les coûts "
+            "Le facteur historique 10³-10⁴ n'est pas revendiqué : les coûts "
             "sont mesurés séparément, sans facteur.",
             "Fenêtre tronquée à quatre écarts-types et grille calibrée pour "
             "la classe C du cas S0 figé (docs/48 §2.2).",
