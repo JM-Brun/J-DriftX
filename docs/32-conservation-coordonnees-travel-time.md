@@ -1,7 +1,7 @@
 # Conservation in travel-time coordinates: what can be derived
 
 > **Status — partial mathematical result, not a reconstruction of the historical Drift-X model.**  
-> This note derives the general balance law under a regular change of coordinates. It does not establish that the historical construction satisfies the assumptions below, nor that the pollutant flux through every iso-travel-time surface equals the emitted quantity.
+> This note derives the general balance law under a regular change of coordinates. It does not establish that the historical construction satisfies the assumptions below, nor that the pollutant flux through every iso-travel-time surface equals the emitted quantity. The 2006 paper explicitly states a global volume-integral constraint, which is not the same proposition as constant flux through every iso-travel-time surface; see the [critical audit of the 2006 source](43-audit-article-mohammadi-brun-2006.md).
 
 ## 1. Question and quantities that must not be conflated
 
