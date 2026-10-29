@@ -1,8 +1,9 @@
-# 00 — Index des notes techniques
+# 00 — Index de navigation des notes techniques
 
-Inventaire de `docs/`, établi le 27 octobre 2026 pour lever l'ambiguïté des
-numéros en double et fixer la règle de numérotation. Cet index est un
-inventaire factuel : il ne résume ni ne remplace les notes.
+Index de navigation de `docs/`, établi le 27 octobre 2026 pour lever l'ambiguïté des
+numéros en double et fixer la règle de numérotation. Il décrit les notes de référence
+et les ressources sélectionnées, mais ne constitue pas un inventaire exhaustif de chaque
+fichier du dépôt. Il ne résume ni ne remplace les documents référencés.
 
 ## Règle de numérotation
 
@@ -30,7 +31,7 @@ Prochain numéro libre sur main : 50 (les notes 43 à 49 couvrent l’audit de l
 | 33 | `33-test-contre-exemple-cisaillement.md` | Test du contre-exemple de cisaillement (coût projeté) |
 | 33 | `33-figure-04-superposition-sources.md` | Figure 4 du chapitre 2008 : superposition de deux sources |
 
-## Inventaire
+## Notes et ressources de référence
 
 | Fichier | Sujet |
 |---|---|
@@ -77,6 +78,12 @@ Prochain numéro libre sur main : 50 (les notes 43 à 49 couvrent l’audit de l
 | `47-contrat-minimal-baseline.md` | Contrat minimal de la baseline : statut figé par capacité historique (définie / partiellement définie / annoncée seulement / non reproductible) |
 | `48-cas-reference-autonome-ecoulement-uniforme.md` | Cas de référence autonome : écoulement uniforme (unités, domaine, conditions aux limites, solution de référence, observable, limites ; cisaillement en contre-exemple distinct) |
 | `49-matrice-revendications-baseline.md` | Matrice initiale des revendications historiques : source/version/localisation, unités, hypothèses, preuves et statut de définition |
+| `bibliographie/fondements-et-heritage.md` | Synthèse bibliographique : fondements et héritage |
+| `bibliographie/identification-source-assimilation.md` | Bibliographie thématique : identification de source et assimilation |
+| `bibliographie/metriques-et-analogies.md` | Bibliographie thématique : métriques et analogies |
+| `bibliographie/rom-et-apprentissage.md` | Bibliographie thématique : modèles réduits et apprentissage |
+| `bibliographie/sig-exposition-applications.md` | Bibliographie thématique : SIG, exposition et applications |
+| `bibliographie/spray-drift-et-modeles-operationnels.md` | Bibliographie thématique : dérive de pulvérisation et modèles opérationnels |
 | `bibliographie/sources/these-brun.md` | Fiche source : thèse de J.-M. Brun (année/titre à confirmer sur la page de titre) |
 | `bibliographie/sources/mohammadi-brun-2006-cr-mecanique.md` | Fiche source : Mohammadi & Brun (2006), C. R. Mécanique |
 | `bibliographie/sources/mohammadi-brun-pironneau-2006.md` | Fiche de traçabilité d'une référence non retrouvée |
@@ -88,6 +95,8 @@ Prochain numéro libre sur main : 50 (les notes 43 à 49 couvrent l’audit de l
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
 | `bibliographie/` | Synthèses thématiques et fiches source par source sous `bibliographie/sources/` |
+| `visuels-g0s/README.md` | Index et conventions des visuels G0-S |
+| `visuels-g0s/prompts/infographie-glossaire-g0s.md` | Prompt source de l'infographie du glossaire G0-S |
 | `visuels-g0s/` | Visuels G0-S (SVG source et générés) |
 
 Les notes numérotées en double figurent dans le tableau dédié ci-dessus. L'audit adversarial a été découpé par rôle : son fichier numéroté est désormais un index ; les constats restent dans `docs/audits/`.
