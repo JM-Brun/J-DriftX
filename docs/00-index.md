@@ -11,9 +11,10 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 42 (la note 39, squelette benchmarks S0, la
-note 40, standards qualité et tests de propriété, et la note 41,
-unification de la source du panache, sont désormais sur main).
+Prochain numéro libre sur main : 43 (la note 40, standards qualité et tests de
+propriété, la note 41, unification de la source du panache, et la note 42,
+contrats d'interopérabilité entre relief, vent et concentrations, sont
+désormais sur main).
 
 ## Numéros en double
 
@@ -69,6 +70,7 @@ unification de la source du panache, sont désormais sur main).
 | `39-squelette-benchmarks-s0.md` | Squelette de benchmarks : cas analytique S0, registres de cas et de métriques, évaluation reproductible, standards (MVK, ASTM D6589, CF, PDEBench) |
 | `40-standards-qualite-tests-proprietes.md` | Standards qualité : tests de propriété (Hypothesis), objet et domaine (OOP/DDD), diagnostic architecture et recommandations |
 | `41-unification-source-panache.md` | Unification de la source du panache : objet SourcePanache partagé par les familles S0, carte concepts-modules et recommandations P2/P3 |
+| `42-contrats-interoperabilite.md` | Contrats d'interopérabilité : protocoles PEP 544 (relief, vent 2D/3D, concentrations), MNT ESRI ASCII Grid, profil de vent en loi de puissance |
 | `bibliographie/sources/these-brun.md` | Fiche source : thèse de J.-M. Brun (année/titre à confirmer sur la page de titre) |
 | `bibliographie/sources/mohammadi-brun-2006-cr-mecanique.md` | Fiche source : Mohammadi & Brun (2006), C. R. Mécanique |
 | `bibliographie/sources/mohammadi-brun-pironneau-2006.md` | Fiche de traçabilité d'une référence non retrouvée |

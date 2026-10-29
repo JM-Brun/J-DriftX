@@ -446,6 +446,11 @@ id = "source"
 type = "module"
 libelle = "source.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/source.py"
+[[noeuds]]
+id = "contrats"
+type = "module"
+libelle = "contrats.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/contrats.py"
 
 [[noeuds]]
 id = "constraints"
@@ -1756,6 +1761,28 @@ de = "experiences/cas_synthetiques"
 vers = "source"
 relation = "utilise"
 
+# ---------- Aretes : contrats d interface ----------
+
+[[aretes]]
+de = "contrats"
+vers = "terrain"
+relation = "utilise"
+
+[[aretes]]
+de = "contrats"
+vers = "champ_analytique"
+relation = "utilise"
+
+[[aretes]]
+de = "contrats"
+vers = "source"
+relation = "utilise"
+
+[[aretes]]
+de = "contrats"
+vers = "similitude"
+relation = "utilise"
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1801,7 +1828,7 @@ noeuds = [
   "experiences/superposition_sources", "experiences/relief",
   "experiences/modele_reduit_edp",
   "experiences/identification_source",
-  "similitude", "stabilite", "source",
+  "similitude", "stabilite", "source", "contrats",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
   "figures/figure_02", "figures/figure_03", "figures/figure_04", "figures/figure_05", "figures/figure_06",
@@ -1853,6 +1880,11 @@ noeuds = [
   id = "sol"
   titre = "Socle gaussien"
   noeuds = ["similitude", "stabilite", "source", "c-panache", "c-stabilite"]
+
+  [[graphes.groupes]]
+  id = "ctr"
+  titre = "Contrats d'interface (docs/42)"
+  noeuds = ["contrats"]
 
   [[graphes.groupes]]
   id = "rfs"

@@ -162,6 +162,9 @@ graph TD
     c_panache["Panache gaussien (similitude)"]::concept
     c_stabilite["Classes de Pasquill et lois de Briggs"]::concept
   end
+  subgraph ctr["Contrats d'interface (docs/42)"]
+    contrats["contrats.py"]::module
+  end
   subgraph rfs["Solveurs de référence"]
     periodic_transport["periodic_transport.py"]::module
     advection_diffusion["advection_diffusion.py"]::module
@@ -301,6 +304,10 @@ graph TD
   source -->|"utilise"| stabilite
   benchmarks_cas -->|"utilise"| source
   experiences_cas_synthetiques -->|"utilise"| source
+  contrats -->|"utilise"| terrain
+  contrats -->|"utilise"| champ_analytique
+  contrats -->|"utilise"| source
+  contrats -->|"utilise"| similitude
   classDef niveau fill:#ddd0f0,stroke:#495057,color:#212529;
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
   classDef propriete fill:#ffd9b3,stroke:#495057,color:#212529;
@@ -324,6 +331,7 @@ graph TD
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
 | source.py | Module de code | [source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/source.py) |
+| contrats.py | Module de code | [contrats.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/contrats.py) |
 | constraints.py | Module de code | [constraints.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/constraints.py) |
 | periodic_transport.py | Module de code | [periodic_transport.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/periodic_transport.py) |
 | advection_diffusion.py | Module de code | [advection_diffusion.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/advection_diffusion.py) |
