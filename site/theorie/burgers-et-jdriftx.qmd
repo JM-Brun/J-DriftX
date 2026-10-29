@@ -10,6 +10,8 @@ title: "Équation de Burgers : lien avec J-DriftX"
 
 L'équation de Burgers est un modèle canonique d'advection non linéaire régularisée par diffusion. Elle peut aider à étudier des propriétés générales des équations de transport et à construire des tests numériques. En revanche, elle ne constitue pas, sans dérivation supplémentaire, une équation de dispersion atmosphérique de gouttelettes ou de concentration.
 
+Cette page est l'explication développée pour les lecteurs du site. Le cadrage court de la piste et ses limites de décision sont conservés dans la [note de recherche technique](../../docs/16-note-burgers-jdriftx.md) ; les deux documents ont des fonctions complémentaires, pas deux versions équivalentes d'un même texte.
+
 Cette page distingue trois niveaux qu'il ne faut pas confondre :
 
 1. **Analogie mathématique** : transport, flux, diffusion et conservation sont des notions communes.
