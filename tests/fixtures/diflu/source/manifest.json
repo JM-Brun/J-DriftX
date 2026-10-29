@@ -1,0 +1,40 @@
+{
+  "dataset_pid": "doi:10.57745/A9YC3C",
+  "dataset_url": "https://entrepot.recherche.data.gouv.fr/dataset.xhtml?persistentId=doi%3A10.57745%2FA9YC3C",
+  "license": "Etalab Open Licence 2.0",
+  "method": "Byte-for-byte copy of Dataverse originalFileName payloads after audit size/MD5/SHA-256 verification.",
+  "files": [
+    {
+      "filename": "DIFLU_helium_release_sampling.csv",
+      "dataverse_label": "DIFLU_helium_release_sampling.tab",
+      "dataverse_file_id": 758566,
+      "download_url": "https://entrepot.recherche.data.gouv.fr/api/access/datafile/758566?format=original",
+      "size_bytes": 75701,
+      "md5": "d4477017be8efa2ed0f920499c319e3e",
+      "sha256": "de0ec5e2deeb2720b6d22abe54d749f99fb5827bd426ea7855c48acb3d1a8314"
+    },
+    {
+      "filename": "DIFLU_media_dictionary.csv",
+      "dataverse_label": "DIFLU_media_dictionary.tab",
+      "dataverse_file_id": 758568,
+      "download_url": "https://entrepot.recherche.data.gouv.fr/api/access/datafile/758568?format=original",
+      "size_bytes": 3759,
+      "md5": "e99510a977703d6974dc08b255a40c5b",
+      "sha256": "b779f88706e7495476413f550af162548dba34f2a8470e43e8635ef53ae82f4a"
+    },
+    {
+      "filename": "DIFLU_variables_dictionary.csv",
+      "dataverse_label": "DIFLU_variables_dictionary.tab",
+      "dataverse_file_id": 758569,
+      "download_url": "https://entrepot.recherche.data.gouv.fr/api/access/datafile/758569?format=original",
+      "size_bytes": 6561,
+      "md5": "602f0ccdef6112224f71e778622b6fd5",
+      "sha256": "749d2495d146ceca8c05580bd4074f8de21e14660cdae397da1f8ba250ae4f17"
+    }
+  ],
+  "limitations": [
+    "Integrity checks do not establish scientific validity.",
+    "The manifest is deterministic for identical source bytes and metadata.",
+    "Source bytes are not normalized; literal values such as NA are preserved."
+  ]
+}
