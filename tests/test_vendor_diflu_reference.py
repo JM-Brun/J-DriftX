@@ -90,3 +90,18 @@ def test_staging_refuses_to_overwrite_different_existing_bytes(tmp_path: Path) -
 
     with pytest.raises(RuntimeError, match="Refusing to overwrite different existing file"):
         stage(audit_dir, output_dir)
+
+
+
+def test_staging_is_idempotent_for_identical_sources(tmp_path: Path) -> None:
+    """Repeated staging must preserve the same manifest and source bytes."""
+    audit_dir = tmp_path / "audit"
+    output_dir = tmp_path / "reference"
+    _write_audit_fixture(audit_dir)
+
+    first = stage(audit_dir, output_dir)
+    first_manifest = (output_dir / "manifest.json").read_bytes()
+    second = stage(audit_dir, output_dir)
+
+    assert first == second
+    assert (output_dir / "manifest.json").read_bytes() == first_manifest
