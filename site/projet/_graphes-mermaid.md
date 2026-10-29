@@ -160,6 +160,7 @@ graph TD
     stabilite["stabilite.py"]::module
     c_panache["Panache gaussien (similitude)"]::concept
     c_stabilite["Classes de Pasquill et lois de Briggs"]::concept
+    benchmarks_reference["benchmarks/reference.py"]::module
   end
   subgraph rfs["Solveurs de référence"]
     periodic_transport["periodic_transport.py"]::module
@@ -207,6 +208,7 @@ graph TD
     t_wind_field["test_wind_field_explorer.py"]::test
     t_interactif["test_interactive_wind_page.py"]::test
     t_cas_synthetiques["test_cas_synthetiques.py"]::test
+    t_benchmarks["test_benchmarks_reference.py"]::test
   end
   c_fcourant -->|"construit"| c_champ
   c_courant -->|"dépend de"| c_champ
@@ -285,6 +287,8 @@ graph TD
   t_diagnostic -->|"couvre"| diagnostic_graphe
   experiences_cas_synthetiques -->|"utilise"| c_panache
   t_cas_synthetiques -->|"couvre"| experiences_cas_synthetiques
+  benchmarks_reference -->|"utilise"| similitude
+  t_benchmarks -->|"couvre"| benchmarks_reference
   classDef niveau fill:#ddd0f0,stroke:#495057,color:#212529;
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
   classDef propriete fill:#ffd9b3,stroke:#495057,color:#212529;
@@ -369,6 +373,8 @@ graph TD
 | test_graphe_connaissances.py | Test (CI) | [test_graphe_connaissances.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_graphe_connaissances.py) |
 | test_extraction_graphe.py | Test (CI) | [tests/test_extraction_graphe.py](../../tests/test_extraction_graphe.py) |
 | test_diagnostic_graphe.py | Test (CI) | [tests/test_diagnostic_graphe.py](../../tests/test_diagnostic_graphe.py) |
+| benchmarks/reference.py | Module de code | [reference.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/reference.py) |
+| test_benchmarks_reference.py | Test (CI) | [test_benchmarks_reference.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_benchmarks_reference.py) |
 
 ## Références et corpus
 

@@ -537,6 +537,12 @@ type = "module"
 libelle = "diagnostic_graphe.py"
 lien = "src/jdriftx/diagnostic_graphe.py"
 
+[[noeuds]]
+id = "benchmarks/reference"
+type = "module"
+libelle = "benchmarks/reference.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/reference.py"
+
 # ---------- Nœuds : tests ----------
 
 [[noeuds]]
@@ -706,6 +712,12 @@ id = "t-cas-synthetiques"
 type = "test"
 libelle = "test_cas_synthetiques.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_cas_synthetiques.py"
+
+[[noeuds]]
+id = "t-benchmarks"
+type = "test"
+libelle = "test_benchmarks_reference.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_benchmarks_reference.py"
 
 # ---------- Nœuds : références (clés de site/references.bib) ----------
 
@@ -1676,6 +1688,17 @@ vers = "experiences/cas_synthetiques"
 relation = "couvre"
 justification = "tests/test_cas_synthetiques.py : génération des cas synthétiques à vérité exacte."
 
+[[aretes]]
+de = "benchmarks/reference"
+vers = "similitude"
+relation = "utilise"
+
+[[aretes]]
+de = "t-benchmarks"
+vers = "benchmarks/reference"
+relation = "couvre"
+justification = "tests/test_benchmarks_reference.py : cas S0, métriques FAC2/NMSE et commande auto-cohérence."
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1742,6 +1765,7 @@ noeuds = [
   "t-cas-synthetiques",
   "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
   "t-graphe", "t-extraction", "t-diagnostic",
+  "benchmarks/reference", "t-benchmarks",
 ]
 
   [[graphes.groupes]]
@@ -1770,7 +1794,7 @@ noeuds = [
   [[graphes.groupes]]
   id = "sol"
   titre = "Socle gaussien"
-  noeuds = ["similitude", "stabilite", "c-panache", "c-stabilite"]
+  noeuds = ["similitude", "stabilite", "c-panache", "c-stabilite", "benchmarks/reference"]
 
   [[graphes.groupes]]
   id = "rfs"
@@ -1794,7 +1818,7 @@ noeuds = [
     "t-relief", "t-figure-05", "t-modele-reduit-edp", "t-figure-03",
     "t-identification", "t-figure-06",
     "t-wind-field", "t-interactif",
-    "t-cas-synthetiques",
+    "t-cas-synthetiques", "t-benchmarks",
   ]
 
 [[graphes]]
