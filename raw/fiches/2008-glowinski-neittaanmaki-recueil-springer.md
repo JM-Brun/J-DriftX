@@ -2,11 +2,12 @@
 
 ## Identification du fichier
 
-- **État après la PR #67 (28 octobre 2026)** : le PDF intégral a été retiré du dépôt. Cette fiche est conservée comme référence bibliographique et trace de provenance de la copie consultée historiquement ; elle ne signifie pas que le binaire est encore distribué.
-- **Décision de dépôt** : le retrait du PDF intégral est proposé par la PR [#67](https://github.com/JM-Brun/J-DriftX/pull/67) afin de ne pas redistribuer une version éditeur sans autorisation établie. La référence bibliographique et cette fiche de provenance sont conservées ; l'état de fusion de la PR doit être vérifié sur GitHub.
+- **État actuel (29 octobre 2026)** : le PDF intégral du recueil est présent dans `raw/Partial Differential Equations - Modelling and Numerical Simulation - R. Glowinski, P. Neittaanmaki (Springer, 2008) WW.pdf` et doit être conservé conformément à la décision explicite du mainteneur.
+- **Historique des PR** : ajouté via #54 ; retrait tenté via #67 ; restauration via #216 ; nouvelle suppression tentée via #262 puis annulée par restauration exacte via #264. Ne pas ouvrir une nouvelle PR de suppression sans demande explicite.
+- **Droits** : les droits de redistribution restent non résolus. La conservation du binaire dans le dépôt est la décision opérationnelle du mainteneur, pas une conclusion juridique ni une autorisation de redistribution.
 - **Nature** : recueil éditorial complet, et non tiré-à-part du seul chapitre utile au projet.
 - **Contrôle documentaire** : une copie consultée antérieurement a servi à contrôler la page de titre, l'ISBN, la table des matières et le texte du chapitre 14. Cela étaye l'identification bibliographique et la lecture scientifique initiale, mais ne signifie pas que le PDF intégral est redistribuable.
-- **Matériaux conservés** : le dépôt contient aussi `raw/2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf` (pages 245–246 seulement) et `raw/extracts/2008-brun-mohammadi-springer-chap14-notes.txt` (notes analytiques, pas OCR intégral). Ils ne remplacent pas une vérification des équations et figures sur le chapitre original.
+- **Matériaux complémentaires conservés** : le dépôt contient aussi `raw/2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf` (pages 245–246 seulement) et `raw/extracts/2008-brun-mohammadi-springer-chap14-notes.txt` (notes analytiques, pas OCR intégral). Ils ne remplacent pas une vérification des équations et figures sur le chapitre original.
 
 ## Référence bibliographique
 
@@ -94,7 +95,7 @@ Ce chapitre est une source primaire particulièrement importante pour le noyau h
 
 ## Droits et conservation
 
-La copie historiquement consultée était une version éditeur du recueil complet. La page de copyright encadre la reproduction ou la transmission. Le dépôt ne conserve plus ce binaire ; il conserve la référence, les DOI et une analyse explicitement limitée par la source consultée. Pour toute reprise de lecture, privilégier une source légalement accessible ou une version auteur autorisée.
+La copie historiquement consultée était une version éditeur du recueil complet. La page de copyright encadre la reproduction ou la transmission. Le binaire complet reste conservé dans le dépôt conformément à la décision explicite du mainteneur. Pour toute reprise de lecture, privilégier une source légalement accessible ou une version auteur autorisée.
 
 ## Sources de contrôle
 
