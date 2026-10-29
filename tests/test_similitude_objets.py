@@ -39,9 +39,7 @@ def test_panache_objet_coherent_avec_api_vectorisee() -> None:
 def test_puff_objet_coherent_avec_api_vectorisee() -> None:
     """L'API objet accepte un point 3D et des parametres immuables."""
     point = Point3D(x=1500.0, y=10.0, z=5.0)
-    parametres = ParametresPuff(
-        t=500.0, masse=10.0, u=3.0, classe=ClasseStabilite.C
-    )
+    parametres = ParametresPuff(t=500.0, masse=10.0, u=3.0, classe=ClasseStabilite.C)
 
     obtenu = concentration_puff_au_point(point, parametres)
 
@@ -83,9 +81,7 @@ def test_point3d_refuse_coordonnees_non_finies(
         ({"t": 1.0, "masse": 1.0, "u": 2.0, "classe": "Z"}, "Classe de stabilite"),
     ],
 )
-def test_parametres_puff_valident_les_invariants(
-    kwargs: dict[str, object], message: str
-) -> None:
+def test_parametres_puff_valident_les_invariants(kwargs: dict[str, object], message: str) -> None:
     """Les paramètres du puff valident temps, masse, vent et classe."""
     with pytest.raises(ValueError, match=message):
         ParametresPuff(**kwargs)  # type: ignore[arg-type]
@@ -204,9 +200,7 @@ def test_puff_est_lineaire_en_masse(
         ("x0", math.inf),
     ],
 )
-def test_parametres_puff_refusent_les_valeurs_non_finies(
-    champ: str, valeur: float
-) -> None:
+def test_parametres_puff_refusent_les_valeurs_non_finies(champ: str, valeur: float) -> None:
     """Given un paramètre non fini, when construit, then l'objet le refuse."""
     valeurs: dict[str, object] = {
         "t": 1.0,
