@@ -1,6 +1,6 @@
 # Audit de la thèse de Brun — conservation du transport lointain (G0-S)
 
-**État au 29 octobre 2026 :** le texte de la thèse et la page imprimée 129 (équations 7.12–7.13) ont été inspectés sur une copie miroir tierce ; la forme imprimée des deux alternatives de $c^+$ est donc vérifiée visuellement sur cette copie, pas seulement via OCR. Le chapitre Springer 2008 a également été inspecté dans une copie tierce du recueil et imprime la même alternative avec la même définition sans dimension de $u_l^+$. **L'identité binaire entre ces copies tierces, le PDF poussé dans la branche et le fichier servi par HAL n'est pas vérifiée.** Le diagnostic dimensionnel est néanmoins indépendant de l'identité binaire, car les deux textes consultés montrent la même formule.
+**État au 29 octobre 2026 :** le PDF de thèse associé à HAL `tel-02589999` a déjà été obtenu par une voie appropriée, et cette provenance est documentée dans [`raw/provenance`](../raw/provenance/Modèles%20à%20complexité%20réduite%20de%20transport%20pour%20applications%20environnementales%20-%20pub00023263.pdf.md). Il ne faut pas recommencer l'acquisition. Le texte et la page imprimée 129 (équations 7.12–7.13) ont également été inspectés sur une copie miroir tierce ; la forme imprimée des deux alternatives de $c^+$ est vérifiée visuellement sur cette copie, pas seulement via OCR. Le chapitre Springer 2008 a été inspecté dans une copie tierce et imprime la même alternative avec la même définition sans dimension de $u_l^+$. **Le contrôle d'identité binaire entre le fichier HAL déjà obtenu, le PDF versionné et les copies tierces est une vérification distincte, dont le résultat doit être recherché dans les éléments de provenance existants avant de la déclarer manquante.** Le diagnostic dimensionnel est indépendant de cette identité binaire, car les deux textes consultés montrent la même formule.
 
 ## Sources et niveau de confiance
 
@@ -116,7 +116,7 @@ Le théorème conditionnel dans [la note de conservation](32-conservation-coordo
 
 - [ ] Ouvrir le PDF poussé dans la PR et confirmer visuellement la page de titre.
 - [ ] Confirmer le nombre de pages, les numéros de pages imprimées et la présence des pages 126–129.
-- [ ] Comparer le binaire à la copie miroir et au fichier HAL (empreinte SHA-256, puis comparaison du texte ou du PDF si les fichiers sont disponibles localement).
+- [ ] Consulter d'abord les éléments de provenance déjà archivés pour savoir si la comparaison du binaire versionné avec le fichier HAL déjà obtenu a été réalisée. Si elle ne l'a pas été, comparer les SHA-256 et, en cas de différence, les pages/texte. Ne pas relancer l'acquisition du PDF.
 - [ ] Vérifier les droits de redistribution du binaire présent dans Git.
 - [x] Vérifier visuellement sur la copie miroir la page imprimée 129 et les équations (7.12)–(7.13) ; comparer la forme de (7.12) au chapitre 2008 p. 248. Résultat : formule identique et incohérence dimensionnelle présente dans les deux sources. Cette vérification ne certifie pas l'identité du PDF versionné avec HAL.
 - [ ] Poursuivre la recherche d'une définition explicite de la transformation de coordonnées et d'une preuve de conservation dans la thèse, sans présumer qu'elle existe.
