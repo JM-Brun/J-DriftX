@@ -26,7 +26,10 @@ def _write_audit_fixture(audit_dir: Path) -> dict[str, bytes]:
                 "dataverse_label": filename,
                 "original_filename": filename,
                 "dataverse_file_id": 758565 + index,
-                "download_url": f"https://entrepot.recherche.data.gouv.fr/api/access/datafile/{758565 + index}?format=original",
+                "download_url": (
+                    "https://entrepot.recherche.data.gouv.fr/api/access/datafile/"
+                    f"{758565 + index}?format=original"
+                ),
                 "integrity": {
                     "expected_size_bytes": len(payload),
                     "actual_size_bytes": len(payload),
@@ -65,7 +68,7 @@ def test_staging_rejects_source_changed_after_audit(tmp_path: Path) -> None:
     _write_audit_fixture(audit_dir)
     (audit_dir / CORE_FILES[0]).write_bytes(b"changed after audit")
 
-    with pytest.raises(RuntimeError, match="Size changed|MD5 changed|SHA-256 changed"):
+    with pytest.raises(RuntimeError, match=r"Size changed|MD5 changed|SHA-256 changed"):
         load_verified_records(audit_dir)
 
 
