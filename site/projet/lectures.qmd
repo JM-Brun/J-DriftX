@@ -58,7 +58,7 @@ Le titre et la notice bibliographique identifient une communication consacrée �
 
 ## Le papier plateforme (2009) — le plus riche de tous
 
-**Bozon, N., Sinfort, C. & Mohammadi, B., « A GIS-based atmospheric dispersion model »** — actes STIC & Environnement (Calais), déposé sur [HAL](https://hal.science/hal-00468863). **Nouveauté de la relecture : une version journal existe**, *JESA* 44(4-5), 445–461, 2010.
+**Bozon, N., Sinfort, C. & Mohammadi, B., « A GIS-based atmospheric dispersion model »** — manuscrit auteur pour STIC & Environnement 2009, déposé sur [HAL hal-00468863](https://hal.science/hal-00468863). Une publication en revue existe aussi : *JESA* 44(4–5), 445–461, 2010, [DOI 10.3166/jesa.44.445-461](https://doi.org/10.3166/jesa.44.445-461), notice HAL distincte [hal-02594312](https://hal.inrae.fr/hal-02594312). Le manuscrit et l'article sont deux objets bibliographiques ; la comparaison des équations et résultats n'est pas encore terminée.
 
 Le manuscrit auteur de la communication (17 pages, version déposée en 2010) est accessible. Il décrit le modèle multi-niveaux et plusieurs choix de mise en œuvre ; il ne doit pas être traité comme indépendant de l'article Springer de 2009 ou de l'article JESA de 2010 sans comparaison des versions. Les points applicatifs ci-dessous sont conservés comme contexte historique, mais sont secondaires par rapport à la définition mathématique et à la chaîne de réduction du modèle.
 
