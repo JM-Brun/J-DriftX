@@ -30,7 +30,7 @@ Ces statuts décrivent la reproductibilité documentaire, pas l'utilité de la m
 
 ## 3.1 Registre de comparaison des versions (JESA 2010 / manuscrit 2009)
 
-**État au 29 octobre 2026 : comparaison des versions toujours partielle.** La source publiée JESA est identifiée par HAL `hal-02594312` et DOI `10.3166/jesa.44.445-461`. Le manuscrit auteur de 17 pages identifié par HAL `hal-00468863` est un document distinct. Le PDF JESA ne fait pas partie des fichiers PDF accessibles dans cette session (les sources visibles sont la thèse, le manuscrit 2009, l'article 2006 et l'extrait Springer 2008) ; son contenu ne peut donc pas être comparé ici. Le PDF JESA a déjà été obtenu par le mainteneur par une voie appropriée : **ne pas relancer l'acquisition**. Les observations ci-dessous décrivent uniquement le manuscrit 2009 et ne sont pas extrapolées à la publication finale.
+**État au 29 octobre 2026 : comparaison des versions toujours partielle.** La source publiée JESA est identifiée par HAL `hal-02594312` et DOI `10.3166/jesa.44.445-461`. Le manuscrit auteur de 17 pages identifié par HAL `hal-00468863` est un document distinct. Le PDF JESA ne fait pas partie des fichiers PDF accessibles dans cette session (les sources visibles sont la thèse, le manuscrit STIC 2009, l'article 2006 et l'extrait Springer 2008) ; son contenu ne peut donc pas être comparé ici. Le PDF JESA a déjà été obtenu par le mainteneur par une voie appropriée : **ne pas relancer l'acquisition**. Les observations ci-dessous décrivent uniquement le manuscrit 2009 et ne sont pas extrapolées à la publication finale.
 
 | Domaine | Manuscrit 2009 : repère existant | Contrôle requis sur JESA 2010 | Verdict actuel |
 |---|---|---|---|
