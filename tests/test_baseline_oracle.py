@@ -1,4 +1,4 @@
-"Tests de l'oracle scalaire indépendant pour l'étape 5."""
+"""Tests de l'oracle scalaire indépendant pour l'étape 5."""
 
 import math
 
@@ -36,8 +36,7 @@ def test_comparaison_reproductible_rejoint_la_tolerance_numerique() -> None:
     assert precision["all_within_tolerance"]
     assert precision["max_absolute_error_kg_m3"] <= (
         TOLERANCE_ABSOLUE
-        + TOLERANCE_RELATIVE
-        * max(point["oracle_kg_m3"] for point in precision["points"])
+        + TOLERANCE_RELATIVE * max(point["oracle_kg_m3"] for point in precision["points"])
     )
     assert rapport["cost"]["per_query_median_ms_baseline"] > 0.0
     assert rapport["cost"]["per_query_median_ms_oracle"] > 0.0
