@@ -303,6 +303,7 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
         },
     }
 
+
 def run(output_dir: Path, timeout: float) -> dict[str, Any]:  # noqa: PLR0915
     """Download core files, verify original bytes, and produce the audit report."""
     output_dir.mkdir(parents=True, exist_ok=True)

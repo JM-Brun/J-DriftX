@@ -61,10 +61,9 @@ def test_audit_reports_invalid_vega_bag_id(tmp_path: Path) -> None:
     report = audit_sampling_csv(path)
 
     assert report["semantic_checks"]["EA_literal_NA_and_VEGA_populated"] == "failed"
-    assert report["semantic_checks"]["violations"] == [
+    assert report["semantic_checks"]["sampling_bag_violations"] == [
         {"row": 3, "rule": "VEGA sampling_bag_id must be populated"}
     ]
-
 
 
 def test_audit_reports_descriptive_counts_and_detection_flag_consistency(
