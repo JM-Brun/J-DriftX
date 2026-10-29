@@ -100,9 +100,9 @@ Les tâches à accomplir, les investigations à faire et les validations requise
 - [#43](https://github.com/JM-Brun/J-DriftX/issues/43) — Besoin applicatif G0-A : **ouvert** — utilisateur, décision, observable, baseline et seuils à établir indépendamment de la méthode.
 - [#44](https://github.com/JM-Brun/J-DriftX/issues/44) — Ancrage documentaire M0 : **terminé** — décision « aucun autodépôt HAL » consignée, la thèse sera ajoutée plus tard au corpus ; issue fermée le 23/10/2026.
 
-Voir aussi [#13](https://github.com/JM-Brun/J-DriftX/issues/13) (audit des jeux de données candidats : l'audit documentaire en deux vagues est fait — [docs/20](https://github.com/JM-Brun/J-DriftX/blob/main/docs/20-audit-technique-jeux-donnees.md) et [docs/21](https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-jeux-donnees-seconde-vague-et-cas-synthetiques.md) — restent les téléchargements manuels et la vérification des licences) et [#17](https://github.com/JM-Brun/J-DriftX/issues/17) (squelette benchmarks/reference : **ouvert** — les familles de cas synthétiques S0–S3 y sont planifiées).
+Les audits de corpus sont suivis dans les issues actives [#204](https://github.com/JM-Brun/J-DriftX/issues/204) (DIFLU), [#205](https://github.com/JM-Brun/J-DriftX/issues/205) (ETEX/DATEM), [#206](https://github.com/JM-Brun/J-DriftX/issues/206) (ERIES) et [#207](https://github.com/JM-Brun/J-DriftX/issues/207) (priorisation et stratégie d'évaluation). L'ancienne [issue #13](https://github.com/JM-Brun/J-DriftX/issues/13) est close comme remplacée, pas comme audit terminé. Le squelette de benchmark S0 de l'[issue #17](https://github.com/JM-Brun/J-DriftX/issues/17) a été livré par la PR #223 et l'issue est close ; tout benchmark applicatif futur exige les audits G1 et une décision G0-A (#43), puis une issue dédiée.
 
-*État vérifié le 28/10/2026.*
+*État vérifié le 29/10/2026.*
 
 ## Référence éditoriale
 
