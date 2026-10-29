@@ -42,8 +42,7 @@ Sigles et termes spécialisés utilisés par cette note, définis ici à leur pr
 
 ## 2. Méthodologie (quatre étapes)
 
-1. **Marginale transverse** (cf. lexique) : Q(y, z, t) = ∫ C(x, y, z, t) dx vérifie l'EDP de diffusion 2D en temps (le vent uniforme transporte, la diffusion transverse étale) ; K = (u/2)·d
-σ²/dx à la distance parcourue d = u·t.
+1. **Marginale transverse** (cf. lexique) : Q(y, z, t) = ∫ C(x, y, z, t) dx vérifie l'EDP de diffusion 2D en temps (le vent uniforme transporte, la diffusion transverse étale) ; K = (u/2)·dσ²/dx à la distance parcourue d = u·t.
 2. **Entrée fermée** : au premier instant de passage (t_e = 100/u), la marginale analytique du package est posée sur la grille ; bords latéraux et sommet mis à zéro (Dirichlet, cf. lexique).
 3. **Marche FTCS** (schéma explicite, cf. lexique) : pas de temps t_e/2^k (k = 10 sur la grille fine, nombre de Fourier 0,235 au dernier passage ≤ 1/3) ; sol miroir (Neumann — exact car le noyau du puff est pair en z) ; instantanés prélevés aux instants de passage (pas 1024/3072/7168).
 4. **Comparaison dirigée** : C(x, y, z, t) = Q(y, z, t)·exp(−(x − x0 − u·t)²/2σx²)/(√(2π)σx), σx = σy (isotropie, cf. lexique) ; les points du cas S0 sont aux arcs, où le facteur gaussien longitudinal est évalué au passage.
@@ -74,8 +73,7 @@ Sigles et termes spécialisés utilisés par cette note, définis ici à leur pr
 
 ## 5. Limites explicites
 
-**Établit** : la cohérence interne du package entre la marche FTCS en temps de la marg
-inale transverse et la solution fermée du puff, sur le cas S0 figé.
+**Établit** : la cohérence interne du package entre la marche FTCS en temps de la marginale transverse et la solution fermée du puff, sur le cas S0 figé.
 
 **N'établit pas** : une validation physique (cas synthétique) ; une résolution numérique de la structure longitudinale (analytique : carte travel-time + isotropie du noyau fermé) ; le traitement du noyau symétrique en z autour du sol (moitié de la masse du noyau fermé formellement sous le sol ; la grille porte la demi-colonne miroir et les écarts de masse comparent la marginale analytique sur la même grille) ; une physique de l'isotropie σx = σy (portée par la solution fermée du package).
 
@@ -105,6 +103,6 @@ Le package sépare les considérations, une par module : une extension (nouveau 
 
 ## Références
 
-- Interne : [évaluation dirigée du puff](53-evaluation-puff-source-impusionnelle.md) ; [comparaison à référence indépendante](51-reference-independante-cas-s0.md) ; [cas de référence autonome](48-cas-reference-autonome-ecoulement-uniforme.md) ; [carte travel-time](37-transformation-tau-eta-cas-uniforme.md) ; [deux résolutions indépendantes et coûts mesurés](35-figure-03-modele-reduit-edp.md) ; [contrats d'interopérabilité PEP 544](42-contrats-interoperabilite.md) ; [squelette de benchmarks et registre des métriques](39-squelette-benchmarks-s0.md) ; [standards qualité des tests](40-standards-qualite-tests-proprietes.md).
+- Interne : [évaluation dirigée du puff](53-evaluation-puff-source-impulsionnelle.md) ; [comparaison à référence indépendante](51-reference-independante-cas-s0.md) ; [cas de référence autonome](48-cas-reference-autonome-ecoulement-uniforme.md) ; [carte travel-time](37-transformation-tau-eta-cas-uniforme.md) ; [deux résolutions indépendantes et coûts mesurés](35-figure-03-modele-reduit-edp.md) ; [contrats d'interopérabilité PEP 544](42-contrats-interoperabilite.md) ; [squelette de benchmarks et registre des métriques](39-squelette-benchmarks-s0.md) ; [standards qualité des tests](40-standards-qualite-tests-proprietes.md).
 - Standards : [PEP 544 — protocoles à typage structurel](https://peps.python.org/pep-0544/) ; métriques FAC2/NMSE du registre partagé ([issue #43](https://github.com/JM-Brun/J-DriftX/issues/43)).
 - Suivi : [issue #232 — baseline scientifique](https://github.com/JM-Brun/J-DriftX/issues/232) ; source étiquetée : Brun & Mohammadi (2008), [DOI 10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14).
