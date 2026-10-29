@@ -43,13 +43,11 @@ def _slug_heading(heading: str) -> str:
         if not unicodedata.combining(char)
     )
     heading = heading.replace("&", "-")
-    # GitHub keeps dash punctuation as a separator, while quotes and other
-    # punctuation are removed. Collapse whitespace runs to a single hyphen.
-    heading = "".join(
-        "-" if unicodedata.category(char) == "Pd" else char for char in heading
-    )
-    heading = re.sub(r"[^\w\-\s]", "", heading, flags=re.UNICODE)
-    heading = re.sub(r"\s+", "-", heading.strip().lower())
+    # GitHub anchors retain a double separator around an em dash while
+    # typographic quotes are removed without introducing extra separators.
+    heading = re.sub(r"\\s*[‐‑‒–—]\\s*", "--", heading)
+    heading = re.sub(r"[^\\w\\-\\s]", "", heading, flags=re.UNICODE)
+    heading = re.sub(r"\\s+", "-", heading.strip().lower())
     return heading.strip("-")
 
 
