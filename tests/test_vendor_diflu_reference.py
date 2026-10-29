@@ -14,10 +14,7 @@ from scripts.vendor_diflu_reference import CORE_FILES, load_verified_records, st
 def _write_audit_fixture(audit_dir: Path) -> dict[str, bytes]:
     """Create a minimal audit report and the three exact-byte source fixtures."""
     audit_dir.mkdir(parents=True)
-    payloads = {
-        filename: f"fixture for {filename}\n".encode()
-        for filename in CORE_FILES
-    }
+    payloads = {filename: f"fixture for {filename}\n".encode() for filename in CORE_FILES}
     records = []
     for index, (filename, payload) in enumerate(payloads.items(), start=1):
         (audit_dir / filename).write_bytes(payload)
@@ -93,7 +90,6 @@ def test_staging_refuses_to_overwrite_different_existing_bytes(tmp_path: Path) -
 
     with pytest.raises(RuntimeError, match="Refusing to overwrite different existing file"):
         stage(audit_dir, output_dir)
-
 
 
 def test_staging_is_idempotent_for_identical_sources(tmp_path: Path) -> None:
