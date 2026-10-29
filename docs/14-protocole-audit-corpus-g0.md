@@ -4,7 +4,7 @@
 
 ## 1. Règles communes
 
-Pour chaque corpus, vérifier neuf points ([preuves externes, §5](11-g0-evidence-externe.md)) :
+Pour chaque corpus, vérifier neuf points. Les éléments d'accès, de licence et de compatibilité ont ensuite été repris dans l'[audit technique des jeux de données, notamment §0 et §7](20-audit-technique-jeux-donnees.md) ; ce document postérieur remplace l'ancienne référence « preuves externes » :
 
 1. **Accès et licence** — URL stable, droits de réutilisation, citation attendue.
 2. **Terme source** — position, hauteur, débit d'émission, durée du lâcher documentés.
@@ -59,5 +59,5 @@ Pré-tri effectué le 22 octobre 2026 pour répondre à la question « existe-t-
 ## 6. Livrables et décision
 
 1. Un tableau rempli par corpus (verdict V/A/R + justification point par point), commité dans docs/.
-2. Mise à jour du champ (e) de la [fiche G0](13-fiche-g0-cadrage-besoin.md).
-3. Décision : au moins un verdict **V** → sortie G0 instruisable ; tous **R** → activation du critère d'arrêt n°1 (fiche G0, §7) et repli sur le [fallback](09-fallback-modele-jouet.md).
+2. Mise à jour du champ (e) de la fiche G0 historique : cette fiche n'est plus présente sous son ancien nom. Le résultat documenté est conservé dans l'[audit des corpus G0](15-audit-corpus-g0-resultats.md) ; le cadrage applicatif actuel est décrit séparément dans le [cadrage G0-A](38-cadrage-g0a-besoin-applicatif.md) et l'[issue de cadrage #43](https://github.com/JM-Brun/J-DriftX/issues/43).
+3. Décision : au moins un verdict **V** → sortie G0 instruisable ; tous **R** → activation du critère d'arrêt n°1 (critère d'arrêt historique du cadrage G0) et repli sur le [fallback](09-fallback-modele-jouet.md).
