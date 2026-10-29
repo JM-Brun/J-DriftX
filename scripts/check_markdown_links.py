@@ -44,7 +44,8 @@ def _slug_heading(heading: str) -> str:
     )
     heading = heading.replace("&", "-")
     heading = re.sub(r"[^\w\- ]", "", heading, flags=re.UNICODE)
-    return re.sub(r"[-\s]+", "-", heading.strip().lower()).strip("-")
+    # Preserve repeated separators as GitHub does for punctuation between words.
+    return re.sub(r"\s", "-", heading.strip().lower()).strip("-")
 
 
 def _heading_anchors(text: str) -> set[str]:
