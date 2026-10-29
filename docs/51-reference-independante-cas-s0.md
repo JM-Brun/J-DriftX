@@ -15,10 +15,10 @@
 Dans le cas uniforme, l’EDP de transport-diffusion se réduit à une diffusion transverse et verticale marchée en longitude :
 
 ~~~text
-∂C/∂x = (1/(2U)) · dσ_y²/dx · ∂²C/∂y² + (1/(2U)) · dσ_z²/dx · ∂²C/∂z²
+∂C/∂x = (1/2) · dσ_y²/dx · ∂²C/∂y² + (1/2) · dσ_z²/dx · ∂²C/∂z²
 ~~~
 
-avec K = (U/2)·dσ²/dx porté par la paramétrisation de Briggs ([note 24](24-classes-stabilite-pasquill-objet.md), source unique de vérité). La forme fermée du panache gaussien ([note 48](48-cas-reference-autonome-ecoulement-uniforme.md) §2.5) est la solution exacte de cette équation : les deux routes partagent la paramétrisation, et la comparaison contrôle la route de diffusion — pas la physique ni l’entrée.
+avec K_y = (U/2)·dσ_y²/dx et K_z = (U/2)·dσ_z²/dx dans l’équation de transport U·∂C/∂x = K_y·∂²C/∂y² + K_z·∂²C/∂z² ; après division par U, les coefficients de l’équation marchée en x sont donc (1/2)·dσ²/dx, sans facteur 1/U supplémentaire. Contrôle dimensionnel : dσ²/dx est en mètres et ∂²C/∂y² en kg·m⁻⁵, donc le membre droit est en kg·m⁻⁴, comme ∂C/∂x. La paramétrisation vient de Briggs ([note 24](24-classes-stabilite-pasquill-objet.md), source unique de vérité). La forme fermée du panache gaussien ([note 48](48-cas-reference-autonome-ecoulement-uniforme.md) §2.5) est la solution exacte de cette équation : les deux routes partagent la paramétrisation, et la comparaison contrôle la route de diffusion — pas la physique ni l’entrée.
 
 Choix numériques, tous étiquetés « reconstruction » :
 
