@@ -33,8 +33,8 @@ from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
 from jdriftx.experiences.transitoire_puff.solveur import (
     InstantPuff,
     PassagesPuff,
-    SolveurTransitoire,
     SolutionTransitoire,
+    SolveurTransitoire,
 )
 from jdriftx.similitude import concentration_puff, sigma_y
 

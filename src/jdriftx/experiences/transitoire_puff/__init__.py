@@ -74,8 +74,8 @@ from jdriftx.experiences.transitoire_puff.routes import (
 from jdriftx.experiences.transitoire_puff.solveur import (
     InstantPuff,
     PassagesPuff,
-    SolveurTransitoire,
     SolutionTransitoire,
+    SolveurTransitoire,
     resoudre_transitoire,
 )
 
