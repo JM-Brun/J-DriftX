@@ -1,6 +1,6 @@
 # Revues détaillées des papiers sources — index
 
-Ce fichier est un **index de fiches individuelles**, pas un document de lecture monolithique. Chaque fiche distingue le contenu réellement consulté, le statut d'accès et les limites de ce que la source permet d'affirmer. Les synthèses thématiques de la bibliographie restent dans [`docs/bibliographie/`](bibliographie/).
+Ce fichier est l'**index canonique des fiches de lecture source par source** ; ce n'est pas une synthèse bibliographique ni un registre de tâches. Chaque fiche distingue le contenu réellement consulté, le statut d'accès et les limites de ce que la source permet d'affirmer. Pour les relations entre littérature et hypothèses du projet, utiliser la [bibliographie annotée](bibliographie-annotee-jdriftx.md) ; pour la liste générale des références, utiliser [references.md](references.md) ; les synthèses thématiques restent dans [`docs/bibliographie/`](bibliographie/).
 
 ## Fiches source par source
 
