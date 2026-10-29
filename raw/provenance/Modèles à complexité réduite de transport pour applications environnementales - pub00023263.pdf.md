@@ -1,6 +1,6 @@
 # Provenance — Modèles à complexité réduite de transport pour applications environnementales - pub00023263.pdf
 
-**État :** le binaire est présent dans la branche de la PR documentaire ; l'authentification documentaire reste à terminer.
+**État :** le binaire est présent dans la branche de la PR documentaire. Le texte de la thèse a été consulté via une copie miroir tierce ; l'identité du binaire versionné avec cette copie et le fichier HAL reste à établir.
 
 ## Référence et liens
 
@@ -13,7 +13,7 @@ Référence provisoire : Brun, J.-M., thèse sur la modélisation à complexité
 
 ## Provenance et limites
 
-Le fichier a été ajouté à la branche de la PR par le mainteneur. Le chemin précis d'obtention du binaire, la date et la méthode de téléchargement ne sont pas consignés ici ; ne pas les déduire de l'URL de référence. L'accès automatisé précédent à l'URL HAL avait rencontré la protection Anubis, et ne permettait pas de lire le document. La copie désormais poussée dans la PR doit être contrôlée directement.
+Le fichier a été ajouté à la branche de la PR par le mainteneur. Le chemin précis d'obtention du binaire, la date et la méthode de téléchargement ne sont pas consignés ici ; ne pas les déduire de l'URL de référence. L'accès automatisé à l'URL HAL a rencontré la protection Anubis. Une copie miroir tierce de 201 pages a ensuite pu être consultée : https://www.mcours.net/cours/pdf/yass2/yass2cllic260.pdf. Son texte concorde avec la notice et contient notamment les équations (7.12)–(7.13), p. 129, analysées dans [docs/41](../../docs/41-audit-these-brun-conservation-g0s.md). Cela ne prouve pas que le binaire versionné est identique à cette copie ou au fichier HAL.
 
 ## Contrôles requis
 
@@ -23,7 +23,8 @@ Le fichier a été ajouté à la branche de la PR par le mainteneur. Le chemin p
 - [ ] Consigner la source effectivement utilisée pour obtenir le binaire et la date d'obtention.
 - [ ] Vérifier les droits de redistribution du fichier dans Git ; si nécessaire, remplacer le binaire par un lien vers la source institutionnelle.
 - [ ] Calculer et consigner une empreinte SHA-256 du fichier réel depuis un checkout local.
-- [ ] Produire une extraction texte avec méthode et pages documentées, puis une fiche de lecture.
-- [ ] Vérifier les équations de conservation sur les pages originales avant de mettre à jour [la note de conservation](../../docs/32-conservation-coordonnees-travel-time.md).
+- [x] Consulter le texte via une copie miroir tierce et documenter les équations (7.12)–(7.13), p. 129, dans [la note d'audit](../../docs/41-audit-these-brun-conservation-g0s.md). Cette lecture ne remplace pas l'authentification du binaire.
+- [ ] Produire une extraction texte du binaire versionné avec méthode et pages documentées.
+- [ ] Vérifier les équations de conservation sur le PDF versionné avant de finaliser [la note de conservation](../../docs/32-conservation-coordonnees-travel-time.md).
 
 Ne pas inférer le contenu de la thèse depuis les articles qui la citent.
