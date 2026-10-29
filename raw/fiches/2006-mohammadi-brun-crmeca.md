@@ -27,4 +27,4 @@ Définition de référence de la métrique (contrat du module <code>metrique</co
 
 ## Pour aller plus loin
 
-Fiche détaillée : <code>docs/04-revues-papiers-sources.md</code>, section 2.
+Fiche source détaillée : [Mohammadi & Brun (2006), C. R. Mécanique](../../docs/bibliographie/sources/mohammadi-brun-2006-cr-mecanique.md). L'index général est [docs/04](../../docs/04-revues-papiers-sources.md).

@@ -23,7 +23,7 @@ Source riche en détails d'implémentation historique : forme de panache, restri
 
 ## Pour aller plus loin
 
-Fiche détaillée : <code>docs/04-revues-papiers-sources.md</code>, section 6.
+Fiche source détaillée : [plateforme Drift-X 2009](../../docs/bibliographie/sources/bozon-sinfort-mohammadi-2009-driftx.md). L'index général est [docs/04](../../docs/04-revues-papiers-sources.md).
 
 
 ## Analyse approfondie — signification des niveaux et propriétés à préserver
@@ -45,4 +45,4 @@ Le terme « multi-niveaux » recouvre ici un **raffinement spatial emboîté**, 
 5. Comparer séparément la construction spatiale et le couplage champ proche / transport lointain : elles répondent à des questions différentes.
 6. Associer chaque propriété au code réellement existant. La présente fiche décrit l'architecture historique ; elle n'affirme pas que la réimplémentation Python actuelle la reproduit.
 
-Voir aussi la [revue du corpus](../../docs/04-revues-papiers-sources.md#complment-danalyse--deux-sens-distincts-de-multi-niveaux) et la [carte conceptuelle N0–N6](../../site/projet/niveaux-modelisation.qmd).
+Voir aussi la [revue du corpus](../../docs/bibliographie/sources/bozon-sinfort-mohammadi-2009-driftx.md#complment-danalyse--deux-sens-distincts-de-multi-niveaux) et la [carte conceptuelle N0–N6](../../site/projet/niveaux-modelisation.qmd).
