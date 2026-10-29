@@ -1,6 +1,6 @@
 # Synthèse et état historique de l'accès aux sources — corpus Drift-X
 
-> **Document historique.** Les tableaux de disponibilité et la liste d'extraction proviennent d'octobre 2026. Ils préservent le raisonnement bibliographique d'origine, mais ne font pas foi comme backlog ni comme état actuel des accès. Les décisions courantes sont portées par les issues publiques propriétaires et l'index des sources.
+> **Document historique.** Les tableaux de disponibilité et la liste d'extraction proviennent d'octobre 2026. Les numéros de source/fiches (1–7) renvoient à l'ancien ordre du document monolithique `docs/04-revues-papiers-sources.md`, désormais remplacé par des fiches individuelles. Ils préservent le raisonnement bibliographique d'origine, mais ne font pas foi comme backlog ni comme état actuel des accès. Les décisions courantes sont portées par les issues publiques propriétaires et l'index des sources.
 >
 > Pour les fiches individuelles, voir l'[index des revues par source](../04-revues-papiers-sources.md). Les synthèses thématiques se trouvent dans [`docs/bibliographie/`](../bibliographie/).
 
