@@ -28,6 +28,10 @@ notions / documentation / code est tenue dans docs/30 (section 9, « Carte
 explicite ») et la matrice de traçabilité docs/27 ; pourquoi tester chaque
 propriété séparément : docs/30, section 2. Aucune de ces propriétés ne
 constitue une validation physique.
+
+L'extension du 29 octobre (2e série) porte sur les objets d'exploration
+interactifs de terrain.py et fields.py (recommandation P3 de la note 41) :
+bornes, symétries et invariances de leurs formes fermées.
 """
 
 import math
@@ -42,11 +46,13 @@ from jdriftx.benchmarks.cas import CasS0
 from jdriftx.benchmarks.metriques import fac2, nmse
 from jdriftx.experiences.cas_synthetiques import FRACTION_CALIBRATION, construire_partition
 from jdriftx.experiences.uniforme import ChampUniforme, ScenarioUniforme, resoudre_scenario
+from jdriftx.fields import vector_field
 from jdriftx.metric import temps_premiere_arrivee_1d
 from jdriftx.periodic_transport import periodic_sine_solution
 from jdriftx.similitude import concentration_panache, sigma_y, sigma_z
 from jdriftx.source import SourcePanache
 from jdriftx.stabilite import ClasseStabilite
+from jdriftx.terrain import terrain_surface
 
 
 def _vents_non_nuls():
@@ -553,3 +559,245 @@ def test_sine_periodique_bornee_et_periodique(
     assert np.all(concentrations >= moyenne - amplitude * amortissement - 1e-9)
     assert np.all(concentrations <= moyenne + amplitude * amortissement + 1e-9)
     assert concentrations[0] == pytest.approx(concentrations[-1], abs=1e-9)
+
+
+@settings(deadline=None)
+@given(
+    deplacements=st.lists(st.floats(-20.0, 20.0), min_size=1, max_size=8),
+    hauteur=st.floats(-10.0, 10.0),
+    largeur=st.floats(0.1, 5.0),
+    centre_x=st.floats(-50.0, 50.0),
+    centre_y=st.floats(-50.0, 50.0),
+)
+def test_terrain_plat_est_nul(deplacements, hauteur, largeur, centre_x, centre_y) -> None:
+    """Le terrain plat est identiquement nul, quels que soient ses paramètres.
+
+    Référence : la forme "flat" de terrain_surface (src/jdriftx/terrain.py)
+    ne dépend ni de la hauteur ni de la largeur. Cas fixé voisin :
+    tests/test_terrain.py. Ces surfaces sont des exemples d'enseignement,
+    pas de la topographie mesurée.
+    """
+    # Given — des points quelconques autour du centre, paramètres libres.
+    abcisses = np.asarray([centre_x + valeur for valeur in deplacements])
+    ordonnees = np.asarray([centre_y - valeur for valeur in deplacements])
+    # When — on évalue la surface plate.
+    surface = terrain_surface(
+        abcisses,
+        ordonnees,
+        "flat",
+        height=hauteur,
+        width=largeur,
+        center_x=centre_x,
+        center_y=centre_y,
+    )
+    # Then — toutes les valeurs sont exactement nulles.
+    assert np.all(surface == 0.0)
+
+
+@settings(deadline=None)
+@given(
+    forme=st.sampled_from(["hill", "valley", "ridge"]),
+    hauteur=st.floats(-10.0, 10.0),
+    largeur=st.floats(0.1, 5.0),
+    dx=st.floats(-30.0, 30.0),
+    dy=st.floats(-30.0, 30.0),
+    centre_x=st.floats(-50.0, 50.0),
+    centre_y=st.floats(-50.0, 50.0),
+)
+def test_terrain_borne_par_hauteur(forme, hauteur, largeur, dx, dy, centre_x, centre_y) -> None:
+    """Toute surface synthétique non plate est bornée par la hauteur absolue.
+
+    Référence : les formes "hill", "valley" et "ridge" de terrain_surface
+    multiplient la hauteur par une exponentielle d'un réel négatif : la
+    valeur absolue de l'altitude reste sous la valeur absolue de la hauteur.
+    """
+    # Given — un point quelconque et des paramètres finis.
+    abcisses = np.asarray([centre_x + dx])
+    ordonnees = np.asarray([centre_y + dy])
+    # When — on évalue la surface.
+    surface = terrain_surface(
+        abcisses,
+        ordonnees,
+        forme,
+        height=hauteur,
+        width=largeur,
+        center_x=centre_x,
+        center_y=centre_y,
+    )
+    # Then — l'altitude est bornée par la valeur absolue de la hauteur.
+    assert np.all(np.abs(surface) <= abs(hauteur))
+
+
+@settings(deadline=None)
+@given(
+    hauteur=st.floats(-10.0, 10.0),
+    largeur=st.floats(0.1, 5.0),
+    dx=st.floats(-30.0, 30.0),
+    dy=st.floats(-30.0, 30.0),
+    centre_x=st.floats(-50.0, 50.0),
+    centre_y=st.floats(-50.0, 50.0),
+)
+def test_terrain_colline_symetrique(hauteur, largeur, dx, dy, centre_x, centre_y) -> None:
+    """La colline est symétrique par rapport à son centre en x et en y.
+
+    Référence : la forme "hill" ne dépend que de la somme des carrés des
+    écarts au centre ; le point symétrique a la même altitude à
+    l'arrondi près : l'écart recalculé (centre + déplacement) - centre
+    n'est pas exact en virgule flottante, l'égalité est donc relative.
+    """
+    # Given — un point et son symétrique par rapport au centre.
+    x_plus = np.asarray([centre_x + dx])
+    y_plus = np.asarray([centre_y + dy])
+    x_moins = np.asarray([centre_x - dx])
+    y_moins = np.asarray([centre_y - dy])
+    # When — on évalue la colline aux deux points.
+    altitude_plus = terrain_surface(
+        x_plus,
+        y_plus,
+        "hill",
+        height=hauteur,
+        width=largeur,
+        center_x=centre_x,
+        center_y=centre_y,
+    )
+    altitude_moins = terrain_surface(
+        x_moins,
+        y_moins,
+        "hill",
+        height=hauteur,
+        width=largeur,
+        center_x=centre_x,
+        center_y=centre_y,
+    )
+    # Then — les deux altitudes coïncident à l'arrondi près.
+    assert altitude_plus[0] == pytest.approx(altitude_moins[0], rel=1e-12)
+
+
+@settings(deadline=None)
+@given(
+    hauteur=st.floats(1.0, 10.0),
+    largeur=st.floats(0.1, 5.0),
+    x1=st.floats(-50.0, 50.0),
+    x2=st.floats(-50.0, 50.0),
+    y=st.floats(-50.0, 50.0),
+    centre_x=st.floats(-20.0, 20.0),
+    centre_y=st.floats(-20.0, 20.0),
+)
+def test_terrain_crete_invariante_en_x(hauteur, largeur, x1, x2, y, centre_x, centre_y) -> None:
+    """La crête ne dépend pas de la coordonnée longitudinale.
+
+    Référence : la forme "ridge" ne dépend que de l'écart transversal au
+    carré : deux points de même ordonnée ont la même altitude, quelle que
+    soit leur abscisse.
+    """
+    # Given — deux abscisses quelconques et une même ordonnée.
+    # When — on évalue la crête aux deux points.
+    altitude_1 = terrain_surface(
+        np.asarray([x1]),
+        np.asarray([y]),
+        "ridge",
+        height=hauteur,
+        width=largeur,
+        center_x=centre_x,
+        center_y=centre_y,
+    )
+    altitude_2 = terrain_surface(
+        np.asarray([x2]),
+        np.asarray([y]),
+        "ridge",
+        height=hauteur,
+        width=largeur,
+        center_x=centre_x,
+        center_y=centre_y,
+    )
+    # Then — les deux altitudes coïncident exactement.
+    assert altitude_1[0] == altitude_2[0]
+
+
+@settings(deadline=None)
+@given(
+    vitesse=st.floats(-5.0, 5.0).filter(lambda valeur: abs(valeur) >= 0.1),
+    angle_degres=st.floats(-180.0, 180.0),
+)
+def test_champ_uniforme_est_constant(vitesse, angle_degres) -> None:
+    """Le champ uniforme a les mêmes composantes exactes en tout point.
+
+    Référence : la forme "uniform" de vector_field (src/jdriftx/fields.py) :
+    u = vitesse*cos(angle) et v = vitesse*sin(angle), indépendants du point
+    évalué. Cas fixé voisin : tests/test_fields.py.
+    """
+    # Given — deux points éloignés de la grille.
+    u_proche, v_proche = vector_field(
+        np.asarray([0.0]), np.asarray([0.0]), "uniform", speed=vitesse, angle_deg=angle_degres
+    )
+    u_loin, v_loin = vector_field(
+        np.asarray([123.4]), np.asarray([-456.7]), "uniform", speed=vitesse, angle_deg=angle_degres
+    )
+    # When — on forme les composantes attendues.
+    angle = math.radians(angle_degres)
+    # Then — le champ est constant et égal aux composantes attendues.
+    assert u_proche[0] == u_loin[0]
+    assert v_proche[0] == v_loin[0]
+    assert u_proche[0] == pytest.approx(vitesse * math.cos(angle), rel=1e-12)
+    assert v_proche[0] == pytest.approx(vitesse * math.sin(angle), rel=1e-12)
+
+
+@settings(deadline=None)
+@given(
+    vitesse=st.floats(-5.0, 5.0).filter(lambda valeur: abs(valeur) >= 0.1),
+    angle_degres=st.floats(-180.0, 180.0),
+    cisaillement=st.floats(-2.0, 2.0).filter(lambda valeur: abs(valeur) >= 0.05),
+    y1=st.floats(-50.0, 50.0),
+    y2=st.floats(-50.0, 50.0),
+)
+def test_champ_cisaille_est_lineaire_en_y(vitesse, angle_degres, cisaillement, y1, y2) -> None:
+    """Le champ cisaillé garde v constant et u linéaire en ordonnée.
+
+    Référence : la forme "shear" : u = vitesse*cos(angle) + cisaillement*y
+    et v = vitesse*sin(angle). Entre deux points de même abscisse,
+    u(y2) - u(y1) vaut exactement cisaillement*(y2 - y1).
+    """
+    # Given — deux points de même abscisse à des ordonnées quelconques.
+    u1, v1 = vector_field(
+        np.asarray([10.0]),
+        np.asarray([y1]),
+        "shear",
+        speed=vitesse,
+        angle_deg=angle_degres,
+        shear=cisaillement,
+    )
+    u2, v2 = vector_field(
+        np.asarray([10.0]),
+        np.asarray([y2]),
+        "shear",
+        speed=vitesse,
+        angle_deg=angle_degres,
+        shear=cisaillement,
+    )
+    # When — on compare les deux évaluations.
+    # Then — v est identique et u croît du gradient attendu.
+    assert v1[0] == v2[0]
+    assert (u2[0] - u1[0]) == pytest.approx(cisaillement * (y2 - y1), rel=1e-9, abs=1e-12)
+
+
+@settings(deadline=None)
+@given(
+    force=st.floats(-3.0, 3.0).filter(lambda valeur: abs(valeur) >= 0.05),
+    x=st.floats(-50.0, 50.0),
+    y=st.floats(-50.0, 50.0),
+)
+def test_champ_radial_est_colineaire_au_rayon(force, x, y) -> None:
+    """Le champ radial est partout colinéaire au rayon vecteur.
+
+    Référence : la forme "radial" : (u, v) = force*(x, y) : le produit
+    vectoriel u*y - v*x est nul et la norme du champ vaut |force| fois la
+    norme du rayon. Le sens (source ou puits) suit le signe de force.
+    """
+    # Given — un point quelconque du plan.
+    u, v = vector_field(np.asarray([x]), np.asarray([y]), "radial", radial_strength=force)
+    # When — on forme le produit vectoriel et la norme du champ.
+    produit_vectoriel = float(u[0]) * y - float(v[0]) * x
+    norme_champ = math.hypot(float(u[0]), float(v[0]))
+    # Then — colinéarité et norme attendue, au sens près.
+    assert produit_vectoriel == pytest.approx(0.0, abs=1e-9)
+    assert norme_champ == pytest.approx(abs(force) * math.hypot(x, y), rel=1e-9)
