@@ -543,6 +543,18 @@ type = "module"
 libelle = "benchmarks/reference.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/reference.py"
 
+[[noeuds]]
+id = "benchmarks/cas"
+type = "module"
+libelle = "benchmarks/cas.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/cas.py"
+
+[[noeuds]]
+id = "benchmarks/metriques"
+type = "module"
+libelle = "benchmarks/metriques.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/metriques.py"
+
 # ---------- Nœuds : tests ----------
 
 [[noeuds]]
@@ -1689,7 +1701,7 @@ relation = "couvre"
 justification = "tests/test_cas_synthetiques.py : génération des cas synthétiques à vérité exacte."
 
 [[aretes]]
-de = "benchmarks/reference"
+de = "benchmarks/cas"
 vers = "similitude"
 relation = "utilise"
 
@@ -1698,6 +1710,28 @@ de = "t-benchmarks"
 vers = "benchmarks/reference"
 relation = "couvre"
 justification = "tests/test_benchmarks_reference.py : cas S0, métriques FAC2/NMSE et commande auto-cohérence."
+
+[[aretes]]
+de = "t-benchmarks"
+vers = "benchmarks/cas"
+relation = "couvre"
+justification = "tests/test_benchmarks_reference.py : contrat du cas, registre et grille exercés."
+
+[[aretes]]
+de = "t-benchmarks"
+vers = "benchmarks/metriques"
+relation = "couvre"
+justification = "tests/test_benchmarks_reference.py : conventions FAC2/NMSE et registre exercés."
+
+[[aretes]]
+de = "benchmarks/reference"
+vers = "benchmarks/cas"
+relation = "utilise"
+
+[[aretes]]
+de = "benchmarks/reference"
+vers = "benchmarks/metriques"
+relation = "utilise"
 
 # ---------- Vues ----------
 
@@ -1765,7 +1799,8 @@ noeuds = [
   "t-cas-synthetiques",
   "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
   "t-graphe", "t-extraction", "t-diagnostic",
-  "benchmarks/reference", "t-benchmarks",
+  "benchmarks/cas", "benchmarks/metriques", "benchmarks/reference",
+  "t-benchmarks",
 ]
 
   [[graphes.groupes]]
@@ -1794,7 +1829,7 @@ noeuds = [
   [[graphes.groupes]]
   id = "sol"
   titre = "Socle gaussien"
-  noeuds = ["similitude", "stabilite", "c-panache", "c-stabilite", "benchmarks/reference"]
+  noeuds = ["similitude", "stabilite", "c-panache", "c-stabilite"]
 
   [[graphes.groupes]]
   id = "rfs"
@@ -1818,7 +1853,15 @@ noeuds = [
     "t-relief", "t-figure-05", "t-modele-reduit-edp", "t-figure-03",
     "t-identification", "t-figure-06",
     "t-wind-field", "t-interactif",
-    "t-cas-synthetiques", "t-benchmarks",
+    "t-cas-synthetiques",
+  ]
+
+  [[graphes.groupes]]
+  id = "ben"
+  titre = "Benchmarks de référence"
+  noeuds = [
+    "benchmarks/cas", "benchmarks/metriques", "benchmarks/reference",
+    "t-benchmarks",
   ]
 
 [[graphes]]

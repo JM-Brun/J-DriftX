@@ -62,7 +62,7 @@ sur main).
 | `36-identification-source.md` | Figure 6 du chapitre 2008 : identification de source, carte de sensibilité du coût |
 | `37-transformation-tau-eta-cas-uniforme.md` | Carte travel-time explicite pour le champ uniforme de référence : jacobien, théorème conditionnel d'égalité des flux, verdict sur les affirmations historiques |
 | `38-cadrage-g0a-besoin-applicatif.md` | Cadrage G0-A : utilisateur cible, décision, observable, baseline équitable et limites du corpus CAPRIV |
-| `39-squelette-benchmarks-s0.md` | Squelette benchmarks/reference : cas analytique S0, métriques FAC2/NMSE, commande reproductible |
+| `39-squelette-benchmarks-s0.md` | Squelette de benchmarks : cas analytique S0, registres de cas et de métriques, évaluation reproductible, standards (MVK, ASTM D6589, CF, PDEBench) |
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
 | `bibliographie/` | Dossier bibliographique |
