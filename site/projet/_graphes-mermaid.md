@@ -157,6 +157,7 @@ graph TD
   end
   subgraph sol["Socle gaussien"]
     similitude["similitude.py"]::module
+    similitude_objets["similitude_objets.py"]::module
     stabilite["stabilite.py"]::module
     source["source.py"]::module
     c_panache["Panache gaussien (similitude)"]::concept
@@ -329,6 +330,7 @@ graph TD
 | experiences/modele_reduit_edp.py | Module de code | [modele_reduit_edp.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/modele_reduit_edp.py) |
 | experiences/identification_source.py | Module de code | [identification_source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/identification_source.py) |
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
+| similitude_objets.py | Module de code | [similitude_objets.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude_objets.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
 | source.py | Module de code | [source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/source.py) |
 | contrats.py | Module de code | [contrats.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/contrats.py) |
