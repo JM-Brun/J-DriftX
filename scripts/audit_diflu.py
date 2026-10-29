@@ -85,49 +85,160 @@ def verify_original(payload: bytes, metadata: dict[str, Any], filename: str) -> 
 
 
 def audit_sampling_csv(path: Path) -> dict[str, Any]:
-    """Audit CSV structure and the documented EA/VEGA sampling-bag invariant."""
+    """Audit structure and emit descriptive data-quality checks without rewriting source values."""
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
         reader = csv.DictReader(stream)
         if not reader.fieldnames:
             raise RuntimeError("Sampling file has no CSV header")
+        fieldnames = list(reader.fieldnames)
         required = {"sampling_type", "sampling_bag_id"}
-        missing_columns = sorted(required - set(reader.fieldnames))
+        missing_columns = sorted(required - set(fieldnames))
         if missing_columns:
             raise RuntimeError(f"Sampling file lacks required columns: {missing_columns}")
         rows = list(reader)
 
-    type_counts = Counter((row.get("sampling_type") or "").strip() for row in rows)
-    bag_counts = Counter(
-        ((row.get("sampling_type") or "").strip(), (row.get("sampling_bag_id") or "").strip())
-        for row in rows
-    )
-    violations = []
+    def value(row: dict[str, str | None], column: str) -> str:
+        return (row.get(column) or "").strip()
+
+    type_counts = Counter(value(row, "sampling_type") for row in rows)
+    bag_counts = Counter((value(row, "sampling_type"), value(row, "sampling_bag_id")) for row in rows)
+    violations: list[dict[str, Any]] = []
     for row_number, row in enumerate(rows, start=2):
-        sampling_type = (row.get("sampling_type") or "").strip()
-        bag_id = (row.get("sampling_bag_id") or "").strip()
+        sampling_type = value(row, "sampling_type")
+        bag_id = value(row, "sampling_bag_id")
         if sampling_type == "EA" and bag_id != "NA":
             violations.append({"row": row_number, "rule": "EA sampling_bag_id must be literal NA"})
         elif sampling_type == "VEGA" and (not bag_id or bag_id == "NA"):
             violations.append({"row": row_number, "rule": "VEGA sampling_bag_id must be populated"})
+
+    missingness: dict[str, dict[str, int]] = {}
+    for column in fieldnames:
+        counts = {
+            "literal_NA": sum(value(row, column) == "NA" for row in rows),
+            "blank": sum(value(row, column) == "" for row in rows),
+            "below_detection_marker": sum(value(row, column) == "< LC" for row in rows),
+        }
+        if any(counts.values()):
+            missingness[column] = counts
+
+    experiment_counts: dict[str, int] = {}
+    if "experiment_id" in fieldnames:
+        experiment_counts = dict(sorted(Counter(value(row, "experiment_id") for row in rows).items()))
+
+    flag_counts: dict[str, int] = {}
+    flag_violations: list[dict[str, Any]] = []
+    flag_column = "helium_concentration_sampling_bg_corrected_flag"
+    corrected_column = "helium_concentration_sampling_bg_corrected"
+    passage_column = "helium_concentration_sampling_bg_passage_corrected"
+    if flag_column in fieldnames:
+        flag_counts = dict(sorted(Counter(value(row, flag_column) for row in rows).items()))
+        for row_number, row in enumerate(rows, start=2):
+            flag = value(row, flag_column)
+            corrected = value(row, corrected_column) if corrected_column in fieldnames else ""
+            passage = value(row, passage_column) if passage_column in fieldnames else ""
+            if flag == "< LC" and corrected_column in fieldnames and corrected != "NA":
+                flag_violations.append({
+                    "row": row_number,
+                    "rule": "< LC flag requires literal NA in background-corrected concentration",
+                })
+            elif flag == "significant" and corrected_column in fieldnames and corrected in {"", "NA", "< LC"}:
+                flag_violations.append({
+                    "row": row_number,
+                    "rule": "significant flag requires a numeric background-corrected concentration",
+                })
+            if flag == "< LC" and passage_column in fieldnames and passage != "NA":
+                flag_violations.append({
+                    "row": row_number,
+                    "rule": "< LC flag requires literal NA in passage-corrected concentration",
+                })
+
+    time_summary: dict[str, Any] = {}
+    start_column, end_column = "sampling_start_time", "sampling_end_time"
+    if start_column in fieldnames and end_column in fieldnames:
+        durations = Counter()
+        invalid_times = []
+        reversed_intervals = []
+        for row_number, row in enumerate(rows, start=2):
+            try:
+                start_time = datetime.fromisoformat(value(row, start_column).replace("Z", "+00:00"))
+                end_time = datetime.fromisoformat(value(row, end_column).replace("Z", "+00:00"))
+                duration = int((end_time - start_time).total_seconds())
+                durations[str(duration)] += 1
+                if duration < 0:
+                    reversed_intervals.append(row_number)
+            except (ValueError, TypeError):
+                invalid_times.append(row_number)
+        time_summary = {
+            "duration_seconds_counts": dict(sorted(durations.items(), key=lambda item: int(item[0]))),
+            "invalid_timestamp_rows": invalid_times,
+            "reversed_interval_rows": reversed_intervals,
+        }
+
+    duplicate_summary: dict[str, Any] = {}
+    identity_columns = [
+        "experiment_id", "sampling_type", "sampling_id", "sampling_bag_id",
+        "sampling_start_time", "sampling_end_time",
+    ]
+    if all(column in fieldnames for column in identity_columns):
+        keys = [tuple(value(row, column) for column in identity_columns) for row in rows]
+        duplicate_summary = {
+            "identity_columns": identity_columns,
+            "duplicate_key_row_count": len(keys) - len(set(keys)),
+        }
+
+    numeric_ranges: dict[str, dict[str, float | int]] = {}
+    numeric_columns = [
+        "helium_release_height", "helium_release_flow", "sampling_latitude",
+        "sampling_longitude", "sampling_height", "sampling_flowrate",
+        "helium_concentration_decision_threshold",
+        "helium_concentration_sampling_bg_corrected",
+        "helium_concentration_sampling_bg_passage_corrected",
+    ]
+    for column in numeric_columns:
+        if column not in fieldnames:
+            continue
+        parsed = []
+        for row in rows:
+            raw = value(row, column)
+            if raw in {"", "NA", "< LC"}:
+                continue
+            try:
+                number = float(raw)
+            except ValueError:
+                continue
+            if number == number and abs(number) != float("inf"):
+                parsed.append(number)
+        if parsed:
+            numeric_ranges[column] = {"min": min(parsed), "max": max(parsed), "numeric_count": len(parsed)}
+
     return {
         "file": path.name,
         "row_count": len(rows),
-        "column_count": len(reader.fieldnames),
-        "columns": reader.fieldnames,
+        "column_count": len(fieldnames),
+        "columns": fieldnames,
         "sampling_type_counts": dict(sorted(type_counts.items())),
         "sampling_bag_id_counts": {
             f"{kind}:{bag}": count for (kind, bag), count in sorted(bag_counts.items())
         },
+        "unique_experiment_count": len(experiment_counts) if "experiment_id" in fieldnames else None,
+        "rows_per_experiment": experiment_counts,
+        "flag_counts": flag_counts,
+        "missingness": missingness,
+        "time_checks": time_summary,
+        "duplicate_identity_check": duplicate_summary,
+        "numeric_ranges": numeric_ranges,
         "semantic_checks": {
             "EA_literal_NA_and_VEGA_populated": "passed" if not violations else "failed",
-            "violations": violations,
+            "sampling_bag_violations": violations,
+            "detection_flag_consistency": "passed" if not flag_violations else "failed",
+            "detection_flag_violations": flag_violations,
             "note": (
-                "Literal NA is preserved as a domain value for EA; "
-                "no global NA normalization is performed."
+                "Literal NA is preserved as a domain value for EA and is reported per column; "
+                "no global NA normalization is performed. Descriptive counts do not establish "
+                "scientific validity or independence of experiments."
             ),
         },
     }
-
 
 def run(output_dir: Path, timeout: float) -> dict[str, Any]:  # noqa: PLR0915
     """Download core files, verify original bytes, and produce the audit report."""
@@ -229,8 +340,8 @@ def run(output_dir: Path, timeout: float) -> dict[str, Any]:  # noqa: PLR0915
                 "and MD5 metadata."
             ),
             (
-                "The current semantic check covers the documented EA/VEGA sampling_bag_id "
-                "rule, not all scientific quality criteria."
+                "The report includes descriptive missingness, time, duplicate-key, range and "
+                "detection-flag checks; these diagnostics do not establish scientific validity."
             ),
         ],
     }
@@ -258,7 +369,9 @@ def main() -> int:
     print(f"Sampling types: {report['sampling_audit']['sampling_type_counts']}")
     invariant = report["sampling_audit"]["semantic_checks"]["EA_literal_NA_and_VEGA_populated"]
     print(f"EA/VEGA invariant: {invariant}")
-    return 0 if invariant == "passed" else 1
+    flag_check = report["sampling_audit"]["semantic_checks"]["detection_flag_consistency"]
+    print(f"Detection-flag consistency: {flag_check}")
+    return 0 if invariant == "passed" and flag_check == "passed" else 1
 
 
 if __name__ == "__main__":
