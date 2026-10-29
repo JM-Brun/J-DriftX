@@ -1,7 +1,9 @@
 """Marginale transverse fermée du puff sur la grille EDP.
 
 La marginale Q(y, z, t) est l'intégrale longitudinale de la concentration
-du puff : la solution fermée du package la donne en gaussienne produit,
+du puff (kg m⁻²) — « marginale » par analogie avec les lois marginales :
+la concentration vue depuis la direction intégrée. La solution fermée du
+package la donne en gaussienne produit,
 évaluée à la distance parcourue d = u·t. Elle sert de condition d'entrée
 au schéma transitoire (note 54) et de référence des écarts de masse sur
 la même grille — jamais de la masse totale : le noyau du puff est pair en

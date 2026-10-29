@@ -2,14 +2,16 @@
 
 Cette étape reconstruit une seconde route de calcul pour la source
 impulsionnelle de l'étape 6 : la marginale transverse Q(y, z, t) du puff
-(intégrale longitudinale de la concentration) vérifie ∂Q/∂t =
+(intégrale longitudinale de la concentration, kg m⁻²) vérifie ∂Q/∂t =
 Ky(t)·∂²Q/∂y² + Kz(t)·∂²Q/∂z², avec K = (u/2)·d(sigma²)/dx évalué à la
 distance parcourue d = u·t (Briggs via le modèle injecté). La condition
 d'entrée est la marginale fermée du package posée au premier instant de
-passage ; la marche est explicite en temps (FTCS), le sol est de type
+passage ; la marche est explicite en temps (FTCS : Forward in Time,
+Centred in Space), le sol est de type
 miroir (Neumann : ∂Q/∂z = 0 au sol, exact ici car le noyau du puff est
 pair en z), les bords latéraux et le sommet de fenêtre sont de Dirichlet
-nul. La structure longitudinale reste analytique (carte travel-time de la
+nul (la valeur y est imposée nulle). La structure longitudinale reste
+analytique (carte travel-time de la
 note 37, isotropie sigma_x = sigma_y du noyau fermé) : C(x, y, z, t) est
 la marginale échantillonnée multipliée par le facteur gaussien
 longitudinal évalué à d = u·t.

@@ -1,9 +1,12 @@
 """Routes de mesure du puff transitoire : fermée, EDP, structure longitudinale.
 
-Les deux routes de la comparaison partagent la même géométrie de passages
-(arcs sous le vent, instants dirigés t = arc/u) et seules leurs lectures
-diffèrent : la route fermée évalue le noyau du package aux points de
-mesure ; la route EDP résout la marginale transverse puis l'échantillonne
+Les deux routes de la comparaison (routes de calcul : procédures complètes,
+des entrées partagées aux valeurs aux points de mesure, note 35) partagent
+la même géométrie de passages (arcs sous le vent, instants dirigés
+t = arc/u) et seules leurs lectures diffèrent : la route fermée évalue le
+noyau du package aux points de mesure (solution fermée : expression
+analytique exacte, sans itération ni discrétisation) ; la route EDP résout
+la marginale transverse par le schéma explicite FTCS puis l'échantillonne
 et lui applique la structure longitudinale. Chaque route rend sa mesure
 typée (``MesureFermeePuff``, ``MesureEdpPuff``), assemblée en métriques
 par le module de comparaison, sans état partagé entre les routes. La

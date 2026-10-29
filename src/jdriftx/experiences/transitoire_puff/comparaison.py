@@ -45,8 +45,10 @@ class ComparaisonTransitoire(BaseModel):
         parametres : paramètres numériques de la grille EDP transverse.
         instants : instants de passage couverts par la solution (s).
         points : comparaisons ponctuelles, une par point de mesure.
-        fac2 : fraction des points dans un facteur 2 (métrique partagée).
-        nmse : erreur quadratique normalisée (métrique partagée).
+        fac2 : fraction des points dans un facteur 2 (prédiction entre 0,5
+            et 2 fois la référence ; métrique partagée).
+        nmse : erreur quadratique normalisée (somme des carrés des écarts
+            sur la somme des carrés de la référence ; métrique partagée).
         ecart_relatif_max : écart relatif maximal fermée/EDP (sans unité).
         ecart_masse_max : écart relatif maximal de masse aux instantanés.
         cout_ferme_s : coût de la route fermée, mesuré (s).
@@ -103,9 +105,11 @@ def assembler_comparaison(
 
     Assemblage pur, sans résolution : les routes sont mesurées séparément
     (note 35) et cette fonction n'en connaît que les mesures ; les points
-    sont appariés strictement (zip strict), les métriques FAC2 et NMSE
-    sont celles du registre partagé (jdriftx.benchmarks.metriques,
-    issue #43), et les coûts reportés sont exactement ceux des mesures.
+    sont appariés strictement (zip strict), les métriques FAC2 (fraction
+    des points dans un facteur deux) et NMSE (erreur quadratique
+    normalisée) sont celles du registre partagé
+    (jdriftx.benchmarks.metriques, issue #43), et les coûts reportés sont
+    exactement ceux des mesures.
     """
     comparaisons = tuple(
         PointComparaisonPuff(

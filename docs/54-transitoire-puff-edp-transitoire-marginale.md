@@ -1,8 +1,38 @@
 # 54 — EDP transitoire du puff (marche en temps de la marginale transverse)
 
-**Statut.** Note d'expérience ouvrant la route EDP transitoire de la source impulsionnelle de l'[issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) : la marginale transverse Q(y, z, t) du puff est marchée en temps par un schéma FTCS, route indépendante de la solution fermée, comparée à celle-ci sur la grille du cas de référence S0 figé ([note 48](48-cas-reference-autonome-ecoulement-uniforme.md) §2.2). Suite directe de l'évaluation dirigée ([note 53](53-evaluation-puff-source-impulsionnelle.md)). Implémentation : package [experiences/transitoire_puff/](../src/jdriftx/experiences/transitoire_puff) ; tests : [tests/test_transitoire_puff.py](../tests/test_transitoire_puff.py).
+**Statut.** Note d'expérience ouvrant la route EDP transitoire de la source impulsionnelle de l'[issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) : la marginale transverse Q(y, z, t) du puff est marchée en temps par un schéma FTCS, route indépendante de la solution fermée, comparée à celle-ci sur la grille du cas de référence S0 figé ([note 48](48-cas-reference-autonome-ecoulement-uniforme.md) §2.2). Suite directe de l'évaluation dirigée ([note 53](53-evaluation-puff-source-impulsionnelle.md)). Implémentation : package [experiences/transitoire_puff/](../src/jdriftx/experiences/transitoire_puff) ; tests : [tests/test_transitoire_puff.py](../tests/test_transitoire_puff.py). Les sigles (FTCS, NMSE, FAC2, GWT, R1…) et les termes spécialisés (marginale, route, solution fermée, conditions de Dirichlet et de Neumann) sont définis dans le [Lexique et notations](#lexique-et-notations) ci-dessous.
 
 **Date :** 29 octobre 2026. **Suivi :** [issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) ; étiquetage héritage/reconstruction/extension conformément au [contrat minimal](47-contrat-minimal-baseline.md) §3.4.
+
+## Lexique et notations
+
+Sigles et termes spécialisés utilisés par cette note, définis ici à leur premier emploi ; chaque entrée renvoie au document qui développe la notion.
+
+| Terme ou sigle | Définition | Développé dans |
+|---|---|---|
+| EDP | Équation aux dérivées partielles — ici l'équation de diffusion parabolique ∂Q/∂t = Ky ∂²Q/∂y² + Kz ∂²Q/∂z², que la route numérique intègre pas à pas | [note 51](51-reference-independante-cas-s0.md) §2 |
+| Puff | Source impulsionnelle : une masse M émise instantanément (1,0 kg ici), par opposition au panache continu | [note 53](53-evaluation-puff-source-impulsionnelle.md) |
+| Marginale transverse | L'intégrale longitudinale de la concentration, Q(y, z, t) = ∫ C(x, y, z, t) dx (kg m⁻²) — « marginale » par analogie avec les lois marginales : la concentration vue depuis la direction intégrée | §2, étape 1 ci-dessous |
+| Route de calcul | Procédure complète, des entrées partagées aux valeurs de concentration aux points de mesure ; comparer deux routes, c'est comparer deux résolutions indépendantes du même problème | [note 35](35-figure-03-modele-reduit-edp.md) |
+| Solution fermée | Expression analytique exacte du puff (`jdriftx.similitude.concentration_puff`) : évaluation directe, sans itération ni discrétisation — c'est la lecture de la route fermée | [note 53](53-evaluation-puff-source-impulsionnelle.md) §2 |
+| Route EDP | Résolution numérique de l'EDP par le schéma FTCS, échantillonnage aux points, puis application de la structure longitudinale | §2, étapes 2–4 ci-dessous |
+| Mesure | Résultat typé d'une route : valeurs aux points et coût mesuré (`MesureFermeePuff`) ; la mesure EDP porte en plus les écarts de masse et la solution complète (`MesureEdpPuff`) | §6 ci-dessous |
+| FTCS | *Forward in Time, Centred in Space* : schéma explicite — le champ à t + Δt est une combinaison directe du champ à t, aux différences finies centrées en espace ; aucun système linéaire à résoudre, en échange une condition de stabilité | [note 51](51-reference-independante-cas-s0.md) §2 |
+| Nombre de Fourier | Fo = K·Δt/Δy² par direction : le critère de stabilité du schéma explicite, somme bornée à 1/3 ici | [note 51](51-reference-independante-cas-s0.md) §2 |
+| Condition de Dirichlet | Condition aux limites qui impose la **valeur** de la solution au bord — ici concentration nulle aux bords latéraux et au sommet de la fenêtre (la masse qui y passe est perdue : c'est la troncature documentée) | [note 51](51-reference-independante-cas-s0.md) §2 |
+| Condition de Neumann | Condition aux limites qui impose le **flux** normal (la dérivée) — ici ∂Q/∂z = 0 au sol : le champ se refléchit symétriquement (« miroir »), exact car le noyau du puff est pair en z | §2, étape 3 ci-dessous |
+| Fenêtre 4σ | Domaine de calcul tronqué à quatre écarts-types (σ : écart-type des gaussiennes) aux derniers instants ; la masse au-delà est documentée comme tronquée | §3 ci-dessous ; [note 48](48-cas-reference-autonome-ecoulement-uniforme.md) |
+| NMSE | *Normalized Mean Square Error* : somme des carrés des écarts divisée par la somme des carrés de la référence — une erreur quadratique sans unité, comparable entre expériences | registre [note 39](39-squelette-benchmarks-s0.md) §3 ; [issue #43](https://github.com/JM-Brun/J-DriftX/issues/43) |
+| FAC2 | *Fraction within A factor of Two* : fraction des points dont la prédiction tombe entre 0,5 et 2 fois la référence (1,0 = tous) | registre [note 39](39-squelette-benchmarks-s0.md) §3 |
+| Arcs, instants dirigés | La grille de mesure du cas S0 est organisée en arcs sous le vent (100/200/400/800 m) ; le vent uniforme u porte le puff : chaque arc x correspond à l'instant de passage t = x/u | [note 53](53-evaluation-puff-source-impulsionnelle.md) §2 |
+| Carte travel-time | Changement de variable longitude → temps (t = x/u sous vent uniforme) : l'advection devient une simple translation du temps, la marche en longitude de l'étape 5 devient une marche en temps | [note 37](37-transformation-tau-eta-cas-uniforme.md) |
+| Isotropie σx = σy | La solution fermée du package donne au puff la même largeur longitudinale et transverse | [note 53](53-evaluation-puff-source-impulsionnelle.md) §2 |
+| Écart de masse | Écart relatif entre la masse de la marginale EDP et celle de la marginale fermée, à chaque instantané, intégré sur la même grille (trapèzes doubles) : contrôle de conservation | §4.1 ci-dessous |
+| Cas S0 | Cas de référence synthétique à écoulement uniforme : vent, classe de stabilité, unités et grille de 12 points figés | [note 48](48-cas-reference-autonome-ecoulement-uniforme.md) |
+| GWT | *Given–When–Then* : chaque test nomme son contexte, son action et sa conséquence attendue | [note 40](40-standards-qualite-tests-proprietes.md) |
+| R1 | Niveau de fidélité « reconstruction conceptuelle » de l'échelle d'héritage documentaire : aucune donnée historique comme cible | [note 47](47-contrat-minimal-baseline.md) §3.4 |
+| Manifeste étiqueté | Export JSON de l'expérience — identifiant, étiquettes héritage/reconstruction/extension, limites, comparaison, version, commande — reproductible hors du dépôt | [note 35](35-figure-03-modele-reduit-edp.md) ; [note 51](51-reference-independante-cas-s0.md) §5 |
+| PEP 544 | Protocoles Python à typage structurel : une classe satisfait le contrat en exposant la méthode attendue, sans héritage ni inscription | [note 42](42-contrats-interoperabilite.md) ; [PEP 544](https://peps.python.org/pep-0544/) |
 
 ## 1. Objectif et étiquetage
 
@@ -12,11 +42,11 @@
 
 ## 2. Méthodologie (quatre étapes)
 
-1. **Marginale transverse** : Q(y, z, t) = ∫ C(x, y, z, t) dx vérifie l'EDP de diffusion 2D en temps (le vent uniforme transporte, la diffusion transverse étale) ; K = (u/2)·d
+1. **Marginale transverse** (cf. lexique) : Q(y, z, t) = ∫ C(x, y, z, t) dx vérifie l'EDP de diffusion 2D en temps (le vent uniforme transporte, la diffusion transverse étale) ; K = (u/2)·d
 σ²/dx à la distance parcourue d = u·t.
-2. **Entrée fermée** : au premier instant de passage (t_e = 100/u), la marginale analytique du package est posée sur la grille ; bords latéraux et sommet mis à zéro.
-3. **Marche FTCS** : pas de temps t_e/2^k (k = 10 sur la grille fine, nombre de Fourier 0,235 au dernier passage ≤ 1/3) ; sol miroir (Neumann — exact car le noyau du puff est pair en z) ; instantanés prélevés aux instants de passage (pas 1024/3072/7168).
-4. **Comparaison dirigée** : C(x, y, z, t) = Q(y, z, t)·exp(−(x − x0 − u·t)²/2σx²)/(√(2π)σx), σx = σy ; les points du cas S0 sont aux arcs, où le facteur gaussien longitudinal est évalué au passage.
+2. **Entrée fermée** : au premier instant de passage (t_e = 100/u), la marginale analytique du package est posée sur la grille ; bords latéraux et sommet mis à zéro (Dirichlet, cf. lexique).
+3. **Marche FTCS** (schéma explicite, cf. lexique) : pas de temps t_e/2^k (k = 10 sur la grille fine, nombre de Fourier 0,235 au dernier passage ≤ 1/3) ; sol miroir (Neumann — exact car le noyau du puff est pair en z) ; instantanés prélevés aux instants de passage (pas 1024/3072/7168).
+4. **Comparaison dirigée** : C(x, y, z, t) = Q(y, z, t)·exp(−(x − x0 − u·t)²/2σx²)/(√(2π)σx), σx = σy (isotropie, cf. lexique) ; les points du cas S0 sont aux arcs, où le facteur gaussien longitudinal est évalué au passage.
 
 ## 3. Paramètres
 
@@ -34,7 +64,7 @@
 
 ### 4.1 Grille fine
 
-- **NMSE ≈ 3,4 × 10⁻⁵** (< 10⁻⁴), **FAC2 = 1,0**.
+- **NMSE ≈ 3,4 × 10⁻⁵** (< 10⁻⁴) et **FAC2 = 1,0** — les deux métriques du lexique, aux seuils préenregistrés du registre ([note 39](39-squelette-benchmarks-s0.md) §3).
 - **Écart relatif maximal ≈ 5,9 × 10⁻³** (arc 100, entrée partagée : pur effet de l'interpolation bilinéaire en z) ; arcs 200–800 : écarts ≤ 6,5 × 10⁻⁴.
 - **Écarts de masse** vs marginale analytique sur la même grille : 0 à l'entrée, ~10⁻¹⁶ à 200 s, ~2 × 10⁻¹⁴ à 400 s, −1,1 × 10⁻⁴ à 800 s (troncature de la fenêtre 4σ).
 
@@ -75,6 +105,6 @@ Le package sépare les considérations, une par module : une extension (nouveau 
 
 ## Références
 
-- Interne : [évaluation dirigée du puff](53-evaluation-puff-source-impulsionnelle.md) ; [comparaison à référence indépendante](51-reference-independante-cas-s0.md) ; [cas de référence autonome](48-cas-reference-autonome-ecoulement-uniforme.md) ; [carte travel-time](37-transformation-tau-eta-cas-uniforme.md) ; [deux résolutions indépendantes et coûts mesurés](35-figure-03-modele-reduit-edp.md) ; [contrats d'interopérabilité PEP 544](42-contrats-interoperabilite.md).
+- Interne : [évaluation dirigée du puff](53-evaluation-puff-source-impusionnelle.md) ; [comparaison à référence indépendante](51-reference-independante-cas-s0.md) ; [cas de référence autonome](48-cas-reference-autonome-ecoulement-uniforme.md) ; [carte travel-time](37-transformation-tau-eta-cas-uniforme.md) ; [deux résolutions indépendantes et coûts mesurés](35-figure-03-modele-reduit-edp.md) ; [contrats d'interopérabilité PEP 544](42-contrats-interoperabilite.md) ; [squelette de benchmarks et registre des métriques](39-squelette-benchmarks-s0.md) ; [standards qualité des tests](40-standards-qualite-tests-proprietes.md).
 - Standards : [PEP 544 — protocoles à typage structurel](https://peps.python.org/pep-0544/) ; métriques FAC2/NMSE du registre partagé ([issue #43](https://github.com/JM-Brun/J-DriftX/issues/43)).
 - Suivi : [issue #232 — baseline scientifique](https://github.com/JM-Brun/J-DriftX/issues/232) ; source étiquetée : Brun & Mohammadi (2008), [DOI 10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14).

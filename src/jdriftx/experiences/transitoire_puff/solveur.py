@@ -1,4 +1,10 @@
-"""Passages du puff et schéma FTCS marché en temps de la marginale."""
+"""Passages du puff et schéma FTCS marché en temps de la marginale.
+
+FTCS (Forward in Time, Centred in Space) : schéma explicite — le champ à
+t + dt s'exprime directement à partir du champ à t, par différences
+finies centrées en espace ; aucun système linéaire à résoudre, en
+échange une condition de stabilité (nombre de Fourier borné).
+"""
 
 from __future__ import annotations
 
@@ -25,7 +31,8 @@ class PassagesPuff:
     """Arcs de passage du puff et leurs instants dirigés (vent uniforme).
 
     Porte la géométrie de l'expérience : les arcs sous le vent et les
-    instants dirigés t = arc/u qui en découlent. Les points de mesure
+    instants dirigés t = arc/u qui en découlent (le vent uniforme porte
+    le puff : un arc x est atteint à l'instant x/u). Les points de mesure
     doivent se trouver aux arcs ; les instants de passage doivent être
     des multiples entiers du pas de temps depuis l'entrée.
 
@@ -99,9 +106,11 @@ class SolveurTransitoire:
 
     Le solveur porte les seules considérations numériques : pas de temps
     stable (celui de l'étape 5 divisé par la vitesse — la condition de
-    Fourier est la même), condition au sol de type miroir (Neumann),
-    Dirichlet nul aux bords latéraux et au sommet de fenêtre, instantanés
-    prélevés aux instants de passage. La physique de diffusion vient du
+    Fourier est la même), condition au sol de type miroir (Neumann : le
+    flux normal est imposé nul, le champ se refléchit symétriquement),
+    Dirichlet nul aux bords latéraux et au sommet de fenêtre (la valeur
+    y est imposée nulle), instantanés prélevés aux instants de passage.
+    La physique de diffusion vient du
     modèle injecté (ModeleDiffusion), la géométrie de la grille (GrilleEdp)
     et la condition d'entrée de la marginale fermée (MarginaleFermee) : il
     étend le solveur en longitude de l'étape 5 (reference_independante)

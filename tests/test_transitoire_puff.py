@@ -1,5 +1,8 @@
 """Tests de l'EDP transitoire du puff (marginale transverse).
 
+Chaque test suit la forme GWT (Given-When-Then) : son contexte, son
+action et sa conséquence attendue.
+
 Couverture (issue #232) : calibration fine et grossière de la marche en
 temps, entrée partagée avec la marginale fermée, comparaison dirigée sous
 les seuils calibrés, convergence fine/grossier, rejets explicites (classe
