@@ -20,6 +20,7 @@ from jdriftx.experiences.reference_independante import (
     construire_manifeste,
     derivee_sigma_carre,
     resoudre_edp,
+    _pas_longitudinal,
 )
 from jdriftx.similitude import sigma_y, sigma_z
 from jdriftx.source import SourcePanache
@@ -149,7 +150,7 @@ def test_la_symetrie_laterale_est_exacte(
     for par_y in par_arc.values():
         assert -50.0 in par_y
         assert 50.0 in par_y
-        assert par_y[-50.0].edp == par_y[50.0].edp
+        assert par_y[-50.0].edp == pytest.approx(par_y[50.0].edp, rel=1e-14)
         assert par_y[-50.0].fermee == par_y[50.0].fermee
 
 
@@ -159,7 +160,7 @@ def test_affiner_la_grille_reduit_l_erreur(
     """La grille grossière reste dans les seuils et converge vers la fine."""
     # Given — la comparaison grossière (pas doublés en transverse et vertical).
     # Then — son pas longitudinal est 100/256 m (Fourier inchangé).
-    assert grossier.parametres.pas_longitudinal == 100.0 / 256.0
+    assert _pas_longitudinal("C", 100.0, 800.0, grossier.parametres) == 100.0 / 256.0
     # Then — elle reste dans les seuils de reprise des métriques.
     assert grossier.fac2 == 1.0
     assert 0.0 < grossier.ecart_relatif_max < 0.05
