@@ -121,9 +121,11 @@ class ReliefSynthetique:
 
     def altitude(self, x: ArrayLike, y: ArrayLike) -> NDArray[np.float64]:
         """Evalue l altitude du relief (m) aux points (x, y) : delegation pure."""
+        x_arr = np.asarray(x, dtype=float)
+        y_arr = np.asarray(y, dtype=float)
         return terrain_surface(
-            x,
-            y,
+            x_arr,
+            y_arr,
             self.kind,
             height=self.height,
             width=self.width,
