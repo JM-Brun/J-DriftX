@@ -40,7 +40,7 @@ $$
 \tilde u_i(x) = \sum_{j=1}^{4} \lambda_j(x)\, \tilde u_{i-1}(q_j), \qquad \sum_{j=1}^{4} \lambda_j = 1, \quad \lambda_j(x_i) = \delta_{ij} \qquad \text{[S3]}
 $$
 
-où les λ_j sont les fonctions de base bilinéaires du rectangle ω_i : λ_j vaut 1 au coin q_j et 0 aux trois autres. La source précise que cette décomposition est « similar » à celle de ũ_0, « where the observation quantities are becoming the values at the corners » : le champ grossier ũ_0 = ũ_H est lui-même construit à partir de quantités d'observation (voir la fiche de lecture, [docs/04](04-revues-papiers-sources.md)).
+**La source ne nomme pas la famille des fonctions λ_j** : elle donne seulement la partition de l'unité Σ_j λ_j = 1 et la propriété nodale λ_j(x_i) = δ_ij. Elle ne dit pas explicitement que l'interpolation est bilinéaire. L'hypothèse de fonctions de base bilinéaires sur le rectangle est donc une reconstruction possible, mais non une transcription de la source. La source précise que cette décomposition est « similar » à celle de ũ_0, « where the observation quantities are becoming the values at the corners » : le champ grossier ũ_0 = ũ_H est lui-même construit à partir de quantités d'observation (voir la fiche de lecture, [docs/04](04-revues-papiers-sources.md)).
 
 Ces deux formulations **ne sont pas équivalentes** : la première égalise des potentiels aux coins, la seconde égalise des vitesses. La section 2 examine ce que chacune garantit.
 
@@ -75,9 +75,9 @@ La formulation (a) impose à φ_i d'être harmonique dans ω_i et de coïncider 
 
 Plus grave : l'égalité des potentiels aux coins ne contraint même pas les vitesses aux coins. Si h est harmonique, nulle aux quatre coins et de gradient non nul aux coins (une telle h existe, cf. ci-dessus), alors φ_i = φ_{i−1} + h satisfait les conditions de (a) alors que ∇φ_i(q_j) ≠ ∇φ_{i−1}(q_j). Or la compatibilité du champ total se joue sur les vitesses. R1 seule ne peut pas être implémentée sans choix supplémentaire.
 
-### 2.2 Lecture R2 (interpolation bilinéaire des vitesses de coins) : déterminée, mais à divergence non nulle en général
+### 2.2 Hypothèse R2 (fonctions de base bilinéaires) : déterminée, mais à divergence non nulle en général
 
-La formulation (b) détermine ũ_i de façon unique. Mais chaque composante de ũ_i est bilinéaire, donc sa divergence est une fonction affine de (x, y) : elle est identiquement nulle seulement sous des conditions linéaires de compatibilité portant sur les huit valeurs de coins. Le flux net ne s'en sauve pas : pour un rectangle ω = [0, a] × [0, b] de coins q_1 = (0,0), q_2 = (a,0), q_3 = (a,b), q_4 = (0,b), le flux net de l'interpolé à travers ∂ω vaut
+**Sous l'hypothèse supplémentaire de fonctions de base bilinéaires**, la formule (b) détermine ũ_i de façon unique. Chaque composante de ũ_i est alors bilinéaire, donc sa divergence est une fonction affine de (x, y) : elle est identiquement nulle seulement sous des conditions linéaires de compatibilité portant sur les huit valeurs de coins. Le flux net ne s'en sauve pas : pour un rectangle ω = [0, a] × [0, b] de coins q_1 = (0,0), q_2 = (a,0), q_3 = (a,b), q_4 = (0,b), le flux net de l'interpolé à travers ∂ω vaut
 
 $$
 \frac{b}{2}\,[u_x(q_2) + u_x(q_3) - u_x(q_1) - u_x(q_4)]
@@ -98,7 +98,7 @@ $$
 \int_\omega \nabla\cdot\tilde u\; \mathrm{d}V = \frac{b}{a} \int_0^b y\, \mathrm{d}y \int_0^a \mathrm{d}x = \frac{b^3}{2} \neq 0 .
 $$
 
-**L'identité de flux de la source est donc fausse sous la lecture R2**, pour un champ parent pourtant à divergence nulle. R2 ne peut pas être la lecture visée par la source — ou alors la garantie historique doit être réécrite comme une approximation. Un test de divergence sous R2 échouerait mathématiquement : ce serait un résultat, pas un défaut du code.
+**L'identité de flux annoncée dans la source n'est pas garantie par la reconstruction bilinéaire R2** : le contre-exemple montre qu'elle peut être fausse pour un champ parent pourtant à divergence nulle. Cela réfute la garantie générale sous cette hypothèse d'interpolation ; cela ne réfute pas toute interpolation satisfaisant les seules propriétés effectivement imprimées dans la source. On ne peut donc ni attribuer R2 à la source, ni conclure que la source est mathématiquement contradictoire sans connaître la famille λ_j réellement utilisée. Un test sous R2 caractérise cette reconstruction particulière, pas la méthode historique dans son ensemble.
 
 ### 2.3 Lecture R3 (potentiel harmonique ajusté aux vitesses de coins) : cohérente, mais non unique
 
@@ -126,7 +126,7 @@ La règle des quatre points, correctement écrite ∫_ω f = (aire/4) · Σ f(q_
 
 ## 3. Conséquences pour les tests de l'issue #42
 
-1. **Sous R2**, un test de divergence du champ de niveau échouerait mathématiquement (section 2.2) : le « test manquant » n'est pas un oubli, il est impossible sous cette lecture.
+1. **Sous l'hypothèse bilinéaire R2**, un test de divergence du champ de niveau peut échouer mathématiquement (section 2.2) : ce résultat caractérise cette reconstruction et ne doit pas être extrapolé à une famille λ_j non spécifiée par la source.
 2. **Sous R3**, la divergence ponctuelle d'un niveau est une identité de construction — comme pour les champs à fonction de courant de `champ_analytique.py`. Un test de divergence y vérifie l'implémentation (base, solveur aux coins, discrétisation), pas une propriété scientifique nouvelle. Les tests **informatifs** sont :
    - reproduction exacte des vitesses de coins, niveau par niveau ;
    - flux net nul à travers chaque ∂ω_i (le critère historique, version intégrée), y compris pour des coins issus d'un champ cisaillé ;
@@ -138,7 +138,7 @@ La règle des quatre points, correctement écrite ∫_ω f = (aire/4) · Σ f(q_
 
 ## 4. Arbitrage requis avant implémentation
 
-**Recommandation de cette note** (argumentée, à trancher par le propriétaire) : retenir **R3** — potentiel harmonique ajusté aux vitesses de coins — parce que R1 est sous-déterminée (section 2.1) et que R2 contredit l'identité de flux de la source (section 2.2). Conditions à fixer dans le contrat d'implémentation :
+**Recommandation de cette note** (argumentée, à trancher par le propriétaire) : retenir **R3** — potentiel harmonique ajusté aux vitesses de coins — parce que R1 est sous-déterminée (section 2.1) et que la reconstruction bilinéaire R2 ne satisfait pas la garantie de flux annoncée (section 2.2). Cette recommandation reste une proposition de reconstruction, pas l'identification certaine de la méthode historique : la famille λ_j de la source n'est pas spécifiée. Conditions à fixer dans le contrat d'implémentation :
 
 - base harmonique fixée et documentée (proposition : les huit polynômes harmoniques de degré au plus 4 listés en section 2.3, avec repli en moindres carrés si le système est singulier) ;
 - rectangles homothétiques emboîtés, cascade du grossier vers le fin, pas de rétroaction fine → grossier (fidèle à la source) ;
@@ -169,7 +169,7 @@ La règle des quatre points, correctement écrite ∫_ω f = (aire/4) · Σ f(q_
 |---|---|---|
 | Construction historique : cascade, [S2], restriction, [S3], identité de flux, [S4] | citation | extraction HAL du dépôt, section 2.1.1 |
 | R1 sous-déterminée ; les potentiels aux coins ne fixent pas les vitesses de coins | démontré | section 2.1, calcul standard |
-| R2 déterminée mais à divergence non nulle en général ; identité de flux fausse sous R2 | démontré | section 2.2, contre-exemple explicite |
+| Reconstruction bilinéaire R2 déterminée mais à divergence non nulle en général ; identité de flux non garantie sous R2 | démontré sous hypothèse bilinéaire | section 2.2, contre-exemple explicite |
 | R3 à divergence ponctuelle nulle, flux net nul automatique | démontré | section 2.3, théorème de la divergence |
 | R3 non unique entre bases harmoniques | démontré | section 2.3 |
 | Champ total discontinu ; garantie = bilan de flux par niveau | démontré | section 2.4, calcul distributionnel |
