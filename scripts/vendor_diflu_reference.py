@@ -11,7 +11,6 @@ import argparse
 import hashlib
 import json
 import sys
-from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -142,7 +141,6 @@ def stage(audit_dir: Path, output_dir: Path) -> dict[str, Any]:
         "dataset_pid": DATASET_PID,
         "dataset_url": DATASET_URL,
         "license": LICENSE,
-        "staged_at_utc": datetime.now(UTC).isoformat(),
         "method": "Byte-for-byte copy of Dataverse originalFileName payloads after audit size/MD5/SHA-256 verification.",
         "files": staged_records,
         "limitations": [
