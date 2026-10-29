@@ -21,7 +21,7 @@ DIMENSIONLESS: Dimension = (0, 0, 0)
 
 def _multiply_dimensions(*dimensions: Dimension) -> Dimension:
     """Multiply physical quantities by adding their dimension exponents."""
-    return tuple(sum(values) for values in zip(*dimensions, strict=True))  # type: ignore[return-value]
+    return (\n        sum(dimension[0] for dimension in dimensions),\n        sum(dimension[1] for dimension in dimensions),\n        sum(dimension[2] for dimension in dimensions),\n    )
 
 
 def _integrate_over_length(quantity: Dimension) -> Dimension:
