@@ -119,7 +119,7 @@ The analytical regression test for this example is documented in [the shear-coun
 
 ## 6. Primary-source transcription and dimensional audit (2009 article)
 
-The publisher's open-access HTML for Bozon & Mohammadi (2009), *Applied Geomatics*, exposes the following statements and equations directly. They are transcribed here as printed; no suspected typo is silently repaired.
+**Source-identity caveat added 29 October 2026:** the equations numbered (28)–(31) below are not present in the accessible 17-page STIC & Environnement manuscript `hal-00468863`, which uses bracketed equation labels [1]–[7] in §2. The earlier attribution in this note to “Bozon & Mohammadi (2009), *Applied Geomatics*” has not been reconciled with the distinct JESA 2010 record (`hal-02594312`, DOI `10.3166/jesa.44.445-461`) or backed by a source PDF in the current project files. Therefore, treat the following as a provisional transcription from a previously consulted publisher-text source whose exact bibliographic identity still needs verification; do **not** cite Eqs. (28)–(31) as equations of either the STIC 2009 manuscript or JESA 2010 until that identity is resolved. No new acquisition was performed for this audit.
 
 ### Published definitions
 
@@ -190,14 +190,14 @@ With \(c^i\) interpreted as a volumetric concentration, the left side has units 
 
 ### What this establishes—and what it does not
 
-- **Established from the publisher text:** the equations above are printed in the 2009 article; the apparent unit mismatches are reproducible from their displayed definitions.
-- **Established conditionally:** under the conventional volumetric-concentration interpretation, Eqs. (28), (31), and the Eqs. (38)–(40) sequence are not dimensionally homogeneous as printed.
+- **Established from the accessible STIC 2009 manuscript:** Eqs. [1]–[7] are printed in §2; the multi-level mass identity after Eq. [4] and the Eq. [31]-style integral expression must not be conflated. The manuscript's mass identity has the same dimensional mismatch under the conventional volumetric-concentration interpretation.
+- **Provisional, source identity unresolved:** the displayed Eqs. (28), (31), and (38)–(40) are not in the accessible STIC 2009 manuscript. Their dimensional mismatches are reproducible from the displayed definitions, but their attribution to a specific publication is not yet verified.
 - **Not established:** whether this reflects typographical errors, a nonstandard definition of \(c\), omitted normalization, or a deeper derivation issue. The text alone does not decide among these explanations.
 - **Not authorized:** silently replacing \(dV\) with \(dx\,dy\), inserting a velocity factor, or treating the published equations as a validated mass-conservation proof.
 
 The article does describe the global velocity construction as divergence-free and presents conservation as a constraint, but divergence-free velocity alone does not imply conservation of a passive scalar. The displayed equations require a consistent scalar definition and measure before they can be used as a physical mass balance.
 
-The official 2006 article is available from *Comptes Rendus Mécanique* (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007)); its open-access publisher PDF has since been retrieved and transcribed in §7 below, including its global conservation statement. The 2008 Springer chapter has been inspected from an accessible third-party-hosted scan of the book (chapter pp. 245–256; the Springer landing page provides the bibliographic record, DOI [10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14)). The scan is useful for transcription but is not itself a publisher-hosted copy. The 2009 article remains a separate source and must not be conflated with either the 2006 paper or the 2008 chapter.
+The versioned 2006 PDF is now visually inspected for equations (1), (2) and (4); the audit in [45](45-audit-article-mohammadi-brun-2006.md) records the literal transcription and the ambiguity in (4). The 2008 Springer chapter has been inspected from an accessible scan, but that scan is not a publisher-hosted copy. The accessible STIC 2009 manuscript is a separate source. The JESA 2010 PDF has not been made available in the current project-file context, and the earlier publisher-text attribution for equations (28)–(31) remains unresolved; do not conflate these sources.
 
 ## 7. Primary-source transcription: Mohammadi & Brun (2006)
 
