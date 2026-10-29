@@ -15,6 +15,8 @@ They are not interchangeable. In particular, incompressibility (\(\nabla\cdot u=
 
 The historical sources motivate a conservation constraint, but the passages audited so far do not establish that this constraint is exactly the scalar flux through every surface of constant \(\tau\). The derivation below therefore starts from a general scalar balance rather than assuming that stronger conclusion.
 
+**Relationship to the evidence summary:** this file owns the detailed conditional derivation and source-level analysis. For a shorter synthesis of the historical claims, conditional results, tests and current evidence levels, see [the G0-S conservation evidence summary](47-synthese-preuves-conservation-g0s.md).
+
 ## 2. Starting point: the conservative scalar balance
 
 Write the total scalar flux as
