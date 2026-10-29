@@ -79,3 +79,7 @@ Pour l'interprétation scientifique de chaque famille et son lien avec J-DriftX,
 - ECMWF. The use of real-time forecasts for CBRN dispersion and response modelling. https://events.ecmwf.int/event/211/contributions/1871/attachments/989/1737/Cloud-WS_Carion.pdf
 - SICC 2026 (Rome). Session « AI, Digital Twins & Decision Support in CBRNe Risk Management » (IA, DSS temps réel, interprétabilité, EU AI Act). https://www.sicc-series.com/technical-and-poster-sessions/session-3-artificial-intelligence-digital-twins-decision-support-in-cbrne-risk-management/
 - npj Natural Hazards (2025). Digital risk twin for disaster risk management (IoT, télédétection, human-in-the-loop). https://www.nature.com/articles/s44304-025-00135-x
+
+## Historique logiciel — intégration Web GIS de Drift-X
+
+- Bozon, N. et al. (2010). *Drift-X WPS: Pesticide atmospheric dispersion Web GIS*. FOSS4G 2010 conference paper. https://2010.foss4g.org/papers/3631.pdf — décrit le réemploi du code Fortran original Drift-X dans une architecture WPS/ZOO, avec client Web GIS et publication cartographique. Source de contexte sur l’histoire logicielle et le déploiement ; elle ne démontre pas l’équivalence mathématique de cette implémentation historique avec les primitives actuelles de J-DriftX. Sa bibliographie donne une référence secondaire incohérente pour l’article *Applied Geomatics* de 2009 : utiliser la notice éditeur Springer comme référence canonique.
