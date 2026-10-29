@@ -13,15 +13,15 @@
 
 | Information | Source canonique | Règle pour les autres documents |
 |---|---|---|
-| État courant et prochaine action | Issue propriétaire ; coordination globale privée dans [career-knowledge #125](https://github.com/JM-Brun/career-knowledge/issues/125) | Ne pas recopier le statut courant dans les notes ou roadmaps. |
-| Vision et critères de décision à long terme | [Roadmap stratégique privée](https://github.com/JM-Brun/career-knowledge/blob/main/projects/jdriftx/notes/roadmap.md) | Ne pas y tenir une checklist opérationnelle. |
-| Ordre des portes et dépendances | [Roadmap opérationnelle privée](https://github.com/JM-Brun/career-knowledge/blob/main/projects/jdriftx/notes/roadmap-operationnelle-et-faisabilite.md) | Pointer vers les issues propriétaires pour les actions détaillées. |
+| État courant et prochaine action | Issue propriétaire dans le suivi interne privé (non exposé ici) | Ne pas recopier le statut courant dans les notes ou roadmaps. |
+| Vision et critères de décision à long terme | Roadmap stratégique interne privée | Ne pas y tenir une checklist opérationnelle ni publier son contenu de pilotage. |
+| Ordre des portes et dépendances | Roadmap opérationnelle interne privée | Pointer vers les issues propriétaires dans le suivi interne pour les actions détaillées. |
 | Définition / preuve / code / tests MVP-S | [Matrice publique docs/27](27-matrice-tracabilite-mvp-s.md) | Les notes privées ne sont que des pointeurs, sauf matériau exploratoire explicitement signalé. |
 | Conservation dans les coordonnées travel-time | [Dérivation publique docs/32](32-conservation-coordonnees-travel-time.md), issue [#123](https://github.com/JM-Brun/J-DriftX/issues/123) pour la question et les travaux restants | Séparer dérivation conditionnelle, reconstruction historique, contre-exemples et statut de résolution. |
 | Revendications historiques et baseline | [Matrice docs/49](49-matrice-revendications-baseline.md) et issue [#232](https://github.com/JM-Brun/J-DriftX/issues/232) | Les fiches de sources restent les preuves de provenance ; ne pas recopier la matrice dans le registre d'anomalies. |
 | Anomalies documentaires et résolution | [Registre docs/46](46-registre-erreurs-incoherences-documentaires.md) et issue [#233](https://github.com/JM-Brun/J-DriftX/issues/233) | Chaque anomalie renvoie à l'emplacement affecté, à sa preuve et à son identifiant stable si disponible. |
-| Admissibilité des corpus et droits tiers | Issues privées [#24](https://github.com/JM-Brun/career-knowledge/issues/24) et [#144](https://github.com/JM-Brun/career-knowledge/issues/144), plus issues techniques publiques par corpus | Distinguer admissibilité scientifique, reproductibilité technique et droits de redistribution. |
-| Rôle et disposition des notes privées | [Registre de triage privé](https://github.com/JM-Brun/career-knowledge/blob/main/projects/jdriftx/notes/triage-detaille-et-consolidation-2026-10-28.md) | Ce registre ne doit pas recopier les résultats ni le backlog. |
+| Admissibilité des corpus et droits tiers | Suivi interne privé pour les décisions transversales, plus issues techniques publiques par corpus | Distinguer admissibilité scientifique, reproductibilité technique et droits de redistribution. |
+| Rôle et disposition des notes privées | Registre de disposition documentaire interne privé | Ce registre ne doit pas recopier les résultats ni le backlog ; les chemins internes ne sont pas publiés ici. |
 
 ## Contrat minimal de chaque document actif
 
