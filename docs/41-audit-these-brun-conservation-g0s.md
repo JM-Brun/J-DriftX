@@ -47,7 +47,7 @@ Sous l'interprétation conventionnelle [c_loc] = M L⁻³, avec z une coordonné
 - Branche intégrée en hauteur : [∫ c_loc dz] = M L⁻², donc [M_C] = M. Elle est dimensionnellement compatible avec un inventaire de masse.
 - Branche produit : la thèse définit u⁺_loc = max(0, (u_loc·ẑ)/||u_loc||). Ce rapport est sans dimension. Ainsi [u⁺_loc c_loc] = M L⁻³, puis [M_C] = M L⁻¹ après intégration surfacique.
 
-Les deux branches de (7.12) ne sont donc pas dimensionnellement équivalentes sous ces conventions. La deuxième ne représente pas une masse totale sans facteur ou normalisation supplémentaire. Le texte consulté ne permet pas d'identifier une convention alternative qui résoudrait cet écart ; ne pas corriger l'équation par conjecture.
+Les deux branches de (7.12) ne sont donc pas dimensionnellement équivalentes sous ces conventions. La deuxième ne représente pas une masse totale sans facteur ou normalisation supplémentaire. Le texte consulté ne permet pas d'identifier une convention alternative ou une normalisation supplémentaire qui résoudrait cet écart ; ne pas corriger l'équation par conjecture. La section 1.2.4 mentionne par ailleurs une concentration sans dimension dans le cadre de la formulation de Fick, mais la partie applicative locale précise explicitement kg·m⁻³ pour c_loc. Une autre convention ne doit donc pas être supposée pour (7.12) sans passage source qui la relie explicitement à cette variable.
 
 ### 4. Ce que la thèse établit — et ce qu'elle n'établit pas
 
