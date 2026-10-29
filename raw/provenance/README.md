@@ -31,6 +31,17 @@ La référence publiée est confirmée par la [notice AGRIS/INRAE](https://agris
 
 La version éditée finale JESA **n'a pas été obtenue ni authentifiée** au 28 octobre 2026. Une piste d'accès institutionnel via [ISTEX/Mir@bel](https://reseau-mirabel.info/revue/4637/Journal-europeen-des-systemes-automatises-JESA) reste à essayer avec un accès autorisé. Ne pas traiter le manuscrit HAL 2009 comme la version finale JESA et ne pas prétendre à une comparaison ligne à ligne avant récupération du bon fichier.
 
+## Pistes de récupération identifiées — binaires pas encore vérifiés
+
+Les liens ci-dessous sont des pistes documentaires, pas la preuve que le fichier qui sera ajouté à Git est identique à une version de référence. Les binaires correspondants ne sont pas encore répertoriés dans la table des PDF présents.
+
+| Fichier attendu | Notice / lien de récupération | État au 29 octobre 2026 |
+|---|---|---|
+| `../2007-these-brun.pdf` | [Notice AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c) ; [PDF lié depuis la notice](https://hal.inrae.fr/tel-02589999/file/pub00023263.pdf) ; [notice HAL](https://hal.inrae.fr/tel-02589999/document) | Le lien direct a été identifié, mais l'accès automatisé a rencontré la page de protection Anubis. Le PDF n'a donc pas été lu. Le titre exact, la page de titre, l'année de soutenance, la complétude et les droits de redistribution restent à vérifier. L'article primaire de 2006 cite une thèse de J.-M. Brun datée de 2007 ; cette citation ne remplace pas la vérification du document. |
+| `../2010-bozon-sinfort-mohammadi-jesa.pdf` | [Notice AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/6798c27ed6a63682f045645d) ; [notice HAL hal-02594312](https://hal.inrae.fr/hal-02594312) ; [DOI éditeur](https://doi.org/10.3166/jesa.44.445-461) | Métadonnées bibliographiques retrouvées, mais version finale JESA non obtenue ni authentifiée dans ce contrôle. Le manuscrit auteur HAL [hal-00468863](https://hal.science/hal-00468863) est une source distincte (STIC & Environnement 2009) et ne doit pas être renommé ou présenté comme le PDF JESA 2010. L'URL directe du fichier final n'est pas confirmée ici. |
+
+Lorsqu'un binaire est ajouté, vérifier son identité et sa provenance, calculer une empreinte cryptographique locale si l'outillage du dépôt le permet, et compléter le sidecar associé avec le nom original, l'URL réellement utilisée, la date d'obtention, la pagination, les fichiers dérivés et les conditions de redistribution. Ne pas inventer ces champs a posteriori.
+
 ## Règles et limites
 
 - Distinguer systématiquement **notice bibliographique**, **site réellement consulté**, **binaire présent dans Git**, **fichier dérivé** et **droits de redistribution**.
