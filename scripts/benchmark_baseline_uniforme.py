@@ -24,6 +24,7 @@ import json
 import math
 import platform
 import statistics
+import shutil
 import subprocess
 import sys
 import time
@@ -220,9 +221,13 @@ def _version_package() -> str:
 
 def _git_metadata(*arguments: str) -> str | None:
     """Retourne une métadonnée Git ou None si elle n'est pas disponible."""
+    git_executable = shutil.which("git")
+    if git_executable is None:
+        return None
+
     try:
-        result = subprocess.run(  # noqa: S603 — fixed executable and internally defined arguments
-            ["git", *arguments],
+        result = subprocess.run(  # noqa: S603 — executable resolved via PATH; arguments are internally defined
+            [git_executable, *arguments],
             check=True,
             capture_output=True,
             text=True,
