@@ -73,8 +73,7 @@ def test_directory_links_and_accented_heading_anchors(tmp_path: Path) -> None:
     target.write_text("### 3.2 Correction recommandée\n", encoding="utf-8")
     source = docs / "source.md"
     source.write_text(
-        "[directory](bibliographie/) "
-        "[heading](target.md#32-correction-recommandee)\n",
+        "[directory](bibliographie/) [heading](target.md#32-correction-recommandee)\n",
         encoding="utf-8",
     )
 
