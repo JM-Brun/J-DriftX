@@ -289,7 +289,7 @@ def test_superposition_exige_un_panache() -> None:
         SuperpositionPanaches(panaches=())
 
 
-def test_le_typage_structurel_reconnaît_les_contrats() -> None:
+def test_le_typage_structurel_reconnait_les_contrats() -> None:
     """Étant donné les implémentations, chacune satisfait son protocole (PEP 544)."""
     # Given — un objet de chaque contrat.
     champ = ChampFonctionCourant(amplitude=1.0, longueur=2.0)
