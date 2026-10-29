@@ -448,6 +448,12 @@ libelle = "similitude_objets.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude_objets.py"
 
 [[noeuds]]
+id = "experiences/reference_independante"
+type = "module"
+libelle = "experiences/reference_independante.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reference_independante.py"
+
+[[noeuds]]
 id = "stabilite"
 type = "module"
 libelle = "stabilite.py"
@@ -759,6 +765,12 @@ id = "t-baseline-uniforme"
 type = "test"
 libelle = "test_baseline_uniforme.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_baseline_uniforme.py"
+
+[[noeuds]]
+id = "t-reference-independante"
+type = "test"
+libelle = "test_reference_independante.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reference_independante.py"
 
 # ---------- Nœuds : références (clés de site/references.bib) ----------
 
@@ -1829,6 +1841,39 @@ vers = "experiences/baseline_uniforme"
 relation = "couvre"
 justification = "tests/test_baseline_uniforme.py : temps dirigé tau = x/U sur la grille 12 points, rejet amont, coïncidence exacte avec la vérité S0 (cas uniforme, docs/48 §2.5), manifeste étiqueté héritage/reconstruction/extension, immuabilité."
 
+# ---------- Arêtes : référence indépendante (étape 5) ----------
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "benchmarks/cas"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "benchmarks/metriques"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "similitude"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "stabilite"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/reference_independante"
+vers = "contrats"
+relation = "utilise"
+
+[[aretes]]
+de = "t-reference-independante"
+vers = "experiences/reference_independante"
+relation = "couvre"
+justification = "tests/test_reference_independante.py : comparaison EDP/fermée sur le cas S0 figé — calibrage, symétrie, convergence, entrée partagée, export JSON."
+
 # ---------- Vues ----------
 
 [[graphes]]
@@ -1875,6 +1920,7 @@ noeuds = [
   "experiences/superposition_sources", "experiences/relief",
   "experiences/modele_reduit_edp",
   "experiences/identification_source",
+  "experiences/reference_independante",
   "similitude", "similitude_objets", "stabilite", "source", "contrats",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
@@ -1895,6 +1941,7 @@ noeuds = [
   "t-identification", "t-figure-06",
   "t-wind-field", "t-interactif",
   "t-cas-synthetiques",
+  "t-reference-independante",
   "graphe_connaissances", "extraction_graphe", "diagnostic_graphe",
   "t-graphe", "t-extraction", "t-diagnostic",
   "benchmarks/cas", "benchmarks/metriques", "benchmarks/reference",
@@ -1916,6 +1963,7 @@ noeuds = [
     "experiences/superposition_sources", "experiences/relief",
     "experiences/modele_reduit_edp",
     "experiences/identification_source",
+    "experiences/reference_independante",
     "fields", "terrain",
     "trajectories", "figures/figure_01", "figures/figure_02", "figures/figure_03",
     "figures/figure_04",
@@ -1959,6 +2007,7 @@ noeuds = [
     "t-identification", "t-figure-06",
     "t-wind-field", "t-interactif",
     "t-cas-synthetiques",
+    "t-reference-independante",
   ]
 
   [[graphes.groupes]]
@@ -2049,3 +2098,4 @@ noeuds = [
   id = "cible"
   titre = "Niveaux visés"
   noeuds = ["n5", "n6"]
+
