@@ -1,6 +1,6 @@
 # 50 — Étape 5 : oracle indépendant et protocole de coûts pour S0 uniforme
 
-**Statut :** protocole et outillage implémentés ; les mesures de performance ne sont pas encore exécutées sur un environnement de référence ni interprétées. Voir l'issue [#244](https://github.com/JM-Brun/J-DriftX/issues/244).
+**Statut :** protocole et outillage implémentés. À la révision inspectée, aucun artefact de résultat de référence n'a été retrouvé ; l'historique d'exécution n'est donc pas établi par ce seul constat. Ne pas conclure que des mesures n'ont jamais été produites. Voir [la distinction entre protocole, mesures d'exécution et artefacts versionnés](51-niveaux-preuve-mesures-benchmark.md) et l'issue [#244](https://github.com/JM-Brun/J-DriftX/issues/244).
 
 ## 1. Objet et portée
 
@@ -27,7 +27,7 @@ uv run python scripts/benchmark_baseline_uniforme.py --repetitions 1000 --output
 uv run pytest tests/test_baseline_oracle.py tests/test_baseline_uniforme.py
 ```
 
-Le JSON produit contient les valeurs par point, les erreurs, toutes les répétitions chronométrées, les statistiques et les métadonnées d'environnement. Il doit être versionné après exécution dans un environnement déclaré ; ne pas inventer ni recopier des mesures issues de la CI comme si elles représentaient un benchmark stable.
+Le JSON produit contient les valeurs par point, les erreurs, toutes les répétitions chronométrées, les statistiques et les métadonnées d'environnement. L'écriture d'un JSON ne prouve pas à elle seule son archivage ; stdout peut également contenir des mesures sans artefact commité. Avant toute nouvelle campagne, vérifier les journaux et artefacts d'exécutions antérieures disponibles. Toute mesure conservée doit être reliée au protocole et à la révision du code ; ne pas recopier des mesures CI comme si elles représentaient un benchmark stable. Voir la [politique de preuve et de versionnement](51-niveaux-preuve-mesures-benchmark.md).
 
 ## 4. Limites d'interprétation
 
