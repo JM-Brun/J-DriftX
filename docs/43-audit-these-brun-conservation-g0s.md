@@ -60,6 +60,37 @@ Une correction dimensionnellement possible dépend de la quantité physique vis�
 - pour un débit massique vertical, il faudrait un flux contenant la composante verticale dimensionnée $u_z$ (en m/s), puis une intégrale surfacique fournirait une masse par temps, à intégrer dans le temps pour obtenir une masse ;
 - remplacer le cosinus directionnel $u_l^+$ par $u_z$ ne rendrait pas les deux branches équivalentes : cela définirait une autre grandeur physique. Aucune de ces réparations n'est confirmée comme intention des auteurs.
 
+### 3.2 Correction recommandée pour une reconstruction cohérente, avec impact minimal sur la thèse
+
+**Choix retenu pour J-DriftX : conserver un inventaire de masse, et non un flux massique.** C'est l'option qui demande le moins de changements conceptuels au passage historique : elle conserve la première branche de (7.12), la définition surfacique de (7.13), le symbole $M_C$ et l'objectif annoncé de conservation d'une quantité totale. Elle ne prouve pas que cette interprétation était l'intention des auteurs ; c'est une décision explicite de reconstruction.
+
+Avec $[c_{loc}]=\mathrm{kg\,m^{-3}}$, définir
+\[
+ c^+(x,y) := \int_H^{z_{\max}} c_{loc}(x,y,z)\,dz
+ \quad\text{(ou }\int_{z>H}c_{loc}\,dz\text{ si le domaine vertical est non borné),}
+\]
+où $H$ est la hauteur de référence et $z_{\max}$ la limite supérieure du domaine lorsqu'elle existe. Alors $[c^+]=\mathrm{kg\,m^{-2}}$ et
+\[
+ M_C := \int_{\Omega_{xy}} c^+(x,y)\,dx\,dy
+\]
+est une masse en kg, à condition que $\Omega_{xy}$ soit le domaine horizontal pertinent et que l'intégrale converge. Cette quantité est l'inventaire de masse dans la colonne verticale au-dessus de $H$ sur le domaine horizontal considéré. **Ce n'est pas, à elle seule, un débit traversant une surface** : un débit massique exige un flux avec vitesse dimensionnée et une intégration sur une surface, en kg/s.
+
+La branche $u^+_{loc}c_{loc}$ doit donc être retirée de la définition de $c^+$ dans la reconstruction, ou présentée séparément comme une autre grandeur sans lui attribuer la même masse conservée. Puisque $u^+_{loc}=\max(0,(u\cdot\hat z)/\|u\|)$ est un cosinus directionnel sans dimension, elle ne peut pas remplacer l'intégration verticale sans introduire une échelle dimensionnelle supplémentaire et une justification physique indépendante.
+
+#### Corrections éditoriales recommandées dans le texte de la thèse
+
+Ces propositions sont des corrections à apporter dans une édition corrigée ou une note d'errata, pas des modifications à appliquer silencieusement à la transcription historique :
+
+1. **Équation (7.12), p. 129 — supprimer l'alternative dimensionnellement incompatible** pour la définition retenue : garder l'intégrale verticale et définir explicitement ses bornes/domaine ; ne pas conserver « ou $u^+_{loc}c_{loc}$ » comme égalité alternative.
+2. **Définir les unités à la première occurrence** : $c_{loc}$ en kg·m⁻³, $c^+$ en kg·m⁻², $d\sigma=dx\,dy$ en m², et $M_C$ en kg. Si les auteurs souhaitaient une concentration normalisée ou une autre variable, cette convention devrait être explicitée et toutes les unités réconciliées ; les sources consultées ne justifient pas cette hypothèse.
+3. **Équation (7.13) — préciser le domaine d'intégration** : remplacer $\mathbb R^2$ par $\Omega_{xy}$ si le domaine physique/calcul est fini, et indiquer les conditions de décroissance/intégrabilité si $\mathbb R^2$ est conservé.
+4. **Remplacer la phrase « should be conserved » par une proposition conditionnelle vérifiable** : annoncer que la masse totale est conservée seulement pour un bilan fermé sans sources/puits nets, sans dépôt/pertes non comptabilisés, avec conditions aux limites compatibles et sans fuite nette par les frontières latérales/verticales. Si le modèle est censé conserver la masse malgré des sources, puits ou sorties, expliciter le terme de bilan correspondant. La conservation de $M_C$ ne découle pas de la seule définition de $c^+$.
+5. **Séparer inventaire et flux** : ne pas appeler $M_C$ « flux » ou « masse traversant le plan » sans définition supplémentaire. Si la grandeur visée est en réalité un débit massique, définir un flux physique adapté à la concentration massique, par exemple $\mathbf F=c_{loc}\mathbf u-D\nabla c_{loc}$, d'unités kg·m⁻²·s⁻¹, puis $\dot M=\int_S\mathbf F\cdot\mathbf n\,dS$ en kg/s ; la masse transférée s'obtient en intégrant ce débit dans le temps.
+6. **Ajouter une note d'errata traçable** : signaler que la formule publiée en 2008 et reprise en thèse contient deux branches dimensionnellement incompatibles sous les unités explicites ; indiquer que l'édition corrigée retient l'inventaire de masse par intégration verticale, sans prétendre établir l'intention historique.
+7. **Ne pas revendiquer une preuve du modèle lointain par cette correction** : la cohérence dimensionnelle répare la définition de la grandeur, mais la conservation effective doit encore être démontrée à partir des équations d'évolution, du domaine, des sources/puits et des conditions aux limites.
+
+**Pourquoi ce choix minimise l'impact :** il conserve l'intégrale verticale déjà imprimée, l'intégration horizontale déjà imprimée et le symbole de masse $M_C$ ; il retire seulement l'alternative non équivalente et précise les hypothèses de conservation. La correction est donc locale à la définition et à la portée de l'affirmation. Elle reste une recommandation pour une édition corrigée, pas une affirmation sur l'intention des auteurs ni une preuve que le modèle historique satisfait le bilan.
+
 ### 4. Ce que la thèse établit — et ce qu'elle n'établit pas
 
 | Proposition | Verdict documentaire |
