@@ -209,6 +209,7 @@ def test_panache_positif_et_symetrique_en_y(y, classe) -> None:
     assert float(c_y) > 0.0
     assert float(c_y) == float(c_symetrique)
 
+
 @st.composite
 def _verites_et_predictions(draw):
     """Génère un couple (vérité, prédiction) de même taille, vérité positive.
@@ -325,9 +326,7 @@ def _cas_s0(draw):
     de la CI.
     """
     nombre_arcs = draw(st.integers(min_value=1, max_value=6))
-    arcs_tires = draw(
-        st.sets(st.floats(100.0, 2000.0), min_size=nombre_arcs, max_size=nombre_arcs)
-    )
+    arcs_tires = draw(st.sets(st.floats(100.0, 2000.0), min_size=nombre_arcs, max_size=nombre_arcs))
     positions = draw(st.lists(st.floats(-100.0, 100.0), min_size=1, max_size=5))
     return CasS0(
         debit=draw(st.floats(0.1, 5.0)),
@@ -497,9 +496,7 @@ def test_gaussienne_1d_pic_central_et_symetrie(
     # Then — le pic est au centre, symétrique, à la valeur attendue.
     assert concentrations[1] > concentrations[0]
     assert concentrations[0] == pytest.approx(concentrations[2], rel=1e-9)
-    assert concentrations[1] == pytest.approx(
-        2.0 / math.sqrt(2.0 * math.pi * variance), rel=1e-9
-    )
+    assert concentrations[1] == pytest.approx(2.0 / math.sqrt(2.0 * math.pi * variance), rel=1e-9)
 
 
 @st.composite
