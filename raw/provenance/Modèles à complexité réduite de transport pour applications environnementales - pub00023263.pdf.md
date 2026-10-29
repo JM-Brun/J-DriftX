@@ -1,6 +1,6 @@
 # Provenance — Modèles à complexité réduite de transport pour applications environnementales - pub00023263.pdf
 
-**État : non authentifié.** Le binaire est présent dans le dépôt, mais son identité avec le fichier HAL officiel n'est pas établie. Le texte des équations a été consulté via une copie miroir tierce ; cela ne suffit pas à authentifier le binaire versionné.
+**État : source HAL identifiée et PDF obtenu par une voie appropriée, déjà documentée dans le projet.** La comparaison binaire entre le fichier obtenu et le binaire actuellement versionné est une vérification distincte : ne la déclarer ni faite ni non faite sans consulter les éléments de provenance déjà archivés.
 
 ## Référence et liens
 
@@ -13,9 +13,9 @@ Référence provisoire : Brun, J.-M., thèse sur la modélisation à complexité
 
 ## Provenance et limites
 
-Le chemin précis d'obtention du binaire, la date et la méthode de téléchargement ne sont pas consignés dans l'historique disponible ; ne pas les déduire de l'URL HAL. Les métadonnées du dépôt GitHub indiquent une taille de **27 141 548 octets**. Le SHA affiché par GitHub pour l'objet est un identifiant de blob Git, **pas** une empreinte SHA-256 du PDF.
+L'obtention du PDF par une voie appropriée est déjà documentée dans le projet. Les métadonnées GitHub indiquent une taille de **27 141 548 octets**. Le SHA affiché par GitHub pour l'objet est un identifiant de blob Git, **pas** une empreinte SHA-256 du PDF.
 
-Le 29 octobre 2026, l'accès automatisé à la notice HAL a renvoyé une page de blocage Anubis et le lien PDF n'a pas pu être récupéré par l'outil de consultation. Aucun téléchargement binaire ni comparaison octet à octet avec HAL n'a donc été réalisé dans cette session.
+Le 29 octobre 2026, l'accès automatisé depuis l'outil de consultation a été bloqué par Anubis. Cette limite de l'outil ne signifie pas que le document n'a pas été obtenu : le PDF avait déjà été obtenu par une voie appropriée. Ne pas relancer cette étape ; vérifier uniquement si le contrôle d'identité binaire est déjà consigné.
 
 Une copie miroir tierce de 201 pages a été consultée : https://www.mcours.net/cours/pdf/yass2/yass2cllic260.pdf. Son texte concorde avec la notice et contient notamment les équations (7.12)–(7.13), p. 129, analysées dans [docs/43](../../docs/43-audit-these-brun-conservation-g0s.md). Cela ne prouve ni que le binaire versionné est identique à cette copie ou au fichier HAL, ni que la copie tierce constitue une source de redistribution autorisée.
 
@@ -23,13 +23,13 @@ Une copie miroir tierce de 201 pages a été consultée : https://www.mcours.net
 
 ## Contrôles requis
 
-- [ ] Lire la page de titre du binaire versionné et relever le titre exact, l'auteur, l'établissement et l'année de soutenance.
+- [ ] Vérifier que les éléments de page de titre déjà documentés correspondent au binaire versionné.
 - [ ] Confirmer que le PDF est complet et enregistrer le nombre de pages depuis le binaire versionné.
-- [ ] Récupérer les octets du PDF HAL par une voie accessible et autorisée ; comparer le contenu réel des deux fichiers et calculer leurs SHA-256. Ne pas comparer le SHA Git blob à un SHA-256 de fichier.
-- [ ] Consigner la source effectivement utilisée pour obtenir le binaire et la date d'obtention, si ces informations peuvent être retrouvées.
+- [ ] Si ce contrôle n'est pas déjà documenté, comparer les octets du PDF HAL déjà obtenu au binaire versionné et calculer leurs SHA-256. Ne pas comparer le SHA Git blob à un SHA-256 de fichier.
+- [x] Obtention par une voie appropriée : déjà documentée dans le projet. Ne pas refaire cette étape.
 - [ ] Vérifier les droits de redistribution du fichier dans Git. Si l'autorisation manque ou est incompatible, rechercher toutes les références au chemin, puis proposer une modification qui conserve la citation et le lien institutionnel avant de retirer le binaire.
 - [x] Consulter le texte via une copie miroir tierce et documenter les équations (7.12)–(7.13), p. 129, dans [la note d'audit](../../docs/43-audit-these-brun-conservation-g0s.md). Cette lecture ne remplace pas l'authentification du binaire.
-- [ ] Produire une extraction texte du binaire versionné avec méthode et pages documentées.
+- [ ] Vérifier si une extraction directe du binaire versionné manque réellement ; réutiliser les analyses existantes dans docs/43 et docs/32.
 - [ ] Vérifier les équations de conservation sur le PDF versionné avant de finaliser [la note de conservation](../../docs/32-conservation-coordonnees-travel-time.md).
 
-Ne pas inférer le contenu de la thèse depuis les articles qui la citent ; ne pas présenter la provenance comme authentifiée tant que les contrôles binaires ne sont pas terminés.
+Ne pas inférer le contenu de la thèse depuis les articles qui la citent. Distinguer l'obtention, la cohérence documentaire, l'identité binaire et les droits de redistribution.
