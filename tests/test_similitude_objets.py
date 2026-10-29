@@ -2,8 +2,8 @@
 
 import math
 
-import pytest
 from hypothesis import given, strategies as st
+import pytest
 
 from jdriftx.similitude import concentration_panache, concentration_puff
 from jdriftx.similitude_objets import (
@@ -91,11 +91,16 @@ def test_parametres_puff_valident_les_invariants(
         ParametresPuff(**kwargs)  # type: ignore[arg-type]
 
 
-
 @given(
-    x=st.floats(min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
-    y=st.floats(min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
-    z=st.floats(min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False),
+    x=st.floats(
+        min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
+    ),
+    y=st.floats(
+        min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
+    ),
+    z=st.floats(
+        min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False
+    ),
 )
 def test_point3d_accepte_toutes_coordonnees_finies_dans_le_domaine(
     x: float, y: float, z: float
@@ -107,14 +112,28 @@ def test_point3d_accepte_toutes_coordonnees_finies_dans_le_domaine(
 
 
 @given(
-    x=st.floats(min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
-    y=st.floats(min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
-    z=st.floats(min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False),
-    t=st.floats(min_value=1.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
-    masse=st.floats(min_value=0.0, max_value=100.0, allow_nan=False, allow_infinity=False),
-    u=st.floats(min_value=0.1, max_value=20.0, allow_nan=False, allow_infinity=False),
+    x=st.floats(
+        min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
+    ),
+    y=st.floats(
+        min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
+    ),
+    z=st.floats(
+        min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False
+    ),
+    t=st.floats(
+        min_value=1.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
+    ),
+    masse=st.floats(
+        min_value=0.0, max_value=100.0, allow_nan=False, allow_infinity=False
+    ),
+    u=st.floats(
+        min_value=0.1, max_value=20.0, allow_nan=False, allow_infinity=False
+    ),
     classe=st.sampled_from(list(ClasseStabilite)),
-    x0=st.floats(min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False),
+    x0=st.floats(
+        min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False
+    ),
 )
 def test_puff_objet_equivaut_au_noyau_pour_entrees_valides(
     x: float,
@@ -147,10 +166,18 @@ def test_puff_objet_equivaut_au_noyau_pour_entrees_valides(
 
 
 @given(
-    t=st.floats(min_value=1.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
-    u=st.floats(min_value=0.1, max_value=20.0, allow_nan=False, allow_infinity=False),
-    masse=st.floats(min_value=0.01, max_value=100.0, allow_nan=False, allow_infinity=False),
-    facteur=st.floats(min_value=0.1, max_value=10.0, allow_nan=False, allow_infinity=False),
+    t=st.floats(
+        min_value=1.0, max_value=10_000.0, allow_nan=False, allow_infinity=False
+    ),
+    u=st.floats(
+        min_value=0.1, max_value=20.0, allow_nan=False, allow_infinity=False
+    ),
+    masse=st.floats(
+        min_value=0.01, max_value=100.0, allow_nan=False, allow_infinity=False
+    ),
+    facteur=st.floats(
+        min_value=0.1, max_value=10.0, allow_nan=False, allow_infinity=False
+    ),
     classe=st.sampled_from(list(ClasseStabilite)),
 )
 def test_puff_est_lineaire_en_masse(
