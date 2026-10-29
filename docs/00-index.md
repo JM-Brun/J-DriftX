@@ -11,7 +11,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 48 (les notes 43 à 47 documentent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies et le contrat minimal de la baseline).
+Prochain numéro libre sur main : 49 (les notes 43 à 48 documentent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline et le cas de référence autonome à écoulement uniforme).
 
 ## Numéros en double
 
@@ -27,6 +27,8 @@ Prochain numéro libre sur main : 48 (les notes 43 à 47 documentent l’audit d
 | 17 | `17-laboratoire-interactif.md` | Laboratoire interactif |
 | 21 | `21-bilan-mvp-s-1d.md` | Bilan de reproductibilité du MVP-S 1D |
 | 21 | `21-jeux-donnees-seconde-vague-et-cas-synthetiques.md` | Seconde vague de jeux de données et cas synthétiques S0-S3 |
+| 33 | `33-test-contre-exemple-cisaillement.md` | Test du contre-exemple de cisaillement (coût projeté) |
+| 33 | `33-figure-04-superposition-sources.md` | Figure 4 du chapitre 2008 : superposition de deux sources |
 
 ## Inventaire
 
@@ -73,6 +75,7 @@ Prochain numéro libre sur main : 48 (les notes 43 à 47 documentent l’audit d
 | `45-audit-article-mohammadi-brun-2006.md` | Audit critique de la source fondatrice 2006 : pseudo-distance orientée, conservation globale, assimilation et coûts rapportés |
 | `46-registre-erreurs-incoherences-documentaires.md` | Registre central des erreurs, anomalies, ambiguïtés et incohérences entre documents |
 | `47-contrat-minimal-baseline.md` | Contrat minimal de la baseline : statut figé par capacité historique (définie / partiellement définie / annoncée seulement / non reproductible) |
+| `48-cas-reference-autonome-ecoulement-uniforme.md` | Cas de référence autonome : écoulement uniforme (unités, domaine, conditions aux limites, solution de référence, observable, limites ; cisaillement en contre-exemple distinct) |
 | `bibliographie/sources/these-brun.md` | Fiche source : thèse de J.-M. Brun (année/titre à confirmer sur la page de titre) |
 | `bibliographie/sources/mohammadi-brun-2006-cr-mecanique.md` | Fiche source : Mohammadi & Brun (2006), C. R. Mécanique |
 | `bibliographie/sources/mohammadi-brun-pironneau-2006.md` | Fiche de traçabilité d'une référence non retrouvée |
