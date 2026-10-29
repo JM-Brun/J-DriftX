@@ -121,6 +121,29 @@ The analytical regression test for this example is documented in [the shear-coun
 
 **Source-identity caveat added 29 October 2026:** the equations numbered (28)–(31) below are not present in the accessible 17-page STIC & Environnement manuscript `hal-00468863`, which uses bracketed equation labels [1]–[7] in §2. The earlier attribution in this note to “Bozon & Mohammadi (2009), *Applied Geomatics*” has not been reconciled with the distinct JESA 2010 record (`hal-02594312`, DOI `10.3166/jesa.44.445-461`) or backed by a source PDF in the current project files. Therefore, treat the following as a provisional transcription from a previously consulted publisher-text source whose exact bibliographic identity still needs verification; do **not** cite Eqs. (28)–(31) as equations of either the STIC 2009 manuscript or JESA 2010 until that identity is resolved. No new acquisition was performed for this audit.
 
+### Accessible STIC 2009 manuscript (HAL `hal-00468863`): equations [1]–[7]
+
+The 17-page author manuscript is a distinct, directly accessible source. Its §2 uses bracketed equation labels [1]–[7], not the numbering (28)–(31) below. Pages 5–7 of the PDF were inspected visually for the similitude profile, multi-level velocity restriction, concentration interpolation, and integral definitions.
+
+The manuscript prints the concentration profile
+\[
+c(x,y,z)=c_c(x)f(\sqrt{y^2+z^2},\delta(x)),\quad
+c_c(x)\sim e^{-a(U)x},\quad
+f\sim e^{-b(U,\delta(x))\sqrt{y^2+z^2}},
+\tag{STIC09-1}
+\]
+and defines the injected quantity \(K=\int_0^T c_{inj}(t)\,dt\), the ground-integrated quantity \(C_g(x,y)=\int_{z\le z_0}c(x,y,z)\,dz\), and \(C_a=K-\int_{R\ge R_0}C_g(x,y)\,dV\) as printed. Under \([c]=M L^{-3}\), \(C_g\) has units \(M L^{-2}\); integrating it against \(dV\) yields \(M L\), not the mass units of \(K\). The manuscript's printed differential \(dV\) is retained here; replacing it with \(dx\,dy\) would be conjectural.
+
+After the concentration interpolation in Eq. [4], the manuscript claims that
+\[
+\int_{\omega_i}c^i\,dV=
+\int_{\partial\omega_i}c^i\left(\frac{\vec u_i}{\|\vec u_i\|}\cdot\vec n_i\right)dS.
+\tag{STIC09-MB}
+\]
+Under the same conventional volumetric-concentration interpretation, the left side has units \(M\), whereas the right side has units \(M L^{-1}\). The normalized velocity is dimensionless and supplies no missing speed factor. This is a conditional dimensional inconsistency of the printed identity, not proof of authorial intent or of a general failure of every reconstruction.
+
+In the inspected §2 equations, the source is represented through \(c_{inj}(t)\); no explicit deposition/sink term appears in the reduced equations [1]–[7]. The boundary conditions for the reduced model are not fully specified there. The free inlet/outlet boundaries and calibrated deposition sink described in the 2006 paper's *PDE reference comparison* belong to that 2006 comparison and must not be silently transferred to the STIC 2009 manuscript or assumed to be the JESA 2010 conditions.
+
 ### Published definitions
 
 The paper states that the total injected quantity over \( [0,T] \) is
