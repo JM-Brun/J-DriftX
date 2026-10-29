@@ -7,7 +7,7 @@ inventaire factuel : il ne résume ni ne remplace les notes.
 ## Règle de numérotation
 
 Avant de créer une note `docs/NN-…`, **lister le dossier `docs/` et prendre le
-plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
+plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21 et 33 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
