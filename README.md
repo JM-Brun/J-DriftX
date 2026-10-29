@@ -23,7 +23,7 @@ Le projet historique est un **socle à reconstruire et à auditer, pas un carcan
 | 2009 | [GIS-based atmospheric dispersion modelling](https://doi.org/10.1007/s12518-009-0006-0) — N. Bozon & B. Mohammadi | *Applied Geomatics* 1, 59–74 |
 | 2010 | [A GIS-based atmospheric dispersion model](https://doi.org/10.3166/jesa.44.445-461) — N. Bozon, C. Sinfort & B. Mohammadi | *JESA* 44(4-5), 445–461 (version journal du papier STIC & Environnement 2009 / HAL hal-00468863) |
 
-Détails : [docs/references.md](docs/references.md) — [fiches de lecture par papier source](docs/04-revues-papiers-sources.md) — [sources primaires et extractions](raw/).
+Détails : [docs/references.md](docs/references.md) — [fiches de lecture par papier source](docs/04-revues-papiers-sources.md) — [audit critique de l'article fondateur de 2006](docs/43-audit-article-mohammadi-brun-2006.md) — [sources primaires et extractions](raw/).
 
 ## Documentation
 
