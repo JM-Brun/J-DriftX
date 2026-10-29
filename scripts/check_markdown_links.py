@@ -37,6 +37,11 @@ def _slug_heading(heading: str) -> str:
     """Approximate GitHub's heading-anchor slug for ordinary Markdown headings."""
     heading = re.sub(r"\x60([^\x60]*)\x60", r"\1", heading)
     heading = re.sub(r"<[^>]+>", "", heading)
+    heading = "".join(
+        char
+        for char in unicodedata.normalize("NFKD", heading)
+        if not unicodedata.combining(char)
+    )
     heading = heading.replace("&", "-")
     heading = re.sub(r"[^\w\- ]", "", heading, flags=re.UNICODE)
     return re.sub(r"[-\s]+", "-", heading.strip().lower()).strip("-")
