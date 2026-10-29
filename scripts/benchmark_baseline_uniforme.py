@@ -156,8 +156,11 @@ def executer(repetitions: int) -> dict[str, Any]:
         # L'oracle est sans calibration : seule la source et la grille sont préparées.
         preparer_cas()
 
-    baseline_workload = lambda: [evaluer_point(cas, p).concentration for p in points]
-    oracle_workload = lambda: [oracle_concentration(p, source) for p in points]
+    def baseline_workload() -> list[float]:
+        return [evaluer_point(cas, point).concentration for point in points]
+
+    def oracle_workload() -> list[float]:
+        return [oracle_concentration(point, source) for point in points]
 
     baseline_times = mesurer(baseline_workload, repetitions)
     oracle_times = mesurer(oracle_workload, repetitions)
