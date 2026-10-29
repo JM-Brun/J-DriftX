@@ -3,6 +3,7 @@
 import math
 
 import pytest
+from hypothesis import given, strategies as st
 
 from jdriftx.similitude import concentration_panache, concentration_puff
 from jdriftx.similitude_objets import (
@@ -88,3 +89,79 @@ def test_parametres_puff_valident_les_invariants(
     """Les paramètres du puff valident temps, masse, vent et classe."""
     with pytest.raises(ValueError, match=message):
         ParametresPuff(**kwargs)  # type: ignore[arg-type]
+
+
+
+@given(
+    x=st.floats(min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
+    y=st.floats(min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
+    z=st.floats(min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False),
+)
+def test_point3d_accepte_toutes_coordonnees_finies_dans_le_domaine(
+    x: float, y: float, z: float
+) -> None:
+    """Given des coordonnées finies, when le point est construit, then il les conserve."""
+    point = Point3D(x=x, y=y, z=z)
+
+    assert (point.x, point.y, point.z) == (x, y, z)
+
+
+@given(
+    x=st.floats(min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
+    y=st.floats(min_value=-10_000.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
+    z=st.floats(min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False),
+    t=st.floats(min_value=1.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
+    masse=st.floats(min_value=0.0, max_value=100.0, allow_nan=False, allow_infinity=False),
+    u=st.floats(min_value=0.1, max_value=20.0, allow_nan=False, allow_infinity=False),
+    classe=st.sampled_from(list(ClasseStabilite)),
+    x0=st.floats(min_value=-1_000.0, max_value=1_000.0, allow_nan=False, allow_infinity=False),
+)
+def test_puff_objet_equivaut_au_noyau_pour_entrees_valides(
+    x: float,
+    y: float,
+    z: float,
+    t: float,
+    masse: float,
+    u: float,
+    classe: ClasseStabilite,
+    x0: float,
+) -> None:
+    """Given un puff valide, when les deux API calculent, then elles concordent."""
+    point = Point3D(x=x, y=y, z=z)
+    parametres = ParametresPuff(t=t, masse=masse, u=u, classe=classe, x0=x0)
+
+    obtenu = concentration_puff_au_point(point, parametres)
+    attendu = concentration_puff(
+        x=x,
+        y=y,
+        z=z,
+        t=t,
+        masse=masse,
+        u=u,
+        classe=classe.value,
+        x0=x0,
+    )
+
+    assert math.isfinite(obtenu)
+    assert obtenu == pytest.approx(float(attendu), rel=1e-12, abs=0.0)
+
+
+@given(
+    t=st.floats(min_value=1.0, max_value=10_000.0, allow_nan=False, allow_infinity=False),
+    u=st.floats(min_value=0.1, max_value=20.0, allow_nan=False, allow_infinity=False),
+    masse=st.floats(min_value=0.01, max_value=100.0, allow_nan=False, allow_infinity=False),
+    facteur=st.floats(min_value=0.1, max_value=10.0, allow_nan=False, allow_infinity=False),
+    classe=st.sampled_from(list(ClasseStabilite)),
+)
+def test_puff_est_lineaire_en_masse(
+    t: float, u: float, masse: float, facteur: float, classe: ClasseStabilite
+) -> None:
+    """Given deux masses proportionnelles, when calculées, then C est proportionnelle."""
+    point = Point3D(x=u * t, y=0.0, z=0.0)
+    initial = ParametresPuff(t=t, masse=masse, u=u, classe=classe)
+    multiplie = ParametresPuff(t=t, masse=masse * facteur, u=u, classe=classe)
+
+    c_initiale = concentration_puff_au_point(point, initial)
+    c_multipliee = concentration_puff_au_point(point, multiplie)
+
+    assert c_multipliee == pytest.approx(c_initiale * facteur, rel=1e-12, abs=0.0)
