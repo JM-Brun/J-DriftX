@@ -594,4 +594,3 @@ graph LR
 | [Bonicelli et al. 2012 — dérive des pesticides](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Defra 2011 — PS2024 (exposition des riverains)](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Garbaczewski et al. 1997 — équation de Burgers](../references.qmd) | [Équation de Burgers : lien avec J-DriftX](../theorie/burgers-et-jdriftx.qmd) |
-
