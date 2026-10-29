@@ -5,7 +5,7 @@ Index de navigation de `docs/`, établi le 27 octobre 2026 et maintenu pour orie
 ## Règle de numérotation
 
 Avant de créer une note `docs/NN-…`, **lister le dossier `docs/` et prendre le
-plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21 et 33 existent en double
+plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21, 33 et 47 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
@@ -27,6 +27,8 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | 21 | `21-jeux-donnees-seconde-vague-et-cas-synthetiques.md` | Seconde vague de jeux de données et cas synthétiques S0-S3 |
 | 33 | `33-test-contre-exemple-cisaillement.md` | Test du contre-exemple de cisaillement (coût projeté) |
 | 33 | `33-figure-04-superposition-sources.md` | Figure 4 du chapitre 2008 : superposition de deux sources |
+| 47 | `47-contrat-minimal-baseline.md` | Contrat minimal de la baseline : statuts figés par capacité historique |
+| 47 | `47-synthese-preuves-conservation-g0s.md` | Synthèse des preuves — conservation G0-S et temps de transport |
 
 ## Notes et ressources de référence
 
@@ -73,6 +75,7 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `45-audit-article-mohammadi-brun-2006.md` | Audit critique de la source fondatrice 2006 : pseudo-distance orientée, conservation globale, assimilation et coûts rapportés |
 | `46-registre-erreurs-incoherences-documentaires.md` | Registre central des erreurs, anomalies, ambiguïtés et incohérences entre documents |
 | `47-contrat-minimal-baseline.md` | Contrat minimal de la baseline : statut figé par capacité historique (définie / partiellement définie / annoncée seulement / non reproductible) |
+| `47-synthese-preuves-conservation-g0s.md` | Synthèse des preuves — conservation G0-S et temps de transport (affirmations historiques, résultats conditionnels, tests et reconstructions) |
 | `48-cas-reference-autonome-ecoulement-uniforme.md` | Cas de référence autonome : écoulement uniforme (unités, domaine, conditions aux limites, solution de référence, observable, limites ; cisaillement en contre-exemple distinct) |
 | `49-matrice-revendications-baseline.md` | Matrice initiale des revendications historiques : source/version/localisation, unités, hypothèses, preuves et statut de définition |
 | `50-protocole-oracle-couts-baseline-uniforme.md` | Oracle indépendant et protocole de coûts pour le cas S0 uniforme ; protocole implémenté, mesures à exécuter |
