@@ -65,12 +65,11 @@ def test_relief_synthetique_delegue_au_module_terrain() -> None:
     """Étant donné le contrat Relief, quand on évalue une colline, la délégation est exacte."""
     # Given — un relief synthétique de colline.
     relief = ReliefSynthetique(kind="hill", height=3.0, width=2.0, center_x=1.0)
-    # When — on évalue l'altitude sur une grille.
-    x = np.linspace(-5.0, 5.0, 11)
-    y = np.linspace(-4.0, 4.0, 9)
+    # When — on évalue l'altitude sur une grille bidimensionnelle.
+    grille_x, grille_y = np.meshgrid(np.linspace(-5.0, 5.0, 11), np.linspace(-4.0, 4.0, 9))
     # Then — la valeur délègue au module terrain, sans duplication.
-    attendu = terrain_surface(x, y, "hill", height=3.0, width=2.0, center_x=1.0)
-    assert np.array_equal(relief.altitude(x, y), attendu)
+    attendu = terrain_surface(grille_x, grille_y, "hill", height=3.0, width=2.0, center_x=1.0)
+    assert np.array_equal(relief.altitude(grille_x, grille_y), attendu)
 
 
 def test_relief_synthetique_herite_des_rejets() -> None:
@@ -118,10 +117,10 @@ def test_mnt_ascii_rejette_cellule_sans_donnee() -> None:
     """Étant donné une cellule nodata dans l'interpolation, l'évaluation est refusée."""
     # Given — un MNT avec une cellule -9999 au sud-est.
     relief = ReliefMntAscii.depuis_texte(MNT_SANS_DONNEE)
-    # When / Then — l'interpolation qui la touche est refusée.
+    # When / Then — l'interpolation qui la touche à poids non nul est refusée.
     with pytest.raises(ValueError, match="sans donnee"):
         relief.altitude(10.0, 10.0)
-    # Et un point qui ne la touche pas reste lisible.
+    # Et le centre d'une cellule valide reste lisible.
     assert relief.altitude(5.0, 5.0) == pytest.approx(1.0)
 
 
