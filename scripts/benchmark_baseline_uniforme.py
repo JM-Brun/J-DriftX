@@ -23,8 +23,8 @@ import argparse
 import json
 import math
 import platform
-import statistics
 import shutil
+import statistics
 import subprocess
 import sys
 import time
