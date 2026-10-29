@@ -1,0 +1,20 @@
+﻿file_name,description,date,location,related_instrument,related_dataset,author
+video_1,Video illustrating plume behaviour using a smoke generator positioned in the airflow exiting the stack. Provides a qualitative visualization of plume trajectory under prevailing meteorological conditions. Recorded within one hour after tracer experiment #1.9,17/10/2019,Inside the cyclotron site,—,helium_release_sampling,Philippe Laguionie
+video_2,Video illustrating plume behaviour using a smoke generator positioned in the airflow exiting the stack. Provides a qualitative visualization of plume trajectory under prevailing meteorological conditions. Recorded within the hour preceding tracer experiment #1.9,17/10/2019,Inside the cyclotron site,—,helium_release_sampling,Philippe Laguionie
+video_3,Video illustrating plume behaviour using a smoke generator positioned in the airflow exiting the stack. Provides a qualitative visualization of plume trajectory under prevailing meteorological conditions. Recorded within the hour preceding tracer experiment #1.9,17/10/2019,Inside the cyclotron site,—,helium_release_sampling,Philippe Laguionie
+image_1,View of the stack and surrounding buildings and the hedge bordering the site to the east and south,17/10/2019,Inside the cyclotron site,—,—,Philippe Laguionie
+image_2,View of the stack and surrounding buildings,10/12/2019,Inside the cyclotron site,—,—,Philippe Laguionie
+image_3,Anemometers A (foreground) and B (background),09/10/2019,Inside the cyclotron site,anemometer_A,micrometeorology,Philippe Laguionie
+image_4,Anemometer H,08/10/2019,Inside the cyclotron site,anemometer_H,micrometeorology,Philippe Laguionie
+image_5,Anemometer N,09/10/2019,Inside the cyclotron site,anemometer_N,micrometeorology,Philippe Laguionie
+image_6,Anemometers B (foreground) and A (background right) and C (background left) and N (far background right) and lidar,09/10/2019,Inside the cyclotron site,anemometer_A; anemometer_B; anemometer_C; wind_lidar,micrometeorology; wind_lidar,Philippe Laguionie
+image_7,Anemometers C (foreground) and B (background) and lidar,09/10/2019,Inside the cyclotron site,anemometer_B; anemometer_C; wind_lidar,micrometeorology; wind_lidar,Philippe Laguionie
+image_8,Anemometers B and C and H and lidar,09/10/2019,Inside the cyclotron site,anemometer_B; anemometer_C; anemometer_H; wind_lidar,micrometeorology; wind_lidar,Philippe Laguionie
+image_9,Watchdog meteorological station,23/10/2019,Inside the cyclotron site,watchdog_station,meteorology,Philippe Laguionie
+image_10,Helium emission flow rate control system,17/10/2019,Inside the cyclotron site,—,helium_release_sampling,Philippe Laguionie
+image_11,Position of the helium release point at the end of the yellow pole within the airflow exiting the stack,23/10/2019,Inside the cyclotron site,—,helium_release_sampling,Philippe Laguionie
+image_12,Position of the helium release point at the end of the yellow pole within the airflow exiting the stack,10/12/2019,Inside the cyclotron site,—,helium_release_sampling,Philippe Laguionie
+image_13,Position of the helium release point at the end of the yellow pole within the airflow exiting the stack,10/12/2019,Inside the cyclotron site,—,helium_release_sampling,Philippe Laguionie
+image_14,EA-type air samplers (orange case),23/10/2019,Inside the cyclotron site,—,helium_release_sampling,Philippe Laguionie
+image_15,Mass spectrometer mounted on a trolley,10/12/2019,Inside the cyclotron site,ASM_2,helium_ambient_realtime,Philippe Laguionie
+image_16,EA-type air samplers (orange case) and VEGA-type air samplers (grey case) and mass spectrometer mounted on a trolley,10/12/2019,Outside the cyclotron site,ASM_2,helium_ambient_realtime,Philippe Laguionie

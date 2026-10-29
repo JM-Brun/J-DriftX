@@ -1,0 +1,47 @@
+﻿variable,description,unit,type,related_instrument,related_dataset
+air_temperature_meteorology,Air temperature,°C,float,meteorological station,meteorology
+air_temperature_micrometeorology,Air temperature measured by the ultrasonic anemometer (raw instrument output and no correction applied). Set to NA in the absence of recording.,°C,float,ultrasonic anemometer,micrometeorology
+atmospheric_pressure,Atmospheric pressure,hPa,float,meteorological station,meteorology
+datetime,Date and time of measurement,ISO-8601,datetime,—,meteorology; micrometeorology; helium_ambient_realtime
+experiment_id,Identifier of helium release experiment,—,string,—,helium_release_sampling; helium_ambient_realtime
+height_reference,Reference level used for the measurement height,—,string,—,instrument_locations
+helium_concentration_decision_threshold,Decision threshold (LC) defined as 1.05 × background concentration (background = 5.24 ppm),g m⁻³,float,mass spectrometer,helium_release_sampling
+helium_concentration_real_time_bg_corrected,Helium concentration in ambient air measured in real-time after background correction. Values below the decision threshold (LC) are reported as < LC.,g m⁻³,float,mass spectrometer,helium_ambient_realtime
+helium_concentration_real_time_bg_corrected_flag,Flag indicating whether the real-time background-corrected helium concentration is above or below the decision threshold (LC). Values are significant (≥ LC) or <LC (< LC).,—,string,mass spectrometer,helium_ambient_realtime
+helium_concentration_sampling_bg_corrected,Helium concentration in the sample after background correction. Values below the decision threshold (LC) are reported as < LC.,g m⁻³,float,mass spectrometer,helium_release_sampling
+helium_concentration_sampling_bg_corrected_flag,Flag indicating whether the background-corrected helium concentration measured from discrete air sampling is above or below the decision threshold (LC). Values are significant (≥ LC) or <LC (< LC).,—,string,mass spectrometer,helium_release_sampling
+helium_concentration_sampling_bg_passage_corrected,Helium concentration in the sampled air after background and plume passage corrections. Calculated only when the background-corrected concentration is significant (≥ LC) and set to NA otherwise.,g m⁻³,float,mass spectrometer,helium_release_sampling
+helium_real_time_height,Height of the real-time helium measurement above ground level,m,float,—,helium_ambient_realtime
+helium_real_time_latitude,Latitude of the real-time helium measurement,decimal degrees (WGS84),float,GPS,helium_ambient_realtime
+helium_real_time_longitude,Longitude of the real-time helium measurement,decimal degrees (WGS84),float,GPS,helium_ambient_realtime
+helium_release_end_time,Helium release end time,ISO-8601,datetime,mass flow controller,helium_release_sampling
+helium_release_flow,Helium mass flow rate,g s⁻¹,float,mass flow controller,helium_release_sampling
+helium_release_height,Height of helium release above ground level,m,float,—,helium_release_sampling
+helium_release_latitude,Latitude of the helium release location,decimal degrees (WGS84),float,GPS,helium_release_sampling
+helium_release_longitude,Longitude of the helium release location,decimal degrees (WGS84),float,GPS,helium_release_sampling
+helium_release_start_time,Helium release start time,ISO-8601,datetime,mass flow controller,helium_release_sampling
+instrument_id,Identifier of the instrument location ,—,string,—,instrument_locations
+instrument_latitude,Latitude of the instrument location,decimal degrees (WGS84),float,GPS,instrument_locations
+instrument_longitude,Longitude of the instrument location,decimal degrees (WGS84),float,GPS,instrument_locations
+measurement_height,Height of the instrument measurement above the reference level,m,float,—,instrument_locations
+relative_humidity,Relative humidity,%,float,meteorological station,meteorology
+sampling_bag_id,Identifier of the air sampling bag. Applicable only for VEGA samplers (multiple bags per sampling event). This field is set to NA for EA samplers (single bag per sampling event).,—,string,—,helium_release_sampling
+sampling_end_time,End time of the air sampling,ISO-8601,datetime,atmospheric sampler,helium_release_sampling
+sampling_flowrate,Mean air sampling flow rate. Set to NA when the sampler was not equipped with a flow rate recorder or when the recorder did not operate properly.,L min⁻¹,float,atmospheric sampler,helium_release_sampling
+sampling_flowrate_sd,Standard deviation of air sampling flow rate. Set to NA when the sampler was not equipped with a flow rate recorder or when the recorder did not operate properly.,L min⁻¹,float,atmospheric sampler,helium_release_sampling
+sampling_height,Height of the air sampling inlet above ground level,m,float,atmospheric sampler,helium_release_sampling
+sampling_id,Identifier of the air sampler,—,string,atmospheric sampler,helium_release_sampling
+sampling_latitude,Latitude of the air sampling location,decimal degrees (WGS84),float,GPS,helium_release_sampling
+sampling_longitude,Longitude of the air sampling location,decimal degrees (WGS84),float,GPS,helium_release_sampling
+sampling_start_time,Start time of the air sampling,ISO-8601,datetime,atmospheric sampler,helium_release_sampling
+sampling_type,Type of air sampler: EA for sampling a single air bag during an experiment and VEGA for sequential sampling of multiple air bags during an experiment,—,string,atmospheric sampler,helium_release_sampling
+solar_radiation,Global solar radiation,W m⁻²,float,Watchdog station,meteorology
+turbulence_kinetic_energy,Turbulence kinetic energy,m² s⁻²,float,ultrasonic anemometer,micrometeorology
+vertical_range,Vertical measurement range above ground level,—,string,wind profiler,instrument_locations
+vertical_resolution,Vertical spacing between successive measurement levels,m,float,wind profiler,instrument_locations
+wind_direction,Wind direction,°,float,ultrasonic anemometer,micrometeorology
+wind_direction_sd,Standard deviation of wind direction,°,float,ultrasonic anemometer,micrometeorology
+wind_nbdata,Number of instantaneous wind measurements recorded over a 10-minute period,—,float,ultrasonic anemometer,micrometeorology
+wind_speed,Mean wind speed,m s⁻¹,float,ultrasonic anemometer,micrometeorology
+wind_speed_max,Maximum wind speed,m s⁻¹,float,ultrasonic anemometer,micrometeorology
+wind_speed_sd,Standard deviation of wind speed,m s⁻¹,float,ultrasonic anemometer,micrometeorology
