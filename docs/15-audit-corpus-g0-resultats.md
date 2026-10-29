@@ -59,7 +59,7 @@
 
 ## 4. Décision et entrée en G1
 
-1. Le critère (e) de la [fiche G0](13-fiche-g0-cadrage-besoin.md) est renseigné et sourcé ; G0 est **franchi**.
+1. Le critère documentaire (e) est renseigné et sourcé ; le jalon **G0 documentaire** est **franchi**. G0-A reste ouvert ; voir l'[issue #43](https://github.com/JM-Brun/J-DriftX/issues/43) et le [cadrage G0-A](38-cadrage-g0a-besoin-applicatif.md).
 2. **Corpus principal du test discriminant : DIFLU** (champ proche, terme source contrôlé, météo co-localisée, observable conforme). **DATEM/ETEX** sont retenus en far-field pour la généralisation (G3).
 3. Prérequis G1 avant tout benchmark, sans entraînement de modèle :
    - télécharger DIFLU, conserver la fiche indiquant la Licence Ouverte Etalab 2.0 et vérifier les métadonnées des fichiers ;
