@@ -11,8 +11,9 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17 et 21 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 39 (la note 38, cadrage G0-A du besoin applicatif,
-est désormais sur main).
+Prochain numéro libre sur main : 40 (la note 38, cadrage G0-A du besoin
+applicatif — issue #43 —, et la note 39, squelette benchmarks S0, sont désormais
+sur main).
 
 ## Numéros en double
 
@@ -61,6 +62,7 @@ est désormais sur main).
 | `36-identification-source.md` | Figure 6 du chapitre 2008 : identification de source, carte de sensibilité du coût |
 | `37-transformation-tau-eta-cas-uniforme.md` | Carte travel-time explicite pour le champ uniforme de référence : jacobien, théorème conditionnel d'égalité des flux, verdict sur les affirmations historiques |
 | `38-cadrage-g0a-besoin-applicatif.md` | Cadrage G0-A : utilisateur cible, décision, observable, baseline équitable et limites du corpus CAPRIV |
+| `39-squelette-benchmarks-s0.md` | Squelette de benchmarks : cas analytique S0, registres de cas et de métriques, évaluation reproductible, standards (MVK, ASTM D6589, CF, PDEBench) |
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
 | `bibliographie/` | Dossier bibliographique |
