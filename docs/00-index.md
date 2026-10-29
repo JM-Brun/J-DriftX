@@ -64,6 +64,7 @@ main).
 | `38-cadrage-g0a-besoin-applicatif.md` | Cadrage G0-A : utilisateur cible, décision, observable, baseline équitable et limites du corpus CAPRIV |
 | `39-squelette-benchmarks-s0.md` | Squelette de benchmarks : cas analytique S0, registres de cas et de métriques, évaluation reproductible, standards (MVK, ASTM D6589, CF, PDEBench) |
 | `40-standards-qualite-tests-proprietes.md` | Standards qualité : tests de propriété (Hypothesis), objet et domaine (OOP/DDD), diagnostic architecture et recommandations |
+| `41-audit-these-brun-conservation-g0s.md` | Audit de la thèse de Brun : équations (7.12)–(7.13), conservation du transport lointain et contrôle dimensionnel |
 | `references.md` | Références et sources du projet |
 | `bibliographie-annotee-jdriftx.md` | Bibliographie annotée |
 | `bibliographie/` | Dossier bibliographique |
