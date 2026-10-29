@@ -16,11 +16,11 @@ from jdriftx.experiences.reference_independante import (
     ParametresEdp,
     PointComparaison,
     SolutionEdp,
+    _pas_longitudinal,
     comparer_reference,
     construire_manifeste,
     derivee_sigma_carre,
     resoudre_edp,
-    _pas_longitudinal,
 )
 from jdriftx.similitude import sigma_y, sigma_z
 from jdriftx.source import SourcePanache
