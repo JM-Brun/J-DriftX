@@ -142,8 +142,13 @@ class ManifesteBaseline(BaseModel):
     commande: str
 
     def vers_dict(self) -> dict[str, object]:
-        """Exporte le manifeste en dictionnaire (frontière JSON uniquement)."""
-        return self.model_dump()
+        """Exporte le manifeste en dictionnaire JSON-natif (frontière uniquement).
+
+        Le mode ``json`` du builtin ``model_dump`` convertit les tuples en
+        listes et les énumérations en chaînes : l'export est directement
+        sérialisable par ``json.dumps``, sans conversion manuelle.
+        """
+        return self.model_dump(mode="json")
 
 
 CAS_REFERENCE_DEFAUT: CasS0 = CAS_S0_DEFAUT
