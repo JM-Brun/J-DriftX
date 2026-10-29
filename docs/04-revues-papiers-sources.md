@@ -14,6 +14,10 @@ Ce fichier est un **index de fiches individuelles**, pas un document de lecture 
 | Bozon, Sinfort & Mohammadi (2009), plateforme Drift-X / HAL | [Fiche plateforme 2009](bibliographie/sources/bozon-sinfort-mohammadi-2009-driftx.md) | Extraction technique détaillée, architecture Fortran/QGIS et sens des niveaux spatiaux. |
 | Bozon & Mohammadi (2009), *Applied Geomatics* | [Fiche Applied Geomatics](bibliographie/sources/bozon-mohammadi-2009-applied-geomatics.md) | Résumé accessible, texte intégral et portée limitée des extraits. |
 
+## Complément d'analyse — deux sens distincts de « multi-niveaux »
+
+Ce passage a été déplacé dans la [fiche source de la plateforme Drift-X 2009](bibliographie/sources/bozon-sinfort-mohammadi-2009-driftx.md#complment-danalyse--deux-sens-distincts-de-multi-niveaux). Ce titre est conservé ici comme point d'entrée pour les liens historiques qui pointaient vers l'ancien document monolithique.
+
 ## Synthèse transversale
 
 - [Découvertes bibliographiques et état historique des accès (octobre 2026)](bibliographie/synthese-acces-sources-historique-2026-10.md) conserve les anciens tableaux d'accès et les pistes de recherche ; ce n'est pas une liste de tâches actuelle.
