@@ -1,6 +1,6 @@
 # Revue mathématique ciblée — temps de parcours de Drift-X
 
-> **Statut :** revue mathématique ciblée, non exhaustive. Les passages pertinents de l'article de 2006 et du chapitre de 2008 ont été consultés ; la thèse n'est pas disponible dans le projet et sera examinée après son ajout ultérieur par l'utilisateur. Cette note distingue les définitions rapportées par les sources, les déductions analytiques vérifiables et les questions physiques ou numériques encore ouvertes. Elle ne certifie ni l'originalité de la formulation historique ni sa validité applicative.
+> **Statut de la revue initiale et mise à jour (29 octobre 2026) :** revue mathématique ciblée, non exhaustive. La rédaction initiale précédait l'obtention du PDF de thèse. Celui-ci est désormais versionné dans `raw/`; des passages ciblés, notamment les équations (7.12)–(7.13), sont analysés dans [l'audit de thèse](43-audit-these-brun-conservation-g0s.md). La thèse entière n'a pas été relue de bout en bout, et la page de titre ainsi que l'identité binaire avec le fichier HAL restent à vérifier depuis les éléments de provenance existants. Ne pas relancer l'acquisition. Cette note distingue les définitions rapportées par les sources, les déductions analytiques vérifiables et les questions physiques ou numériques encore ouvertes ; elle ne certifie ni l'originalité de la formulation historique ni sa validité applicative.
 
 > **Guide de lecture.** Une *définition* fixe l'objet étudié; une *hypothèse* précise quand il est défini; une *proposition démontrée* découle de ces éléments; une *illustration* aide à l'interpréter sans constituer une validation physique.
 
@@ -217,7 +217,7 @@ La différence de flux entre sections dépend donc de la source \(s\) contenue d
 | Contreras & Kachroo (2020), [*The Viscosity Solution for Hamilton Jacobi Travel Time Dynamics*](https://doi.org/10.1109/TITS.2019.2946109) | Équation de temps de parcours de type Hamilton–Jacobi et solution de viscosité | Application au trafic/LWR : analogue méthodologique, pas la même dynamique physique |
 | Sethian & Vladimirsky (2001), [*Ordered upwind methods for static Hamilton–Jacobi equations*](https://pmc.ncbi.nlm.nih.gov/articles/PMC58684/) | Problèmes de temps minimal anisotrope et équations Hamilton–Jacobi–Bellman | Pertinent si le temps est un minimum sur un ensemble de directions et si un solveur de front est envisagé |
 
-Cette liste établit que le voisinage conceptuel est riche; elle **n'établit pas** que la contribution historique de Drift-X est redondante. Les sections pertinentes du rapport CR Mécanique (2006) et du chapitre Springer de 2008 ont maintenant été lues. La thèse elle-même n'a pas encore été examinée; sa date bibliographique reste incohérente entre les références consultées.
+Cette liste établit que le voisinage conceptuel est riche; elle **n'établit pas** que la contribution historique de Drift-X est redondante. Les sections pertinentes du rapport CR Mécanique (2006) et du chapitre Springer de 2008 ont été lues. Le PDF de thèse a désormais été obtenu et des passages ciblés sont examinés dans [docs/43](43-audit-these-brun-conservation-g0s.md), mais la thèse entière n'a pas été relue ; sa date bibliographique reste incohérente entre les références consultées.
 
 ## 5. Décision scientifique pour le MVP
 
@@ -238,7 +238,7 @@ Le risque le plus immédiat n'est pas simplement que « Zermelo existe déjà »
 À ce stade :
 - **résultat établi par la revue** : le texte primaire de 2006 définit une pseudo-distance fondée sur la projection sur une caractéristique, et annonce explicitement la perte de séparation et l'échec possible de l'inégalité triangulaire; plusieurs familles mathématiques voisines sont pertinentes;
 - **non établi** : originalité de Drift-X, validité générale des propriétés annoncées, conservation exacte sous les hypothèses réellement implémentées, valeur applicative;
-- **prochaine action discriminante hors thèse** : traduire le contre-exemple de triangulation en test de référence lorsque l'API de champ variable sera spécifiée et formaliser la preuve de conservation à partir des sources déjà disponibles. L'examen de la thèse est différé jusqu'à son ajout ultérieur par l'utilisateur ; le cas uniforme analytique est déjà implémenté et testé.
+- **prochaine action discriminante hors lecture intégrale de la thèse** : traduire le contre-exemple de triangulation en test de référence lorsque l'API de champ variable sera spécifiée et formaliser la preuve de conservation à partir des sources déjà disponibles. L'acquisition de la thèse est terminée ; poursuivre l'examen des passages utiles à partir du PDF versionné et de la provenance existante, sans relancer l'acquisition. Le cas uniforme analytique est déjà implémenté et testé.
 
 ### Écart entre la source historique et le code actuel
 
@@ -270,7 +270,7 @@ De même, \(\nabla\cdot\mathbf u=0\) contraint la cinématique du champ, mais la
 | Point | État après lecture du rapport 2006 | Ce qui reste nécessaire pour le lever |
 |---|---|---|
 | Implémentation Python actuelle | **Écart désormais explicite** : la fonction est un coût de polyligne qui ignore l'orientation et la projection historique | Étendre la référence seulement après avoir spécifié les caractéristiques et cas limites des champs variables; conserver la primitive de polyligne comme API distincte |
-| Définition historique | **Partiellement levé** : la projection \(B\mapsto B^\perp\) et le statut de pseudo-distance sont explicités au §3 | Lire la thèse et le chapitre de 2008 pour vérifier la cohérence des variantes et les extensions proposées |
+| Définition historique | **Partiellement levé** : la projection \(B\mapsto B^\perp\) et le statut de pseudo-distance sont explicités au §3 | Le PDF de thèse est obtenu ; des passages ciblés sont audités dans docs/43. Compléter la lecture des parties non examinées et vérifier la page de titre/identité binaire à partir des éléments de provenance existants. Le chapitre 2008 reste une source complémentaire |
 | Domaine de validité | **Partiellement levé** : l'article suppose une caractéristique unique et écarte sources/puits | Définir précisément le traitement des séparatrices, stagnations, caractéristiques multiples et limites du domaine |
 | Séparation des points | **Levé pour la construction publiée** : la source reconnaît que \(d(A,B)=0\) n'implique pas \(A=B\) | Ajouter un test analytique de reproduction; ne pas présenter cette propriété comme un défaut nouvellement découvert |
 | Inégalité triangulaire | **Levé pour un cas analytique** : le champ divergence nulle \(\mathbf u=(1+9y,0)\) et trois points donnent \(d(A,C)=2>d(A,B)+d(B,C)=1.1\) | Traduire ce cas en test de référence quand l'API de champ variable sera spécifiée |
@@ -282,7 +282,7 @@ De même, \(\nabla\cdot\mathbf u=0\) contraint la cinématique du champ, mais la
 
 ### Prochaine action à plus forte valeur
 
-Ne pas lancer encore un solveur 2D. Reproduire d'abord la pseudo-distance historique dans le champ uniforme, avec cas de test calculés à la main. En parallèle, formaliser la conservation de masse à partir des sources déjà disponibles. L'examen de la thèse de Brun est différé jusqu'à son ajout ultérieur au projet ; le chapitre de 2008 reste une source complémentaire à consulter au-delà des pages déjà extraites. Si la source primaire complète n'est pas accessible, documenter cette limite plutôt que combler les lacunes par inférence.
+Ne pas lancer encore un solveur 2D. Reproduire d'abord la pseudo-distance historique dans le champ uniforme, avec cas de test calculés à la main. En parallèle, formaliser la conservation de masse à partir des sources déjà disponibles. Le PDF de la thèse est déjà obtenu ; poursuivre la lecture ciblée/intégrale et les contrôles de provenance à partir des éléments versionnés, sans relancer l'acquisition. Le chapitre de 2008 reste une source complémentaire à consulter au-delà des pages déjà extraites. Si une source primaire reste partiellement examinée, documenter précisément cette limite plutôt que combler les lacunes par inférence.
 
 ## Références web consultées
 
