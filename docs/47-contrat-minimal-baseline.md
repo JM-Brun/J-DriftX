@@ -113,6 +113,8 @@ Conformément à l’ordre #232 (choisir un premier sous-ensemble exécutable pl
 4. **Champ multi-niveaux R3** : première extension conditionnelle, après arbitrage de la base et comparaison des versions.
 5. **Assimilation et bilan sources/puits** : reconstructions explicitement divergentes après la baseline (étapes 5–6), jamais présentées comme capacités héritées.
 
+La matrice ligne par ligne des revendications, versions, unités, hypothèses et preuves est maintenue séparément dans la [note 49](49-matrice-revendications-baseline.md). Elle complète ce contrat synthétique sans dupliquer les fiches d'anomalies de la note 46.
+
 ## 6. Ce que ce contrat ne fait pas
 
 - Il ne modifie aucune transcription, aucun code, aucun test.
