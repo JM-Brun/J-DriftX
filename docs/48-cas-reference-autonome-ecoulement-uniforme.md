@@ -73,11 +73,11 @@ avec σ_y(x) = a·x/√(1+d·x) et σ_z(x) selon la forme de la classe (linéair
 
 ## 4. Limites explicites — ce que le cas établit et ne établit pas
 
-**Établit** : cohérence dimensionnelle de la solution de référence ; reproductibilité (commande du squelette S0) ; pipeline grille → vérité → métriques ; conservation du panache gaussien sur les cas et grilles testés du dépôt ; exactitude des temps de transport au cas uniforme.
+**Établit** : cohérence dimensionnelle de la solution de référence ; reproductibilité (commande du squelette S0) ; pipeline grille → vérité → métriques ; conservation du panache gaussien sur les cas et grilles testés du dépôt ; exactitude des temps de transport au cas uniforme. Le test `test_panache_against_closed_form_oracle` ([tests/test_similitude.py](../tests/test_similitude.py)) recoupe aussi l'évaluation vectorisée par une expression scalaire fermée, avec coefficients de classe C fixés dans le test.
 
 **N’établit pas** : toute propriété en champ variable (champ multi-niveaux, relief, divergence entre niveaux) ; dépôt et pertes au sol ; cisaillement ; non-stationnarité ; champ proche de la buse ; validation terrain (porte G1, DIFLU délégué) ; et aucune revendication de coût héritée des sources.
 
-Dans le cas S0, la vérité analytique **est** la baseline gaussienne ([note 39](39-squelette-benchmarks-s0.md) §5) : une comparaison à cette vérité valide un pipeline ou une reconstruction, jamais une source historique et jamais une supériorité.
+Dans le cas S0, la vérité analytique **est** la baseline gaussienne ([note 39](39-squelette-benchmarks-s0.md) §5) : une comparaison à cette vérité valide un pipeline ou une reconstruction, jamais une source historique et jamais une supériorité. Le nouvel oracle scalaire est indépendant du chemin d'exécution du package, mais partage la même formule gaussienne et les mêmes hypothèses physiques : il détecte des erreurs d'implémentation, pas une erreur conceptuelle commune à la formule ni une erreur de modèle par rapport à un solveur EDP.
 
 ## 5. Contre-exemple distinct : cisaillement
 
@@ -95,7 +95,7 @@ Aucune fusion du contre-exemple dans le cas de référence ; les statuts figés 
 | Objet du dépôt | Rôle vis-à-vis du cas de référence |
 |---|---|
 | CAS_S0_DEFAUT ([benchmarks/cas.py](../src/jdriftx/benchmarks/cas.py)) | **Le cas de référence est le cas S0 figé** : paramètres identiques ; la note fige son contrat, le code reste l’implémentation |
-| concentration_panache ([similitude.py](../src/jdriftx/similitude.py)) | Solution de référence ; aucun développement mathématique dupliqué |
+| concentration_panache ([similitude.py](../src/jdriftx/similitude.py)) | Solution de référence du package ; recoupée par un oracle scalaire distinct dans [tests/test_similitude.py](../tests/test_similitude.py), sans prétendre à une validation indépendante de la physique |
 | SCENARIO_DEFAUT (experiences/uniforme.py) | Scénario jouet de coût dirigé (vent 2 m/s, A=(0,0), B=(300,65), τ = 150 s, +∞ au retour) : objet distinct, sans contradiction — il illustre le volet transport avec ses propres valeurs |
 | benchmarks/metriques.py | Métriques FAC2/NMSE, conventions figées [note 39](39-squelette-benchmarks-s0.md) §3 |
 | tests/test_shear_projected_cost.py | Contre-exemple distinct (section 5) |
