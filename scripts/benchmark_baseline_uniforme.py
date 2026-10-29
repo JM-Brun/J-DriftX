@@ -23,13 +23,13 @@ import argparse
 import json
 import math
 import platform
-import subprocess
 import statistics
+import subprocess
 import sys
 import time
 import tracemalloc
 from collections.abc import Callable
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from importlib import metadata
 from pathlib import Path
 from typing import Any
@@ -222,7 +222,7 @@ def _git_metadata(*arguments: str) -> str | None:
     """Retourne une métadonnée Git ou None si elle n'est pas disponible."""
     try:
         result = subprocess.run(
-            ["git", *arguments],
+            ["git", *arguments],  # noqa: S603, S607 — executable and arguments are fixed internally
             check=True,
             capture_output=True,
             text=True,
@@ -249,7 +249,7 @@ def main() -> None:
     if args.repetitions < 5:
         parser.error("--repetitions doit être >= 5 pour rapporter une variabilité.")
 
-    debut_execution = datetime.now(timezone.utc).isoformat()
+    debut_execution = datetime.now(UTC).isoformat()
     rapport = executer(args.repetitions)
     rapport["execution"] = {
         "started_at_utc": debut_execution,
