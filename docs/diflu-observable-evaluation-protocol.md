@@ -49,7 +49,7 @@ Ces comptes ne doivent pas être forcés à correspondre. L'audit doit établir 
 
 Avant tout benchmark :
 
-- [ ] confirmer la granularité d'une ligne et l'identifiant de l'essai indépendant ;
+- [ ] confirmer la granularité d'une ligne et l'identifiant de l'essai indépendant ; l'audit structurel trouve 19 identifiants `experiment_id`, mais leur correspondance exacte avec les 15 expériences de l'article reste à établir ;
 - [ ] définir une cible unique, sa formule, ses unités et les conditions d'inclusion ;
 - [ ] déterminer quelles covariables sont disponibles au moment de la prédiction et lesquelles risqueraient de divulguer indirectement la cible ;
 - [ ] auditer les valeurs manquantes, le seuil de significativité, les limites de détection et les corrections ;
