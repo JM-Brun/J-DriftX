@@ -4,7 +4,7 @@
 
 ## 1. Règles communes
 
-Pour chaque corpus, vérifier neuf points ([preuves externes, §5](11-g0-evidence-externe.md)) :
+Pour chaque corpus, vérifier neuf points ([catalogue des données](12-catalogue-donnees-transport-dispersion.md) et [cadrage G0-A](38-cadrage-g0a-besoin-applicatif.md)) :
 
 1. **Accès et licence** — URL stable, droits de réutilisation, citation attendue.
 2. **Terme source** — position, hauteur, débit d'émission, durée du lâcher documentés.
@@ -59,5 +59,5 @@ Pré-tri effectué le 22 octobre 2026 pour répondre à la question « existe-t-
 ## 6. Livrables et décision
 
 1. Un tableau rempli par corpus (verdict V/A/R + justification point par point), commité dans docs/.
-2. Mise à jour du champ (e) de la [fiche G0](13-fiche-g0-cadrage-besoin.md).
+2. Mise à jour du critère (e) dans l'issue de cadrage [#43](https://github.com/JM-Brun/J-DriftX/issues/43) et renvoi vers le [cadrage G0-A](38-cadrage-g0a-besoin-applicatif.md).
 3. Décision : au moins un verdict **V** → sortie G0 instruisable ; tous **R** → activation du critère d'arrêt n°1 (fiche G0, §7) et repli sur le [fallback](09-fallback-modele-jouet.md).
