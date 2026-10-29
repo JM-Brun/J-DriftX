@@ -81,5 +81,5 @@ def test_source_immuable() -> None:
 )
 def test_refuse_parametres_physiques_non_finis(champ: str, valeur: float) -> None:
     """Given un paramètre physique non fini, when construit, then il est refusé."""
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="fini|finie"):
         replace(_source_valide(), **{champ: valeur})
