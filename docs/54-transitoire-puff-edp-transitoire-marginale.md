@@ -1,6 +1,6 @@
 # 54 — EDP transitoire du puff (marche en temps de la marginale transverse)
 
-**Statut.** Note d'expérience ouvrant la route EDP transitoire de la source impulsionnelle de l'[issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) : la marginale transverse Q(y, z, t) du puff est marchée en temps par un schéma FTCS, route indépendante de la solution fermée, comparée à celle-ci sur la grille du cas de référence S0 figé ([note 48](48-cas-reference-autonome-ecoulement-uniforme.md) §2.2). Suite directe de l'évaluation dirigée ([note 53](53-evaluation-puff-source-impulsionnelle.md)). Implémentation : [experiences/transitoire_puff.py](../src/jdriftx/experiences/transitoire_puff.py) ; tests : [tests/test_transitoire_puff.py](../tests/test_transitoire_puff.py).
+**Statut.** Note d'expérience ouvrant la route EDP transitoire de la source impulsionnelle de l'[issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) : la marginale transverse Q(y, z, t) du puff est marchée en temps par un schéma FTCS, route indépendante de la solution fermée, comparée à celle-ci sur la grille du cas de référence S0 figé ([note 48](48-cas-reference-autonome-ecoulement-uniforme.md) §2.2). Suite directe de l'évaluation dirigée ([note 53](53-evaluation-puff-source-impulsionnelle.md)). Implémentation : package [experiences/transitoire_puff/](../src/jdriftx/experiences/transitoire_puff) ; tests : [tests/test_transitoire_puff.py](../tests/test_transitoire_puff.py).
 
 **Date :** 29 octobre 2026. **Suivi :** [issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) ; étiquetage héritage/reconstruction/extension conformément au [contrat minimal](47-contrat-minimal-baseline.md) §3.4.
 
@@ -12,7 +12,8 @@
 
 ## 2. Méthodologie (quatre étapes)
 
-1. **Marginale transverse** : Q(y, z, t) = ∫ C(x, y, z, t) dx vérifie l'EDP de diffusion 2D en temps (le vent uniforme transporte, la diffusion transverse étale) ; K = (u/2)·dσ²/dx à la distance parcourue d = u·t.
+1. **Marginale transverse** : Q(y, z, t) = ∫ C(x, y, z, t) dx vérifie l'EDP de diffusion 2D en temps (le vent uniforme transporte, la diffusion transverse étale) ; K = (u/2)·d
+σ²/dx à la distance parcourue d = u·t.
 2. **Entrée fermée** : au premier instant de passage (t_e = 100/u), la marginale analytique du package est posée sur la grille ; bords latéraux et sommet mis à zéro.
 3. **Marche FTCS** : pas de temps t_e/2^k (k = 10 sur la grille fine, nombre de Fourier 0,235 au dernier passage ≤ 1/3) ; sol miroir (Neumann — exact car le noyau du puff est pair en z) ; instantanés prélevés aux instants de passage (pas 1024/3072/7168).
 4. **Comparaison dirigée** : C(x, y, z, t) = Q(y, z, t)·exp(−(x − x0 − u·t)²/2σx²)/(√(2π)σx), σx = σy ; les points du cas S0 sont aux arcs, où le facteur gaussien longitudinal est évalué au passage.
@@ -43,7 +44,8 @@
 
 ## 5. Limites explicites
 
-**Établit** : la cohérence interne du package entre la marche FTCS en temps de la marginale transverse et la solution fermée du puff, sur le cas S0 figé.
+**Établit** : la cohérence interne du package entre la marche FTCS en temps de la marg
+inale transverse et la solution fermée du puff, sur le cas S0 figé.
 
 **N'établit pas** : une validation physique (cas synthétique) ; une résolution numérique de la structure longitudinale (analytique : carte travel-time + isotropie du noyau fermé) ; le traitement du noyau symétrique en z autour du sol (moitié de la masse du noyau fermé formellement sous le sol ; la grille porte la demi-colonne miroir et les écarts de masse comparent la marginale analytique sur la même grille) ; une physique de l'isotropie σx = σy (portée par la solution fermée du package).
 
@@ -51,9 +53,9 @@
 
 | Objet du dépôt | Rôle |
 |---|---|
-| [experiences/transitoire_puff.py](../src/jdriftx/experiences/transitoire_puff.py) | Module : marche FTCS en temps, routes mesurées séparément, manifeste étiqueté |
-| [tests/test_transitoire_puff.py](../tests/test_transitoire_puff.py) | 17 tests GWT : calibration, entrée partagée, seuils, convergence, rejets, temps dirigé, coûts, manifeste, export JSON |
-| [experiences/reference_independante.py](../src/jdriftx/experiences/reference_independante.py) | Grille EDP, modèle de diffusion injectable, seuil de Fourier (étape 5) |
+| [experiences/transitoire_puff/](../src/jdriftx/experiences/transitoire_puff) | Package à cinq modules : marginale fermée, schéma FTCS en temps (solveur), routes mesurées séparément et structure longitudinale injectable (protocole), comparaison et manifeste étiqueté |
+| [tests/test_transitoire_puff.py](../tests/test_transitoire_puff.py) | 18 tests GWT : calibration, entrée partagée, seuils, convergence, rejets, temps dirigé, coûts, manifeste, export JSON, injectabilité |
+| [experiences/reference_independante.py](../src/jdriftx/experiences/reference_independante.py) | Grille EDP et modèle de diffusion injectable (étape 5) ; échantillonneur bilinéaire et pas longitudinal stable réutilisés par la marche en temps |
 | [experiences/evaluation_puff.py](../src/jdriftx/experiences/evaluation_puff.py) | Source impulsionnelle et temps dirigé (étape 6) |
 | [similitude.py](../src/jdriftx/similitude.py) | Solution fermée du puff et σ de Briggs |
 

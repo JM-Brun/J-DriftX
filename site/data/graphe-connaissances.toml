@@ -460,10 +460,28 @@ libelle = "experiences/evaluation_puff.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/evaluation_puff.py"
 
 [[noeuds]]
-id = "experiences/transitoire_puff"
+id = "experiences/transitoire_puff/comparaison"
 type = "module"
-libelle = "experiences/transitoire_puff.py"
-lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff.py"
+libelle = "experiences/transitoire_puff/comparaison.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/comparaison.py"
+
+[[noeuds]]
+id = "experiences/transitoire_puff/marginale"
+type = "module"
+libelle = "experiences/transitoire_puff/marginale.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/marginale.py"
+
+[[noeuds]]
+id = "experiences/transitoire_puff/routes"
+type = "module"
+libelle = "experiences/transitoire_puff/routes.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/routes.py"
+
+[[noeuds]]
+id = "experiences/transitoire_puff/solveur"
+type = "module"
+libelle = "experiences/transitoire_puff/solveur.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/solveur.py"
 
 [[noeuds]]
 id = "stabilite"
@@ -1922,30 +1940,103 @@ relation = "couvre"
 justification = "tests/test_evaluation_puff.py : évaluation dirigée du puff sur la grille S0 — temps dirigé, pic temporel, symétrie latérale, manifeste étiqueté, export JSON."
 
 [[aretes]]
-de = "experiences/transitoire_puff"
-vers = "experiences/reference_independante"
-relation = "utilise"
-
-[[aretes]]
-de = "experiences/transitoire_puff"
-vers = "experiences/evaluation_puff"
-relation = "utilise"
-
-[[aretes]]
-de = "experiences/transitoire_puff"
-vers = "similitude"
-relation = "utilise"
-
-[[aretes]]
-de = "experiences/transitoire_puff"
+de = "experiences/transitoire_puff/comparaison"
 vers = "benchmarks/cas"
 relation = "utilise"
 
 [[aretes]]
+de = "experiences/transitoire_puff/comparaison"
+vers = "benchmarks/metriques"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/comparaison"
+vers = "experiences/evaluation_puff"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/comparaison"
+vers = "experiences/reference_independante"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/marginale"
+vers = "experiences/evaluation_puff"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/marginale"
+vers = "experiences/reference_independante"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/marginale"
+vers = "similitude"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/routes"
+vers = "benchmarks/cas"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/routes"
+vers = "experiences/evaluation_puff"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/routes"
+vers = "experiences/reference_independante"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/routes"
+vers = "similitude"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/solveur"
+vers = "benchmarks/cas"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/solveur"
+vers = "experiences/evaluation_puff"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/solveur"
+vers = "experiences/reference_independante"
+relation = "utilise"
+
+[[aretes]]
+de = "experiences/transitoire_puff/solveur"
+vers = "similitude"
+relation = "utilise"
+
+[[aretes]]
 de = "t-transitoire-puff"
-vers = "experiences/transitoire_puff"
+vers = "experiences/transitoire_puff/comparaison"
 relation = "couvre"
-justification = "tests/test_transitoire_puff.py : EDP transitoire du puff sur la grille S0 — calibration fine et grossière, entrée partagée, convergence, rejets, temps dirigé, manifeste étiqueté, export JSON."
+justification = "tests/test_transitoire_puff.py : comparaison et manifeste étiqueté de l'EDP transitoire — métriques FAC2/NMSE, étiquetage, export JSON."
+
+[[aretes]]
+de = "t-transitoire-puff"
+vers = "experiences/transitoire_puff/marginale"
+relation = "couvre"
+justification = "tests/test_transitoire_puff.py : marginale fermée — entrée partagée au premier passage, écarts de masse contre la marginale analytique."
+
+[[aretes]]
+de = "t-transitoire-puff"
+vers = "experiences/transitoire_puff/routes"
+relation = "couvre"
+justification = "tests/test_transitoire_puff.py : routes mesurées séparément, points aux arcs, structure longitudinale injectable."
+
+[[aretes]]
+de = "t-transitoire-puff"
+vers = "experiences/transitoire_puff/solveur"
+relation = "couvre"
+justification = "tests/test_transitoire_puff.py : marche FTCS en temps — calibration fine et grossière, pas de temps, rejets (fenêtre quatre écarts-types, passages non multiples, forme INVERSE)."
 
 # ---------- Vues ----------
 
@@ -1995,7 +2086,10 @@ noeuds = [
   "experiences/identification_source",
   "experiences/reference_independante",
   "experiences/evaluation_puff",
-  "experiences/transitoire_puff",
+  "experiences/transitoire_puff/comparaison",
+  "experiences/transitoire_puff/marginale",
+  "experiences/transitoire_puff/routes",
+  "experiences/transitoire_puff/solveur",
   "similitude", "similitude_objets", "stabilite", "source", "contrats",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
@@ -2042,7 +2136,10 @@ noeuds = [
     "experiences/identification_source",
     "experiences/reference_independante",
     "experiences/evaluation_puff",
-    "experiences/transitoire_puff",
+    "experiences/transitoire_puff/comparaison",
+    "experiences/transitoire_puff/marginale",
+    "experiences/transitoire_puff/routes",
+    "experiences/transitoire_puff/solveur",
     "fields", "terrain",
     "trajectories", "figures/figure_01", "figures/figure_02", "figures/figure_03",
     "figures/figure_04",

@@ -6,7 +6,8 @@ les seuils calibrés, convergence fine/grossier, rejets explicites (classe
 INVERSE, fenêtres quatre écarts-types, passages non multiples, points
 hors arcs), cohérence des instants avec le temps dirigé de l'étape 6,
 coûts mesurés séparément, immuabilité, manifeste étiqueté, export
-JSON-natif, modèle de diffusion injectable.
+JSON-natif, modèle de diffusion injectable, structure longitudinale
+injectable.
 """
 
 from __future__ import annotations
@@ -19,7 +20,7 @@ import numpy as np
 import pytest
 from pydantic import ValidationError
 
-import jdriftx.experiences.transitoire_puff as module_transitoire
+import jdriftx.experiences.transitoire_puff.comparaison as module_comparaison
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, PointMesure
 from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT, SourceImpulsionnelle, temps_dirige
 from jdriftx.experiences.reference_independante import (
@@ -30,6 +31,7 @@ from jdriftx.experiences.reference_independante import (
 )
 from jdriftx.experiences.transitoire_puff import (
     ComparaisonTransitoire,
+    FacteurLongitudinalAnalytique,
     ManifesteTransitoire,
     SolutionTransitoire,
     comparer_transitoire,
@@ -283,9 +285,9 @@ def test_la_version_non_installee_est_supportee(
     """Sans package installé, le manifeste porte « non-installe » sans échouer."""
     # Given — un environnement où les métadonnées d'installation sont absentes.
     monkeypatch.setattr(
-        module_transitoire.metadata,
+        module_comparaison.metadata,
         "version",
-        lambda nom: (_ for _ in ()).throw(module_transitoire.metadata.PackageNotFoundError(nom)),
+        lambda nom: (_ for _ in ()).throw(module_comparaison.metadata.PackageNotFoundError(nom)),
     )
     # When — le manifeste est construit.
     manifeste = construire_manifeste(comparaison)
@@ -314,3 +316,28 @@ def test_le_modele_de_diffusion_est_injectable() -> None:
     assert np.array_equal(double.instants[0].champ, reference.instants[0].champ)
     # Then — le dernier instantané diffère : le point d'extension est effectif.
     assert not np.array_equal(double.instants[-1].champ, reference.instants[-1].champ)
+
+
+def test_la_structure_longitudinale_est_injectable(
+    arcs: tuple[float, ...],
+    grille: tuple[PointMesure, ...],
+    comparaison: ComparaisonTransitoire,
+) -> None:
+    """Une structure longitudinale alternative change la lecture dirigée seulement."""
+    # Given — une structure jouet qui double le facteur longitudinal analytique.
+    analytique = FacteurLongitudinalAnalytique(source=PUFF_DEFAUT)
+
+    class StructureDoublee:
+        """Structure jouet : facteur longitudinal doublé, marginale inchangée."""
+
+        def facteur(self, x: float, t: float) -> float:
+            return 2.0 * analytique.facteur(x, t)
+
+    # When — la même géométrie est comparée avec la structure doublée.
+    doublee = comparer_transitoire(PUFF_DEFAUT, arcs, grille, structure=StructureDoublee())
+    # Then — chaque valeur EDP est exactement doublée (2·(a·b) = (2a)·b).
+    for point, attendu in zip(doublee.points, comparaison.points, strict=True):
+        assert point.edp == 2.0 * attendu.edp
+        assert point.fermee == attendu.fermee
+    # Then — la marginale et les écarts de masse ne dépendent pas de la structure.
+    assert doublee.ecart_masse_max == comparaison.ecart_masse_max

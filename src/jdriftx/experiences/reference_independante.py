@@ -17,7 +17,9 @@ Architecture (séparation des considérations, révision interne) :
   écarts-types) ; point d'extension de la colonne multi-niveaux de R3.
 - ``SolveurEdp`` : schéma FTCS (pas stable, miroir au sol, Dirichlet aux
   bords, tranches aux arcs) ; point d'extension de l'EDP transitoire du puff.
-- ``EchantillonneurBilineaire`` : lecture ponctuelle et bilan de flux.
+- ``EchantillonneurBilineaire`` : lecture ponctuelle et bilan d'un champ
+  sur la grille (interpolation, intégrale, flux) ; réutilisée par l'EDP
+  transitoire du puff (note 54).
 - ``RouteFermee``/``RouteEdp`` : les deux routes mesurées séparément
   (note 35), assemblées par ``comparer_reference`` avec les métriques
   partagées.
@@ -494,21 +496,22 @@ def _pas_longitudinal(
 
 
 class EchantillonneurBilineaire:
-    """Lecture ponctuelle et bilan de flux d'une tranche du champ EDP.
+    """Lecture ponctuelle et bilan d'un champ sur la grille EDP.
 
-    Regroupe les deux opérations de lecture d'une tranche : interpolation
-    bilinéaire aux points de mesure (après résolution) et intégration du
-    flux massique transverse. C'est le point d'extension d'un échantillonnage
+    Regroupe les opérations de lecture d'un champ résolu : interpolation
+    bilinéaire aux points de mesure (après résolution), intégrale sur la
+    grille et flux massique transverse. Réutilisée par l'EDP transitoire
+    du puff (note 54) ; c'est le point d'extension d'un échantillonnage
     enrichi (profils verticaux multi-niveaux de R3).
 
     Attributs :
-        tranche : tranche lue, prélevée à un arc.
+        champ : champ lu (tranche à un arc ou marginale à un instant).
         grille : grille de nœuds associée (même solution).
     """
 
-    def __init__(self, tranche: TrancheEdp, grille: GrilleEdp) -> None:
-        """Lie la tranche à sa grille (les deux viennent de la même solution)."""
-        self.tranche = tranche
+    def __init__(self, champ: np.ndarray, grille: GrilleEdp) -> None:
+        """Lie le champ à sa grille (les deux viennent de la même solution)."""
+        self.champ = champ
         self.grille = grille
 
     def concentration(self, y: float, z: float) -> float:
@@ -530,10 +533,10 @@ class EchantillonneurBilineaire:
         i_z = min(int(f_z), abscisses_z.size - 2)
         t_y = f_y - i_y
         t_z = f_z - i_z
-        c00 = float(self.tranche.champ[i_y, i_z])
-        c10 = float(self.tranche.champ[i_y + 1, i_z])
-        c01 = float(self.tranche.champ[i_y, i_z + 1])
-        c11 = float(self.tranche.champ[i_y + 1, i_z + 1])
+        c00 = float(self.champ[i_y, i_z])
+        c10 = float(self.champ[i_y + 1, i_z])
+        c01 = float(self.champ[i_y, i_z + 1])
+        c11 = float(self.champ[i_y + 1, i_z + 1])
         return float(
             c00 * (1.0 - t_y) * (1.0 - t_z)
             + c10 * t_y * (1.0 - t_z)
@@ -541,13 +544,17 @@ class EchantillonneurBilineaire:
             + c11 * t_y * t_z
         )
 
-    def flux(self, u: float) -> float:
-        """Flux massique transverse (kg/s) d'une tranche : U·∫∫ C dy dz."""
+    def integrale(self) -> float:
+        """Intégrale du champ sur la fenêtre de la grille (trapèzes doubles)."""
         integrale = np.trapezoid(
-            np.trapezoid(self.tranche.champ, x=self.grille.abscisses_z, axis=1),
+            np.trapezoid(self.champ, x=self.grille.abscisses_z, axis=1),
             x=self.grille.abscisses_y,
         )
-        return float(u * integrale)
+        return float(integrale)
+
+    def flux(self, u: float) -> float:
+        """Flux massique transverse (kg/s) d'une tranche : U·∫∫ C dy dz."""
+        return float(u * self.integrale())
 
 
 @dataclass(frozen=True)
@@ -616,20 +623,20 @@ class RouteEdp:
         solution = SolveurEdp(self.cas, self.parametres, self.modele).resoudre()
         grille = GrilleEdp(abscisses_y=solution.abscisses_y, abscisses_z=solution.abscisses_z)
         tranches = {tranche.x: tranche for tranche in solution.tranches}
-        valeurs = tuple(
-            EchantillonneurBilineaire(tranches[point.x], grille).concentration(point.y, point.z)
-            for point in points
-        )
+        valeurs: list[float] = []
+        for point in points:
+            echantillonneur = EchantillonneurBilineaire(tranches[point.x].champ, grille)
+            valeurs.append(echantillonneur.concentration(point.y, point.z))
         u = self.cas.source.u
-        flux_entree = EchantillonneurBilineaire(solution.tranches[0], grille).flux(u)
-        ecarts_flux = tuple(
-            abs(EchantillonneurBilineaire(tranche, grille).flux(u) - flux_entree) / flux_entree
-            for tranche in solution.tranches[1:]
-        )
+        flux_entree = EchantillonneurBilineaire(solution.tranches[0].champ, grille).flux(u)
+        ecarts_flux: list[float] = []
+        for tranche in solution.tranches[1:]:
+            echantillonneur = EchantillonneurBilineaire(tranche.champ, grille)
+            ecarts_flux.append(abs(echantillonneur.flux(u) - flux_entree) / flux_entree)
         cout_s = time.perf_counter() - debut
         return MesureEdp(
-            valeurs=valeurs,
-            ecarts_flux=ecarts_flux,
+            valeurs=tuple(valeurs),
+            ecarts_flux=tuple(ecarts_flux),
             solution=solution,
             cout_s=float(cout_s),
         )

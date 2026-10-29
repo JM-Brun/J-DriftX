@@ -141,7 +141,10 @@ graph TD
     experiences_identification_source["experiences/identification_source.py"]::module
     experiences_reference_independante["experiences/reference_independante.py"]::module
     experiences_evaluation_puff["experiences/evaluation_puff.py"]::module
-    experiences_transitoire_puff["experiences/transitoire_puff.py"]::module
+    experiences_transitoire_puff_comparaison["experiences/transitoire_puff/comparaison.py"]::module
+    experiences_transitoire_puff_marginale["experiences/transitoire_puff/marginale.py"]::module
+    experiences_transitoire_puff_routes["experiences/transitoire_puff/routes.py"]::module
+    experiences_transitoire_puff_solveur["experiences/transitoire_puff/solveur.py"]::module
     fields["fields.py"]::module
     terrain["terrain.py"]::module
     trajectories["trajectories.py"]::module
@@ -332,11 +335,25 @@ graph TD
   experiences_evaluation_puff -->|"utilise"| similitude
   experiences_evaluation_puff -->|"utilise"| metric
   t_evaluation_puff -->|"couvre"| experiences_evaluation_puff
-  experiences_transitoire_puff -->|"utilise"| experiences_reference_independante
-  experiences_transitoire_puff -->|"utilise"| experiences_evaluation_puff
-  experiences_transitoire_puff -->|"utilise"| similitude
-  experiences_transitoire_puff -->|"utilise"| benchmarks_cas
-  t_transitoire_puff -->|"couvre"| experiences_transitoire_puff
+  experiences_transitoire_puff_comparaison -->|"utilise"| benchmarks_cas
+  experiences_transitoire_puff_comparaison -->|"utilise"| benchmarks_metriques
+  experiences_transitoire_puff_comparaison -->|"utilise"| experiences_evaluation_puff
+  experiences_transitoire_puff_comparaison -->|"utilise"| experiences_reference_independante
+  experiences_transitoire_puff_marginale -->|"utilise"| experiences_evaluation_puff
+  experiences_transitoire_puff_marginale -->|"utilise"| experiences_reference_independante
+  experiences_transitoire_puff_marginale -->|"utilise"| similitude
+  experiences_transitoire_puff_routes -->|"utilise"| benchmarks_cas
+  experiences_transitoire_puff_routes -->|"utilise"| experiences_evaluation_puff
+  experiences_transitoire_puff_routes -->|"utilise"| experiences_reference_independante
+  experiences_transitoire_puff_routes -->|"utilise"| similitude
+  experiences_transitoire_puff_solveur -->|"utilise"| benchmarks_cas
+  experiences_transitoire_puff_solveur -->|"utilise"| experiences_evaluation_puff
+  experiences_transitoire_puff_solveur -->|"utilise"| experiences_reference_independante
+  experiences_transitoire_puff_solveur -->|"utilise"| similitude
+  t_transitoire_puff -->|"couvre"| experiences_transitoire_puff_comparaison
+  t_transitoire_puff -->|"couvre"| experiences_transitoire_puff_marginale
+  t_transitoire_puff -->|"couvre"| experiences_transitoire_puff_routes
+  t_transitoire_puff -->|"couvre"| experiences_transitoire_puff_solveur
   classDef niveau fill:#ddd0f0,stroke:#495057,color:#212529;
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
   classDef propriete fill:#ffd9b3,stroke:#495057,color:#212529;
@@ -360,7 +377,10 @@ graph TD
 | experiences/identification_source.py | Module de code | [identification_source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/identification_source.py) |
 | experiences/reference_independante.py | Module de code | [reference_independante.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reference_independante.py) |
 | experiences/evaluation_puff.py | Module de code | [evaluation_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/evaluation_puff.py) |
-| experiences/transitoire_puff.py | Module de code | [transitoire_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff.py) |
+| experiences/transitoire_puff/comparaison.py | Module de code | [comparaison.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/comparaison.py) |
+| experiences/transitoire_puff/marginale.py | Module de code | [marginale.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/marginale.py) |
+| experiences/transitoire_puff/routes.py | Module de code | [routes.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/routes.py) |
+| experiences/transitoire_puff/solveur.py | Module de code | [solveur.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/solveur.py) |
 | similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
 | similitude_objets.py | Module de code | [similitude_objets.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude_objets.py) |
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
