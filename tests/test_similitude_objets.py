@@ -2,8 +2,8 @@
 
 import math
 
-from hypothesis import given, strategies as st
 import pytest
+from hypothesis import given, strategies as st
 
 from jdriftx.similitude import concentration_panache, concentration_puff
 from jdriftx.similitude_objets import (
@@ -218,7 +218,7 @@ def test_parametres_puff_refusent_les_valeurs_non_finies(
     }
     valeurs[champ] = valeur
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="fini|finie|strictement"):
         ParametresPuff(**valeurs)  # type: ignore[arg-type]
 
 
