@@ -66,3 +66,20 @@ def test_source_immuable() -> None:
     # When / Then — toute mutation est refusée (dataclass figée).
     with pytest.raises(FrozenInstanceError):
         source.debit = 2.0  # type: ignore[misc]
+
+
+@pytest.mark.parametrize(
+    ("champ", "valeur"),
+    [
+        ("debit", float("nan")),
+        ("debit", float("inf")),
+        ("u", float("nan")),
+        ("u", float("inf")),
+        ("hauteur", float("nan")),
+        ("hauteur", float("inf")),
+    ],
+)
+def test_refuse_parametres_physiques_non_finis(champ: str, valeur: float) -> None:
+    """Given un paramètre physique non fini, when construit, then il est refusé."""
+    with pytest.raises(ValueError):
+        replace(_source_valide(), **{champ: valeur})
