@@ -29,3 +29,10 @@ Le dépôt JESA sur HAL est déjà identifié ; ne pas requalifier la source com
 - [ ] Produire une extraction texte avec méthode et pagination, puis relier chaque anomalie à l'extraction et au fac-similé.
 
 Ne pas présenter la comparaison comme terminée tant que les deux versions n'ont pas été confrontées. La disponibilité de la source HAL est établie ; l'absence d'un PDF JESA et d'une extraction dédiée dans `raw/` est un état du dépôt, pas une absence de source.
+
+
+## Piste ResearchGate examinée — ne pas confondre avec la version JESA
+
+La page ResearchGate [« A GIS-based atmospheric dispersion model »](https://www.researchgate.net/publication/42782194_A_GIS-based_atmospheric_dispersion_model) affiche les métadonnées JESA 44(4–5), 445–461 (2010), mais le texte intégral visible commence par la mention explicite **« hal-00468863, version 1 — 31 Mar 2010 »** et **« Author manuscript, published in STIC & Environnement, Calais : France (2009) »**. Le document exposé est donc le manuscrit auteur STIC 2009, pas une preuve indépendante de la version JESA finale. Ne pas l'utiliser comme substitut du fichier associé à la notice HAL `hal-02594312`.
+
+Cette vérification réduit l'ambiguïté : une copie candidate circulant sous les métadonnées JESA a été identifiée comme le manuscrit HAL 2009 par son propre front matter. La comparaison JESA 2010 doit partir du fichier associé à la notice HAL JESA, déjà identifiée, et consigner sa version réelle et sa provenance.
