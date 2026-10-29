@@ -1,21 +1,25 @@
 """Tests de la reconstruction baseline uniforme (étape 4 de l'issue #232)."""
 
+import json
 import math
-from dataclasses import FrozenInstanceError
+from dataclasses import dataclass
 from importlib import metadata
 
 import pytest
+from pydantic import ValidationError
 
 import jdriftx.experiences.baseline_uniforme as module_baseline
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, PointMesure
 from jdriftx.experiences.baseline_uniforme import (
     CAS_REFERENCE_DEFAUT,
+    CasReferenceUniforme,
     EvaluationDirigee,
     construire_manifeste,
     evaluer_grille,
     evaluer_point,
     temps_dirige,
 )
+from jdriftx.source import SourcePanache
 
 
 def test_le_cas_de_reference_est_le_cas_s0_fige() -> None:
@@ -31,6 +35,36 @@ def test_le_cas_de_reference_est_le_cas_s0_fige() -> None:
     assert cas.arcs == (100.0, 200.0, 400.0, 800.0)
     assert cas.positions_laterales == (-50.0, 0.0, 50.0)
     assert cas.z_mesure == pytest.approx(1.5)
+
+
+def test_le_cas_s0_satisfait_le_contrat_uniforme() -> None:
+    """Le cas consommé est le contrat PEP 544, satisfait structurellement."""
+    # Given — le contrat du cas de référence uniforme.
+    # Then — le cas S0 figé le satisfait au sens structurel (PEP 544).
+    assert isinstance(CAS_REFERENCE_DEFAUT, CasReferenceUniforme)
+
+
+def test_un_cas_minimal_hors_registre_est_evalue() -> None:
+    """L'évaluation n'exige pas la classe concrète CasS0, seulement le contrat."""
+
+    # Given — un cas minimal : une source validée et un point de mesure.
+    @dataclass(frozen=True)
+    class CasMinimal:
+        source: SourcePanache
+
+        def points(self) -> tuple[PointMesure, ...]:
+            return (PointMesure(x=100.0, y=0.0, z=1.5),)
+
+    cas = CasMinimal(source=SourcePanache(debit=2.0, u=3.0, classe="C", hauteur=1.0))
+    # Then — il satisfait le contrat sans hériter de CasS0.
+    assert isinstance(cas, CasReferenceUniforme)
+    # When — l'évaluation dirigée s'applique à ce cas.
+    evaluations = evaluer_grille(cas)
+    # Then — elle produit une évaluation finie et strictement positive.
+    assert len(evaluations) == 1
+    assert evaluations[0].tau == pytest.approx(100.0 / 3.0)
+    assert evaluations[0].concentration > 0.0
+    assert math.isfinite(evaluations[0].x_aval)
 
 
 def test_le_temps_dirige_vaut_x_sur_u_sur_la_grille() -> None:
@@ -99,9 +133,18 @@ def test_les_evaluations_sont_immuables() -> None:
     """Les évaluations dirigées ne peuvent pas être modifiées après construction."""
     # Given — une évaluation sur la grille.
     evaluation = evaluer_grille(CAS_REFERENCE_DEFAUT)[0]
-    # When / Then — toute mutation est refusée.
-    with pytest.raises(FrozenInstanceError):
+    # When / Then — toute mutation est refusée par le modèle gelé.
+    with pytest.raises(ValidationError):
         evaluation.tau = 1.0
+
+
+def test_le_manifeste_est_immuable() -> None:
+    """Le manifeste Pydantic gelé refuse toute mutation après construction."""
+    # Given — un manifeste construit.
+    manifeste = construire_manifeste(CAS_REFERENCE_DEFAUT, evaluer_grille(CAS_REFERENCE_DEFAUT))
+    # When / Then — toute mutation est refusée par le modèle gelé.
+    with pytest.raises(ValidationError):
+        manifeste.version_code = "0.0.0-factice"
 
 
 def test_le_manifeste_etiquette_heritage_reconstruction_extension() -> None:
@@ -115,28 +158,32 @@ def test_le_manifeste_etiquette_heritage_reconstruction_extension() -> None:
     assert "10.1007/978-1-4020-8758-5_14" in manifeste.source
     assert "annoncée seulement" in manifeste.heritage_documentaire
     assert "pseudo_distance_uniforme" in manifeste.reconstruction
-    assert "concentration_panache" in manifeste.reconstruction
+    assert "PanacheGaussien" in manifeste.reconstruction
+    assert "CasReferenceUniforme" in manifeste.reconstruction
     assert manifeste.extension.startswith("Aucune")
     assert manifeste.hypothese
     assert manifeste.limites
-    assert manifeste.cas is cas
+    assert manifeste.cas == cas
     assert manifeste.version_code != ""
     assert "uv run" in manifeste.commande
 
 
 def test_le_manifeste_exporte_un_dict_pour_la_frontiere_json() -> None:
-    """vers_dict produit un export plat, sans objet du domaine imbriqué."""
+    """vers_dict délègue à model_dump : export JSON, sans objet du domaine."""
     # Given — un manifeste construit.
     cas = CAS_REFERENCE_DEFAUT
     manifeste = construire_manifeste(cas, evaluer_grille(cas))
-    # When — l'export frontière est produit.
+    # When — l'export frontière est produit par le builtin Pydantic.
     export = manifeste.vers_dict()
-    # Then — clés, paramètres figés et 12 résultats sont présents.
+    # Then — clés, paramètres figés et 12 évaluations sont présents.
     assert export["identifiant"] == "jdriftx-baseline-uniforme-001"
-    assert export["parametres"]["classe"] == "C"
-    assert export["parametres"]["arcs"] == [100.0, 200.0, 400.0, 800.0]
-    assert len(export["resultats"]) == 12
+    assert export["cas"]["source"]["classe"] == "C"
+    assert export["cas"]["arcs"] == [100.0, 200.0, 400.0, 800.0]
+    assert len(export["evaluations"]) == 12
+    assert export["evaluations"][0]["point"]["x"] == pytest.approx(100.0)
     assert isinstance(export["limites"], list)
+    # Then — l'export est sérialisable en JSON (frontière uniquement).
+    assert json.dumps(export)
     for valeur in export.values():
         assert not isinstance(valeur, (EvaluationDirigee,))
 

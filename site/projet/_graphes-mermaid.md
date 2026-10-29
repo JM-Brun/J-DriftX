@@ -312,7 +312,8 @@ graph TD
   contrats -->|"utilise"| similitude
   experiences_baseline_uniforme -->|"utilise"| c_pdist
   experiences_baseline_uniforme -->|"utilise"| benchmarks_cas
-  experiences_baseline_uniforme -->|"utilise"| similitude
+  experiences_baseline_uniforme -->|"utilise"| source
+  experiences_baseline_uniforme -->|"utilise"| contrats
   t_baseline_uniforme -->|"couvre"| experiences_baseline_uniforme
   classDef niveau fill:#ddd0f0,stroke:#495057,color:#212529;
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;

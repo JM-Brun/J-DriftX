@@ -12,43 +12,81 @@ modernes (stratégie de reprise, note 44 §2) :
   n'a été relu, aucune fidélité historique n'est revendiquée ;
 - reconstruction : cette implémentation compose uniquement des primitives
   partagées et testées — le coût dirigé ``pseudo_distance_uniforme``
-  (metric.py) et la solution de similitude ``concentration_panache``
-  (similitude.py) — sans dupliquer aucune formule ;
+  (metric.py) et le contrat de concentration ``PanacheGaussien``
+  (contrats.py, docs/42) — sans dupliquer aucune formule ; le cas consommé
+  est défini par l'interface ``CasReferenceUniforme`` (PEP 544), pas par
+  la classe concrète ``CasS0`` ;
 - extension : aucune (ni champ multi-niveaux, ni assimilation).
 
 Le mécanisme reconstruit sur le cas S0 figé (``CAS_S0_DEFAUT``, docs/48
 §2.2) : pour un point cible à l'aval, le temps de transport dirigé τ est
 évalué par le coût dirigé partagé (amont rejeté à +inf), l'abscisse aval
 est reconstruite par la carte travel-time x = U·τ (note 37 : u·∇τ = 1
-exact dans le cas uniforme), puis la concentration est évaluée par la
-solution de référence au point reconstruit. Dans le cas uniforme, cette
+exact dans le cas uniforme), puis la concentration est évaluée par le
+contrat de concentration au point reconstruit. Dans le cas uniforme, cette
 évaluation coïncide avec la vérité du cas S0 (docs/48 §2.5) : c'est un
 contrôle d'auto-cohérence du pipeline, pas une validation physique
 (docs/21, issue #43) ni une reproduction du comportement historique en
 champ variable. Tous les objets sont immuables et validés à la
 construction ; les ``dict`` restent confinés à la frontière d'export JSON
-(``ManifesteBaseline.vers_dict``), conformément à la charte qualité.
+(``ManifesteBaseline.vers_dict``, builtin Pydantic ``model_dump``),
+conformément à la charte qualité.
 """
 
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
 from importlib import metadata
-from typing import Literal
+from typing import Literal, Protocol, runtime_checkable
+
+from pydantic import BaseModel, ConfigDict
 
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, CasS0, PointMesure
+from jdriftx.contrats import PanacheGaussien
 from jdriftx.metric import pseudo_distance_uniforme
-from jdriftx.similitude import concentration_panache
+from jdriftx.source import SourcePanache
+
+__all__ = [
+    "CAS_REFERENCE_DEFAUT",
+    "CasReferenceUniforme",
+    "EvaluationDirigee",
+    "ManifesteBaseline",
+    "NiveauFidelite",
+    "construire_manifeste",
+    "evaluer_grille",
+    "evaluer_point",
+    "temps_dirige",
+]
 
 NiveauFidelite = Literal["R0", "R1", "R2"]
 
 ORIGINE: tuple[float, float] = (0.0, 0.0)
 
 
-@dataclass(frozen=True)
-class EvaluationDirigee:
+@runtime_checkable
+class CasReferenceUniforme(Protocol):
+    """Contrat du cas de référence uniforme consommé par la reconstruction.
+
+    Interface PEP 544 : tout objet portant une source de panache validée
+    (docs/41) et exposant une grille ordonnée de points de mesure satisfait
+    le contrat, sans héritage. La reconstruction (temps dirigé, évaluation
+    ponctuelle) ne dépend plus de la classe concrète ``CasS0`` : elle
+    exige seulement ce contrat, conformément aux frontières stables de
+    docs/42.
+    """
+
+    source: SourcePanache
+
+    def points(self) -> tuple[PointMesure, ...]:
+        """Grille ordonnée et non vide des points de mesure (m)."""
+        ...
+
+
+class EvaluationDirigee(BaseModel):
     """Évaluation ponctuelle reconstruite en un point de mesure.
+
+    Modèle Pydantic gelé : types validés à la construction, immuabilité
+    portée par la configuration gelée (charte qualité).
 
     Attributes:
         point: point cible de l'évaluation (m).
@@ -58,15 +96,20 @@ class EvaluationDirigee:
         concentration: concentration (kg m^-3) évaluée au point reconstruit.
     """
 
+    model_config = ConfigDict(frozen=True)
+
     point: PointMesure
     tau: float
     x_aval: float
     concentration: float
 
 
-@dataclass(frozen=True)
-class ManifesteBaseline:
+class ManifesteBaseline(BaseModel):
     """Manifeste immuable reliant la reconstruction à ses statuts et limites.
+
+    Modèle Pydantic gelé : la validation des types et l'export JSON
+    (builtin ``model_dump``) sont fournis par le modèle, l'immuabilité par
+    la configuration gelée — aucune logique d'export écrite à la main.
 
     Attributes:
         identifiant: identifiant stable de l'expérience.
@@ -83,6 +126,8 @@ class ManifesteBaseline:
         commande: commande de reproduction.
     """
 
+    model_config = ConfigDict(frozen=True)
+
     identifiant: str
     niveau_fidelite: NiveauFidelite
     source: str
@@ -98,48 +143,18 @@ class ManifesteBaseline:
 
     def vers_dict(self) -> dict[str, object]:
         """Exporte le manifeste en dictionnaire (frontière JSON uniquement)."""
-        return {
-            "identifiant": self.identifiant,
-            "niveau_fidelite": self.niveau_fidelite,
-            "source": self.source,
-            "heritage_documentaire": self.heritage_documentaire,
-            "reconstruction": self.reconstruction,
-            "extension": self.extension,
-            "hypothese": list(self.hypothese),
-            "limites": list(self.limites),
-            "version_code": self.version_code,
-            "commande": self.commande,
-            "parametres": {
-                "debit": self.cas.source.debit,
-                "u": self.cas.source.u,
-                "classe": self.cas.source.classe,
-                "hauteur": self.cas.source.hauteur,
-                "arcs": list(self.cas.arcs),
-                "positions_laterales": list(self.cas.positions_laterales),
-                "z_mesure": self.cas.z_mesure,
-            },
-            "resultats": [
-                {
-                    "x": evaluation.point.x,
-                    "y": evaluation.point.y,
-                    "z": evaluation.point.z,
-                    "tau": evaluation.tau,
-                    "x_aval": evaluation.x_aval,
-                    "concentration": evaluation.concentration,
-                }
-                for evaluation in self.evaluations
-            ],
-        }
+        return self.model_dump()
 
 
 CAS_REFERENCE_DEFAUT: CasS0 = CAS_S0_DEFAUT
 
 
-def temps_dirige(cas: CasS0, point: PointMesure) -> float:
+def temps_dirige(cas: CasReferenceUniforme, point: PointMesure) -> float:
     """Temps de transport dirigé origine → point, par le coût partagé.
 
     Args:
-        cas: cas de référence (source validée, jamais revalidée ici).
+        cas: cas satisfaisant le contrat ``CasReferenceUniforme`` (source
+            validée, jamais revalidée ici).
         point: point cible de l'évaluation (m).
 
     Returns:
@@ -149,11 +164,11 @@ def temps_dirige(cas: CasS0, point: PointMesure) -> float:
     return pseudo_distance_uniforme(ORIGINE, (point.x, point.y), (cas.source.u, 0.0))
 
 
-def evaluer_point(cas: CasS0, point: PointMesure) -> EvaluationDirigee:
+def evaluer_point(cas: CasReferenceUniforme, point: PointMesure) -> EvaluationDirigee:
     """Évalue le mécanisme reconstruit au point cible.
 
     Args:
-        cas: cas de référence figé (docs/48 §2.2).
+        cas: cas satisfaisant le contrat ``CasReferenceUniforme``.
         point: point cible, strictement à l'aval (x > 0).
 
     Returns:
@@ -168,23 +183,16 @@ def evaluer_point(cas: CasS0, point: PointMesure) -> EvaluationDirigee:
         msg = "Le point est en amont : le mécanisme dirigé ne l'atteint pas (tau = +inf)."
         raise ValueError(msg)
     x_aval = cas.source.u * tau
-    valeur = concentration_panache(
-        x=x_aval,
-        y=point.y,
-        z=point.z,
-        debit=cas.source.debit,
-        u=cas.source.u,
-        classe=cas.source.classe,
-        hauteur=cas.source.hauteur,
-    )
+    panache = PanacheGaussien(source=cas.source)
+    valeur = panache.concentration(x_aval, point.y, point.z)
     return EvaluationDirigee(point=point, tau=tau, x_aval=x_aval, concentration=float(valeur))
 
 
-def evaluer_grille(cas: CasS0) -> tuple[EvaluationDirigee, ...]:
+def evaluer_grille(cas: CasReferenceUniforme) -> tuple[EvaluationDirigee, ...]:
     """Évalue le mécanisme reconstruit sur la grille de prélèvements du cas.
 
     Args:
-        cas: cas de référence figé (docs/48 §2.2).
+        cas: cas satisfaisant le contrat ``CasReferenceUniforme``.
 
     Returns:
         Une évaluation dirigée par point de la grille, dans l'ordre du cas.
@@ -225,7 +233,9 @@ def construire_manifeste(
         reconstruction=(
             "Cette implémentation : coût dirigé partagé pseudo_distance_uniforme "
             "(τ = x/U, rejet amont à +inf), carte travel-time x = U·τ (note 37), évaluation "
-            "par la solution de référence concentration_panache sur la grille du cas S0 figé."
+            "par le contrat de concentration PanacheGaussien (contrats.py, docs/42) sur la "
+            "grille du cas S0 figé ; le cas consommé est défini par l'interface "
+            "CasReferenceUniforme (PEP 544)."
         ),
         extension=(
             "Aucune : ni champ multi-niveaux, ni évaluation réduite revendiquée, ni assimilation."
