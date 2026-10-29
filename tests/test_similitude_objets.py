@@ -192,3 +192,40 @@ def test_puff_est_lineaire_en_masse(
     c_multipliee = concentration_puff_au_point(point, multiplie)
 
     assert c_multipliee == pytest.approx(c_initiale * facteur, rel=1e-12, abs=0.0)
+
+
+
+@pytest.mark.parametrize(
+    ("champ", "valeur"),
+    [
+        ("t", math.nan),
+        ("t", math.inf),
+        ("masse", math.inf),
+        ("u", math.nan),
+        ("x0", math.inf),
+    ],
+)
+def test_parametres_puff_refusent_les_valeurs_non_finies(
+    champ: str, valeur: float
+) -> None:
+    """Given un paramètre non fini, when construit, then l'objet le refuse."""
+    valeurs: dict[str, object] = {
+        "t": 1.0,
+        "masse": 1.0,
+        "u": 2.0,
+        "classe": ClasseStabilite.D,
+        "x0": 0.0,
+    }
+    valeurs[champ] = valeur
+
+    with pytest.raises(ValueError):
+        ParametresPuff(**valeurs)  # type: ignore[arg-type]
+
+
+def test_parametres_puff_normalisent_la_classe_et_sont_immuables() -> None:
+    """Given une classe textuelle valide, when construite, then enum et immutabilité."""
+    parametres = ParametresPuff(t=1.0, masse=1.0, u=2.0, classe="D")
+
+    assert parametres.classe is ClasseStabilite.D
+    with pytest.raises(AttributeError):
+        parametres.t = 2.0  # type: ignore[misc]
