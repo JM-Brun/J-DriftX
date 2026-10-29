@@ -213,7 +213,7 @@ def construire_manifeste(
         identifiant="jdriftx-baseline-uniforme-001",
         niveau_fidelite="R1",
         source=(
-            "Cas de référence autonome docs/48 §2.5–2.6 ; "
+            "Cas de référence autonome docs/48 §2.5-2.6 ; "
             "Brun, J.-M. & Mohammadi, B. (2008), « Reduced-Order Modelling of Dispersion », "
             "chapitre 14, p. 253, DOI 10.1007/978-1-4020-8758-5_14."
         ),
