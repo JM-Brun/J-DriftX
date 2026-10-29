@@ -102,7 +102,7 @@ def concentration_panache_au_point(
         z=point.z,
         debit=parametres.debit,
         u=parametres.u,
-        classe=parametres.classe.value,
+        classe=ClasseStabilite(parametres.classe).value,
         hauteur=parametres.hauteur,
     )
     return float(np.asarray(valeur).item())
@@ -120,7 +120,7 @@ def concentration_puff_au_point(
             t=parametres.t,
             masse=parametres.masse,
             u=parametres.u,
-            classe=parametres.classe.value,
+            classe=ClasseStabilite(parametres.classe).value,
             x0=parametres.x0,
         ),
         dtype=np.float64,
