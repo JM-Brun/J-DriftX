@@ -32,7 +32,7 @@ Ces statuts décrivent la reproductibilité documentaire, pas l'utilité de la m
 
 **État au 29 octobre 2026 :** le mainteneur désigne `MO2009-PUB00026817-1.pdf` (HAL `hal-00468863`) comme le texte JESA à utiliser pour l'audit ; les contrôles ci-dessous portent donc sur ce fichier, sans nouvelle acquisition. Sa couverture HAL le décrit toutefois comme une contribution STIC & Environnement 2009. Faute de comparaison directe avec un PDF éditeur JESA dans ce contexte, l'identité exacte avec la version de record n'est pas certifiée. Les observations portent sur le texte fourni et ne sont pas extrapolées au-delà de ce qui y est imprimé.
 
-| Domaine | Manuscrit 2009 : repère existant | Contrôle requis sur JESA 2010 | Verdict actuel |
+| Domaine | Texte désigné (HAL `hal-00468863`) : repère | Contrôle/version éditeur éventuel | Verdict sur le texte fourni |
 |---|---|---|---|
 | Identité/version | Couverture du PDF : `hal-00468863, version 1`, contribution STIC & Environnement 2009 | Comparer les métadonnées bibliographiques avec la notice JESA `hal-02594312`, DOI `10.3166/jesa.44.445-461` si la version éditeur devient disponible dans le contexte | Texte désigné par le mainteneur pour la comparaison ; correspondance exacte avec la version éditeur non certifiée |
 | Temps de migration/projection | §2, pseudo-distance issue des travaux antérieurs ; la formule détaillée n'est pas entièrement redonnée dans le PDF désigné | Vérifier si la version éditeur apporte des détails supplémentaires sur l'équation, l'orientation, l'intégrande, le champ et la projection | Transcription du texte fourni ; pas de changement entre versions certifié |
@@ -42,7 +42,7 @@ Ces statuts décrivent la reproductibilité documentaire, pas l'utilité de la m
 | Conditions aux limites | §2.1.1–2.2 : construction par sous-domaines, coins et normales ; aucun jeu complet de conditions aux limites n'est donné pour le modèle réduit dans les sections examinées | Vérifier les éventuelles précisions dans la version éditeur ; ne pas importer les conditions d'une autre version | Conditions aux limites du modèle réduit insuffisamment spécifiées dans le texte fourni ; les conditions d'entrée/sortie libres décrites dans la comparaison EDP de 2006 ne prouvent pas celles du modèle réduit |
 | Unités | Le texte décrit \(c\) comme concentration volumique ; avec \([c]=M L^{-3}\), le bilan imprimé \(\int_{\omega_i}c^i dV=\int_{\partial\omega_i}c^i(\vec u_i/\|\vec u_i\|\cdot\vec n_i)dS\) a des unités \(M\) à gauche et \(M L^{-1}\) à droite | Vérifier si un facteur de vitesse, une définition intégrée de \(c\) ou une coquille est documenté dans la version finale ; ne pas corriger par conjecture | Incohérence dimensionnelle conditionnelle établie pour le manuscrit 2009 ; comparaison JESA en attente |
 
-### Portée des constats sur le manuscrit 2009
+### Portée des constats sur le texte désigné
 
 Le contrôle visuel ciblé des pages PDF 5–7 confirme le profil de similitude, les équations multi-niveaux [2]–[4] et les définitions intégrales [K], \(C_g\) et \(C_a\) telles qu'imprimées dans le texte désigné. Les deux incohérences dimensionnelles conditionnelles sont détaillées dans [32](32-conservation-coordonnees-travel-time.md). La matrice conserve le statut et le lien de preuve ; elle ne duplique pas la dérivation complète.
 
