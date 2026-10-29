@@ -8,11 +8,11 @@ Cette page organise les sources historiques par rôle scientifique : fondements 
 
 **Statut documentaire.** Les notices bibliographiques peuvent être confirmées sans que le texte intégral ait été lu. Les équations et conclusions sont présentées au niveau de détail permis par l'accès réellement vérifié ; les écarts de notation entre sources sont conservés lorsqu'ils correspondent à des objets différents, et rapprochés lorsqu'une définition commune peut être établie.
 
-## La thèse de J.-M. Brun (notice localisée, texte intégral en attente)
+## La thèse de J.-M. Brun (PDF obtenu, authentification bibliographique en cours)
 
-**Brun, J.-M., *Modélisation à complexité réduite de la dérive*, Université Montpellier II.**
+**Brun, J.-M., *Modèles à complexité réduite de transport pour applications environnementales*, titre provisoire associé à la notice HAL/INRAE [tel-02589999](https://hal.inrae.fr/tel-02589999/document).**
 
-La notice de la thèse a été retrouvée dans le catalogue AGRIS/INRAE et reliée à un dépôt HAL, mais le téléchargement du PDF est actuellement bloqué par le mécanisme d'accès du site dans l'environnement de lecture. Le texte intégral n'a donc pas été lu. Les références secondaires divergent sur l'année (2006/2007) et les variantes de titre ; ces points restent à confirmer sur la page de titre. **Décision de travail :** suspendre les tâches qui exigent la lecture de la thèse, sans suspendre les comparaisons possibles à partir des articles accessibles.
+Le PDF a été obtenu par une voie appropriée et est déjà versionné sous `raw/`; sa provenance est documentée dans le sidecar associé. **Ne pas relancer l'acquisition.** Des passages ciblés, notamment les équations (7.12)–(7.13), p. 129, sont analysés dans [l'audit de thèse](../../docs/43-audit-these-brun-conservation-g0s.md). Cela ne signifie pas que la thèse entière a été relue. Les références divergent sur le titre exact et l'année (2006/2007) ; la page de titre et l'identité binaire du fichier versionné avec le PDF HAL restent à vérifier à partir des éléments de provenance existants.
 
 ## L'article de 2006 (C. R. Mécanique) — fondement mathématique, accès direct incomplet
 
@@ -25,7 +25,7 @@ Publié en octobre 2006 (reçu en avril, accepté en juin), ce papier de 5 pages
 3. **Sans EDP ni maillage** : aucune équation aux dérivées partielles n'est résolue.
 4. **Évaluation ponctuelle** : la concentration se calcule en un point isolé, sans calculer le champ entier.
 
-L'accès direct au PDF éditeur renvoie une erreur 403 dans l'environnement de lecture ; l'indexation web expose toutefois des extraits de plusieurs sections. Les éléments ci-dessous sont donc une **extraction partielle**, à confirmer par une lecture intégrale avant de figer toutes les conventions :
+L'accès direct au PDF éditeur renvoyait une erreur 403 dans l'environnement de lecture ; l'indexation web exposait des extraits de plusieurs sections. Un contrôle visuel ultérieur du PDF éditeur versionné a néanmoins porté sur les équations (1), (2) et (4), pages imprimées 634–636 ([audit ciblé, docs/45](../../docs/45-audit-article-mohammadi-brun-2006.md)). Ce contrôle ne certifie pas les autres équations ni les figures. Les éléments ci-dessous restent une **synthèse partielle**, et la relecture intégrale demeure nécessaire avant de figer toutes les conventions :
 
 - **La construction géométrique historique (à confirmer sur le texte intégral).** Les extraits disponibles décrivent un coût orienté lié au temps de transport sur une caractéristique et une projection de la cible. Les conventions d'amont/aval et les cas dégénérés doivent être vérifiés dans leur contexte complet ; ne pas confondre cette construction avec le temps de première arrivée ni avec un coût calculé sur une polyligne imposée. La comparaison avec le code actuel est suivie dans la [page travel-time](../theorie/metrique-travel-time.qmd).
 - **La conservation, calée au rang de culture.** La quantité totale émise (résolue par un modèle de traitement au niveau du rang de vigne) est conservée globalement — réaliste car les traitements ne se font que par vent faible (moins de 20 km/h).
