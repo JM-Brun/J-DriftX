@@ -553,4 +553,3 @@ def test_sine_periodique_bornee_et_periodique(
     assert np.all(concentrations >= moyenne - amplitude * amortissement - 1e-9)
     assert np.all(concentrations <= moyenne + amplitude * amortissement + 1e-9)
     assert concentrations[0] == pytest.approx(concentrations[-1], abs=1e-9)
-
