@@ -23,11 +23,14 @@ import argparse
 import json
 import math
 import platform
+import shutil
 import statistics
+import subprocess
 import sys
 import time
 import tracemalloc
 from collections.abc import Callable
+from datetime import UTC, datetime
 from importlib import metadata
 from pathlib import Path
 from typing import Any
@@ -216,6 +219,32 @@ def _version_package() -> str:
         return "non-installe"
 
 
+def _git_metadata(*arguments: str) -> str | None:
+    """Retourne une métadonnée Git ou None si elle n'est pas disponible."""
+    git_executable = shutil.which("git")
+    if git_executable is None:
+        return None
+
+    try:
+        result = subprocess.run(  # noqa: S603 — executable resolved via PATH; arguments are internally defined
+            [git_executable, *arguments],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return result.stdout.strip()
+
+
+def _git_worktree_status() -> str:
+    """Indique si le worktree est propre, sale ou non vérifiable."""
+    status = _git_metadata("status", "--porcelain")
+    if status is None:
+        return "unknown"
+    return "dirty" if status else "clean"
+
+
 def main() -> None:
     """Point d'entrée CLI."""
     parser = argparse.ArgumentParser(description=__doc__)
@@ -225,7 +254,15 @@ def main() -> None:
     if args.repetitions < 5:
         parser.error("--repetitions doit être >= 5 pour rapporter une variabilité.")
 
+    debut_execution = datetime.now(UTC).isoformat()
     rapport = executer(args.repetitions)
+    rapport["execution"] = {
+        "started_at_utc": debut_execution,
+        "command_argv": sys.argv,
+        "git_commit": _git_metadata("rev-parse", "HEAD"),
+        "git_worktree_status": _git_worktree_status(),
+        "output_path": str(args.output) if args.output is not None else "stdout",
+    }
     texte = json.dumps(rapport, indent=2, ensure_ascii=False, allow_nan=False) + "\n"
     if args.output is None:
         print(texte, end="")
