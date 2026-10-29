@@ -76,7 +76,10 @@ def load_verified_records(audit_dir: Path) -> list[dict[str, Any]]:
             )
 
         original_filename = record.get("original_filename")
-        if not isinstance(original_filename, str) or Path(original_filename).name != original_filename:
+        if (
+            not isinstance(original_filename, str)
+            or Path(original_filename).name != original_filename
+        ):
             raise RuntimeError(f"Unsafe original filename for {filename}")
         source = audit_dir / original_filename
         if not source.is_file():
@@ -141,7 +144,10 @@ def stage(audit_dir: Path, output_dir: Path) -> dict[str, Any]:
         "dataset_pid": DATASET_PID,
         "dataset_url": DATASET_URL,
         "license": LICENSE,
-        "method": "Byte-for-byte copy of Dataverse originalFileName payloads after audit size/MD5/SHA-256 verification.",
+        "method": (
+            "Byte-for-byte copy of Dataverse originalFileName payloads after audit "
+            "size/MD5/SHA-256 verification."
+        ),
         "files": staged_records,
         "limitations": [
             "Integrity checks do not establish scientific validity.",
