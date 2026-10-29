@@ -22,11 +22,11 @@ Le dépôt JESA sur HAL est identifié et le mainteneur confirme que son PDF fin
 ## Travail restant — sans refaire l'obtention HAL
 
 - [x] Vérifier les métadonnées bibliographiques JESA : titre, auteurs, revue, volume, numéro, pages et DOI (voir ci-dessus).
-- [ ] Exploiter le PDF de travail déjà fourni (`MO2009-PUB00026817-1.pdf`, versionné sous `raw/2009-bozon-sinfort-mohammadi-driftx-hal.pdf`) et son extraction ; comparer les passages disponibles sur le temps de migration, la projection, le champ de vitesse, les équations de concentration et conservation, les intégrales, unités, sources/puits et conditions aux limites. Ne pas redemander le binaire.
-- [ ] Pour chaque différence, enregistrer page imprimée/équation et classer : identique, changement éditorial, changement mathématique, ambiguïté ou non vérifiable.
-- [x] Réutiliser le PDF déjà obtenu et sa provenance documentée ; aucune nouvelle acquisition n'est requise.
-- [ ] Avant d'ajouter un PDF à `raw/`, vérifier les conditions de dépôt et de redistribution. À défaut, conserver le lien HAL et une extraction dont l'usage est autorisé.
-- [x] Réutiliser l'extraction texte déjà versionnée ; compléter seulement les vérifications visuelles et les renvois page/équation manquants.
+- [x] Réutiliser le PDF de travail manuscrit 2009 déjà fourni (`MO2009-PUB00026817-1.pdf`, versionné sous `raw/2009-bozon-sinfort-mohammadi-driftx-hal.pdf`) et son extraction pour établir le relevé du manuscrit : temps de migration, projection, champ de vitesse, équations de concentration/conservation, intégrales, unités, sources/puits et conditions aux limites. Ne pas redemander ce binaire.
+- [x] Réutiliser le PDF final JESA 2010 déjà obtenu par le mainteneur sans relancer l'acquisition ; son chemin/binaire distinct reste à retrouver dans les éléments de travail archivés.
+- [ ] Comparer directement le fac-similé final JESA au manuscrit 2009, puis pour chaque différence enregistrer page imprimée/équation et classer : identique, changement éditorial, changement mathématique, ambiguïté ou non vérifiable. La lecture du seul manuscrit ne clôt pas cette tâche.
+- [ ] Avant d'ajouter une copie du PDF JESA à `raw/`, vérifier les conditions de dépôt et de redistribution. À défaut, conserver le lien HAL et une extraction dont l'usage est autorisé.
+- [x] Réutiliser l'extraction texte déjà versionnée du manuscrit 2009 ; compléter seulement les vérifications visuelles et les renvois page/équation manquants pour ce document.
 
 Ne pas présenter la comparaison différentielle comme terminée tant que les écarts n'ont pas été examinés. En revanche, **la disponibilité du PDF de travail et de son extraction est acquise** : ne plus confondre « comparaison incomplète » avec « source inaccessible ». La couverture HAL du fichier désigné identifie le manuscrit STIC 2009 ; la vérification ligne à ligne de la version de record JESA demeure une réserve de version, pas un motif pour refaire l'acquisition.
 
