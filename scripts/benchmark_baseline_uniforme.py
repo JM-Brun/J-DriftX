@@ -221,8 +221,8 @@ def _version_package() -> str:
 def _git_metadata(*arguments: str) -> str | None:
     """Retourne une métadonnée Git ou None si elle n'est pas disponible."""
     try:
-        result = subprocess.run(
-            ["git", *arguments],  # noqa: S603, S607 — executable and arguments are fixed internally
+        result = subprocess.run(  # noqa: S603 — fixed executable and internally defined arguments
+            ["git", *arguments],
             check=True,
             capture_output=True,
             text=True,
