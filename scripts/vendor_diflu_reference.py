@@ -15,7 +15,9 @@ from pathlib import Path
 from typing import Any
 
 DATASET_PID = "doi:10.57745/A9YC3C"
-DATASET_URL = "https://entrepot.recherche.data.gouv.fr/dataset.xhtml?persistentId=doi%3A10.57745%2FA9YC3C"
+DATASET_URL = (
+    "https://entrepot.recherche.data.gouv.fr/dataset.xhtml?persistentId=doi%3A10.57745%2FA9YC3C"
+)
 CORE_FILES = (
     "DIFLU_helium_release_sampling.tab",
     "DIFLU_media_dictionary.tab",
@@ -57,9 +59,7 @@ def load_verified_records(audit_dir: Path) -> list[dict[str, Any]]:
     if not isinstance(records, list):
         raise RuntimeError("Audit report has no files list")
     by_name = {
-        record.get("dataverse_label"): record
-        for record in records
-        if isinstance(record, dict)
+        record.get("dataverse_label"): record for record in records if isinstance(record, dict)
     }
 
     verified: list[dict[str, Any]] = []
@@ -122,9 +122,7 @@ def stage(audit_dir: Path, output_dir: Path) -> dict[str, Any]:
         payload = source.read_bytes()
         if destination.exists():
             if destination.read_bytes() != payload:
-                raise RuntimeError(
-                    f"Refusing to overwrite different existing file: {destination}"
-                )
+                raise RuntimeError(f"Refusing to overwrite different existing file: {destination}")
         else:
             destination.write_bytes(payload)
 
