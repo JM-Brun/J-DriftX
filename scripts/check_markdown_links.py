@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import unicodedata
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -85,12 +86,12 @@ def check_markdown_links(root: Path, markdown_files: list[Path]) -> list[str]:
             target, fragment = _target_path(raw_target, source, root)
             if target is None:
                 continue
-            if not target.is_file():
+            if not target.exists():
                 diagnostics.append(
                     f"{source.relative_to(root)}: local target not found: {raw_target}"
                 )
                 continue
-            if fragment and target.suffix.lower() in {".md", ".markdown"}:
+            if fragment and target.is_file() and target.suffix.lower() in {".md", ".markdown"}:
                 if target not in anchors_cache:
                     try:
                         anchors_cache[target] = _heading_anchors(
