@@ -117,6 +117,6 @@ En parallèle, le projet doit corriger ou circonscrire les hypothèses non démo
 
 - [x] Inspecter visuellement les équations (1) et (2), p. 635, et l'équation (4), p. 636, sur le PDF éditeur versionné ; les transcriptions et la réserve d'indice de (4) sont consignées ci-dessus.
 - [ ] Inspecter les autres équations et figures du PDF éditeur si elles deviennent nécessaires à une revendication de la baseline.
-- [ ] Si un exemplaire officiel de référence déjà obtenu est disponible dans les éléments de provenance, comparer son SHA-256 à celui du binaire versionné. Ne pas confondre un blob SHA Git avec le SHA-256 du fichier ; ne pas relancer l'acquisition uniquement à cause du 403 de l'outil de consultation.
+- [x] Contrôle d'identité du PDF versionné documenté par SHA-256 et Git blob SHA dans « Source et méthode » ; ces empreintes établissent l'identité avec le binaire du dépôt, pas nécessairement avec tout exemplaire officiel externe. Ne pas relancer l'acquisition uniquement à cause du 403 de l'outil de consultation.
 - [ ] Vérifier les unités et les bilans du modèle local, du modèle réduit et de la source mobile.
 - [ ] Distinguer clairement résultats analytiques, résultats synthétiques, comparaison à une EDP et validation terrain.
