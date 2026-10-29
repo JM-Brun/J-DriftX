@@ -80,6 +80,7 @@ def _etat_initial_periodique(
     )
     return x, dx, initial
 
+
 def periodic_sine_solution(
     x: NDArray[np.floating],
     time: float,
