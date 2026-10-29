@@ -12,6 +12,7 @@ porte seul les invariants de la source.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 
 from jdriftx.stabilite import ClasseStabilite
 
@@ -38,13 +39,13 @@ class SourcePanache:
 
     def __post_init__(self) -> None:
         """Valide les invariants de la source, sinon leve une ValueError."""
-        if self.debit <= 0.0:
-            msg = "Le debit d emission doit etre strictement positif."
+        if not math.isfinite(self.debit) or self.debit <= 0.0:
+            msg = "Le debit d emission doit etre fini et strictement positif."
             raise ValueError(msg)
-        if self.u <= 0.0:
-            msg = "La vitesse du vent doit etre strictement positive."
+        if not math.isfinite(self.u) or self.u <= 0.0:
+            msg = "La vitesse du vent doit etre finie et strictement positive."
             raise ValueError(msg)
-        if self.hauteur < 0.0:
-            msg = "La hauteur de source doit etre positive ou nulle."
+        if not math.isfinite(self.hauteur) or self.hauteur < 0.0:
+            msg = "La hauteur de source doit etre finie et positive ou nulle."
             raise ValueError(msg)
         ClasseStabilite(self.classe)
