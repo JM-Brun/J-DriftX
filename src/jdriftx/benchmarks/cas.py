@@ -127,7 +127,9 @@ class CasS0(CasSynthetique):
     def points(self) -> tuple[PointMesure, ...]:
         """Grille croisee arcs x positions laterales a z_mesure."""
         return tuple(
-            PointMesure(x=x, y=y, z=self.z_mesure) for x in self.arcs for y in self.positions_laterales
+            PointMesure(x=x, y=y, z=self.z_mesure)
+            for x in self.arcs
+            for y in self.positions_laterales
         )
 
     def verite(self, points: tuple[PointMesure, ...]) -> np.ndarray:

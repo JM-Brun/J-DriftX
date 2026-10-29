@@ -10,12 +10,12 @@ import pytest
 
 from jdriftx.benchmarks import (
     CAS_S0_DEFAUT,
-    CasS0,
-    CasSynthetique,
     FAC2,
     METRIQUES,
-    Metrique,
     NMSE,
+    CasS0,
+    CasSynthetique,
+    Metrique,
     PointMesure,
     calculer_metriques,
     construire_cas,
@@ -188,7 +188,7 @@ class TestRegistreCas:
 
     def test_enregistrement_puis_retrait(self) -> None:
         """Given un cas valide, When ajouter puis retirer, Then cycle complet."""
-        enregistrer_cas(lambda: _CasT())
+        enregistrer_cas(_CasT)
         assert lister_cas() == ("S0", "T1")
         retirer_cas("T1")
         assert lister_cas() == ("S0",)
@@ -201,12 +201,12 @@ class TestRegistreCas:
     def test_refuse_verite_non_positive(self) -> None:
         """Given une verite negative, When ajouter, Then refus."""
         with pytest.raises(ValueError, match="strictement positive"):
-            enregistrer_cas(lambda: _CasNegatif())
+            enregistrer_cas(_CasNegatif)
 
     def test_refuse_grille_vide(self) -> None:
         """Given une grille vide, When ajouter, Then refus."""
         with pytest.raises(ValueError, match="grille vide"):
-            enregistrer_cas(lambda: _CasVide())
+            enregistrer_cas(_CasVide)
 
     def test_refuse_retrait_inconnu(self) -> None:
         """Given un identifiant absent, When retirer, Then refus."""
