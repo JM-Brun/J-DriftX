@@ -145,7 +145,7 @@ def stage(audit_dir: Path, output_dir: Path) -> dict[str, Any]:
         "files": staged_records,
         "limitations": [
             "Integrity checks do not establish scientific validity.",
-            "The manifest timestamp records staging time, not a new dataset release.",
+            "The manifest is deterministic for identical source bytes and metadata.",
             "Source bytes are not normalized; literal values such as NA are preserved.",
         ],
     }
