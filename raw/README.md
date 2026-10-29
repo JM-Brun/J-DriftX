@@ -14,14 +14,15 @@ Ce dossier rassemble les **documents sources** du projet : corpus historique Dri
 
 ## Sources PDF présentes
 
-Les fichiers du corpus historique utilisent déjà la convention `AAAA-auteur-sujet.pdf`. La table ci-dessous documente les sources conservées dans `raw/`.
+Les fichiers du corpus historique utilisent déjà la convention `AAAA-auteur-sujet.pdf`. La table ci-dessous documente les sources conservées dans `raw/`. Les notices et liens de dépôt identifient les références, mais ne prouvent pas à eux seuls que le binaire versionné est identique au fichier servi en ligne.
 
 | Fichier | Source | Fiche / état |
 |---|---|---|
 | `2006-mohammadi-brun-crmeca.pdf` | Mohammadi & Brun, *C. R. Mécanique* (2006), DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007) | PDF éditeur de 5 pages et extraction automatique disponibles ; la revue publique qualifie désormais la lecture de partielle (PR #143), car l'accès direct au PDF n'a pas pu être vérifié dans l'environnement de relecture |
 | `2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf` | Brun & Mohammadi, chapitre Springer (2008), extrait p. 245–246 | Extrait de deux pages seulement ; les pages restantes nécessitent une source légalement accessible |
 | Référence bibliographique du recueil Springer 2008 (PDF intégral non distribué) | Glowinski, R. & Neittaanmäki (eds) (2008), *Partial Differential Equations: Modelling and Numerical Simulation*, Computational Methods in Applied Sciences vol. 16, Springer, Dordrecht, DOI [10.1007/978-1-4020-8758-5](https://doi.org/10.1007/978-1-4020-8758-5) — chapitre 14, Brun & Mohammadi, pp. 245–256, DOI [10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14) | Référence et provenance historique conservées ; le recueil complet a été retiré par la PR #67. Le PDF local restant ne couvre que les pages 245–246 ; les notes analytiques ne sont pas un OCR intégral |
-| `2009-bozon-sinfort-mohammadi-driftx-hal.pdf` | Bozon, Sinfort & Mohammadi, manuscrit Drift-X (2009), [HAL hal-00468863](https://hal.science/hal-00468863) | Manuscrit auteur et extraction texte disponibles |
+| `2009-bozon-sinfort-mohammadi-driftx-hal.pdf` | Bozon, Sinfort & Mohammadi (2009), manuscrit auteur « A GIS-based atmospheric dispersion model », [notice HAL hal-00468863](https://hal.science/hal-00468863), [PDF direct HAL v1](https://hal.science/hal-00468863v1/file/MO2009-PUB00026817.pdf) | Manuscrit auteur STIC & Environnement 2009, 17 pages selon le sidecar ; distinct de la publication JESA 2010. PDF et extraction texte déjà présents. Voir [sidecar](provenance/2009-bozon-sinfort-mohammadi-driftx-hal.pdf.md) |
+| [`Modèles à complexité réduite de transport pour applications environnementales - pub00023263.pdf`](<Modèles à complexité réduite de transport pour applications environnementales - pub00023263.pdf>) | Brun, thèse sur la modélisation à complexité réduite du transport pour applications environnementales | Fichier binaire ajouté à cette PR. Références de provenance : [notice AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c), [notice HAL](https://hal.inrae.fr/tel-02589999/document), [PDF lié depuis HAL](https://hal.inrae.fr/tel-02589999/file/pub00023263.pdf). Page de titre, pagination, identité exacte avec le dépôt HAL et droits de redistribution à vérifier. Voir le [sidecar](provenance/Modèles à complexité réduite de transport pour applications environnementales - pub00023263.pdf.md). |
 | `2009-invs-exposition-aerienne-pesticides-herault.pdf` | InVS / Santé publique France (2009), mesures d'exposition aux pesticides dans l'Hérault | Rapport d'agence ; lecture ciblée documentée, extraction intégrale reproductible encore à produire |
 | `reviews/2026-revue-systematique-jdriftx-resume-executif-partie-1.pdf` | Résumé exécutif de la revue, partie 1 | Synthèse PDF ; voir la cartographie éditable |
 | `reviews/2026-revue-systematique-jdriftx-resume-executif-partie-2.pdf` | Résumé exécutif de la revue, partie 2 | Synthèse PDF ; voir la cartographie éditable |
@@ -37,16 +38,15 @@ Les fiches Markdown décrivant les liens scientifiques entre les références et
 
 Pour le rapport InVS 2009, une lecture ciblée paraphrasée est disponible dans `extracts/2009-invs-exposition-aerienne-pesticides-herault-lecture-ciblee.md`. Elle documente les tableaux de concentrations consultés et leurs limites ; ce n'est ni un OCR intégral ni une transcription exhaustive. Une extraction complète reproductible reste à produire, après vérification de l'identité du PDF local avec la version officielle. Pour le chapitre 14 du recueil Glowinski & Neittaanmäki, `extracts/2008-brun-mohammadi-springer-chap14-notes.txt` est une note analytique, pas un OCR verbatim ; les équations, légendes et figures doivent être contrôlées sur le PDF original.
 
-## PDF encore attendus
+## Autres PDF encore attendus
 
 | Fichier attendu | Source | Où le trouver |
 |---|---|---|
-| <code>2007-these-brun.pdf</code> | Brun, *Modélisation à complexité réduite de la dérive*, thèse Univ. Montpellier II (citée comme 2007 dans l'article primaire de 2006 ; année exacte à vérifier) | Indiquée comme en possession de l'auteur — vérifier page de titre, métadonnées et droits avant tout dépôt HAL (action M0) |
 | <code>2006-mohammadi-brun-pironneau-reference.pdf</code> | Fichier éventuel pour la référence attribuée à Mohammadi, Brun & Pironneau (2006) | Référence citée secondairement ; recueil et statut éditorial à confirmer, ne pas traiter comme un chapitre Springer établi |
 | <code>2008-bozon-mohammadi-sinfort-esta.pdf</code> | e-sta vol. 5, STIC & Environnement’07 | Archives SEE introuvables en ligne à ce jour |
 | ~~<code>2008-brun-mohammadi-springer-chap14.pdf</code>~~ | Chapitre complet non versionné faute d'autorisation de redistribution établie | Utiliser une source légalement accessible ; l'extrait local ne couvre que les pages 245–246 |
 | <code>2009-bozon-mohammadi-applied-geomatics.pdf</code> | Applied Geomatics 1, 59–74 | Abonnement Springer / tiré-à-part auteur |
-| <code>2010-bozon-sinfort-mohammadi-jesa.pdf</code> | JESA 44(4-5), 445–461 | Abonnement Lavoisier ; DOI 10.3166/jesa.44.445-461 |
+| `2010-bozon-sinfort-mohammadi-jesa.pdf` (attendu) | Bozon, Sinfort & Mohammadi (2010), “A GIS-based atmospheric dispersion model”, *Journal Européen des Systèmes Automatisés* 44(4–5), 445–461, DOI [10.3166/jesa.44.445-461](https://doi.org/10.3166/jesa.44.445-461) | Notice [HAL hal-02594312](https://hal.inrae.fr/hal-02594312), notice [AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/6798c27ed6a63682f045645d). Le PDF final JESA n'est pas encore présent/authentifié. Ne pas confondre avec le manuscrit HAL 2009 ci-dessus. Voir [sidecar préparatoire](provenance/2010-bozon-sinfort-mohammadi-jesa.pdf.md) |
 | <code>1979-muller-espace-geographique.pdf</code> | Muller, *La cartographie d'une métrique non euclidienne : les distances-temps*, L'Espace géographique 8(3), 215–227 | [Persée](https://www.persee.fr/doc/spgeo_0046-2497_1979_num_8_3_1915) — référence théorique (métriques non riemanniennes), hors corpus Drift-X |
 
 ## Comment ajouter d'autres PDF
