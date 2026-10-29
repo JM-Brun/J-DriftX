@@ -436,6 +436,12 @@ libelle = "similitude.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py"
 
 [[noeuds]]
+id = "similitude_objets"
+type = "module"
+libelle = "similitude_objets.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude_objets.py"
+
+[[noeuds]]
 id = "stabilite"
 type = "module"
 libelle = "stabilite.py"
@@ -1828,7 +1834,7 @@ noeuds = [
   "experiences/superposition_sources", "experiences/relief",
   "experiences/modele_reduit_edp",
   "experiences/identification_source",
-  "similitude", "stabilite", "source", "contrats",
+  "similitude", "similitude_objets", "stabilite", "source", "contrats",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
   "figures/figure_02", "figures/figure_03", "figures/figure_04", "figures/figure_05", "figures/figure_06",
@@ -1879,7 +1885,7 @@ noeuds = [
   [[graphes.groupes]]
   id = "sol"
   titre = "Socle gaussien"
-  noeuds = ["similitude", "stabilite", "source", "c-panache", "c-stabilite"]
+  noeuds = ["similitude", "similitude_objets", "stabilite", "source", "c-panache", "c-stabilite"]
 
   [[graphes.groupes]]
   id = "ctr"
