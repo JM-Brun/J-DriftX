@@ -78,7 +78,7 @@ Ce qui reste volontairement hors du squelette : le bruit et les graines (famille
 | Extension : nouveaux cas et benchmarks | **Préparé** (section 1 et 6, registres et contrat) |
 | Benchmark applicatif sur données observées | **Non commencé — bloqué** par G1 (#204, DIFLU déléguée) et la décision G0-A du propriétaire |
 
-L'issue #17 reste ouverte tant que le benchmark applicatif n'a pas de donnée inspectée ; le squelette S0 est la première brique, réutilisable telle quelle pour la famille S1 (vérités bruitées, docs/21) quand la porte G1 sera franchie.
+L'issue #17 est close pour le livrable « squelette analytique S0 » (PR #223). Elle ne suit pas le benchmark applicatif futur : celui-ci reste non commencé et bloqué par les audits G1 (#204–#206) et la décision G0-A (#43). Si ces prérequis sont levés, ouvrir une issue dédiée définissant le corpus retenu, le protocole et les critères préenregistrés avant de lancer l'expérience. Le squelette S0 est réutilisable, mais ne valide ni S1 ni un cas applicatif.
 
 ## Références
 
