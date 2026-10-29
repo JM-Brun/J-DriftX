@@ -42,7 +42,7 @@ et indique explicitement que cette quantité totale transportée « should be co
 
 ### 3. Contrôle dimensionnel des deux branches de (7.12)
 
-Sous l'interprétation conventionnelle [c_loc] = M L⁻³, avec z une coordonnée de longueur et dσ une mesure surfacique :
+Sous l'interprétation [c_loc] = M L⁻³, cette hypothèse est étayée par la thèse elle-même : au chapitre 5, §5.6.3, p. 101, les équations (5.54)–(5.55) donnent à la concentration liée au modèle local l'unité kg·m⁻³ et au coefficient de calibration l'unité s⁻¹ ; les équations (5.61)–(5.64), pp. 101–102, calculent ensuite des pertes de masse par intégration volumique ou par flux vertical intégré dans le temps. En appliquant ces unités à c_loc dans (7.12), avec z une coordonnée de longueur et dσ une mesure surfacique :
 
 - Branche intégrée en hauteur : [∫ c_loc dz] = M L⁻², donc [M_C] = M. Elle est dimensionnellement compatible avec un inventaire de masse.
 - Branche produit : la thèse définit u⁺_loc = max(0, (u_loc·ẑ)/||u_loc||). Ce rapport est sans dimension. Ainsi [u⁺_loc c_loc] = M L⁻³, puis [M_C] = M L⁻¹ après intégration surfacique.
