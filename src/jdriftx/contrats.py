@@ -258,13 +258,12 @@ class ReliefMntAscii:
         p10 = tx * (1.0 - ty)
         p01 = (1.0 - tx) * ty
         p11 = tx * ty
-        if self.sans_donnee is not None:
-            if any(
-                np.any((coin == self.sans_donnee) & (poids > 0.0))
-                for coin, poids in ((z00, p00), (z10, p10), (z01, p01), (z11, p11))
-            ):
-                msg = "Interpolation sur une cellule sans donnee."
-                raise ValueError(msg)
+        coins = ((z00, p00), (z10, p10), (z01, p01), (z11, p11))
+        if self.sans_donnee is not None and any(
+            np.any((coin == self.sans_donnee) & (poids > 0.0)) for coin, poids in coins
+        ):
+            msg = "Interpolation sur une cellule sans donnee."
+            raise ValueError(msg)
         z = z00 * p00 + z10 * p10 + z01 * p01 + z11 * p11
         return np.asarray(z, dtype=float)
 
