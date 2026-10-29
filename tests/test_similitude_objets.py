@@ -194,7 +194,6 @@ def test_puff_est_lineaire_en_masse(
     assert c_multipliee == pytest.approx(c_initiale * facteur, rel=1e-12, abs=0.0)
 
 
-
 @pytest.mark.parametrize(
     ("champ", "valeur"),
     [
