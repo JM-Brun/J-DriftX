@@ -2,6 +2,8 @@
 
 > Statut : prototype pédagogique et numérique en développement. Aucune validation physique ou applicative n'est revendiquée.
 
+> **Portée actualisée (29 octobre 2026) :** ce document est une note de conception et de lancement local, pas l'inventaire canonique de l'interface publiée. Le parcours GitHub Pages courant est décrit dans le [catalogue du laboratoire numérique](../site/projet/laboratoire-interactif.qmd) et l'[explorateur de champs 2D](../site/projet/experiences-interactives.qmd) : le rendu statique consomme des résultats pré-calculés par Python et ne maintient pas de noyau Python actif dans le navigateur. L'application Streamlit reste une option locale (`apps/interactive_lab.py`), distincte du site public. Les pistes Plotly, iframe Streamlit et Shiny ci-dessous sont des options d'architecture, pas des services distants actuellement déployés.
+
 ## 1. Objectif et séparation des usages
 
 Le laboratoire doit distinguer **exploration** (comprendre le comportement d'une équation dans un cas contrôlé) et **vérification numérique** (comparer un calcul à une solution connue, mesurer l'erreur et conserver les paramètres). Une visualisation n'est ni une preuve mathématique ni une validation empirique.
