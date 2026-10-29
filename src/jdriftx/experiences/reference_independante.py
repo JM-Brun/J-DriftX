@@ -247,10 +247,7 @@ def resoudre_edp(cas: CasS0, parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT) 
     dx = _pas_longitudinal(classe, x_entree, x_fin, parametres)
     for precedent, arc in zip((x_entree, *cas.arcs[1:]), cas.arcs[1:], strict=True):
         if abs((arc - precedent) / dx - round((arc - precedent) / dx)) > 1e-9:
-            msg = (
-                "Les arcs doivent être des multiples entiers du pas "
-                "longitudinal depuis l'entrée."
-            )
+            msg = "Les arcs doivent être des multiples entiers du pas longitudinal depuis l'entrée."
             raise ValueError(msg)
 
     pas_y = parametres.pas_transverse_y
@@ -502,8 +499,7 @@ def construire_manifeste(cas: CasS0, comparaison: ComparaisonReference) -> Manif
             "≤ 1/3, miroir au sol, Dirichlet aux bords, fenêtre 4 sigma, tranches "
             "aux arcs, entrée partagée avec la solution fermée)."
         ),
-        extension="Aucune (l'évaluation du puff et le multi-niveaux restent "
-        "hors périmètre).",
+        extension="Aucune (l'évaluation du puff et le multi-niveaux restent hors périmètre).",
         limites=(
             "Contrôle d'auto-cohérence entre deux routes du même package sur "
             "un cas synthétique : pas une validation physique.",
