@@ -21,7 +21,7 @@ from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 CLASSES: tuple[str, ...] = tuple(classe.value for classe in ClasseStabilite)
 
 
-def _valide_classe(classe: str) -> ClasseStabilite:
+def _valide_classe(classe: str | ClasseStabilite) -> ClasseStabilite:
     """Retourne la classe de stabilite correspondante ou leve une ValueError."""
     try:
         return ClasseStabilite(classe)
@@ -30,7 +30,7 @@ def _valide_classe(classe: str) -> ClasseStabilite:
         raise ValueError(msg) from err
 
 
-def sigma_y(x: ArrayLike, classe: str) -> np.ndarray:
+def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
     """Ecart-type horizontal du panache (m) a la distance sous le vent x (m)."""
     classe_stable = _valide_classe(classe)
     x_arr = np.asarray(x, dtype=float)
@@ -41,7 +41,7 @@ def sigma_y(x: ArrayLike, classe: str) -> np.ndarray:
     return a * x_arr / np.sqrt(1.0 + d * x_arr)
 
 
-def sigma_z(x: ArrayLike, classe: str) -> np.ndarray:
+def sigma_z(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
     """Ecart-type vertical du panache (m) a la distance sous le vent x (m)."""
     classe_stable = _valide_classe(classe)
     x_arr = np.asarray(x, dtype=float)
@@ -62,7 +62,7 @@ def concentration_panache(
     z: ArrayLike,
     debit: float,
     u: float,
-    classe: str,
+    classe: str | ClasseStabilite,
     hauteur: float = 0.0,
 ) -> np.ndarray:
     """Concentration (kg m^-3) du panache gaussien au point (x, y, z).
@@ -73,7 +73,7 @@ def concentration_panache(
         z: altitude du point de calcul (m).
         debit: emission massique (kg s^-1).
         u: vitesse du vent (m s^-1), strictement positive.
-        classe: classe de stabilite de Pasquill (A a F).
+        classe: classe de stabilite de Pasquill (A a F), lettre ou ClasseStabilite.
         hauteur: hauteur effective de la source (m).
 
     Returns:
@@ -109,7 +109,7 @@ def concentration_puff(
     t: float,
     masse: float,
     u: float,
-    classe: str,
+    classe: str | ClasseStabilite,
     x0: float = 0.0,
 ) -> np.ndarray:
     """Concentration (kg m^-3) d'un puff gaussien au point (x, y, z) et a l'instant t.
@@ -121,7 +121,7 @@ def concentration_puff(
         t: temps ecoule depuis l'emission (s), strictement positif.
         masse: masse emise (kg).
         u: vitesse du vent (m s^-1), strictement positive.
-        classe: classe de stabilite de Pasquill (A a F).
+        classe: classe de stabilite de Pasquill (A a F), lettre ou ClasseStabilite.
         x0: position sous le vent de l'emission (m).
 
     Returns:

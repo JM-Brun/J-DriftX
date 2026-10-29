@@ -183,14 +183,30 @@ ultérieures. Arbitrage propriétaire.
 
 | N° | Priorité | Constat | Recommandation | Décision |
 |----|----------|---------|---------------|----------|
-| 1 | P1 | `linearite` : kwargs non vérifiés, annotation fausse (`classe` est un `str`) | Spécialiser + retyper (option A) | propriétaire |
-| 2 | P2 | `Literal` vs `StrEnum` (fields, terrain, trajectories) | Harmonisation optionnelle, pattern #96 | propriétaire |
-| 3 | P2 | Duplication grille / CI / garde `end_time == 0` entre solveurs | Helper privé non cassant | propriétaire |
-| 4 | P2 | Tuples de résultats (solveurs périodiques, trajectoires) | Dataclasses si le remaniement des tests est accepté | propriétaire |
-| 5 | P2 | Langues mixtes FR/EN dans `src/` | Statuer la convention, convergence progressive | propriétaire |
-| 6 | P3 | `classe: str` → `str | ClasseStabilite` (après fusion de #96) | À l'occasion d'une PR sur `similitude` | faible risque |
-| 7 | P3 | Exports racine incohérents | Documenter l'intention | propriétaire |
+| 1 | P1 | `linearite` : kwargs non vérifiés, annotation fausse (`classe` est un `str`) | Spécialiser + retyper (option A) | exécutée (`linearite_panache` sur `main`) |
+| 2 | P2 | `Literal` vs `StrEnum` (fields, terrain, trajectories) | Harmonisation optionnelle, pattern #96 | arbitrage propriétaire (en attente) |
+| 3 | P2 | Duplication grille / CI / garde `end_time == 0` entre solveurs | Helper privé non cassant | exécutée (cf. §11) |
+| 4 | P2 | Tuples de résultats (solveurs périodiques, trajectoires) | Dataclasses si le remaniement des tests est accepté | arbitrage propriétaire (en attente) |
+| 5 | P2 | Langues mixtes FR/EN dans `src/` | Statuer la convention, convergence progressive | exécutée (cf. §11) |
+| 6 | P3 | `classe: str` → `str | ClasseStabilite` (après fusion de #96) | À l'occasion d'une PR sur `similitude` | exécutée (cf. §11) |
+| 7 | P3 | Exports racine incohérents | Documenter l'intention | exécutée (cf. §11) |
 | 8 | P3 | Constantes de disposition `figure_01` | Ne rien faire (aucun invariant) | — |
 
 Cet audit ne dépend d'aucune fusion (files disjoints des PR #95 et #96) ; la
 recommandation n° 6 suppose la fusion de la PR #96.
+## 11. Suivi d'exécution (29 octobre 2026)
+
+- Recommandation 1 (P1) : déjà exécutée sur `main` — `linearite_panache` et le
+  retypage `**kwargs: object` sont en place, avec leurs tests (acceptation de
+  l'enum, rejet de la classe inconnue).
+- Recommandations 3, 5, 6 et 7 : exécutées par la PR ouverte le 29/10/2026 —
+  helper privé `_etat_initial_periodique` partagé par les deux solveurs
+  périodiques (comportement bit-exact conservé), convention de langue des
+  docstrings consignée dans CONTRIBUTING, annotations `str | ClasseStabilite`
+  dans `similitude` (contrat déjà accepté à l'exécution, désormais documenté
+  et testé), intention des exports racine consignée dans la docstring du
+  `__init__`.
+- Recommandations 2 (StrEnum) et 4 (dataclasses de résultats) : non exécutées —
+  harmonisation optionnelle et changement cassant de signature ; elles restent
+  à l'arbitrage du propriétaire.
+- Recommandation 8 : ne rien faire (aucun invariant), inchangé.

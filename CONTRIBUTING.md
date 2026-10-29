@@ -29,6 +29,12 @@ Choisir un ou plusieurs modes et les indiquer dans la PR.
 - **Structures typées plutôt que `dict` ou DataFrame.** Les objets du domaine sont des dataclasses/classes ou des tableaux NumPy ; éviter les `dict` et DataFrame pandas comme porteurs internes quand une structure typée convient. Les `dict`/JSON restent aux frontières et sont convertis tôt vers des objets typés validés.
 - **Séparation calcul / rendu / IO.** Le cœur (`src/jdriftx`) ne dépend ni de Matplotlib, ni de QGIS, ni de formats de fichiers ; figures et pages consomment les résultats du cœur et ne réimplémentent pas la physique.
 - **Ne pas réinventer la roue.** Justifier toute nouvelle dépendance (besoin, licence, maintenance, coût d'installation), idéalement avec un mini-benchmark.
+- **Langue du code.** Les docstrings et messages des nouveaux modules sont
+  rédigés en français. Les modules d'enseignement existants en anglais
+  (`trajectories`, `fields`, `terrain`, `periodic_transport`,
+  `advection_diffusion`) ne sont pas migrés rétroactivement : un ajout
+  ponctuel y suit la langue du module, et ils convergent à l'occasion d'une
+  modification substantielle (audit docs/25, recommandation 5).
 
 ## Tests — TDD
 

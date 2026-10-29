@@ -321,3 +321,28 @@ def test_panache_against_closed_form_oracle_independent_of_package() -> None:
 
     # Then — accord au niveau de l'arrondi flottant, sans auto-comparaison.
     np.testing.assert_allclose(obtenu, reference, rtol=1e-13, atol=0.0)
+
+
+@pytest.mark.parametrize("classe", list(ClasseStabilite))
+def test_enum_classe_equivalente_a_la_lettre(classe: ClasseStabilite) -> None:
+    """Un membre ClasseStabilite est accepté au même titre que sa lettre.
+
+    Les deux formes étaient déjà acceptées à l'exécution ; les annotations
+    publiques le documentent désormais (audit docs/25, recommandation 6).
+    """
+    # Given — une classe de stabilité passée comme objet et sa lettre.
+    x, y, z = 500.0, 25.0, 2.0
+    # When — les sigma, le panache et le puff sont évalués avec l'enum.
+    sy_enum = sigma_y(x, classe)
+    sz_enum = sigma_z(x, classe)
+    c_enum = concentration_panache(x, y, z, debit=1.5, u=3.0, classe=classe)
+    p_enum = concentration_puff(x, y, z, t=300.0, masse=5.0, u=3.0, classe=classe)
+    # Then — les évaluations coïncident exactement avec celles de la lettre.
+    assert float(sy_enum) == pytest.approx(float(sigma_y(x, classe.value)))
+    assert float(sz_enum) == pytest.approx(float(sigma_z(x, classe.value)))
+    assert float(c_enum) == pytest.approx(
+        float(concentration_panache(x, y, z, debit=1.5, u=3.0, classe=classe.value))
+    )
+    assert float(p_enum) == pytest.approx(
+        float(concentration_puff(x, y, z, t=300.0, masse=5.0, u=3.0, classe=classe.value))
+    )

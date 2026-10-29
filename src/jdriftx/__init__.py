@@ -4,6 +4,11 @@ Le projet étudie les formulations historiques de Drift-X (J.-M. Brun et
 B. Mohammadi, 2006-2009). La primitive actuelle de temps de parcours calcule
 un coût sur une polyligne fournie; elle ne reproduit pas encore la
 pseudo-distance historique ni un modèle de dispersion validé.
+
+Les modules d'enseignement (`trajectories`, `fields`, `terrain`,
+`periodic_transport`, `advection_diffusion`) ne sont pas exportés à la racine :
+ils servent aux applications interactives et aux tests, pas à l'API publique du
+package (audit docs/25, recommandation 7).
 """
 
 from jdriftx.champ_analytique import ChampFonctionCourant, ChampPlan, SuperpositionChamps

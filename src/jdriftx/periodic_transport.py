@@ -52,6 +52,34 @@ def _validate_periodic_parameters(
         raise ValueError("diffusivity must be non-negative.")
 
 
+def _etat_initial_periodique(
+    n_cells: int,
+    length: float,
+    *,
+    mean_concentration: float,
+    amplitude: float,
+    velocity: float,
+    diffusivity: float,
+) -> tuple[NDArray[np.float64], float, NDArray[np.float64]]:
+    """Build the periodic grid and the exact initial condition shared by both solvers.
+
+    Returns (grid without duplicated endpoint, cell width, initial sine
+    profile), i.e. the exact solution evaluated at t = 0. Shared preparation
+    only: each solver keeps its own stability checks and time stepping.
+    """
+    dx = length / n_cells
+    x = np.arange(n_cells, dtype=float) * dx
+    initial = periodic_sine_solution(
+        x,
+        0.0,
+        length=length,
+        mean_concentration=mean_concentration,
+        amplitude=amplitude,
+        velocity=velocity,
+        diffusivity=diffusivity,
+    )
+    return x, dx, initial
+
 def periodic_sine_solution(
     x: NDArray[np.floating],
     time: float,
@@ -122,12 +150,9 @@ def solve_periodic_sine_transport(
         diffusivity=diffusivity,
     )
 
-    dx = length / n_cells
-    x = np.arange(n_cells, dtype=float) * dx
-    initial = periodic_sine_solution(
-        x,
-        0.0,
-        length=length,
+    x, dx, initial = _etat_initial_periodique(
+        n_cells,
+        length,
         mean_concentration=mean_concentration,
         amplitude=amplitude,
         velocity=velocity,
@@ -196,12 +221,9 @@ def solve_periodic_upwind_euler(
         diffusivity=diffusivity,
     )
 
-    dx = length / n_cells
-    x = np.arange(n_cells, dtype=float) * dx
-    concentration = periodic_sine_solution(
-        x,
-        0.0,
-        length=length,
+    x, dx, concentration = _etat_initial_periodique(
+        n_cells,
+        length,
         mean_concentration=mean_concentration,
         amplitude=amplitude,
         velocity=velocity,
