@@ -8,7 +8,7 @@
 
 **Ce que l'on sait par recoupement (sources vérifiables).**
 - L'article primaire de Mohammadi & Brun (2006) cite « J.-M. Brun, Modélisation à complexité réduite de la dérive, Thèse université Montpellier II, 2007 ». Certaines bibliographies secondaires donnent 2006 et un autre titre. La divergence concerne donc les métadonnées rapportées par les sources ; seule la page de titre ou une notice institutionnelle fiable pourrait établir l'intitulé officiel et l'année de soutenance.
-- Le résumé du C. R. Mécanique 2006 (source n° 2, mêmes auteurs, même année) décrit le contenu scientifique contemporain de la thèse : assimilation de données partielles, solutions de similitude dans une métrique non symétrique basée sur les temps de transport, sans EDP ni maillage, évaluation ponctuelle.
-- Le chapitre 2008 (source n° 4) précise que la hiérarchie multi-niveaux traite « du rang de plants de vigne aux bassins versants », avec le champ proche de la buse construit à partir d'observations expérimentales — soit la partie viticulture/ITAP du travail de thèse.
+- Le résumé du C. R. Mécanique 2006 ([fiche Mohammadi & Brun (2006)](mohammadi-brun-2006-cr-mecanique.md), mêmes auteurs, même année) décrit le contenu scientifique contemporain de la thèse : assimilation de données partielles, solutions de similitude dans une métrique non symétrique basée sur les temps de transport, sans EDP ni maillage, évaluation ponctuelle.
+- Le chapitre 2008 ([fiche du chapitre 2008](brun-mohammadi-2008-chapitre.md)) précise que la hiérarchie multi-niveaux traite « du rang de plants de vigne aux bassins versants », avec le champ proche de la buse construit à partir d'observations expérimentales — soit la partie viticulture/ITAP du travail de thèse.
 
 **Apports pour J-DriftX.** La thèse est le document fondateur, mais aucune information supplémentaire ne peut en être extraite tant qu'elle n'est pas numérisée. Le dépôt HAL (action M0) est le prérequis pour sa relecture.
