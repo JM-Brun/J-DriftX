@@ -45,7 +45,7 @@ def _slug_heading(heading: str) -> str:
     heading = heading.replace("&", "-")
     # GitHub anchors retain a double separator around an em dash while
     # typographic quotes are removed without introducing extra separators.
-    heading = re.sub(r"\s*[‐‑‒–—]\s*", "--", heading)
+    heading = re.sub(r"\s*[‐‑‒–—]\s*", "--", heading)  # noqa: RUF001
     heading = re.sub(r"[^\w\-\s]", "", heading, flags=re.UNICODE)
     heading = re.sub(r"\s+", "-", heading.strip().lower())
     return heading.strip("-")
@@ -87,8 +87,8 @@ def check_markdown_links(root: Path, markdown_files: list[Path]) -> list[str]:
     root = root.resolve()
     diagnostics: list[str] = []
     anchors_cache: dict[Path, set[str]] = {}
-    for source in markdown_files:
-        source = source.resolve()
+    for source_path in markdown_files:
+        source = source_path.resolve()
         text = source.read_text(encoding="utf-8")
         for match in _LINK_RE.finditer(_without_fenced_code(text)):
             raw_target = match.group(1).strip("<>")
@@ -100,7 +100,11 @@ def check_markdown_links(root: Path, markdown_files: list[Path]) -> list[str]:
                     f"{source.relative_to(root)}: local target not found: {raw_target}"
                 )
                 continue
-            if fragment and target.is_file() and target.suffix.lower() in {".md", ".markdown"}:
+            if (
+                fragment
+                and target.is_file()
+                and target.suffix.lower() in {".md", ".markdown"}
+            ):
                 if target not in anchors_cache:
                     try:
                         anchors_cache[target] = _heading_anchors(
