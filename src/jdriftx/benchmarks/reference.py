@@ -147,9 +147,7 @@ CAS_S0_DEFAUT: CasS0 = _cas_defaut()
 def grille_mesures(cas: CasS0) -> tuple[PointMesure, ...]:
     """Construit la grille croisee arcs x positions laterales a z_mesure."""
     return tuple(
-        PointMesure(x=x, y=y, z=cas.z_mesure)
-        for x in cas.arcs
-        for y in cas.positions_laterales
+        PointMesure(x=x, y=y, z=cas.z_mesure) for x in cas.arcs for y in cas.positions_laterales
     )
 
 
