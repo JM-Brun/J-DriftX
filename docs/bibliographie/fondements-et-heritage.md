@@ -1,5 +1,7 @@
 # Sources fondatrices et héritage Drift-X
 
+> **Rôle :** synthèse thématique du corpus historique fondateur (2006–2010) et de son lien avec le projet. Elle contextualise les sources, mais ne remplace ni les fiches de lecture canoniques dans l'[index source par source](../04-revues-papiers-sources.md), ni la [bibliographie annotée](../bibliographie-annotee-jdriftx.md), ni la [liste générale des références](../references.md). Les statuts d'accès et les transcriptions détaillées restent dans les fiches individuelles ; les actions courantes restent dans les issues propriétaires.
+
 ## Synthèse du lien avec le projet
 
 Cette famille constitue le noyau historique directement lié à J-DriftX. Elle documente la modélisation à complexité réduite, les solutions de similitude généralisées, l'assimilation de données partielles et la pseudo-distance non symétrique fondée sur les temps de transport. Elle permet de préserver l'antériorité et de formuler fidèlement les hypothèses historiques avant toute modernisation.
