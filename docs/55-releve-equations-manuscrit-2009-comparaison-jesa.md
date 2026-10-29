@@ -1,8 +1,11 @@
 # Comparaison JESA 2010 / manuscrit HAL 2009 — relevé vérifiable
 
-**Statut :** relevé de la version manuscrit auteur HAL hal-00468863 effectué ; comparaison différentielle ligne à ligne avec l'article de revue JESA 2010 non déclarée terminée. Les deux objets bibliographiques doivent rester distincts. Ce document constitue une transcription de référence pour le manuscrit, afin que les écarts ne soient pas inférés de mémoire ou depuis une version supposée identique.
+**Statut :** le PDF de travail `MO2009-PUB00026817-1.pdf` est déjà fourni dans le projet et son binaire identique est versionné dans `raw/2009-bozon-sinfort-mohammadi-driftx-hal.pdf` (Git blob `e87d4eec066f27d8935302fc412f0d7e20cf692f`, SHA-256 `e102ff7a98a5489e258ff6dd82c9d5d2bf6542475ab47c7c250c2c5ae646745d`). Son extraction existe dans `raw/extracts/2009-bozon-sinfort-mohammadi-driftx-hal.txt`. **Ne jamais redemander ce fichier ni relancer son acquisition.** Le mainteneur le désigne comme le document JESA déjà obtenu à exploiter. Réserve de provenance à conserver : son frontispice HAL identifie `hal-00468863v1`, contribution STIC & Environnement 2009 ; cela ne certifie pas à lui seul l'identité ligne à ligne avec la version de record JESA `hal-02594312`. La comparaison différentielle doit continuer à partir des ressources existantes, sans confondre cette réserve avec une absence d'accès.
 
 ## Sources et pagination
+
+**Règle de reprise :** le document de travail est déjà présent dans le projet sous `MO2009-PUB00026817-1.pdf` et dans le dépôt sous `../raw/2009-bozon-sinfort-mohammadi-driftx-hal.pdf`. Son extraction est `../raw/extracts/2009-bozon-sinfort-mohammadi-driftx-hal.txt`. Toute session reprend ces fichiers ; aucune demande de nouvel upload ni nouvelle acquisition ne doit être formulée.
+
 
 - Manuscrit utilisé : [PDF versionné](../raw/2009-bozon-sinfort-mohammadi-driftx-hal.pdf), identifié par le frontispice comme « A GIS-based atmospheric dispersion model », Bozon, Sinfort et Mohammadi, contribution STIC & Environnement, juin 2009, HAL hal-00468863v1, soumis sur HAL le 31 mars 2010.
 - Article de revue : Bozon, Sinfort & Mohammadi, *Journal Européen des Systèmes Automatisés*, 44(4–5), 445–461 (2010), DOI [10.3166/jesa.44.445-461](https://doi.org/10.3166/jesa.44.445-461), notice [HAL hal-02594312](https://hal.inrae.fr/hal-02594312).
