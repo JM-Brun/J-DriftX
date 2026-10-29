@@ -28,6 +28,8 @@ Les contrats sont des protocoles PEP 544 à typage structurel — le même méca
 
 Le choix vectorisé/ponctuel suit l'usage réel : le relief et les concentrations s'évaluent sur des grilles (rendu, jeux de mesures), le vent s'échantillonne point par point (intégration des trajectoires, [trajectories.py](../src/jdriftx/trajectories.py)).
 
+Deux autres protocoles suivent la même règle hors du module des contrats : `ModeleDiffusion` (docs/51 — modèle de diffusion injectable de la comparaison à référence indépendante) et `StructureLongitudinale` (docs/54 — structure longitudinale injectable de l'EDP transitoire du puff).
+
 ## 4. Standards retenus
 
 - **MNT : ESRI ASCII Grid (`.asc`)** — format d'échange lisible par QGIS et GDAL, exporté par les altimétries nationales, analysable sans dépendance au-delà de numpy. `ReliefMntAscii.depuis_texte` lit l'en-tête standard (`ncols`, `nrows`, `xllcorner`, `yllcorner`, `cellsize`, `nodata_value` optionnel), les centres de cellules suivent la convention du format (ligne 0 au nord, `x0`/`y0` au centre de la cellule sud-ouest), l'interpolation est bilinéaire, l'emprise et les cellules sans données sont refusées explicitement. GeoTIFF et CF-NetCDF restent des candidats post-G1, conformément à la décision de [docs/39](39-squelette-benchmarks-s0.md), section 7 : ils exigent des dépendances de lecture que le paquet n'embarque pas encore.
@@ -57,4 +59,4 @@ Le relief du contrat est une **géométrie** (altitude du sol) : aucun effet du 
 ## Références
 
 - Exécution : [contrats.py](../src/jdriftx/contrats.py) ; tests : [test_contrats.py](../tests/test_contrats.py).
-- Contexte interne : docs/24 (objets de stabilité), docs/25 (harmonisation OOP), docs/39 section 7 (standards de données), docs/40 (standards de qualité, PEP 544), docs/41 (unification de la source) ; contrats inchangés : [#43](https://github.com/JM-Brun/J-DriftX/issues/43).
+- Contexte interne : docs/24 (objets de stabilité), docs/25 (harmonisation OOP), docs/39 section 7 (standards de données), docs/40 (standards de qualité, PEP 544), docs/41 (unification de la source), docs/51 et docs/54 (protocoles hors module des contrats : `ModeleDiffusion`, `StructureLongitudinale`) ; contrats inchangés : [#43](https://github.com/JM-Brun/J-DriftX/issues/43).
