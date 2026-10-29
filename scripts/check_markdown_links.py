@@ -43,9 +43,11 @@ def _slug_heading(heading: str) -> str:
         if not unicodedata.combining(char)
     )
     heading = heading.replace("&", "-")
-    heading = re.sub(r"[^\w\- ]", "", heading, flags=re.UNICODE)
-    # Preserve repeated separators as GitHub does for punctuation between words.
-    return re.sub(r"\s", "-", heading.strip().lower()).strip("-")
+    # GitHub keeps dash punctuation as a separator, while quotes and other
+    # punctuation are removed. Collapse whitespace runs to a single hyphen.
+    heading = re.sub(r"[^\w\-\s]", "", heading, flags=re.UNICODE)
+    heading = re.sub(r"\s+", "-", heading.strip().lower())
+    return heading.strip("-")
 
 
 def _heading_anchors(text: str) -> set[str]:
