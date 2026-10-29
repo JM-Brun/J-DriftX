@@ -289,9 +289,9 @@ def resoudre_edp(cas: CasS0, parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT) 
         suivant[:, -1] = 0.0
         champ, suivant = suivant, champ
         x += dx
-        arc = cibles.get(pas)
-        if arc is not None:
-            tranches.append(TrancheEdp(x=arc, champ=champ.copy()))
+        arc_vise = cibles.get(pas)
+        if arc_vise is not None:
+            tranches.append(TrancheEdp(x=arc_vise, champ=champ.copy()))
 
     return SolutionEdp(
         x_entree=x_entree,
