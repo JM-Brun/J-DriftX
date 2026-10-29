@@ -28,7 +28,7 @@
 
 Ces statuts décrivent la reproductibilité documentaire, pas l'utilité de la méthode ni la validité globale de Drift-X.
 
-## 3.1 Registre de comparaison du texte JESA désigné et de sa version HAL
+## 3.1 Registre de comparaison du manuscrit HAL 2009 et de la version de record JESA 2010
 
 **État au 29 octobre 2026 :** les observations ci-dessous portent exclusivement sur le manuscrit auteur STIC & Environnement 2009 `MO2009-PUB00026817-1.pdf` (HAL `hal-00468863`). Le mainteneur a confirmé que le PDF final JESA 2010 a déjà été obtenu par une voie appropriée ; ce binaire distinct n'est pas identifié dans `raw/` de cette branche et son chemin/provenance doit être retrouvé dans les éléments archivés, sans nouvelle acquisition. La couverture du manuscrit confirme qu'il ne faut pas l'attribuer à la version de record JESA. Aucune différence mathématique JESA/manuscrit n'est affirmée avant comparaison directe des fac-similés.
 
