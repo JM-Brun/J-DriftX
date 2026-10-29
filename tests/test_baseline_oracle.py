@@ -1,10 +1,11 @@
-"""Tests de l'oracle scalaire indépendant pour l'étape 5."""
+"Tests de l'oracle scalaire indépendant pour l'étape 5."""
 
 import math
 
 import pytest
 
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT
+from jdriftx.source import SourcePanache
 from scripts.benchmark_baseline_uniforme import (
     TOLERANCE_ABSOLUE,
     TOLERANCE_RELATIVE,
@@ -23,8 +24,6 @@ def test_oracle_est_positif_sur_les_12_points_s0() -> None:
 
 def test_oracle_refuse_les_classes_non_specifiees() -> None:
     """L'oracle n'étend pas silencieusement sa formule au-delà de la classe C."""
-    from jdriftx.source import SourcePanache
-
     source = SourcePanache(debit=2.0, u=3.0, classe="D", hauteur=1.0)
     with pytest.raises(ValueError, match="classe C"):
         oracle_concentration(CAS_S0_DEFAUT.points()[0], source)
