@@ -129,7 +129,8 @@ def _marginale_analytique(
     sz = sigma_z(distance, source.classe)
     mailles_y, mailles_z = grille.mailles()
     champ = (
-        source.masse / (2.0 * np.pi * sy * sz)
+        source.masse
+        / (2.0 * np.pi * sy * sz)
         * np.exp(-(mailles_y**2) / (2.0 * sy**2))
         * np.exp(-(mailles_z**2) / (2.0 * sz**2))
     )
@@ -291,8 +292,7 @@ class SolveurTransitoire:
         champ[:, -1] = 0.0
 
         cibles = {
-            round((float(arc) / u - t_entree) / pas_temps): float(arc) / u
-            for arc in self.arcs[1:]
+            round((float(arc) / u - t_entree) / pas_temps): float(arc) / u for arc in self.arcs[1:]
         }
         instants: list[InstantPuff] = [InstantPuff(t=t_entree, champ=champ.copy())]
         total = round((float(self.arcs[-1]) / u - t_entree) / pas_temps)
@@ -568,15 +568,12 @@ def comparer_transitoire(
             edp=valeur_edp,
             ratio=float(valeur_edp / valeur_fermee),
         )
-        for point, valeur_fermee, valeur_edp in zip(
-            points, fermee, mesure.valeurs, strict=True
-        )
+        for point, valeur_fermee, valeur_edp in zip(points, fermee, mesure.valeurs, strict=True)
     )
     ecarts_relatifs = [abs(point.edp - point.fermee) / point.fermee for point in comparaisons]
     return ComparaisonTransitoire(
         source_puff=(
-            f"masse={source.masse} kg, u={source.u} m/s, "
-            f"classe={source.classe}, x0={source.x0} m"
+            f"masse={source.masse} kg, u={source.u} m/s, classe={source.classe}, x0={source.x0} m"
         ),
         parametres=parametres,
         instants=tuple(float(instant.t) for instant in mesure.solution.instants),
