@@ -10,8 +10,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 import math
 
-from numpy.typing import NDArray
 import numpy as np
+from numpy.typing import NDArray
 
 from jdriftx.similitude import concentration_panache, concentration_puff
 from jdriftx.source import SourcePanache
@@ -32,6 +32,7 @@ class Point3D:
     z: float
 
     def __post_init__(self) -> None:
+        """Rejette les coordonnées infinies ou indéfinies."""
         if not all(math.isfinite(value) for value in (self.x, self.y, self.z)):
             raise ValueError("Les coordonnees du point doivent etre finies.")
 
@@ -47,6 +48,7 @@ class ParametresPuff:
     x0: float = 0.0
 
     def __post_init__(self) -> None:
+        """Valide les paramètres physiques et normalise la classe de stabilité."""
         if not math.isfinite(self.t) or self.t <= 0.0:
             raise ValueError("Le temps doit etre fini et strictement positif.")
         if not math.isfinite(self.masse) or self.masse < 0.0:
@@ -103,8 +105,8 @@ def concentration_puff_au_point(
 
 
 __all__ = [
-    "Point3D",
     "ParametresPuff",
+    "Point3D",
     "concentration_panache_au_point",
     "concentration_puff_au_point",
 ]
