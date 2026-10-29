@@ -79,6 +79,7 @@ def test_directory_links_and_accented_heading_anchors(tmp_path: Path) -> None:
 
     assert check_markdown_links(tmp_path, [source]) == []
 
+
 def test_em_dash_and_quotes_match_github_heading_slug(tmp_path: Path) -> None:
     """Em dashes remain separators; typographic quotes do not add separators."""
     docs = tmp_path / "docs"
