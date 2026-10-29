@@ -229,7 +229,7 @@ def _git_metadata(*arguments: str) -> str | None:
         )
     except (OSError, subprocess.CalledProcessError):
         return None
-    return result.stdout.strip() or None
+    return result.stdout.strip()
 
 
 def _git_worktree_status() -> str:
