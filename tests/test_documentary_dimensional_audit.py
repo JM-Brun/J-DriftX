@@ -7,8 +7,6 @@ See docs/44-registre-erreurs-incoherences-documentaires.md.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
-
 import pytest
 
 # Dimension vector order: mass, length, time. Exponents are integers for
