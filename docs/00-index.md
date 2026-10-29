@@ -12,7 +12,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21 et 33 existent en do
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Prochain numéro libre sur main : 50 (les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques).
+Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-uniforme.md` (oracle indépendant et protocole de coûts S0 uniforme). Prochain numéro libre sur main : 51. Les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques.
 
 ## Numéros en double
 
@@ -78,6 +78,7 @@ Prochain numéro libre sur main : 50 (les notes 43 à 49 couvrent l’audit de l
 | `47-contrat-minimal-baseline.md` | Contrat minimal de la baseline : statut figé par capacité historique (définie / partiellement définie / annoncée seulement / non reproductible) |
 | `48-cas-reference-autonome-ecoulement-uniforme.md` | Cas de référence autonome : écoulement uniforme (unités, domaine, conditions aux limites, solution de référence, observable, limites ; cisaillement en contre-exemple distinct) |
 | `49-matrice-revendications-baseline.md` | Matrice initiale des revendications historiques : source/version/localisation, unités, hypothèses, preuves et statut de définition |
+| `50-protocole-oracle-couts-baseline-uniforme.md` | Oracle indépendant et protocole de coûts pour le cas S0 uniforme ; protocole implémenté, mesures à exécuter |
 | `bibliographie/fondements-et-heritage.md` | Synthèse bibliographique : fondements et héritage |
 | `bibliographie/identification-source-assimilation.md` | Bibliographie thématique : identification de source et assimilation |
 | `bibliographie/metriques-et-analogies.md` | Bibliographie thématique : métriques et analogies |
