@@ -60,7 +60,7 @@ Ce que la source imprime : le manuscrit HAL 2009 (§2.1.1), transcrit dans la [n
 
 Ce qui est démontré ([note 31](31-investigation-champ-multiniveaux.md) §2) : la lecture R1 (égalité des potentiels aux coins) est sous-déterminée ; la lecture R2 (interpolation bilinéaire des vitesses de coins) contredit l’identité de flux annoncée par la source (contre-exemple explicite) ; la lecture R3 (potentiel harmonique ajusté aux vitesses de coins) est cohérente mais non unique — la base reste à fixer. Le champ total est discontinu aux frontières de niveaux ; la garantie historique se lit comme un bilan de flux par niveau, pas comme une divergence ponctuelle du champ total.
 
-Arbitrage enregistré : R3 retenue par le propriétaire sur l’[issue #42](https://github.com/JM-Brun/J-DriftX/issues/42) le 28/10/2026, avec conditions ouvertes : choix de la base harmonique (proposition dans la [note 31](31-investigation-champ-multiniveaux.md) §4) et lecture préalable de JESA 2010 pour la comparaison des versions (version de record non authentifiée, DRX-ERR-012). Le contrat d’implémentation est prêt ([note 31](31-investigation-champ-multiniveaux.md) §4–5) ; la capacité n’est pas implémentée.
+Arbitrage enregistré : R3 retenue par le propriétaire sur l’[issue #42](https://github.com/JM-Brun/J-DriftX/issues/42) le 28/10/2026, avec conditions ouvertes : choix de la base harmonique (proposition dans la [note 31](31-investigation-champ-multiniveaux.md) §4) et comparaison du contenu du PDF JESA 2010 déjà obtenu avec le manuscrit 2009 (non versionné dans `raw/`, comparaison encore non effectuée, DRX-ERR-012). Le contrat d’implémentation est prêt ([note 31](31-investigation-champ-multiniveaux.md) §4–5) ; la capacité n’est pas implémentée.
 
 Verrous : base non arbitrée ; comparaison inter-versions non faite ; construction exacte du champ grossier ũ_0 = ũ_H renvoyée par la source aux travaux antérieurs sans définition complète.
 
@@ -99,7 +99,7 @@ Conséquence de contrat : le bilan historique n’entre pas dans la baseline com
 | Brun & Mohammadi (2008), chapitre Springer | OCR des p. 245–246 uniquement | p. 247–256 non transcrites ; accès légal à une transcription intégrale à établir ([fiche chapitre 2008](bibliographie/sources/brun-mohammadi-2008-chapitre.md)) |
 | Manuscrit HAL 2009 (Bozon, Sinfort, Mohammadi) | Extraction versionnée dans le dépôt ; PDF HAL comme référence | Base de travail de la [note 31](31-investigation-champ-multiniveaux.md) ; l’extraction ne conserve ni mise en page ni équations |
 | Bozon & Mohammadi (2009), Applied Geomatics | Résumé et extraits uniquement | Texte intégral sur abonnement ([fiche Applied Geomatics](bibliographie/sources/bozon-mohammadi-2009-applied-geomatics.md)) |
-| JESA 2010 | Version de record non authentifiée | Ne pas fusionner ses anomalies avec celles du manuscrit 2009 (DRX-ERR-012) |
+| JESA 2010 | PDF obtenu par une voie appropriée, mais non versionné dans `raw/` ; comparaison du contenu avec le manuscrit 2009 non effectuée | Réutiliser le fichier déjà obtenu pour comparer les versions ; ne pas relancer l'acquisition ni fusionner leurs anomalies avant comparaison (DRX-ERR-012) |
 
 Cet instantané justifie la règle de progression : la baseline ne peut pas attendre l’authentification parfaite de toutes les sources.
 
