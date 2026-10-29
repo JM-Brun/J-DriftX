@@ -8,6 +8,24 @@ figé (docs/48 §2.2). La méthodologie suit la note 35 (cost model étape par
 étape : les coûts des deux routes sont mesurés séparément ; le facteur
 historique 10³-10⁴ de l'ouvrage de 2008 n'est ni reconstruit ni revendiqué).
 
+Architecture (séparation des considérations, révision interne) :
+
+- ``ModeleDiffusion`` (protocole) : physique de diffusion transverse et
+  verticale, implémentée par ``DiffusionBriggs`` (jdriftx.stabilite) ;
+  point d'extension de S0-b (cisaillement) et de la paramétrisation R3.
+- ``GrilleEdp`` : géométrie seule (nœuds, mailles, couverture quatre
+  écarts-types) ; point d'extension de la colonne multi-niveaux de R3.
+- ``SolveurEdp`` : schéma FTCS (pas stable, miroir au sol, Dirichlet aux
+  bords, tranches aux arcs) ; point d'extension de l'EDP transitoire du puff.
+- ``EchantillonneurBilineaire`` : lecture ponctuelle et bilan de flux.
+- ``RouteFermee``/``RouteEdp`` : les deux routes mesurées séparément
+  (note 35), assemblées par ``comparer_reference`` avec les métriques
+  partagées.
+
+Le comportement numérique de cette révision est inchangé : mêmes formules,
+même ordre d'opérations, résultats identiques à l'implémentation d'origine
+(vérifié par les tests existants, conservés tels quels).
+
 Étiquetage explicite, conformément à l'ordre confirmé de l'issue #232 :
 
 - Héritage documentaire : la comparaison à référence indépendante est
@@ -32,24 +50,35 @@ from __future__ import annotations
 import time
 from dataclasses import dataclass
 from importlib import metadata
+from typing import Protocol
 
 import numpy as np
 from pydantic import BaseModel, ConfigDict
 
-from jdriftx.benchmarks.cas import CasS0
+from jdriftx.benchmarks.cas import CasS0, PointMesure
 from jdriftx.benchmarks.metriques import fac2, nmse
 from jdriftx.contrats import PanacheGaussien
 from jdriftx.similitude import sigma_y, sigma_z
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
 __all__ = [
+    "DIFFUSION_BRIGGS",
     "PARAMETRES_EDP_DEFAUT",
     "SEUIL_FOURIER",
+    "CoefficientsDiffusion",
     "ComparaisonReference",
+    "DiffusionBriggs",
+    "EchantillonneurBilineaire",
+    "GrilleEdp",
     "ManifesteReference",
+    "MesureEdp",
+    "ModeleDiffusion",
     "ParametresEdp",
     "PointComparaison",
+    "RouteEdp",
+    "RouteFermee",
     "SolutionEdp",
+    "SolveurEdp",
     "TrancheEdp",
     "comparer_reference",
     "construire_manifeste",
@@ -138,6 +167,97 @@ def derivee_sigma_carre(x: float, coefficient: float, d: float) -> float:
 
 
 @dataclass(frozen=True)
+class CoefficientsDiffusion:
+    """Coefficients (a_y, d_y, b_z, d_z) des sigma de Briggs d'une classe.
+
+    Porte la dérivée exacte de sigma², seule quantitative pour le schéma ;
+    les deux directions (transverse, verticale) partagent la même forme.
+
+    Attributs :
+        a_y, d_y : coefficients de sigma_y (m, sans unité).
+        b_z, d_z : coefficients de sigma_z (m, sans unité).
+    """
+
+    a_y: float
+    d_y: float
+    b_z: float
+    d_z: float
+
+    def derivee_sigma_y_carre(self, x: float) -> float:
+        """Dérivée exacte de sigma_y² en x (m), strictement positive."""
+        return derivee_sigma_carre(x, self.a_y, self.d_y)
+
+    def derivee_sigma_z_carre(self, x: float) -> float:
+        """Dérivée exacte de sigma_z² en x (m), strictement positive."""
+        return derivee_sigma_carre(x, self.b_z, self.d_z)
+
+    def pas_longitudinal(self, x_debut: float, x_fin: float, parametres: ParametresEdp) -> float:
+        """Plus grand pas en base/2^k stable au dernier arc (nombre de Fourier).
+
+        Le nombre de Fourier est évalué au dernier arc, là où sigma² croît le
+        plus ; le pas de base est la distance d'entrée (100 m pour le cas S0
+        figé) et il est divisé par deux jusqu'à ce que la somme des
+        contributions transverse et verticale passe sous SEUIL_FOURIER.
+        """
+        dy = parametres.pas_transverse_y
+        dz = parametres.pas_transverse_z
+        for exposant in range(0, 41):
+            candidat = x_debut / 2.0**exposant
+            fourier = (
+                0.5 * self.derivee_sigma_y_carre(x_fin) * candidat / dy**2
+                + 0.5 * self.derivee_sigma_z_carre(x_fin) * candidat / dz**2
+            )
+            if fourier <= SEUIL_FOURIER:
+                return float(candidat)
+        msg = "Aucun pas longitudinal stable trouvé (exposant > 40)."
+        raise ValueError(msg)
+
+
+class ModeleDiffusion(Protocol):
+    """Interface des modèles de diffusion (point d'extension du schéma).
+
+    Un modèle fournit les coefficients des sigma d'une classe de stabilité :
+    c'est la seule porte d'entrée de la physique dans la marche numérique.
+    S0-b (cisaillement du vent) s'y branchera sans toucher au schéma ni à
+    la grille ; R3 réutilisera la même interface pour sa paramétrisation.
+    """
+
+    def coefficients(self, classe: str, x: float) -> CoefficientsDiffusion:
+        """Coefficients de diffusion de la classe au point x (m).
+
+        Lève une ValueError si la classe ou sa forme est hors périmètre.
+        """
+        ...
+
+
+@dataclass(frozen=True)
+class DiffusionBriggs:
+    """Modèle de référence : lois de Briggs rurales via jdriftx.stabilite.
+
+    Formes couvertes : LINEAIRE (d = 0) et RACINE (d > 0). La forme INVERSE
+    (sigma_z = b·x/(1 + d·x), classes E et F) n'est pas dérivable en sigma²
+    au sens du schéma et est rejetée sans ambiguïté.
+    """
+
+    def coefficients(self, classe: str, x: float) -> CoefficientsDiffusion:
+        """Coefficients de la classe, forme INVERSE rejetée (ValueError)."""
+        stable = ClasseStabilite(classe)
+        a_y, d_y = stable.coeff_sigma_y
+        forme, b_z, d_z = stable.coeff_sigma_z
+        if forme is FormeSigmaZ.INVERSE:
+            msg = (
+                "La forme INVERSE de sigma_z (classes E et F) est hors périmètre "
+                "de la résolution EDP marchée."
+            )
+            raise ValueError(msg)
+        return CoefficientsDiffusion(a_y=a_y, d_y=d_y, b_z=b_z, d_z=d_z)
+
+
+DIFFUSION_BRIGGS: ModeleDiffusion = DiffusionBriggs()
+"""Modèle de diffusion par défaut : lois de Briggs rurales du package."""
+
+
+@dataclass(frozen=True)
 class TrancheEdp:
     """Tranche du champ EDP prélevée à un arc de mesure.
 
@@ -170,175 +290,349 @@ class SolutionEdp:
     tranches: tuple[TrancheEdp, ...]
 
 
-def _coefficients_diffusion(classe: str, x: float) -> tuple[float, float, float, float]:
-    """Coefficients (a_y, d_y, b_z, d_z) de la classe, forme INVERSE rejetée.
+@dataclass(frozen=True)
+class GrilleEdp:
+    """Géométrie de la grille EDP : nœuds latéraux symétriques, colonne du sol.
 
-    La dérivée de sigma² est porteuse de la diffusion effective : seules les
-    formes LINEAIRE et RACINE des lois de Briggs (jdriftx.stabilite) sont
-    couvertes ; la forme INVERSE (classes E et F) est explicitement hors
-    périmètre et lève une ValueError pour rester sans ambiguïté.
+    La grille ne porte aucune considération numérique ni physique : elle
+    construit les nœuds, les mailles d'évaluation du contrat d'entrée et la
+    couverture quatre écarts-types exigée au dernier arc. C'est le point
+    d'extension de R3 (colonne multi-niveaux : nœuds verticaux enrichis).
+
+    Attributs :
+        abscisses_y : nœuds latéraux (m), symétriques autour de zéro.
+        abscisses_z : nœuds verticaux (m), du sol au sommet de fenêtre.
     """
-    stable = ClasseStabilite(classe)
-    a_y, d_y = stable.coeff_sigma_y
-    forme, b_z, d_z = stable.coeff_sigma_z
-    if forme is FormeSigmaZ.INVERSE:
-        msg = (
-            "La forme INVERSE de sigma_z (classes E et F) est hors périmètre "
-            "de la résolution EDP marchée."
+
+    abscisses_y: np.ndarray
+    abscisses_z: np.ndarray
+
+    @classmethod
+    def depuis_parametres(cls, parametres: ParametresEdp) -> GrilleEdp:
+        """Construit les nœuds depuis les paramètres (fenêtre symétrique)."""
+        abscisses_y = np.arange(
+            -parametres.demi_largeur_y,
+            parametres.demi_largeur_y + 0.5 * parametres.pas_transverse_y,
+            parametres.pas_transverse_y,
         )
-        raise ValueError(msg)
-    return a_y, d_y, b_z, d_z
+        abscisses_z = np.arange(
+            0.0,
+            parametres.hauteur_max + 0.5 * parametres.pas_transverse_z,
+            parametres.pas_transverse_z,
+        )
+        return cls(abscisses_y=abscisses_y, abscisses_z=abscisses_z)
+
+    def mailles(self) -> tuple[np.ndarray, np.ndarray]:
+        """Mailles 2D (meshgrid, indexation ij) pour l'évaluation d'entrée."""
+        mailles_y, mailles_z = np.meshgrid(self.abscisses_y, self.abscisses_z, indexing="ij")
+        return mailles_y, mailles_z
+
+    @classmethod
+    def pour_le_cas(cls, cas: CasS0, parametres: ParametresEdp) -> GrilleEdp:
+        """Construit la grille du cas en validant la couverture quatre sigma.
+
+        La troncature à quatre écarts-types est documentée (note 51) : la
+        fenêtre latérale couvre 4·sigma_y et la colonne verticale la hauteur
+        source augmentée de 4·sigma_z, tous deux au dernier arc du cas.
+        """
+        x_fin = float(cas.arcs[-1])
+        classe = cas.source.classe
+        if parametres.demi_largeur_y < 4.0 * float(sigma_y(x_fin, classe)):
+            msg = (
+                "La fenêtre latérale doit couvrir quatre écarts-types au dernier "
+                "arc (troncature documentée)."
+            )
+            raise ValueError(msg)
+        seuil_z = cas.source.hauteur + 4.0 * float(sigma_z(x_fin, classe))
+        if parametres.hauteur_max < seuil_z:
+            msg = (
+                "La colonne verticale doit couvrir la hauteur source plus quatre "
+                "écarts-types verticaux au dernier arc."
+            )
+            raise ValueError(msg)
+        return cls.depuis_parametres(parametres)
+
+
+class SolveurEdp:
+    """Schéma explicite FTCS marché en longitude, tranches prélevées aux arcs.
+
+    Le solveur porte les seules considérations numériques : pas longitudinal
+    stable (SEUIL_FOURIER), condition au sol de type miroir (Neumann),
+    Dirichlet nul aux bords latéraux et au sommet de fenêtre, prélèvement des
+    tranches aux arcs de mesure. La physique de diffusion vient du modèle
+    injecté (ModeleDiffusion), la géométrie de la grille (GrilleEdp) : une
+    EDP transitoire du puff réutilisera la même grille et le même modèle en
+    changeant la marche.
+
+    Attributs :
+        cas : cas S0 figé portant la source et les arcs de mesure.
+        parametres : paramètres numériques de la grille transverse/verticale.
+        modele : modèle de diffusion (Briggs par défaut).
+    """
+
+    def __init__(
+        self,
+        cas: CasS0,
+        parametres: ParametresEdp,
+        modele: ModeleDiffusion = DIFFUSION_BRIGGS,
+    ) -> None:
+        """Injecte les trois considérations : cas, géométrie, physique."""
+        self.cas = cas
+        self.parametres = parametres
+        self.modele = modele
+
+    def resoudre(self) -> SolutionEdp:
+        """Résout du premier au dernier arc : modèle, grille, pas, arcs, marche.
+
+        L'ordre de validation est celui de l'implémentation d'origine :
+        coefficients (forme INVERSE rejetée), couverture de fenêtre, pas
+        longitudinal stable, divisibilité des arcs, puis marche FTCS.
+        """
+        classe = self.cas.source.classe
+        x_entree = float(self.cas.arcs[0])
+        x_fin = float(self.cas.arcs[-1])
+        coefficients = self.modele.coefficients(classe, x_fin)
+        grille = GrilleEdp.pour_le_cas(self.cas, self.parametres)
+        dx = coefficients.pas_longitudinal(x_entree, x_fin, self.parametres)
+        self._verifier_arcs(dx)
+        return self._marcher(grille, coefficients, x_entree, dx)
+
+    def _verifier_arcs(self, dx: float) -> None:
+        """Exige des arcs multiples entiers du pas longitudinal (écart strict)."""
+        for precedent, arc in zip(self.cas.arcs[:-1], self.cas.arcs[1:], strict=True):
+            if abs((arc - precedent) / dx - round((arc - precedent) / dx)) > 1e-9:
+                msg = (
+                    "Les arcs doivent être des multiples entiers du pas "
+                    "longitudinal depuis l'entrée."
+                )
+                raise ValueError(msg)
+
+    def _marcher(
+        self,
+        grille: GrilleEdp,
+        coefficients: CoefficientsDiffusion,
+        x_entree: float,
+        dx: float,
+    ) -> SolutionEdp:
+        """Marche le schéma FTCS de l'entrée au dernier arc, tranches aux arcs.
+
+        Méthodologie (note 35, étape 5 de l'issue #232) : schéma explicite
+        marché en longitude sur K = (U/2)·d(sigma²)/dx (U disparaît du champ),
+        entrée partagée à x du premier arc (solution fermée du package sur la
+        grille), condition au sol de type miroir (Neumann : ∂C/∂z = 0 au sol),
+        Dirichlet nul aux bords latéraux et au sommet de fenêtre.
+        """
+        pas_y = self.parametres.pas_transverse_y
+        pas_z = self.parametres.pas_transverse_z
+        mailles_y, mailles_z = grille.mailles()
+        panache = PanacheGaussien(source=self.cas.source)
+        champ = np.asarray(panache.concentration(x_entree, mailles_y, mailles_z), dtype=float)
+        champ[0, :] = 0.0
+        champ[-1, :] = 0.0
+        champ[:, -1] = 0.0
+
+        cibles = {round((arc - x_entree) / dx): float(arc) for arc in self.cas.arcs[1:]}
+        tranches: list[TrancheEdp] = [TrancheEdp(x=x_entree, champ=champ.copy())]
+        total = round((float(self.cas.arcs[-1]) - x_entree) / dx)
+        suivant = np.empty_like(champ)
+
+        x = x_entree
+        for pas in range(1, total + 1):
+            x_milieu = x + 0.5 * dx
+            c_y = 0.5 * coefficients.derivee_sigma_y_carre(x_milieu) * dx / pas_y**2
+            c_z = 0.5 * coefficients.derivee_sigma_z_carre(x_milieu) * dx / pas_z**2
+            interieur = champ[1:-1, 1:-1]
+            suivant[1:-1, 1:-1] = (
+                interieur
+                + c_y * (champ[2:, 1:-1] - 2.0 * interieur + champ[:-2, 1:-1])
+                + c_z * (champ[1:-1, 2:] - 2.0 * interieur + champ[1:-1, :-2])
+            )
+            sol = champ[1:-1, 0]
+            suivant[1:-1, 0] = (
+                sol
+                + c_y * (champ[2:, 0] - 2.0 * sol + champ[:-2, 0])
+                + c_z * 2.0 * (champ[1:-1, 1] - sol)
+            )
+            suivant[0, :] = 0.0
+            suivant[-1, :] = 0.0
+            suivant[:, -1] = 0.0
+            champ, suivant = suivant, champ
+            x += dx
+            arc_vise = cibles.get(pas)
+            if arc_vise is not None:
+                tranches.append(TrancheEdp(x=arc_vise, champ=champ.copy()))
+
+        return SolutionEdp(
+            x_entree=x_entree,
+            pas_longitudinal=dx,
+            abscisses_y=grille.abscisses_y,
+            abscisses_z=grille.abscisses_z,
+            tranches=tuple(tranches),
+        )
+
+
+def resoudre_edp(
+    cas: CasS0,
+    parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT,
+    modele: ModeleDiffusion = DIFFUSION_BRIGGS,
+) -> SolutionEdp:
+    """Résout l'EDP de diffusion marchée en x, du premier au dernier arc.
+
+    Point d'entrée public inchangé (note 51) : délègue au solveur, même
+    comportement numérique. Le modèle de diffusion est injectable — c'est
+    le point d'extension de S0-b (cisaillement) ; le schéma et la grille
+    restent ceux de l'étape 5.
+    """
+    return SolveurEdp(cas, parametres, modele).resoudre()
 
 
 def _pas_longitudinal(
     classe: str, x_debut: float, x_fin: float, parametres: ParametresEdp
 ) -> float:
-    """Plus grand pas en base/2^k stable au dernier arc (nombre de Fourier).
+    """Plus grand pas stable pour la diffusion Briggs de la classe (compat)."""
+    return DIFFUSION_BRIGGS.coefficients(classe, x_fin).pas_longitudinal(x_debut, x_fin, parametres)
 
-    Le nombre de Fourier est évalué au dernier arc, là où sigma² croît le plus ;
-    le pas de base est la distance d'entrée (100 m pour le cas S0 figé) et
-    il est divisé par deux jusqu'à ce que la somme des contributions
-    transverse et verticale passe sous SEUIL_FOURIER.
+
+class EchantillonneurBilineaire:
+    """Lecture ponctuelle et bilan de flux d'une tranche du champ EDP.
+
+    Regroupe les deux opérations de lecture d'une tranche : interpolation
+    bilinéaire aux points de mesure (après résolution) et intégration du
+    flux massique transverse. C'est le point d'extension d'un échantillonnage
+    enrichi (profils verticaux multi-niveaux de R3).
+
+    Attributs :
+        tranche : tranche lue, prélevée à un arc.
+        grille : grille de nœuds associée (même solution).
     """
-    a_y, d_y, b_z, d_z = _coefficients_diffusion(classe, x_fin)
-    dy = parametres.pas_transverse_y
-    dz = parametres.pas_transverse_z
-    for exposant in range(0, 41):
-        candidat = x_debut / 2.0**exposant
-        fourier = (
-            0.5 * derivee_sigma_carre(x_fin, a_y, d_y) * candidat / dy**2
-            + 0.5 * derivee_sigma_carre(x_fin, b_z, d_z) * candidat / dz**2
-        )
-        if fourier <= SEUIL_FOURIER:
-            return float(candidat)
-    msg = "Aucun pas longitudinal stable trouvé (exposant > 40)."
-    raise ValueError(msg)
 
+    def __init__(self, tranche: TrancheEdp, grille: GrilleEdp) -> None:
+        """Lie la tranche à sa grille (les deux viennent de la même solution)."""
+        self.tranche = tranche
+        self.grille = grille
 
-def resoudre_edp(cas: CasS0, parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT) -> SolutionEdp:
-    """Résout l'EDP de diffusion marchée en x, du premier au dernier arc.
+    def concentration(self, y: float, z: float) -> float:
+        """Interpole bilinéairement la concentration au point (y, z) (m).
 
-    Méthodologie (note 35, étape 5 de l'issue #232) : schéma explicite FTCS
-    marché en longitude sur K = (U/2)·d(sigma²)/dx (U disparaît du champ), entrée
-    partagée à x du premier arc (solution fermée du package sur la grille),
-    condition au sol de type miroir (Neumann : ∂C/∂z = 0 au sol), Dirichlet
-    nul aux bords latéraux et au sommet de fenêtre, tranches prélevées aux
-    arcs de mesure.
-    """
-    classe = cas.source.classe
-    x_entree = float(cas.arcs[0])
-    x_fin = float(cas.arcs[-1])
-    a_y, d_y, b_z, d_z = _coefficients_diffusion(classe, x_fin)
-
-    demi_largeur = parametres.demi_largeur_y
-    if demi_largeur < 4.0 * float(sigma_y(x_fin, classe)):
-        msg = (
-            "La fenêtre latérale doit couvrir quatre écarts-types au dernier "
-            "arc (troncature documentée)."
-        )
-        raise ValueError(msg)
-    if parametres.hauteur_max < cas.source.hauteur + 4.0 * float(sigma_z(x_fin, classe)):
-        msg = (
-            "La colonne verticale doit couvrir la hauteur source plus quatre "
-            "écarts-types verticaux au dernier arc."
-        )
-        raise ValueError(msg)
-
-    dx = _pas_longitudinal(classe, x_entree, x_fin, parametres)
-    for precedent, arc in zip(cas.arcs[:-1], cas.arcs[1:], strict=True):
-        if abs((arc - precedent) / dx - round((arc - precedent) / dx)) > 1e-9:
-            msg = "Les arcs doivent être des multiples entiers du pas longitudinal depuis l'entrée."
+        Lève une ValueError si le point sort de la fenêtre couverte par la
+        grille : les points de comparaison doivent rester dans le domaine.
+        """
+        abscisses_y = self.grille.abscisses_y
+        abscisses_z = self.grille.abscisses_z
+        pas_y = float(abscisses_y[1] - abscisses_y[0])
+        pas_z = float(abscisses_z[1] - abscisses_z[0])
+        f_y = (y - float(abscisses_y[0])) / pas_y
+        f_z = (z - float(abscisses_z[0])) / pas_z
+        if f_y < 0.0 or f_y > abscisses_y.size - 1 or f_z < 0.0 or f_z > abscisses_z.size - 1:
+            msg = "Le point de comparaison sort de la fenêtre de la grille EDP."
             raise ValueError(msg)
-
-    pas_y = parametres.pas_transverse_y
-    pas_z = parametres.pas_transverse_z
-    abscisses_y = np.arange(-demi_largeur, demi_largeur + 0.5 * pas_y, pas_y)
-    abscisses_z = np.arange(0.0, parametres.hauteur_max + 0.5 * pas_z, pas_z)
-
-    mailles_y, mailles_z = np.meshgrid(abscisses_y, abscisses_z, indexing="ij")
-    panache = PanacheGaussien(source=cas.source)
-    champ = np.asarray(panache.concentration(x_entree, mailles_y, mailles_z), dtype=float)
-    champ[0, :] = 0.0
-    champ[-1, :] = 0.0
-    champ[:, -1] = 0.0
-
-    cibles = {round((arc - x_entree) / dx): float(arc) for arc in cas.arcs[1:]}
-    tranches: list[TrancheEdp] = [TrancheEdp(x=x_entree, champ=champ.copy())]
-    total = round((x_fin - x_entree) / dx)
-    suivant = np.empty_like(champ)
-
-    x = x_entree
-    for pas in range(1, total + 1):
-        x_milieu = x + 0.5 * dx
-        c_y = 0.5 * derivee_sigma_carre(x_milieu, a_y, d_y) * dx / pas_y**2
-        c_z = 0.5 * derivee_sigma_carre(x_milieu, b_z, d_z) * dx / pas_z**2
-        interieur = champ[1:-1, 1:-1]
-        suivant[1:-1, 1:-1] = (
-            interieur
-            + c_y * (champ[2:, 1:-1] - 2.0 * interieur + champ[:-2, 1:-1])
-            + c_z * (champ[1:-1, 2:] - 2.0 * interieur + champ[1:-1, :-2])
+        i_y = min(int(f_y), abscisses_y.size - 2)
+        i_z = min(int(f_z), abscisses_z.size - 2)
+        t_y = f_y - i_y
+        t_z = f_z - i_z
+        c00 = float(self.tranche.champ[i_y, i_z])
+        c10 = float(self.tranche.champ[i_y + 1, i_z])
+        c01 = float(self.tranche.champ[i_y, i_z + 1])
+        c11 = float(self.tranche.champ[i_y + 1, i_z + 1])
+        return float(
+            c00 * (1.0 - t_y) * (1.0 - t_z)
+            + c10 * t_y * (1.0 - t_z)
+            + c01 * (1.0 - t_y) * t_z
+            + c11 * t_y * t_z
         )
-        sol = champ[1:-1, 0]
-        suivant[1:-1, 0] = (
-            sol
-            + c_y * (champ[2:, 0] - 2.0 * sol + champ[:-2, 0])
-            + c_z * 2.0 * (champ[1:-1, 1] - sol)
+
+    def flux(self, u: float) -> float:
+        """Flux massique transverse (kg/s) d'une tranche : U·∫∫ C dy dz."""
+        integrale = np.trapezoid(
+            np.trapezoid(self.tranche.champ, x=self.grille.abscisses_z, axis=1),
+            x=self.grille.abscisses_y,
         )
-        suivant[0, :] = 0.0
-        suivant[-1, :] = 0.0
-        suivant[:, -1] = 0.0
-        champ, suivant = suivant, champ
-        x += dx
-        arc_vise = cibles.get(pas)
-        if arc_vise is not None:
-            tranches.append(TrancheEdp(x=arc_vise, champ=champ.copy()))
-
-    return SolutionEdp(
-        x_entree=x_entree,
-        pas_longitudinal=dx,
-        abscisses_y=abscisses_y,
-        abscisses_z=abscisses_z,
-        tranches=tuple(tranches),
-    )
+        return float(u * integrale)
 
 
-def _interp_bilineaire(
-    tranche: TrancheEdp, abscisses_y: np.ndarray, abscisses_z: np.ndarray, y: float, z: float
-) -> float:
-    """Interpole bilinéairement la concentration au point (y, z) (m).
+@dataclass(frozen=True)
+class MesureEdp:
+    """Mesure de la route EDP : valeurs ponctuelles, flux, solution, coût.
 
-    Lève une ValueError si le point sort de la fenêtre couverte par la
-    grille : les points de comparaison doivent rester dans le domaine.
+    Attributs :
+        valeurs : concentrations EDP interpolées aux points (kg m^-3).
+        ecarts_flux : écarts relatifs de flux aux arcs, entrée exclue.
+        solution : solution EDP complète (tranches, grille, pas).
+        cout_s : coût mesuré de la route : résolution, échantillonnage, flux.
     """
-    pas_y = float(abscisses_y[1] - abscisses_y[0])
-    pas_z = float(abscisses_z[1] - abscisses_z[0])
-    f_y = (y - float(abscisses_y[0])) / pas_y
-    f_z = (z - float(abscisses_z[0])) / pas_z
-    if f_y < 0.0 or f_y > abscisses_y.size - 1 or f_z < 0.0 or f_z > abscisses_z.size - 1:
-        msg = "Le point de comparaison sort de la fenêtre de la grille EDP."
-        raise ValueError(msg)
-    i_y = min(int(f_y), abscisses_y.size - 2)
-    i_z = min(int(f_z), abscisses_z.size - 2)
-    t_y = f_y - i_y
-    t_z = f_z - i_z
-    c00 = float(tranche.champ[i_y, i_z])
-    c10 = float(tranche.champ[i_y + 1, i_z])
-    c01 = float(tranche.champ[i_y, i_z + 1])
-    c11 = float(tranche.champ[i_y + 1, i_z + 1])
-    return float(
-        c00 * (1.0 - t_y) * (1.0 - t_z)
-        + c10 * t_y * (1.0 - t_z)
-        + c01 * (1.0 - t_y) * t_z
-        + c11 * t_y * t_z
-    )
+
+    valeurs: tuple[float, ...]
+    ecarts_flux: tuple[float, ...]
+    solution: SolutionEdp
+    cout_s: float
 
 
-def _flux_tranche(
-    tranche: TrancheEdp, abscisses_y: np.ndarray, abscisses_z: np.ndarray, u: float
-) -> float:
-    """Flux massique transverse (kg/s) d'une tranche : U·∫∫ C dy dz."""
-    integrale = np.trapezoid(np.trapezoid(tranche.champ, x=abscisses_z, axis=1), x=abscisses_y)
-    return float(u * integrale)
+class RouteFermee:
+    """Route de référence : solution fermée du package, coût mesuré (note 35).
+
+    Attributs :
+        cas : cas S0 figé évalué par le contrat de concentration partagé.
+    """
+
+    def __init__(self, cas: CasS0) -> None:
+        """Porte le cas figé dont la vérité exacte sert de référence."""
+        self.cas = cas
+
+    def mesurer(self, points: tuple[PointMesure, ...]) -> tuple[tuple[float, ...], float]:
+        """Évalue la solution fermée aux points et mesure le coût de la route."""
+        debut = time.perf_counter()
+        verite = np.asarray(self.cas.verite(points), dtype=float)
+        cout_s = time.perf_counter() - debut
+        return tuple(float(v) for v in verite), float(cout_s)
+
+
+class RouteEdp:
+    """Route candidate : résolution EDP, échantillonnage et flux, coût mesuré.
+
+    Le coût couvre exactement la résolution, l'échantillonnage bilinéaire et
+    le bilan de flux (note 35 : les deux routes sont mesurées séparément,
+    sans facteur historique).
+
+    Attributs :
+        cas : cas S0 figé résolu par le schéma FTCS.
+        parametres : paramètres numériques de la grille transverse/verticale.
+        modele : modèle de diffusion (Briggs par défaut).
+    """
+
+    def __init__(
+        self,
+        cas: CasS0,
+        parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT,
+        modele: ModeleDiffusion = DIFFUSION_BRIGGS,
+    ) -> None:
+        """Injecte les mêmes considérations que le solveur (points d'extension)."""
+        self.cas = cas
+        self.parametres = parametres
+        self.modele = modele
+
+    def mesurer(self, points: tuple[PointMesure, ...]) -> MesureEdp:
+        """Résout, échantillonne et intègre la route EDP ; coût mesuré ensemble."""
+        debut = time.perf_counter()
+        solution = SolveurEdp(self.cas, self.parametres, self.modele).resoudre()
+        grille = GrilleEdp(abscisses_y=solution.abscisses_y, abscisses_z=solution.abscisses_z)
+        tranches = {tranche.x: tranche for tranche in solution.tranches}
+        valeurs = tuple(
+            EchantillonneurBilineaire(tranches[point.x], grille).concentration(point.y, point.z)
+            for point in points
+        )
+        u = self.cas.source.u
+        flux_entree = EchantillonneurBilineaire(solution.tranches[0], grille).flux(u)
+        ecarts_flux = tuple(
+            abs(EchantillonneurBilineaire(tranche, grille).flux(u) - flux_entree) / flux_entree
+            for tranche in solution.tranches[1:]
+        )
+        cout_s = time.perf_counter() - debut
+        return MesureEdp(
+            valeurs=valeurs,
+            ecarts_flux=ecarts_flux,
+            solution=solution,
+            cout_s=float(cout_s),
+        )
 
 
 class PointComparaison(BaseModel):
@@ -409,52 +703,33 @@ class ManifesteReference(BaseModel):
 
 
 def comparer_reference(
-    cas: CasS0, parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT
+    cas: CasS0,
+    parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT,
+    modele: ModeleDiffusion = DIFFUSION_BRIGGS,
 ) -> ComparaisonReference:
     """Compare la route EDP à la solution fermée sur la grille du cas.
 
-    Les deux routes partagent la paramétrisation (Briggs via
-    jdriftx.stabilite) et l'entrée : la route fermée évalue
+    Orchestration seulement : les deux routes partagent la paramétrisation
+    (Briggs via jdriftx.stabilite) et l'entrée (la route fermée évalue
     ``cas.verite(points)``, la route EDP part de la même solution fermée à
-    l'arc d'entrée puis diffuse. Les métriques FAC2 et NMSE sont celles du
+    l'arc d'entrée puis diffuse) ; les métriques FAC2 et NMSE sont celles du
     registre partagé (jdriftx.benchmarks.metriques, issue #43) ; les coûts
     des deux routes sont mesurés séparément (note 35), sans facteur
     historique.
     """
     points = cas.points()
-    debut_ferme = time.perf_counter()
-    verite = np.asarray(cas.verite(points), dtype=float)
-    cout_ferme = time.perf_counter() - debut_ferme
-
-    debut_edp = time.perf_counter()
-    solution = resoudre_edp(cas, parametres)
-    tranches = {tranche.x: tranche for tranche in solution.tranches}
-    edp = [
-        _interp_bilineaire(
-            tranches[point.x], solution.abscisses_y, solution.abscisses_z, point.y, point.z
-        )
-        for point in points
-    ]
-    flux_entree = _flux_tranche(
-        solution.tranches[0], solution.abscisses_y, solution.abscisses_z, cas.source.u
-    )
-    ecarts_flux: list[float] = []
-    for tranche in solution.tranches[1:]:
-        flux = _flux_tranche(tranche, solution.abscisses_y, solution.abscisses_z, cas.source.u)
-        ecarts_flux.append(abs(flux - flux_entree) / flux_entree)
-    cout_edp = time.perf_counter() - debut_edp
-
-    fermee = [float(v) for v in verite]
+    fermee, cout_ferme = RouteFermee(cas).mesurer(points)
+    mesure = RouteEdp(cas, parametres, modele).mesurer(points)
     comparaisons = tuple(
         PointComparaison(
             x=float(point.x),
             y=float(point.y),
             z=float(point.z),
-            fermee=float(v),
-            edp=float(e),
-            ratio=float(e / v),
+            fermee=valeur_fermee,
+            edp=valeur_edp,
+            ratio=float(valeur_edp / valeur_fermee),
         )
-        for point, v, e in zip(points, fermee, edp, strict=True)
+        for point, valeur_fermee, valeur_edp in zip(points, fermee, mesure.valeurs, strict=True)
     )
     ecarts_relatifs = [abs(point.edp - point.fermee) / point.fermee for point in comparaisons]
     return ComparaisonReference(
@@ -464,12 +739,12 @@ def comparer_reference(
         ),
         parametres=parametres,
         points=comparaisons,
-        fac2=fac2(fermee, edp),
-        nmse=nmse(fermee, edp),
+        fac2=fac2(list(fermee), list(mesure.valeurs)),
+        nmse=nmse(list(fermee), list(mesure.valeurs)),
         ecart_relatif_max=float(max(ecarts_relatifs)),
-        ecart_flux_max=float(max(ecarts_flux)),
-        cout_ferme_s=float(cout_ferme),
-        cout_edp_s=float(cout_edp),
+        ecart_flux_max=float(max(mesure.ecarts_flux)),
+        cout_ferme_s=cout_ferme,
+        cout_edp_s=mesure.cout_s,
     )
 
 
