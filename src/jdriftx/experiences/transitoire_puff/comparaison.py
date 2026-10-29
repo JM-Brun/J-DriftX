@@ -1,4 +1,4 @@
-"""Comparaison des routes transitoires et manifeste étiqueté de l'étape 6."""
+"""Comparaison des routes transitoires, assemblage et manifeste (étape 6)."""
 
 from __future__ import annotations
 
@@ -16,6 +16,8 @@ from jdriftx.experiences.reference_independante import (
     ParametresEdp,
 )
 from jdriftx.experiences.transitoire_puff.routes import (
+    MesureEdpPuff,
+    MesureFermeePuff,
     RouteEdpPuff,
     RouteFermeePuff,
     StructureLongitudinale,
@@ -90,6 +92,51 @@ class ManifesteTransitoire(BaseModel):
         return self.model_dump(mode="json")
 
 
+def assembler_comparaison(
+    source: SourceImpulsionnelle,
+    fermee: MesureFermeePuff,
+    edp: MesureEdpPuff,
+    points: tuple[PointMesure, ...],
+    parametres: ParametresEdp,
+) -> ComparaisonTransitoire:
+    """Assemble les mesures typées des deux routes en comparaison dirigée.
+
+    Assemblage pur, sans résolution : les routes sont mesurées séparément
+    (note 35) et cette fonction n'en connaît que les mesures ; les points
+    sont appariés strictement (zip strict), les métriques FAC2 et NMSE
+    sont celles du registre partagé (jdriftx.benchmarks.metriques,
+    issue #43), et les coûts reportés sont exactement ceux des mesures.
+    """
+    comparaisons = tuple(
+        PointComparaisonPuff(
+            x=float(point.x),
+            y=float(point.y),
+            z=float(point.z),
+            fermee=valeur_fermee,
+            edp=valeur_edp,
+            ratio=float(valeur_edp / valeur_fermee),
+        )
+        for point, valeur_fermee, valeur_edp in zip(
+            points, fermee.valeurs, edp.valeurs, strict=True
+        )
+    )
+    ecarts_relatifs = [abs(point.edp - point.fermee) / point.fermee for point in comparaisons]
+    return ComparaisonTransitoire(
+        source_puff=(
+            f"masse={source.masse} kg, u={source.u} m/s, classe={source.classe}, x0={source.x0} m"
+        ),
+        parametres=parametres,
+        instants=tuple(float(instant.t) for instant in edp.solution.instants),
+        points=comparaisons,
+        fac2=fac2(list(fermee.valeurs), list(edp.valeurs)),
+        nmse=nmse(list(fermee.valeurs), list(edp.valeurs)),
+        ecart_relatif_max=float(max(ecarts_relatifs)),
+        ecart_masse_max=float(max(edp.ecarts_masse)),
+        cout_ferme_s=fermee.cout_s,
+        cout_edp_s=edp.cout_s,
+    )
+
+
 def comparer_transitoire(
     source: SourceImpulsionnelle,
     arcs: tuple[float, ...],
@@ -102,39 +149,14 @@ def comparer_transitoire(
 
     Orchestration seulement : la route fermée évalue la solution fermée du
     puff aux instants de passage, la route EDP résout la marginale
-    transverse puis lui applique la structure longitudinale injectée ; les
-    métriques FAC2 et NMSE sont celles du registre partagé
-    (jdriftx.benchmarks.metriques, issue #43) ; les coûts des deux routes
-    sont mesurés séparément (note 35), sans facteur historique.
+    transverse puis lui applique la structure longitudinale injectée, et
+    l'assemblage des mesures typées en métriques est délégué à
+    ``assembler_comparaison`` ; les coûts des deux routes sont mesurés
+    séparément (note 35), sans facteur historique.
     """
-    fermee, cout_ferme = RouteFermeePuff(source, arcs).mesurer(points)
+    fermee = RouteFermeePuff(source, arcs).mesurer(points)
     mesure = RouteEdpPuff(source, arcs, parametres, modele, structure).mesurer(points)
-    comparaisons = tuple(
-        PointComparaisonPuff(
-            x=float(point.x),
-            y=float(point.y),
-            z=float(point.z),
-            fermee=valeur_fermee,
-            edp=valeur_edp,
-            ratio=float(valeur_edp / valeur_fermee),
-        )
-        for point, valeur_fermee, valeur_edp in zip(points, fermee, mesure.valeurs, strict=True)
-    )
-    ecarts_relatifs = [abs(point.edp - point.fermee) / point.fermee for point in comparaisons]
-    return ComparaisonTransitoire(
-        source_puff=(
-            f"masse={source.masse} kg, u={source.u} m/s, classe={source.classe}, x0={source.x0} m"
-        ),
-        parametres=parametres,
-        instants=tuple(float(instant.t) for instant in mesure.solution.instants),
-        points=comparaisons,
-        fac2=fac2(list(fermee), list(mesure.valeurs)),
-        nmse=nmse(list(fermee), list(mesure.valeurs)),
-        ecart_relatif_max=float(max(ecarts_relatifs)),
-        ecart_masse_max=float(max(mesure.ecarts_masse)),
-        cout_ferme_s=cout_ferme,
-        cout_edp_s=mesure.cout_s,
-    )
+    return assembler_comparaison(source, fermee, mesure, points, parametres)
 
 
 def construire_manifeste(comparaison: ComparaisonTransitoire) -> ManifesteTransitoire:

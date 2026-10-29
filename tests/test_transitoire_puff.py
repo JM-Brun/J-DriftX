@@ -5,9 +5,9 @@ temps, entrée partagée avec la marginale fermée, comparaison dirigée sous
 les seuils calibrés, convergence fine/grossier, rejets explicites (classe
 INVERSE, fenêtres quatre écarts-types, passages non multiples, points
 hors arcs), cohérence des instants avec le temps dirigé de l'étape 6,
-coûts mesurés séparément, immuabilité, manifeste étiqueté, export
-JSON-natif, modèle de diffusion injectable, structure longitudinale
-injectable.
+coûts mesurés séparément, assemblage des routes mesurées séparément,
+immuabilité, manifeste étiqueté, export JSON-natif, modèle de diffusion
+injectable, structure longitudinale injectable.
 """
 
 from __future__ import annotations
@@ -33,7 +33,10 @@ from jdriftx.experiences.transitoire_puff import (
     ComparaisonTransitoire,
     FacteurLongitudinalAnalytique,
     ManifesteTransitoire,
+    RouteEdpPuff,
+    RouteFermeePuff,
     SolutionTransitoire,
+    assembler_comparaison,
     comparer_transitoire,
     construire_manifeste,
     resoudre_transitoire,
@@ -341,3 +344,28 @@ def test_la_structure_longitudinale_est_injectable(
         assert point.fermee == attendu.fermee
     # Then — la marginale et les écarts de masse ne dépendent pas de la structure.
     assert doublee.ecart_masse_max == comparaison.ecart_masse_max
+
+
+def test_les_routes_sont_assemblees_separement(
+    arcs: tuple[float, ...],
+    grille: tuple[PointMesure, ...],
+    grossier: ComparaisonTransitoire,
+) -> None:
+    """Les routes mesurées séparément s'assemblent en la même comparaison."""
+    # Given — les deux routes mesurées séparément (paramètres de la grille grossière).
+    parametres = ParametresEdp(5.0, 4.0, 340.0, 240.0)
+    fermee = RouteFermeePuff(PUFF_DEFAUT, arcs).mesurer(grille)
+    edp = RouteEdpPuff(PUFF_DEFAUT, arcs, parametres).mesurer(grille)
+    # When — les mesures typées sont assemblées sans orchestration.
+    assemblee = assembler_comparaison(PUFF_DEFAUT, fermee, edp, grille, parametres)
+    # Then — la comparaison assemblée coïncide avec l'orchestration complète.
+    assert assemblee.points == grossier.points
+    assert assemblee.fac2 == grossier.fac2
+    assert assemblee.nmse == grossier.nmse
+    assert assemblee.instants == grossier.instants
+    assert assemblee.ecart_relatif_max == grossier.ecart_relatif_max
+    assert assemblee.ecart_masse_max == grossier.ecart_masse_max
+    assert assemblee.parametres == grossier.parametres
+    # Then — les coûts reportés sont exactement ceux des mesures assemblées.
+    assert assemblee.cout_ferme_s == fermee.cout_s
+    assert assemblee.cout_edp_s == edp.cout_s

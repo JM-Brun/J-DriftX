@@ -53,15 +53,28 @@ inale transverse et la solution fermée du puff, sur le cas S0 figé.
 
 | Objet du dépôt | Rôle |
 |---|---|
-| [experiences/transitoire_puff/](../src/jdriftx/experiences/transitoire_puff) | Package à cinq modules : marginale fermée, schéma FTCS en temps (solveur), routes mesurées séparément et structure longitudinale injectable (protocole), comparaison et manifeste étiqueté |
-| [tests/test_transitoire_puff.py](../tests/test_transitoire_puff.py) | 18 tests GWT : calibration, entrée partagée, seuils, convergence, rejets, temps dirigé, coûts, manifeste, export JSON, injectabilité |
+| [experiences/transitoire_puff/marginale.py](../src/jdriftx/experiences/transitoire_puff/marginale.py) | Marginale fermée et bilan de masse sur la grille : condition d'entrée du schéma, référence des écarts de masse |
+| [experiences/transitoire_puff/solveur.py](../src/jdriftx/experiences/transitoire_puff/solveur.py) | Géométrie des passages et schéma FTCS marché en temps : instants, solution transitoire |
+| [experiences/transitoire_puff/routes.py](../src/jdriftx/experiences/transitoire_puff/routes.py) | Routes mesurées séparément, chacune rendant sa mesure typée (assemblables), structure longitudinale injectable (protocole PEP 544) |
+| [experiences/transitoire_puff/comparaison.py](../src/jdriftx/experiences/transitoire_puff/comparaison.py) | Modèles gelés, assemblage des métriques (`assembler_comparaison`), manifeste étiqueté |
+| [tests/test_transitoire_puff.py](../tests/test_transitoire_puff.py) | 19 tests GWT : calibration, entrée partagée, seuils, convergence, rejets, temps dirigé, coûts, assemblage des routes, manifeste, export JSON, injectabilité |
 | [experiences/reference_independante.py](../src/jdriftx/experiences/reference_independante.py) | Grille EDP et modèle de diffusion injectable (étape 5) ; échantillonneur bilinéaire et pas longitudinal stable réutilisés par la marche en temps |
 | [experiences/evaluation_puff.py](../src/jdriftx/experiences/evaluation_puff.py) | Source impulsionnelle et temps dirigé (étape 6) |
 | [similitude.py](../src/jdriftx/similitude.py) | Solution fermée du puff et σ de Briggs |
 
 **Écarts explicites : aucun** vis-à-vis des notes 47, 48, 49 et 53 ; les statuts figés ne sont pas modifiés.
 
-## Références internes
+## 7. Architecture du package et justifications
 
-- [Évaluation dirigée du puff](53-evaluation-puff-source-impulsionnelle.md) ; [comparaison à référence indépendante](51-reference-independante-cas-s0.md) ; [cas de référence autonome](48-cas-reference-autonome-ecoulement-uniforme.md)
-- [Issue #232 — baseline scientifique](https://github.com/JM-Brun/J-DriftX/issues/232)
+Le package sépare les considérations, une par module : une extension (nouveau modèle de diffusion, nouvelle structure longitudinale, nouveau format de manifeste) touche un seul fichier, et la façade `__init__.py` re-exporte l'API publique pour que l'import historique `jdriftx.experiences.transitoire_puff` reste stable.
+
+- **Interfaces injectables (PEP 544).** `ModeleDiffusion` ([note 51](51-reference-independante-cas-s0.md)) et `StructureLongitudinale` sont des protocoles à typage structurel, la règle du package depuis `ChampPlan` et les contrats de la [note 42](42-contrats-interoperabilite.md) : le point d'extension de S0-b (cisaillement) s'exprime comme une structure alternative, sans toucher aux routes ni au solveur ; les tests d'injectabilité prouvent que le point d'extension est effectif (structure doublée → valeurs EDP exactement doublées, marginale inchangée).
+- **Réutilisations bit-exact.** Le pas de temps est le pas longitudinal stable de l'étape 5 divisé par u (même nombre de Fourier, même exposant k) ; l'échantillonnage bilinéaire et le bilan d'intégrale réutilisent `EchantillonneurBilineaire` : la route EDP ne duplique ni interpolation ni choix de pas — une seule définition, deux consommateurs.
+- **Mesures typées assemblables.** Chaque route rend sa mesure (`MesureFermeePuff`, `MesureEdpPuff`) ; `comparer_transitoire` orchestre les deux routes, `assembler_comparaison` assemble les mesures en métriques pures. Choix négatif justifié : pas de protocole de route générique — les retours sont distincts par nature (noyau fermé ponctuel contre solution complète portant les écarts de masse), un contrat unique serait artificiel ; l'échangeabilité est portée par les mesures assemblables, pas par une fausse interface commune.
+- **Immuabilité et frontière JSON.** Dataclasses gelées et modèles Pydantic gelés ; les `dict` restent confinés à la frontière d'export JSON (`model_dump`), conformément à la charte du projet ([note 22](22-audit-package-code.md)).
+
+## Références
+
+- Interne : [évaluation dirigée du puff](53-evaluation-puff-source-impulsionnelle.md) ; [comparaison à référence indépendante](51-reference-independante-cas-s0.md) ; [cas de référence autonome](48-cas-reference-autonome-ecoulement-uniforme.md) ; [carte travel-time](37-transformation-tau-eta-cas-uniforme.md) ; [deux résolutions indépendantes et coûts mesurés](35-figure-03-modele-reduit-edp.md) ; [contrats d'interopérabilité PEP 544](42-contrats-interoperabilite.md).
+- Standards : [PEP 544 — protocoles à typage structurel](https://peps.python.org/pep-0544/) ; métriques FAC2/NMSE du registre partagé ([issue #43](https://github.com/JM-Brun/J-DriftX/issues/43)).
+- Suivi : [issue #232 — baseline scientifique](https://github.com/JM-Brun/J-DriftX/issues/232) ; source étiquetée : Brun & Mohammadi (2008), [DOI 10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14).

@@ -4,11 +4,14 @@ Les deux routes de la comparaison partagent la même géométrie de passages
 (arcs sous le vent, instants dirigés t = arc/u) et seules leurs lectures
 diffèrent : la route fermée évalue le noyau du package aux points de
 mesure ; la route EDP résout la marginale transverse puis l'échantillonne
-et lui applique la structure longitudinale. La structure est une
-interface injectable (StructureLongitudinale) : le facteur gaussien
-analytique (carte travel-time de la note 37, isotropie sigma_x = sigma_y
-du noyau fermé) est l'implémentation par défaut, et le point d'extension
-de S0-b (cisaillement) s'y branchera sans toucher aux routes.
+et lui applique la structure longitudinale. Chaque route rend sa mesure
+typée (``MesureFermeePuff``, ``MesureEdpPuff``), assemblée en métriques
+par le module de comparaison, sans état partagé entre les routes. La
+structure est une interface injectable (StructureLongitudinale) : le
+facteur gaussien analytique (carte travel-time de la note 37, isotropie
+sigma_x = sigma_y du noyau fermé) est l'implémentation par défaut, et le
+point d'extension de S0-b (cisaillement) s'y branchera sans toucher aux
+routes.
 """
 
 from __future__ import annotations
@@ -79,7 +82,7 @@ class FacteurLongitudinalAnalytique:
 
 
 @dataclass(frozen=True)
-class MesureTransitoire:
+class MesureEdpPuff:
     """Mesure de la route EDP transitoire : valeurs, masse, solution, coût.
 
     Attributs :
@@ -96,6 +99,19 @@ class MesureTransitoire:
     cout_s: float
 
 
+@dataclass(frozen=True)
+class MesureFermeePuff:
+    """Mesure de la route fermée : valeurs dirigées et coût, sans état.
+
+    Attributs :
+        valeurs : concentrations fermées du puff aux points (kg m⁻³).
+        cout_s : coût mesuré de l'évaluation fermée aux points (s).
+    """
+
+    valeurs: tuple[float, ...]
+    cout_s: float
+
+
 class RouteFermeePuff:
     """Route de référence : solution fermée du puff, coût mesuré (note 35).
 
@@ -109,7 +125,7 @@ class RouteFermeePuff:
         self.source = source
         self.arcs = arcs
 
-    def mesurer(self, points: tuple[PointMesure, ...]) -> tuple[tuple[float, ...], float]:
+    def mesurer(self, points: tuple[PointMesure, ...]) -> MesureFermeePuff:
         """Évalue la solution fermée aux points (t = x/u), coût mesuré."""
         PassagesPuff(source=self.source, arcs=self.arcs).exiger_points_aux_arcs(points)
         debut = time.perf_counter()
@@ -130,7 +146,9 @@ class RouteFermeePuff:
             dtype=float,
         )
         cout_s = time.perf_counter() - debut
-        return tuple(float(valeur) for valeur in valeurs), float(cout_s)
+        return MesureFermeePuff(
+            valeurs=tuple(float(valeur) for valeur in valeurs), cout_s=float(cout_s)
+        )
 
 
 class RouteEdpPuff:
@@ -165,7 +183,7 @@ class RouteEdpPuff:
             structure if structure is not None else FacteurLongitudinalAnalytique(source=source)
         )
 
-    def mesurer(self, points: tuple[PointMesure, ...]) -> MesureTransitoire:
+    def mesurer(self, points: tuple[PointMesure, ...]) -> MesureEdpPuff:
         """Résout, échantillonne et pèse la route EDP ; coût mesuré ensemble."""
         PassagesPuff(source=self.source, arcs=self.arcs).exiger_points_aux_arcs(points)
         debut = time.perf_counter()
@@ -185,7 +203,7 @@ class RouteEdpPuff:
             masse_fermee = marginale.masse(marginale.champ(instant.t))
             ecarts_masse.append(abs(masse_edp - masse_fermee) / masse_fermee)
         cout_s = time.perf_counter() - debut
-        return MesureTransitoire(
+        return MesureEdpPuff(
             valeurs=tuple(valeurs),
             ecarts_masse=tuple(ecarts_masse),
             solution=solution,

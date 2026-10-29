@@ -23,12 +23,14 @@ Architecture (séparation des considérations, une par module) :
   FTCS marché en temps (``SolveurTransitoire``) ; réutilise le pas
   longitudinal stable de l'étape 5 (``pas_longitudinal``, divisé par u :
   même nombre de Fourier) et la grille EDP partagée (``GrilleEdp``).
-- ``routes`` : les deux routes mesurées séparément (note 35) et la
-  structure longitudinale injectable (``StructureLongitudinale``) ;
+- ``routes`` : les deux routes mesurées séparément (note 35), chacune
+  rendant sa mesure typée (``MesureFermeePuff``, ``MesureEdpPuff``), et
+  la structure longitudinale injectable (``StructureLongitudinale``) ;
   l'échantillonnage bilinéaire et le bilan d'intégrale réutilisent
   ``EchantillonneurBilineaire`` (étape 5).
 - ``comparaison`` : les modèles Pydantic gelés de la comparaison et du
-  manifeste étiqueté, assemblés par ``comparer_transitoire``.
+  manifeste étiqueté ; ``comparer_transitoire`` orchestre les deux routes
+  et ``assembler_comparaison`` assemble les mesures typées en métriques.
 - cette façade re-exporte l'API publique du package, importable comme le
   module historique : ``jdriftx.experiences.transitoire_puff``.
 
@@ -60,13 +62,15 @@ from jdriftx.experiences.transitoire_puff.comparaison import (
     ComparaisonTransitoire,
     ManifesteTransitoire,
     PointComparaisonPuff,
+    assembler_comparaison,
     comparer_transitoire,
     construire_manifeste,
 )
 from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
 from jdriftx.experiences.transitoire_puff.routes import (
     FacteurLongitudinalAnalytique,
-    MesureTransitoire,
+    MesureEdpPuff,
+    MesureFermeePuff,
     RouteEdpPuff,
     RouteFermeePuff,
     StructureLongitudinale,
@@ -85,7 +89,8 @@ __all__ = [
     "InstantPuff",
     "ManifesteTransitoire",
     "MarginaleFermee",
-    "MesureTransitoire",
+    "MesureEdpPuff",
+    "MesureFermeePuff",
     "PassagesPuff",
     "PointComparaisonPuff",
     "RouteEdpPuff",
@@ -93,6 +98,7 @@ __all__ = [
     "SolutionTransitoire",
     "SolveurTransitoire",
     "StructureLongitudinale",
+    "assembler_comparaison",
     "comparer_transitoire",
     "construire_manifeste",
     "resoudre_transitoire",
