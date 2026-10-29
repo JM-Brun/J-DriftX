@@ -4,6 +4,8 @@
 
 Issue de suivi : [#123](https://github.com/JM-Brun/J-DriftX/issues/123). Reconstruction scientifique minimale : [#232](https://github.com/JM-Brun/J-DriftX/issues/232).
 
+**Rôle éditorial :** synthèse courte des niveaux de preuve et des décisions ouvertes. La dérivation conditionnelle détaillée et les transcriptions de sources sont dans [docs/32](32-conservation-coordonnees-travel-time.md) ; cette synthèse ne la remplace pas et ne recopie pas sa démonstration.
+
 ## Conclusion centrale
 
 Les sources historiques affirment des contraintes de conservation, mais elles ne démontrent pas une loi générale de flux scalaire constant sur chaque surface iso-temps.

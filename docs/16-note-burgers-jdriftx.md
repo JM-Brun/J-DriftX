@@ -3,6 +3,8 @@
 **Statut :** connexion mathématique indirecte ; aucune équivalence physique démontrée.  
 **Date de la note :** 2026-10-22.
 
+**Rôle éditorial :** note de recherche courte, centrée sur le verdict de pertinence et les limites de la piste Burgers. Pour l'explication développée destinée au lecteur du site, voir la [page Quarto « Équation de Burgers : lien avec J-DriftX »](../site/theorie/burgers-et-jdriftx.qmd). La page du site expose les notions et exemples ; cette note conserve le cadrage et les décisions conditionnelles.
+
 ## Question
 
 L'équation de Burgers est-elle pertinente pour la modélisation de la dispersion atmosphérique et, en particulier, pour l'exploration travel-time / similitude de J-DriftX ?
