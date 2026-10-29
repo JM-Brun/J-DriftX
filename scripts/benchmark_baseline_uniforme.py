@@ -62,12 +62,7 @@ def oracle_concentration(point: PointMesure, source: SourcePanache) -> float:
     lateral = math.exp(-(point.y**2) / (2.0 * sigma_y**2))
     vertical = math.exp(-((point.z - source.hauteur) ** 2) / (2.0 * sigma_z**2))
     vertical += math.exp(-((point.z + source.hauteur) ** 2) / (2.0 * sigma_z**2))
-    return (
-        source.debit
-        / (2.0 * math.pi * source.u * sigma_y * sigma_z)
-        * lateral
-        * vertical
-    )
+    return source.debit / (2.0 * math.pi * source.u * sigma_y * sigma_z) * lateral * vertical
 
 
 def preparer_cas() -> tuple[CasS0, tuple[PointMesure, ...]]:
@@ -143,8 +138,7 @@ def executer(repetitions: int) -> dict[str, Any]:
             "oracle_kg_m3": o,
             "absolute_error_kg_m3": abs(b - o),
             "relative_error": abs(b - o) / max(abs(o), SEUIL_RELATIF),
-            "within_tolerance": abs(b - o)
-            <= TOLERANCE_ABSOLUE + TOLERANCE_RELATIVE * abs(o),
+            "within_tolerance": abs(b - o) <= TOLERANCE_ABSOLUE + TOLERANCE_RELATIVE * abs(o),
         }
         for p, b, o in zip(points, baseline, oracle, strict=True)
     ]
