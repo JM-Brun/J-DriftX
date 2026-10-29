@@ -2,9 +2,9 @@
 
 ## Fichier
 
-- PDF actuellement présent : <code>../2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf</code> (le renommage est déjà effectif ; <code>PDF.js viewer.pdf</code> est l'ancien nom de téléchargement).
-- Attention : **extrait de 2 pages seulement** (p. 245–246), généré depuis un visualiseur PDF ; le recueil complet Glowinski & Neittaanmäki 2008 n'est plus versionné dans <code>raw/</code> après la PR #67. La fiche de provenance historique conserve la référence bibliographique, pas le binaire.
-- Extraction : pas de transcription OCR intégrale vérifiée du chapitre. Des notes analytiques existent dans <code>../extracts/2008-brun-mohammadi-springer-chap14-notes.txt</code> et sont croisées avec la revue du corpus. Le PDF local ne couvre que les pages 245–246 ; les pages 247–256 restent à examiner à partir d'une source légalement accessible.
+- PDF intégral du recueil actuellement présent : <code>../Partial Differential Equations - Modelling and Numerical Simulation - R. Glowinski, P. Neittaanmaki (Springer, 2008) WW.pdf</code> ; il est conservé conformément à la décision explicite du mainteneur (restauration exacte via PR #264). Ne pas ouvrir de PR de suppression sans demande explicite.
+- Extrait distinct : <code>../2008-brun-mohammadi-springer-chap14-extrait-p245-246.pdf</code>, **2 pages seulement** (p. 245–246), généré depuis un visualiseur PDF. Il ne remplace pas le recueil complet.
+- Extraction : pas de transcription OCR intégrale vérifiée du chapitre. Des notes analytiques existent dans <code>../extracts/2008-brun-mohammadi-springer-chap14-notes.txt</code> et couvrent les pages 245–256, mais elles ne sont pas verbatim. Les équations et figures restent à contrôler sur le fac-similé du PDF conservé ; droits de redistribution non résolus.
 
 ## Référence
 
@@ -23,7 +23,7 @@ Brun, J.-M. & Mohammadi, B. (2008). « Reduced-Order Modelling of Dispersion ».
 
 ## Valeur pour J-DriftX
 
-Cahier des charges scientifique du noyau : multi-niveaux avec entrée/sortie de sous-couche, métrique τ non symétrique, quatre contraintes physiques (deux déjà testées dans le socle : conservation, non-symétrie), sensibilité/identification de source. Les pages restantes (exemples numériques, analyse de sensibilité) restent à examiner à partir d'une source légalement accessible ; le recueil complet n'est plus versionné (voir la fiche de provenance historique).
+Cahier des charges scientifique du noyau : multi-niveaux avec entrée/sortie de sous-couche, métrique τ non symétrique, quatre contraintes physiques (deux déjà testées dans le socle : conservation, non-symétrie), sensibilité/identification de source. Les pages restantes (exemples numériques, analyse de sensibilité) peuvent être examinées à partir du recueil complet conservé dans `raw/`, sous réserve des droits applicables ; les équations et figures ne sont pas toutes vérifiées visuellement.
 
 ## Pour aller plus loin
 
