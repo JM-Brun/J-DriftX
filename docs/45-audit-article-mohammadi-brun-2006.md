@@ -1,6 +1,6 @@
 # 45 — Audit de l'article Mohammadi & Brun (2006)
 
-**Périmètre :** lecture critique de l'extraction texte versionnée du PDF éditeur, pages imprimées 634–638. Le PDF éditeur est déjà présent dans `raw/2006-mohammadi-brun-crmeca.pdf` ; l'erreur 403 observée le 29 octobre 2026 concerne l'accès web automatisé à l'URL officielle, pas l'absence de la source dans le dépôt. Les figures et la typographie des équations restent à contrôler visuellement depuis le binaire versionné. L'extraction brute n'est pas une transcription fiable des formules lorsque les symboles sont dégradés.
+**Périmètre :** lecture de l'extraction texte et contrôle visuel ciblé du PDF éditeur versionné, pages imprimées 634–636. Le binaire existant a été rendu localement pour inspecter les équations (1), (2) et (4) ; aucune nouvelle acquisition n'a été effectuée. Les autres équations et figures ne sont pas certifiées par ce contrôle ciblé. L'extraction brute reste insuffisante pour transcrire seule les formules lorsque les symboles sont dégradés.
 
 ## Source et méthode
 
@@ -9,18 +9,23 @@
 - [PDF éditeur](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
 - Extraction du dépôt : [`raw/extracts/2006-mohammadi-brun-crmeca.txt`](../raw/extracts/2006-mohammadi-brun-crmeca.txt).
 - Fiche de provenance du binaire : [`raw/provenance/2006-mohammadi-brun-crmeca.pdf.md`](../raw/provenance/2006-mohammadi-brun-crmeca.pdf.md).
+- Contrôle d'identité du fichier : SHA-256 `230990bb30919b4853613a3eecaa3c4de0766a04bccae74c6bcf5680465315cc` ; Git blob SHA `104cfd7cfe9272f1e0dc99ab0ebd6da52b6bd0b8` identique au blob versionné.
 
 ## 1. Pages 634–635 — Objectif et modèle de similitude
 
 Le résumé présente un modèle de complexité réduite pour le transport et la dispersion d'un scalaire passif, ajusté à partir d'observations partielles. Il propose de généraliser des solutions de similitude de jets/plumes dans une métrique non symétrique fondée sur des temps de transport. Il affirme que le modèle évite de résoudre une EDP à chaque évaluation et permet de calculer la solution en un point.
 
-L'équation (1) est présentée comme un problème d'assimilation des paramètres du modèle à partir d'observations de vitesse et de concentration. L'extraction ne conserve pas assez bien la structure mathématique de l'objectif pour certifier ici chaque terme, signe, norme ou pondération : ils doivent être transcrits depuis le PDF visuel avant toute implémentation.
+L'inspection visuelle du fac-similé confirme l'équation (1), p. 635, sous la forme imprimée
+\[
+\min_{p\in\mathcal O} J(p)=\|\vec u(p)-\vec u_{\mathrm{obs}}\|+\|c(p,\vec u(p))-c_{\mathrm{obs}}\|.
+\]
+Le texte précise que les observations de vitesse et de concentration peuvent être en des points différents. Aucune pondération explicite entre les deux normes n'est visible dans l'équation. Les unités et la normalisation des deux résidus ne sont pas précisées dans ce passage : la formule est transcrite, mais son interprétation statistique et l'identifiabilité ne sont pas démontrées.
 
-L'équation (2) introduit un profil de similitude du type
-[
-c(x,y)=c_c(x)f(y,delta(x)),
-]
-avec une décroissance axiale et un profil transversal dépendant de l'épaisseur (delta(x)). La formule exponentielle exacte et les paramètres doivent être contrôlés sur le fac-similé avant d'être utilisés comme spécification de code.
+L'équation (2), également vérifiée visuellement p. 635, est
+\[
+c(x,y)=c_c(x)f(y,\delta(x)),\qquad c_c(x)\sim e^{-a(U)x},\qquad f(y,\delta(x))\sim e^{-b(U,\delta(x))y^2}.
+\]
+Le carré porte bien sur la coordonnée transversale \(y\). Le texte caractérise \(a\) comme positive et monotone décroissante, et \(b\) comme positive, croissante en \(U\) et décroissante en \(\delta\). Cette forme est donnée pour un écoulement plan uniforme ; elle ne démontre pas à elle seule la validité de sa généralisation à des champs quelconques.
 
 **Interprétation :** l'idée de base à préserver est une famille paramétrique de profils, alimentée par des variables physiques et calibrée à partir de données. L'article ne justifie pas à lui seul que cette famille soit exacte pour des vents variables ou pour d'autres mécanismes physiques.
 
@@ -65,7 +70,11 @@ Sous l'interprétation conventionnelle (c) = concentration massique volumique, l
 
 ## 4. Page 636 — Reconstruction du champ de vitesse
 
-Le texte propose de compléter des observations météorologiques clairsemées par un champ de vitesse dérivé d'un potentiel, avec une formulation d'optimisation. L'extraction de l'équation (4) est trop dégradée pour certifier le signe de l'opérateur elliptique, le fonctionnel exact, les contraintes ou les conditions aux limites.
+L'équation (4), vérifiée visuellement p. 636, est imprimée sous la forme
+\[
+\vec u=\nabla\phi,\qquad -\Delta\phi=\sum_{i=1,\ldots,n_{\mathrm{obs}}}\|\nabla\phi-\vec u_{\mathrm{obs}}\|.
+\]
+**Réserve de transcription importante :** dans le terme sous la somme, le fac-similé ne montre pas d'indice \(i\) sur \(\vec u_{\mathrm{obs}}\), alors que le texte définit \(n_{\mathrm{obs}}\) comme le nombre de points d'observation. La transcription ci-dessus conserve cette omission telle qu'imprimée ; ajouter un indice ou remplacer la somme par un autre fonctionnel serait une correction conjecturale. Sous les unités conventionnelles, si \(\phi\) est un potentiel de vitesse et \(\vec u=\nabla\phi\), alors \(\Delta\phi\) a l'unité \(s^{-1}\), tandis que le résidu de vitesse a l'unité \(m\,s^{-1}\) : les deux membres ne sont pas homogènes dimensionnellement sans normalisation ou changement d'échelle non indiqué. De plus, \(\nabla\cdot\vec u=\Delta\phi\) n'est pas nul en général si le second membre imprimé est strictement positif ; cela contredit l'énoncé précédent d'un champ à divergence nulle, sauf cas de résidus nuls ou interprétation différente. L'article ne spécifie pas ici les conditions aux limites du problème elliptique, ni les espaces fonctionnels, ni les conditions de compatibilité. L'équation est donc lisible, mais la formulation mathématique est ambiguë et sous-spécifiée.
 
 **Point à vérifier avant implémentation :** une écriture du type (mathbf u=
 ablaphi) impose un champ irrotationnel sur le domaine où le potentiel est régulier. Cela ne suffit pas à garantir que le champ respecte les contraintes physiques de vent dans un relief ou une couche limite. Le choix de potentiel, l'objectif d'assimilation, les contraintes de divergence et les conditions aux limites doivent être transcrits et justifiés séparément.
@@ -94,7 +103,7 @@ Le papier indique également que les campagnes de mesure nécessaires à la vali
 | A06-01 | La pseudo-distance ne vérifie pas nécessairement séparation, symétrie ou inégalité triangulaire | Limite structurelle explicitement reconnue, pas une faute | Préserver le caractère orienté ; définir précisément le domaine d'usage |
 | A06-02 | Existence/unicité de la caractéristique et de la projection sont supposées ou traitées par heuristique | Hypothèses insuffisamment formalisées | Définir cas admissibles, échecs et tests analytiques |
 | A06-03 | L'intégrale globale de concentration est liée à la quantité émise sans démonstration complète dans le passage | Conservation globale revendiquée ; bilan physique à reconstruire | Vérifier unités, source, dépôt, frontières et bilan du modèle multi-niveaux |
-| A06-04 | L'équation du potentiel et son fonctionnel d'assimilation sont dégradés dans l'extraction | Incertitude de transcription, pas encore une erreur de source confirmée | Transcription visuelle de l'équation (4), conditions aux limites et opérateur |
+| A06-04 | L'équation (4) est lisible sur le fac-similé, mais le terme sous la somme ne porte pas d'indice d'observation visible ; les unités des deux membres diffèrent sous l'interprétation conventionnelle et la divergence n'est pas nulle en général | Formulation imprimée ambiguë/sous-spécifiée ; contradiction conditionnelle avec l'affirmation de divergence nulle, sans correction conjecturale | Vérifier une version parallèle déjà disponible ; sinon conserver la lecture littérale et traiter toute formulation corrigée comme hypothèse distincte |
 | A06-05 | Le facteur (10^3)–(10^4) est rapporté sur un cas avec maillage d'environ 3 000 points | Résultat contextuel non généralisable sans protocole | Reproduire les coûts complets à précision comparable |
 | A06-06 | Le papier annonce une validation terrain future | Limite de preuve historique explicite | Ne pas présenter les figures synthétiques comme validation terrain |
 
@@ -106,8 +115,8 @@ En parallèle, le projet doit corriger ou circonscrire les hypothèses non démo
 
 ## 8. Vérifications encore ouvertes
 
-- [ ] Inspecter visuellement les cinq pages du PDF éditeur et confirmer toutes les équations, signes, indices et figures.
+- [x] Inspecter visuellement les équations (1) et (2), p. 635, et l'équation (4), p. 636, sur le PDF éditeur versionné ; les transcriptions et la réserve d'indice de (4) sont consignées ci-dessus.
+- [ ] Inspecter les autres équations et figures du PDF éditeur si elles deviennent nécessaires à une revendication de la baseline.
 - [ ] Si un exemplaire officiel de référence déjà obtenu est disponible dans les éléments de provenance, comparer son SHA-256 à celui du binaire versionné. Ne pas confondre un blob SHA Git avec le SHA-256 du fichier ; ne pas relancer l'acquisition uniquement à cause du 403 de l'outil de consultation.
-- [ ] Reconstituer l'équation (1) d'assimilation et l'équation (4) de potentiel à partir du fac-similé.
 - [ ] Vérifier les unités et les bilans du modèle local, du modèle réduit et de la source mobile.
 - [ ] Distinguer clairement résultats analytiques, résultats synthétiques, comparaison à une EDP et validation terrain.

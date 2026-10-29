@@ -117,11 +117,34 @@ For non-constant \(v\), the last expression is not identically one. Therefore th
 
 The analytical regression test for this example is documented in [the shear-counterexample test note](33-test-contre-exemple-cisaillement.md). The dimensional consequences of the audited 2008/2009 formulas are covered separately, under explicit conventional-unit assumptions, in [the documentary dimensional audit tests](../tests/test_documentary_dimensional_audit.py). It checks the closed-form projected cost, the non-unit transport residual for a non-constant profile, and the uniform-flow control case. The test is deliberately independent of a numerical solver; it freezes this mathematical counterexample rather than validating the full historical model.
 
-## 6. Primary-source transcription and dimensional audit (2009 article)
+## 6. Provisional publisher-text equations and dimensional audit (source identity unresolved)
 
-The publisher's open-access HTML for Bozon & Mohammadi (2009), *Applied Geomatics*, exposes the following statements and equations directly. They are transcribed here as printed; no suspected typo is silently repaired.
+**Source-identity clarification added 29 October 2026:** the maintainer identifies the versioned file `raw/2009-bozon-sinfort-mohammadi-driftx-hal.pdf` (HAL `hal-00468863`, `MO2009-PUB00026817-1.pdf`) as the JESA text to use for this audit. Its HAL cover sheet nevertheless labels the deposited version as a 17-page STIC & Environnement 2009 contribution (submitted to HAL on 31 March 2010), and §2 uses equation labels [1]–[7]. We therefore treat its contents as the **designated JESA comparison text for this project**, while preserving the bibliographic/version caveat: the file itself does not prove line-for-line identity with the JESA version of record (`hal-02594312`, DOI `10.3166/jesa.44.445-461`). The equations (28)–(31) below are not present in this PDF and remain a separate, unattributed transcription; do not attribute them to this designated text without evidence. No acquisition was performed.
 
-### Published definitions
+### Designated JESA comparison text: HAL manuscript `hal-00468863`, equations [1]–[7]
+
+The 17-page author manuscript is a distinct, directly accessible source. Its §2 uses bracketed equation labels [1]–[7], not the numbering (28)–(31) below. Pages 5–7 of the PDF were inspected visually for the similitude profile, multi-level velocity restriction, concentration interpolation, and integral definitions.
+
+The manuscript prints the concentration profile
+\[
+c(x,y,z)=c_c(x)f(\sqrt{y^2+z^2},\delta(x)),\quad
+c_c(x)\sim e^{-a(U)x},\quad
+f\sim e^{-b(U,\delta(x))\sqrt{y^2+z^2}},
+\tag{STIC09-1}
+\]
+and defines the injected quantity \(K=\int_0^T c_{inj}(t)\,dt\), the ground-integrated quantity \(C_g(x,y)=\int_{z\le z_0}c(x,y,z)\,dz\), and \(C_a=K-\int_{R\ge R_0}C_g(x,y)\,dV\) as printed. Under \([c]=M L^{-3}\), \(C_g\) has units \(M L^{-2}\); integrating it against \(dV\) yields \(M L\), not the mass units of \(K\). The manuscript's printed differential \(dV\) is retained here; replacing it with \(dx\,dy\) would be conjectural.
+
+After the concentration interpolation in Eq. [4], the manuscript claims that
+\[
+\int_{\omega_i}c^i\,dV=
+\int_{\partial\omega_i}c^i\left(\frac{\vec u_i}{\|\vec u_i\|}\cdot\vec n_i\right)dS.
+\tag{STIC09-MB}
+\]
+Under the same conventional volumetric-concentration interpretation, the left side has units \(M\), whereas the right side has units \(M L^{-1}\). The normalized velocity is dimensionless and supplies no missing speed factor. This is a conditional dimensional inconsistency of the printed identity, not proof of authorial intent or of a general failure of every reconstruction.
+
+In the inspected §2 equations, the source is represented through \(c_{inj}(t)\); no explicit deposition/sink term appears in the reduced equations [1]–[7]. The boundary conditions for the reduced model are not fully specified there. The free inlet/outlet boundaries and calibrated deposition sink described in the 2006 paper's *PDE reference comparison* belong to that 2006 comparison and must not be silently transferred from the 2006 PDE comparison to the designated JESA comparison text.
+
+### Provisional equations from the unresolved publisher-text source
 
 The paper states that the total injected quantity over \( [0,T] \) is
 \[
@@ -178,7 +201,7 @@ Assume, provisionally, that \(c\) is a volumetric mass concentration with units 
 | \(\int C_g\,dV\) in Eq. (31) | Integrates \(C_g\) against a volume element | \([M L]\) | **Dimensionally inconsistent with \(K\)** under this interpretation |
 | \(\int C_g\,dx\,dy\) | Not what the paper prints | \([M]\) | Would be dimensionally compatible, but is only a possible correction, not an established authorial intent |
 
-The same paper's Eq. (28) states that the “total mass” in a subdomain satisfies
+The same unresolved publisher-text source's Eq. (28) states that the “total mass” in a subdomain satisfies
 \[
 \int_{\omega^i} c^i\,dV
 =
@@ -190,29 +213,29 @@ With \(c^i\) interpreted as a volumetric concentration, the left side has units 
 
 ### What this establishes—and what it does not
 
-- **Established from the publisher text:** the equations above are printed in the 2009 article; the apparent unit mismatches are reproducible from their displayed definitions.
-- **Established conditionally:** under the conventional volumetric-concentration interpretation, Eqs. (28), (31), and the Eqs. (38)–(40) sequence are not dimensionally homogeneous as printed.
+- **Established from the designated JESA comparison text (HAL `hal-00468863`):** Eqs. [1]–[7] are printed in §2; the multi-level mass identity after Eq. [4] and the Eq. (31)-style integral expression must not be conflated. The printed mass identity has a conditional dimensional mismatch under the conventional volumetric-concentration interpretation.
+- **Separate, unattributed transcription:** displayed Eqs. (28), (31), and (38)–(40) are not in the designated JESA comparison PDF. Their dimensional mismatches are reproducible from the displayed definitions, but attribution to a specific publication remains unverified.
 - **Not established:** whether this reflects typographical errors, a nonstandard definition of \(c\), omitted normalization, or a deeper derivation issue. The text alone does not decide among these explanations.
 - **Not authorized:** silently replacing \(dV\) with \(dx\,dy\), inserting a velocity factor, or treating the published equations as a validated mass-conservation proof.
 
-The article does describe the global velocity construction as divergence-free and presents conservation as a constraint, but divergence-free velocity alone does not imply conservation of a passive scalar. The displayed equations require a consistent scalar definition and measure before they can be used as a physical mass balance.
+The unresolved publisher-text source describes its global velocity construction as divergence-free and presents conservation as a constraint, but its exact bibliographic identity is not established here. Independently of that attribution, divergence-free velocity alone does not imply conservation of a passive scalar. The displayed equations require a consistent scalar definition and measure before they can be used as a physical mass balance.
 
-The official 2006 article is available from *Comptes Rendus Mécanique* (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007)); its open-access publisher PDF has since been retrieved and transcribed in §7 below, including its global conservation statement. The 2008 Springer chapter has been inspected from an accessible third-party-hosted scan of the book (chapter pp. 245–256; the Springer landing page provides the bibliographic record, DOI [10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14)). The scan is useful for transcription but is not itself a publisher-hosted copy. The 2009 article remains a separate source and must not be conflated with either the 2006 paper or the 2008 chapter.
+The versioned 2006 PDF is now visually inspected for equations (1), (2) and (4); the audit in [45](45-audit-article-mohammadi-brun-2006.md) records the literal transcription and the ambiguity in (4). The 2008 Springer chapter has been inspected from an accessible scan, but that scan is not a publisher-hosted copy. The designated JESA comparison text is the versioned HAL manuscript `hal-00468863`, as specified by the maintainer; its cover sheet describes the STIC & Environnement contribution. The separate equations (28)–(31) remain unattributed and must not be conflated with it. The exact differences from the JESA version of record have not been verified against that publisher PDF.
 
 ## 7. Primary-source transcription: Mohammadi & Brun (2006)
 
-The open-access publisher PDF of the founding Note is available from the Comptes Rendus site (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007); direct PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) and was retrieved and transcribed on 28 October 2026. **Extraction caveat:** the PDF text layer garbles some math glyphs (integrals, radicals, exponents, sum signs); the equations below are reconstructions from the text layer and the surrounding prose, and this is flagged wherever it matters. They must be checked against the typeset PDF before being cited as verbatim. No suspected typo is silently repaired.
+The versioned publisher PDF of the founding Note is available from the Comptes Rendus site (DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007); direct PDF: https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf). Equations (1) and (2), p. 635, and equation (4), p. 636, were visually checked against the already-versioned PDF on 29 October 2026. Other equations in this section remain transcriptions/reconstructions from the text layer and surrounding prose, not visually certified verbatim. No suspected typo is silently repaired.
 
 ### Assimilation setting and transport assumption (§1)
 
 The model parameters \(p\) — computation-domain definition, topography, meteo conditions, source locations, nozzle characteristics — are determined through the assimilation objective
 
 \[
-\min_{p\in\mathcal O} J(p)=\|\vec u(p)-\vec u_{\rm obs}\|^2+\|c(p,\vec u(p))-c_{\rm obs}\|^2,
+\min_{p\in\mathcal O} J(p)=\|\vec u(p)-\vec u_{\rm obs}\|+\|c(p,\vec u(p))-c_{\rm obs}\|,
 \tag{MB06-1}
 \]
 
-(the exponents and norm bars are not visible in the text layer; the printed equation is a sum of two norms). The article then states that \(\vec u(p)\) est « un champ de vitesse à divergence nulle servant au transport de \(c(p,\vec u(p))\) »: the transport velocity is divergence-free **by assumption** in this Note, not by a construction given there.
+(visually checked: the printed equation is a sum of two norms without explicit squares or weights). The article then states that \(\vec u(p)\) est « un champ de vitesse à divergence nulle servant au transport de \(c(p,\vec u(p))\) »: the transport velocity is divergence-free **by assumption** in this Note, not by a construction given there.
 
 ### Similitude solution in a uniform flow (§2)
 
@@ -254,7 +277,7 @@ The article then states explicitly that the construction is **not** a distance: 
 \tag{MB06-4}
 \]
 
-as extracted (the text layer does not show how the observation points enter the terms inside the sum); the article presents this as the completion of the velocity field from \(n_{\rm obs}\) observation points, and offers as an alternative a coarse migration-time grid with interpolation. The equation is not dimensionally homogeneous as reconstructed — a pointwise-source or optimality reading may be intended — and is transcribed without repair.
+as printed in the facsimile. The term \(\vec u_{\rm obs}\) inside the sum has no visible observation index, even though the text defines \(n_{\rm obs}\) observation points. Under conventional units, \(\Delta\varphi\) has units \(s^{-1}\) if \(\nabla\varphi\) is a velocity, whereas the residual norm has units \(m\,s^{-1}\); additionally, \(\nabla\cdot\vec u=\Delta\varphi\) is not zero in general for the printed nonzero right-hand side. This conflicts conditionally with the preceding description of a divergence-free field. The article offers a coarse migration-time grid with interpolation as an alternative. The displayed equation is preserved literally, without adding an index or silently changing its mathematical form.
 
 ### Generalized similitude ansatz (§3, Eq. 5)
 
@@ -272,7 +295,7 @@ In the validation examples, the reference PDE (transport–diffusion–depositio
 ### What the 2006 source adds to the conservation question
 
 1. **The 2006 conservation statement is global, not per-surface.** It is a volume integral of \(c\) over \(\mathbb R^3\), set equal to the total emitted quantity. **No flux conservation across iso-\(\tau\) surfaces is claimed anywhere in the article.** The per-surface reading is therefore not supported by the founding source.
-2. **It is dimensionally consistent as printed** — under the conventional \(c\in[M\,L^{-3}]\), the integral is a mass — in contrast with the printed Eqs. (28)/(31) of the 2009 article transcribed in the previous section.
+2. **It is dimensionally consistent as printed** — under the conventional \(c\in[M\,L^{-3}]\), the integral is a mass — in contrast with the separately transcribed Eqs. (28)/(31), which are absent from the designated JESA comparison text and remain unattributed in §6.
 3. **As a physical claim it conflicts with deposition.** §5 calibrates a deposition sink; with a sink active, the atmospheric inventory \(\int_{\mathbb R^3}c\,dV\) falls below the emitted mass once deposition starts. Pending the thesis [1], the constraint is therefore best read as a **normalization/calibration convention of the reduced model** — the emitted quantity being itself « solution d'un modèle de traitement au niveau du rang de culture » — not as a theorem derived from a balance law.
 4. **The three audited sources state three different conservation objects as printed:** 2006 — global volume integral of \(c\) over \(\mathbb R^3\); 2008 — \(C=\int_{\mathbb R^2}c^+\,d\sigma\) with two printed alternatives for \(c^+\) (not dimensionally equivalent); 2009 — \(K\), \(C_g\), \(C_a\) with printed element mismatches. A single unambiguous historical conserved quantity has **not** been identified across the corpus as printed; the reconstruction must not average or silently reconcile the three.
 5. **The founding Note itself documents the metric failures** (non-separation, non-symmetry, triangle inequality), consistent with the project's audited understanding of \(T_{\rm proj}\).
@@ -299,7 +322,7 @@ This derivation establishes a conditional conservation statement for a regular c
 
 To resolve the historical question:
 
-1. Obtain verifiable full text for the primary sources and transcribe their governing near-/far-field equations and definitions verbatim, preserving notation. Status: 2006 §1–§5 transcribed from the open-access publisher PDF (§7 above), with text-layer caveats; 2008 §2.1–2.2 transcribed from an accessible scan (§6; publisher-hosted copy still unavailable); 2009 transcribed from the publisher version of record (§6); thesis §7.1.3 and §7.3 transcribed from a third-party mirror and summarized in [the thesis audit](43-audit-these-brun-conservation-g0s.md). Still to authenticate the thesis binary in Git against HAL and to transcribe the JESA 2010 version of record.
+1. Obtain verifiable full text for the primary sources and transcribe their governing near-/far-field equations and definitions verbatim, preserving notation. Status: 2006 §1–§5 transcribed from the open-access publisher PDF (§7 above), with text-layer caveats; 2008 §2.1–2.2 transcribed from an accessible scan (§6; publisher-hosted copy still unavailable); designated JESA comparison text transcribed from the versioned HAL manuscript (§6; publisher-version identity not independently verified); thesis §7.1.3 and §7.3 transcribed from a third-party mirror and summarized in [the thesis audit](43-audit-these-brun-conservation-g0s.md). Still to authenticate the thesis binary in Git against HAL and to transcribe the JESA 2010 version of record.
 2. Inspect the versioned thesis binary and verify its title page, pagination, identity and redistribution rights. The thesis text found in the mirror explicitly gives Eqs. (7.12)–(7.13), p. 129, but the mirror is not proof that the Git binary is identical to the HAL file.
 3. **Decision for the J-DriftX reconstruction (not an attribution of historical intent):** use a mass inventory, not a flux, for the (c^+,M_C) definition. Retain the vertically integrated branch (c^+(x,y)=\int_{z>H}c_{loc}(x,y,z)\,dz), then define (M_C=\int_{\Omega_{xy}}c^+\,dx\,dy). Under ([c_{loc}]=\mathrm{kg\,m^{-3}}), this gives ([c^+]=\mathrm{kg\,m^{-2}}) and ([M_C]=\mathrm{kg}). Do not retain (u^+_{loc}c_{loc}) as an equivalent branch: it is dimensionally incompatible because (u^+_{loc}) is dimensionless. The editorial corrections and their limits are documented in [the thesis audit, §3.2](43-audit-these-brun-conservation-g0s.md#32-correction-recommandee-pour-une-reconstruction-coherente-avec-impact-minimal-sur-la-these). The original printed equations remain transcribed unchanged in the audit; this is a reconstruction decision, not proof of authorial intent or of conservation by the historical model.
 4. Derive the specific coordinate map and its Jacobian only if the historical equations define a regular map on the stated domain. The one setting where the map is fully explicit — the uniform reference field — is now constructed in [docs/37](37-transformation-tau-eta-cas-uniforme.md), together with the conditional flux theorem and the rate/inventory distinction.
