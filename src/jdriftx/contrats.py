@@ -226,7 +226,7 @@ class ReliefMntAscii:
 
         Raises:
             ValueError: formes differentes, point hors emprise ou cellule
-                sans donnee touchee par l interpolation.
+                sans donnee a poids non nul dans l interpolation.
         """
         x_arr = np.asarray(x, dtype=float)
         y_arr = np.asarray(y, dtype=float)
@@ -252,19 +252,20 @@ class ReliefMntAscii:
         z10 = self.altitudes[r0, i1]
         z01 = self.altitudes[r1, i0]
         z11 = self.altitudes[r1, i1]
-        if self.sans_donnee is not None:
-            proches = (z00, z10, z01, z11)
-            if any(np.any(coin == self.sans_donnee) for coin in proches):
-                msg = "Interpolation sur une cellule sans donnee."
-                raise ValueError(msg)
         tx = colonne - i0
         ty = ligne - j0
-        z = (
-            z00 * (1.0 - tx) * (1.0 - ty)
-            + z10 * tx * (1.0 - ty)
-            + z01 * (1.0 - tx) * ty
-            + z11 * tx * ty
-        )
+        p00 = (1.0 - tx) * (1.0 - ty)
+        p10 = tx * (1.0 - ty)
+        p01 = (1.0 - tx) * ty
+        p11 = tx * ty
+        if self.sans_donnee is not None:
+            if any(
+                np.any((coin == self.sans_donnee) & (poids > 0.0))
+                for coin, poids in ((z00, p00), (z10, p10), (z01, p01), (z11, p11))
+            ):
+                msg = "Interpolation sur une cellule sans donnee."
+                raise ValueError(msg)
+        z = z00 * p00 + z10 * p10 + z01 * p01 + z11 * p11
         return np.asarray(z, dtype=float)
 
 
