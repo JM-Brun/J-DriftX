@@ -31,15 +31,13 @@ from jdriftx.benchmarks import (
     retirer_metrique,
 )
 from jdriftx.similitude import concentration_panache
+from jdriftx.source import SourcePanache
 
 
 def _cas_valide() -> CasS0:
     """Cas S0 valide minimal pour les tests."""
     return CasS0(
-        debit=2.0,
-        u=3.0,
-        classe="C",
-        hauteur=1.0,
+        source=SourcePanache(debit=2.0, u=3.0, classe="C", hauteur=1.0),
         arcs=(100.0, 200.0),
         positions_laterales=(-50.0, 0.0, 50.0),
         z_mesure=1.5,
@@ -84,13 +82,15 @@ class _CasVide(_CasT):
 class TestCasS0:
     def test_refuse_vent_non_positif(self) -> None:
         """Given un vent nul, When construction, Then refus."""
+        cas = _cas_valide()
         with pytest.raises(ValueError, match="vent"):
-            replace(_cas_valide(), u=0.0)
+            replace(cas, source=replace(cas.source, u=0.0))
 
     def test_refuse_debit_non_positif(self) -> None:
         """Given un debit nul, When construction, Then refus."""
+        cas = _cas_valide()
         with pytest.raises(ValueError, match="debit"):
-            replace(_cas_valide(), debit=0.0)
+            replace(cas, source=replace(cas.source, debit=0.0))
 
     def test_refuse_arc_non_positif(self) -> None:
         """Given un arc nul, When construction, Then refus."""
@@ -114,13 +114,15 @@ class TestCasS0:
 
     def test_refuse_classe_inconnue(self) -> None:
         """Given une classe inexistante, When construction, Then refus."""
+        cas = _cas_valide()
         with pytest.raises(ValueError, match="Z"):
-            replace(_cas_valide(), classe="Z")
+            replace(cas, source=replace(cas.source, classe="Z"))
 
     def test_refuse_hauteur_negative(self) -> None:
         """Given une hauteur negative, When construction, Then refus."""
+        cas = _cas_valide()
         with pytest.raises(ValueError, match="hauteur"):
-            replace(_cas_valide(), hauteur=-1.0)
+            replace(cas, source=replace(cas.source, hauteur=-1.0))
 
     def test_refuse_z_mesure_negative(self) -> None:
         """Given une altitude de mesure negative, When construction, Then refus."""
@@ -131,7 +133,7 @@ class TestCasS0:
         """Given un cas valide, When affectation, Then refus."""
         cas = _cas_valide()
         with pytest.raises(AttributeError):
-            cas.u = 5.0  # type: ignore[misc]
+            cas.z_mesure = 2.0  # type: ignore[misc]
 
 
 class TestGrilleEtVerite:
@@ -150,10 +152,10 @@ class TestGrilleEtVerite:
             x=np.array([p.x for p in points]),
             y=np.array([p.y for p in points]),
             z=np.array([p.z for p in points]),
-            debit=cas.debit,
-            u=cas.u,
-            classe=cas.classe,
-            hauteur=cas.hauteur,
+            debit=cas.source.debit,
+            u=cas.source.u,
+            classe=cas.source.classe,
+            hauteur=cas.source.hauteur,
         )
         np.testing.assert_array_equal(cas.verite(points), attendu)
 

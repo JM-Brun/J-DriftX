@@ -24,7 +24,7 @@ from typing import ClassVar
 import numpy as np
 
 from jdriftx.similitude import concentration_panache
-from jdriftx.stabilite import ClasseStabilite
+from jdriftx.source import SourcePanache
 
 __all__ = [
     "CAS_S0_DEFAUT",
@@ -75,10 +75,8 @@ class CasS0(CasSynthetique):
     """Cas analytique S0 (docs/21, S0-a) : panache gaussien en vent uniforme.
 
     Attributs :
-        debit : debit massique d emission (kg s^-1), strictement positif.
-        u : vitesse du vent uniforme (m s^-1), strictement positive.
-        classe : classe de stabilite de Pasquill (A a F).
-        hauteur : hauteur effective de la source (m), positive ou nulle.
+        source : valeur source du panache (debit, vent, classe, hauteur),
+            dont les invariants sont portes par SourcePanache (docs/41).
         arcs : distances sous le vent des arcs de mesure (m), toutes
             strictement positives, en ordre croissant strict.
         positions_laterales : coordonnees y des prelevements (m), non vide.
@@ -88,25 +86,18 @@ class CasS0(CasSynthetique):
     identifiant: ClassVar[str] = "S0"
     libelle: ClassVar[str] = "Panache gaussien en vent uniforme (docs/21, S0-a)"
 
-    debit: float
-    u: float
-    classe: str
-    hauteur: float
+    source: SourcePanache
     arcs: tuple[float, ...]
     positions_laterales: tuple[float, ...]
     z_mesure: float
 
     def __post_init__(self) -> None:
-        """Valide les invariants du cas, sinon leve une ValueError."""
-        if self.u <= 0.0:
-            msg = "La vitesse du vent doit etre strictement positive."
-            raise ValueError(msg)
-        if self.debit <= 0.0:
-            msg = "Le debit d emission doit etre strictement positif."
-            raise ValueError(msg)
-        if self.hauteur < 0.0:
-            msg = "La hauteur de source doit etre positive ou nulle."
-            raise ValueError(msg)
+        """Valide les invariants du cas, sinon leve une ValueError.
+
+        Les invariants de la source (debit, vent, classe, hauteur) sont
+        portes par SourcePanache : le cas ne revalide pas ce que la
+        valeur partagee garantit deja (docs/41).
+        """
         if self.z_mesure < 0.0:
             msg = "L altitude de mesure doit etre positive ou nulle."
             raise ValueError(msg)
@@ -122,7 +113,6 @@ class CasS0(CasSynthetique):
         if not self.positions_laterales:
             msg = "Au moins une position laterale est requise."
             raise ValueError(msg)
-        ClasseStabilite(self.classe)
 
     def points(self) -> tuple[PointMesure, ...]:
         """Grille croisee arcs x positions laterales a z_mesure."""
@@ -148,10 +138,10 @@ class CasS0(CasSynthetique):
             x=xs,
             y=ys,
             z=zs,
-            debit=self.debit,
-            u=self.u,
-            classe=self.classe,
-            hauteur=self.hauteur,
+            debit=self.source.debit,
+            u=self.source.u,
+            classe=self.source.classe,
+            hauteur=self.source.hauteur,
         )
 
 
@@ -202,10 +192,7 @@ def retirer_cas(identifiant: str) -> None:
 
 
 CAS_S0_DEFAUT: CasS0 = CasS0(
-    debit=2.0,
-    u=3.0,
-    classe="C",
-    hauteur=1.0,
+    source=SourcePanache(debit=2.0, u=3.0, classe="C", hauteur=1.0),
     arcs=(100.0, 200.0, 400.0, 800.0),
     positions_laterales=(-50.0, 0.0, 50.0),
     z_mesure=1.5,

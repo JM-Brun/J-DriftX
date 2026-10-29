@@ -45,6 +45,7 @@ from jdriftx.experiences.uniforme import ChampUniforme, ScenarioUniforme, resoud
 from jdriftx.metric import temps_premiere_arrivee_1d
 from jdriftx.periodic_transport import periodic_sine_solution
 from jdriftx.similitude import concentration_panache, sigma_y, sigma_z
+from jdriftx.source import SourcePanache
 from jdriftx.stabilite import ClasseStabilite
 
 
@@ -329,10 +330,12 @@ def _cas_s0(draw):
     arcs_tires = draw(st.sets(st.floats(100.0, 2000.0), min_size=nombre_arcs, max_size=nombre_arcs))
     positions = draw(st.lists(st.floats(-100.0, 100.0), min_size=1, max_size=5))
     return CasS0(
-        debit=draw(st.floats(0.1, 5.0)),
-        u=draw(st.floats(0.5, 10.0)),
-        classe=draw(st.sampled_from(tuple(ClasseStabilite))),
-        hauteur=draw(st.floats(0.0, 50.0)),
+        source=SourcePanache(
+            debit=draw(st.floats(0.1, 5.0)),
+            u=draw(st.floats(0.5, 10.0)),
+            classe=draw(st.sampled_from(tuple(ClasseStabilite))),
+            hauteur=draw(st.floats(0.0, 50.0)),
+        ),
         arcs=tuple(sorted(arcs_tires)),
         positions_laterales=tuple(positions),
         z_mesure=draw(st.floats(0.0, 20.0)),
