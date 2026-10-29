@@ -1,4 +1,4 @@
-# Comparaison JESA 2010 / manuscrit HAL 2009 — relevé vérifiable
+# Relevé du manuscrit HAL 2009 en vue de la comparaison avec JESA 2010
 
 **Statut et périmètre :** cette note relève les équations du **manuscrit auteur STIC & Environnement 2009**, PDF `MO2009-PUB00026817-1.pdf`, dont le binaire est versionné dans `raw/2009-bozon-sinfort-mohammadi-driftx-hal.pdf` (Git blob `e87d4eec066f27d8935302fc412f0d7e20cf692f`, SHA-256 `e102ff7a98a5489e258ff6dd82c9d5d2bf6542475ab47c7c250c2c5ae646745d`). Son extraction existe dans `raw/extracts/2009-bozon-sinfort-mohammadi-driftx-hal.txt`. **Ce PDF n'est pas le PDF final JESA 2010** : son frontispice identifie HAL `hal-00468863v1`. Le mainteneur a confirmé que le PDF final JESA a déjà été obtenu par une voie appropriée, mais son binaire distinct n'est pas identifié dans `raw/` de cette branche. Ne pas relancer l'acquisition ni demander un nouvel upload ; retrouver le chemin/provenance de la copie déjà obtenue dans les éléments archivés. La présente note documente le manuscrit 2009 et prépare la comparaison ; elle ne prétend pas avoir comparé les fac-similés JESA/manuscrit.
 
