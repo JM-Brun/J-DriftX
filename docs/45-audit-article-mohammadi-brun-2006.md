@@ -1,6 +1,6 @@
 # 45 — Audit de l'article Mohammadi & Brun (2006)
 
-**Périmètre :** lecture critique de l'extraction texte versionnée du PDF éditeur, pages imprimées 634–638. Ce document sépare ce qui est explicitement imprimé dans l'extraction, les conséquences mathématiques et les vérifications encore nécessaires sur le fac-similé. L'accès direct au PDF éditeur a renvoyé une erreur 403 pendant cette passe ; les figures et la typographie des équations n'ont donc pas été vérifiées visuellement ici. L'extraction brute n'est pas une transcription fiable des formules lorsque les symboles sont dégradés.
+**Périmètre :** lecture critique de l'extraction texte versionnée du PDF éditeur, pages imprimées 634–638. Le PDF éditeur est déjà présent dans `raw/2006-mohammadi-brun-crmeca.pdf` ; l'erreur 403 observée le 29 octobre 2026 concerne l'accès web automatisé à l'URL officielle, pas l'absence de la source dans le dépôt. Les figures et la typographie des équations restent à contrôler visuellement depuis le binaire versionné. L'extraction brute n'est pas une transcription fiable des formules lorsque les symboles sont dégradés.
 
 ## Source et méthode
 
@@ -107,7 +107,7 @@ En parallèle, le projet doit corriger ou circonscrire les hypothèses non démo
 ## 8. Vérifications encore ouvertes
 
 - [ ] Inspecter visuellement les cinq pages du PDF éditeur et confirmer toutes les équations, signes, indices et figures.
-- [ ] Authentifier le binaire versionné par comparaison SHA-256 avec le PDF officiel téléchargé.
+- [ ] Si un exemplaire officiel de référence déjà obtenu est disponible dans les éléments de provenance, comparer son SHA-256 à celui du binaire versionné. Ne pas confondre un blob SHA Git avec le SHA-256 du fichier ; ne pas relancer l'acquisition uniquement à cause du 403 de l'outil de consultation.
 - [ ] Reconstituer l'équation (1) d'assimilation et l'équation (4) de potentiel à partir du fac-similé.
 - [ ] Vérifier les unités et les bilans du modèle local, du modèle réduit et de la source mobile.
 - [ ] Distinguer clairement résultats analytiques, résultats synthétiques, comparaison à une EDP et validation terrain.
