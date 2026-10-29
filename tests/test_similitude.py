@@ -6,6 +6,7 @@ from math import erf, exp, pi, sqrt
 import numpy as np
 import pytest
 
+from jdriftx.stabilite import ClasseStabilite
 from jdriftx.similitude import (
     concentration_panache,
     concentration_puff,
@@ -290,10 +291,12 @@ def test_panache_against_closed_form_oracle_independent_of_package() -> None:
     zs = (0.0, 1.5, 12.0)
     debit, u, hauteur = 2.0, 3.0, 1.0
 
-    # When — la référence est évaluée par une expression scalaire autonome.
-    # Coefficients ruraux de Briggs classe C, fixés pour ce test de régression.
-    sy = 0.11 * x / sqrt(1.0 + 0.0001 * x)
-    sz = 0.08 * x / sqrt(1.0 + 0.0002 * x)
+    # When — les coefficients sont lus depuis la source de vérité du projet.
+    a, d_y = ClasseStabilite.C.coeff_sigma_y
+    forme_z, b, d_z = ClasseStabilite.C.coeff_sigma_z
+    assert forme_z.value == "sqrt"
+    sy = a * x / sqrt(1.0 + d_y * x)
+    sz = b * x / sqrt(1.0 + d_z * x)
     reference = np.array(
         [
             debit
