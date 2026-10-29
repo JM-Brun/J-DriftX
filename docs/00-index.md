@@ -9,7 +9,7 @@ plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21, 33, 47 et 51 existe
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-uniforme.md` (oracle indépendant et protocole de coûts S0 uniforme) et le numéro 51 à `51-reference-independante-cas-s0.md` (comparaison à référence indépendante EDP du cas S0 ; partagé avec `51-niveaux-preuve-mesures-benchmark.md`) et le numéro 53 à `53-evaluation-puff-source-impulsionnelle.md` (évaluation dirigée d'une source impulsionnelle) et le numéro 54 à `54-transitoire-puff-edp-transitoire-marginale.md` (EDP transitoire du puff : marche en temps de la marginale transverse). Prochain numéro disponible après cette attribution : 55. Les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques.
+Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-uniforme.md` (oracle indépendant et protocole de coûts S0 uniforme) et le numéro 51 à `51-reference-independante-cas-s0.md` (comparaison à référence indépendante EDP du cas S0 ; partagé avec `51-niveaux-preuve-mesures-benchmark.md`) et le numéro 53 à `53-evaluation-puff-source-impulsionnelle.md` (évaluation dirigée d'une source impulsionnelle) et le numéro 54 à `54-transitoire-puff-edp-transitoire-marginale.md` (EDP transitoire du puff : marche en temps de la marginale transverse). Prochain numéro disponible après cette attribution : 56. Les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques.
 
 ## Numéros en double
 
@@ -86,6 +86,7 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `52-gouvernance-documentaire.md` | Frontière public/privé, sources canoniques, scopes, règles anti-redondance et validation des références |
 | `53-evaluation-puff-source-impulsionnelle.md` | Évaluation dirigée d'une source impulsionnelle (puff) : temps dirigé t = τ, maximum temporel C(t), écart quantifié |
 | `54-transitoire-puff-edp-transitoire-marginale.md` | EDP transitoire du puff : marche en temps de la marginale transverse, structure longitudinale analytique, écarts calibrés |
+| `55-releve-equations-manuscrit-2009-comparaison-jesa.md` | Relevé vérifiable du manuscrit auteur HAL 2009 et protocole de comparaison différentielle avec l'article JESA 2010 ; comparaison éditeur encore non terminée |
 | `bibliographie/fondements-et-heritage.md` | Synthèse bibliographique : fondements et héritage |
 | `bibliographie/identification-source-assimilation.md` | Bibliographie thématique : identification de source et assimilation |
 | `bibliographie/metriques-et-analogies.md` | Bibliographie thématique : métriques et analogies |
