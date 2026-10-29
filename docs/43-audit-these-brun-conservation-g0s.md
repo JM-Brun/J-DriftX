@@ -1,6 +1,6 @@
 # Audit de la thèse de Brun — conservation du transport lointain (G0-S)
 
-**État au 29 octobre 2026 :** le texte de la thèse a pu être consulté via une copie miroir tierce. Les métadonnées bibliographiques concordent avec le titre attribué à la thèse de J.-M. Brun, mais **l'identité binaire entre cette copie miroir, le PDF poussé dans la PR et le fichier servi par HAL n'est pas encore vérifiée**. Les conclusions ci-dessous portent sur le texte extrait de la copie miroir, pas sur une comparaison cryptographique des fichiers.
+**État au 29 octobre 2026 :** le texte de la thèse et la page imprimée 129 (équations 7.12–7.13) ont été inspectés sur une copie miroir tierce ; la forme imprimée des deux alternatives de $c^+$ est donc vérifiée visuellement sur cette copie, pas seulement via OCR. Le chapitre Springer 2008 a également été inspecté dans une copie tierce du recueil et imprime la même alternative avec la même définition sans dimension de $u_l^+$. **L'identité binaire entre ces copies tierces, le PDF poussé dans la branche et le fichier servi par HAL n'est pas vérifiée.** Le diagnostic dimensionnel est néanmoins indépendant de l'identité binaire, car les deux textes consultés montrent la même formule.
 
 ## Sources et niveau de confiance
 
@@ -47,7 +47,18 @@ Sous l'interprétation [c_loc] = M L⁻³, cette hypothèse est étayée par la 
 - Branche intégrée en hauteur : [∫ c_loc dz] = M L⁻², donc [M_C] = M. Elle est dimensionnellement compatible avec un inventaire de masse.
 - Branche produit : la thèse définit u⁺_loc = max(0, (u_loc·ẑ)/||u_loc||). Ce rapport est sans dimension. Ainsi [u⁺_loc c_loc] = M L⁻³, puis [M_C] = M L⁻¹ après intégration surfacique.
 
-Les deux branches de (7.12) ne sont donc pas dimensionnellement équivalentes sous ces conventions. La deuxième ne représente pas une masse totale sans facteur ou normalisation supplémentaire. Le texte consulté ne permet pas d'identifier une convention alternative ou une normalisation supplémentaire qui résoudrait cet écart ; ne pas corriger l'équation par conjecture. La section 1.2.4 mentionne par ailleurs une concentration sans dimension dans le cadre de la formulation de Fick, mais la partie applicative locale précise explicitement kg·m⁻³ pour c_loc. Une autre convention ne doit donc pas être supposée pour (7.12) sans passage source qui la relie explicitement à cette variable.
+Les deux branches de (7.12) ne sont donc pas dimensionnellement équivalentes sous ces conventions. La deuxième ne représente pas une masse totale sans facteur ou normalisation supplémentaire. La section 1.2.4 mentionne par ailleurs une concentration sans dimension dans le cadre de la formulation de Fick, mais la partie applicative locale précise explicitement kg·m⁻³ pour $c_{loc}$ ; aucune relation ne redéfinit $c_{loc}$ comme une quantité sans dimension dans le chapitre 7.
+
+### 3.1 Comparaison avec le chapitre Springer de 2008 : l'ambiguïté est antérieure à la thèse
+
+La copie consultée du chapitre 14, §2.2, p. imprimée 248, présente déjà la même formule : $c^+(x,y)=\int_{z>H}c_l\,dz$ **ou** $c^+(x,y)=u_l^+c_l$, avec $u_l^+=\max(0,(u\cdot\hat z)/\|u\|)$, puis $C=\int_{\mathbb R^2}c^+\,d\sigma$ annoncé comme quantité à conserver. La thèse reprend cette construction en équations (7.12)–(7.13), p. 129, en changeant les indices en $loc$ et en nommant la quantité $M_C$. La formule est donc **déjà présente dans le chapitre de 2008** ; elle n'est ni une erreur d'OCR propre à la thèse, ni une faute isolée que l'on peut attribuer avec preuve à la rédaction de la thèse.
+
+Le diagnostic le plus fort justifié par les sources est une **incohérence dimensionnelle de la spécification publiée**, répétée dans le chapitre et la thèse. Cela constitue une erreur de formulation conceptuelle au niveau du modèle tel qu'il est écrit si les deux branches sont censées être des définitions alternatives de la même quantité conservée. On ne peut toutefois pas établir si la cause historique est une coquille répétée, une variable insuffisamment définie, ou une confusion entre une concentration pondérée par une direction et une quantité intégrée : les sources consultées ne donnent ni facteur de longueur manquant, ni autre convention dimensionnelle explicite. Il faut donc corriger la reconstruction de J-DriftX en choisissant et justifiant une définition cohérente, mais **ne pas modifier silencieusement la transcription historique ni affirmer que l'intention exacte des auteurs est connue**.
+
+Une correction dimensionnellement possible dépend de la quantité physique visée :
+- pour un inventaire de masse traversant un plan horizontal, $\int c_{loc}\,dz$ fournit une masse par aire, puis son intégrale surfacique fournit une masse ;
+- pour un débit massique vertical, il faudrait un flux contenant la composante verticale dimensionnée $u_z$ (en m/s), puis une intégrale surfacique fournirait une masse par temps, à intégrer dans le temps pour obtenir une masse ;
+- remplacer le cosinus directionnel $u_l^+$ par $u_z$ ne rendrait pas les deux branches équivalentes : cela définirait une autre grandeur physique. Aucune de ces réparations n'est confirmée comme intention des auteurs.
 
 ### 4. Ce que la thèse établit — et ce qu'elle n'établit pas
 
@@ -55,14 +66,14 @@ Les deux branches de (7.12) ne sont donc pas dimensionnellement équivalentes so
 |---|---|
 | Le modèle lointain introduit c⁺ par deux expressions alternatives | Explicitement imprimé, Eq. (7.12), p. 129 |
 | Le modèle vise à conserver M_C = ∫ c⁺ dσ | Explicitement affirmé, Eq. (7.13), p. 129 |
-| Les deux expressions de c⁺ sont équivalentes dimensionnellement | Non, sous les unités conventionnelles ci-dessus |
+| Les deux expressions de c⁺ sont équivalentes dimensionnellement | Non, sous les unités conventionnelles ci-dessus ; la même incohérence est imprimée dans le chapitre 2008 et reprise par la thèse |
 | Une masse globale est conservée sur chaque surface iso-temps de transport | Non démontré dans ce passage |
 | Le modèle historique définit une transformation globale régulière avec jacobien calculable | Non établi par les passages consultés |
 | L'affirmation de conservation est prouvée pour le modèle réduit général | Non : « should be conserved » est un objectif/propriété attendue, sans preuve dans ce passage |
 
 ## Conséquence pour l'audit G0-S
 
-Cette source permet de préciser le statut de l'affirmation historique, mais ne clôt pas l'issue #123. Conserver trois objets distincts :
+Le contrôle croisé de la thèse et du chapitre 2008 clôt l'ambiguïté sur l'origine de l'écart : la formule problématique est imprimée dans les deux sources, avec la même définition sans dimension de $u^+$. Le verdict est donc **incohérence dimensionnelle publiée et reproduite dans la thèse**, pas artefact OCR. L'intention corrective exacte reste non déterminable à partir de ces sources. Cela ne clôt pas l'issue #123, car le bilan de conservation du modèle lointain reste à démontrer. Conserver trois objets distincts :
 
 1. **Inventaire global de masse** du scalaire dans un volume ;
 2. **Quantité d'entrée M_C** du modèle réduit, construite à partir de c⁺ sur le plan horizontal ;
@@ -76,12 +87,12 @@ Le théorème conditionnel dans [la note de conservation](32-conservation-coordo
 - [ ] Confirmer le nombre de pages, les numéros de pages imprimées et la présence des pages 126–129.
 - [ ] Comparer le binaire à la copie miroir et au fichier HAL (empreinte SHA-256, puis comparaison du texte ou du PDF si les fichiers sont disponibles localement).
 - [ ] Vérifier les droits de redistribution du binaire présent dans Git.
-- [ ] Transcrire les équations (7.6)–(7.13) depuis le PDF versionné et archiver les références de page.
+- [x] Vérifier visuellement sur la copie miroir la page imprimée 129 et les équations (7.12)–(7.13) ; comparer la forme de (7.12) au chapitre 2008 p. 248. Résultat : formule identique et incohérence dimensionnelle présente dans les deux sources. Cette vérification ne certifie pas l'identité du PDF versionné avec HAL.
 - [ ] Poursuivre la recherche d'une définition explicite de la transformation de coordonnées et d'une preuve de conservation dans la thèse, sans présumer qu'elle existe.
 
 ## Références
 
 - Brun, J.-M. (2007 selon les notices et les références citées), *Modèles à complexité réduite de transport pour applications environnementales*, thèse, Université Montpellier II. Notice : https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c.
 - Copie miroir consultée : https://www.mcours.net/cours/pdf/yass2/yass2cllic260.pdf.
-- Brun, J.-M. & Mohammadi, B. (2008), « Reduced-Order Modelling of Dispersion », chap. 14, pp. 245–256, DOI https://doi.org/10.1007/978-1-4020-8758-5_14.
+- Brun, J.-M. & Mohammadi, B. (2008), « Reduced-Order Modelling of Dispersion », chap. 14, pp. 245–256, DOI https://doi.org/10.1007/978-1-4020-8758-5_14. Copie tierce consultée pour le contrôle de l'équation p. 248 : https://www.sgo.fi/~j/baylie/Partial%20Differential%20Equations%20-%20Modelling%20and%20Numerical%20Simulation%20-%20R.%20Glowinski%2C%20P.%20Neittaanmaki%20%28Springer%2C%202008%29%20WW.pdf (ce lien atteste le fichier consulté, pas une autorisation de redistribution).
 - Mohammadi, B. & Brun, J.-M. (2006), « Similitude généralisée et modélisation géométrique à complexité réduite », *Comptes Rendus Mécanique*, 334(10), 634–638, DOI https://doi.org/10.1016/j.crme.2006.06.007.
