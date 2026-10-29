@@ -4,6 +4,8 @@
 
 > **Lecture autonome des notions.** Pour les définitions explicites de métrique/quasi-distance, champ lipschitzien, temps de première arrivée, composante connexe sans stagnation, orbite périodique et contre-exemples élémentaires, voir le [glossaire mathématique autonome G0-S](30-glossaire-mathematique-autonome-g0s.md). Ce glossaire est maintenu dans le présent dépôt public ; aucun accès à un wiki externe n'est requis.
 
+**Articulation documentaire :** cette investigation est la référence actuelle pour les définitions et propriétés de $T_{\\mathrm{arr}}$ et $T_{\\mathrm{proj}}$. Pour la lecture critique des sources historiques et la trace de la première revue mathématique, voir [docs/14](14-revue-mathematique-ciblee.md) ; pour la dérivation conditionnelle de conservation et les bilans de flux, voir [docs/32](32-conservation-coordonnees-travel-time.md). Les résultats généraux ne doivent pas être copiés entre ces notes sans préciser leur portée et leur niveau de preuve.
+
 ## 1. Objet et réponse courte
 
 La question de l'issue #41 est : **quelles propriétés possède une fonction de temps de parcours dirigé définie par une dynamique explicite, et lesquelles ne découlent pas de sa seule définition ?**
