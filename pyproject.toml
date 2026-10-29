@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [{ name = "Jean-Marc Brun" }]
 requires-python = ">=3.12"
 license = "GPL-3.0-or-later"
-dependencies = ["numpy>=2.0"]
+dependencies = ["numpy>=2.0", "pydantic>=2.9"]
 keywords = [
   "atmospheric-dispersion",
   "reduced-order-modelling",
