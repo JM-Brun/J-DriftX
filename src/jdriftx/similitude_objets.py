@@ -7,8 +7,8 @@ ponctuels, sans dupliquer les equations ni casser l'API historique.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import NDArray
