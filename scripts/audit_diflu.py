@@ -125,11 +125,16 @@ def _audit_detection_flags(
                 "row": row_number,
                 "rule": "< LC flag requires literal NA in background-corrected concentration",
             })
-        elif flag == "significant" and corrected_column in fieldnames:
-            if corrected in {"", "NA", "< LC"}:
+        elif (
+            flag == "significant"
+            and corrected_column in fieldnames
+            and corrected in {"", "NA", "< LC"}
+        ):
                 violations.append({
                     "row": row_number,
-                    "rule": "significant flag requires a numeric background-corrected concentration",
+                    "rule": (
+                    "significant flag requires a numeric background-corrected concentration"
+                ),
                 })
         if flag == "< LC" and passage_column in fieldnames and passage != "NA":
             violations.append({
@@ -168,7 +173,7 @@ def _audit_times(
 def _audit_duplicate_keys(
     rows: list[dict[str, str | None]], fieldnames: list[str]
 ) -> dict[str, Any]:
-    """Count repeated descriptive sample keys without assuming they are scientifically independent."""
+    """Count repeated sample keys without assuming they are scientifically independent."""
     columns = [
         "experiment_id", "sampling_type", "sampling_id", "sampling_bag_id",
         "sampling_start_time", "sampling_end_time",
@@ -260,7 +265,9 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
         "sampling_bag_id_counts": {
             f"{kind}:{bag}": count for (kind, bag), count in sorted(bag_counts.items())
         },
-        "unique_experiment_count": len(experiment_counts) if "experiment_id" in fieldnames else None,
+        "unique_experiment_count": (
+            len(experiment_counts) if "experiment_id" in fieldnames else None
+        ),
         "rows_per_experiment": experiment_counts,
         "flag_counts": flag_counts,
         "missingness": _missingness(rows, fieldnames),
