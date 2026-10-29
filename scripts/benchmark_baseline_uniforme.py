@@ -149,13 +149,6 @@ def executer(repetitions: int) -> dict[str, Any]:
         for p, b, o in zip(points, baseline, oracle, strict=True)
     ]
 
-    def preparer_baseline() -> None:
-        preparer_cas()
-
-    def preparer_oracle() -> None:
-        # L'oracle est sans calibration : seule la source et la grille sont préparées.
-        preparer_cas()
-
     def baseline_workload() -> list[float]:
         return [evaluer_point(cas, point).concentration for point in points]
 
@@ -164,8 +157,7 @@ def executer(repetitions: int) -> dict[str, Any]:
 
     baseline_times = mesurer(baseline_workload, repetitions)
     oracle_times = mesurer(oracle_workload, repetitions)
-    baseline_setup = mesurer(preparer_baseline, repetitions)
-    oracle_setup = mesurer(preparer_oracle, repetitions)
+    preparation_partagee = mesurer(preparer_cas, repetitions)
     baseline_memory = mesurer_pic_allocations(baseline_workload)
     oracle_memory = mesurer_pic_allocations(oracle_workload)
 
@@ -207,8 +199,7 @@ def executer(repetitions: int) -> dict[str, Any]:
             "points": erreurs,
         },
         "cost": {
-            "preparation_baseline": baseline_setup,
-            "preparation_oracle": oracle_setup,
+            "preparation_partagee_source_et_grille": preparation_partagee,
             "full_grid_baseline": baseline_times,
             "full_grid_oracle": oracle_times,
             "per_query_median_ms_baseline": baseline_times["median_ms"] / len(points),
