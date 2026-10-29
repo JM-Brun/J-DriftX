@@ -4,6 +4,7 @@ import math
 
 import pytest
 
+from jdriftx.similitude import concentration_panache, concentration_puff
 from jdriftx.similitude_objets import (
     ParametresPanache,
     ParametresPuff,
@@ -23,8 +24,17 @@ def test_panache_objet_coherent_avec_api_vectorisee() -> None:
 
     obtenu = concentration_panache_au_point(point, parametres)
 
+    attendu = concentration_panache(
+        point.x,
+        point.y,
+        point.z,
+        debit=parametres.debit,
+        u=parametres.u,
+        classe=parametres.classe.value,
+        hauteur=parametres.hauteur,
+    )
     assert math.isfinite(obtenu)
-    assert obtenu > 0.0
+    assert obtenu == pytest.approx(float(attendu))
 
 
 def test_puff_objet_coherent_avec_api_vectorisee() -> None:
@@ -36,8 +46,18 @@ def test_puff_objet_coherent_avec_api_vectorisee() -> None:
 
     obtenu = concentration_puff_au_point(point, parametres)
 
+    attendu = concentration_puff(
+        point.x,
+        point.y,
+        point.z,
+        t=parametres.t,
+        masse=parametres.masse,
+        u=parametres.u,
+        classe=parametres.classe.value,
+        x0=parametres.x0,
+    )
     assert math.isfinite(obtenu)
-    assert obtenu > 0.0
+    assert obtenu == pytest.approx(float(attendu))
 
 
 @pytest.mark.parametrize(
