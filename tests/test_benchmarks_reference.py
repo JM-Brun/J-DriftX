@@ -1,23 +1,34 @@
-"""Tests du squelette de benchmark S0 (Given/When/Then)."""
+"""Tests du squelette de benchmarks : cas, metriques et evaluation."""
 
 from __future__ import annotations
 
 from dataclasses import replace
+from typing import ClassVar
 
 import numpy as np
 import pytest
 
-from jdriftx.benchmarks.reference import (
+from jdriftx.benchmarks import (
     CAS_S0_DEFAUT,
     CasS0,
+    CasSynthetique,
+    FAC2,
+    METRIQUES,
+    Metrique,
+    NMSE,
     PointMesure,
+    calculer_metriques,
+    construire_cas,
+    enregistrer_cas,
+    enregistrer_metrique,
     evaluer_prediction,
     fac2,
-    grille_mesures,
+    lister_cas,
     main,
     mesurer_cout_inference,
     nmse,
-    verite_s0,
+    retirer_cas,
+    retirer_metrique,
 )
 from jdriftx.similitude import concentration_panache
 
@@ -33,6 +44,41 @@ def _cas_valide() -> CasS0:
         positions_laterales=(-50.0, 0.0, 50.0),
         z_mesure=1.5,
     )
+
+
+class _CasT(CasSynthetique):
+    """Cas minimal valide, pour tester le registre."""
+
+    identifiant: ClassVar[str] = "T1"
+    libelle: ClassVar[str] = "cas de test"
+
+    def points(self) -> tuple[PointMesure, ...]:
+        """Un unique point sur l axe."""
+        return (PointMesure(x=100.0, y=0.0, z=1.5),)
+
+    def verite(self, points: tuple[PointMesure, ...]) -> np.ndarray:
+        """Verite constante strictement positive."""
+        return np.full(len(points), 1.0)
+
+
+class _CasNegatif(_CasT):
+    """Cas a verite non positive, pour tester les garde-fous du registre."""
+
+    identifiant: ClassVar[str] = "T2"
+
+    def verite(self, points: tuple[PointMesure, ...]) -> np.ndarray:
+        """Verite strictement negative."""
+        return np.full(len(points), -1.0)
+
+
+class _CasVide(_CasT):
+    """Cas a grille vide, pour tester les garde-fous du registre."""
+
+    identifiant: ClassVar[str] = "T3"
+
+    def points(self) -> tuple[PointMesure, ...]:
+        """Grille vide."""
+        return ()
 
 
 class TestCasS0:
@@ -91,15 +137,15 @@ class TestCasS0:
 class TestGrilleEtVerite:
     def test_grille_croisee(self) -> None:
         """Given 2 arcs x 3 positions, When grille, Then 6 points ordonnes."""
-        points = grille_mesures(_cas_valide())
+        points = _cas_valide().points()
         assert len(points) == 6
         assert points[0] == PointMesure(x=100.0, y=-50.0, z=1.5)
         assert points[5] == PointMesure(x=200.0, y=50.0, z=1.5)
 
     def test_verite_egal_solution_de_similitude(self) -> None:
-        """Given la grille du cas, When verite, Then elle est exactement la solution."""
+        """Given la grille du cas, When verite, Then exactement la solution."""
         cas = _cas_valide()
-        points = grille_mesures(cas)
+        points = cas.points()
         attendu = concentration_panache(
             x=np.array([p.x for p in points]),
             y=np.array([p.y for p in points]),
@@ -109,19 +155,63 @@ class TestGrilleEtVerite:
             classe=cas.classe,
             hauteur=cas.hauteur,
         )
-        np.testing.assert_array_equal(verite_s0(cas, points), attendu)
+        np.testing.assert_array_equal(cas.verite(points), attendu)
 
     def test_verite_positive_et_decroissante_sur_l_axe(self) -> None:
         """Given des mesures sur l axe, When verite, Then positive decroissante."""
-        cas = replace(_cas_valide(), arcs=(100.0, 200.0, 400.0, 800.0), positions_laterales=(0.0,))
-        vrais = verite_s0(cas, grille_mesures(cas))
+        cas = replace(
+            _cas_valide(), arcs=(100.0, 200.0, 400.0, 800.0), positions_laterales=(0.0,)
+        )
+        vrais = cas.verite(cas.points())
         assert np.all(vrais > 0.0)
         assert np.all(np.diff(vrais) < 0.0)
 
     def test_refuse_points_vides(self) -> None:
         """Given une grille vide, When verite, Then refus."""
         with pytest.raises(ValueError, match="point"):
-            verite_s0(_cas_valide(), ())
+            _cas_valide().verite(())
+
+
+class TestRegistreCas:
+    def test_s0_enregistre(self) -> None:
+        """Given import du module, When lister, Then S0 seul present."""
+        assert lister_cas() == ("S0",)
+
+    def test_construire_s0(self) -> None:
+        """Given l identifiant S0, When construire, Then cas par defaut."""
+        assert construire_cas("S0") == CAS_S0_DEFAUT
+
+    def test_refuse_cas_inconnu(self) -> None:
+        """Given un identifiant inconnu, When construire, Then refus."""
+        with pytest.raises(ValueError, match="enregistres"):
+            construire_cas("ZZ")
+
+    def test_enregistrement_puis_retrait(self) -> None:
+        """Given un cas valide, When ajouter puis retirer, Then cycle complet."""
+        enregistrer_cas(lambda: _CasT())
+        assert lister_cas() == ("S0", "T1")
+        retirer_cas("T1")
+        assert lister_cas() == ("S0",)
+
+    def test_refuse_doublon(self) -> None:
+        """Given un identifiant deja pris, When ajouter, Then refus."""
+        with pytest.raises(ValueError, match="deja enregistre"):
+            enregistrer_cas(lambda: CAS_S0_DEFAUT)
+
+    def test_refuse_verite_non_positive(self) -> None:
+        """Given une verite negative, When ajouter, Then refus."""
+        with pytest.raises(ValueError, match="strictement positive"):
+            enregistrer_cas(lambda: _CasNegatif())
+
+    def test_refuse_grille_vide(self) -> None:
+        """Given une grille vide, When ajouter, Then refus."""
+        with pytest.raises(ValueError, match="grille vide"):
+            enregistrer_cas(lambda: _CasVide())
+
+    def test_refuse_retrait_inconnu(self) -> None:
+        """Given un identifiant absent, When retirer, Then refus."""
+        with pytest.raises(ValueError, match="absent"):
+            retirer_cas("ZZ")
 
 
 class TestMetriques:
@@ -153,9 +243,9 @@ class TestMetriques:
     def test_refuse_verite_non_positive(self) -> None:
         """Given une verite avec un zero, When metriques, Then refus."""
         vrais = np.array([1.0, 0.0])
-        with pytest.raises(ValueError, match="positives"):
+        with pytest.raises(ValueError, match="positive"):
             fac2(vrais, vrais)
-        with pytest.raises(ValueError, match="positives"):
+        with pytest.raises(ValueError, match="positive"):
             nmse(vrais, vrais)
 
     def test_refuse_tailles_differentes(self) -> None:
@@ -172,20 +262,66 @@ class TestMetriques:
         with pytest.raises(ValueError, match="requis"):
             nmse(np.array([]), np.array([]))
 
+    def test_calcul_par_defaut(self) -> None:
+        """Given metriques par defaut, When calcul, Then fac2 et nmse."""
+        vrais = np.array([1.0, 2.0])
+        assert calculer_metriques(vrais, vrais) == {"fac2": 1.0, "nmse": 0.0}
+
+    def test_calcul_sous_ensemble(self) -> None:
+        """Given un sous-ensemble explicite, When calcul, Then lui seul."""
+        vrais = np.array([1.0, 2.0])
+        assert calculer_metriques(vrais, 2.0 * vrais, metriques=(NMSE,)) == {"nmse": 1.0}
+
+    def test_refuse_doublon_de_metriques(self) -> None:
+        """Given une metrique demandee deux fois, When calcul, Then refus."""
+        vrais = np.array([1.0])
+        with pytest.raises(ValueError, match="qu une seule fois"):
+            calculer_metriques(vrais, vrais, metriques=(FAC2, FAC2))
+
+    def test_refuse_aucune_metrique(self) -> None:
+        """Given aucune metrique, When calcul, Then refus."""
+        vrais = np.array([1.0])
+        with pytest.raises(ValueError, match="au moins une metrique"):
+            calculer_metriques(vrais, vrais, metriques=())
+
+    def test_enregistrement_puis_retrait(self) -> None:
+        """Given une metrique valide, When ajouter puis retirer, Then cycle."""
+        metrique = Metrique(nom="de_test", libelle="test", ancrage="test", calcul=fac2)
+        enregistrer_metrique(metrique)
+        assert METRIQUES["de_test"] is metrique
+        retirer_metrique("de_test")
+        assert "de_test" not in METRIQUES
+
+    def test_refuse_metrique_doublon(self) -> None:
+        """Given un nom deja pris, When ajouter, Then refus."""
+        doublon = Metrique(nom="fac2", libelle="x", ancrage="x", calcul=fac2)
+        with pytest.raises(ValueError, match="deja enregistree"):
+            enregistrer_metrique(doublon)
+
+    def test_refuse_retrait_metrique_inconnue(self) -> None:
+        """Given un nom absent, When retirer, Then refus."""
+        with pytest.raises(ValueError, match="absente"):
+            retirer_metrique("zz")
+
 
 class TestEvaluation:
-    def test_evaluer_prediction_auto_coherence(self) -> None:
-        """Given prediction = verite, When evaluation, Then FAC2 1 NMSE 0."""
-        vrais = verite_s0(_cas_valide(), grille_mesures(_cas_valide()))
+    def test_auto_coherence(self) -> None:
+        """Given prediction = verite, When evaluation, Then metriques parfaites."""
+        cas = CAS_S0_DEFAUT
+        vrais = cas.verite(cas.points())
         resultat = evaluer_prediction(vrais, vrais)
-        assert resultat.fac2 == 1.0
-        assert resultat.nmse == 0.0
-        assert resultat.effectif == 6
+        assert resultat.metriques == {"fac2": 1.0, "nmse": 0.0}
+        assert resultat.effectif == len(cas.points())
 
     def test_vers_dict(self) -> None:
-        """Given un resultat, When export, Then dict a trois cles."""
+        """Given un resultat, When export, Then dict avec effectif."""
         resultat = evaluer_prediction(np.array([1.0]), np.array([1.0]))
         assert resultat.vers_dict() == {"fac2": 1.0, "nmse": 0.0, "effectif": 1}
+
+    def test_sous_ensemble_metriques(self) -> None:
+        """Given un sous-ensemble demande, When evaluation, Then lui seul."""
+        resultat = evaluer_prediction(np.array([1.0]), np.array([2.0]), metriques=(NMSE,))
+        assert resultat.metriques == {"nmse": 1.0}
 
 
 class TestCommande:
@@ -194,10 +330,19 @@ class TestCommande:
         effectif = len(CAS_S0_DEFAUT.arcs) * len(CAS_S0_DEFAUT.positions_laterales)
         assert main() == {"fac2": 1.0, "nmse": 0.0, "effectif": effectif}
 
+    def test_main_cas_explicite(self) -> None:
+        """Given l identifiant S0 explicite, When commande, Then meme resultat."""
+        assert main("S0") == main()
+
+    def test_refuse_cas_inconnu(self) -> None:
+        """Given un identifiant inconnu, When commande, Then refus."""
+        with pytest.raises(ValueError, match="enregistres"):
+            main("ZZ")
+
     def test_cout_inference_positif(self) -> None:
         """Given la verite S0, When mesure de cout, Then positif et fini."""
         cas = CAS_S0_DEFAUT
-        points = grille_mesures(cas)
-        cout = mesurer_cout_inference(verite_s0, cas, points)
+        points = cas.points()
+        cout = mesurer_cout_inference(cas.verite, points)
         assert cout >= 0.0
         assert np.isfinite(cout)
