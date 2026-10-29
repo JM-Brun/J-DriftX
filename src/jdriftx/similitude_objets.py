@@ -64,9 +64,7 @@ class ParametresPuff:
         object.__setattr__(self, "classe", classe)
 
 
-def concentration_panache_au_point(
-    point: Point3D, source: SourcePanache
-) -> float:
+def concentration_panache_au_point(point: Point3D, source: SourcePanache) -> float:
     """Evalue le panache en un point et retourne une concentration en kg/m^3.
 
     Le point est exprime dans le repere sous le vent du modele de similitude.
@@ -84,9 +82,7 @@ def concentration_panache_au_point(
     return float(np.asarray(valeur).item())
 
 
-def concentration_puff_au_point(
-    point: Point3D, parametres: ParametresPuff
-) -> float:
+def concentration_puff_au_point(point: Point3D, parametres: ParametresPuff) -> float:
     """Evalue le puff en un point et retourne une concentration en kg/m^3."""
     valeur: NDArray[np.float64] = np.asarray(
         concentration_puff(
