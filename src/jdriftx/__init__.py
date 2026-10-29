@@ -1,4 +1,4 @@
-"""J-DriftX : reprise de recherche sur la dispersion atmosphérique à complexité réduite.
+"J-DriftX : reprise de recherche sur la dispersion atmosphérique à complexité réduite.
 
 Le projet étudie les formulations historiques de Drift-X (J.-M. Brun et
 B. Mohammadi, 2006-2009). La primitive actuelle de temps de parcours calcule
@@ -35,6 +35,13 @@ from jdriftx.experiences import (
 )
 from jdriftx.metric import pseudo_distance_uniforme, temps_transport
 from jdriftx.similitude import concentration_panache, concentration_puff, sigma_y, sigma_z
+from jdriftx.similitude_objets import (
+    ParametresPanache,
+    ParametresPuff,
+    Point3D,
+    concentration_panache_au_point,
+    concentration_puff_au_point,
+)
 from jdriftx.source import SourcePanache
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
@@ -50,6 +57,9 @@ __all__ = [
     "ManifesteScenario",
     "ModeleConcentration",
     "PanacheGaussien",
+    "ParametresPanache",
+    "ParametresPuff",
+    "Point3D",
     "Rectangle",
     "Relief",
     "ReliefMntAscii",
@@ -68,7 +78,9 @@ __all__ = [
     "VentUniforme",
     "__version__",
     "concentration_panache",
+    "concentration_panache_au_point",
     "concentration_puff",
+    "concentration_puff_au_point",
     "construire_manifeste",
     "linearite",
     "linearite_panache",
