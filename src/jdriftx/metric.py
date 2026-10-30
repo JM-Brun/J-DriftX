@@ -76,8 +76,9 @@ def temps_transport(
         Le calcul ne tient pas compte de l'orientation des vecteurs vitesse.
 
     Raises:
-        ValueError: si les formes sont incohérentes ou si une vitesse est sous
-            le seuil umin.
+        ValueError: si les formes sont incohérentes, si une vitesse est sous
+            le seuil umin, ou si le coût total n'est pas représentable en
+            float64.
     """
     pts = np.asarray(ligne, dtype=float)
     u_seg = np.asarray(vent, dtype=float)
@@ -106,12 +107,17 @@ def temps_transport(
         msg = "Les deplacements des segments doivent rester finis."
         raise ValueError(msg)
 
-    longueurs = np.hypot(segments[:, 0], segments[:, 1])
-    vitesses = np.hypot(u_seg[:, 0], u_seg[:, 1])
+    with np.errstate(over="ignore"):
+        longueurs = np.hypot(segments[:, 0], segments[:, 1])
+        vitesses = np.hypot(u_seg[:, 0], u_seg[:, 1])
+        cout = float(np.sum(longueurs / vitesses))
     if np.any(vitesses < umin):
         msg = f"Vent plus faible que umin ({umin} m/s) : temps de transport non defini."
         raise ValueError(msg)
-    return float(np.sum(longueurs / vitesses))
+    if not isfinite(cout):
+        msg = "Le cout total doit rester fini."
+        raise ValueError(msg)
+    return cout
 
 
 def pseudo_distance_uniforme(
@@ -142,7 +148,8 @@ def pseudo_distance_uniforme(
 
     Raises:
         ValueError: si un point ou le vecteur vitesse n'a pas la forme (2,),
-            ou si la vitesse est nulle.
+            si la vitesse est nulle, ou si le déplacement ou le coût déborde
+            du format flottant.
     """
     point_a = np.asarray(a, dtype=float)
     point_b = np.asarray(b, dtype=float)
@@ -163,8 +170,19 @@ def pseudo_distance_uniforme(
         msg = "Le champ uniforme doit avoir une vitesse non nulle."
         raise ValueError(msg)
 
+    with np.errstate(over="ignore", invalid="ignore"):
+        deplacement = point_b - point_a
+    if not np.all(np.isfinite(deplacement)):
+        msg = "Le deplacement b - a doit rester fini."
+        raise ValueError(msg)
+
     direction = vitesse / norme_vitesse
-    avance_longitudinale = float(np.dot(point_b - point_a, direction))
+    with np.errstate(over="ignore"):
+        avance_longitudinale = float(np.dot(deplacement, direction))
+    cout = avance_longitudinale / norme_vitesse
+    if not (isfinite(avance_longitudinale) and isfinite(cout)):
+        msg = "Le cout longitudinal doit rester fini."
+        raise ValueError(msg)
     if avance_longitudinale < 0.0:
         return float("inf")
-    return avance_longitudinale / norme_vitesse
+    return cout
