@@ -217,7 +217,7 @@ Les frontières publiques suivantes rejettent explicitement les booléens Python
 
 Les tableaux et séquences sont inspectés avant coercition en `float64`. Aucune formule de temps, équation d'intégration, convention d'accessibilité ou règle de rendu n'est modifiée.
 
-### Complément P0 — champs de concentration, métriques et grille EDP (issue #364, PR #365)
+### Complément P0 — champs de concentration, métriques et grille EDP (issue #364, PR #371)
 
 Le balayage des frontières C1/C5 a identifié des coercitions booléennes dans le champ passé à `constraints.positivite`, les observations des métriques FAC2/NMSE (y compris la façade `calculer_metriques`), et les tableaux et scalaires de `experiences.reference_independante`. La façade `benchmarks.reference.evaluer_prediction` conserve désormais le dtype de la vérité jusqu'à la validation des métriques.
 
