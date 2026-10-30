@@ -247,10 +247,7 @@ class CoefficientsDiffusion:
         """Refuse les coefficients booléens avant tout calcul de diffusion."""
         valeurs = (self.a_y, self.d_y, self.b_z, self.d_z)
         if any(isinstance(value, (bool, np.bool_)) for value in valeurs):
-            msg = (
-                "Les coefficients de diffusion doivent être numériques "
-                "(booléens exclus)."
-            )
+            msg = "Les coefficients de diffusion doivent être numériques (booléens exclus)."
             raise ValueError(msg)
 
     def derivee_sigma_y_carre(self, x: float) -> float:
