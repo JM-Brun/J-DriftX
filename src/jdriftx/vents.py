@@ -139,6 +139,10 @@ class VentProfilPuissance:
             rapport = z / self.z_reference
             u = self.u_reference * rapport**self.exposant
         except OverflowError:
+            # Ceinture de securite a priori inatteignable : avec un exposant
+            # valide dans [0, 1] et des entrees finies, rapport ** exposant
+            # ne peut pas deborder (la division flottante, elle, renvoie
+            # inf sans lever). A reevaluer si le domaine de l exposant change.
             u = math.inf
         if not np.isfinite(u) or u <= 0.0:
             log_u = math.log(self.u_reference) + self.exposant * (
