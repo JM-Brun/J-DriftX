@@ -23,9 +23,9 @@ def _verifie_coordonnees(x_arr: NDArray[np.floating], y_arr: NDArray[np.floating
 
 
 def _interpole_lineairement_stable(
-    a: NDArray[np.float64],
-    b: NDArray[np.float64],
-    poids: NDArray[np.float64],
+    a: ArrayLike,
+    b: ArrayLike,
+    poids: ArrayLike,
 ) -> NDArray[np.float64]:
     """Calcule une interpolation convexe sans différence ou somme débordante."""
     meme_signe = np.signbit(a) == np.signbit(b)
