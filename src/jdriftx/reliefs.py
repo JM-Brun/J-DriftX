@@ -28,10 +28,13 @@ def _interpole_lineairement_stable(
     poids: ArrayLike,
 ) -> NDArray[np.float64]:
     """Calcule une interpolation convexe sans différence ou somme débordante."""
-    meme_signe = np.signbit(a) == np.signbit(b)
+    a_arr = np.asarray(a, dtype=np.float64)
+    b_arr = np.asarray(b, dtype=np.float64)
+    poids_arr = np.asarray(poids, dtype=np.float64)
+    meme_signe = np.signbit(a_arr) == np.signbit(b_arr)
     with np.errstate(over="ignore", invalid="ignore"):
-        interpolation_meme_signe = a + poids * (b - a)
-        interpolation_signes_opposes = (1.0 - poids) * a + poids * b
+        interpolation_meme_signe = a_arr + poids_arr * (b_arr - a_arr)
+        interpolation_signes_opposes = (1.0 - poids_arr) * a_arr + poids_arr * b_arr
     return np.asarray(
         np.where(meme_signe, interpolation_meme_signe, interpolation_signes_opposes),
         dtype=float,
