@@ -138,8 +138,8 @@ class ReliefSynthetique:
 
     def altitude(self, x: ArrayLike, y: ArrayLike) -> NDArray[np.float64]:
         """Evalue l altitude du relief (m) aux points (x, y) : delegation pure."""
-        x_arr = np.asarray(x, dtype=float)
-        y_arr = np.asarray(y, dtype=float)
+        x_arr = _tableau_reel_fini(x, "Les coordonnees x")
+        y_arr = _tableau_reel_fini(y, "Les coordonnees y")
         _verifie_coordonnees(x_arr, y_arr)
         return terrain_surface(
             x_arr,
@@ -269,8 +269,8 @@ class ReliefMntAscii:
             ValueError: formes differentes, point hors emprise ou cellule
                 sans donnee a poids non nul dans l interpolation.
         """
-        x_arr = np.asarray(x, dtype=float)
-        y_arr = np.asarray(y, dtype=float)
+        x_arr = _tableau_reel_fini(x, "Les coordonnees x")
+        y_arr = _tableau_reel_fini(y, "Les coordonnees y")
         _verifie_coordonnees(x_arr, y_arr)
         nrows, ncols = self.altitudes.shape
         colonne = _coordonnees_normalisees(x_arr, self.x0, self.pas)
