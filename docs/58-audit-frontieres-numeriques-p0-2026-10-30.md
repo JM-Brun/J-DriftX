@@ -107,7 +107,7 @@ La solution exacte et le validateur partagé des deux solveurs normalisent les p
 
 
 
-**Analyse numérique différée — issue #388.** Des entrées finies admises par les domaines actuels peuvent encore provoquer un sous-débordement de `initial_sigma**2` (NaN au centre), un débordement de ce carré (`OverflowError`) ou une variance infinie qui annule artificiellement la concentration. La solution périodique peut aussi lever `OverflowError` en calculant `wave_number**2` alors que `time=0` ou `diffusivity=0` impose un facteur de décroissance exactement égal à 1. Ces cas demandent une dérivation numérique distincte ; ils ne sont pas corrigés par les seules validations d'entrée.
+**Analyse numérique différée — issue #388.** Des entrées finies admises par les domaines actuels peuvent encore provoquer un sous-débordement de `initial_sigma**2` (NaN au centre), un débordement de ce carré (`OverflowError`) ou une variance infinie qui annule artificiellement la concentration. La solution périodique pouvait aussi lever `OverflowError` en calculant `wave_number**2` alors que `time=0` ou `diffusivity=0` impose un facteur de décroissance exactement égal à 1. La PR #390 traite le facteur de décroissance par logarithmes et couvre également le cas où le taux de décroissance est trop grand pour être formé directement. Le calcul de la phase périodique et du centre advecté aux échelles extrêmes reste à auditer.
 
 ## 4. Adaptateurs et méthodes ponctuelles : contrat à clarifier avant correction
 
@@ -145,7 +145,7 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 |---|---|---|---|
 | 1 | `fields.vector_field`, `terrain.terrain_surface` | PR #380 — CI verte | Contrôles réels finis, booléens/complexes exclus |
 | 2 | `integrate_trajectory`, `gaussian_advection_diffusion` | PR #383 — CI verte | Contrôles réels finis, conversions et erreurs homogénéisées |
-| 3 | `periodic_sine_solution`, helper périodique partagé | PR #387 — CI à vérifier | Contrats réels finis, entiers NumPy et validation partagée |
+| 3 | `periodic_sine_solution`, helper périodique partagé | PR #387 — CI verte ; décroissance extrême : PR #390 | Contrats réels finis, entiers NumPy et validation partagée |
 | 4 | Adaptateurs `vents.py` | Corrigé #374 | Contrat ponctuel explicité et appliqué avant délégation |
 | 5 | `EchantillonneurBilineaire.concentration` | Corrigé #369 | Contrat ponctuel autonome contrôlé avant conversion en indice |
 
@@ -159,3 +159,8 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 - Analyse des débordements intermédiaires de la gaussienne et de la solution périodique : issue #388.
 
 **Conclusion actualisée :** les frontières #369, #374, #380 et #383 sont traitées en code et leurs CI sont vertes. La PR #387 traite le dernier bloc prioritaire du périmètre initial : `periodic_sine_solution` et son validateur partagé.
+
+
+### 3.10 Facteur de décroissance de la solution périodique — issue #388 / PR #390
+
+Le facteur analytique `exp(-K(2*pi/L)^2*t)` est évalué à partir du logarithme du taux `4*pi²*K*t/L²`. Les cas `K=0` et `t=0` sont traités exactement avec un facteur égal à 1 ; lorsque le taux dépasse la plage où son exponentielle finale est représentable, le facteur est posé à zéro conformément à l'arrondi IEEE-754 de `exp(-rate)`. Les tests vérifient les cas extrêmes et l'équivalence dans le régime usuel. Cette tranche ne traite pas encore la réduction de phase `k(x-ut)), ni la représentabilité du centre advecté.
