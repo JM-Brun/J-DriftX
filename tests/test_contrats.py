@@ -519,3 +519,21 @@ def test_mnt_ascii_interpolation_preserves_the_finite_convex_bound() -> None:
     # Then — les poids bilinéaires forment une combinaison convexe finie.
     assert np.isfinite(altitude)
     assert altitude == maximum
+
+
+
+def test_mnt_ascii_interpolation_preserves_a_tiny_active_corner() -> None:
+    """Un sommet de poids un conserve sa valeur malgré les autres échelles."""
+    # Given — le coin sud-ouest est subnormal et les trois autres coins sont énormes.
+    minimum = np.nextafter(0.0, 1.0)
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[maximum, maximum], [minimum, maximum]]),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+    # When — on évalue exactement au centre du coin sud-ouest.
+    altitude = relief.altitude(0.0, 0.0)
+    # Then — le poids un du coin actif doit préserver sa valeur subnormale.
+    assert altitude == minimum
