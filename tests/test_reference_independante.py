@@ -11,12 +11,12 @@ import jdriftx.experiences.reference_independante as module_reference
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, CasS0
 from jdriftx.contrats import PanacheGaussien
 from jdriftx.experiences.reference_independante import (
+    DIFFUSION_BRIGGS,
+    PARAMETRES_EDP_DEFAUT,
     CoefficientsDiffusion,
     ComparaisonReference,
-    DIFFUSION_BRIGGS,
     EchantillonneurBilineaire,
     GrilleEdp,
-    PARAMETRES_EDP_DEFAUT,
     ParametresEdp,
     PointComparaison,
     RouteEdp,
