@@ -59,7 +59,7 @@ from pydantic import BaseModel, ConfigDict
 
 from jdriftx.benchmarks.cas import CasS0, PointMesure
 from jdriftx.benchmarks.metriques import fac2, nmse
-from jdriftx.contrats import PanacheGaussien
+from jdriftx.concentrations import PanacheGaussien
 from jdriftx.similitude import sigma_y, sigma_z
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
