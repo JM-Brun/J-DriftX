@@ -20,6 +20,8 @@ from jdriftx.contrats import (
 from jdriftx.similitude import concentration_panache
 from jdriftx.source import SourcePanache
 from jdriftx.terrain import terrain_surface
+from jdriftx.trajectories import integrate_trajectory
+from jdriftx.vents import AdaptateurTrajectoire2D
 
 MNT_ASCII = """ncols 3
 nrows 3
@@ -310,6 +312,33 @@ def test_superposition_exige_un_panache() -> None:
     # Given / When / Then — au moins un panache est exigé.
     with pytest.raises(ValueError, match="au moins un panache"):
         SuperpositionPanaches(panaches=())
+
+
+def test_adaptateur_vent_stationnaire_alimente_les_trajectoires_2d() -> None:
+    """Un vent horizontal est utilisable sans adapter chaque appelant."""
+    # Given — un vent stationnaire horizontal échantillonné à hauteur fixe.
+    adaptateur = AdaptateurTrajectoire2D(
+        vent=VentUniforme(u=2.0, v=-1.0),
+        hauteur=10.0,
+    )
+
+    # When — l'intégrateur 2D consomme directement l'adaptateur callable.
+    temps, x, y = integrate_trajectory(adaptateur, 0.0, 0.0, 0.0, 1.0, 0.25)
+
+    # Then — la trajectoire respecte exactement le champ uniforme.
+    assert np.allclose(x, 2.0 * temps)
+    assert np.allclose(y, -temps)
+
+
+def test_adaptateur_vent_refuse_une_composante_verticale_non_nulle() -> None:
+    """Un intégrateur 2D ne doit pas masquer une vitesse verticale."""
+    class VentVertical:
+        def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
+            return 1.0, 0.0, 0.1
+
+    adaptateur = AdaptateurTrajectoire2D(vent=VentVertical(), hauteur=10.0)
+    with pytest.raises(ValueError, match="vent vertical"):
+        adaptateur(0.0, 0.0, 0.0)
 
 
 def test_le_typage_structurel_reconnait_les_contrats() -> None:
