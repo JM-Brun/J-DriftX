@@ -1,4 +1,4 @@
-"""Regression tests for strict numerical input validation in similitude functions."""
+"""Regressions de la validation stricte des entrees des fonctions de similitude."""
 
 from collections.abc import Callable
 
@@ -13,7 +13,9 @@ from jdriftx.similitude import concentration_panache, concentration_puff, sigma_
 def test_sigmas_rejettent_les_booleens_meles_aux_reels(
     fonction: Callable[..., np.ndarray], valeur: object
 ) -> None:
-    """A bool must not be silently promoted to an integer by NumPy."""
+    """Un booleen mele n'est pas promu silencieusement en entier par NumPy."""
+    # Given — une distance melant reels et booleens.
+    # When / Then — l'appel est refuse avant toute promotion de type.
     with pytest.raises(ValueError, match="booleens exclus"):
         fonction(valeur, "D")
 
@@ -35,14 +37,18 @@ def test_sigmas_rejettent_les_booleens_meles_aux_reels(
 def test_concentrations_rejettent_les_booleens_meles_aux_reels(
     fonction: Callable[..., np.ndarray], parametres: dict[str, object], axe: str
 ) -> None:
-    """Coordinates preserve strict bool exclusion before NumPy type promotion."""
+    """Les coordonnees preservent l'exclusion stricte des booleens avant promotion."""
+    # Given — une coordonnee melant un reel et un booleen.
     coordonnees = {"x": 500.0, "y": 0.0, "z": 1.0}
     coordonnees[axe] = [1.0, True]
+    # When / Then — l'appel est refuse avant toute promotion de type.
     with pytest.raises(ValueError, match="booleens exclus"):
         fonction(**coordonnees, **parametres)
 
 
 def test_tableau_numpy_de_type_booleen_reste_refuse() -> None:
-    """A homogeneous boolean ndarray remains rejected."""
+    """Un tableau NumPy homogene de booleens reste refuse."""
+    # Given — un tableau de booleens homogenes.
+    # When / Then — l'appel est refuse par le controle de dtype.
     with pytest.raises(ValueError, match="booleens"):
         sigma_y(np.array([True, False]), "D")
