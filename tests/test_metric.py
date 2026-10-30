@@ -516,13 +516,13 @@ def test_polyline_cost_rejects_overflowing_total() -> None:
 
 def test_1d_first_arrival_rejects_unrepresentable_positive_time() -> None:
     """Un temps positif qui deborde float64 est refuse explicitement."""
-    with pytest.raises(ValueError, match="premiere arrivee.*representable"):
+    with pytest.raises(ValueError, match=r"premiere arrivee.*representable"):
         temps_premiere_arrivee_1d(0.0, 1.0e308, 1.0e-308)
 
 
 def test_1d_first_arrival_rejects_time_underflow() -> None:
     """Un temps positif qui s'arrondirait a zero est refuse."""
-    with pytest.raises(ValueError, match="premiere arrivee.*representable"):
+    with pytest.raises(ValueError, match=r"premiere arrivee.*representable"):
         temps_premiere_arrivee_1d(0.0, 5.0e-324, 1.0e308)
 
 
@@ -546,5 +546,5 @@ def test_polyline_cost_rejects_unrepresentable_positive_time() -> None:
     """Un cout positif qui deborde float64 est refuse explicitement."""
     ligne = np.array([[0.0, 0.0], [1.0e308, 0.0]])
     vent = np.array([[1.0e-308, 0.0]])
-    with pytest.raises(ValueError, match="cout total.*representable"):
+    with pytest.raises(ValueError, match=r"cout total.*representable"):
         temps_transport(ligne, vent, umin=1.0e-309)
