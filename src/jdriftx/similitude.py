@@ -235,6 +235,7 @@ def concentration_puff(
             finie, si la distance parcourue u*t n'est pas representable, ou
             si la concentration theorique n'est pas representable en float64
             (singularite pres de la source).
+        FloatingPointError: si un ecart-type positif n'est pas representable en float64.
     """
     classe_stable = _valide_classe(classe)
     if not all(isfinite(valeur) for valeur in (t, masse, u, x0)):
