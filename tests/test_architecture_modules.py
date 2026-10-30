@@ -32,12 +32,16 @@ from jdriftx.contrats import (
     VentProfilPuissance as ContratVentProfil,
     VentUniforme as ContratVentUniforme,
 )
-from jdriftx.reliefs import ReliefMntAscii as ModeleReliefMnt
-from jdriftx.reliefs import ReliefPlat as ModeleReliefPlat
-from jdriftx.reliefs import ReliefSynthetique as ModeleReliefSynthetique
-from jdriftx.vents import VentDeChampPlan as ModeleVentChamp
-from jdriftx.vents import VentProfilPuissance as ModeleVentProfil
-from jdriftx.vents import VentUniforme as ModeleVentUniforme
+from jdriftx.reliefs import (
+    ReliefMntAscii as ModeleReliefMnt,
+    ReliefPlat as ModeleReliefPlat,
+    ReliefSynthetique as ModeleReliefSynthetique,
+)
+from jdriftx.vents import (
+    VentDeChampPlan as ModeleVentChamp,
+    VentProfilPuissance as ModeleVentProfil,
+    VentUniforme as ModeleVentUniforme,
+)
 
 
 def test_facade_historique_reexporte_les_implementations_canoniques() -> None:
