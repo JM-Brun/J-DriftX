@@ -164,3 +164,12 @@ def test_coefficients_diffusion_refusent_les_booleens(champ: str, booleen: bool 
     valeurs[champ] = booleen
     with pytest.raises(ValueError, match="booléens exclus"):
         CoefficientsDiffusion(**valeurs)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_pas_longitudinal_refuse_un_debut_booleen(booleen: bool | np.bool_) -> None:
+    """La distance initiale du pas longitudinal exclut les booléens."""
+    coefficients = CoefficientsDiffusion(a_y=0.08, d_y=0.0002, b_z=0.06, d_z=0.0003)
+    parametres = ParametresEdp(2.5, 2.0, 340.0, 240.0)
+    with pytest.raises(ValueError, match="booléen exclu"):
+        coefficients.pas_longitudinal(booleen, 800.0, parametres)
