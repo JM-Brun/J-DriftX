@@ -29,8 +29,6 @@ from jdriftx.experiences import (
 )
 from jdriftx.metric import pseudo_distance_uniforme, temps_transport
 from jdriftx.reliefs import ReliefMntAscii, ReliefPlat, ReliefSynthetique
-from jdriftx.vents import VentDeChampPlan, VentProfilPuissance, VentUniforme
-
 from jdriftx.similitude import concentration_panache, concentration_puff, sigma_y, sigma_z
 from jdriftx.similitude_objets import (
     ParametresPuff,
@@ -40,6 +38,7 @@ from jdriftx.similitude_objets import (
 )
 from jdriftx.source import SourcePanache
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
+from jdriftx.vents import VentDeChampPlan, VentProfilPuissance, VentUniforme
 
 __version__ = "0.1.0"
 
