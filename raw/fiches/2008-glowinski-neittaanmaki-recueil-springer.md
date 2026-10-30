@@ -88,7 +88,7 @@ Ce chapitre est une source primaire particulièrement importante pour le noyau h
 - [x] Identité du livre, éditeurs, année, collection, ISBN et pagination contrôlés.
 - [x] Présence et pagination du chapitre 14 confirmées dans la table des matières : p. 245–256.
 - [x] Première lecture du texte du chapitre 14 : objectif, architecture, hypothèses, contraintes, géométrie, exemples et limites consignés ci-dessus.
-- [x] Documenter la provenance historique de la copie consultée ; le binaire complet n'est plus conservé dans le dépôt.
+- [x] Documenter la provenance historique de la copie consultée ; le binaire complet est conservé dans `raw/` conformément à la décision du mainteneur (restauration exacte #264), sans préjuger des droits de redistribution.
 - [x] Ajouter une extraction analytique structurée dans `raw/extracts/2008-brun-mohammadi-springer-chap14-notes.txt`, avec provenance, pagination, limites et note de droits. Il ne s'agit pas d'une transcription OCR intégrale.
 - [ ] Si une transcription OCR intégrale est nécessaire, la produire localement à partir du PDF autorisé, puis vérifier les équations, figures et légendes sur le document original ; ne pas confondre texte OCR non relu et extraction validée.
 - [ ] Reporter les constats utiles dans la fiche dédiée du chapitre `raw/fiches/2008-brun-mohammadi-springer-chap14.md` et dans la synthèse documentaire `docs/04-revues-papiers-sources.md` si ces pages ne les intègrent pas déjà.
