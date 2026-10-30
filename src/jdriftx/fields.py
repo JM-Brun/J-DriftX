@@ -5,10 +5,46 @@ These fields are mathematical teaching examples, not meteorological simulations.
 
 from __future__ import annotations
 
+from numbers import Real
 from typing import Literal
 
 import numpy as np
 from numpy.typing import NDArray
+
+
+def _reel_fini(valeur: object, nom: str) -> float:
+    """Valide un scalaire réel fini et représentable en float64."""
+    if isinstance(valeur, (bool, np.bool_)) or not isinstance(valeur, Real):
+        raise ValueError(f"{nom} must be a finite real scalar (booleans and complex values excluded).")
+    try:
+        resultat = float(valeur)
+    except (OverflowError, TypeError, ValueError) as err:
+        raise ValueError(f"{nom} must be representable as finite float64.") from err
+    if not np.isfinite(resultat):
+        raise ValueError(f"{nom} must be finite.")
+    return resultat
+
+
+def _tableau_reel_fini(valeur: object, nom: str) -> NDArray[np.float64]:
+    """Convertit un tableau réel en float64 sans coercition booléenne ou textuelle."""
+    try:
+        brut = np.asarray(valeur)
+        valeurs_brutes = np.asarray(valeur, dtype=object)
+    except (TypeError, ValueError, OverflowError) as err:
+        raise ValueError(f"{nom} must be a real numeric array.") from err
+    if any(isinstance(element, (bool, np.bool_)) for element in valeurs_brutes.flat):
+        raise ValueError(f"{nom} must be a real numeric array (booleans excluded).")
+    if brut.dtype.kind not in "iuf":
+        raise ValueError(f"{nom} must be a real numeric array (complex and non-numeric values excluded).")
+    try:
+        with np.errstate(over="ignore", invalid="ignore"):
+            resultat = np.asarray(brut, dtype=np.float64)
+    except (TypeError, ValueError, OverflowError) as err:
+        raise ValueError(f"{nom} must be representable as float64.") from err
+    if not np.all(np.isfinite(resultat)):
+        raise ValueError(f"{nom} must contain only finite values.")
+    return resultat
+
 
 
 FieldKind = Literal["uniform", "shear", "radial"]
@@ -46,9 +82,6 @@ def vector_field(
     y_arr = _tableau_reel_fini(y, "y")
     if x_arr.shape != y_arr.shape:
         msg = "x and y must have identical shapes."
-        raise ValueError(msg)
-    if not np.all(np.isfinite(x_arr)) or not np.all(np.isfinite(y_arr)):
-        msg = "Coordinates must be finite."
         raise ValueError(msg)
     speed = _reel_fini(speed, "speed")
     angle_deg = _reel_fini(angle_deg, "angle_deg")
