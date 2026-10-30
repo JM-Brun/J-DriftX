@@ -4,8 +4,16 @@ import numpy as np
 import pytest
 
 from jdriftx.benchmarks.metriques import calculer_metriques, fac2, nmse
+from jdriftx.benchmarks.reference import evaluer_prediction
 from jdriftx.constraints import positivite
-from jdriftx.experiences.reference_independante import GrilleEdp, ParametresEdp, TrancheEdp
+from jdriftx.experiences.reference_independante import (
+    CoefficientsDiffusion,
+    GrilleEdp,
+    ParametresEdp,
+    SolutionEdp,
+    TrancheEdp,
+    derivee_sigma_carre,
+)
 
 
 @pytest.mark.parametrize(
@@ -93,3 +101,65 @@ def test_parametres_edp_refusent_les_scalaires_booleens(
     valeurs[champ] = booleen
     with pytest.raises(ValueError, match="booléens exclus"):
         ParametresEdp(**valeurs)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("champ", ["verite", "prediction"])
+def test_evaluer_prediction_refuse_les_vecteurs_booleens(champ: str) -> None:
+    """La façade de benchmark conserve le dtype jusqu'à la validation des métriques."""
+    verite: object = [1.0, 2.0]
+    prediction: object = [1.0, 2.0]
+    if champ == "verite":
+        verite = np.array([True, False])
+    else:
+        prediction = np.array([True, False])
+    with pytest.raises(ValueError, match="booleens exclus"):
+        evaluer_prediction(verite, prediction)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_tranche_edp_refuse_une_abscisse_booleenne(booleen: bool | np.bool_) -> None:
+    """L'abscisse de tranche est un scalaire réel, pas un booléen."""
+    with pytest.raises(ValueError, match="booléen exclu"):
+        TrancheEdp(x=booleen, champ=np.ones((2, 2)))
+
+
+@pytest.mark.parametrize("champ", ["x_entree", "pas_longitudinal"])
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_solution_edp_refuse_les_scalaires_booleens(champ: str, booleen: bool | np.bool_) -> None:
+    """L'entrée et le pas de la solution EDP excluent les booléens."""
+    valeurs: dict[str, object] = {
+        "x_entree": 100.0,
+        "pas_longitudinal": 0.5,
+        "abscisses_y": np.array([-1.0, 0.0, 1.0]),
+        "abscisses_z": np.array([0.0, 1.0]),
+        "tranches": (TrancheEdp(x=100.0, champ=np.ones((3, 2))),),
+    }
+    valeurs[champ] = booleen
+    with pytest.raises(ValueError, match="booléens exclus"):
+        SolutionEdp(**valeurs)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("champ", ["x", "coefficient", "d"])
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_derivee_sigma_carre_refuse_les_scalaires_booleens(
+    champ: str, booleen: bool | np.bool_
+) -> None:
+    """Les trois arguments de la dérivée analytique excluent les booléens."""
+    valeurs: dict[str, float | bool | np.bool_] = {"x": 100.0, "coefficient": 0.08, "d": 0.0002}
+    valeurs[champ] = booleen
+    with pytest.raises(ValueError, match="booléens exclus"):
+        derivee_sigma_carre(**valeurs)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("champ", ["a_y", "d_y", "b_z", "d_z"])
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_coefficients_diffusion_refusent_les_booleens(
+    champ: str, booleen: bool | np.bool_
+) -> None:
+    """Les coefficients de diffusion typés réels excluent les booléens."""
+    valeurs: dict[str, float | bool | np.bool_] = {
+        "a_y": 0.08, "d_y": 0.0002, "b_z": 0.06, "d_z": 0.0003
+    }
+    valeurs[champ] = booleen
+    with pytest.raises(ValueError, match="booléens exclus"):
+        CoefficientsDiffusion(**valeurs)  # type: ignore[arg-type]
