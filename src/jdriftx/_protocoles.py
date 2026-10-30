@@ -37,7 +37,11 @@ class Vent(Protocol):
     """
 
     def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
-        """Composantes (u, v, w) du vent (m s^-1) au point (x, y, z) (m)."""
+        """Composantes (u, v, w) au point (x, y, z), coordonnées réelles finies.
+
+        Les trois coordonnées sont des scalaires réels finis (booléens exclus),
+        y compris celles dont une implémentation concrète est indépendante.
+        """
         ...
 
 

@@ -26,6 +26,12 @@ def _reel_fini(valeur: object, nom: str) -> float:
     return resultat
 
 
+def _coordonnees_finies(*coordonnees: tuple[str, object]) -> None:
+    """Valide les coordonnées d'un point, même si le modèle en ignore certaines."""
+    for nom, valeur in coordonnees:
+        _reel_fini(valeur, f"La coordonnée {nom}")
+
+
 @overload
 def _composantes_finies(
     valeurs: object, nombre: Literal[2], contexte: str
@@ -66,6 +72,8 @@ class AdaptateurTrajectoire2D:
 
     def __call__(self, _temps: float, x: float, y: float) -> tuple[float, float]:
         """Retourne (u, v) au point (x, y, hauteur), si w est nul."""
+        _reel_fini(_temps, "Le temps de la trajectoire")
+        _coordonnees_finies(("x", x), ("y", y))
         u, v, w = _composantes_finies(self.vent.vitesse(x, y, self.hauteur), 3, "Le champ de vent")
         if w != 0.0:
             msg = "Un vent vertical ne peut pas etre adapte a une trajectoire 2D."
@@ -92,6 +100,7 @@ class VentUniforme:
 
     def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
         """Retourne le vent uniforme (u, v, 0) au point (x, y, z)."""
+        _coordonnees_finies(("x", x), ("y", y), ("z", z))
         return self.u, self.v, 0.0
 
 
@@ -123,6 +132,7 @@ class VentDeChampPlan:
             ValueError: si le champ delegue ne retourne pas deux composantes
                 reelles finies.
         """
+        _coordonnees_finies(("x", x), ("y", y), ("z", z))
         u, v = _composantes_finies(self.champ.vitesse(x, y), 2, "Le champ plan")
         return u, v, 0.0
 
@@ -168,6 +178,7 @@ class VentProfilPuissance:
             ValueError: si z est invalide ou si la vitesse calculee n'est pas
                 representable comme une valeur float64 finie et strictement positive.
         """
+        _coordonnees_finies(("x", x), ("y", y))
         z = _reel_fini(z, "La hauteur z")
         if z <= 0.0:
             raise ValueError("z doit etre strictement positif.")
