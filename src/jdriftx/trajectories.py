@@ -55,7 +55,9 @@ def integrate_trajectory(
         result = velocity(time, px, py)
         if not isinstance(result, tuple) or len(result) != 2:
             raise ValueError("velocity must return a pair of finite components.")
-        if not all(isinstance(component, Real) and not isinstance(component, bool) for component in result):
+        if not all(
+            isinstance(component, Real) and not isinstance(component, bool) for component in result
+        ):
             raise ValueError("velocity must return a pair of finite components.")
         components = (float(result[0]), float(result[1]))
         if not all(np.isfinite(component) for component in components):
