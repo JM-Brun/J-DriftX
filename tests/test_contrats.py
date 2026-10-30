@@ -87,8 +87,9 @@ def test_relief_synthetique_rejette_les_parametres_invalides(
     parametres: dict[str, object], message: str
 ) -> None:
     """Un relief invalide est refusé à la construction, pas à la première évaluation."""
+    configuration = {"kind": "hill", **parametres}
     with pytest.raises(ValueError, match=message):
-        ReliefSynthetique(kind="hill", **parametres)  # type: ignore[arg-type]
+        ReliefSynthetique(**configuration)  # type: ignore[arg-type]
 
 
 def test_reliefs_rejettent_les_coordonnees_non_finies() -> None:
