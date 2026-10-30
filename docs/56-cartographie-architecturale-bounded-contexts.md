@@ -84,6 +84,28 @@ Les corrections #311/#313/#314 sont intégrées et testées ; elles ne valident 
 - Ces tests établissent le rejet logiciel de certaines entrées ambiguës ; ils ne démontrent aucune propriété physique.
 
 **Interpolation bilinéaire MNT — correction présente sur `main`** : `ReliefMntAscii.altitude` délègue chaque interpolation linéaire à `_interpole_lineairement_stable`, qui utilise `a + t·(b − a)` pour deux valeurs de même signe et la forme pondérée pour des signes opposés. Cette sélection évite de faire dépendre le résultat retenu d'une expression intermédiaire susceptible de déborder. Les tests `test_mnt_ascii_interpolation_preserves_the_finite_convex_bound`, `test_mnt_ascii_interpolation_preserves_a_tiny_active_corner`, `test_mnt_ascii_interpolation_preserves_tiny_corner_at_grid_node` et `test_mnt_ascii_interpolation_handles_opposite_sign_extremes` couvrent les cas extrêmes correspondants. Il s'agit de garanties numériques ciblées sur l'interpolation, pas d'une validation topographique générale.
+
+### Complément P0 — cohérence des scalaires booléens (#343)
+
+Une revue complémentaire a identifié des frontières d'objets où `math.isfinite` ou
+`np.isfinite` étaient utilisés seuls. Ces fonctions considèrent les booléens comme
+des valeurs numériques finies ; elles ne suffisent donc pas à garantir qu'une
+coordonnée ou un paramètre déclaré numérique est réellement un scalaire réel.
+
+La tranche dédiée couvre :
+
+- C1 : `similitude_objets.Point3D` et `ParametresPuff` ;
+- C4 : `CasSynthetiqueS0` et les tableaux détenus par `DatasetS0`, avant conversion
+  en `float64` ;
+- C5 : `PointMesure` et `CasS0`.
+
+Les booléens Python et NumPy sont rejetés explicitement. Les champs entiers
+`graine` et `nombre_points` de `CasSynthetiqueS0` sont également vérifiés à la
+construction afin d'éviter une erreur différée au moment de la génération.
+Aucune équation, unité, convention de génération, tolérance ou hypothèse physique
+n'est modifiée. La validation de `SourcePanache` reste la référence déjà en place
+pour les scalaires physiques.
+
 ## 5. Séparation de `contrats.py` — soldée par #302
 
 L'item P1 « séparer progressivement `contrats.py` » est **déjà effectif** sur `main` : `contrats.py` est une façade de 26 lignes ré-exportant 11 noms ; les protocoles vivent dans `_protocoles.py` ; les implémentations dans `reliefs.py`, `vents.py`, `concentrations.py` ; les chemins d'import historiques sont conservés et couverts par un test d'identité. Rien à refaire ; les futures implémentations de contrat vont dans leur module dédié, la façade n'ajoute que des ré-exports.
@@ -117,7 +139,28 @@ Conclusion : l'inventaire interne est terminé ; la réduction de l'API racine e
 
 ## 8. Suites (P0 résiduel, P2/P3 de #303)
 
-### Complément P0 — autres expériences C4 (issue #347)
+### Complément P0 — frontières des champs et géométries (issue #345, PR #346)
+
+La recherche des usages de `math.isfinite` a révélé un autre cas de coercition
+implicite : les booléens Python et NumPy sont des valeurs finies pour ces
+fonctions. Le correctif ciblé couvre :
+
+- C1 : paramètres et coordonnées de `ChampFonctionCourant` ;
+- C4 : composantes du vent de `ChampUniforme`, coordonnées de
+  `ScenarioUniforme`, paramètres géométriques de `Rectangle`, ainsi que les
+  points de mesures et de trajectoire de `ScenarioReconstruction` ;
+- l'appel direct à `Rectangle.contient`, qui doit respecter le même contrat
+  que la construction des scénarios.
+
+Les booléens sont rejetés avant les calculs de phase, de norme ou de
+comparaison géométrique. Les formules du champ, les unités, les coordonnées
+et les hypothèses des expériences restent inchangées. Les validateurs
+`_valide_point` restent locaux à leurs contextes : cette tranche ne remet pas
+en cause l'arbitrage antérieur de ne pas introduire de module transversal
+uniquement pour factoriser de petits helpers.
+
+
+### Complément P0 — autres expériences C4 (issue #347, PR #348)
 
 L'audit des autres configurations d'expérience a étendu le même contrôle aux
 frontières suivantes :
@@ -135,7 +178,6 @@ Les entrées booléennes Python et NumPy sont rejetées avant les calculs.
 Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
 aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
 n'introduit aucun validateur transversal.
-
 
 - **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
