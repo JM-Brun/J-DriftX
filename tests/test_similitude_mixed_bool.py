@@ -19,7 +19,7 @@ def test_sigmas_rejettent_les_booleens_meles_aux_reels(
 
 
 @pytest.mark.parametrize(
-    "fonction,parametres",
+    ("fonction", "parametres"),
     [
         (
             concentration_panache,
