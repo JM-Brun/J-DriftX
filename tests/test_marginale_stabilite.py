@@ -13,8 +13,6 @@ from jdriftx.similitude import sigma_y, sigma_z
 
 def test_marginale_fermee_preserves_representable_peak_at_extreme_widths() -> None:
     """Le pic fini reste calculable malgré le sous-débordement de sy*sz."""
-    from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
-
     source = SourceImpulsionnelle(masse=1e-300, u=3.0, classe="C")
     grille = GrilleEdp(
         abscisses_y=np.array([-1.0, 0.0, 1.0]),
@@ -33,8 +31,6 @@ def test_marginale_fermee_preserves_representable_peak_at_extreme_widths() -> No
 
 def test_marginale_fermee_matches_direct_formula_at_moderate_scales() -> None:
     """La formulation logarithmique est équivalente à la formule directe usuelle."""
-    from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
-
     grille = GrilleEdp(
         abscisses_y=np.array([-50.0, 0.0, 50.0]),
         abscisses_z=np.array([0.0, 1.0, 2.0]),
@@ -56,8 +52,6 @@ def test_marginale_fermee_matches_direct_formula_at_moderate_scales() -> None:
 
 def test_marginale_fermee_rejects_unrepresentable_positive_peak() -> None:
     """Une concentration théorique hors float64 est refusée explicitement."""
-    from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
-
     source = SourceImpulsionnelle(masse=1e308, u=3.0, classe="C")
     grille = GrilleEdp(
         abscisses_y=np.array([-1.0, 0.0, 1.0]),
