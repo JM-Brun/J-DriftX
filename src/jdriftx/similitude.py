@@ -45,28 +45,53 @@ def _distance_sous_le_vent(x_arr: np.ndarray) -> np.ndarray:
 
 
 def _ecart_type_horizontal(x_arr: np.ndarray, classe_stable: ClasseStabilite) -> np.ndarray:
-    """Evalue la loi de Briggs rurale de sigma_y sur des distances validees.
-
-    Les coefficients sont lus depuis l'objet ClasseStabilite, source unique de
-    verite ; la classe et la distance ne sont pas revalidees ici.
-    """
+    """Evalue la loi de Briggs rurale sans debordement intermediaire."""
     a, d = classe_stable.coeff_sigma_y
-    return a * x_arr / np.sqrt(1.0 + d * x_arr)
+    with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+        direct = a * x_arr / np.sqrt(1.0 + d * x_arr)
+        stable = a * np.sqrt(x_arr) / np.sqrt(d + 1.0 / x_arr)
+        resultat = np.where(x_arr > 1.0, stable, direct)
+    if np.any((x_arr > 0.0) & (resultat == 0.0)) or not np.all(np.isfinite(resultat)):
+        raise FloatingPointError("sigma_y n'est pas representable en float64.")
+    return resultat
 
 
 def _ecart_type_vertical(x_arr: np.ndarray, classe_stable: ClasseStabilite) -> np.ndarray:
-    """Evalue la loi de Briggs rurale de sigma_z sur des distances validees.
-
-    La forme et les coefficients sont lus depuis l'objet ClasseStabilite,
-    source unique de verite ; la classe et la distance ne sont pas revalidees.
-    """
+    """Evalue sigma_z en conservant les trois formes de Briggs."""
     forme, b, d = classe_stable.coeff_sigma_z
-    if forme is FormeSigmaZ.LINEAIRE:
-        return b * x_arr
-    if forme is FormeSigmaZ.RACINE:
-        return b * x_arr / np.sqrt(1.0 + d * x_arr)
-    return b * x_arr / (1.0 + d * x_arr)
+    with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+        if forme is FormeSigmaZ.LINEAIRE:
+            resultat = b * x_arr
+        elif forme is FormeSigmaZ.RACINE:
+            direct = b * x_arr / np.sqrt(1.0 + d * x_arr)
+            stable = b * np.sqrt(x_arr) / np.sqrt(d + 1.0 / x_arr)
+            resultat = np.where(x_arr > 1.0, stable, direct)
+        else:
+            direct = b * x_arr / (1.0 + d * x_arr)
+            stable = b / (d + 1.0 / x_arr)
+            resultat = np.where(x_arr > 1.0, stable, direct)
+    if np.any((x_arr > 0.0) & (resultat == 0.0)) or not np.all(np.isfinite(resultat)):
+        raise FloatingPointError("sigma_z n'est pas representable en float64.")
+    return resultat
 
+
+def _rapport_difference(a: ArrayLike, b: ArrayLike, sigma: np.ndarray) -> np.ndarray:
+    """Calcule (a-b)/sigma avec un intermédiaire étendu avant conversion float64."""
+    with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
+        difference = np.asarray(a, dtype=np.longdouble) - np.asarray(b, dtype=np.longdouble)
+        return np.asarray(difference / np.asarray(sigma, dtype=np.longdouble), dtype=float)
+
+
+def _exponentielle_log(log_valeur: ArrayLike) -> np.ndarray:
+    """Exponentie en domaine logarithmique sans depassement silencieux.
+
+    Les sous-debordements sont arrondis a zero selon IEEE-754 ; un depassement
+    positif est refuse explicitement.
+    """
+    if np.any(np.asarray(log_valeur) > _LOG_FLOAT_MAX):
+        raise ValueError("La concentration theorique n'est pas representable en float64.")
+    with np.errstate(over="raise", under="ignore", invalid="raise"):
+        return np.asarray(np.exp(log_valeur))
 
 def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
     """Ecart-type horizontal du panache (m) a la distance sous le vent x (m)."""
@@ -128,46 +153,36 @@ def concentration_panache(
     """
     classe_stable = _valide_classe(classe)
     if not all(isfinite(valeur) for valeur in (debit, u, hauteur)):
-        msg = "debit, u et hauteur doivent etre finis."
-        raise ValueError(msg)
+        raise ValueError("debit, u et hauteur doivent etre finis.")
     if u <= 0.0:
-        msg = "La vitesse du vent doit etre strictement positive."
-        raise ValueError(msg)
+        raise ValueError("La vitesse du vent doit etre strictement positive.")
     if debit < 0.0:
-        msg = "Le debit d'emission doit etre positif ou nul."
-        raise ValueError(msg)
+        raise ValueError("Le debit d'emission doit etre positif ou nul.")
     x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
     if np.any(x_arr <= 0.0):
-        msg = "La distance sous le vent doit etre strictement positive."
-        raise ValueError(msg)
-    y_arr = np.asarray(y, dtype=float)
-    z_arr = np.asarray(z, dtype=float)
+        raise ValueError("La distance sous le vent doit etre strictement positive.")
+    y_arr, z_arr = np.asarray(y, dtype=float), np.asarray(z, dtype=float)
     if not np.all(np.isfinite(y_arr)) or not np.all(np.isfinite(z_arr)):
-        msg = "y et z doivent contenir uniquement des coordonnees finies."
-        raise ValueError(msg)
+        raise ValueError("y et z doivent contenir uniquement des coordonnees finies.")
+    if debit == 0.0:
+        return np.zeros(np.broadcast_shapes(x_arr.shape, y_arr.shape, z_arr.shape))
 
     sy = _ecart_type_horizontal(x_arr, classe_stable)
     sz = _ecart_type_vertical(x_arr, classe_stable)
-
-    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
-        u_y = y_arr / sy
-        u_z_source = (z_arr - hauteur) / sz
-        u_z_image = (z_arr + hauteur) / sz
-        terme_lateral = np.exp(-0.5 * u_y**2)
-        terme_vertical = np.exp(-0.5 * u_z_source**2) + np.exp(-0.5 * u_z_image**2)
-        concentration = debit / (2.0 * np.pi * u * sy * sz) * terme_lateral * terme_vertical
-        if np.all(np.isfinite(concentration)):
-            return np.asarray(concentration)
-        log_exposant = -0.5 * u_y**2 + np.logaddexp(-0.5 * u_z_source**2, -0.5 * u_z_image**2)
-        log_amplitude = np.log(debit) - np.log(2.0 * np.pi * u) - np.log(sy) - np.log(sz)
-        # Un exposant -infini impose la limite nulle, meme si l'amplitude deborde.
-        log_concentration = np.where(
-            np.equal(log_exposant, -np.inf), -np.inf, log_amplitude + log_exposant
+    ry = _rapport_difference(y_arr, 0.0, sy)
+    rz_source = _rapport_difference(z_arr, hauteur, sz)
+    rz_image = _rapport_difference(z_arr, -hauteur, sz)
+    with np.errstate(over="ignore", invalid="ignore"):
+        exposant_lateral = -0.5 * np.square(ry)
+        exposant_source = -0.5 * np.square(rz_source)
+        exposant_image = -0.5 * np.square(rz_image)
+        exposant_vertical = np.logaddexp(exposant_source, exposant_image)
+        log_amplitude = (
+            np.log(debit) - np.log(2.0 * np.pi) - np.log(u) - np.log(sy) - np.log(sz)
         )
-        if np.any(np.isnan(log_concentration)) or np.any(log_concentration > _LOG_FLOAT_MAX):
-            msg = "La concentration n'est pas representable en float64 pres de la source."
-            raise ValueError(msg)
-        return np.asarray(np.exp(log_concentration))
+        log_concentration = log_amplitude + exposant_lateral + exposant_vertical
+    return _exponentielle_log(log_concentration)
+
 
 
 def concentration_puff(
@@ -213,57 +228,38 @@ def concentration_puff(
     """
     classe_stable = _valide_classe(classe)
     if not all(isfinite(valeur) for valeur in (t, masse, u, x0)):
-        msg = "t, masse, u et x0 doivent etre finis."
-        raise ValueError(msg)
+        raise ValueError("t, masse, u et x0 doivent etre finis.")
     if t <= 0.0:
-        msg = "Le temps doit etre strictement positif."
-        raise ValueError(msg)
+        raise ValueError("Le temps doit etre strictement positif.")
     if masse < 0.0:
-        msg = "La masse emise doit etre positive ou nulle."
-        raise ValueError(msg)
+        raise ValueError("La masse emise doit etre positive ou nulle.")
     if u <= 0.0:
-        msg = "La vitesse du vent doit etre strictement positive."
-        raise ValueError(msg)
-
-    x_arr = np.asarray(x, dtype=float)
-    y_arr = np.asarray(y, dtype=float)
-    z_arr = np.asarray(z, dtype=float)
-    axes = (x_arr, y_arr, z_arr)
-    if not all(np.all(np.isfinite(axe)) for axe in axes):
-        msg = "x, y et z doivent contenir uniquement des coordonnees finies."
-        raise ValueError(msg)
-
+        raise ValueError("La vitesse du vent doit etre strictement positive.")
+    x_arr, y_arr, z_arr = (np.asarray(v, dtype=float) for v in (x, y, z))
+    if not all(np.all(np.isfinite(axe)) for axe in (x_arr, y_arr, z_arr)):
+        raise ValueError("x, y et z doivent contenir uniquement des coordonnees finies.")
     distance = u * t
-    if not isfinite(distance):
-        msg = "La distance parcourue doit rester finie."
-        raise ValueError(msg)
-    if distance <= 0.0:
-        msg = "La distance parcourue doit etre strictement positive."
-        raise ValueError(msg)
+    if not isfinite(distance) or distance <= 0.0:
+        raise ValueError("La distance parcourue doit rester finie et strictement positive.")
+    if masse == 0.0:
+        return np.zeros(np.broadcast_shapes(x_arr.shape, y_arr.shape, z_arr.shape))
 
     distance_arr = np.asarray(distance, dtype=float)
     sx = _ecart_type_horizontal(distance_arr, classe_stable)
-    sy = _ecart_type_horizontal(distance_arr, classe_stable)
+    sy = sx
     sz = _ecart_type_vertical(distance_arr, classe_stable)
-
-    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
-        u_x = (x_arr - x0 - distance) / sx
-        u_y = y_arr / sy
-        u_z = z_arr / sz
-        denom = (2.0 * np.pi) ** 1.5 * sx * sy * sz
-        exponentiel = np.exp(-0.5 * u_x**2) * np.exp(-0.5 * u_y**2) * np.exp(-0.5 * u_z**2)
-        concentration = masse / denom * exponentiel
-        if np.all(np.isfinite(concentration)):
-            return np.asarray(concentration)
-        log_exposant = -0.5 * u_x**2 - 0.5 * u_y**2 - 0.5 * u_z**2
+    centre_x = np.asarray(x0, dtype=np.longdouble) + np.longdouble(distance)
+    rx = _rapport_difference(x_arr, centre_x, sx)
+    ry = _rapport_difference(y_arr, 0.0, sy)
+    rz = _rapport_difference(z_arr, 0.0, sz)
+    with np.errstate(over="ignore", invalid="ignore"):
+        exposant = -0.5 * (np.square(rx) + np.square(ry) + np.square(rz))
         log_amplitude = (
-            np.log(masse) - 1.5 * np.log(2.0 * np.pi) - np.log(sx) - np.log(sy) - np.log(sz)
+            np.log(masse)
+            - 1.5 * np.log(2.0 * np.pi)
+            - np.log(sx)
+            - np.log(sy)
+            - np.log(sz)
         )
-        # Un exposant -infini impose la limite nulle, meme si l'amplitude deborde.
-        log_concentration = np.where(
-            np.equal(log_exposant, -np.inf), -np.inf, log_amplitude + log_exposant
-        )
-        if np.any(np.isnan(log_concentration)) or np.any(log_concentration > _LOG_FLOAT_MAX):
-            msg = "La concentration n'est pas representable en float64 pres de la source."
-            raise ValueError(msg)
-        return np.asarray(np.exp(log_concentration))
+        log_concentration = log_amplitude + exposant
+    return _exponentielle_log(log_concentration)
