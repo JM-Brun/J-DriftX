@@ -502,3 +502,21 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
     # When / Then — le débordement de la somme est refusé explicitement.
     with pytest.raises(ValueError, match="doit rester finie"):
         superposition.concentration(0.0, 0.0, 0.0)
+
+
+
+def test_mnt_ascii_interpolation_preserves_the_finite_convex_bound() -> None:
+    """Une moyenne convexe d'altitudes finies ne doit pas déborder."""
+    # Given — les quatre sommets d'une cellule valent le maximum float64.
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.full((2, 2), maximum),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+    # When — l'altitude est interpolée à l'intérieur de la cellule.
+    altitude = relief.altitude(0.1, 0.2)
+    # Then — les poids bilinéaires forment une combinaison convexe finie.
+    assert np.isfinite(altitude)
+    assert altitude == maximum
