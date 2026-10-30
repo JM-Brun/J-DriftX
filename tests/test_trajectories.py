@@ -115,4 +115,3 @@ def test_velocity_callback_rejects_non_real_components(invalid_component: object
 
     with pytest.raises(ValueError, match="pair of finite components"):
         integrate_trajectory(velocity, 0.0, 0.0, 0.0, 1.0, 0.1)
-
