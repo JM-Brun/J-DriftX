@@ -58,7 +58,9 @@ class SuperpositionPanaches:
             msg = "La superposition exige au moins un panache."
             raise ValueError(msg)
         for index, panache in enumerate(self.panaches):
-            if not isinstance(panache, ModeleConcentration):
+            if not isinstance(panache, ModeleConcentration) or not callable(
+                getattr(panache, "concentration", None)
+            ):
                 msg = f"Le panache d'indice {index} ne satisfait pas ModeleConcentration."
                 raise TypeError(msg)
 
@@ -86,10 +88,11 @@ class SuperpositionPanaches:
             if not isinstance(concentration, np.ndarray):
                 msg = f"Le panache d'indice {index} doit renvoyer un ndarray."
                 raise TypeError(msg)
-            if not np.issubdtype(concentration.dtype, np.number) or np.issubdtype(
-                concentration.dtype, np.complexfloating
-            ):
-                msg = f"La concentration du panache d'indice {index} doit être réelle et numérique."
+            if not np.issubdtype(concentration.dtype, np.floating):
+                msg = (
+                    f"La concentration du panache d'indice {index} doit être "
+                    "un tableau flottant réel."
+                )
                 raise TypeError(msg)
             if concentration.shape != forme_attendue:
                 msg = (
