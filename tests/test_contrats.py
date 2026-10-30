@@ -553,3 +553,22 @@ def test_mnt_ascii_interpolation_preserves_tiny_corner_at_grid_node() -> None:
     altitude = relief.altitude(1.0, 0.0)
     # Then — l'interpolation restitue exactement le sommet actif.
     assert altitude == minimum
+
+
+def test_mnt_ascii_interpolation_handles_opposite_sign_extremes() -> None:
+    """Une interpolation entre signes opposés reste finie aux extrêmes float64."""
+    # Given — les sommets alternent entre les deux extrêmes représentables.
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[maximum, -maximum], [-maximum, maximum]]),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+
+    # When — on évalue au centre géométrique de la cellule.
+    altitude = relief.altitude(0.5, 0.5)
+
+    # Then — les contributions symétriques s'annulent sans débordement.
+    assert np.isfinite(altitude)
+    assert altitude == 0.0
