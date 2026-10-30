@@ -23,10 +23,12 @@ Les contrats sont des protocoles PEP 544 à typage structurel — le même méca
 | Contrat | Signature | Implémentations livrées | Rôle |
 |---|---|---|---|
 | `Relief` | `altitude(x, y)` (vectorisé, grilles) | `ReliefPlat`, `ReliefSynthetique`, `ReliefMntAscii` | Géométrie du sol pour le rendu, la planification de prélèvements et les futurs cas de terrain |
-| `Vent` | `vitesse(x, y, z) -> (u, v, w)` (ponctuel, comme l'intégration des trajectoires) | `VentUniforme`, `VentDeChampPlan`, `VentProfilPuissance` | Champ de vent plan ou 3D, interchangeable derrière une seule signature |
+| `Vent` | `vitesse(x, y, z) -> (u, v, w)` (ponctuel, comme l'intégration des trajectoires) | `VentUniforme`, `VentDeChampPlan`, `VentProfilPuissance`, `AdaptateurTrajectoire2D` | Champ de vent plan ou 3D, interchangeable derrière une seule signature |
 | `ModeleConcentration` | `concentration(x, y, z)` (vectorisé) | `PanacheGaussien`, `SuperpositionPanaches` | Modèle de concentration interchangeable (similitude analytique et condition d'entrée des solveurs) |
 
-Le choix vectorisé/ponctuel suit l'usage réel : le relief et les concentrations s'évaluent sur des grilles (rendu, jeux de mesures), le vent s'échantillonne point par point (intégration des trajectoires, [trajectories.py](../src/jdriftx/trajectories.py)).
+Le choix vectorisé/ponctuel suit l'usage réel : le relief et les concentrations s'évaluent sur des grilles (rendu, jeux de mesures), le vent s'échantillonne point par point. L'adaptateur explicite vers l'intégrateur 2D est limité aux champs stationnaires sans composante verticale.
+
+Un adaptateur explicite `AdaptateurTrajectoire2D` relie un `Vent` stationnaire à l'intégrateur cinématique 2D (`trajectories.integrate_trajectory`) en fixant la hauteur ; il refuse une composante verticale non nulle au lieu de la perdre silencieusement. Il ne transforme donc ni un champ instationnaire ni un mouvement 3D en équivalent 2D.
 
 Les autres points de substitution suivent la même règle hors du module des contrats : `ModeleDiffusion` et `SolveurDeReference` (docs/51 — physique de diffusion et algorithme de résolution séparés dans la comparaison à référence indépendante), ainsi que `StructureLongitudinale` (docs/54 — structure longitudinale injectable de l'EDP transitoire du puff). Les routes doivent dépendre de ces contrats et non instancier directement une implémentation alternative ; l'implémentation FTCS reste le défaut et sa comparaison scientifique documentée n'est pas étendue automatiquement aux solveurs injectés.
 
