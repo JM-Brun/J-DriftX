@@ -5,10 +5,12 @@ from dataclasses import replace
 import numpy as np
 import pytest
 
-import jdriftx.experiences.identification_source as identification_source
-import jdriftx.experiences.modele_reduit_edp as modele_reduit_edp
-import jdriftx.experiences.relief as relief
-import jdriftx.experiences.superposition_sources as superposition_sources
+from jdriftx.experiences import (
+    identification_source,
+    modele_reduit_edp,
+    relief,
+    superposition_sources,
+)
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
