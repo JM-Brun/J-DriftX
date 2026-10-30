@@ -93,6 +93,7 @@ def _exponentielle_log(log_valeur: ArrayLike) -> np.ndarray:
     with np.errstate(over="raise", under="ignore", invalid="raise"):
         return np.asarray(np.exp(log_valeur))
 
+
 def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
     """Ecart-type horizontal du panache (m) a la distance sous le vent x (m).
 
@@ -190,7 +191,6 @@ def concentration_panache(
         log_amplitude = np.log(debit) - np.log(2.0 * np.pi) - np.log(u) - np.log(sy) - np.log(sz)
         log_concentration = log_amplitude + exposant_lateral + exposant_vertical
     return _exponentielle_log(log_concentration)
-
 
 
 def concentration_puff(
