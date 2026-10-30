@@ -3,6 +3,7 @@
 import numpy as np
 import pytest
 
+from jdriftx import trajectories
 from jdriftx.trajectories import integrate_trajectory
 
 
@@ -115,3 +116,12 @@ def test_velocity_callback_rejects_non_real_components(invalid_component: object
 
     with pytest.raises(ValueError, match="pair of finite components"):
         integrate_trajectory(velocity, 0.0, 0.0, 0.0, 1.0, 0.1)
+
+
+def test_excessive_step_count_is_rejected(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Une intégration qui dépasserait la garde de pas est refusée explicitement."""
+    # Given — une garde abaissée à trois pas et un champ de vitesse constant.
+    monkeypatch.setattr(trajectories, "_MAXIMUM_STEPS", 3)
+    # When / Then — l'intégration refuse de boucler sans borne.
+    with pytest.raises(ValueError, match="maximum"):
+        integrate_trajectory(lambda _t, _x, _y: (1.0, 0.0), 0.0, 0.0, 0.0, 10.0, 0.1)

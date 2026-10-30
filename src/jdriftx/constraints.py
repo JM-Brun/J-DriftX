@@ -12,6 +12,7 @@ ensemble de tests ciblés, pas une preuve générale de conformité physique.
 from __future__ import annotations
 
 from collections.abc import Callable
+from numbers import Real
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -21,9 +22,27 @@ from jdriftx.stabilite import ClasseStabilite
 
 
 def positivite(concentration: ArrayLike, tol: float = 1e-12) -> bool:
-    """Verifie qu'un champ de concentration est positif (a tol pres)."""
+    """Verifie qu'un champ de concentration est positif (a tol pres).
+
+    Args:
+        concentration: champ de concentration a verifier.
+        tol: tolerance, reel fini positif ou nul (booleen exclu).
+
+    Returns:
+        True si toutes les valeurs sont superieures ou egales a -tol.
+
+    Raises:
+        ValueError: si la tolerance n'est pas un reel fini positif ou nul.
+    """
+    if isinstance(tol, bool) or not isinstance(tol, Real):
+        msg = "La tolerance doit etre un nombre reel (booleen exclu)."
+        raise ValueError(msg)
+    tolerance = float(tol)
+    if not np.isfinite(tolerance) or tolerance < 0.0:
+        msg = "La tolerance doit etre finie et positive ou nulle."
+        raise ValueError(msg)
     c = np.asarray(concentration, dtype=float)
-    return bool(np.all(c >= -tol))
+    return bool(np.all(c >= -tolerance))
 
 
 def linearite(

@@ -8,13 +8,15 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from numbers import Real
-from typing import Literal
+from typing import Final, Literal
 
 import numpy as np
 from numpy.typing import NDArray
 
 Velocity = Callable[[float, float, float], tuple[float, float]]
 IntegrationMethod = Literal["euler", "rk4"]
+
+_MAXIMUM_STEPS: Final[int] = 10_000_000
 
 
 def integrate_trajectory(
@@ -36,7 +38,8 @@ def integrate_trajectory(
 
     Raises:
         ValueError: If initial values, step parameters, method, or velocity
-            output are invalid.
+            output are invalid, or the integration would exceed the maximum
+            number of steps.
         FloatingPointError: If a step cannot be represented with finite
             coordinates or cannot advance floating-point time (explicit
             failure instead of silently truncating the trajectory).
@@ -68,6 +71,11 @@ def integrate_trajectory(
     xs = [float(x0)]
     ys = [float(y0)]
     while times[-1] < t_end:
+        if len(times) > _MAXIMUM_STEPS:
+            raise ValueError(
+                "The trajectory requires more than the maximum number of "
+                f"{_MAXIMUM_STEPS} integration steps."
+            )
         time, x, y = times[-1], xs[-1], ys[-1]
         step = min(dt, t_end - time)
         next_time = time + step
