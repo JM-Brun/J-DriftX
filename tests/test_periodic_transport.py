@@ -369,7 +369,7 @@ def test_exact_solution_rejects_non_real_or_non_finite_parameters(
         "diffusivity": 0.01,
     }
     parameters[parameter] = bad
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="must be"):
         periodic_sine_solution(np.linspace(0.0, 1.0, 8), **parameters)  # type: ignore[arg-type]
 
 
@@ -388,7 +388,7 @@ def test_exact_solution_rejects_non_real_or_non_finite_coordinates(
     coordinates: object,
 ) -> None:
     """La solution exacte refuse les coordonnées ambiguës avant conversion."""
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"numeric array|finite coordinates"):
         periodic_sine_solution(
             coordinates,  # type: ignore[arg-type]
             0.0,
@@ -424,7 +424,10 @@ def test_periodic_solvers_reject_invalid_cell_count_types(bad: object) -> None:
         )
 
 
-@pytest.mark.parametrize("parameter", ["length", "end_time", "dt", "mean_concentration", "amplitude", "velocity", "diffusivity"])
+@pytest.mark.parametrize(
+    "parameter",
+    ["length", "end_time", "dt", "mean_concentration", "amplitude", "velocity", "diffusivity"],
+)
 @pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.inf])
 def test_periodic_solvers_reject_non_real_or_non_finite_parameters(
     parameter: str, bad: object
@@ -441,5 +444,5 @@ def test_periodic_solvers_reject_non_real_or_non_finite_parameters(
         "diffusivity": 0.01,
     }
     parameters[parameter] = bad
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="must be"):
         solve_periodic_sine_transport(**parameters)  # type: ignore[arg-type]
