@@ -179,6 +179,10 @@ Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
 aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
 n'introduit aucun validateur transversal.
 
+### Complément P0 — scalaires booléens dans `integrate_trajectory` (issue #361)
+
+La validation initiale de `integrate_trajectory` utilisait uniquement `np.isfinite`, qui accepte les booléens Python et NumPy. Les cinq scalaires `x0`, `y0`, `t0`, `t_end` et `dt` sont désormais explicitement contrôlés avant la finitude. Le contrôle de type déjà présent sur le callback de vitesse est conservé. Le schéma, les conditions temporelles, la borne de pas et les équations cinématiques restent inchangés. Les tests portent sur le contrat logiciel uniquement.
+
 - **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
 - **P3** : contrôle d'architecture statique désormais intégré par #316 (`tests/test_architecture_boundaries.py`) ; il couvre la matrice d'imports, les dépendances de rendu et les cycles statiques, sans couvrir les imports dynamiques.
