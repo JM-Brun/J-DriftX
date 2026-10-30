@@ -33,7 +33,11 @@ FRACTION_CALIBRATION = 0.7
 
 
 def _tableau_immuable(valeur: np.ndarray, nom: str) -> np.ndarray:
-    """Copie un vecteur float64 dans un tampon réellement non modifiable."""
+    """Copie un vecteur float64 dans un tampon réellement non modifiable.
+
+    Rejette au préalable tout booléen (Python ou NumPy) mêlé aux valeurs,
+    avant la conversion en float64 qui le promouvrait silencieusement.
+    """
     if isinstance(valeur, np.ndarray):
         bool_present = valeur.dtype.kind == "b" or (
             valeur.dtype.kind == "O"

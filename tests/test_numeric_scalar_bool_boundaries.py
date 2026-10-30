@@ -113,6 +113,7 @@ def test_cas_synthetique_s0_refuse_un_nombre_de_points_non_entier() -> None:
     [
         np.array([True, False]),
         [1.0, True],
+        [1.0, np.True_],
         np.array([1.0, True], dtype=object),
     ],
 )

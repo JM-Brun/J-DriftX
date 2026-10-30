@@ -77,7 +77,7 @@ Les corrections #311/#313/#314 sont intégrées et testées ; elles ne valident 
 
 **Interpolation bilinéaire MNT — correction présente sur `main`** : `ReliefMntAscii.altitude` délègue chaque interpolation linéaire à `_interpole_lineairement_stable`, qui utilise `a + t·(b − a)` pour deux valeurs de même signe et la forme pondérée pour des signes opposés. Cette sélection évite de faire dépendre le résultat retenu d'une expression intermédiaire susceptible de déborder. Les tests `test_mnt_ascii_interpolation_preserves_the_finite_convex_bound`, `test_mnt_ascii_interpolation_preserves_a_tiny_active_corner`, `test_mnt_ascii_interpolation_preserves_tiny_corner_at_grid_node` et `test_mnt_ascii_interpolation_handles_opposite_sign_extremes` couvrent les cas extrêmes correspondants. Il s'agit de garanties numériques ciblées sur l'interpolation, pas d'une validation topographique générale.
 
-### Complément P0 — cohérence des scalaires booléens (PR en cours)
+### Complément P0 — cohérence des scalaires booléens (#343)
 
 Une revue complémentaire a identifié des frontières d'objets où `math.isfinite` ou
 `np.isfinite` étaient utilisés seuls. Ces fonctions considèrent les booléens comme
