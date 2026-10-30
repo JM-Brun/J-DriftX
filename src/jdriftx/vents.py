@@ -6,7 +6,6 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from jdriftx._protocoles import Vent
 from jdriftx.champ_analytique import ChampPlan
 
 
