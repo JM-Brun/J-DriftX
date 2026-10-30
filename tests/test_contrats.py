@@ -504,7 +504,6 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
         superposition.concentration(0.0, 0.0, 0.0)
 
 
-
 def test_superposition_rejette_le_debordement_sans_avertissement_numpy() -> None:
     """Le débordement attendu est converti en ValueError sans RuntimeWarning."""
     # Given — deux contributions finies dont la somme dépasse float64.
