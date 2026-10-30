@@ -17,7 +17,7 @@ from math import isfinite, log
 from numbers import Real
 
 import numpy as np
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
@@ -37,12 +37,12 @@ def _reel_fini(valeur: object, nom: str) -> float:
     except (OverflowError, TypeError, ValueError) as err:
         raise ValueError(f"{nom} doit etre representable en float64 fini.") from err
     if not isfinite(resultat):
-        raise ValueError(f"{nom} doit contenir uniquement des valeurs finies.")
+        raise ValueError(f"{nom} doit etre fini.")
     return resultat
 
 
-def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> np.ndarray:
-    """Convertit un tableau numerique reel en float64 sans coercition textuelle."""
+def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> NDArray[np.float64]:
+    """Convertit un tableau numerique reel representable en float64."""
     if isinstance(valeur, Real) and not isinstance(valeur, bool):
         return np.asarray(_reel_fini(valeur, nom))
     try:
@@ -60,7 +60,7 @@ def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> np.ndarray:
     ):
         raise ValueError(f"{nom} doit etre un tableau numerique reel (booleens exclus).")
     if brut.dtype.kind not in "iuf":
-        msg = f"{nom} doit etre un tableau numerique reel "
+        msg = f"{nom} doit etre un tableau numerique reel representable en float64 "
         raise ValueError(msg + "(booleens et complexes exclus).")
     try:
         with np.errstate(over="ignore", invalid="ignore"):

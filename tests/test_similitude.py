@@ -353,9 +353,9 @@ def test_sigmas_rejettent_distance_non_finie(valeur: float) -> None:
     """Une distance sous le vent non finie est refusée par les deux écarts-types."""
     # Given — une distance NaN ou infinie, classe Pasquill objet D.
     # When / Then — les deux appels sont refusés avant tout calcul.
-    with pytest.raises(ValueError, match="valeurs finies"):
+    with pytest.raises(ValueError, match="fini"):
         sigma_y(valeur, ClasseStabilite.D)
-    with pytest.raises(ValueError, match="valeurs finies"):
+    with pytest.raises(ValueError, match="fini"):
         sigma_z(valeur, ClasseStabilite.D)
 
 
@@ -390,7 +390,7 @@ def test_panache_rejette_distance_infinie() -> None:
     """Une distance sous le vent infinie est refusée."""
     # Given — x = +inf : le contrôle de signe passe, les sigmas débordent.
     # When / Then — l'appel est refusé.
-    with pytest.raises(ValueError, match="valeurs finies"):
+    with pytest.raises(ValueError, match="fini"):
         concentration_panache(float("inf"), 0.0, 1.0, debit=1.0, u=3.0, classe=ClasseStabilite.D)
 
 
@@ -632,11 +632,11 @@ def test_puff_distance_extreme_ne_produit_pas_de_valeur_non_finie() -> None:
 def test_sigmas_rejettent_les_types_et_valeurs_non_numeriques(valeur: object) -> None:
     """Les distances des fonctions sigma exigent des valeurs réelles finies."""
     with pytest.raises(
-        ValueError, match=r"nombre reel|tableau numerique reel|valeurs finies|representable"
+        ValueError, match=r"nombre reel|tableau numerique reel|valeurs finies|fini|representable"
     ):
         sigma_y(valeur, "D")  # type: ignore[arg-type]
     with pytest.raises(
-        ValueError, match=r"nombre reel|tableau numerique reel|valeurs finies|representable"
+        ValueError, match=r"nombre reel|tableau numerique reel|valeurs finies|fini|representable"
     ):
         sigma_z(valeur, "D")  # type: ignore[arg-type]
 
@@ -654,7 +654,7 @@ def test_panache_rejette_les_scalaires_non_reels(champ: str, valeur: object) -> 
     parametres: dict[str, object] = {"debit": 1.0, "u": 3.0, "hauteur": 0.0}
     parametres[champ] = valeur
     with pytest.raises(
-        ValueError, match=r"nombre reel|tableau numerique reel|valeurs finies|representable"
+        ValueError, match=r"nombre reel|tableau numerique reel|valeurs finies|fini|representable"
     ):
         concentration_panache(500.0, 0.0, 1.0, classe="D", **parametres)  # type: ignore[arg-type]
 
@@ -671,7 +671,9 @@ def test_panache_rejette_les_coordonnees_non_reelles(axe: str, valeur: object) -
     """Les tableaux de coordonnées ne subissent pas de coercition implicite."""
     coordonnees: dict[str, object] = {"x": 500.0, "y": 0.0, "z": 1.0}
     coordonnees[axe] = valeur
-    with pytest.raises(ValueError, match=r"tableau numerique reel|valeurs finies|representable"):
+    with pytest.raises(
+        ValueError, match=r"tableau numerique reel|valeurs finies|fini|representable"
+    ):
         concentration_panache(**coordonnees, debit=1.0, u=3.0, classe="D")  # type: ignore[arg-type]
 
 
@@ -682,7 +684,7 @@ def test_puff_rejette_les_scalaires_non_reels(champ: str, valeur: object) -> Non
     parametres: dict[str, object] = {"t": 300.0, "masse": 5.0, "u": 3.0, "x0": 0.0}
     parametres[champ] = valeur
     with pytest.raises(
-        ValueError, match=r"nombre reel|tableau numerique reel|valeurs finies|representable"
+        ValueError, match=r"nombre reel|tableau numerique reel|valeurs finies|fini|representable"
     ):
         concentration_puff(900.0, 0.0, 1.0, classe="D", **parametres)  # type: ignore[arg-type]
 
@@ -699,7 +701,9 @@ def test_puff_rejette_les_coordonnees_non_reelles(axe: str, valeur: object) -> N
     """Les tableaux de coordonnées du puff sont des réels finis stricts."""
     coordonnees: dict[str, object] = {"x": 900.0, "y": 0.0, "z": 1.0}
     coordonnees[axe] = valeur
-    with pytest.raises(ValueError, match=r"tableau numerique reel|valeurs finies|representable"):
+    with pytest.raises(
+        ValueError, match=r"tableau numerique reel|valeurs finies|fini|representable"
+    ):
         concentration_puff(**coordonnees, t=300.0, masse=5.0, u=3.0, classe="D")  # type: ignore[arg-type]
 
 
