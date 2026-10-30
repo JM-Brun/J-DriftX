@@ -345,7 +345,7 @@ def test_la_condition_entree_est_un_modele_de_concentration_injectable() -> None
     ("forme", "valeur", "message"),
     [
         ((2, 2), 1.0, "même forme"),
-        ((137, 61), float("nan"), "concentrations finies"),
+        ((69, 25), float("nan"), "concentrations finies"),
     ],
 )
 def test_le_solveur_valide_le_champ_de_condition_entree(
