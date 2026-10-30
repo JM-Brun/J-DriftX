@@ -712,3 +712,87 @@ def test_mnt_ascii_rejette_une_coordonnees_extreme_hors_emprise() -> None:
         pytest.raises(ValueError, match="emprise horizontale"),
     ):
         relief.altitude(maximum, 0.0)
+
+
+@pytest.mark.parametrize("axe", ["x", "y", "z"])
+@pytest.mark.parametrize(
+    "valeur", [True, np.bool_(True), float("nan"), float("inf"), "1.0", 1.0 + 0.0j]
+)
+def test_vent_uniforme_refuse_les_coordonnees_non_reelles(
+    axe: str, valeur: object
+) -> None:
+    """Le vent uniforme valide le point même s'il est indépendant de ses coordonnées."""
+    vent = VentUniforme(u=2.0, v=-1.0)
+    coordonnees: dict[str, object] = {"x": 0.0, "y": 0.0, "z": 5.0}
+    coordonnees[axe] = valeur
+    with pytest.raises(ValueError, match="doit etre"):
+        vent.vitesse(**coordonnees)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("axe", ["x", "y", "z"])
+@pytest.mark.parametrize(
+    "valeur", [True, np.bool_(True), float("nan"), float("inf"), "1.0", 1.0 + 0.0j]
+)
+def test_vent_profil_refuse_les_coordonnees_non_reelles(axe: str, valeur: object) -> None:
+    """Le profil valide aussi x et y, bien que sa loi dépende seulement de z."""
+    vent = VentProfilPuissance(u_reference=5.0, z_reference=10.0, exposant=0.15)
+    coordonnees: dict[str, object] = {"x": 0.0, "y": 0.0, "z": 10.0}
+    coordonnees[axe] = valeur
+    with pytest.raises(ValueError, match="doit etre"):
+        vent.vitesse(**coordonnees)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("axe", ["x", "y", "z"])
+@pytest.mark.parametrize(
+    "valeur", [True, np.bool_(True), float("nan"), float("inf"), "1.0", 1.0 + 0.0j]
+)
+def test_vent_champ_plan_refuse_les_coordonnees_non_reelles(
+    axe: str, valeur: object
+) -> None:
+    """L'adaptateur valide le point avant de déléguer à un ChampPlan personnalisé."""
+
+    class ChampConstant:
+        def fonction_courant(self, x: float, y: float) -> float:
+            return 0.0
+
+        def vitesse(self, x: float, y: float) -> tuple[float, float]:
+            return 1.0, 2.0
+
+    vent = VentDeChampPlan(champ=ChampConstant())  # type: ignore[arg-type]
+    coordonnees: dict[str, object] = {"x": 0.0, "y": 0.0, "z": 10.0}
+    coordonnees[axe] = valeur
+    with pytest.raises(ValueError, match="doit etre"):
+        vent.vitesse(**coordonnees)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("axe", ["temps", "x", "y"])
+@pytest.mark.parametrize(
+    "valeur", [True, np.bool_(True), float("nan"), float("inf"), "1.0", 1.0 + 0.0j]
+)
+def test_adaptateur_trajectoire_refuse_les_entrees_non_reelles(
+    axe: str, valeur: object
+) -> None:
+    """L'adaptateur valide temps et coordonnées avant un vent personnalisé."""
+
+    class VentConstant:
+        def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
+            return 1.0, 0.0, 0.0
+
+    adaptateur = AdaptateurTrajectoire2D(vent=VentConstant(), hauteur=10.0)  # type: ignore[arg-type]
+    entrees: dict[str, object] = {"temps": 0.0, "x": 0.0, "y": 0.0}
+    entrees[axe] = valeur
+    with pytest.raises(ValueError, match="doit etre"):
+        adaptateur(entrees["temps"], entrees["x"], entrees["y"])  # type: ignore[arg-type]
+
+
+def test_vent_et_adaptateur_conservent_les_coordonnees_signees() -> None:
+    """Aucun domaine de signe n'est ajouté aux coordonnées finies."""
+    vent = VentUniforme(u=2.0, v=-1.0)
+    assert vent.vitesse(-1.0, -2.0, -3.0) == (2.0, -1.0, 0.0)
+
+    class VentConstant:
+        def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
+            return 2.0, -1.0, 0.0
+
+    adaptateur = AdaptateurTrajectoire2D(vent=VentConstant(), hauteur=10.0)  # type: ignore[arg-type]
+    assert adaptateur(-5.0, -1.0, -2.0) == (2.0, -1.0)
