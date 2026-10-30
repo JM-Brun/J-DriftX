@@ -501,3 +501,48 @@ def test_parametres_edp_refusent_les_valeurs_non_finies() -> None:
         ParametresEdp(float("nan"), 2.0, 340.0, 240.0)
     with pytest.raises(ValueError, match="finis"):
         ParametresEdp(2.5, 2.0, 340.0, float("inf"))
+
+
+@pytest.mark.parametrize("champ", ["y", "z"])
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_echantillonneur_refuse_les_coordonnees_booleennes(
+    champ: str, booleen: bool | np.bool_
+) -> None:
+    """Les coordonnées booléennes ne sont pas des positions réelles."""
+    grille = GrilleEdp(np.array([-1.0, 0.0, 1.0]), np.array([0.0, 1.0]))
+    echantillonneur = EchantillonneurBilineaire(np.ones((3, 2)), grille)
+    y, z = 0.0, 0.5
+    if champ == "y":
+        y = booleen
+    else:
+        z = booleen
+    with pytest.raises(ValueError, match="booléens exclus"):
+        echantillonneur.concentration(y, z)
+
+
+@pytest.mark.parametrize(
+    "valeur",
+    [float("nan"), float("inf"), float("-inf"), "0.5", 1 + 0j, np.array([0.5])],
+)
+@pytest.mark.parametrize("champ", ["y", "z"])
+def test_echantillonneur_refuse_les_coordonnees_non_reelles_ou_non_finies(
+    champ: str, valeur: object
+) -> None:
+    """Les coordonnées non réelles, non scalaires ou non finies sont refusées."""
+    grille = GrilleEdp(np.array([-1.0, 0.0, 1.0]), np.array([0.0, 1.0]))
+    echantillonneur = EchantillonneurBilineaire(np.ones((3, 2)), grille)
+    y, z = 0.0, 0.5
+    if champ == "y":
+        y = valeur  # type: ignore[assignment]
+    else:
+        z = valeur  # type: ignore[assignment]
+    with pytest.raises(ValueError, match="coordonnées y et z"):
+        echantillonneur.concentration(y, z)  # type: ignore[arg-type]
+
+
+def test_echantillonneur_conserve_le_rejet_des_points_hors_grille() -> None:
+    """Les coordonnées réelles finies hors domaine gardent l'erreur existante."""
+    grille = GrilleEdp(np.array([-1.0, 0.0, 1.0]), np.array([0.0, 1.0]))
+    echantillonneur = EchantillonneurBilineaire(np.ones((3, 2)), grille)
+    with pytest.raises(ValueError, match="sort de la fenêtre"):
+        echantillonneur.concentration(2.0, 0.5)
