@@ -231,9 +231,7 @@ def test_fonction_concentration_refuse_les_coordonnees_booleennes(
         "pas_tranche",
     ],
 )
-def test_scenario_edp_refuse_les_parametres_booleens(
-    booleen: bool | np.bool_, champ: str
-) -> None:
+def test_scenario_edp_refuse_les_parametres_booleens(booleen: bool | np.bool_, champ: str) -> None:
     """Les huit paramètres positifs du scénario EDP excluent les booléens."""
     # Given — un paramètre positif remplacé par un booléen.
     # When / Then — la construction du scénario est refusée.
