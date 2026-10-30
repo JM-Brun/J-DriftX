@@ -37,7 +37,7 @@ __all__ = [
 def _vecteurs_verifies(
     verite: ArrayLike, prediction: ArrayLike, nom: str
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Convertit et valide : 1D, meme taille, non vides, verite > 0."""
+    """Convertit et valide : 1D, meme taille, non vides, finies, verite > 0."""
     vrais = np.asarray(verite, dtype=float)
     predits = np.asarray(prediction, dtype=float)
     if vrais.shape != predits.shape or vrais.ndim != 1:
@@ -45,6 +45,9 @@ def _vecteurs_verifies(
         raise ValueError(msg)
     if vrais.size == 0:
         msg = f"{nom} : au moins un point est requis."
+        raise ValueError(msg)
+    if not np.all(np.isfinite(vrais)) or not np.all(np.isfinite(predits)):
+        msg = f"{nom} : verite et prediction doivent etre des vecteurs finis."
         raise ValueError(msg)
     if np.any(vrais <= 0.0):
         msg = f"{nom} : la verite doit etre strictement positive."

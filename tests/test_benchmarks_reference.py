@@ -79,6 +79,16 @@ class _CasVide(_CasT):
         return ()
 
 
+class _CasVeriteNonFinie(_CasT):
+    """Cas a verite non finie : NaN invisible aux comparaisons."""
+
+    identifiant: ClassVar[str] = "T4"
+
+    def verite(self, points: tuple[PointMesure, ...]) -> np.ndarray:
+        """Verite contenant un NaN, qui esquive le test de positivite."""
+        return np.array([np.nan])
+
+
 class TestCasS0:
     def test_refuse_vent_non_positif(self) -> None:
         """Given un vent nul, When construction, Then refus."""
@@ -135,6 +145,20 @@ class TestCasS0:
         with pytest.raises(AttributeError):
             cas.z_mesure = 2.0  # type: ignore[misc]
 
+    @pytest.mark.parametrize(
+        ("champ", "valeur"),
+        [
+            ("z_mesure", float("nan")),
+            ("z_mesure", float("inf")),
+            ("arcs", (float("nan"), 200.0)),
+            ("positions_laterales", (-50.0, float("inf"))),
+        ],
+    )
+    def test_refuse_scalaires_non_finis(self, champ, valeur) -> None:
+        """Given un parametre non fini, When construction, Then refus."""
+        with pytest.raises(ValueError, match="finis"):
+            replace(_cas_valide(), **{champ: valeur})
+
 
 class TestGrilleEtVerite:
     def test_grille_croisee(self) -> None:
@@ -170,6 +194,11 @@ class TestGrilleEtVerite:
         """Given une grille vide, When verite, Then refus."""
         with pytest.raises(ValueError, match="point"):
             _cas_valide().verite(())
+
+    def test_refuse_point_non_fini(self) -> None:
+        """Given une coordonnee non finie, When point, Then refus."""
+        with pytest.raises(ValueError, match="finies"):
+            PointMesure(x=float("nan"), y=0.0, z=1.5)
 
 
 class TestRegistreCas:
@@ -207,6 +236,11 @@ class TestRegistreCas:
         """Given une grille vide, When ajouter, Then refus."""
         with pytest.raises(ValueError, match="grille vide"):
             enregistrer_cas(_CasVide)
+
+    def test_refuse_verite_non_finie(self) -> None:
+        """Given une verite NaN (invisible aux comparaisons), When ajouter, Then refus."""
+        with pytest.raises(ValueError, match="non finie"):
+            enregistrer_cas(_CasVeriteNonFinie)
 
     def test_refuse_retrait_inconnu(self) -> None:
         """Given un identifiant absent, When retirer, Then refus."""
@@ -261,6 +295,22 @@ class TestMetriques:
             fac2(np.array([]), np.array([]))
         with pytest.raises(ValueError, match="requis"):
             nmse(np.array([]), np.array([]))
+
+    def test_refuse_vecteurs_non_finis(self) -> None:
+        """Given NaN ou infini dans un vecteur, When metriques, Then refus explicite."""
+        vrais = np.array([1.0, 2.0])
+        predictions_invalides = (
+            np.array([1.0, np.nan]),
+            np.array([1.0, np.inf]),
+            np.array([np.inf, 2.0]),
+        )
+        for prediction in predictions_invalides:
+            with pytest.raises(ValueError, match="finis"):
+                fac2(vrais, prediction)
+            with pytest.raises(ValueError, match="finis"):
+                nmse(vrais, prediction)
+        with pytest.raises(ValueError, match="finis"):
+            fac2(np.array([1.0, np.nan]), np.array([1.0, 2.0]))
 
     def test_calcul_par_defaut(self) -> None:
         """Given metriques par defaut, When calcul, Then fac2 et nmse."""
