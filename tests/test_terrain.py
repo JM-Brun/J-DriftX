@@ -177,7 +177,7 @@ def test_opposite_extreme_coordinates_do_not_overflow_before_scaling(
 @pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf])
 def test_terrain_surface_rejects_non_real_or_non_finite_coordinates(bad: object) -> None:
     """Les coordonnées brutes sont réelles, finies et sans coercition booléenne."""
-    with pytest.raises(ValueError, match="numeric array|finite coordinates"):
+    with pytest.raises(ValueError, match=r"numeric array|finite coordinates"):
         terrain_surface(np.array([bad]), np.array([0.0]), "hill")
 
 
