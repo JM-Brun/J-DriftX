@@ -691,11 +691,7 @@ class EchantillonneurBilineaire:
                 msg = f"La coordonnée {nom} doit être représentable en float64."
                 raise ValueError(msg) from err
             if not np.isfinite(coordonnee):
-                msg = (
-                    "Les coordonnées y et z doivent être des scalaires réels finis "
-                    "(booléens exclus)."
-                )
-                raise ValueError(msg)
+                raise ValueError(msg_coordonnees)
             coordonnees.append(coordonnee)
         y_reel, z_reel = coordonnees
 
