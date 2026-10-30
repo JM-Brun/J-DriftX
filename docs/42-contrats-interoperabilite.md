@@ -38,7 +38,7 @@ Deux autres protocoles suivent la même règle hors du module des contrats : `Mo
 
 ## 5. Registre du graphe
 
-Les modules `_protocoles.py`, `reliefs.py`, `vents.py`, `concentrations.py` et la façade `contrats.py` sont représentés dans le registre ([site/data/graphe-connaissances.toml](../site/data/graphe-connaissances.toml)). Les dépendances sont explicitées par responsabilité : les reliefs utilisent `terrain`, les vents utilisent `champ_analytique`, les concentrations utilisent `source` et `similitude`, et la façade réexporte les contrats et implémentations. Le nœud rejoint la vue « Code, propriétés et preuves », groupe dédié « Contrats d'interface » ; le rendu ([site/projet/_graphes-mermaid.md](../site/projet/_graphes-mermaid.md)) est régénéré et committé avec le registre, la synchronisation octet par octet restant vérifiée par la CI.
+Les modules `_protocoles.py`, `reliefs.py`, `vents.py`, `concentrations.py` et la façade `contrats.py` sont représentés dans le registre ([site/data/graphe-connaissances.toml](../site/data/graphe-connaissances.toml)). Les dépendances sont explicitées par responsabilité : les reliefs utilisent `terrain`, les vents utilisent `champ_analytique`, les concentrations utilisent `source` et `similitude`, et la façade réexporte les contrats et implémentations. Les nœuds rejoignent la vue « Code, propriétés et preuves », groupe dédié « Contrats d'interface » ; le rendu ([site/projet/_graphes-mermaid.md](../site/projet/_graphes-mermaid.md)) est régénéré et committé avec le registre, la synchronisation octet par octet restant vérifiée par la CI.
 
 ## 6. Limites
 
