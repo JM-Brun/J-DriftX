@@ -33,7 +33,6 @@ def _reel_fini(valeur: object, nom: str) -> float:
     return resultat
 
 
-
 def integrate_trajectory(
     velocity: Velocity,
     x0: float,
