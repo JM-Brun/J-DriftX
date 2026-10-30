@@ -513,7 +513,6 @@ def test_polyline_cost_rejects_overflowing_total() -> None:
         temps_transport(ligne, vent)
 
 
-
 def test_1d_first_arrival_rejects_unrepresentable_positive_time() -> None:
     """Un temps positif qui deborde float64 est refuse explicitement."""
     with pytest.raises(ValueError, match=r"premiere arrivee.*representable"):
