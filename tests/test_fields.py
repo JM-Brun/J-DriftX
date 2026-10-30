@@ -64,3 +64,46 @@ def test_unknown_field_kind_raises() -> None:
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="Unknown field kind"):
         vector_field(np.zeros(2), np.zeros(2), "unknown")  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf])
+def test_vector_field_rejects_non_real_or_non_finite_coordinates(bad: object) -> None:
+    """Les coordonnées brutes sont réelles, finies et sans coercition booléenne."""
+    with pytest.raises(ValueError):
+        vector_field(np.array([bad]), np.array([0.0]), "uniform")
+
+
+@pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf])
+@pytest.mark.parametrize("parameter", ["speed", "angle_deg", "shear", "radial_strength"])
+def test_vector_field_rejects_non_real_or_non_finite_parameters(
+    parameter: str, bad: object
+) -> None:
+    """Chaque paramètre scalaire suit le même contrat réel fini."""
+    with pytest.raises(ValueError):
+        vector_field(
+            np.array([0.0]),
+            np.array([0.0]),
+            "uniform",
+            **{parameter: bad},
+        )
+
+
+@pytest.mark.parametrize("coordinates", [[0.0, True], [0.0, 1.0 + 2.0j], ["0.0", "1.0"]])
+def test_vector_field_rejects_mixed_or_non_numeric_coordinate_sequences(
+    coordinates: list[object],
+) -> None:
+    """Les promotions NumPy ne masquent pas les booléens ou les complexes."""
+    with pytest.raises(ValueError):
+        vector_field(coordinates, [0.0, 0.0], "uniform")  # type: ignore[arg-type]
+
+
+def test_vector_field_preserves_signed_real_parameters() -> None:
+    """Les paramètres signés historiquement admis restent valides."""
+    u, v = vector_field(
+        np.array([1.0, -1.0]),
+        np.array([2.0, -2.0]),
+        "radial",
+        radial_strength=-2.0,
+    )
+    np.testing.assert_array_equal(u, np.array([-2.0, 2.0]))
+    np.testing.assert_array_equal(v, np.array([-4.0, 4.0]))
