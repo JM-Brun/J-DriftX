@@ -592,3 +592,38 @@ def test_puff_extreme_representable_restitue_une_valeur_finie() -> None:
     # Then — la valeur restituee est finie et strictement positive.
     assert np.isfinite(c)
     assert c > 0.0
+
+
+@pytest.mark.parametrize("classe", list(ClasseStabilite))
+def test_sigmas_representables_aux_tres_grandes_distances(classe: ClasseStabilite) -> None:
+    """Les lois de Briggs restent évaluables pour x = 1e308."""
+    # Given — une distance finie dont les produits d*x deborderaient.
+    # When — les deux ecarts-types sont calcules pour chaque classe.
+    sy = sigma_y(1.0e308, classe)
+    sz = sigma_z(1.0e308, classe)
+    # Then — les valeurs restent positives et finies.
+    assert np.isfinite(sy) and float(sy) > 0.0
+    assert np.isfinite(sz) and float(sz) > 0.0
+
+
+def test_panache_distance_extreme_ne_produit_pas_de_valeur_non_finie() -> None:
+    """Une concentration sous-representable a grande distance s'arrondit a zero."""
+    # Given / When — le panache est evalue a une distance finie extreme.
+    resultat = concentration_panache(
+        1.0e308, 0.0, 0.0, debit=1.0, u=3.0, classe=ClasseStabilite.A
+    )
+    # Then — aucun NaN ni inf n'est retourne.
+    assert np.isfinite(resultat)
+    assert float(resultat) >= 0.0
+
+
+def test_puff_distance_extreme_ne_produit_pas_de_valeur_non_finie() -> None:
+    """Un puff a tres grande distance reste dans le domaine float64."""
+    # Given / When — u*t vaut 1e308 sans debordement.
+    resultat = concentration_puff(
+        1.0e308, 0.0, 0.0, t=1.0e154, masse=1.0,
+        u=1.0e154, classe=ClasseStabilite.A
+    )
+    # Then — la concentration est finie (eventuellement arrondie a zero).
+    assert np.isfinite(resultat)
+    assert float(resultat) >= 0.0
