@@ -38,9 +38,7 @@ def _composantes_finies(
 ) -> tuple[float, float, float]: ...
 
 
-def _composantes_finies(
-    valeurs: object, nombre: int, contexte: str
-) -> tuple[float, ...]:
+def _composantes_finies(valeurs: object, nombre: int, contexte: str) -> tuple[float, ...]:
     """Valide un tuple de composantes reelles et finies, puis le normalise."""
     if not isinstance(valeurs, tuple) or len(valeurs) != nombre:
         raise ValueError(f"{contexte} doit retourner un tuple de {nombre} composantes.")
@@ -68,9 +66,7 @@ class AdaptateurTrajectoire2D:
 
     def __call__(self, _temps: float, x: float, y: float) -> tuple[float, float]:
         """Retourne (u, v) au point (x, y, hauteur), si w est nul."""
-        u, v, w = _composantes_finies(
-            self.vent.vitesse(x, y, self.hauteur), 3, "Le champ de vent"
-        )
+        u, v, w = _composantes_finies(self.vent.vitesse(x, y, self.hauteur), 3, "Le champ de vent")
         if w != 0.0:
             msg = "Un vent vertical ne peut pas etre adapte a une trajectoire 2D."
             raise ValueError(msg)
