@@ -117,7 +117,7 @@ class VentProfilPuissance:
     def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
         """Evalue le vent (u(z), 0, 0) au point (x, y, z)."""
         if not np.isfinite(z) or z <= 0.0:
-            msg = "La hauteur z doit être finie et strictement positive."
+            msg = "La hauteur z doit être strictement positif et fini."
             raise ValueError(msg)
         u = self.u_reference * (z / self.z_reference) ** self.exposant
         return u, 0.0, 0.0
