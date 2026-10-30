@@ -116,7 +116,8 @@ def _tableau_immuable(
             for element in brut.flat
         )
     if valeur_non_reelle:
-        raise ValueError(f"{nom} doit contenir des valeurs reelles (booleens exclus; complexes exclus).")
+        msg = f"{nom} doit contenir des valeurs reelles "
+        raise ValueError(msg + "(booleens exclus; complexes exclus).")
     tableau = np.asarray(valeur, dtype=float)
     if tableau.ndim != dimension or tableau.size < taille_minimale:
         raise ValueError(f"{nom} doit avoir {dimension} dimension(s) et être non vide.")
@@ -302,7 +303,10 @@ class CoefficientsDiffusion:
             isinstance(value, (bool, np.bool_, complex, np.complexfloating))
             for value in valeurs
         ):
-            msg = "Les coefficients de diffusion doivent être réels (booléens exclus ; complexes exclus)."
+            msg = (
+                "Les coefficients de diffusion doivent être réels "
+                "(booléens exclus ; complexes exclus)."
+            )
             raise ValueError(msg)
 
     def derivee_sigma_y_carre(self, x: float) -> float:
