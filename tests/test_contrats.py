@@ -310,3 +310,56 @@ def test_le_typage_structurel_reconnait_les_contrats() -> None:
     assert not isinstance(42, Relief)
     assert not isinstance(42, Vent)
     assert not isinstance(42, ModeleConcentration)
+
+
+def test_mnt_ascii_copie_et_protege_sa_grille() -> None:
+    """La grille est possédée par le relief et ne peut pas être mutée après validation."""
+    # Given — une grille source mutable transmise au constructeur.
+    altitudes = np.arange(4, dtype=float).reshape(2, 2)
+    relief = ReliefMntAscii(altitudes=altitudes, x0=0.0, y0=0.0, pas=1.0)
+
+    # When — le tableau d'origine est modifié après construction.
+    altitudes[0, 0] = 99.0
+
+    # Then — le relief conserve les données validées et expose une grille en lecture seule.
+    assert relief.altitudes[0, 0] == 0.0
+    with pytest.raises(ValueError, match="read-only"):
+        relief.altitudes[0, 0] = 42.0
+
+
+@pytest.mark.parametrize(
+    ("champ", "valeur"),
+    [
+        ("sans_donnee", float("nan")),
+        ("sans_donnee", float("inf")),
+    ],
+)
+def test_mnt_ascii_rejette_sentinelle_sans_donnee_non_finie(
+    champ: str, valeur: float
+) -> None:
+    """Une sentinelle nodata doit être finie pour permettre une comparaison fiable."""
+    # Given — une grille valide et une sentinelle non finie.
+    valeurs: dict[str, object] = {
+        "altitudes": np.zeros((2, 2)),
+        "x0": 0.0,
+        "y0": 0.0,
+        "pas": 1.0,
+        champ: valeur,
+    }
+
+    # When / Then — la construction rejette la sentinelle.
+    with pytest.raises(ValueError, match="sans donnee.*finie"):
+        ReliefMntAscii(**valeurs)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("coordonnees", [(float("nan"), 0.0), (0.0, float("inf"))])
+def test_mnt_ascii_rejette_coordonnees_non_finies(
+    coordonnees: tuple[float, float],
+) -> None:
+    """L'interpolation refuse les coordonnées non finies avant tout calcul d'index."""
+    # Given — un MNT valide et une coordonnée non finie.
+    relief = ReliefMntAscii.depuis_texte(MNT_ASCII)
+
+    # When / Then — l'évaluation est refusée explicitement.
+    with pytest.raises(ValueError, match="coordonnees.*finies"):
+        relief.altitude(*coordonnees)
