@@ -172,3 +172,18 @@ def test_opposite_extreme_coordinates_do_not_overflow_before_scaling(
     # Then — le quotient analytique vaut 2 et le profil reste fini.
     assert np.isfinite(elevation).all()
     assert elevation[0, 0] == pytest.approx(expected)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_terrain_surface_rejects_boolean_coordinates(booleen: bool | np.bool_) -> None:
+    """Les coordonnées booléennes ne sont pas converties en coordonnées float."""
+    with pytest.raises(ValueError, match="booleans excluded"):
+        terrain_surface(np.array([booleen]), np.array([0.0]), "hill")
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("parametre", ["height", "width", "center_x", "center_y"])
+def test_terrain_surface_rejects_boolean_parameters(booleen: bool | np.bool_, parametre: str) -> None:
+    """Les paramètres géométriques booléens sont rejetés à la frontière publique."""
+    with pytest.raises(ValueError, match="booleans excluded"):
+        terrain_surface(np.array([0.0]), np.array([0.0]), "hill", **{parametre: booleen})
