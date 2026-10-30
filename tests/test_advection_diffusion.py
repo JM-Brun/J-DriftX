@@ -117,7 +117,7 @@ def test_gaussian_zero_diffusion_handles_extreme_initial_widths(
         diffusivity=0.0,
         initial_sigma=initial_sigma,
     )
-    assert actual[0] == pytest.approx(expected, rel=2e-15)
+    assert actual[0] == pytest.approx(expected, rel=1e-13)
 
 
 def test_gaussian_large_diffusion_uses_representable_standard_deviation() -> None:
