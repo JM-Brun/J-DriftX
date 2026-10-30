@@ -474,3 +474,76 @@ def test_puff_diffuse_les_formes_selon_numpy() -> None:
     # Then — la forme du résultat suit la forme diffusée commune (3,).
     assert c.shape == (3,)
     assert np.all(c > 0.0)
+
+
+@pytest.mark.parametrize("classe", list(ClasseStabilite))
+def test_sigmas_representables_aux_tres_grandes_distances(classe: ClasseStabilite) -> None:
+    """Les lois de Briggs restent évaluables lorsque x est proche de 1e308."""
+    # Given — une distance finie dont certains produits intermédiaires déborderaient.
+    x = 1.0e308
+    # When — les deux écarts-types sont calculés pour chaque classe.
+    sy = sigma_y(x, classe)
+    sz = sigma_z(x, classe)
+    # Then — les résultats restent positifs et représentables.
+    assert np.isfinite(sy) and float(sy) > 0.0
+    assert np.isfinite(sz) and float(sz) > 0.0
+
+
+@pytest.mark.parametrize("classe", list(ClasseStabilite))
+def test_panache_aux_tres_grandes_distances_reste_fini(classe: ClasseStabilite) -> None:
+    """Le préfacteur du panache ne déborde pas pour des sigmas très grands."""
+    # Given — x est fini et les coordonnées sont sur l'axe du panache.
+    # When — la concentration est évaluée pour chacune des classes.
+    resultat = concentration_panache(
+        1.0e308, 0.0, 0.0, debit=1.0, u=3.0, classe=classe
+    )
+    # Then — la concentration représentable est finie et positive.
+    assert np.isfinite(resultat)
+    assert float(resultat) > 0.0
+
+
+def test_panache_pres_de_la_source_leve_si_concentration_non_representable() -> None:
+    """Une singularité non représentable ne doit pas devenir NaN ou inf silencieux."""
+    # Given — les sigmas sont positifs mais le préfacteur dépasse float64.
+    # When / Then — le calcul signale explicitement la limite numérique.
+    with pytest.raises(FloatingPointError, match="depasse la plage representable"):
+        concentration_panache(
+            1.0e-200, 0.0, 0.0, debit=1.0, u=1.0, classe=ClasseStabilite.A
+        )
+
+
+def test_panache_coordonnees_extremes_donne_une_queue_nulle() -> None:
+    """Une queue gaussienne sous la résolution float64 s'arrondit à zéro."""
+    # Given — coordonnées finies extrêmes, loin de l'axe du panache.
+    # When — l'exponentielle est évaluée sans former les carrés bruts.
+    resultat = concentration_panache(
+        500.0, 1.0e308, 0.0, debit=1.0, u=3.0, classe=ClasseStabilite.D
+    )
+    # Then — la queue non représentable est arrondie à zéro, sans NaN.
+    assert resultat == 0.0
+
+
+def test_puff_coordonnees_extremes_donne_une_queue_nulle() -> None:
+    """Le calcul du déplacement longitudinal évite le débordement du carré."""
+    # Given — point et position initiale de signes opposés et d'amplitude extrême.
+    # When — l'écart longitudinal est normalisé avant son carré.
+    resultat = concentration_puff(
+        1.0e308, 0.0, 0.0, t=1.0, masse=1.0, u=1.0,
+        classe=ClasseStabilite.D, x0=-1.0e308
+    )
+    # Then — la queue gaussienne est nulle en float64, sans NaN ni inf.
+    assert resultat == 0.0
+
+
+@pytest.mark.parametrize("classe", list(ClasseStabilite))
+def test_puff_reste_fini_pour_distance_extreme(classe: ClasseStabilite) -> None:
+    """Le puff garde un résultat représentable pour une distance de 1e308 m."""
+    # Given — u*t vaut 1e308 sans que le produit déborde.
+    # When — le puff est évalué à son centre.
+    resultat = concentration_puff(
+        1.0e308, 0.0, 0.0, t=1.0e154, masse=1.0,
+        u=1.0e154, classe=classe
+    )
+    # Then — le résultat reste fini et positif pour les six classes.
+    assert np.isfinite(resultat)
+    assert float(resultat) > 0.0
