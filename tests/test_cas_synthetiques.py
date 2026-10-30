@@ -15,6 +15,7 @@ from jdriftx.experiences.cas_synthetiques import (
     CAS_S0_DEFAUT,
     CLAUSE_NON_VALIDATION,
     VERSION_GENERATEUR,
+    DatasetS0,
 )
 from jdriftx.source import SourcePanache
 
@@ -142,3 +143,51 @@ def test_refuse_sources_invalides(champ, valeur, message_attendu) -> None:
     # Then — la construction est refusée avec le message correspondant.
     with pytest.raises(ValueError, match=message_attendu):
         replace(cas, source=replace(cas.source, **{champ: valeur}))
+
+
+def test_dataset_copie_et_fige_ses_tableaux() -> None:
+    """Un DatasetS0 ne partage pas de tableaux mutables avec son appelant."""
+    # Given — un jeu S0 et un tableau d'abscisses fourni par l'appelant.
+    jeu = generer_dataset_s0(CAS_S0_DEFAUT)
+    points_x = jeu.points_x.copy()
+    valeur_initiale = float(points_x[0])
+    # When — un nouveau dataset est construit puis le tableau source est modifié.
+    copie = DatasetS0(
+        cas=jeu.cas,
+        points_x=points_x,
+        points_y=jeu.points_y,
+        concentrations=jeu.concentrations,
+        partition=jeu.partition,
+    )
+    points_x[0] = points_x[0] + 1.0
+    # Then — le dataset conserve sa valeur initiale et ses tableaux sont réellement immuables.
+    assert copie.points_x[0] == valeur_initiale
+    with pytest.raises(ValueError, match="read-only"):
+        copie.points_x[0] = 0.0
+    with pytest.raises(ValueError, match="WRITEABLE"):
+        copie.points_x.setflags(write=True)
+
+
+def test_dataset_refuse_des_tableaux_de_formes_differentes() -> None:
+    """Les trois vecteurs d'un dataset doivent être alignés point à point."""
+    # Given — un jeu valide.
+    jeu = generer_dataset_s0(CAS_S0_DEFAUT)
+    # When / Then — une coordonnée amputée d'un point est refusée.
+    with pytest.raises(ValueError, match="même forme"):
+        DatasetS0(
+            cas=jeu.cas,
+            points_x=jeu.points_x,
+            points_y=jeu.points_y[:-1],
+            concentrations=jeu.concentrations,
+            partition=jeu.partition,
+        )
+
+
+def test_configuration_s0_refuse_les_scalaires_non_finis() -> None:
+    """Les paramètres physiques finis sont exigés dès la construction."""
+    # Given — des configurations contenant NaN ou infini.
+    # When / Then — chaque paramètre scalaire non fini est refusé.
+    with pytest.raises(ValueError, match="finis"):
+        replace(_cas_valide(), altitude=float("nan"))
+    with pytest.raises(ValueError, match="finis"):
+        replace(_cas_valide(), y_max=float("inf"))

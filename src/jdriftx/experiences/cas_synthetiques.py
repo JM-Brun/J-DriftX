@@ -32,6 +32,16 @@ CLAUSE_NON_VALIDATION = (
 FRACTION_CALIBRATION = 0.7
 
 
+def _tableau_immuable(valeur: np.ndarray, nom: str) -> np.ndarray:
+    """Copie un vecteur float64 dans un tampon réellement non modifiable."""
+    tableau = np.array(valeur, dtype=float, copy=True)
+    if tableau.ndim != 1 or tableau.size == 0:
+        raise ValueError(f"{nom} doit être un vecteur 1D non vide.")
+    if not np.all(np.isfinite(tableau)):
+        raise ValueError(f"{nom} doit contenir uniquement des valeurs finies.")
+    return np.frombuffer(tableau.tobytes(), dtype=tableau.dtype).reshape(tableau.shape)
+
+
 @dataclass(frozen=True)
 class CasSynthetiqueS0:
     """Configuration figée d'un cas S0 (panache gaussien en champ uniforme).
@@ -65,6 +75,10 @@ class CasSynthetiqueS0:
         absente de la configuration plate historique, est désormais
         garantie à la construction (docs/41).
         """
+        parametres = (self.altitude, self.x_min, self.x_max, self.y_max)
+        if not all(np.isfinite(valeur) for valeur in parametres):
+            msg = "Les paramètres physiques du cas doivent être finis."
+            raise ValueError(msg)
         if not self.identifiant:
             msg = "L'identifiant du cas doit être non vide."
             raise ValueError(msg)
@@ -105,6 +119,31 @@ class DatasetS0:
     points_y: np.ndarray
     concentrations: np.ndarray
     partition: PartitionS0
+
+    def __post_init__(self) -> None:
+        """Valide l'alignement des données et fige les tableaux détenus."""
+        points_x = _tableau_immuable(self.points_x, "points_x")
+        points_y = _tableau_immuable(self.points_y, "points_y")
+        concentrations = _tableau_immuable(self.concentrations, "concentrations")
+        if points_x.shape != points_y.shape or points_x.shape != concentrations.shape:
+            msg = "Les vecteurs du dataset doivent avoir la même forme."
+            raise ValueError(msg)
+        if points_x.size != self.cas.nombre_points:
+            msg = "Le nombre de points du dataset doit correspondre au cas."
+            raise ValueError(msg)
+        calibration = tuple(self.partition.calibration)
+        evaluation = tuple(self.partition.evaluation)
+        indices = calibration + evaluation
+        if len(set(indices)) != len(indices) or set(indices) != set(range(points_x.size)):
+            msg = "La partition doit être disjointe et couvrir tous les indices du dataset."
+            raise ValueError(msg)
+
+        object.__setattr__(self, "points_x", points_x)
+        object.__setattr__(self, "points_y", points_y)
+        object.__setattr__(self, "concentrations", concentrations)
+        object.__setattr__(
+            self, "partition", PartitionS0(calibration=calibration, evaluation=evaluation)
+        )
 
     def vers_dict(self) -> dict[str, object]:
         """Exporte le manifeste du jeu (frontière JSON uniquement)."""
