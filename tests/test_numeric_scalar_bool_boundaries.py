@@ -18,15 +18,20 @@ from jdriftx.stabilite import ClasseStabilite
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("coord", ["x", "y", "z"])
 def test_point3d_refuse_les_coordonnees_booleennes(booleen: bool, coord: str) -> None:
+    """Un point 3D refuse une coordonnee booleenne sur chaque axe."""
+    # Given — un point valide dont un axe recoit un booleen.
     valeurs = {"x": 1.0, "y": 2.0, "z": 3.0}
     valeurs[coord] = booleen
-    with pytest.raises(ValueError, match="booleens exclus"):
+    # When / Then — la construction est refusee avant toute evaluation.
+    with pytest.raises(ValueError, match="booleens exclus"):]
         Point3D(**valeurs)
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["t", "masse", "u", "x0"])
 def test_parametres_puff_refusent_les_booleens(booleen: bool, champ: str) -> None:
+    """Les parametres du puff refusent un booleen sur chaque champ physique."""
+    # Given — des parametres valides dont un champ recoit un booleen.
     valeurs: dict[str, object] = {
         "t": 1.0,
         "masse": 1.0,
@@ -35,6 +40,7 @@ def test_parametres_puff_refusent_les_booleens(booleen: bool, champ: str) -> Non
         "x0": 0.0,
     }
     valeurs[champ] = booleen
+    # When / Then — la construction est refusee avant toute evaluation.
     with pytest.raises(ValueError, match="booleens exclus"):
         ParametresPuff(**valeurs)  # type: ignore[arg-type]
 
@@ -42,8 +48,11 @@ def test_parametres_puff_refusent_les_booleens(booleen: bool, champ: str) -> Non
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("coord", ["x", "y", "z"])
 def test_point_mesure_refuse_les_coordonnees_booleennes(booleen: bool, coord: str) -> None:
+    """Un point de mesure refuse une coordonnee booleenne sur chaque axe."""
+    # Given — un point de mesure valide dont un axe recoit un booleen.
     valeurs = {"x": 100.0, "y": 0.0, "z": 1.0}
     valeurs[coord] = booleen
+    # When / Then — la construction est refusee avant toute evaluation.
     with pytest.raises(ValueError, match="booleens exclus"):
         PointMesure(**valeurs)
 
@@ -51,6 +60,8 @@ def test_point_mesure_refuse_les_coordonnees_booleennes(booleen: bool, coord: st
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["z_mesure", "arcs", "positions_laterales"])
 def test_cas_s0_refuse_les_parametres_booleens(booleen: bool, champ: str) -> None:
+    """Le cas S0 refuse un booleen dans l altitude, les arcs ou les positions."""
+    # Given — un cas S0 valide et un champ remplace par un booleen.
     cas = CasS0(
         source=CAS_S0_DEFAUT.source,
         arcs=(100.0, 200.0),
@@ -64,6 +75,7 @@ def test_cas_s0_refuse_les_parametres_booleens(booleen: bool, champ: str) -> Non
         valeur = (booleen,)
     else:
         valeur = booleen
+    # When / Then — la re-construction est refusee avant toute evaluation.
     with pytest.raises(ValueError, match="booleens exclus"):
         replace(cas, **{champ: valeur})
 
@@ -71,6 +83,9 @@ def test_cas_s0_refuse_les_parametres_booleens(booleen: bool, champ: str) -> Non
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["altitude", "x_min", "x_max", "y_max"])
 def test_cas_synthetique_s0_refuse_les_parametres_booleens(booleen: bool, champ: str) -> None:
+    """Le cas synthetique S0 refuse un booleen dans ses parametres reels."""
+    # Given — le cas S0 de reference, un champ remplace par un booleen.
+    # When / Then — la re-construction est refusee.
     with pytest.raises(ValueError, match="booleens exclus"):
         replace(CAS_S0_DEFAUT, **{champ: booleen})
 
@@ -78,11 +93,17 @@ def test_cas_synthetique_s0_refuse_les_parametres_booleens(booleen: bool, champ:
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["graine", "nombre_points"])
 def test_cas_synthetique_s0_refuse_les_entiers_booleens(booleen: bool, champ: str) -> None:
+    """Les champs entiers graine et nombre_points refusent les booleens."""
+    # Given — le cas S0 de reference, un champ entier remplace par un booleen.
+    # When / Then — la re-construction est refusee.
     with pytest.raises(ValueError, match="entier"):
         replace(CAS_S0_DEFAUT, **{champ: booleen})
 
 
 def test_cas_synthetique_s0_refuse_un_nombre_de_points_non_entier() -> None:
+    """Un nombre de points non entier est refuse a la construction."""
+    # Given — le cas S0 de reference et un nombre de points flottant.
+    # When / Then — la re-construction est refusee.
     with pytest.raises(ValueError, match="entier"):
         replace(CAS_S0_DEFAUT, nombre_points=2.5)
 
@@ -96,7 +117,10 @@ def test_cas_synthetique_s0_refuse_un_nombre_de_points_non_entier() -> None:
     ],
 )
 def test_dataset_s0_refuse_les_tableaux_booleens_avant_conversion(valeurs: object) -> None:
+    """Les tableaux du dataset refusent les booleens avant conversion float64."""
+    # Given — un jeu S0 valide et un vecteur points_x contenant des booleens.
     jeu = generer_dataset_s0(CAS_S0_DEFAUT)
+    # When / Then — la construction est refusee avant la conversion float64.
     with pytest.raises(ValueError, match="booleens exclus"):
         DatasetS0(
             cas=jeu.cas,
