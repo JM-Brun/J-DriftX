@@ -85,7 +85,7 @@ def test_non_finite_coordinates_are_rejected() -> None:
 )
 @pytest.mark.parametrize("kind", ["hill", "valley", "ridge"])
 def test_scaled_formulas_preserve_standard_terrain_profiles(
-    kind: Literal["hill", "valley", "ridge"]
+    kind: Literal["hill", "valley", "ridge"],
 ) -> None:
     """La normalisation conserve les profils analytiques aux échelles usuelles."""
     # Given — une grille et des paramètres loin des limites de représentation.
