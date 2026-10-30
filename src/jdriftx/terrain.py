@@ -27,10 +27,16 @@ def _tableau_reel_fini(valeur: object, nom: str) -> NDArray[np.float64]:
     """Convertit un tableau réel en float64 sans coercition booléenne ou textuelle."""
     try:
         brut = np.asarray(valeur)
-        valeurs_brutes = np.asarray(valeur, dtype=object)
+        valeurs_brutes = (
+            np.asarray(valeur, dtype=object)
+            if not isinstance(valeur, np.ndarray) or brut.dtype.kind == "O"
+            else None
+        )
     except (TypeError, ValueError, OverflowError) as err:
         raise ValueError(f"{nom} must be a real numeric array.") from err
-    if any(isinstance(element, (bool, np.bool_)) for element in valeurs_brutes.flat):
+    if valeurs_brutes is not None and any(
+        isinstance(element, (bool, np.bool_)) for element in valeurs_brutes.flat
+    ):
         raise ValueError(f"{nom} must be a real numeric array (booleans excluded).")
     if brut.dtype.kind not in "iuf":
         msg = f"{nom} must be a real numeric array (complex and non-numeric values excluded)."
