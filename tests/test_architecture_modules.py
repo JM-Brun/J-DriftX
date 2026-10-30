@@ -1,6 +1,8 @@
 """Vérifie la séparation des modules et la compatibilité des imports historiques."""
 
-import jdriftx
+from importlib import import_module
+PACKAGE = import_module("jdriftx")
+
 from jdriftx._protocoles import (
     ModeleConcentration as ProtocoleConcentration,
     Relief as ProtocoleRelief,
@@ -34,18 +36,18 @@ from jdriftx.vents import (
 
 def test_facade_historique_reexporte_les_implementations_canoniques() -> None:
     """Les anciens imports restent des alias des classes définies par domaine."""
-    assert ContratPanache is ModelePanache is jdriftx.PanacheGaussien
-    assert ContratSuperposition is jdriftx.SuperpositionPanaches
-    assert ContratReliefMnt is ModeleReliefMnt is jdriftx.ReliefMntAscii
-    assert ContratReliefPlat is ModeleReliefPlat is jdriftx.ReliefPlat
-    assert ContratReliefSynthetique is ModeleReliefSynthetique is jdriftx.ReliefSynthetique
-    assert ContratVentChamp is ModeleVentChamp is jdriftx.VentDeChampPlan
-    assert ContratVentProfil is ModeleVentProfil is jdriftx.VentProfilPuissance
-    assert ContratVentUniforme is ModeleVentUniforme is jdriftx.VentUniforme
+    assert ContratPanache is ModelePanache is PACKAGE.PanacheGaussien
+    assert ContratSuperposition is PACKAGE.SuperpositionPanaches
+    assert ContratReliefMnt is ModeleReliefMnt is PACKAGE.ReliefMntAscii
+    assert ContratReliefPlat is ModeleReliefPlat is PACKAGE.ReliefPlat
+    assert ContratReliefSynthetique is ModeleReliefSynthetique is PACKAGE.ReliefSynthetique
+    assert ContratVentChamp is ModeleVentChamp is PACKAGE.VentDeChampPlan
+    assert ContratVentProfil is ModeleVentProfil is PACKAGE.VentProfilPuissance
+    assert ContratVentUniforme is ModeleVentUniforme is PACKAGE.VentUniforme
 
 
 def test_protocoles_publics_reexportent_les_protocoles_canoniques() -> None:
     """Les protocoles conservent leur identité à travers les deux façades publiques."""
-    assert ContratRelief is ProtocoleRelief is jdriftx.Relief
-    assert ContratVent is ProtocoleVent is jdriftx.Vent
-    assert ContratConcentration is ProtocoleConcentration is jdriftx.ModeleConcentration
+    assert ContratRelief is ProtocoleRelief is PACKAGE.Relief
+    assert ContratVent is ProtocoleVent is PACKAGE.Vent
+    assert ContratConcentration is ProtocoleConcentration is PACKAGE.ModeleConcentration
