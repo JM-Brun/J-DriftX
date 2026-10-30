@@ -75,3 +75,29 @@ def test_non_finite_coordinates_are_rejected() -> None:
         terrain_surface(x_mauvais, np.zeros(2), "flat")
     with pytest.raises(ValueError, match="finite coordinates"):
         terrain_surface(np.zeros(2), y_mauvais, "flat")
+
+
+@pytest.mark.parametrize(
+    ("kind", "expected"),
+    [("hill", 2.0), ("valley", -2.0), ("ridge", 2.0)],
+)
+def test_tiny_positive_width_remains_finite_at_terrain_center(
+    kind: str, expected: float
+) -> None:
+    """Une largeur très petite ne doit pas créer de NaN au centre du relief."""
+    # Given — une largeur positive dont le carré sous-déborde en float64.
+    coordinates = np.zeros((1, 1))
+    width = 1.0e-200
+
+    # When — le relief est évalué exactement en son centre.
+    elevation = terrain_surface(
+        coordinates,
+        coordinates,
+        kind,  # type: ignore[arg-type]
+        height=2.0,
+        width=width,
+    )
+
+    # Then — la valeur au centre reste égale à la hauteur analytique.
+    assert np.isfinite(elevation).all()
+    assert elevation[0, 0] == pytest.approx(expected)
