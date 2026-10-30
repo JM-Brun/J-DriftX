@@ -27,11 +27,20 @@ def _reel_fini(valeur: object, nom: str) -> float:
 
 
 def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> NDArray[np.float64]:
-    """Convertit un tableau de nombres reels en float64 sans coercition textuelle."""
+    """Convertit en float64 sans coercition textuelle ni booléens masqués par promotion."""
     try:
         brut = np.asarray(valeur)
+        # NumPy peut promouvoir [0.0, True] en int64 et perdre la trace du booléen.
+        # N'inspecter en objet que les entrées séquentielles, pas les grands ndarray typés.
+        valeurs_brutes = (
+            np.asarray(valeur, dtype=object) if not isinstance(valeur, np.ndarray) else None
+        )
     except (TypeError, ValueError, OverflowError) as err:
         raise ValueError(f"{nom} doit etre un tableau numerique reel.") from err
+    if valeurs_brutes is not None and any(
+        isinstance(element, (bool, np.bool_)) for element in valeurs_brutes.flat
+    ):
+        raise ValueError(f"{nom} doit etre un tableau numerique reel (booleens exclus).")
     if brut.dtype.kind not in "iuf":
         msg = f"{nom} doit etre un tableau numerique reel (booleens et complexes exclus)."
         raise ValueError(msg)
