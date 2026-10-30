@@ -7,7 +7,7 @@ import pytest
 
 from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT
 from jdriftx.experiences.reference_independante import GrilleEdp, PARAMETRES_EDP_DEFAUT
-import jdriftx.experiences.transitoire_puff.marginale as module_marginale
+from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
 
 
 @pytest.mark.parametrize(
@@ -17,7 +17,7 @@ import jdriftx.experiences.transitoire_puff.marginale as module_marginale
 def test_marginale_fermee_rejects_invalid_time(instant: object) -> None:
     """La marginale exige un instant réel fini strictement positif."""
     grille = GrilleEdp.depuis_parametres(PARAMETRES_EDP_DEFAUT)
-    marginale = module_marginale.MarginaleFermee(source=PUFF_DEFAUT, grille=grille)
+    marginale = MarginaleFermee(source=PUFF_DEFAUT, grille=grille)
     with pytest.raises(ValueError, match=r"t must|strictly positive"):
         marginale.champ(instant)  # type: ignore[arg-type]
 
