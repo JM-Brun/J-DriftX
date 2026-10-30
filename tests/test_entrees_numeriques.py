@@ -76,9 +76,7 @@ def test_vent_uniforme_rejette_les_composantes_invalides(valeur: object) -> None
 
 @pytest.mark.parametrize("champ", ["u_reference", "z_reference", "exposant"])
 @pytest.mark.parametrize("valeur", ["1.0", None, 1 + 0j, True, float("nan"), float("inf")])
-def test_profil_puissance_rejette_les_parametres_non_reels(
-    champ: str, valeur: object
-) -> None:
+def test_profil_puissance_rejette_les_parametres_non_reels(champ: str, valeur: object) -> None:
     """Les parametres du profil exigent des scalaires reels finis."""
     parametres: dict[str, object] = {
         "u_reference": 5.0,
