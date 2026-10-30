@@ -162,7 +162,7 @@ def sigma_z(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
         FloatingPointError: si un ecart-type positif n'est pas representable en float64.
     """
     classe_stable = _valide_classe(classe)
-    x_arr = _distance_sous_le_vent(_tableau_reel_fini(x, "La distance sous le vent"))
+    x_arr = _tableau_reel_fini(x, "La distance sous le vent")
     if np.any(x_arr < 0.0):
         msg = "La distance sous le vent doit etre positive ou nulle."
         raise ValueError(msg)
@@ -215,7 +215,7 @@ def concentration_panache(
         raise ValueError("La vitesse du vent doit etre strictement positive.")
     if debit < 0.0:
         raise ValueError("Le debit d'emission doit etre positif ou nul.")
-    x_arr = _distance_sous_le_vent(_tableau_reel_fini(x, "La distance sous le vent"))
+    x_arr = _tableau_reel_fini(x, "La distance sous le vent")
     if np.any(x_arr <= 0.0):
         raise ValueError("La distance sous le vent doit etre strictement positive.")
     y_arr = _tableau_reel_fini(y, "La coordonnee y")
