@@ -127,8 +127,11 @@ def test_gaussian_advection_diffusion_refuse_les_parametres_booleens(
         "diffusivity": 0.1,
         "initial_sigma": 1.0,
     }
-    parametres[champ] = booleen
-    temps = 1.0 if champ != "time" else booleen
+    if champ == "time":
+        temps = booleen
+    else:
+        parametres[champ] = booleen
+        temps = 1.0
     # When / Then — la solution refuse le paramètre avant le calcul de variance.
     with pytest.raises(ValueError, match="booleans excluded"):
         advection_diffusion.gaussian_advection_diffusion(
@@ -179,8 +182,11 @@ def test_periodic_sine_solution_refuse_les_parametres_booleens(
         "velocity": 0.4,
         "diffusivity": 0.01,
     }
-    parametres[champ] = booleen
-    temps = 0.1 if champ != "time" else booleen
+    if champ == "time":
+        temps = booleen
+    else:
+        parametres[champ] = booleen
+        temps = 0.1
     # When / Then — la solution refuse le paramètre avant le calcul de phase.
     with pytest.raises(ValueError, match="booleans excluded"):
         periodic_transport.periodic_sine_solution(
