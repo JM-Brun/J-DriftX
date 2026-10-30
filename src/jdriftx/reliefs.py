@@ -33,7 +33,8 @@ def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> NDArray[np.float64]:
     except (TypeError, ValueError, OverflowError) as err:
         raise ValueError(f"{nom} doit etre un tableau numerique reel.") from err
     if brut.dtype.kind not in "iuf":
-        raise ValueError(f"{nom} doit etre un tableau numerique reel (booleens et complexes exclus).")
+        msg = f"{nom} doit etre un tableau numerique reel (booleens et complexes exclus)."
+        raise ValueError(msg)
     try:
         resultat = np.asarray(brut, dtype=np.float64)
     except (TypeError, ValueError, OverflowError) as err:
