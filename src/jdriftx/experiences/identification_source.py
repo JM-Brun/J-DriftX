@@ -27,6 +27,8 @@ from __future__ import annotations
 import itertools
 import math
 from dataclasses import dataclass
+
+import numpy as np
 from importlib import metadata
 from typing import Literal
 
@@ -40,7 +42,11 @@ _MARGE_MINIMUM = 1e-30
 
 def _valide_point(nom: str, point: tuple[float, float]) -> None:
     """Lève ValueError si le point n'est pas un couple de coordonnées finies."""
-    if len(tuple(point)) != 2 or not all(math.isfinite(c) for c in tuple(point)):
+    coordonnees = tuple(point)
+    if len(coordonnees) != 2 or any(isinstance(valeur, (bool, np.bool_)) for valeur in coordonnees):
+        msg = f"Le point {nom} doit être un couple (x, y) numérique (booléens exclus)."
+        raise ValueError(msg)
+    if not all(math.isfinite(c) for c in coordonnees):
         msg = f"Le point {nom} doit être un couple (x, y) de coordonnées finies."
         raise ValueError(msg)
 
@@ -69,6 +75,11 @@ def concentration(
         (transport advectif dominant), gaussienne en travers avec un
         écart-type en racine carrée de la distance advective.
     """
+    _valide_point("point", point)
+    _valide_point("source", source)
+    if isinstance(debit, (bool, np.bool_)):
+        msg = "Le débit doit être numérique (booléens exclus)."
+        raise ValueError(msg)
     return _concentration_panache(scenario.vent, scenario.diffusivite, point, source, debit)
 
 
@@ -107,6 +118,12 @@ def _valide_vent_et_scalaires(scenario: ScenarioIdentification) -> None:
     _valide_point("vent", scenario.vent)
     if _vitesse(scenario.vent) <= 0.0:
         msg = "Le vent doit être un vecteur non nul."
+        raise ValueError(msg)
+    if any(
+        isinstance(valeur, (bool, np.bool_))
+        for valeur in (scenario.diffusivite, scenario.debit_vrai)
+    ):
+        msg = "La diffusivité et le débit doivent être numériques (booléens exclus)."
         raise ValueError(msg)
     if not math.isfinite(scenario.diffusivite) or scenario.diffusivite <= 0.0:
         msg = "La diffusivité doit être finie et strictement positive."
@@ -167,8 +184,13 @@ def _valide_capteurs(scenario: ScenarioIdentification) -> None:
 
 def _valide_detection(scenario: ScenarioIdentification) -> None:
     """Vérifie l'indice, le seuil et l'unicité du capteur de détection."""
-    if not isinstance(scenario.indice_detection, int) or not 0 <= scenario.indice_detection < 5:
+    if isinstance(scenario.indice_detection, (bool, np.bool_)) or not isinstance(
+        scenario.indice_detection, int
+    ) or not 0 <= scenario.indice_detection < 5:
         msg = "L'indice de détection doit désigner l'un des cinq capteurs."
+        raise ValueError(msg)
+    if isinstance(scenario.seuil_detection, (bool, np.bool_)):
+        msg = "Le seuil de détection doit être numérique (booléens exclus)."
         raise ValueError(msg)
     if not math.isfinite(scenario.seuil_detection) or scenario.seuil_detection <= 0.0:
         msg = "Le seuil de détection doit être fini et strictement positif."
@@ -191,6 +213,9 @@ def _valide_detection(scenario: ScenarioIdentification) -> None:
 
 def _valide_grille_candidats(scenario: ScenarioIdentification) -> None:
     """Vérifie que le pas des candidats pave exactement la fenêtre."""
+    if isinstance(scenario.pas_candidats, (bool, np.bool_)):
+        msg = "Le pas des candidats doit être numérique (booléens exclus)."
+        raise ValueError(msg)
     if not math.isfinite(scenario.pas_candidats) or scenario.pas_candidats <= 0.0:
         msg = "Le pas des candidats doit être fini et strictement positif."
         raise ValueError(msg)
