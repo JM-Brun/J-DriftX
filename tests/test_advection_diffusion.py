@@ -161,9 +161,5 @@ def test_gaussian_peak_log_domain_preserves_subnormal_mass_contribution() -> Non
         diffusivity=0.0,
         initial_sigma=sigma,
     )
-    expected = np.exp(
-        np.log(smallest_positive)
-        - 0.5 * np.log(2.0 * np.pi)
-        - np.log(sigma)
-    )
+    expected = np.exp(np.log(smallest_positive) - 0.5 * np.log(2.0 * np.pi) - np.log(sigma))
     assert actual[0] == pytest.approx(expected, rel=2e-14)
