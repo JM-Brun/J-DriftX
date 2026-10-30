@@ -3,10 +3,7 @@
 import importlib
 
 import jdriftx._protocoles as protocoles
-import jdriftx.concentrations as concentrations
-import jdriftx.contrats as contrats
-import jdriftx.reliefs as reliefs
-import jdriftx.vents as vents
+from jdriftx import concentrations, contrats, reliefs, vents
 
 PACKAGE = importlib.import_module("jdriftx")
 
