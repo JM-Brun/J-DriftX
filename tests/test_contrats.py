@@ -683,6 +683,7 @@ def test_mnt_ascii_rejette_une_cellule_non_numerique() -> None:
     with pytest.raises(ValueError, match="non numerique"):
         ReliefMntAscii.depuis_texte(texte)
 
+
 def test_mnt_ascii_normalise_les_coordonnees_sans_debordement() -> None:
     """Une différence intermédiaire supérieure à float64.max reste calculable."""
     maximum = np.finfo(float).max
