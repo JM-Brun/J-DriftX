@@ -59,6 +59,7 @@ from pydantic import BaseModel, ConfigDict
 
 from jdriftx.benchmarks.cas import CasS0, PointMesure
 from jdriftx.benchmarks.metriques import fac2, nmse
+from jdriftx._protocoles import ModeleConcentration
 from jdriftx.concentrations import PanacheGaussien
 from jdriftx.similitude import sigma_y, sigma_z
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
@@ -391,11 +392,17 @@ class SolveurEdp:
         cas: CasS0,
         parametres: ParametresEdp,
         modele: ModeleDiffusion = DIFFUSION_BRIGGS,
+        condition_entree: ModeleConcentration | None = None,
     ) -> None:
-        """Injecte les trois considérations : cas, géométrie, physique."""
+        """Injecte le cas, la géométrie, la diffusion et le champ d'entrée."""
         self.cas = cas
         self.parametres = parametres
         self.modele = modele
+        self.condition_entree = (
+            condition_entree
+            if condition_entree is not None
+            else PanacheGaussien(source=cas.source)
+        )
 
     def resoudre(self) -> SolutionEdp:
         """Résout du premier au dernier arc : modèle, grille, pas, arcs, marche.
@@ -441,8 +448,17 @@ class SolveurEdp:
         pas_y = self.parametres.pas_transverse_y
         pas_z = self.parametres.pas_transverse_z
         mailles_y, mailles_z = grille.mailles()
-        panache = PanacheGaussien(source=self.cas.source)
-        champ = np.asarray(panache.concentration(x_entree, mailles_y, mailles_z), dtype=float)
+        champ = np.asarray(
+            self.condition_entree.concentration(x_entree, mailles_y, mailles_z),
+            dtype=float,
+        )
+        if champ.shape != mailles_y.shape:
+            msg = "La condition d'entrée doit retourner un champ de même forme que la grille."
+            raise ValueError(msg)
+        if not np.all(np.isfinite(champ)):
+            msg = "La condition d'entrée doit retourner des concentrations finies."
+            raise ValueError(msg)
+        champ = champ.copy()
         champ[0, :] = 0.0
         champ[-1, :] = 0.0
         champ[:, -1] = 0.0
@@ -491,6 +507,7 @@ def resoudre_edp(
     cas: CasS0,
     parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT,
     modele: ModeleDiffusion = DIFFUSION_BRIGGS,
+    condition_entree: ModeleConcentration | None = None,
 ) -> SolutionEdp:
     """Résout l'EDP de diffusion marchée en x, du premier au dernier arc.
 
@@ -499,7 +516,7 @@ def resoudre_edp(
     le point d'extension de S0-b (cisaillement) ; le schéma et la grille
     restent ceux de l'étape 5.
     """
-    return SolveurEdp(cas, parametres, modele).resoudre()
+    return SolveurEdp(cas, parametres, modele, condition_entree).resoudre()
 
 
 def _pas_longitudinal(
