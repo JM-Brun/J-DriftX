@@ -424,7 +424,6 @@ def test_le_modele_de_diffusion_est_injectable() -> None:
     assert not np.array_equal(double.tranches[-1].champ, reference.tranches[-1].champ)
 
 
-
 def test_grille_edp_copie_et_fige_ses_axes() -> None:
     """Une grille ne partage pas ses axes mutables avec l'appelant."""
     # Given — des axes fournis dans des tableaux mutables.
