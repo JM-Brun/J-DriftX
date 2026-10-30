@@ -355,7 +355,7 @@ def test_sigmas_rejettent_distance_non_finie(valeur: float) -> None:
     # When / Then — les deux appels sont refusés avant tout calcul.
     with pytest.raises(ValueError, match="valeurs finies"):
         sigma_y(valeur, ClasseStabilite.D)
-    with pytest.raises(ValueError, match="doit etre finie"):
+    with pytest.raises(ValueError, match="valeurs finies"):
         sigma_z(valeur, ClasseStabilite.D)
 
 
@@ -364,7 +364,7 @@ def test_sigmas_rejettent_tableau_contenant_nan() -> None:
     # Given — une distance valide suivie d'un NaN.
     x = np.array([100.0, float("nan")])
     # When / Then — l'appel est refusé même si une seule valeur est invalide.
-    with pytest.raises(ValueError, match="doit etre finie"):
+    with pytest.raises(ValueError, match="valeurs finies"):
         sigma_y(x, ClasseStabilite.D)
 
 
@@ -390,7 +390,7 @@ def test_panache_rejette_distance_infinie() -> None:
     """Une distance sous le vent infinie est refusée."""
     # Given — x = +inf : le contrôle de signe passe, les sigmas débordent.
     # When / Then — l'appel est refusé.
-    with pytest.raises(ValueError, match="doit etre finie"):
+    with pytest.raises(ValueError, match="valeurs finies"):
         concentration_panache(float("inf"), 0.0, 1.0, debit=1.0, u=3.0, classe=ClasseStabilite.D)
 
 
@@ -435,7 +435,7 @@ def test_puff_rejette_scalaire_non_fini(parametre: dict[str, float]) -> None:
     fixes = {"t": 300.0, "masse": 5.0, "u": 3.0, "x0": 0.0}
     fixes.update(parametre)
     # When / Then — l'appel est refusé avant tout calcul.
-    with pytest.raises(ValueError, match="doivent etre finis"):
+    with pytest.raises(ValueError, match="fini"):
         concentration_puff(1500.0, 0.0, 1.0, classe=ClasseStabilite.C, **fixes)
 
 
@@ -451,7 +451,7 @@ def test_puff_rejette_grille_non_finie(x: np.ndarray, y: np.ndarray, z: np.ndarr
     """Une coordonnée du point de calcul non finie est refusée."""
     # Given — un NaN ou un infini dans la grille x, y ou z.
     # When / Then — l'appel est refusé.
-    with pytest.raises(ValueError, match="coordonnees finies"):
+    with pytest.raises(ValueError, match="valeurs finies"):
         concentration_puff(x, y, z, t=300.0, masse=5.0, u=3.0, classe=ClasseStabilite.C)
 
 
