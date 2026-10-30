@@ -25,6 +25,16 @@ from numpy.typing import ArrayLike
 UMIN_PAR_DEFAUT = 0.1
 
 
+def _temps_float64(valeur: np.longdouble, contexte: str) -> float:
+    """Convertit un temps positif en float64 sans overflow ni underflow silencieux."""
+    if not np.isfinite(valeur) or valeur > np.finfo(float).max:
+        raise ValueError(f"{contexte} n'est pas representable en float64.")
+    resultat = float(valeur)
+    if valeur > 0.0 and resultat == 0.0:
+        raise ValueError(f"{contexte} n'est pas representable en float64.")
+    return resultat
+
+
 def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
     """Calcule le temps de première arrivée pour une vitesse constante en 1D.
 
@@ -42,7 +52,8 @@ def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
         inaccessible sous la dynamique constante spécifiée.
 
     Raises:
-        ValueError: si une entrée est non finie.
+        ValueError: si une entrée est non finie ou si le temps positif
+            n'est pas representable en float64.
     """
     if not all(isfinite(value) for value in (a, b, vitesse)):
         msg = "a, b et vitesse doivent etre finis."
@@ -56,7 +67,8 @@ def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
         return 0.0
     if vitesse == 0.0 or ((deplacement > 0.0) != (vitesse > 0.0)):
         return float("inf")
-    return abs(deplacement / vitesse)
+    temps = abs(np.longdouble(deplacement) / np.longdouble(vitesse))
+    return _temps_float64(temps, "Le temps de premiere arrivee")
 
 
 def temps_transport(
@@ -78,7 +90,7 @@ def temps_transport(
     Raises:
         ValueError: si les formes sont incohérentes, si une vitesse est sous
             le seuil umin, ou si le coût total n'est pas représentable en
-            float64.
+            float64 ou s'arrondit a zero.
     """
     pts = np.asarray(ligne, dtype=float)
     u_seg = np.asarray(vent, dtype=float)
@@ -107,17 +119,16 @@ def temps_transport(
         msg = "Les deplacements des segments doivent rester finis."
         raise ValueError(msg)
 
-    with np.errstate(over="ignore"):
-        longueurs = np.hypot(segments[:, 0], segments[:, 1])
-        vitesses = np.hypot(u_seg[:, 0], u_seg[:, 1])
-        cout = float(np.sum(longueurs / vitesses))
-    if np.any(vitesses < umin):
+    segments_etendus = np.asarray(segments, dtype=np.longdouble)
+    vent_etendu = np.asarray(u_seg, dtype=np.longdouble)
+    longueurs = np.hypot(segments_etendus[:, 0], segments_etendus[:, 1])
+    vitesses = np.hypot(vent_etendu[:, 0], vent_etendu[:, 1])
+    if np.any(vitesses < np.longdouble(umin)):
         msg = f"Vent plus faible que umin ({umin} m/s) : temps de transport non defini."
         raise ValueError(msg)
-    if not isfinite(cout):
-        msg = "Le cout total doit rester fini."
-        raise ValueError(msg)
-    return cout
+    couts = longueurs / vitesses
+    cout_total = np.sum(couts, dtype=np.longdouble)
+    return _temps_float64(cout_total, "Le cout total")
 
 
 def pseudo_distance_uniforme(
@@ -165,24 +176,25 @@ def pseudo_distance_uniforme(
         msg = "vent doit contenir uniquement des vitesses finies."
         raise ValueError(msg)
 
-    norme_vitesse = float(np.hypot(vitesse[0], vitesse[1]))
-    if norme_vitesse == 0.0:
-        msg = "Le champ uniforme doit avoir une vitesse non nulle."
-        raise ValueError(msg)
-
     with np.errstate(over="ignore", invalid="ignore"):
         deplacement = point_b - point_a
     if not np.all(np.isfinite(deplacement)):
         msg = "Le deplacement b - a doit rester fini."
         raise ValueError(msg)
 
-    direction = vitesse / norme_vitesse
-    with np.errstate(over="ignore"):
-        avance_longitudinale = float(np.dot(deplacement, direction))
-    cout = avance_longitudinale / norme_vitesse
-    if not (isfinite(avance_longitudinale) and isfinite(cout)):
-        msg = "Le cout longitudinal doit rester fini."
+    # Le quotient (d . u) / (u . u) peut rester representable alors que
+    # chacun des produits scalaires deborde en float64. L'intermediaire etendu
+    # preserve ce rapport sans changer la formule analytique.
+    deplacement_etendu = np.asarray(deplacement, dtype=np.longdouble)
+    vitesse_etendue = np.asarray(vitesse, dtype=np.longdouble)
+    avance = np.sum(deplacement_etendu * vitesse_etendue, dtype=np.longdouble)
+    norme_carre = np.sum(vitesse_etendue * vitesse_etendue, dtype=np.longdouble)
+    if norme_carre == 0.0:
+        msg = "Le champ uniforme doit avoir une vitesse non nulle."
         raise ValueError(msg)
-    if avance_longitudinale < 0.0:
+    if avance < 0.0:
         return float("inf")
-    return cout
+    if avance == 0.0:
+        return 0.0
+    cout = avance / norme_carre
+    return _temps_float64(cout, "Le cout longitudinal")
