@@ -671,7 +671,9 @@ def test_panache_rejette_les_coordonnees_non_reelles(axe: str, valeur: object) -
     """Les tableaux de coordonnées ne subissent pas de coercition implicite."""
     coordonnees: dict[str, object] = {"x": 500.0, "y": 0.0, "z": 1.0}
     coordonnees[axe] = valeur
-    with pytest.raises(ValueError, match=r"tableau numerique reel|valeurs finies|fini|representable"):
+    with pytest.raises(
+        ValueError, match=r"tableau numerique reel|valeurs finies|fini|representable"
+    ):
         concentration_panache(**coordonnees, debit=1.0, u=3.0, classe="D")  # type: ignore[arg-type]
 
 
