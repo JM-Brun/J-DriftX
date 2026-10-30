@@ -80,6 +80,7 @@ __all__ = [
     "RouteEdp",
     "RouteFermee",
     "SolutionEdp",
+    "SolveurDeReference",
     "SolveurEdp",
     "TrancheEdp",
     "comparer_reference",
@@ -290,6 +291,19 @@ class SolutionEdp:
     abscisses_y: np.ndarray
     abscisses_z: np.ndarray
     tranches: tuple[TrancheEdp, ...]
+
+
+class SolveurDeReference(Protocol):
+    """Contrat d'un solveur produisant une solution échantillonnable.
+
+    Une route de comparaison dépend de la structure de sortie, pas du schéma
+    numérique. Un solveur alternatif peut donc remplacer FTCS s'il fournit
+    les mêmes coordonnées et tranches, sans hériter de SolveurEdp.
+    """
+
+    def resoudre(self) -> SolutionEdp:
+        """Retourne la solution sur la grille et aux arcs du cas configuré."""
+        ...
 
 
 @dataclass(frozen=True)
@@ -611,16 +625,18 @@ class RouteEdp:
         cas: CasS0,
         parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT,
         modele: ModeleDiffusion = DIFFUSION_BRIGGS,
+        solveur: SolveurDeReference | None = None,
     ) -> None:
-        """Injecte les mêmes considérations que le solveur (points d'extension)."""
+        """Injecte le solveur ; FTCS reste l'implémentation par défaut."""
         self.cas = cas
         self.parametres = parametres
         self.modele = modele
+        self.solveur = solveur or SolveurEdp(cas, parametres, modele)
 
     def mesurer(self, points: tuple[PointMesure, ...]) -> MesureEdp:
         """Résout, échantillonne et intègre la route EDP ; coût mesuré ensemble."""
         debut = time.perf_counter()
-        solution = SolveurEdp(self.cas, self.parametres, self.modele).resoudre()
+        solution = self.solveur.resoudre()
         grille = GrilleEdp(abscisses_y=solution.abscisses_y, abscisses_z=solution.abscisses_z)
         tranches = {tranche.x: tranche for tranche in solution.tranches}
         valeurs: list[float] = []
