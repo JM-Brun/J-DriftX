@@ -58,7 +58,11 @@ def positivite(concentration: ArrayLike, tol: float = 1e-12) -> bool:
         msg = "La tolerance doit etre finie et positive ou nulle."
         raise ValueError(msg)
     if _contient_valeur_non_reelle(concentration):
-        raise ValueError("La concentration doit contenir des valeurs reelles (booleens exclus; complexes exclus).")
+        msg = (
+            "La concentration doit contenir des valeurs reelles "
+            "(booleens exclus; complexes exclus)."
+        )
+        raise ValueError(msg)
     c = np.asarray(concentration, dtype=float)
     return bool(np.all(c >= -tolerance))
 
