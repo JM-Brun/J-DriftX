@@ -92,7 +92,7 @@ def test_relief_synthetique_rejette_les_parametres_invalides(
 def test_reliefs_rejettent_les_coordonnees_non_finies() -> None:
     """Les implémentations de relief appliquent le même contrat d'entrée."""
     for relief in (ReliefPlat(), ReliefSynthetique(kind="hill")):
-        with pytest.raises(ValueError, match="coordonnées doivent être finies"):
+        with pytest.raises(ValueError, match="coordonnees doivent etre finies"):
             relief.altitude(np.array([float("nan")]), np.array([0.0]))
 
 
