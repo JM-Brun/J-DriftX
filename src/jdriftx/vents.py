@@ -4,11 +4,31 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from numbers import Real
 
 import numpy as np
 
 from jdriftx._protocoles import Vent
 from jdriftx.champ_analytique import ChampPlan
+
+
+def _composantes_reelles_finies(
+    resultat: object,
+    nombre: int,
+    description: str,
+) -> tuple[float, ...]:
+    """Valide une sortie de vitesse tuple de réels finis et la normalise."""
+    if not isinstance(resultat, tuple) or len(resultat) != nombre:
+        raise ValueError(description)
+    if any(not isinstance(value, Real) or isinstance(value, bool) for value in resultat):
+        raise ValueError(description)
+    try:
+        composantes = tuple(float(value) for value in resultat)
+    except (OverflowError, ValueError) as err:
+        raise ValueError(description) from err
+    if not all(math.isfinite(value) for value in composantes):
+        raise ValueError(description)
+    return composantes
 
 
 @dataclass(frozen=True)
@@ -25,16 +45,25 @@ class AdaptateurTrajectoire2D:
 
     def __post_init__(self) -> None:
         """Valide la hauteur fixe de l'échantillonnage."""
-        if not np.isfinite(self.hauteur):
-            msg = "La hauteur d'échantillonnage doit être finie."
+        if (
+            not isinstance(self.hauteur, Real)
+            or isinstance(self.hauteur, bool)
+            or not math.isfinite(float(self.hauteur))
+        ):
+            msg = "La hauteur d'échantillonnage doit être un réel fini."
             raise ValueError(msg)
+        if not callable(getattr(self.vent, "vitesse", None)):
+            msg = "Le vent doit exposer une méthode vitesse callable."
+            raise TypeError(msg)
+        object.__setattr__(self, "hauteur", float(self.hauteur))
 
     def __call__(self, _temps: float, x: float, y: float) -> tuple[float, float]:
         """Retourne (u, v) au point (x, y, hauteur), si w est nul."""
-        u, v, w = self.vent.vitesse(x, y, self.hauteur)
-        if not np.all(np.isfinite((u, v, w))):
-            msg = "Le champ de vent doit retourner trois composantes finies."
-            raise ValueError(msg)
+        u, v, w = _composantes_reelles_finies(
+            self.vent.vitesse(x, y, self.hauteur),
+            3,
+            "Le champ de vent doit retourner trois composantes réelles finies.",
+        )
         if w != 0.0:
             msg = "Un vent vertical ne peut pas être adapté à une trajectoire 2D."
             raise ValueError(msg)
@@ -78,16 +107,25 @@ class VentDeChampPlan:
 
     champ: ChampPlan
 
+    def __post_init__(self) -> None:
+        """Valide les méthodes requises par le protocole ChampPlan."""
+        if not callable(getattr(self.champ, "fonction_courant", None)) or not callable(
+            getattr(self.champ, "vitesse", None)
+        ):
+            msg = "Le champ doit exposer fonction_courant et vitesse callable."
+            raise TypeError(msg)
+
     def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
         """Evalue le vent (u, v, 0) du champ plan au point (x, y).
 
         Raises:
             ValueError: si le champ delegue retourne une composante non finie.
         """
-        u, v = self.champ.vitesse(x, y)
-        if not np.all(np.isfinite((u, v))):
-            msg = "Le champ de vent doit retourner deux composantes finies."
-            raise ValueError(msg)
+        u, v = _composantes_reelles_finies(
+            self.champ.vitesse(x, y),
+            2,
+            "Le champ de vent doit retourner deux composantes réelles finies.",
+        )
         return u, v, 0.0
 
 
