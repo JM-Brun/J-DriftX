@@ -351,12 +351,12 @@ def test_enum_classe_equivalente_a_la_lettre(classe: ClasseStabilite) -> None:
 @pytest.mark.parametrize("valeur", [float("nan"), float("inf"), -float("inf")])
 def test_sigmas_rejettent_distance_non_finie(valeur: float) -> None:
     """Une distance sous le vent non finie est refusée par les deux écarts-types."""
-    # Given — une distance NaN ou infinie.
+    # Given — une distance NaN ou infinie, classe Pasquill objet D.
     # When / Then — les deux appels sont refusés avant tout calcul.
     with pytest.raises(ValueError, match="doit etre finie"):
-        sigma_y(valeur, "D")
+        sigma_y(valeur, ClasseStabilite.D)
     with pytest.raises(ValueError, match="doit etre finie"):
-        sigma_z(valeur, "D")
+        sigma_z(valeur, ClasseStabilite.D)
 
 
 def test_sigmas_rejettent_tableau_contenant_nan() -> None:
@@ -365,7 +365,7 @@ def test_sigmas_rejettent_tableau_contenant_nan() -> None:
     x = np.array([100.0, float("nan")])
     # When / Then — l'appel est refusé même si une seule valeur est invalide.
     with pytest.raises(ValueError, match="doit etre finie"):
-        sigma_y(x, "D")
+        sigma_y(x, ClasseStabilite.D)
 
 
 @pytest.mark.parametrize(
@@ -383,7 +383,7 @@ def test_panache_rejette_scalaire_non_fini(parametre: dict[str, float]) -> None:
     fixes.update(parametre)
     # When / Then — l'appel est refusé avant tout calcul.
     with pytest.raises(ValueError, match="doivent etre finis"):
-        concentration_panache(500.0, 0.0, 1.0, classe="D", **fixes)
+        concentration_panache(500.0, 0.0, 1.0, classe=ClasseStabilite.D, **fixes)
 
 
 def test_panache_rejette_distance_infinie() -> None:
@@ -391,7 +391,9 @@ def test_panache_rejette_distance_infinie() -> None:
     # Given — x = +inf : le contrôle de signe passe, les sigmas débordent.
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="doit etre finie"):
-        concentration_panache(float("inf"), 0.0, 1.0, debit=1.0, u=3.0, classe="D")
+        concentration_panache(
+            float("inf"), 0.0, 1.0, debit=1.0, u=3.0, classe=ClasseStabilite.D
+        )
 
 
 @pytest.mark.parametrize(
@@ -406,7 +408,7 @@ def test_panache_rejette_grille_non_finie(y: np.ndarray, z: np.ndarray) -> None:
     # Given — un NaN ou un infini dans la grille y ou z.
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="coordonnees finies"):
-        concentration_panache(500.0, y, z, debit=1.0, u=3.0, classe="D")
+        concentration_panache(500.0, y, z, debit=1.0, u=3.0, classe=ClasseStabilite.D)
 
 
 def test_panache_diffuse_les_formes_selon_numpy() -> None:
@@ -414,7 +416,7 @@ def test_panache_diffuse_les_formes_selon_numpy() -> None:
     # Given — x et y scalaires, z vectorisé sur quatre altitudes.
     z = np.array([0.0, 5.0, 10.0, 15.0])
     # When — le panache est évalué.
-    c = concentration_panache(500.0, 25.0, z, debit=1.0, u=3.0, classe="D")
+    c = concentration_panache(500.0, 25.0, z, debit=1.0, u=3.0, classe=ClasseStabilite.D)
     # Then — la forme du résultat suit la forme diffusée commune (4,).
     assert c.shape == (4,)
     assert np.all(c > 0.0)
@@ -436,7 +438,7 @@ def test_puff_rejette_scalaire_non_fini(parametre: dict[str, float]) -> None:
     fixes.update(parametre)
     # When / Then — l'appel est refusé avant tout calcul.
     with pytest.raises(ValueError, match="doivent etre finis"):
-        concentration_puff(1500.0, 0.0, 1.0, classe="C", **fixes)
+        concentration_puff(1500.0, 0.0, 1.0, classe=ClasseStabilite.C, **fixes)
 
 
 @pytest.mark.parametrize(
@@ -452,7 +454,7 @@ def test_puff_rejette_grille_non_finie(x: np.ndarray, y: np.ndarray, z: np.ndarr
     # Given — un NaN ou un infini dans la grille x, y ou z.
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="coordonnees finies"):
-        concentration_puff(x, y, z, t=300.0, masse=5.0, u=3.0, classe="C")
+        concentration_puff(x, y, z, t=300.0, masse=5.0, u=3.0, classe=ClasseStabilite.C)
 
 
 def test_puff_rejette_distance_parcourue_infinie() -> None:
@@ -460,7 +462,9 @@ def test_puff_rejette_distance_parcourue_infinie() -> None:
     # Given — un vent et un temps finis dont le produit n'est pas représentable.
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="distance parcourue doit rester finie"):
-        concentration_puff(1500.0, 0.0, 1.0, t=1.0e200, masse=5.0, u=1.0e200, classe="C")
+        concentration_puff(
+            1500.0, 0.0, 1.0, t=1.0e200, masse=5.0, u=1.0e200, classe=ClasseStabilite.C
+        )
 
 
 def test_puff_diffuse_les_formes_selon_numpy() -> None:
@@ -468,7 +472,7 @@ def test_puff_diffuse_les_formes_selon_numpy() -> None:
     # Given — x et y scalaires, z vectorisé sur trois altitudes.
     z = np.array([0.0, 2.0, 4.0])
     # When — le puff est évalué.
-    c = concentration_puff(900.0, 0.0, z, t=300.0, masse=5.0, u=3.0, classe="C")
+    c = concentration_puff(900.0, 0.0, z, t=300.0, masse=5.0, u=3.0, classe=ClasseStabilite.C)
     # Then — la forme du résultat suit la forme diffusée commune (3,).
     assert c.shape == (3,)
     assert np.all(c > 0.0)
