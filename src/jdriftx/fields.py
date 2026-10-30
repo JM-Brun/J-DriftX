@@ -11,18 +11,6 @@ import numpy as np
 from numpy.typing import NDArray
 
 
-def _contient_booleen(valeur: object) -> bool:
-    """Détecte les booléens avant toute conversion numérique avec NumPy."""
-    if isinstance(valeur, np.ndarray):
-        if valeur.dtype.kind == "b":
-            return True
-        return valeur.dtype.kind == "O" and any(
-            isinstance(element, (bool, np.bool_)) for element in valeur.flat
-        )
-    brut = np.asarray(valeur, dtype=object)
-    return any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
-
-
 FieldKind = Literal["uniform", "shear", "radial"]
 
 
@@ -35,7 +23,9 @@ def vector_field(
     shear: float = 0.0,
     radial_strength: float = 1.0,
 ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
-    """Evaluate a simple 2D vector field on matching coordinate arrays.
+    """Evaluate a simple 2D vector field on matching finite real coordinate arrays.
+
+    Boolean and complex values, non-finite values and textual coercions are rejected.
 
     Args:
         x: X coordinates on a grid.
@@ -52,27 +42,18 @@ def vector_field(
     Raises:
         ValueError: If coordinates have different shapes or parameters are invalid.
     """
-    if _contient_booleen(x) or _contient_booleen(y):
-        msg = "Coordinates must be real-valued (booleans excluded)."
-        raise ValueError(msg)
-    x_arr = np.asarray(x, dtype=float)
-    y_arr = np.asarray(y, dtype=float)
+    x_arr = _tableau_reel_fini(x, "x")
+    y_arr = _tableau_reel_fini(y, "y")
     if x_arr.shape != y_arr.shape:
         msg = "x and y must have identical shapes."
         raise ValueError(msg)
     if not np.all(np.isfinite(x_arr)) or not np.all(np.isfinite(y_arr)):
         msg = "Coordinates must be finite."
         raise ValueError(msg)
-    parameters = (speed, angle_deg, shear, radial_strength)
-    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
-        msg = "Field parameters must be real-valued (booleans excluded)."
-        raise ValueError(msg)
-    if not np.isfinite(speed) or not np.isfinite(angle_deg) or not np.isfinite(shear):
-        msg = "Field parameters must be finite."
-        raise ValueError(msg)
-    if not np.isfinite(radial_strength):
-        msg = "radial_strength must be finite."
-        raise ValueError(msg)
+    speed = _reel_fini(speed, "speed")
+    angle_deg = _reel_fini(angle_deg, "angle_deg")
+    shear = _reel_fini(shear, "shear")
+    radial_strength = _reel_fini(radial_strength, "radial_strength")
 
     angle = np.deg2rad(angle_deg)
     if kind == "uniform":
