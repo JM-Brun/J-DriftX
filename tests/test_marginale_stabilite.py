@@ -22,9 +22,7 @@ def test_marginale_fermee_preserves_representable_peak_at_extreme_widths() -> No
     distance = source.u * 1e-300
     sy = float(sigma_y(distance, source.classe))
     sz = float(sigma_z(distance, source.classe))
-    expected_peak = np.exp(
-        np.log(source.masse) - np.log(2.0 * np.pi) - np.log(sy) - np.log(sz)
-    )
+    expected_peak = np.exp(np.log(source.masse) - np.log(2.0 * np.pi) - np.log(sy) - np.log(sz))
     assert np.isfinite(actual[1, 0])
     assert actual[1, 0] == pytest.approx(expected_peak, rel=2e-14)
 
