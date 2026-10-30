@@ -1,7 +1,5 @@
 """Tests for synthetic terrain functions."""
 
-from typing import Literal
-
 import numpy as np
 import pytest
 
@@ -77,6 +75,44 @@ def test_non_finite_coordinates_are_rejected() -> None:
         terrain_surface(x_mauvais, np.zeros(2), "flat")
     with pytest.raises(ValueError, match="finite coordinates"):
         terrain_surface(np.zeros(2), y_mauvais, "flat")
+
+
+@pytest.mark.parametrize(
+    ("kind", "expected"),
+    [("hill", 2.0), ("valley", -2.0), ("ridge", 2.0)],
+)
+@pytest.mark.parametrize("kind", ["hill", "valley", "ridge"])
+def test_scaled_formulas_preserve_standard_terrain_profiles(
+    kind: Literal["hill", "valley", "ridge"]
+) -> None:
+    """La normalisation conserve les profils analytiques aux échelles usuelles."""
+    # Given — une grille et des paramètres loin des limites de représentation.
+    x, y = np.meshgrid(np.array([-2.0, 0.5, 3.0]), np.array([-1.0, 1.5]))
+    height, width = 2.5, 1.7
+    center_x, center_y = 0.25, -0.5
+    dx = x - center_x
+    dy = y - center_y
+
+    # When — le profil est calculé par la fonction et par sa formule directe.
+    actual = terrain_surface(
+        x,
+        y,
+        kind,
+        height=height,
+        width=width,
+        center_x=center_x,
+        center_y=center_y,
+    )
+    if kind == "ridge":
+        expected = height * np.exp(-(dy**2) / (2.0 * width**2))
+    else:
+        radial_exponent = -(dx**2 + dy**2) / (2.0 * width**2)
+        expected = height * np.exp(radial_exponent)
+        if kind == "valley":
+            expected = -expected
+
+    # Then — la réécriture numérique conserve la formule de référence.
+    np.testing.assert_allclose(actual, expected, rtol=1e-14, atol=1e-14)
 
 
 @pytest.mark.parametrize(
