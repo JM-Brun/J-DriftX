@@ -315,6 +315,102 @@ def test_superposition_exige_un_panache() -> None:
         SuperpositionPanaches(panaches=())
 
 
+def test_superposition_refuse_une_collection_mutable() -> None:
+    """La collection doit respecter le tuple annoncé et l'immuabilité du modèle."""
+    panache = PanacheGaussien(source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0))
+    with pytest.raises(TypeError, match="tuple"):
+        SuperpositionPanaches(panaches=[panache])  # type: ignore[arg-type]
+
+
+def test_superposition_refuse_un_objet_hors_protocole() -> None:
+    """Un élément incompatible est rejeté dès la construction."""
+    with pytest.raises(TypeError, match="ModeleConcentration"):
+        SuperpositionPanaches(panaches=(object(),))  # type: ignore[arg-type]
+
+
+def test_superposition_refuse_une_methode_non_appelable() -> None:
+    """Le protocole exige une méthode concentration effectivement appelable."""
+
+    class ModeleSansMethode:
+        concentration = 42
+
+    with pytest.raises(TypeError, match="ModeleConcentration"):
+        SuperpositionPanaches(panaches=(ModeleSansMethode(),))  # type: ignore[arg-type]
+
+
+def test_superposition_refuse_une_forme_de_sortie_incoherente() -> None:
+    """Une sortie ne doit pas être implicitement diffusée par NumPy."""
+
+    class ModeleFormeIncoherente:
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
+            return np.zeros((1,), dtype=float)
+
+    panache = PanacheGaussien(source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0))
+    superposition = SuperpositionPanaches(panaches=(panache, ModeleFormeIncoherente()))
+    with pytest.raises(ValueError, match="forme"):
+        superposition.concentration(np.full((2, 1), 100.0), np.zeros((1, 3)), 0.0)
+
+
+def test_superposition_accepte_le_broadcasting_des_entrees() -> None:
+    """Les entrées broadcastables produisent la forme commune attendue."""
+    panache = PanacheGaussien(source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0))
+    superposition = SuperpositionPanaches(panaches=(panache,))
+    resultat = superposition.concentration(np.full((2, 1), 100.0), np.zeros((1, 3)), 1.0)
+    assert resultat.shape == (2, 3)
+
+
+def test_superposition_refuse_une_sortie_non_ndarray() -> None:
+    """Le protocole exige un ndarray, pas une liste Python."""
+
+    class ModeleListe:
+        def concentration(self, x: np.ndarray, y: np.ndarray, z: np.ndarray) -> list[float]:
+            return [0.0]
+
+    superposition = SuperpositionPanaches(panaches=(ModeleListe(),))  # type: ignore[arg-type]
+    with pytest.raises(TypeError, match="ndarray"):
+        superposition.concentration(np.array([0.0]), np.array([0.0]), np.array([0.0]))
+
+
+def test_superposition_refuse_une_sortie_non_reelle() -> None:
+    """Une concentration complexe ne satisfait pas le contrat physique réel."""
+
+    class ModeleComplexe:
+        def concentration(self, x: np.ndarray, y: np.ndarray, z: np.ndarray) -> np.ndarray:
+            return np.array([1.0 + 2.0j])
+
+    superposition = SuperpositionPanaches(panaches=(ModeleComplexe(),))  # type: ignore[arg-type]
+    with pytest.raises(TypeError, match="flottant réel"):
+        superposition.concentration(np.array([0.0]), np.array([0.0]), np.array([0.0]))
+
+
+def test_superposition_refuse_des_entrees_non_broadcastables() -> None:
+    """Les formes d'entrée incompatibles sont refusées explicitement."""
+    panache = PanacheGaussien(source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0))
+    superposition = SuperpositionPanaches(panaches=(panache,))
+    with pytest.raises(ValueError, match="broadcastables"):
+        superposition.concentration(np.zeros((2, 2)), np.zeros((3,)), 0.0)
+
+
+def test_superposition_rejette_le_debordement_sans_avertissement_numpy() -> None:
+    """Un overflow de somme devient ValueError, même sous errstate strict."""
+
+    class PanacheConstant:
+        def __init__(self, valeur: float) -> None:
+            self.valeur = valeur
+
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
+            return np.full(np.shape(x), self.valeur)
+
+    superposition = SuperpositionPanaches(
+        panaches=(PanacheConstant(1.5e308), PanacheConstant(1.5e308))
+    )
+    with (
+        np.errstate(over="raise", invalid="raise"),
+        pytest.raises(ValueError, match="doit rester finie"),
+    ):
+        superposition.concentration(0.0, 0.0, 0.0)
+
+
 def test_adaptateur_vent_stationnaire_alimente_les_trajectoires_2d() -> None:
     """Un vent horizontal est utilisable sans adapter chaque appelant."""
     # Given — un vent stationnaire horizontal échantillonné à hauteur fixe.
@@ -492,7 +588,7 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
         def __init__(self, valeur: float) -> None:
             self.valeur = valeur
 
-        def concentration(self, x, y, z) -> np.ndarray:
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
             return np.full(np.shape(x), self.valeur)
 
     superposition = SuperpositionPanaches(
@@ -502,6 +598,76 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
     # When / Then — le débordement de la somme est refusé explicitement.
     with pytest.raises(ValueError, match="doit rester finie"):
         superposition.concentration(0.0, 0.0, 0.0)
+
+
+def test_mnt_ascii_interpolation_preserves_the_finite_convex_bound() -> None:
+    """Une moyenne convexe d'altitudes finies ne doit pas déborder."""
+    # Given — les quatre sommets d'une cellule valent le maximum float64.
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.full((2, 2), maximum),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+    # When — l'altitude est interpolée à l'intérieur de la cellule.
+    altitude = relief.altitude(0.1, 0.2)
+    # Then — les poids bilinéaires forment une combinaison convexe finie.
+    assert np.isfinite(altitude)
+    assert altitude == maximum
+
+
+def test_mnt_ascii_interpolation_preserves_a_tiny_active_corner() -> None:
+    """Un sommet de poids un conserve sa valeur malgré les autres échelles."""
+    # Given — le coin sud-ouest est subnormal et les trois autres coins sont énormes.
+    minimum = np.nextafter(0.0, 1.0)
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[maximum, maximum], [minimum, maximum]]),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+    # When — on évalue exactement au centre du coin sud-ouest.
+    altitude = relief.altitude(0.0, 0.0)
+    # Then — le poids un du coin actif doit préserver sa valeur subnormale.
+    assert altitude == minimum
+
+
+def test_mnt_ascii_interpolation_preserves_tiny_corner_at_grid_node() -> None:
+    """Un sommet subnormal conserve sa valeur à un nœud de la grille."""
+    # Given — le coin sud-est est subnormal et les autres coins valent float64.max.
+    minimum = np.nextafter(0.0, 1.0)
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[maximum, maximum], [maximum, minimum]]),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+    # When — on évalue exactement au nœud sud-est du MNT.
+    altitude = relief.altitude(1.0, 0.0)
+    # Then — l'interpolation restitue exactement le sommet actif.
+    assert altitude == minimum
+
+
+def test_mnt_ascii_interpolation_handles_opposite_sign_extremes() -> None:
+    """Une interpolation entre signes opposés reste finie aux extrêmes float64."""
+    # Given — les sommets alternent entre les deux extrêmes représentables.
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[maximum, -maximum], [-maximum, maximum]]),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+
+    # When — on évalue au centre géométrique de la cellule.
+    altitude = relief.altitude(0.5, 0.5)
+
+    # Then — les contributions symétriques s'annulent sans débordement.
+    assert np.isfinite(altitude)
+    assert altitude == 0.0
 
 
 @pytest.mark.parametrize(

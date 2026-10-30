@@ -22,6 +22,25 @@ def _verifie_coordonnees(x_arr: NDArray[np.floating], y_arr: NDArray[np.floating
         raise ValueError(msg)
 
 
+def _interpole_lineairement_stable(
+    a: ArrayLike,
+    b: ArrayLike,
+    poids: ArrayLike,
+) -> NDArray[np.float64]:
+    """Sélectionne une forme dont la branche retenue évite le débordement."""
+    a_arr = np.asarray(a, dtype=np.float64)
+    b_arr = np.asarray(b, dtype=np.float64)
+    poids_arr = np.asarray(poids, dtype=np.float64)
+    meme_signe = np.signbit(a_arr) == np.signbit(b_arr)
+    with np.errstate(over="ignore", invalid="ignore"):
+        interpolation_meme_signe = a_arr + poids_arr * (b_arr - a_arr)
+        interpolation_signes_opposes = (1.0 - poids_arr) * a_arr + poids_arr * b_arr
+    return np.asarray(
+        np.where(meme_signe, interpolation_meme_signe, interpolation_signes_opposes),
+        dtype=float,
+    )
+
+
 @dataclass(frozen=True)
 class ReliefPlat:
     """Terrain plat d altitude nulle, cas de reference des solutions gaussiennes."""
@@ -231,7 +250,12 @@ class ReliefMntAscii:
         ):
             msg = "Interpolation sur une cellule sans donnee."
             raise ValueError(msg)
-        z = z00 * p00 + z10 * p10 + z01 * p01 + z11 * p11
+        # L'interpolation bilinéaire est une interpolation linéaire successive.
+        # La forme a + t*(b-a) est sûre pour deux valeurs de même signe ;
+        # la forme pondérée est sûre pour deux valeurs de signes opposés.
+        z_bas = _interpole_lineairement_stable(z00, z10, tx)
+        z_haut = _interpole_lineairement_stable(z01, z11, tx)
+        z = _interpole_lineairement_stable(z_bas, z_haut, ty)
         return np.asarray(z, dtype=float)
 
 
