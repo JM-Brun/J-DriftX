@@ -45,17 +45,21 @@ class AdaptateurTrajectoire2D:
 
     def __post_init__(self) -> None:
         """Valide la hauteur fixe de l'échantillonnage."""
-        if (
-            not isinstance(self.hauteur, Real)
-            or isinstance(self.hauteur, bool)
-            or not math.isfinite(float(self.hauteur))
-        ):
+        if not isinstance(self.hauteur, Real) or isinstance(self.hauteur, bool):
+            msg = "La hauteur d'échantillonnage doit être un réel fini."
+            raise ValueError(msg)
+        try:
+            hauteur = float(self.hauteur)
+        except (OverflowError, ValueError) as err:
+            msg = "La hauteur d'échantillonnage doit être un réel fini."
+            raise ValueError(msg) from err
+        if not math.isfinite(hauteur):
             msg = "La hauteur d'échantillonnage doit être un réel fini."
             raise ValueError(msg)
         if not callable(getattr(self.vent, "vitesse", None)):
             msg = "Le vent doit exposer une méthode vitesse callable."
             raise TypeError(msg)
-        object.__setattr__(self, "hauteur", float(self.hauteur))
+        object.__setattr__(self, "hauteur", hauteur)
 
     def __call__(self, _temps: float, x: float, y: float) -> tuple[float, float]:
         """Retourne (u, v) au point (x, y, hauteur), si w est nul."""
