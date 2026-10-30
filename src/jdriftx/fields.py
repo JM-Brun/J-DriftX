@@ -43,7 +43,7 @@ def _tableau_reel_fini(valeur: object, nom: str) -> NDArray[np.float64]:
     ):
         raise ValueError(f"{nom} must be a real numeric array (booleans excluded).")
     if brut.dtype.kind not in "iuf":
-        msg = f"{nom} must be a real numeric array (booleans excluded; complex and non-numeric values excluded)."
+        msg = f"{nom} must be a real numeric array (booleans and complex values excluded)."
         raise ValueError(msg)
     try:
         with np.errstate(over="ignore", invalid="ignore"):
