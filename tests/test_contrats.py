@@ -502,3 +502,25 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
     # When / Then — le débordement de la somme est refusé explicitement.
     with pytest.raises(ValueError, match="doit rester finie"):
         superposition.concentration(0.0, 0.0, 0.0)
+
+
+
+def test_superposition_rejette_le_debordement_sans_avertissement_numpy() -> None:
+    """Le débordement attendu est converti en ValueError sans RuntimeWarning."""
+    # Given — deux contributions finies dont la somme dépasse float64.
+
+    class PanacheConstant:
+        def __init__(self, valeur: float) -> None:
+            self.valeur = valeur
+
+        def concentration(self, x, y, z) -> np.ndarray:
+            return np.full(np.shape(x), self.valeur)
+
+    superposition = SuperpositionPanaches(
+        panaches=(PanacheConstant(1.5e308), PanacheConstant(1.5e308))
+    )
+
+    # When / Then — même sous une politique NumPy stricte, le contrat métier prévaut.
+    with np.errstate(over="raise", invalid="raise"):
+        with pytest.raises(ValueError, match="doit rester finie"):
+            superposition.concentration(0.0, 0.0, 0.0)
