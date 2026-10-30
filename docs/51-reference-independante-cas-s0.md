@@ -101,6 +101,8 @@ Conformément à la [note 48](48-cas-reference-autonome-ecoulement-uniforme.md) 
 
 **Établit** : la cohérence interne du package entre la paramétrisation Briggs, la solution fermée et une route de diffusion numériquement indépendante (marche en x, conditions aux limites, interpolation) ; la conservation du flux aux seuils de troncature ; la convergence du schéma.
 
+**Frontières non couvertes par cette architecture** : le solveur FTCS de cette note ne consomme pas le contrat `Vent` ni le contrat `Relief`. Il résout l'équation marchée en longitude sous l'hypothèse d'un écoulement uniforme, avec la paramétrisation Briggs et un sol plan représenté par la condition miroir en z = 0. Injecter un autre vent ou un relief dans ces interfaces ne modifierait pas cette équation et ne constituerait donc pas un modèle de transport sur terrain complexe. Ce cas nécessitera un opérateur d'advection-diffusion adapté, des conditions aux limites cohérentes avec le terrain et des validations indépendantes.
+
 **N’établit pas** : une validation physique (cas synthétique, [note 21](21-jeux-donnees-seconde-vague-et-cas-synthetiques.md)) ; une vérification de la formule gaussienne elle-même — l’entrée est partagée et la paramétrisation est commune, donc une erreur conceptuelle commune aux deux routes resterait invisible ([note 48](48-cas-reference-autonome-ecoulement-uniforme.md) §4) ; les formes INVERSE de σ_z (classes E et F) sont hors périmètre et rejetées explicitement ; le facteur historique 10³–10⁴ n’est pas revendiqué.
 
 ## 8. Relations au code
