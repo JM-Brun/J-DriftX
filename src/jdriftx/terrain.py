@@ -51,7 +51,6 @@ def _tableau_reel_fini(valeur: object, nom: str) -> NDArray[np.float64]:
     return resultat
 
 
-
 TerrainKind = Literal["flat", "hill", "valley", "ridge"]
 
 
