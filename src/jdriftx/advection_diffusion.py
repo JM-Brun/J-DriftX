@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from math import hypot, sqrt
 from numbers import Real
 
 import numpy as np
@@ -87,9 +88,28 @@ def gaussian_advection_diffusion(
         raise ValueError("initial_sigma must be strictly positive.")
 
     x_arr = _tableau_reel_fini(x, "Coordinates")
-    variance = initial_sigma**2 + 2.0 * diffusivity * time
+    # Compute the standard deviation directly. Squaring initial_sigma or
+    # forming 2*K*time can overflow/underflow even when sigma(t) is representable.
+    diffusion_sigma = sqrt(2.0) * sqrt(diffusivity) * sqrt(time)
+    sigma = hypot(initial_sigma, diffusion_sigma)
+    if not np.isfinite(sigma):
+        raise ValueError("The effective Gaussian standard deviation is not representable as float64.")
+
     center = initial_center + velocity * time
-    return np.asarray(
-        mass / np.sqrt(2.0 * np.pi * variance) * np.exp(-0.5 * (x_arr - center) ** 2 / variance),
-        dtype=float,
-    )
+    if not np.isfinite(center):
+        raise ValueError("The advected Gaussian center is not representable as float64.")
+
+    # Divide sequentially: forming sqrt(2*pi)*sigma first can overflow even
+    # when the peak concentration itself is representable.
+    with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
+        peak = (mass / sqrt(2.0 * np.pi)) / sigma
+    if not np.isfinite(peak):
+        raise ValueError("The peak Gaussian concentration is not representable as float64.")
+
+    with np.errstate(over="ignore", under="ignore", invalid="ignore"):
+        standardized_distance = (x_arr - center) / sigma
+        profile = np.exp(-0.5 * np.square(standardized_distance))
+        concentration = peak * profile
+    if not np.all(np.isfinite(concentration)):
+        raise ValueError("The Gaussian concentration is not representable as finite float64.")
+    return np.asarray(concentration, dtype=np.float64)
