@@ -330,6 +330,16 @@ def test_superposition_refuse_un_objet_hors_protocole() -> None:
         SuperpositionPanaches(panaches=(object(),))  # type: ignore[arg-type]
 
 
+def test_superposition_refuse_une_methode_non_appelable() -> None:
+    """Le protocole exige une méthode concentration effectivement appelable."""
+
+    class ModeleSansMethode:
+        concentration = 42
+
+    with pytest.raises(TypeError, match="ModeleConcentration"):
+        SuperpositionPanaches(panaches=(ModeleSansMethode(),))  # type: ignore[arg-type]
+
+
 def test_superposition_refuse_une_forme_de_sortie_incoherente() -> None:
     """Une sortie ne doit pas être implicitement diffusée par NumPy."""
 
