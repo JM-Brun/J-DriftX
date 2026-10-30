@@ -409,6 +409,26 @@ def test_superposition_refuse_des_entrees_non_broadcastables() -> None:
         superposition.concentration(np.zeros((2, 2)), np.zeros((3,)), 0.0)
 
 
+def test_superposition_rejette_le_debordement_sans_avertissement_numpy() -> None:
+    """Un overflow de somme devient ValueError, même sous errstate strict."""
+
+    class PanacheConstant:
+        def __init__(self, valeur: float) -> None:
+            self.valeur = valeur
+
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
+            return np.full(np.shape(x), self.valeur)
+
+    superposition = SuperpositionPanaches(
+        panaches=(PanacheConstant(1.5e308), PanacheConstant(1.5e308))
+    )
+    with (
+        np.errstate(over="raise", invalid="raise"),
+        pytest.raises(ValueError, match="doit rester finie"),
+    ):
+        superposition.concentration(0.0, 0.0, 0.0)
+
+
 def test_adaptateur_vent_stationnaire_alimente_les_trajectoires_2d() -> None:
     """Un vent horizontal est utilisable sans adapter chaque appelant."""
     # Given — un vent stationnaire horizontal échantillonné à hauteur fixe.
