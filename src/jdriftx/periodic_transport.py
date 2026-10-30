@@ -167,12 +167,7 @@ def _facteur_decroissance_periodique(diffusivity: float, length: float, time: fl
     if diffusivity == 0.0 or time == 0.0:
         return 1.0
 
-    log_rate = (
-        log(4.0 * np.pi**2)
-        + log(diffusivity)
-        + log(time)
-        - 2.0 * log(length)
-    )
+    log_rate = log(4.0 * np.pi**2) + log(diffusivity) + log(time) - 2.0 * log(length)
     # exp(-rate) rounds to zero once rate is above this conservative threshold.
     if log_rate >= log(746.0):
         return 0.0
