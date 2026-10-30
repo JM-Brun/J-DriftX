@@ -122,6 +122,7 @@ class VentProfilPuissance:
         u = self.u_reference * (z / self.z_reference) ** self.exposant
         return u, 0.0, 0.0
 
+
 __all__ = [
     "AdaptateurTrajectoire2D",
     "VentDeChampPlan",
