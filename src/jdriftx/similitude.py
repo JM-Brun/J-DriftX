@@ -47,12 +47,17 @@ def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> np.ndarray:
         return np.asarray(_reel_fini(valeur, nom))
     try:
         brut = np.asarray(valeur)
-        valeurs_brutes = np.asarray(valeur, dtype=object)
+        # NumPy peut promouvoir [1, True] en int64 et perdre la trace du booléen.
+        # N'inspecter en objet que les entrées séquentielles : ne pas dupliquer
+        # inutilement en mémoire les grands ndarray déjà typés.
+        valeurs_brutes = (
+            np.asarray(valeur, dtype=object) if not isinstance(valeur, np.ndarray) else None
+        )
     except (TypeError, ValueError, OverflowError) as err:
         raise ValueError(f"{nom} doit etre un tableau numerique reel.") from err
-    # NumPy peut promouvoir [1, True] en int64 et perdre la trace du booléen.
-    # Examiner la représentation objet avant de retenir le dtype numérique.
-    if any(isinstance(element, (bool, np.bool_)) for element in valeurs_brutes.flat):
+    if valeurs_brutes is not None and any(
+        isinstance(element, (bool, np.bool_)) for element in valeurs_brutes.flat
+    ):
         raise ValueError(f"{nom} doit etre un tableau numerique reel (booleens exclus).")
     if brut.dtype.kind not in "iuf":
         msg = f"{nom} doit etre un tableau numerique reel "
