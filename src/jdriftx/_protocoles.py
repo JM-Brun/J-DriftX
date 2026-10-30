@@ -11,6 +11,7 @@ from typing import Protocol, runtime_checkable
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
+
 @runtime_checkable
 class Relief(Protocol):
     """Contrat d un relief : altitude du sol evaluee sur des grilles.
