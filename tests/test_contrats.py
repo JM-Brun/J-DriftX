@@ -502,3 +502,49 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
     # When / Then — le débordement de la somme est refusé explicitement.
     with pytest.raises(ValueError, match="doit rester finie"):
         superposition.concentration(0.0, 0.0, 0.0)
+
+def test_superposition_rejette_une_collection_mutable() -> None:
+    """La collection détenue par une superposition est immuable."""
+    panache = PanacheGaussien(
+        source=SourcePanache(debit=1.0, u=3.0, classe="D", hauteur=10.0)
+    )
+    with pytest.raises(TypeError, match="tuple"):
+        SuperpositionPanaches(panaches=[panache])  # type: ignore[arg-type]
+
+
+def test_superposition_rejette_un_modele_incompatible() -> None:
+    """Chaque élément doit satisfaire le protocole à la construction."""
+    with pytest.raises(TypeError, match="ModeleConcentration"):
+        SuperpositionPanaches(panaches=(object(),))  # type: ignore[arg-type]
+
+
+def test_superposition_refuse_le_broadcasting_implicite_des_sorties() -> None:
+    """Les sorties de chaque modèle doivent avoir la forme attendue des entrées."""
+
+    class PanacheForme:
+        def __init__(self, forme: tuple[int, ...]) -> None:
+            self.forme = forme
+
+        def concentration(self, x, y, z) -> np.ndarray:
+            return np.ones(self.forme, dtype=float)
+
+    superposition = SuperpositionPanaches(
+        panaches=(PanacheForme((2,)), PanacheForme((1,)))  # type: ignore[arg-type]
+    )
+    coordonnees = np.array([0.0, 1.0])
+    with pytest.raises(ValueError, match=r"attendue \(2,\)"):
+        superposition.concentration(coordonnees, coordonnees, coordonnees)
+
+
+def test_superposition_accepte_le_broadcasting_des_coordonnees() -> None:
+    """La forme attendue est le broadcasting des trois coordonnées."""
+
+    class PanacheForme:
+        def concentration(self, x, y, z) -> np.ndarray:
+            return np.ones((2, 3), dtype=float)
+
+    superposition = SuperpositionPanaches(panaches=(PanacheForme(),))  # type: ignore[arg-type]
+    x = np.zeros((2, 1))
+    y = np.zeros((1, 3))
+    resultat = superposition.concentration(x, y, 0.0)
+    assert resultat.shape == (2, 3)
