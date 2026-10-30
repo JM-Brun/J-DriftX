@@ -109,6 +109,8 @@ La méthode reçoit directement `y` et `z`, puis calcule des indices et vérifie
 
 Vérifier explicitement le comportement pour booléens, NaN et infinis avant toute conversion en indice. La correction éventuelle doit rester locale à cette frontière, sans répéter la validation des objets `PointMesure` dans `RouteEdp`.
 
+**Résultat de l'audit (#367).** L'appel direct acceptait effectivement `bool`/`numpy.bool_` comme coordonnées et laissait NaN atteindre la conversion en indice. Les coordonnées sont désormais contrôlées localement comme scalaires réels finis avant le calcul des indices ; chaînes, complexes, tableaux non scalaires et valeurs non finies sont rejetés. Les points finis hors grille conservent le message de domaine historique. Aucune validation n'est ajoutée dans `RouteEdp`, qui transmet des `PointMesure` déjà validés. Les tests caractérisent un contrat logiciel, pas une propriété physique.
+
 ## 5. Composants déjà conformes — ne pas réintroduire de validations
 
 - `SourcePanache` : `_reel_fini` refuse les booléens, normalise les valeurs en `float` et vérifie les domaines physiques.
