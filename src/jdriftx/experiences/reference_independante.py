@@ -90,6 +90,35 @@ __all__ = [
     "resoudre_edp",
 ]
 
+def _tableau_immuable(
+    valeur: np.ndarray,
+    nom: str,
+    *,
+    dimension: int,
+    taille_minimale: int = 1,
+    strictement_croissant: bool = False,
+) -> np.ndarray:
+    """Valide puis détache un tableau dans un tampon réellement non modifiable."""
+    tableau = np.asarray(valeur, dtype=float)
+    if tableau.ndim != dimension or tableau.size < taille_minimale:
+        raise ValueError(f"{nom} doit avoir {dimension} dimension(s) et être non vide.")
+    if not np.all(np.isfinite(tableau)):
+        raise ValueError(f"{nom} doit contenir uniquement des valeurs finies.")
+    if strictement_croissant:
+        ecarts = np.diff(tableau)
+        if not np.all(np.isfinite(ecarts)) or np.any(ecarts <= 0.0):
+            raise ValueError(f"{nom} doit être strictement croissant avec des écarts finis.")
+
+    base: object = tableau
+    while isinstance(base, np.ndarray) and base.base is not None:
+        base = base.base
+    if not tableau.flags.writeable and isinstance(base, bytes):
+        return tableau
+
+    copie = np.array(tableau, dtype=float, copy=True)
+    return np.frombuffer(copie.tobytes(), dtype=copie.dtype).reshape(copie.shape)
+
+
 SEUIL_FOURIER: float = 1.0 / 3.0
 """Nombre de Fourier maximal (somme des directions transverse et verticale).
 
@@ -121,6 +150,15 @@ class ParametresEdp:
 
     def __post_init__(self) -> None:
         """Valide positivité, largeur et multiplicité des pas, sinon ValueError."""
+        valeurs = (
+            self.pas_transverse_y,
+            self.pas_transverse_z,
+            self.demi_largeur_y,
+            self.hauteur_max,
+        )
+        if not all(np.isfinite(valeur) for valeur in valeurs):
+            msg = "Les paramètres EDP doivent être finis."
+            raise ValueError(msg)
         if self.pas_transverse_y <= 0.0:
             msg = "Le pas transverse doit être strictement positif."
             raise ValueError(msg)
@@ -273,6 +311,15 @@ class TrancheEdp:
     x: float
     champ: np.ndarray
 
+    def __post_init__(self) -> None:
+        """Valide et fige le champ porté par la tranche."""
+        if not np.isfinite(self.x):
+            msg = "L'abscisse de la tranche doit être finie."
+            raise ValueError(msg)
+        object.__setattr__(
+            self, "champ", _tableau_immuable(self.champ, "Le champ de la tranche", dimension=2)
+        )
+
 
 @dataclass(frozen=True)
 class SolutionEdp:
@@ -292,6 +339,48 @@ class SolutionEdp:
     abscisses_y: np.ndarray
     abscisses_z: np.ndarray
     tranches: tuple[TrancheEdp, ...]
+
+    def __post_init__(self) -> None:
+        """Valide la cohérence de la solution et fige ses axes et sa séquence."""
+        if not np.isfinite(self.x_entree):
+            msg = "L'abscisse d'entrée de la solution doit être finie."
+            raise ValueError(msg)
+        if not np.isfinite(self.pas_longitudinal) or self.pas_longitudinal <= 0.0:
+            msg = "Le pas longitudinal doit être fini et strictement positif."
+            raise ValueError(msg)
+        abscisses_y = _tableau_immuable(
+            self.abscisses_y,
+            "Les abscisses y",
+            dimension=1,
+            taille_minimale=2,
+            strictement_croissant=True,
+        )
+        abscisses_z = _tableau_immuable(
+            self.abscisses_z,
+            "Les abscisses z",
+            dimension=1,
+            taille_minimale=2,
+            strictement_croissant=True,
+        )
+        tranches = tuple(self.tranches)
+        if not tranches:
+            msg = "La solution doit contenir au moins une tranche."
+            raise ValueError(msg)
+        forme_attendue = (abscisses_y.size, abscisses_z.size)
+        if any(tranche.champ.shape != forme_attendue for tranche in tranches):
+            msg = "Chaque tranche doit avoir la forme de la grille de la solution."
+            raise ValueError(msg)
+        positions = tuple(tranche.x for tranche in tranches)
+        if any(
+            not np.isfinite(position) for position in positions
+        ) or any(
+            suivant <= precedent for precedent, suivant in zip(positions[:-1], positions[1:], strict=True)
+        ):
+            msg = "Les abscisses des tranches doivent être finies et croissantes."
+            raise ValueError(msg)
+        object.__setattr__(self, "abscisses_y", abscisses_y)
+        object.__setattr__(self, "abscisses_z", abscisses_z)
+        object.__setattr__(self, "tranches", tranches)
 
 
 class SolveurDeReference(Protocol):
@@ -323,6 +412,31 @@ class GrilleEdp:
 
     abscisses_y: np.ndarray
     abscisses_z: np.ndarray
+
+    def __post_init__(self) -> None:
+        """Valide la géométrie et fige les deux axes de la grille."""
+        object.__setattr__(
+            self,
+            "abscisses_y",
+            _tableau_immuable(
+                self.abscisses_y,
+                "Les abscisses y",
+                dimension=1,
+                taille_minimale=2,
+                strictement_croissant=True,
+            ),
+        )
+        object.__setattr__(
+            self,
+            "abscisses_z",
+            _tableau_immuable(
+                self.abscisses_z,
+                "Les abscisses z",
+                dimension=1,
+                taille_minimale=2,
+                strictement_croissant=True,
+            ),
+        )
 
     @classmethod
     def depuis_parametres(cls, parametres: ParametresEdp) -> GrilleEdp:
@@ -541,7 +655,15 @@ class EchantillonneurBilineaire:
 
     def __init__(self, champ: np.ndarray, grille: GrilleEdp) -> None:
         """Lie le champ à sa grille (les deux viennent de la même solution)."""
-        self.champ = champ
+        self.champ = _tableau_immuable(
+            champ,
+            "Le champ à échantillonner",
+            dimension=2,
+        )
+        forme_attendue = (grille.abscisses_y.size, grille.abscisses_z.size)
+        if self.champ.shape != forme_attendue:
+            msg = "Le champ doit avoir la forme de la grille EDP."
+            raise ValueError(msg)
         self.grille = grille
 
     def concentration(self, y: float, z: float) -> float:
