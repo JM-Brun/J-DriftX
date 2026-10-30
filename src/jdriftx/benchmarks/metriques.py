@@ -33,6 +33,7 @@ def _contient_booleen(valeur: object) -> bool:
         valeurs = np.asarray(valeur, dtype=object)
     return any(isinstance(element, (bool, np.bool_)) for element in valeurs.flat)
 
+
 __all__ = [
     "FAC2",
     "METRIQUES",
