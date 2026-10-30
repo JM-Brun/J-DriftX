@@ -166,25 +166,25 @@ def test_scenario_identification_refuse_les_coordonnees_booleennes(
 ) -> None:
     """Les coordonnées de toutes les familles de points excluent les booléens."""
     # Given — une coordonnée booléenne dans le champ géométrique ciblé.
-    valeurs: dict[str, object] = {
-        "vent": (3.0, -2.0),
-        "source_vrai": (1500.0, 1500.0),
-        "mesures_vent": identification_source.SCENARIO_DEFAUT.mesures_vent,
-        "capteurs": identification_source.SCENARIO_DEFAUT.capteurs,
-        "candidat_decale": identification_source.SCENARIO_DEFAUT.candidat_decale,
-    }
     if champ in {"vent", "source_vrai", "candidat_decale"}:
-        valeurs[champ] = (booleen, 1500.0)
+        changements: dict[str, object] = {champ: (booleen, 1500.0)}
     elif champ == "mesures_vent":
-        valeurs[champ] = (
-            (booleen, 1500.0),
-            *identification_source.SCENARIO_DEFAUT.mesures_vent[1:],
-        )
+        changements = {
+            champ: (
+                (booleen, 1500.0),
+                *identification_source.SCENARIO_DEFAUT.mesures_vent[1:],
+            )
+        }
     else:
-        valeurs[champ] = ((booleen, 1500.0), *identification_source.SCENARIO_DEFAUT.capteurs[1:])
+        changements = {
+            champ: (
+                (booleen, 1500.0),
+                *identification_source.SCENARIO_DEFAUT.capteurs[1:],
+            )
+        }
     # When / Then — la validation du scénario refuse la coordonnée booléenne.
     with pytest.raises(ValueError, match="booléens exclus"):
-        replace(identification_source.SCENARIO_DEFAUT, **valeurs)
+        replace(identification_source.SCENARIO_DEFAUT, **changements)
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
