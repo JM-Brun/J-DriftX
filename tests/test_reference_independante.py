@@ -314,6 +314,60 @@ def test_la_version_non_installee_est_supportee(
 
 
 
+def test_la_condition_entree_est_un_modele_de_concentration_injectable() -> None:
+    """Le solveur accepte un autre champ initial via le contrat concentration."""
+    # Given — un cas réduit et un modèle initial qui double le panache analytique.
+    cas = CasS0(
+        source=SourcePanache(debit=2.0, u=3.0, classe="C", hauteur=1.0),
+        arcs=(100.0, 200.0),
+        positions_laterales=(0.0,),
+        z_mesure=1.5,
+    )
+    parametres = ParametresEdp(10.0, 10.0, 340.0, 240.0)
+    panache = PanacheGaussien(source=cas.source)
+
+    class ConcentrationDouble:
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
+            return 2.0 * panache.concentration(x, y, z)  # type: ignore[arg-type]
+
+    # When — le solveur utilise successivement le champ par défaut et le champ injecté.
+    reference = resoudre_edp(cas, parametres)
+    alternative = resoudre_edp(cas, parametres, condition_entree=ConcentrationDouble())
+
+    # Then — l'entrée est exactement celle du modèle injecté, après conditions aux limites.
+    assert np.array_equal(
+        alternative.tranches[0].champ,
+        2.0 * reference.tranches[0].champ,
+    )
+
+
+@pytest.mark.parametrize(
+    ("forme", "valeur", "message"),
+    [
+        ((2, 2), 1.0, "même forme"),
+        ((137, 61), float("nan"), "concentrations finies"),
+    ],
+)
+def test_le_solveur_valide_le_champ_de_condition_entree(
+    forme: tuple[int, int], valeur: float, message: str
+) -> None:
+    """La frontière d'entrée refuse les champs mal formés ou non finis."""
+    cas = CasS0(
+        source=SourcePanache(debit=2.0, u=3.0, classe="C", hauteur=1.0),
+        arcs=(100.0, 200.0),
+        positions_laterales=(0.0,),
+        z_mesure=1.5,
+    )
+    parametres = ParametresEdp(10.0, 10.0, 340.0, 240.0)
+
+    class ConditionInvalide:
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
+            return np.full(forme, valeur)
+
+    with pytest.raises(ValueError, match=message):
+        resoudre_edp(cas, parametres, condition_entree=ConditionInvalide())
+
+
 def test_la_route_accepte_un_solveur_alternatif(solution: SolutionEdp) -> None:
     """La route dépend du contrat de sortie, pas de l'implémentation FTCS."""
     # Given — un solveur structurel qui fournit une solution compatible.
