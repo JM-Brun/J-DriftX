@@ -30,9 +30,7 @@ def test_vector_field_refuse_les_coordonnees_booleennes(valeur: object, axe: str
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["speed", "angle_deg", "shear", "radial_strength"])
-def test_vector_field_refuse_les_parametres_booleens(
-    booleen: bool | np.bool_, champ: str
-) -> None:
+def test_vector_field_refuse_les_parametres_booleens(booleen: bool | np.bool_, champ: str) -> None:
     """Les quatre paramètres numériques du champ excluent les booléens."""
     # Given — un paramètre du champ remplacé par un booléen.
     parametres: dict[str, object] = {
@@ -44,9 +42,7 @@ def test_vector_field_refuse_les_parametres_booleens(
     parametres[champ] = booleen
     # When / Then — le champ refuse le paramètre avant toute opération trigonométrique.
     with pytest.raises(ValueError, match="booleans excluded"):
-        fields.vector_field(
-            np.zeros(2), np.zeros(2), "uniform", **parametres
-        )  # type: ignore[arg-type]
+        fields.vector_field(np.zeros(2), np.zeros(2), "uniform", **parametres)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize(
@@ -87,9 +83,7 @@ def test_terrain_surface_refuse_les_parametres_booleens(
     parametres[champ] = booleen
     # When / Then — le terrain refuse le paramètre avant l'évaluation.
     with pytest.raises(ValueError, match="booleans excluded"):
-        terrain.terrain_surface(
-            np.zeros(2), np.zeros(2), "hill", **parametres
-        )  # type: ignore[arg-type]
+        terrain.terrain_surface(np.zeros(2), np.zeros(2), "hill", **parametres)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize(
@@ -131,9 +125,7 @@ def test_gaussian_advection_diffusion_refuse_les_parametres_booleens(
     temps = 1.0 if champ != "time" else booleen
     # When / Then — la solution refuse le paramètre avant le calcul de variance.
     with pytest.raises(ValueError, match="booleans excluded"):
-        advection_diffusion.gaussian_advection_diffusion(
-            np.zeros(2), temps, **parametres
-        )  # type: ignore[arg-type]
+        advection_diffusion.gaussian_advection_diffusion(np.zeros(2), temps, **parametres)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize(
@@ -183,9 +175,7 @@ def test_periodic_sine_solution_refuse_les_parametres_booleens(
     temps = 0.1 if champ != "time" else booleen
     # When / Then — la solution refuse le paramètre avant le calcul de phase.
     with pytest.raises(ValueError, match="booleans excluded"):
-        periodic_transport.periodic_sine_solution(
-            np.zeros(2), temps, **parametres
-        )  # type: ignore[arg-type]
+        periodic_transport.periodic_sine_solution(np.zeros(2), temps, **parametres)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
