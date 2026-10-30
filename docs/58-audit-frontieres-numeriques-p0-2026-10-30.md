@@ -145,7 +145,7 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 |---|---|---|---|
 | 1 | `fields.vector_field`, `terrain.terrain_surface` | PR #380 — CI verte | Contrôles réels finis, booléens/complexes exclus |
 | 2 | `integrate_trajectory`, `gaussian_advection_diffusion` | PR #383 — CI verte | Contrôles réels finis, conversions et erreurs homogénéisées |
-| 3 | `periodic_sine_solution`, helper périodique partagé | PR #387 — CI verte ; robustesse extrême : PR #390 | Contrats réels finis, entiers NumPy et validation partagée |
+| 3 | `periodic_sine_solution`, helper périodique partagé | PR #387 — CI verte ; robustesse extrême PR #390 — CI verte | Contrats réels finis, entiers NumPy et validation partagée |
 | 4 | Adaptateurs `vents.py` | Corrigé #374 | Contrat ponctuel explicité et appliqué avant délégation |
 | 5 | `EchantillonneurBilineaire.concentration` | Corrigé #369 | Contrat ponctuel autonome contrôlé avant conversion en indice |
 
@@ -173,9 +173,9 @@ Le facteur `exp(-K(2*pi/L)^2*t)` est évalué à partir du logarithme du taux po
 
 ### 3.11 Source impulsionnelle et marginale du puff — issue #391 / PR #392
 
-Pydantic acceptait les booléens comme nombres et les infinis dans les champs `masse`, `u` et `x0` de `SourceImpulsionnelle`, malgré leurs contraintes de signe. La PR #392 ajoute une validation avant coercition, limitée aux réels finis représentables en float64, puis conserve les domaines existants (`masse > 0`, `u > 0`, `x0 >= 0`). `MarginaleFermee.champ(t)` exige un temps réel fini strictement positif et vérifie que `u*t` reste représentable. Le cas `t=0` est refusé : les écarts-types transverses sont nuls et la formule gaussienne ne définit pas un champ régulier sur la grille. Les tests portent sur les contrats logiciels, pas sur une validation physique. La représentabilité des intermédiaires de la formule gaussienne produit est suivie séparément dans l'issue #393 et la PR #396.
+Pydantic acceptait les booléens comme nombres et les infinis dans les champs `masse`, `u` et `x0` de `SourceImpulsionnelle`, malgré leurs contraintes de signe. La PR #392 ajoute une validation avant coercition, limitée aux réels finis représentables en float64, puis conserve les domaines existants (`masse > 0`, `u > 0`, `x0 >= 0`). `MarginaleFermee.champ(t)` exige un temps réel fini strictement positif et vérifie que `u*t` reste représentable. Le cas `t=0` est refusé : les écarts-types transverses sont nuls et la formule gaussienne ne définit pas un champ régulier sur la grille. Les tests portent sur les contrats logiciels, pas sur une validation physique. La représentabilité des intermédiaires de la formule gaussienne produit est suivie séparément dans l'issue #393 et la PR #398.
 
 
-### 3.12 Marginale gaussienne du puff — issue #393 / PR #396
+### 3.12 Marginale gaussienne du puff — issue #393 / PR #398
 
-La formule de `MarginaleFermee.champ(t)` présentait un sous-débordement du produit `sy*sz` et des carrés `sy²` / `sz²`, alors que le pic final pouvait rester représentable. La PR #396 conserve la formule analytique et évalue les exposants par rapports normalisés, puis l'amplitude en domaine logarithmique. Le sous-débordement du résultat final est arrondi à zéro selon IEEE-754 ; une concentration théorique positive hors float64 est refusée explicitement. Les tests couvrent la reproduction à petites échelles, l'équivalence avec la formule directe aux échelles usuelles et le rejet d'un pic non représentable. Ils ne constituent pas une validation physique.
+La formule de `MarginaleFermee.champ(t)` présentait un sous-débordement du produit `sy*sz` et des carrés `sy²` / `sz²`, alors que le pic final pouvait rester représentable. La PR #398 conserve la formule analytique et évalue les exposants par rapports normalisés, puis l'amplitude en domaine logarithmique. Le sous-débordement du résultat final est arrondi à zéro selon IEEE-754 ; une concentration théorique positive hors float64 est refusée explicitement. Les tests couvrent la reproduction à petites échelles, l'équivalence avec la formule directe aux échelles usuelles et le rejet d'un pic non représentable. Ils ne constituent pas une validation physique.
