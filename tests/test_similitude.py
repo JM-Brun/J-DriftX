@@ -602,8 +602,10 @@ def test_sigmas_representables_aux_tres_grandes_distances(classe: ClasseStabilit
     sy = sigma_y(1.0e308, classe)
     sz = sigma_z(1.0e308, classe)
     # Then — les valeurs restent positives et finies.
-    assert np.isfinite(sy) and float(sy) > 0.0
-    assert np.isfinite(sz) and float(sz) > 0.0
+    assert np.isfinite(sy)
+    assert float(sy) > 0.0
+    assert np.isfinite(sz)
+    assert float(sz) > 0.0
 
 
 def test_panache_distance_extreme_ne_produit_pas_de_valeur_non_finie() -> None:
