@@ -28,7 +28,7 @@ Les contrats sont des protocoles PEP 544 à typage structurel — le même méca
 
 Le choix vectorisé/ponctuel suit l'usage réel : le relief et les concentrations s'évaluent sur des grilles (rendu, jeux de mesures), le vent s'échantillonne point par point (intégration des trajectoires, [trajectories.py](../src/jdriftx/trajectories.py)).
 
-Deux autres protocoles suivent la même règle hors du module des contrats : `ModeleDiffusion` (docs/51 — modèle de diffusion injectable de la comparaison à référence indépendante) et `StructureLongitudinale` (docs/54 — structure longitudinale injectable de l'EDP transitoire du puff).
+Les autres points de substitution suivent la même règle hors du module des contrats : `ModeleDiffusion` et `SolveurDeReference` (docs/51 — physique de diffusion et algorithme de résolution séparés dans la comparaison à référence indépendante), ainsi que `StructureLongitudinale` (docs/54 — structure longitudinale injectable de l'EDP transitoire du puff). Les routes doivent dépendre de ces contrats et non instancier directement une implémentation alternative ; l'implémentation FTCS reste le défaut et sa comparaison scientifique documentée n'est pas étendue automatiquement aux solveurs injectés.
 
 ## 4. Standards retenus
 
@@ -60,4 +60,4 @@ Le relief du contrat est une **géométrie** (altitude du sol) : aucun effet du 
 
 - Implémentations : [reliefs.py](../src/jdriftx/reliefs.py), [vents.py](../src/jdriftx/vents.py), [concentrations.py](../src/jdriftx/concentrations.py) ; protocoles : [_protocoles.py](../src/jdriftx/_protocoles.py) ; façade historique : [contrats.py](../src/jdriftx/contrats.py).
 - Tests : [test_contrats.py](../tests/test_contrats.py) et [test_architecture_modules.py](../tests/test_architecture_modules.py) (identité et compatibilité des imports).
-- Contexte interne : docs/24 (objets de stabilité), docs/25 (harmonisation OOP), docs/39 section 7 (standards de données), docs/40 (standards de qualité, PEP 544), docs/41 (unification de la source), docs/51 et docs/54 (protocoles hors module des contrats : `ModeleDiffusion`, `StructureLongitudinale`) ; contrats inchangés : [#43](https://github.com/JM-Brun/J-DriftX/issues/43).
+- Contexte interne : docs/24 (objets de stabilité), docs/25 (harmonisation OOP), docs/39 section 7 (standards de données), docs/40 (standards de qualité, PEP 544), docs/41 (unification de la source), docs/51 et docs/54 (protocoles hors module des contrats : `ModeleDiffusion`, `SolveurDeReference`, `StructureLongitudinale`) ; contrats inchangés : [#43](https://github.com/JM-Brun/J-DriftX/issues/43).
