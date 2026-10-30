@@ -209,7 +209,7 @@ def test_terrain_surface_preserves_signed_height_and_centers() -> None:
     """Les signes de hauteur et de coordonnées centrales restent libres."""
     result = terrain_surface(
         np.array([-1.0, 1.0]),
-        np.array([0.0, 0.0]),
+        np.array([-3.0, -3.0]),
         "hill",
         height=-2.0,
         center_x=-1.0,
