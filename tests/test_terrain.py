@@ -1,5 +1,7 @@
 """Tests for synthetic terrain functions."""
 
+from typing import Literal
+
 import numpy as np
 import pytest
 
@@ -75,3 +77,98 @@ def test_non_finite_coordinates_are_rejected() -> None:
         terrain_surface(x_mauvais, np.zeros(2), "flat")
     with pytest.raises(ValueError, match="finite coordinates"):
         terrain_surface(np.zeros(2), y_mauvais, "flat")
+
+
+@pytest.mark.parametrize("kind", ["hill", "valley", "ridge"])
+def test_scaled_formulas_preserve_standard_terrain_profiles(
+    kind: Literal["hill", "valley", "ridge"],
+) -> None:
+    """La normalisation conserve les profils analytiques aux échelles usuelles."""
+    # Given — une grille et des paramètres loin des limites de représentation.
+    x, y = np.meshgrid(np.array([-2.0, 0.5, 3.0]), np.array([-1.0, 1.5]))
+    height, width = 2.5, 1.7
+    center_x, center_y = 0.25, -0.5
+    dx = x - center_x
+    dy = y - center_y
+
+    # When — le profil est calculé par la fonction et par sa formule directe.
+    actual = terrain_surface(
+        x,
+        y,
+        kind,
+        height=height,
+        width=width,
+        center_x=center_x,
+        center_y=center_y,
+    )
+    if kind == "ridge":
+        expected = height * np.exp(-(dy**2) / (2.0 * width**2))
+    else:
+        radial_exponent = -(dx**2 + dy**2) / (2.0 * width**2)
+        expected = height * np.exp(radial_exponent)
+        if kind == "valley":
+            expected = -expected
+
+    # Then — la réécriture numérique conserve la formule de référence.
+    np.testing.assert_allclose(actual, expected, rtol=1e-14, atol=1e-14)
+
+
+@pytest.mark.parametrize(
+    ("kind", "expected"),
+    [("hill", 2.0), ("valley", -2.0), ("ridge", 2.0)],
+)
+def test_tiny_positive_width_remains_finite_at_terrain_center(
+    kind: Literal["hill", "valley", "ridge"], expected: float
+) -> None:
+    """Une largeur très petite ne doit pas créer de NaN au centre du relief."""
+    # Given — une largeur positive dont le carré sous-déborde en float64.
+    coordinates = np.zeros((1, 1))
+    width = 1.0e-200
+
+    # When — le relief est évalué exactement en son centre.
+    elevation = terrain_surface(
+        coordinates,
+        coordinates,
+        kind,
+        height=2.0,
+        width=width,
+    )
+
+    # Then — la valeur au centre reste égale à la hauteur analytique.
+    assert np.isfinite(elevation).all()
+    assert elevation[0, 0] == pytest.approx(expected)
+
+
+@pytest.mark.parametrize(
+    ("kind", "x_value", "y_value", "expected"),
+    [
+        ("hill", 1.0e308, -1.0e308, 2.0 * np.exp(-2.0)),
+        ("valley", 1.0e308, -1.0e308, -2.0 * np.exp(-2.0)),
+        ("ridge", 0.0, 1.0e308, 2.0 * np.exp(-2.0)),
+    ],
+)
+def test_opposite_extreme_coordinates_do_not_overflow_before_scaling(
+    kind: Literal["hill", "valley", "ridge"],
+    x_value: float,
+    y_value: float,
+    expected: float,
+) -> None:
+    """Les coordonnées de signes opposés sont normalisées avant leur soustraction."""
+    # Given — des coordonnées finies dont la différence brute déborde en float64.
+    x = np.array([[x_value]])
+    y = np.array([[y_value]])
+
+    # When — le centre est à l'opposé, avec une largeur de 1e308.
+    elevation = terrain_surface(
+        x,
+        y,
+        kind,
+        height=2.0,
+        width=1.0e308,
+        center_x=-1.0e308,
+        center_y=-1.0e308,
+    )
+
+    # Then — le quotient analytique vaut 2 et le profil reste fini.
+    assert np.isfinite(elevation).all()
+    assert elevation[0, 0] == pytest.approx(expected)
