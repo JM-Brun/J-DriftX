@@ -125,7 +125,7 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 
 | Ordre | Cible | État | Motif |
 |---|---|---|---|
-| 1 | `fields.vector_field`, `terrain.terrain_surface` | Correction proposée #380, CI à vérifier | Contrôles réels finis, booléens/complexes exclus |
+| 1 | `fields.vector_field`, `terrain.terrain_surface` | PR #380 — CI verte | Contrôles réels finis, booléens/complexes exclus |
 | 2 | `integrate_trajectory`, `gaussian_advection_diffusion` | Correction proposée #384, CI à vérifier | Contrôles réels finis, conversions et erreurs homogénéisées |
 | 3 | `periodic_sine_solution`, helper périodique partagé | À traiter | Cohérence du contrat commun et des fonctions publiques |
 | 4 | Adaptateurs `vents.py` | Corrigé #374 | Contrat ponctuel explicité et appliqué avant délégation |
@@ -139,9 +139,14 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 - Modification des équations, des hypothèses physiques ou des unités.
 - Toute affirmation de validation physique du modèle.
 
-**Conclusion actualisée :** les frontières #369, #374 et #380 sont traitées en code (la CI de #380 reste à confirmer). Les deux blocs encore prioritaires dans le périmètre initial sont `integrate_trajectory` / `gaussian_advection_diffusion`, puis `periodic_sine_solution` et son validateur partagé. Les corrections ne doivent pas dupliquer les invariants déjà garantis par les configurations immuables.
+**Conclusion actualisée :** les frontières #369, #374 et #380 sont traitées en code ; la CI de #380 est verte. Les corrections #383 sur l'intégrateur et la solution gaussienne restent soumises à la CI complète. Le dernier bloc prioritaire du périmètre initial est `periodic_sine_solution` et son validateur partagé.
 
 
 ### 3.6 `fields.vector_field` et `terrain.terrain_surface` — issue #379 / PR #380
 
 Les deux fonctions autonomes refusent désormais les coordonnées qui ne sont pas des tableaux numériques réels float64, finis et sans coercition textuelle ; les booléens et complexes sont exclus avant conversion, y compris dans les séquences hétérogènes promues par NumPy. Les paramètres scalaires sont normalisés en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les contrôles de forme et `width > 0` sont conservés. Aucun signe n'est ajouté aux domaines de `speed`, `shear`, `radial_strength`, `height`, `center_x` ou `center_y`. Les tests couvrent les entrées invalides et des paramètres signés valides ; ils ne constituent pas une validation physique.
+
+
+### 3.7 `integrate_trajectory` et `gaussian_advection_diffusion` — issue #381 / PR #383
+
+Les deux frontières normalisent désormais leurs scalaires en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution gaussienne rejettent booléens, complexes, chaînes et valeurs non finies avant conversion. Le callback de trajectoire conserve le contrat d'un tuple de deux composantes, avec une erreur de validation stable pour les composantes non réelles ou non représentables. Les domaines existants et les formules sont inchangés. Les débordements intermédiaires de la solution gaussienne restent explicitement hors de cette tranche.
