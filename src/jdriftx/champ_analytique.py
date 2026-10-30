@@ -22,6 +22,8 @@ import math
 from dataclasses import dataclass
 from typing import Protocol
 
+import numpy as np
+
 
 class ChampPlan(Protocol):
     """Interface structurelle d'un champ plan stationnaire à fonction de courant.
@@ -70,6 +72,9 @@ def _produit_float64(*facteurs: float) -> float:
 
 def _verifie_coordonnees(x: float, y: float) -> None:
     """Refuse les coordonnées non finies avant toute évaluation du champ."""
+    if any(isinstance(valeur, (bool, np.bool_)) for valeur in (x, y)):
+        msg = "Les coordonnées doivent être numériques (booléens exclus)."
+        raise ValueError(msg)
     if not (math.isfinite(x) and math.isfinite(y)):
         msg = "Les coordonnées doivent être finies."
         raise ValueError(msg)
@@ -98,6 +103,10 @@ class ChampFonctionCourant:
             ValueError: si un parametre est non fini, nul, ou si le nombre
                 d'onde deborde vers l'infini.
         """
+        parametres = (self.amplitude, self.longueur)
+        if any(isinstance(valeur, (bool, np.bool_)) for valeur in parametres):
+            msg = "L'amplitude et la longueur doivent être numériques (booléens exclus)."
+            raise ValueError(msg)
         if not math.isfinite(self.amplitude) or self.amplitude == 0.0:
             msg = "L'amplitude de la fonction de courant doit être finie et non nulle."
             raise ValueError(msg)

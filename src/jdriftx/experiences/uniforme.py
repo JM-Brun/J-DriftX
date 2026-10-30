@@ -21,6 +21,8 @@ from dataclasses import dataclass
 from importlib import metadata
 from typing import Literal
 
+import numpy as np
+
 from jdriftx.metric import pseudo_distance_uniforme
 
 NiveauFidelite = Literal["R0", "R1", "R2"]
@@ -28,7 +30,11 @@ NiveauFidelite = Literal["R0", "R1", "R2"]
 
 def _valide_point(nom: str, point: tuple[float, float]) -> None:
     """Lève ValueError si le point n'est pas un couple de coordonnées finies."""
-    if len(tuple(point)) != 2 or not all(math.isfinite(c) for c in tuple(point)):
+    coordonnees = tuple(point)
+    if len(coordonnees) != 2 or any(isinstance(valeur, (bool, np.bool_)) for valeur in coordonnees):
+        msg = f"Le point {nom} doit être un couple (x, y) numérique (booléens exclus)."
+        raise ValueError(msg)
+    if not all(math.isfinite(c) for c in coordonnees):
         msg = f"Le point {nom} doit être un couple (x, y) de coordonnées finies."
         raise ValueError(msg)
 
@@ -46,7 +52,10 @@ class ChampUniforme:
     def __post_init__(self) -> None:
         """Valide l'invariant : composantes finies et norme strictement positive."""
         vent = tuple(self.vent)
-        if len(vent) != 2 or not all(math.isfinite(composante) for composante in vent):
+        if len(vent) != 2 or any(isinstance(composante, (bool, np.bool_)) for composante in vent):
+            msg = "Le vent doit contenir deux composantes numériques (booléens exclus)."
+            raise ValueError(msg)
+        if not all(math.isfinite(composante) for composante in vent):
             msg = "Le vent doit être un couple (ux, uy) de composantes finies."
             raise ValueError(msg)
         if math.hypot(vent[0], vent[1]) == 0.0:
