@@ -100,8 +100,8 @@ def test_gaussian_solution_rejects_non_real_or_non_finite_coordinates(
 @pytest.mark.parametrize(
     ("initial_sigma", "expected"),
     [
-        (1e-200, 1.0 / (np.sqrt(2.0 * np.pi) * 1e-200)),
-        (1e308, 1.0 / (np.sqrt(2.0 * np.pi) * 1e308)),
+        (1e-200, (1.0 / np.sqrt(2.0 * np.pi)) / 1e-200),
+        (1e308, (1.0 / np.sqrt(2.0 * np.pi)) / 1e308),
     ],
 )
 def test_gaussian_zero_diffusion_handles_extreme_initial_widths(
@@ -131,7 +131,7 @@ def test_gaussian_large_diffusion_uses_representable_standard_deviation() -> Non
         diffusivity=1e308,
         initial_sigma=0.5,
     )
-    expected = 1.0 / (np.sqrt(2.0 * np.pi) * np.sqrt(2.0e308))
+    expected = (1.0 / np.sqrt(2.0 * np.pi)) / (np.sqrt(2.0) * np.sqrt(1e308))
     assert actual[0] == pytest.approx(expected, rel=2e-15)
 
 
