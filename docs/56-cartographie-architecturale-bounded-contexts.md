@@ -179,6 +179,16 @@ Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
 aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
 n'introduit aucun validateur transversal.
 
+### Complément P0 — scalaires et tableaux booléens dans metric.py (issue #354)
+
+L'inspection des trois frontières publiques de metric.py a révélé que math.isfinite et la conversion préalable par np.asarray(..., dtype=float) acceptaient les booléens comme nombres. La tranche dédiée rejette bool et numpy.bool_ dans :
+
+- les trois scalaires de temps_premiere_arrivee_1d ;
+- les coordonnées, vitesses et le seuil umin de temps_transport ;
+- les vecteurs a, b et vent de pseudo_distance_uniforme.
+
+Pour les séquences, les éléments sont inspectés avant la promotion de type NumPy ; les grands tableaux numériques typés ne sont pas copiés en dtype objet. Les formules, conventions géométriques, unités et domaines de signe ne sont pas modifiés. Les tests portent sur les contrats logiciels uniquement.
+
 - **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
 - **P3** : contrôle d'architecture statique désormais intégré par #316 (`tests/test_architecture_boundaries.py`) ; il couvre la matrice d'imports, les dépendances de rendu et les cycles statiques, sans couvrir les imports dynamiques.
