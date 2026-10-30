@@ -263,6 +263,12 @@ def concentration_puff(
     rz = _rapport_difference(z_arr, 0.0, sz)
     with np.errstate(over="ignore", invalid="ignore"):
         exposant = -0.5 * (np.square(rx) + np.square(ry) + np.square(rz))
-        log_amplitude = np.log(masse) - 1.5 * np.log(2.0 * np.pi) - np.log(sx) - np.log(sy) - np.log(sz)
+        log_amplitude = (
+            np.log(masse)
+            - 1.5 * np.log(2.0 * np.pi)
+            - np.log(sx)
+            - np.log(sy)
+            - np.log(sz)
+        )
         log_concentration = log_amplitude + exposant
     return _exponentielle_log(log_concentration)
