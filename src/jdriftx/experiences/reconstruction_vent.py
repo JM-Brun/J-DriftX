@@ -35,9 +35,7 @@ _PAS_DERIVEE = 1.0
 def _valide_point(nom: str, point: tuple[float, float]) -> None:
     """Lève ValueError si le point n'est pas un couple de coordonnées finies."""
     coordonnees = tuple(point)
-    if len(coordonnees) != 2 or any(
-        isinstance(valeur, (bool, np.bool_)) for valeur in coordonnees
-    ):
+    if len(coordonnees) != 2 or any(isinstance(valeur, (bool, np.bool_)) for valeur in coordonnees):
         msg = f"Le point {nom} doit être un couple de coordonnées numériques (booléens exclus)."
         raise ValueError(msg)
     if not all(math.isfinite(c) for c in coordonnees):
