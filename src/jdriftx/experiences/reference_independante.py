@@ -102,15 +102,22 @@ def _tableau_immuable(
 ) -> np.ndarray:
     """Valide puis détache un tableau dans un tampon réellement non modifiable."""
     if isinstance(valeur, np.ndarray):
-        bool_present = valeur.dtype.kind == "b" or (
+        valeur_non_reelle = valeur.dtype.kind in {"b", "c"} or (
             valeur.dtype.kind == "O"
-            and any(isinstance(element, (bool, np.bool_)) for element in valeur.flat)
+            and any(
+                isinstance(element, (bool, np.bool_, complex, np.complexfloating))
+                for element in valeur.flat
+            )
         )
     else:
         brut = np.asarray(valeur, dtype=object)
-        bool_present = any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
-    if bool_present:
-        raise ValueError(f"{nom} doit contenir des valeurs numeriques (booleens exclus).")
+        valeur_non_reelle = any(
+            isinstance(element, (bool, np.bool_, complex, np.complexfloating))
+            for element in brut.flat
+        )
+    if valeur_non_reelle:
+        msg = f"{nom} doit contenir des valeurs reelles "
+        raise ValueError(msg + "(booleens exclus; complexes exclus).")
     tableau = np.asarray(valeur, dtype=float)
     if tableau.ndim != dimension or tableau.size < taille_minimale:
         raise ValueError(f"{nom} doit avoir {dimension} dimension(s) et être non vide.")
@@ -168,8 +175,10 @@ class ParametresEdp:
             self.demi_largeur_y,
             self.hauteur_max,
         )
-        if any(isinstance(valeur, (bool, np.bool_)) for valeur in valeurs):
-            msg = "Les paramètres EDP doivent être numériques (booléens exclus)."
+        if any(
+            isinstance(valeur, (bool, np.bool_, complex, np.complexfloating)) for valeur in valeurs
+        ):
+            msg = "Les paramètres EDP doivent être réels (booléens exclus ; complexes exclus)."
             raise ValueError(msg)
         if not all(np.isfinite(valeur) for valeur in valeurs):
             msg = "Les paramètres EDP doivent être finis."
@@ -227,8 +236,11 @@ def derivee_sigma_carre(x: float, coefficient: float, d: float) -> float:
 
     Lever une ValueError si x n'est pas strictement positif.
     """
-    if any(isinstance(value, (bool, np.bool_)) for value in (x, coefficient, d)):
-        msg = "Les paramètres de dérivée doivent être numériques (booléens exclus)."
+    if any(
+        isinstance(value, (bool, np.bool_, complex, np.complexfloating))
+        for value in (x, coefficient, d)
+    ):
+        msg = "Les paramètres de dérivée doivent être réels (booléens exclus ; complexes exclus)."
         raise ValueError(msg)
     try:
         with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
@@ -286,8 +298,13 @@ class CoefficientsDiffusion:
     def __post_init__(self) -> None:
         """Refuse les coefficients booléens avant tout calcul de diffusion."""
         valeurs = (self.a_y, self.d_y, self.b_z, self.d_z)
-        if any(isinstance(value, (bool, np.bool_)) for value in valeurs):
-            msg = "Les coefficients de diffusion doivent être numériques (booléens exclus)."
+        if any(
+            isinstance(value, (bool, np.bool_, complex, np.complexfloating)) for value in valeurs
+        ):
+            msg = (
+                "Les coefficients de diffusion doivent être réels "
+                "(booléens exclus ; complexes exclus)."
+            )
             raise ValueError(msg)
 
     def derivee_sigma_y_carre(self, x: float) -> float:
@@ -306,8 +323,8 @@ class CoefficientsDiffusion:
         figé) et il est divisé par deux jusqu'à ce que la somme des
         contributions transverse et verticale passe sous SEUIL_FOURIER.
         """
-        if isinstance(x_debut, (bool, np.bool_)):
-            msg = "La distance de début doit être numérique (booléen exclu)."
+        if isinstance(x_debut, (bool, np.bool_, complex, np.complexfloating)):
+            msg = "La distance de début doit être réelle (booléen exclu ; complexe exclu)."
             raise ValueError(msg)
         dy = parametres.pas_transverse_y
         dz = parametres.pas_transverse_z
@@ -351,6 +368,12 @@ class DiffusionBriggs:
 
     def coefficients(self, classe: str, x: float) -> CoefficientsDiffusion:
         """Coefficients de la classe, forme INVERSE rejetée (ValueError)."""
+        if isinstance(x, (bool, np.bool_, complex, np.complexfloating)):
+            msg = "La distance d'évaluation doit être réelle (booléen exclu ; complexe exclu)."
+            raise ValueError(msg)
+        if not np.isfinite(x):
+            msg = "La distance d'évaluation doit être finie."
+            raise ValueError(msg)
         stable = ClasseStabilite(classe)
         a_y, d_y = stable.coeff_sigma_y
         forme, b_z, d_z = stable.coeff_sigma_z
@@ -381,8 +404,8 @@ class TrancheEdp:
 
     def __post_init__(self) -> None:
         """Valide et fige le champ porté par la tranche."""
-        if isinstance(self.x, (bool, np.bool_)):
-            msg = "L'abscisse de la tranche doit être numérique (booléen exclu)."
+        if isinstance(self.x, (bool, np.bool_, complex, np.complexfloating)):
+            msg = "L'abscisse de la tranche doit être réelle (booléen exclu ; complexe exclu)."
             raise ValueError(msg)
         if not np.isfinite(self.x):
             msg = "L'abscisse de la tranche doit être finie."
@@ -413,12 +436,12 @@ class SolutionEdp:
 
     def __post_init__(self) -> None:
         """Valide la cohérence de la solution et fige ses axes et sa séquence."""
-        if isinstance(self.x_entree, (bool, np.bool_)) or isinstance(
-            self.pas_longitudinal, (bool, np.bool_)
+        if isinstance(self.x_entree, (bool, np.bool_, complex, np.complexfloating)) or isinstance(
+            self.pas_longitudinal, (bool, np.bool_, complex, np.complexfloating)
         ):
             msg = (
                 "L'abscisse d'entrée et le pas longitudinal doivent être numériques "
-                "(booléens exclus)."
+                "(booléens exclus ; complexes exclus)."
             )
             raise ValueError(msg)
         if not np.isfinite(self.x_entree):

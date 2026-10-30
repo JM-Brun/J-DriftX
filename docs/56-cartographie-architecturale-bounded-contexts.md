@@ -219,6 +219,10 @@ Les frontières publiques suivantes rejettent explicitement les booléens Python
 
 Les tableaux et séquences sont inspectés avant coercition en `float64`. Aucune formule de temps, équation d'intégration, convention d'accessibilité ou règle de rendu n'est modifiée.
 
+### Complément P0 — entrées complexes dans les contrats réels (issue #377, PR #378)
+
+Une coercition NumPy `complex128 -> float64` peut supprimer la partie imaginaire avec un avertissement au lieu d'échouer. Les frontières de concentration, métriques et référence EDP doivent donc exclure explicitement les tableaux complexes et les séquences mixtes complexes avant conversion. Les scalaires géométriques, coefficients, distances et paramètres de dérivée doivent également être réels avant toute comparaison ou calcul. Le contrat reste réel ; aucune formule, unité, géométrie ou restriction de signe n'est modifiée.
+
 ### Complément P0 — représentabilité des calculs EDP (issue #366, PR #372)
 
 L'audit a confirmé que les paramètres de grille pouvaient être individuellement finis et positifs tout en donnant un rapport de multiplicité non représentable ; le chemin antérieur atteignait alors `round(inf)`. Les rapports sont désormais calculés avec une division ordonnée pour éviter un débordement intermédiaire inutile, puis contrôlés avant l'arrondi. Les rapports nuls par sous-débordement sont également rejetés. La dérivée analytique `derivee_sigma_carre` normalise les entrées en float64, contrôle les valeurs non finies et vérifie la représentabilité des intermédiaires et du résultat ; les débordements et sous-débordements silencieux sont convertis en `ValueError` contextualisée. Les expressions mathématiques, les coefficients, les domaines de signe et les unités restent inchangés. Ces garde-fous logiciels ne constituent pas une analyse de stabilité physique.
