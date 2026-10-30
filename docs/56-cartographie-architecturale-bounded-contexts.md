@@ -179,6 +179,10 @@ Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
 aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
 n'introduit aucun validateur transversal.
 
+### Complément P0 — représentabilité des calculs EDP (issue #366)
+
+L'audit a confirmé que les paramètres de grille pouvaient être individuellement finis et positifs tout en donnant un rapport de multiplicité non représentable ; le chemin antérieur atteignait alors `round(inf)`. Les rapports sont désormais calculés avec une division ordonnée pour éviter un débordement intermédiaire inutile, puis contrôlés avant l'arrondi. Les rapports nuls par sous-débordement sont également rejetés. La dérivée analytique `derivee_sigma_carre` normalise les entrées en float64, contrôle les valeurs non finies et vérifie la représentabilité des intermédiaires et du résultat ; les débordements et sous-débordements silencieux sont convertis en `ValueError` contextualisée. Les expressions mathématiques, les coefficients, les domaines de signe et les unités restent inchangés. Ces garde-fous logiciels ne constituent pas une analyse de stabilité physique.
+
 ### Complément P0 — champs de concentration, métriques et grille EDP (issue #364)
 
 Le balayage des frontières C1/C5 a trouvé trois familles de coercitions booléennes : le champ passé à `constraints.positivite`, les vérités/prédictions des métriques FAC2/NMSE (y compris leur façade `calculer_metriques`), et les tableaux et scalaires de `experiences.reference_independante` (axes, champs, paramètres EDP, abscisses et coefficients), ainsi que la façade `benchmarks.reference.evaluer_prediction`, qui effectuait une coercition préalable de la vérité. La tranche rejette `bool` et `numpy.bool_` avant promotion float64, sans copier systématiquement les grands tableaux numériques typés en dtype objet. Elle contrôle également les quatre paramètres scalaires de `ParametresEdp`. Les formules, tolérances, unités, géométries et domaines de signe restent inchangés ; ces tests établissent des contrats logiciels, pas une validation physique.
