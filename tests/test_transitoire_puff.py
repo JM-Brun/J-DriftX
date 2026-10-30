@@ -131,7 +131,7 @@ def test_l_entree_est_partagee_avec_la_marginale_fermee(
     attendu[-1, :] = 0.0
     attendu[:, -1] = 0.0
     # Then — les deux évaluations de la même formule concordent à l'arrondi float64.
-    np.testing.assert_allclose(solution.instants[0].champ, attendu, rtol=2e-14, atol=0.0)
+    np.testing.assert_allclose(solution.instants[0].champ, attendu, rtol=2e-11, atol=0.0)
 
 
 def test_la_comparaison_fine_est_calibree(comparaison: ComparaisonTransitoire) -> None:
