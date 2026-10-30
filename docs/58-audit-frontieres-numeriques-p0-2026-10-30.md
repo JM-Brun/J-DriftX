@@ -93,21 +93,13 @@ Point à vérifier séparément : `isinstance(n_cells, int)` rejette certains sc
 
 ## 4. Adaptateurs et méthodes ponctuelles : contrat à clarifier avant correction
 
-### 4.1 `VentDeChampPlan.vitesse` et `AdaptateurTrajectoire2D.__call__`
+### 4.1 `VentDeChampPlan.vitesse`, `AdaptateurTrajectoire2D.__call__`, `VentUniforme.vitesse` et `VentProfilPuissance.vitesse`
 
-Ces adaptateurs transmettent des coordonnées à une implémentation fournie par l'appelant. `ChampFonctionCourant` valide ses coordonnées, mais le protocole structurel `ChampPlan` ne peut pas garantir que toute implémentation tierce le fasse.
+**Résultat — issue #373 / PR #374.** Le contrat a été clarifié : toutes les coordonnées d'un point `Vent.vitesse(x, y, z)` sont des scalaires réels finis, booléens exclus, même lorsqu'une implémentation uniforme ou un profil unidimensionnel ignore certaines coordonnées. `ChampPlan` exige de même des coordonnées `x,y` réelles finies. Les adaptateurs valident avant délégation, y compris pour les implémentations structurelles personnalisées. L'adaptateur valide également le temps fini sans restriction de signe. Aucune restriction de signe supplémentaire n'est ajoutée aux coordonnées.
 
-Décision nécessaire : le contrat `ChampPlan` exige-t-il explicitement des coordonnées finies et numériques, et l'adaptateur doit-il les faire respecter avant délégation ? Ne pas dupliquer un contrôle si l'appelant est déjà `integrate_trajectory`, mais ne pas supposer que l'adaptateur n'est jamais appelé directement.
+### 4.2 `EchantillonneurBilineaire.concentration`
 
-### 4.2 `VentUniforme.vitesse` et `VentProfilPuissance.vitesse`
-
-Le premier ignore les coordonnées par définition d'un champ uniforme ; le second n'utilise que `z`. L'audit ne qualifie pas l'absence de validation de `x` et `y` de défaut établi : il faut décider si le contrat `Vent.vitesse(x,y,z)` exige la validité de toutes les coordonnées même lorsque le modèle est indépendant de certaines d'entre elles.
-
-### 4.3 `EchantillonneurBilineaire.concentration`
-
-La méthode reçoit directement `y` et `z`, puis calcule des indices et vérifie les bornes. Contrairement aux points `PointMesure` utilisés par les routes de comparaison, un appel direct à cette méthode n'est pas nécessairement protégé par un modèle de données validé.
-
-Vérifier explicitement le comportement pour booléens, NaN et infinis avant toute conversion en indice. La correction éventuelle doit rester locale à cette frontière, sans répéter la validation des objets `PointMesure` dans `RouteEdp`.
+**Résultat — issue #367 / PR #369.** L'appel direct valide désormais `y` et `z` comme scalaires réels finis, booléens et complexes exclus, avant le calcul des indices. Les tableaux non scalaires et les chaînes sont refusés avec `ValueError` contextualisée. Le rejet historique des coordonnées réelles finies hors de la grille est conservé. La validation des `PointMesure` dans `RouteEdp` n'est pas répétée.
 
 ## 5. Composants déjà conformes — ne pas réintroduire de validations
 
@@ -133,11 +125,11 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 
 | Ordre | Cible | État | Motif |
 |---|---|---|---|
-| 1 | `fields.vector_field`, `terrain.terrain_surface` | Écart confirmé | Frontières directes, coercition booléenne |
-| 2 | `integrate_trajectory`, `gaussian_advection_diffusion` | Écart confirmé | Contrôles scalaires permissifs et/ou coercition booléenne des tableaux |
-| 3 | `periodic_sine_solution`, helper périodique partagé | Écart confirmé | Cohérence du contrat commun et des fonctions publiques |
-| 4 | Adaptateurs `vents.py` | Contrat à clarifier | Délégation à des protocoles structurels |
-| 5 | `EchantillonneurBilineaire.concentration` | Contrat à vérifier par tests ciblés | Entrées ponctuelles sans configuration obligatoire |
+| 1 | `fields.vector_field`, `terrain.terrain_surface` | Correction proposée #380, CI à vérifier | Contrôles réels finis, booléens/complexes exclus |
+| 2 | `integrate_trajectory`, `gaussian_advection_diffusion` | À traiter | Contrôles scalaires permissifs et/ou coercition booléenne des tableaux |
+| 3 | `periodic_sine_solution`, helper périodique partagé | À traiter | Cohérence du contrat commun et des fonctions publiques |
+| 4 | Adaptateurs `vents.py` | Corrigé #374 | Contrat ponctuel explicité et appliqué avant délégation |
+| 5 | `EchantillonneurBilineaire.concentration` | Corrigé #369 | Contrat ponctuel autonome contrôlé avant conversion en indice |
 
 ## 8. Hors périmètre de cette étape
 
@@ -147,9 +139,9 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 - Modification des équations, des hypothèses physiques ou des unités.
 - Toute affirmation de validation physique du modèle.
 
-**Conclusion :** les écarts confirmés concernent d'abord les fonctions autonomes des modules pédagogiques. Les composants de configuration et les validateurs de `similitude.py` / `reliefs.py` sont déjà plus stricts. La prochaine PR de correction doit donc s'appuyer sur les contrats ci-dessus et les tests de frontière, sans ajouter de validation redondante aux objets déjà validés.
+**Conclusion actualisée :** les frontières #369, #374 et #380 sont traitées en code (la CI de #380 reste à confirmer). Les deux blocs encore prioritaires dans le périmètre initial sont `integrate_trajectory` / `gaussian_advection_diffusion`, puis `periodic_sine_solution` et son validateur partagé. Les corrections ne doivent pas dupliquer les invariants déjà garantis par les configurations immuables.
 
 
-### 3.6 `fields.vector_field` et `terrain.terrain_surface` — issue #379 / PR en cours
+### 3.6 `fields.vector_field` et `terrain.terrain_surface` — issue #379 / PR #380
 
 Les deux fonctions autonomes refusent désormais les coordonnées qui ne sont pas des tableaux numériques réels float64, finis et sans coercition textuelle ; les booléens et complexes sont exclus avant conversion, y compris dans les séquences hétérogènes promues par NumPy. Les paramètres scalaires sont normalisés en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les contrôles de forme et `width > 0` sont conservés. Aucun signe n'est ajouté aux domaines de `speed`, `shear`, `radial_strength`, `height`, `center_x` ou `center_y`. Les tests couvrent les entrées invalides et des paramètres signés valides ; ils ne constituent pas une validation physique.
