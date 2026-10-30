@@ -99,9 +99,13 @@ Ces adaptateurs transmettent des coordonnées à une implémentation fournie par
 
 Décision nécessaire : le contrat `ChampPlan` exige-t-il explicitement des coordonnées finies et numériques, et l'adaptateur doit-il les faire respecter avant délégation ? Ne pas dupliquer un contrôle si l'appelant est déjà `integrate_trajectory`, mais ne pas supposer que l'adaptateur n'est jamais appelé directement.
 
+**Résultat de l'audit (#373).** Le contrat est désormais explicite : `ChampPlan` reçoit des coordonnées `x,y` réelles finies ; `Vent.vitesse` reçoit `x,y,z` réelles finies. Les adaptateurs valident localement leurs entrées avant délégation, y compris pour les implémentations structurelles personnalisées. L'adaptateur de trajectoire contrôle aussi le temps fini, sans restriction de signe. Les tests couvrent les valeurs booléennes, non finies et non réelles. Aucune restriction de signe sur les coordonnées ou composantes du vent n'est ajoutée.
+
 ### 4.2 `VentUniforme.vitesse` et `VentProfilPuissance.vitesse`
 
 Le premier ignore les coordonnées par définition d'un champ uniforme ; le second n'utilise que `z`. L'audit ne qualifie pas l'absence de validation de `x` et `y` de défaut établi : il faut décider si le contrat `Vent.vitesse(x,y,z)` exige la validité de toutes les coordonnées même lorsque le modèle est indépendant de certaines d'entre elles.
+
+**Résultat de l'audit (#373).** Le contrat de point du protocole `Vent` s'applique à toutes les implémentations : les trois coordonnées doivent être réelles et finies, même si le modèle n'en utilise qu'une partie. `VentUniforme` et `VentProfilPuissance` valident désormais leurs entrées sur cette base ; le domaine de hauteur strictement positive du profil est inchangé. Les tests confirment que les coordonnées finies négatives restent acceptées.
 
 ### 4.3 `EchantillonneurBilineaire.concentration`
 
