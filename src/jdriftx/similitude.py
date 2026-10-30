@@ -37,7 +37,7 @@ def _reel_fini(valeur: object, nom: str) -> float:
     except (OverflowError, TypeError, ValueError) as err:
         raise ValueError(f"{nom} doit etre representable en float64 fini.") from err
     if not isfinite(resultat):
-        raise ValueError(f"{nom} doit etre fini.")
+        raise ValueError(f"{nom} doit contenir uniquement des valeurs finies.")
     return resultat
 
 
