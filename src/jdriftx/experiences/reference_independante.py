@@ -400,9 +400,7 @@ class SolveurEdp:
         self.parametres = parametres
         self.modele = modele
         self.condition_entree = (
-            condition_entree
-            if condition_entree is not None
-            else PanacheGaussien(source=cas.source)
+            condition_entree if condition_entree is not None else PanacheGaussien(source=cas.source)
         )
 
     def resoudre(self) -> SolutionEdp:
