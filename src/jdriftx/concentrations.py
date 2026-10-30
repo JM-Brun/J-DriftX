@@ -86,6 +86,11 @@ class SuperpositionPanaches:
             if not isinstance(concentration, np.ndarray):
                 msg = f"Le panache d'indice {index} doit renvoyer un ndarray."
                 raise TypeError(msg)
+            if not np.issubdtype(concentration.dtype, np.number) or np.issubdtype(
+                concentration.dtype, np.complexfloating
+            ):
+                msg = f"La concentration du panache d'indice {index} doit être réelle et numérique."
+                raise TypeError(msg)
             if concentration.shape != forme_attendue:
                 msg = (
                     f"La concentration du panache d'indice {index} a la forme "
