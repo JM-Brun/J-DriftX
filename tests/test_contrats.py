@@ -682,3 +682,31 @@ def test_mnt_ascii_rejette_une_cellule_non_numerique() -> None:
     texte = MNT_ASCII.replace("7 8 9", "7 huit 9")
     with pytest.raises(ValueError, match="non numerique"):
         ReliefMntAscii.depuis_texte(texte)
+
+def test_mnt_ascii_normalise_les_coordonnees_sans_debordement() -> None:
+    """Une différence intermédiaire supérieure à float64.max reste calculable."""
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[0.0, 2.0]]),
+        x0=-0.75 * maximum,
+        y0=0.0,
+        pas=maximum,
+    )
+    with np.errstate(over="raise", invalid="raise", divide="raise"):
+        altitude = relief.altitude(0.75 * maximum, 0.0)
+    assert altitude == 1.5
+
+
+def test_mnt_ascii_rejette_une_coordonnees_extreme_hors_emprise() -> None:
+    """Un indice hors emprise reste une ValueError, même si sa différence déborde."""
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[0.0, 2.0]]),
+        x0=-0.75 * maximum,
+        y0=0.0,
+        pas=maximum,
+    )
+    with np.errstate(over="raise", invalid="raise", divide="raise"):
+        with pytest.raises(ValueError, match="emprise horizontale"):
+            relief.altitude(maximum, 0.0)
+
