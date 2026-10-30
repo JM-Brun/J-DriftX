@@ -325,6 +325,8 @@ def test_mnt_ascii_copie_et_protege_sa_grille() -> None:
     assert relief.altitudes[0, 0] == 0.0
     with pytest.raises(ValueError, match="read-only"):
         relief.altitudes[0, 0] = 42.0
+    with pytest.raises(ValueError, match="WRITEABLE"):
+        relief.altitudes.setflags(write=True)
 
 
 @pytest.mark.parametrize(
