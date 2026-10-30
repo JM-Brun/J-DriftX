@@ -28,10 +28,12 @@ from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, PointMesure
 from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT, SourceImpulsionnelle, temps_dirige
 from jdriftx.experiences.reference_independante import (
     DIFFUSION_BRIGGS,
+    GrilleEdp,
     PARAMETRES_EDP_DEFAUT,
     CoefficientsDiffusion,
     ParametresEdp,
 )
+from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
 from jdriftx.experiences.transitoire_puff import (
     ComparaisonTransitoire,
     FacteurLongitudinalAnalytique,
@@ -372,3 +374,20 @@ def test_les_routes_sont_assemblees_separement(
     # Then — les coûts reportés sont exactement ceux des mesures assemblées.
     assert assemblee.cout_ferme_s == fermee.cout_s
     assert assemblee.cout_edp_s == edp.cout_s
+
+
+@pytest.mark.parametrize("instant", [True, np.bool_(True), 0.0, -1.0, float("nan"), float("inf"), 1.0 + 2.0j, "1.0"])
+def test_marginale_fermee_rejects_invalid_time(instant: object) -> None:
+    """La marginale exige un instant réel fini strictement positif."""
+    grille = GrilleEdp.depuis_parametres(PARAMETRES_EDP_DEFAUT)
+    marginale = MarginaleFermee(source=PUFF_DEFAUT, grille=grille)
+    with pytest.raises(ValueError):
+        marginale.champ(instant)  # type: ignore[arg-type]
+
+
+def test_marginale_fermee_rejects_unrepresentable_travel_distance() -> None:
+    """Le produit u*t est contrôlé avant le calcul des écarts-types."""
+    grille = GrilleEdp.depuis_parametres(PARAMETRES_EDP_DEFAUT)
+    marginale = MarginaleFermee(source=PUFF_DEFAUT, grille=grille)
+    with pytest.raises(ValueError, match="travel distance"):
+        marginale.champ(1e308)
