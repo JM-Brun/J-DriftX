@@ -2,7 +2,7 @@
 
 ## Statut
 
-Note d'architecture portant la tranche P1 du [chantier qualité #303](https://github.com/JM-Brun/J-DriftX/issues/303) : cartographie des dépendances, définition des contextes délimités (bounded contexts) et des règles de dépendances autorisées. **État des lieux initial de `main` au commit `8869419` ; actualisation du suivi sur la base `main` du 30 octobre 2026 (commit `e036dad`). Aucune décision de migration n'est appliquée dans cette note** : les arbitrages (réduction de `__init__.py`, déplacement de l'outillage de graphe, gardes résiduelles) restent au propriétaire. Cette note ne change aucune équation, tolérance, contrat d'exécution ni test.
+Note d'architecture portant la tranche P1 du [chantier qualité #303](https://github.com/JM-Brun/J-DriftX/issues/303) : cartographie des dépendances, définition des contextes délimités (bounded contexts) et des règles de dépendances autorisées. **État des lieux initial de `main` au commit `8869419` ; actualisation du suivi sur la base `main` du 30 octobre 2026 (commit `e036dad`). Aucune migration ni réduction d'API n'est appliquée dans cette note** : les arbitrages de migration et le résidu MNT restent au propriétaire. Cette note ne change aucune équation, tolérance, contrat d'exécution ni test.
 
 ## Actualisation du suivi — 30 octobre 2026
 
@@ -55,19 +55,23 @@ Constat préalable : **sur `main`, aucune inversion ni cycle n'existe** — les 
 
 Interdits transverses : cycle quelconque ; import de rendu (matplotlib/plotly/streamlit) dans C1–C5 (déjà respecté : les dépendances de rendu vivent dans `apps/` et `site/`, [docs/22](22-audit-package-code.md)) ; `dict`/JSON au-delà des frontières d'export (charte qualité, [CONTRIBUTING](https://github.com/JM-Brun/J-DriftX/blob/main/CONTRIBUTING.md)).
 
-## 4. État de P0 — frontières NumPy (verdict)
+## 4. État de P0 — frontières NumPy
 
-Le périmètre P0 de #303 est **épuisé** par les tranches fusionnées :
+Le P0 a déjà produit plusieurs tranches fusionnées, mais **ne doit pas être déclaré clos tant que les PR numériques encore ouvertes ne sont pas intégrées** :
 
 - **#302** : immutabilité réelle (bytes-backed `np.frombuffer`) et sentinelle `nodata` finie de `ReliefMntAscii`, coordonnées d'interpolation validées ;
 - **#304** : audit `source` (déjà conforme), gardes `similitude` (scalaires et grilles finis, débordement `u·t`, distance sous le vent), `metric` (débordement `b − a`, somme des coûts), `terrain` (coordonnées finies) ;
 - **#305** : normalisation avant mise au carré dans `terrain_surface` (sous-débordement `width²`) ;
-- **#306** : somme `SuperpositionPanaches`, en-tête MNT (`ncols`/`nrows` finis), profil de vent en loi de puissance, champ plan adapté ;
+- **#306** : somme `SuperpositionPanaches`, en-tête MNT (`ncols`/`nrows`) finis, profil de vent en loi de puissance, champ plan adapté ;
 - **#308** : nombre d'onde, coordonnées, vitesse et superposition de `champ_analytique` ;
-- **#309** : échelles extrêmes gaussiennes (exposants normalisés, chemin de secours logarithmique, exception documentée) — les trois cas de l'[issue #307](https://github.com/JM-Brun/J-DriftX/issues/307) sont couverts par ses tests ; la [PR #311](https://github.com/JM-Brun/J-DriftX/pull/311) (en cours du propriétaire) étend la famille aux très grandes distances.
+- **#309** : échelles extrêmes gaussiennes (exposants normalisés, chemin de secours logarithmique, exception documentée) ; les trois cas de l'[issue #307](https://github.com/JM-Brun/J-DriftX/issues/307) sont couverts par les tests ;
+- **#311 (ouverte, CI verte)** : extension de la robustesse des lois de Briggs et des concentrations panache/puff aux échelles extrêmes ; intégration en attente de revue ;
+- **#313 (ouverte, CI verte)** : représentabilité des métriques et temps de transport, y compris les intermédiaires de norme et de produit scalaire ;
+- **#314 (ouverte, CI verte)** : réduction des phases périodiques et calcul représentable des composantes du champ analytique.
 
-**Résidu théorique identifié** : la somme bilinéaire pondérée de `ReliefMntAscii.altitude` (`z00·p00 + z10·p10 + z01·p01 + z11·p11`) n'est pas contrôlée — quatre altitudes finies proches du maximum float64 peuvent sommer en débordement silencieux. Aucun MNT réel connu du projet n'atteint ces ordres de grandeur. Décision au propriétaire : ajouter une garde explicite ou documenter l'hypothèse de plage physique du MNT. Ce point reste distinct des PR #311/#313/#314.
+Les PR #311/#313/#314 apportent des corrections logicielles testées ; elles ne valident pas physiquement les modèles. Les items correspondants restent ouverts jusqu'à intégration.
 
+**Résidu théorique identifié** : la somme bilinéaire pondérée de `ReliefMntAscii.altitude` (`z00·p00 + z10·p10 + z01·p01 + z11·p11`) n'est pas contrôlée — quatre altitudes finies proches du maximum float64 peuvent sommer en débordement silencieux. Aucun MNT réel connu du projet n'atteint ces ordres de grandeur. Décision au propriétaire : ajouter une garde explicite ou documenter l'hypothèse de plage physique du MNT.
 ## 5. Séparation de `contrats.py` — soldée par #302
 
 L'item P1 « séparer progressivement `contrats.py` » est **déjà effectif** sur `main` : `contrats.py` est une façade de 26 lignes ré-exportant 11 noms ; les protocoles vivent dans `_protocoles.py` ; les implémentations dans `reliefs.py`, `vents.py`, `concentrations.py` ; les chemins d'import historiques sont conservés et couverts par un test d'identité. Rien à refaire ; les futures implémentations de contrat vont dans leur module dédié, la façade n'ajoute que des ré-exports.
