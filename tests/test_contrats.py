@@ -669,6 +669,7 @@ def test_mnt_ascii_interpolation_handles_opposite_sign_extremes() -> None:
     assert np.isfinite(altitude)
     assert altitude == 0.0
 
+
 @pytest.mark.parametrize(
     ("texte", "message_attendu"),
     [
