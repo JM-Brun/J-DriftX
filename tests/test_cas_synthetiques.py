@@ -145,7 +145,6 @@ def test_refuse_sources_invalides(champ, valeur, message_attendu) -> None:
         replace(cas, source=replace(cas.source, **{champ: valeur}))
 
 
-
 def test_dataset_copie_et_fige_ses_tableaux() -> None:
     """Un DatasetS0 ne partage pas de tableaux mutables avec son appelant."""
     # Given — un jeu S0 et un tableau d'abscisses fourni par l'appelant.
