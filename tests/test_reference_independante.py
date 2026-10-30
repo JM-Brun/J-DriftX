@@ -17,6 +17,7 @@ from jdriftx.experiences.reference_independante import (
     ComparaisonReference,
     ParametresEdp,
     PointComparaison,
+    RouteEdp,
     SolutionEdp,
     _pas_longitudinal,
     comparer_reference,
@@ -310,6 +311,31 @@ def test_la_version_non_installee_est_supportee(
     manifeste = construire_manifeste(CAS_S0_DEFAUT, comparaison)
     # Then — la version de repli est explicite.
     assert manifeste.version_code == "non-installe"
+
+
+
+def test_la_route_accepte_un_solveur_alternatif(solution: SolutionEdp) -> None:
+    """La route dépend du contrat de sortie, pas de l'implémentation FTCS."""
+    # Given — un solveur structurel qui fournit une solution compatible.
+    class SolveurInjecte:
+        def __init__(self, resultat: SolutionEdp) -> None:
+            self.resultat = resultat
+            self.appels = 0
+
+        def resoudre(self) -> SolutionEdp:
+            self.appels += 1
+            return self.resultat
+
+    solveur = SolveurInjecte(solution)
+    route = RouteEdp(CAS_S0_DEFAUT, solveur=solveur)
+
+    # When — la route mesure les points du cas avec le solveur injecté.
+    mesure = route.mesurer(CAS_S0_DEFAUT.points())
+
+    # Then — le solveur injecté est appelé une fois et sa solution consommée.
+    assert solveur.appels == 1
+    assert mesure.solution is solution
+    assert len(mesure.valeurs) == len(CAS_S0_DEFAUT.points())
 
 
 def test_le_modele_de_diffusion_est_injectable() -> None:
