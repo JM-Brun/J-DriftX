@@ -7,6 +7,7 @@ The sinusoidal exact solution is a verification target, not part of the solver.
 from __future__ import annotations
 
 from math import ceil
+from numbers import Integral, Real
 from typing import Final
 
 import numpy as np
@@ -16,16 +17,59 @@ _FLOAT_EPS: Final[float] = 1e-10
 _MAXIMUM_STEPS: Final[int] = 10_000_000
 
 
-def _contient_booleen(valeur: object) -> bool:
-    """Détecte les booléens avant toute conversion numérique avec NumPy."""
-    if isinstance(valeur, np.ndarray):
-        if valeur.dtype.kind == "b":
-            return True
-        return valeur.dtype.kind == "O" and any(
-            isinstance(element, (bool, np.bool_)) for element in valeur.flat
+def _reel_fini(valeur: object, nom: str) -> float:
+    """Valide un scalaire réel fini et représentable en float64."""
+    if isinstance(valeur, (bool, np.bool_)) or not isinstance(valeur, Real):
+        msg = f"{nom} must be a finite real scalar (booleans excluded; complex values excluded)."
+        raise ValueError(msg)
+    try:
+        resultat = float(valeur)
+    except (OverflowError, TypeError, ValueError) as err:
+        raise ValueError(f"{nom} must be representable as finite float64.") from err
+    if not np.isfinite(resultat):
+        raise ValueError(f"{nom} must be finite.")
+    return resultat
+
+
+def _tableau_reel_fini(valeur: object, nom: str) -> NDArray[np.float64]:
+    """Convertit un tableau réel en float64 sans coercition booléenne ou textuelle."""
+    try:
+        brut = np.asarray(valeur)
+        valeurs_brutes = (
+            np.asarray(valeur, dtype=object)
+            if not isinstance(valeur, np.ndarray) or brut.dtype.kind == "O"
+            else None
         )
-    brut = np.asarray(valeur, dtype=object)
-    return any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
+    except (TypeError, ValueError, OverflowError) as err:
+        raise ValueError(f"{nom} must be a real numeric array.") from err
+    if brut.dtype.kind == "b" or (
+        valeurs_brutes is not None
+        and any(isinstance(element, (bool, np.bool_)) for element in valeurs_brutes.flat)
+    ):
+        raise ValueError(f"{nom} must be a real numeric array (booleans excluded).")
+    if brut.dtype.kind not in "iuf":
+        msg = f"{nom} must be a real numeric array (booleans excluded; complex values excluded)."
+        raise ValueError(msg)
+    try:
+        with np.errstate(over="ignore", invalid="ignore"):
+            resultat = np.asarray(brut, dtype=np.float64)
+    except (TypeError, ValueError, OverflowError) as err:
+        raise ValueError(f"{nom} must be representable as float64.") from err
+    if not np.all(np.isfinite(resultat)):
+        raise ValueError(f"{nom} must contain only finite coordinates.")
+    return resultat
+
+
+def _entier_cellules(valeur: object) -> int:
+    """Valide un nombre entier de cellules représentable comme dimension NumPy."""
+    if isinstance(valeur, (bool, np.bool_)) or not isinstance(valeur, Integral):
+        raise ValueError("n_cells must be an integer greater than or equal to 8.")
+    resultat = int(valeur)
+    if resultat < 8:
+        raise ValueError("n_cells must be an integer greater than or equal to 8.")
+    if resultat > int(np.iinfo(np.intp).max):
+        raise ValueError("n_cells must be representable as a NumPy array dimension.")
+    return resultat
 
 
 def _validate_periodic_parameters(
@@ -37,25 +81,26 @@ def _validate_periodic_parameters(
     amplitude: float,
     velocity: float,
     diffusivity: float,
-) -> None:
-    """Validate the parameters shared by both periodic solvers.
+) -> tuple[int, float, float, float, float, float, float, float]:
+    """Validate and normalize the parameters shared by both periodic solvers.
 
     The checks and error messages are common to the centered/RK4 and
     upwind/Euler schemes; the scheme-specific stability conditions remain
     in each solver.
 
     Raises:
-        ValueError: If any parameter is non-finite or out of range, the grid
-            is too coarse, the concentration profile would be negative, or
-            the requested number of time steps exceeds the safety limit.
+        ValueError: If a parameter is non-real, non-finite, unrepresentable,
+            or outside its existing domain, the grid is too coarse, or the
+            requested number of time steps exceeds the safety limit.
     """
-    parameters = (length, end_time, dt, mean_concentration, amplitude, velocity, diffusivity)
-    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
-        raise ValueError("Parameters must be real-valued (booleans excluded).")
-    if not all(np.isfinite(value) for value in parameters):
-        raise ValueError("Parameters must be finite.")
-    if isinstance(n_cells, (bool, np.bool_)) or not isinstance(n_cells, int) or n_cells < 8:
-        raise ValueError("n_cells must be an integer greater than or equal to 8.")
+    n_cells = _entier_cellules(n_cells)
+    length = _reel_fini(length, "length")
+    end_time = _reel_fini(end_time, "end_time")
+    dt = _reel_fini(dt, "dt")
+    mean_concentration = _reel_fini(mean_concentration, "mean_concentration")
+    amplitude = _reel_fini(amplitude, "amplitude")
+    velocity = _reel_fini(velocity, "velocity")
+    diffusivity = _reel_fini(diffusivity, "diffusivity")
     if length <= 0:
         raise ValueError("length must be strictly positive.")
     if end_time < 0:
@@ -67,15 +112,23 @@ def _validate_periodic_parameters(
     if diffusivity < 0:
         raise ValueError("diffusivity must be non-negative.")
     if end_time > 0.0:
-        # A huge or unrepresentable step ratio must fail as a ValueError:
-        # end_time / dt can overflow to inf, which math.ceil would otherwise
-        # turn into an unexplained OverflowError.
-        step_ratio = end_time / dt
-        if not np.isfinite(step_ratio) or ceil(step_ratio) > _MAXIMUM_STEPS:
+        with np.errstate(over="ignore", divide="ignore", invalid="ignore"):
+            step_ratio = np.float64(end_time) / np.float64(dt)
+        if not np.isfinite(step_ratio) or ceil(float(step_ratio)) > _MAXIMUM_STEPS:
             raise ValueError(
                 "The requested number of time steps exceeds the maximum of "
                 f"{_MAXIMUM_STEPS}; reduce end_time or increase dt."
             )
+    return (
+        n_cells,
+        length,
+        end_time,
+        dt,
+        mean_concentration,
+        amplitude,
+        velocity,
+        diffusivity,
+    )
 
 
 def _etat_initial_periodique(
@@ -122,11 +175,12 @@ def periodic_sine_solution(
     For k = 2*pi/length, the solution is
     mean + amplitude*exp(-K*k**2*t)*sin(k*(x-u*t)).
     """
-    parameters = (time, length, mean_concentration, amplitude, velocity, diffusivity)
-    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
-        raise ValueError("Parameters must be real-valued (booleans excluded).")
-    if not all(np.isfinite(value) for value in parameters):
-        raise ValueError("Parameters must be finite.")
+    time = _reel_fini(time, "time")
+    length = _reel_fini(length, "length")
+    mean_concentration = _reel_fini(mean_concentration, "mean_concentration")
+    amplitude = _reel_fini(amplitude, "amplitude")
+    velocity = _reel_fini(velocity, "velocity")
+    diffusivity = _reel_fini(diffusivity, "diffusivity")
     if time < 0:
         raise ValueError("time must be non-negative.")
     if length <= 0:
@@ -135,11 +189,7 @@ def periodic_sine_solution(
         raise ValueError("Concentration must remain non-negative: mean >= amplitude >= 0.")
     if diffusivity < 0:
         raise ValueError("diffusivity must be non-negative.")
-    if _contient_booleen(x):
-        raise ValueError("Coordinates must be real-valued (booleans excluded).")
-    coordinates = np.asarray(x, dtype=float)
-    if not np.all(np.isfinite(coordinates)):
-        raise ValueError("Coordinates must be finite.")
+    coordinates = _tableau_reel_fini(x, "Coordinates")
     wave_number = 2.0 * np.pi / length
     decay = np.exp(-diffusivity * wave_number**2 * time)
     return np.asarray(
@@ -171,7 +221,16 @@ def solve_periodic_sine_transport(
             stability region for the discrete spatial operator, or a step
             count above the safety limit.
     """
-    _validate_periodic_parameters(
+    (
+        n_cells,
+        length,
+        end_time,
+        dt,
+        mean_concentration,
+        amplitude,
+        velocity,
+        diffusivity,
+    ) = _validate_periodic_parameters(
         n_cells=n_cells,
         length=length,
         end_time=end_time,
@@ -243,7 +302,16 @@ def solve_periodic_upwind_euler(
     the centered-space/RK4 solver. It requires |u|*dt/dx + 2*K*dt/dx**2 <= 1.
     The shared validation rejects a step count above the safety limit.
     """
-    _validate_periodic_parameters(
+    (
+        n_cells,
+        length,
+        end_time,
+        dt,
+        mean_concentration,
+        amplitude,
+        velocity,
+        diffusivity,
+    ) = _validate_periodic_parameters(
         n_cells=n_cells,
         length=length,
         end_time=end_time,
