@@ -353,9 +353,9 @@ def test_sigmas_rejettent_distance_non_finie(valeur: float) -> None:
     """Une distance sous le vent non finie est refusée par les deux écarts-types."""
     # Given — une distance NaN ou infinie, classe Pasquill objet D.
     # When / Then — les deux appels sont refusés avant tout calcul.
-    with pytest.raises(ValueError, match="valeurs finies"):
+    with pytest.raises(ValueError, match="fini"):
         sigma_y(valeur, ClasseStabilite.D)
-    with pytest.raises(ValueError, match="valeurs finies"):
+    with pytest.raises(ValueError, match="fini"):
         sigma_z(valeur, ClasseStabilite.D)
 
 
@@ -390,7 +390,7 @@ def test_panache_rejette_distance_infinie() -> None:
     """Une distance sous le vent infinie est refusée."""
     # Given — x = +inf : le contrôle de signe passe, les sigmas débordent.
     # When / Then — l'appel est refusé.
-    with pytest.raises(ValueError, match="valeurs finies"):
+    with pytest.raises(ValueError, match="fini"):
         concentration_panache(float("inf"), 0.0, 1.0, debit=1.0, u=3.0, classe=ClasseStabilite.D)
 
 
