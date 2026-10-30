@@ -29,6 +29,8 @@ from dataclasses import dataclass
 from importlib import metadata
 from typing import Literal
 
+import numpy as np
+
 from jdriftx.champ_analytique import ChampFonctionCourant, ChampPlan
 from jdriftx.experiences.reconstruction_vent import Rectangle
 
@@ -41,7 +43,11 @@ _PAS_DERIVEE = 1.0
 
 def _valide_point(nom: str, point: tuple[float, float]) -> None:
     """Lève ValueError si le point n'est pas un couple de coordonnées finies."""
-    if len(tuple(point)) != 2 or not all(math.isfinite(c) for c in tuple(point)):
+    coordonnees = tuple(point)
+    if len(coordonnees) != 2 or any(isinstance(valeur, (bool, np.bool_)) for valeur in coordonnees):
+        msg = f"Le point {nom} doit être un couple (x, y) numérique (booléens exclus)."
+        raise ValueError(msg)
+    if not all(math.isfinite(c) for c in coordonnees):
         msg = f"Le point {nom} doit être un couple (x, y) de coordonnées finies."
         raise ValueError(msg)
 
@@ -71,6 +77,9 @@ class SourceGaussienne:
     def __post_init__(self) -> None:
         """Valide la position, l'amplitude et l'échelle gaussienne."""
         _valide_point("position", self.position)
+        if any(isinstance(valeur, (bool, np.bool_)) for valeur in (self.amplitude, self.longueur)):
+            msg = "L'amplitude et la longueur doivent être numériques (booléens exclus)."
+            raise ValueError(msg)
         if not math.isfinite(self.amplitude) or self.amplitude <= 0.0:
             msg = "L'amplitude doit être finie et strictement positive."
             raise ValueError(msg)
@@ -80,12 +89,16 @@ class SourceGaussienne:
 
     def concentration(self, x: float, y: float) -> float:
         """Évalue la contribution relative de la source au point (x, y)."""
+        _valide_point("evaluation", (x, y))
         dx = x - self.position[0]
         dy = y - self.position[1]
         return self.amplitude * math.exp(-(dx * dx + dy * dy) / (self.longueur * self.longueur))
 
     def rayon_affecte(self, seuil: float) -> float:
         """Rayon analytique du disque affecté ; exige 0 < seuil <= amplitude."""
+        if isinstance(seuil, (bool, np.bool_)):
+            msg = "Le seuil doit être numérique (booléens exclus)."
+            raise ValueError(msg)
         if seuil <= 0.0 or seuil > self.amplitude:
             msg = "Le seuil doit être strictement positif et au plus égal à l'amplitude."
             raise ValueError(msg)
@@ -171,6 +184,9 @@ class ScenarioSuperposition:
             raise ValueError(msg)
         _valide_sources(self.source_1, self.source_2, self.fenetre)
         _valide_mesures(self.mesures, self.fenetre)
+        if isinstance(self.seuil, (bool, np.bool_)):
+            msg = "Le seuil doit être numérique (booléens exclus)."
+            raise ValueError(msg)
         if not math.isfinite(self.seuil) or self.seuil <= 0.0:
             msg = "Le seuil doit être fini et strictement positif."
             raise ValueError(msg)
