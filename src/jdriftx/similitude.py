@@ -13,7 +13,7 @@ Mohammadi, 2008) ; formules de Briggs reprises par Martin (1976).
 
 from __future__ import annotations
 
-from math import isfinite
+from math import isfinite, log
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -21,6 +21,10 @@ from numpy.typing import ArrayLike
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
 CLASSES: tuple[str, ...] = tuple(classe.value for classe in ClasseStabilite)
+
+# Logarithme du plus grand float64 : en deca, exp() reste finie ; au-dela,
+# la concentration theorique n'est pas representable et le contrat le refuse.
+_LOG_FLOAT_MAX = log(1.7976931348623157e308)
 
 
 def _valide_classe(classe: str | ClasseStabilite) -> ClasseStabilite:
@@ -97,6 +101,11 @@ def concentration_panache(
 
     Les tableaux x, y et z sont combines selon les regles de diffusion de
     NumPy (broadcasting) ; la forme du resultat est la forme diffusee commune.
+    Les exposants sont evalues par rapports normalises (coordonnee divisee
+    par ecart-type) : les limites nulles restent exactes meme lorsque les
+    carres debordent. Si la forme diffusee contient des valeurs non
+    representables, le departage entre zero et singularite est fait en
+    domaine logarithmique.
 
     Args:
         x: distance sous le vent (m), strictement positive.
@@ -113,8 +122,9 @@ def concentration_panache(
     Raises:
         ValueError: si la classe de stabilite est inconnue, si un parametre
             scalaire n'est pas fini, si la distance sous le vent n'est pas
-            strictement positive, ou si y ou z contient une coordonnee non
-            finie.
+            strictement positive, si y ou z contient une coordonnee non
+            finie, ou si la concentration theorique n'est pas representable
+            en float64 (singularite pres de la source).
     """
     classe_stable = _valide_classe(classe)
     if not all(isfinite(valeur) for valeur in (debit, u, hauteur)):
@@ -139,11 +149,25 @@ def concentration_panache(
     sy = _ecart_type_horizontal(x_arr, classe_stable)
     sz = _ecart_type_vertical(x_arr, classe_stable)
 
-    terme_lateral = np.exp(-(y_arr**2) / (2.0 * sy**2))
-    terme_vertical = np.exp(-((z_arr - hauteur) ** 2) / (2.0 * sz**2)) + np.exp(
-        -((z_arr + hauteur) ** 2) / (2.0 * sz**2)
-    )
-    return np.asarray(debit / (2.0 * np.pi * u * sy * sz) * terme_lateral * terme_vertical)
+    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+        u_y = y_arr / sy
+        u_z_source = (z_arr - hauteur) / sz
+        u_z_image = (z_arr + hauteur) / sz
+        terme_lateral = np.exp(-0.5 * u_y**2)
+        terme_vertical = np.exp(-0.5 * u_z_source**2) + np.exp(-0.5 * u_z_image**2)
+        concentration = debit / (2.0 * np.pi * u * sy * sz) * terme_lateral * terme_vertical
+        if np.all(np.isfinite(concentration)):
+            return np.asarray(concentration)
+        log_exposant = -0.5 * u_y**2 + np.logaddexp(-0.5 * u_z_source**2, -0.5 * u_z_image**2)
+        log_amplitude = np.log(debit) - np.log(2.0 * np.pi * u) - np.log(sy) - np.log(sz)
+        # Un exposant -infini impose la limite nulle, meme si l'amplitude deborde.
+        log_concentration = np.where(
+            np.equal(log_exposant, -np.inf), -np.inf, log_amplitude + log_exposant
+        )
+        if np.any(np.isnan(log_concentration)) or np.any(log_concentration > _LOG_FLOAT_MAX):
+            msg = "La concentration n'est pas representable en float64 pres de la source."
+            raise ValueError(msg)
+        return np.asarray(np.exp(log_concentration))
 
 
 def concentration_puff(
@@ -160,6 +184,11 @@ def concentration_puff(
 
     Les tableaux x, y et z sont combines selon les regles de diffusion de
     NumPy (broadcasting) ; la forme du resultat est la forme diffusee commune.
+    Les exposants sont evalues par rapports normalises (coordonnee divisee
+    par ecart-type) : les limites nulles restent exactes meme lorsque les
+    carres debordent. Si la forme diffusee contient des valeurs non
+    representables, le departage entre zero et singularite est fait en
+    domaine logarithmique.
 
     Args:
         x: coordonnee sous le vent du point (m).
@@ -178,7 +207,9 @@ def concentration_puff(
     Raises:
         ValueError: si la classe de stabilite est inconnue, si un parametre
             scalaire n'est pas fini, si une coordonnee du point n'est pas
-            finie, ou si la distance parcourue u*t n'est pas representable.
+            finie, si la distance parcourue u*t n'est pas representable, ou
+            si la concentration theorique n'est pas representable en float64
+            (singularite pres de la source).
     """
     classe_stable = _valide_classe(classe)
     if not all(isfinite(valeur) for valeur in (t, masse, u, x0)):
@@ -215,10 +246,24 @@ def concentration_puff(
     sy = _ecart_type_horizontal(distance_arr, classe_stable)
     sz = _ecart_type_vertical(distance_arr, classe_stable)
 
-    denom = (2.0 * np.pi) ** 1.5 * sx * sy * sz
-    exponentiel = (
-        np.exp(-((x_arr - x0 - distance) ** 2) / (2.0 * sx**2))
-        * np.exp(-(y_arr**2) / (2.0 * sy**2))
-        * np.exp(-(z_arr**2) / (2.0 * sz**2))
-    )
-    return np.asarray(masse / denom * exponentiel)
+    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+        u_x = (x_arr - x0 - distance) / sx
+        u_y = y_arr / sy
+        u_z = z_arr / sz
+        denom = (2.0 * np.pi) ** 1.5 * sx * sy * sz
+        exponentiel = np.exp(-0.5 * u_x**2) * np.exp(-0.5 * u_y**2) * np.exp(-0.5 * u_z**2)
+        concentration = masse / denom * exponentiel
+        if np.all(np.isfinite(concentration)):
+            return np.asarray(concentration)
+        log_exposant = -0.5 * u_x**2 - 0.5 * u_y**2 - 0.5 * u_z**2
+        log_amplitude = (
+            np.log(masse) - 1.5 * np.log(2.0 * np.pi) - np.log(sx) - np.log(sy) - np.log(sz)
+        )
+        # Un exposant -infini impose la limite nulle, meme si l'amplitude deborde.
+        log_concentration = np.where(
+            np.equal(log_exposant, -np.inf), -np.inf, log_amplitude + log_exposant
+        )
+        if np.any(np.isnan(log_concentration)) or np.any(log_concentration > _LOG_FLOAT_MAX):
+            msg = "La concentration n'est pas representable en float64 pres de la source."
+            raise ValueError(msg)
+        return np.asarray(np.exp(log_concentration))

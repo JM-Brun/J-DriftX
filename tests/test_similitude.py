@@ -474,3 +474,121 @@ def test_puff_diffuse_les_formes_selon_numpy() -> None:
     # Then — la forme du résultat suit la forme diffusée commune (3,).
     assert c.shape == (3,)
     assert np.all(c > 0.0)
+
+
+@pytest.mark.parametrize("classe", list(ClasseStabilite))
+def test_panache_pres_de_la_source_refuse_la_singularite(classe: ClasseStabilite) -> None:
+    """La singularite pres de la source est refusee pour les six classes.
+
+    Avec x = 1e-200, les ecarts-types restent positifs mais leurs carres
+    sous-debordent : la concentration theorique depasse le plus grand
+    float64. Le contrat leve ValueError au lieu de retourner un NaN ou
+    un inf silencieux (issue #307, cas 1).
+    """
+    # Given — une distance extreme petite, finie, sur l axe du panache.
+    # When / Then — la singularite gaussienne est refusee explicitement.
+    with pytest.raises(ValueError, match="representable"):
+        concentration_panache(1e-200, 0.0, 0.0, debit=1.0, u=1.0, classe=classe)
+
+
+def test_panache_extreme_representable_restitue_une_valeur_finie() -> None:
+    """Pres de la source, un point representable reste fini (cas 1).
+
+    A x = 1e-200 (classe A) et environ 30 ecarts-types lateraux, chaque
+    facteur intermediaire (amplitude, exponentielle) sort du domaine
+    float64 alors que la solution mathematique reste representable : le
+    chemin logarithmique restitue une valeur finie et positive.
+    """
+    # Given — un point lateral a environ 30 sigma de l axe d un panache extreme.
+    y = 6.6e-200
+    # When — la concentration est evaluee.
+    c = concentration_panache(1e-200, y, 0.0, debit=1.0, u=1.0, classe=ClasseStabilite.A)
+    # Then — la valeur restituee est finie et strictement positive.
+    assert np.isfinite(c)
+    assert c > 0.0
+
+
+def test_panache_extreme_hors_axe_restitue_la_limite_nulle() -> None:
+    """Une coordonnee extreme, finie, donne la limite nulle exacte (cas 2).
+
+    Le rapport normalise y/sigma_y deborde vers l infini : l exponentielle
+    tend vers zero et la limite mathematique, nulle, est representable.
+    """
+    # Given — un point lateral extreme devant un panache extreme.
+    # When — la concentration est evaluee.
+    c = concentration_panache(1e-200, 1e100, 0.0, debit=1.0, u=1.0, classe=ClasseStabilite.A)
+    # Then — la limite nulle est restituee, sans NaN.
+    assert c == 0.0
+
+
+def test_panache_double_debordement_des_carres_restitue_zero() -> None:
+    """Le NaN du double debordement des carres est elimine (cas 2).
+
+    A x = 1e307 (classe A), le produit sigma_y*sigma_z deborde et
+    y = 1e200 fait deborder y**2 : l ancien quotient inf/inf produisait
+    NaN. Les rapports normalises restituent la limite nulle.
+    """
+    # Given — distance et coordonnee laterale dont les carres debordent.
+    # When — la concentration est evaluee.
+    c = concentration_panache(1e307, 1e200, 0.0, debit=1.0, u=1.0, classe=ClasseStabilite.A)
+    # Then — la limite nulle est restituee.
+    assert c == 0.0
+
+
+def test_panache_melange_ordinaire_extreme_conserve_le_broadcasting() -> None:
+    """Un tableau melangeant point ordinaire et extreme diffuse sa forme.
+
+    Le point ordinaire suit le chemin direct, le point extreme le chemin
+    logarithmique : la forme diffusee commune est conservee.
+    """
+    # Given — un tableau de distances ordinaire et extreme, coordonnees associees.
+    x = np.array([100.0, 1e-200])
+    y = np.array([0.0, 6.6e-200])
+    # When — le panache est evalue sur la forme diffusee (2,).
+    c = concentration_panache(x, y, 0.0, debit=1.0, u=1.0, classe=ClasseStabilite.A)
+    # Then — la forme diffusee commune est conservee, toutes valeurs finies.
+    assert c.shape == (2,)
+    assert np.all(np.isfinite(c))
+    assert np.all(c > 0.0)
+
+
+@pytest.mark.parametrize("classe", list(ClasseStabilite))
+def test_puff_pres_du_centre_refuse_la_singularite(classe: ClasseStabilite) -> None:
+    """La singularite d un puff compact est refusee pour les six classes (cas 3).
+
+    Avec u*t = 1e-200, le produit des trois ecarts-types sous-deborde au
+    centre du puff : la concentration theorique depasse le plus grand
+    float64, le contrat leve ValueError.
+    """
+    # Given — un puff extreme compact, evalue en son centre.
+    # When / Then — la singularite est refusee explicitement.
+    with pytest.raises(ValueError, match="representable"):
+        concentration_puff(1e-200, 0.0, 0.0, t=1e-200, masse=1.0, u=1.0, classe=classe)
+
+
+def test_puff_extreme_hors_centre_restitue_la_limite_nulle() -> None:
+    """Un point extreme loin du centre d un puff compact donne zero (cas 3).
+
+    Le rapport normalise (x - x0 - u*t)/sigma_x deborde vers l infini : la
+    limite mathematique est nulle et representable, sans NaN.
+    """
+    # Given — un puff compact et un point a 1e200 m de son centre.
+    # When — la concentration est evaluee.
+    c = concentration_puff(1e200, 0.0, 0.0, t=1e-200, masse=1.0, u=1.0, classe=ClasseStabilite.A)
+    # Then — la limite nulle est restituee, sans NaN.
+    assert c == 0.0
+
+
+def test_puff_extreme_representable_restitue_une_valeur_finie() -> None:
+    """Un point a 50 ecarts-types d un puff compact reste representable (cas 3).
+
+    Chaque facteur intermediaire sort du domaine float64, mais la solution
+    mathematique reste finie : le chemin logarithmique la restitue.
+    """
+    # Given — un puff compact et un point a environ 50 sigma du centre.
+    x = 50.0 * 2.2e-201 + 1e-200
+    # When — la concentration est evaluee.
+    c = concentration_puff(x, 0.0, 0.0, t=1e-200, masse=1.0, u=1.0, classe=ClasseStabilite.A)
+    # Then — la valeur restituee est finie et strictement positive.
+    assert np.isfinite(c)
+    assert c > 0.0
