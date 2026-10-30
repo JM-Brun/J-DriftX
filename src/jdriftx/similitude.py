@@ -47,8 +47,18 @@ def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> np.ndarray:
         return np.asarray(_reel_fini(valeur, nom))
     try:
         brut = np.asarray(valeur)
+        # NumPy peut promouvoir [1, True] en int64 et perdre la trace du booléen.
+        # N'inspecter en objet que les entrées séquentielles : ne pas dupliquer
+        # inutilement en mémoire les grands ndarray déjà typés.
+        valeurs_brutes = (
+            np.asarray(valeur, dtype=object) if not isinstance(valeur, np.ndarray) else None
+        )
     except (TypeError, ValueError, OverflowError) as err:
         raise ValueError(f"{nom} doit etre un tableau numerique reel.") from err
+    if valeurs_brutes is not None and any(
+        isinstance(element, (bool, np.bool_)) for element in valeurs_brutes.flat
+    ):
+        raise ValueError(f"{nom} doit etre un tableau numerique reel (booleens exclus).")
     if brut.dtype.kind not in "iuf":
         msg = f"{nom} doit etre un tableau numerique reel "
         raise ValueError(msg + "(booleens et complexes exclus).")
@@ -69,14 +79,6 @@ def _valide_classe(classe: str | ClasseStabilite) -> ClasseStabilite:
     except ValueError as err:
         msg = f"Classe de stabilite inconnue : {classe!r} (attendu : {CLASSES})"
         raise ValueError(msg) from err
-
-
-def _distance_sous_le_vent(x_arr: np.ndarray) -> np.ndarray:
-    """Verifie que la distance sous le vent ne contient que des valeurs finies."""
-    if not np.all(np.isfinite(x_arr)):
-        msg = "La distance sous le vent doit etre finie."
-        raise ValueError(msg)
-    return x_arr
 
 
 def _ecart_type_horizontal(x_arr: np.ndarray, classe_stable: ClasseStabilite) -> np.ndarray:
@@ -145,7 +147,7 @@ def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
         FloatingPointError: si un ecart-type positif n'est pas representable en float64.
     """
     classe_stable = _valide_classe(classe)
-    x_arr = _distance_sous_le_vent(_tableau_reel_fini(x, "La distance sous le vent"))
+    x_arr = _tableau_reel_fini(x, "La distance sous le vent")
     if np.any(x_arr < 0.0):
         msg = "La distance sous le vent doit etre positive ou nulle."
         raise ValueError(msg)
@@ -160,7 +162,7 @@ def sigma_z(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
         FloatingPointError: si un ecart-type positif n'est pas representable en float64.
     """
     classe_stable = _valide_classe(classe)
-    x_arr = _distance_sous_le_vent(_tableau_reel_fini(x, "La distance sous le vent"))
+    x_arr = _tableau_reel_fini(x, "La distance sous le vent")
     if np.any(x_arr < 0.0):
         msg = "La distance sous le vent doit etre positive ou nulle."
         raise ValueError(msg)
@@ -213,7 +215,7 @@ def concentration_panache(
         raise ValueError("La vitesse du vent doit etre strictement positive.")
     if debit < 0.0:
         raise ValueError("Le debit d'emission doit etre positif ou nul.")
-    x_arr = _distance_sous_le_vent(_tableau_reel_fini(x, "La distance sous le vent"))
+    x_arr = _tableau_reel_fini(x, "La distance sous le vent")
     if np.any(x_arr <= 0.0):
         raise ValueError("La distance sous le vent doit etre strictement positive.")
     y_arr = _tableau_reel_fini(y, "La coordonnee y")
