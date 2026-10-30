@@ -448,7 +448,7 @@ def test_periodic_solvers_reject_non_real_or_non_finite_parameters(
         solve_periodic_sine_transport(**parameters)  # type: ignore[arg-type]
 
 
-@pytest.mark.parametrize("time,diffusivity", [(0.0, 0.01), (1.0, 0.0)])
+@pytest.mark.parametrize(("time", "diffusivity"), [(0.0, 0.01), (1.0, 0.0)])
 def test_exact_solution_extreme_length_has_unit_decay_when_time_or_diffusion_is_zero(
     time: float, diffusivity: float
 ) -> None:
