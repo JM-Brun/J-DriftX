@@ -70,18 +70,14 @@ def test_cas_s0_refuse_les_parametres_booleens(booleen: bool, champ: str) -> Non
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["altitude", "x_min", "x_max", "y_max"])
-def test_cas_synthetique_s0_refuse_les_parametres_booleens(
-    booleen: bool, champ: str
-) -> None:
+def test_cas_synthetique_s0_refuse_les_parametres_booleens(booleen: bool, champ: str) -> None:
     with pytest.raises(ValueError, match="booleens exclus"):
         replace(CAS_S0_DEFAUT, **{champ: booleen})
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["graine", "nombre_points"])
-def test_cas_synthetique_s0_refuse_les_entiers_booleens(
-    booleen: bool, champ: str
-) -> None:
+def test_cas_synthetique_s0_refuse_les_entiers_booleens(booleen: bool, champ: str) -> None:
     with pytest.raises(ValueError, match="entier"):
         replace(CAS_S0_DEFAUT, **{champ: booleen})
 
