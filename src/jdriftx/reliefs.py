@@ -18,7 +18,7 @@ def _verifie_coordonnees(x_arr: NDArray[np.floating], y_arr: NDArray[np.floating
         msg = "x et y doivent avoir des formes identiques."
         raise ValueError(msg)
     if not np.all(np.isfinite(x_arr)) or not np.all(np.isfinite(y_arr)):
-        msg = "Les coordonnées doivent être finies."
+        msg = "Les coordonnees doivent etre finies."
         raise ValueError(msg)
 
 
