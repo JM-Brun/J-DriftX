@@ -22,6 +22,22 @@ def _verifie_coordonnees(x_arr: NDArray[np.floating], y_arr: NDArray[np.floating
         raise ValueError(msg)
 
 
+def _interpole_lineairement_stable(
+    a: NDArray[np.float64],
+    b: NDArray[np.float64],
+    poids: NDArray[np.float64],
+) -> NDArray[np.float64]:
+    """Calcule une interpolation convexe sans différence ou somme débordante."""
+    meme_signe = np.signbit(a) == np.signbit(b)
+    with np.errstate(over="ignore", invalid="ignore"):
+        interpolation_meme_signe = a + poids * (b - a)
+        interpolation_signes_opposes = (1.0 - poids) * a + poids * b
+    return np.asarray(
+        np.where(meme_signe, interpolation_meme_signe, interpolation_signes_opposes),
+        dtype=float,
+    )
+
+
 @dataclass(frozen=True)
 class ReliefPlat:
     """Terrain plat d altitude nulle, cas de reference des solutions gaussiennes."""
@@ -224,25 +240,12 @@ class ReliefMntAscii:
         ):
             msg = "Interpolation sur une cellule sans donnee."
             raise ValueError(msg)
-        # Normaliser les altitudes avant la somme : chaque terme pondéré est
-        # alors de module inférieur ou égal à 1, même près de float64.max.
-        echelle = np.maximum.reduce((np.abs(z00), np.abs(z10), np.abs(z01), np.abs(z11)))
-        echelle_sure = np.where(echelle == 0.0, 1.0, echelle)
-        z_normalise = (
-            (z00 / echelle_sure) * p00
-            + (z10 / echelle_sure) * p10
-            + (z01 / echelle_sure) * p01
-            + (z11 / echelle_sure) * p11
-        )
-        # Les poids sont convexes en arithmétique exacte. Borner le résultat
-        # normalisé neutralise un éventuel dépassement d'arrondi de leur somme.
-        borne_min = np.minimum.reduce(
-            (z00 / echelle_sure, z10 / echelle_sure, z01 / echelle_sure, z11 / echelle_sure)
-        )
-        borne_max = np.maximum.reduce(
-            (z00 / echelle_sure, z10 / echelle_sure, z01 / echelle_sure, z11 / echelle_sure)
-        )
-        z = np.clip(z_normalise, borne_min, borne_max) * echelle
+        # L'interpolation bilinéaire est une interpolation linéaire successive.
+        # La forme a + t*(b-a) est sûre pour deux valeurs de même signe ;
+        # la forme pondérée est sûre pour deux valeurs de signes opposés.
+        z_bas = _interpole_lineairement_stable(z00, z10, tx)
+        z_haut = _interpole_lineairement_stable(z01, z11, tx)
+        z = _interpole_lineairement_stable(z_bas, z_haut, ty)
         return np.asarray(z, dtype=float)
 
 
