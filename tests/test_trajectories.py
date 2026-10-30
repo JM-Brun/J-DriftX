@@ -143,7 +143,7 @@ def test_integrator_rejects_non_real_or_non_finite_scalar_inputs(
         "dt": 0.1,
     }
     values[parameter] = bad
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="must be"):
         integrate_trajectory(
             lambda _t, _x, _y: (1.0, 0.0),
             values["x0"], values["y0"], values["t0"], values["t_end"], values["dt"],
