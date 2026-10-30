@@ -446,3 +446,47 @@ def test_periodic_solvers_reject_non_real_or_non_finite_parameters(
     parameters[parameter] = bad
     with pytest.raises(ValueError, match="must be"):
         solve_periodic_sine_transport(**parameters)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("time,diffusivity", [(0.0, 0.01), (1.0, 0.0)])
+def test_exact_solution_extreme_length_has_unit_decay_when_time_or_diffusion_is_zero(
+    time: float, diffusivity: float
+) -> None:
+    """Le facteur de décroissance vaut exactement un si K ou t est nul."""
+    length = 1e-200
+    x = np.array([length / 4.0])
+    actual = periodic_sine_solution(
+        x,
+        time,
+        length=length,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=0.0,
+        diffusivity=diffusivity,
+    )
+    assert actual[0] == pytest.approx(1.3, rel=2e-15)
+
+
+def test_exact_solution_extreme_decay_avoids_wave_number_square_overflow() -> None:
+    """Une décroissance quasi nulle est évaluée sans calculer k au carré."""
+    actual = periodic_sine_solution(
+        np.array([0.0]),
+        1.0,
+        length=1e-200,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=0.0,
+        diffusivity=1e-308,
+    )
+    assert actual[0] == pytest.approx(1.0, abs=0.0)
+
+
+def test_periodic_decay_matches_direct_formula_at_moderate_scales() -> None:
+    """La formulation logarithmique reste équivalente dans le régime usuel."""
+    length, time, diffusivity = 2.0, 0.7, 0.03
+    wave_number = 2.0 * np.pi / length
+    expected_decay = np.exp(-diffusivity * wave_number**2 * time)
+    actual = periodic_transport._facteur_decroissance_periodique(
+        diffusivity, length, time
+    )
+    assert actual == pytest.approx(expected_decay, rel=2e-15)
