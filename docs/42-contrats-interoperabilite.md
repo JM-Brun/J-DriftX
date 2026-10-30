@@ -23,7 +23,7 @@ Les contrats sont des protocoles PEP 544 à typage structurel — le même méca
 | Contrat | Signature | Implémentations livrées | Rôle |
 |---|---|---|---|
 | `Relief` | `altitude(x, y)` (vectorisé, grilles) | `ReliefPlat`, `ReliefSynthetique`, `ReliefMntAscii` | Géométrie du sol pour le rendu, la planification de prélèvements et les futurs cas de terrain |
-| `Vent` | `vitesse(x, y, z) -> (u, v, w)` (ponctuel, comme l'intégration des trajectoires) | `VentUniforme`, `VentDeChampPlan`, `VentProfilPuissance`, `AdaptateurTrajectoire2D` | Champ de vent plan ou 3D, interchangeable derrière une seule signature |
+| `Vent` | `vitesse(x, y, z) -> (u, v, w)` (ponctuel) | `VentUniforme`, `VentDeChampPlan`, `VentProfilPuissance`, `AdaptateurTrajectoire2D` | Champ de vent plan ou 3D, interchangeable derrière une seule signature |
 | `ModeleConcentration` | `concentration(x, y, z)` (vectorisé) | `PanacheGaussien`, `SuperpositionPanaches` | Modèle de concentration interchangeable (similitude analytique et condition d'entrée des solveurs) |
 
 Le choix vectorisé/ponctuel suit l'usage réel : le relief et les concentrations s'évaluent sur des grilles (rendu, jeux de mesures), le vent s'échantillonne point par point. L'adaptateur explicite vers l'intégrateur 2D est limité aux champs stationnaires sans composante verticale.
