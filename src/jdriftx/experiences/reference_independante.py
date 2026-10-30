@@ -101,6 +101,16 @@ def _tableau_immuable(
     strictement_croissant: bool = False,
 ) -> np.ndarray:
     """Valide puis détache un tableau dans un tampon réellement non modifiable."""
+    if isinstance(valeur, np.ndarray):
+        bool_present = valeur.dtype.kind == "b" or (
+            valeur.dtype.kind == "O"
+            and any(isinstance(element, (bool, np.bool_)) for element in valeur.flat)
+        )
+    else:
+        brut = np.asarray(valeur, dtype=object)
+        bool_present = any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
+    if bool_present:
+        raise ValueError(f"{nom} doit contenir des valeurs numeriques (booleens exclus).")
     tableau = np.asarray(valeur, dtype=float)
     if tableau.ndim != dimension or tableau.size < taille_minimale:
         raise ValueError(f"{nom} doit avoir {dimension} dimension(s) et être non vide.")
@@ -158,6 +168,9 @@ class ParametresEdp:
             self.demi_largeur_y,
             self.hauteur_max,
         )
+        if any(isinstance(valeur, (bool, np.bool_)) for valeur in valeurs):
+            msg = "Les paramètres EDP doivent être numériques (booléens exclus)."
+            raise ValueError(msg)
         if not all(np.isfinite(valeur) for valeur in valeurs):
             msg = "Les paramètres EDP doivent être finis."
             raise ValueError(msg)
