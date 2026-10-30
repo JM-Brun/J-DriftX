@@ -76,7 +76,9 @@ def test_tranche_edp_refuse_un_champ_booleen(valeur: np.ndarray) -> None:
 @pytest.mark.parametrize(
     "champ", ["pas_transverse_y", "pas_transverse_z", "demi_largeur_y", "hauteur_max"]
 )
-def test_parametres_edp_refusent_les_scalaires_booleens(booleen: bool | np.bool_, champ: str) -> None:
+def test_parametres_edp_refusent_les_scalaires_booleens(
+    booleen: bool | np.bool_, champ: str
+) -> None:
     """Les quatre paramètres géométriques EDP excluent les booléens."""
     valeurs: dict[str, float | bool | np.bool_] = {
         "pas_transverse_y": 2.5,
