@@ -675,12 +675,30 @@ class EchantillonneurBilineaire:
         Lève une ValueError si le point sort de la fenêtre couverte par la
         grille : les points de comparaison doivent rester dans le domaine.
         """
+        coordonnees: list[float] = []
+        for nom, valeur in (("y", y), ("z", z)):
+            if isinstance(valeur, (bool, np.bool_)) or not isinstance(
+                valeur, (int, float, np.integer, np.floating)
+            ):
+                msg = "Les coordonnées y et z doivent être des scalaires réels finis (booléens exclus)."
+                raise ValueError(msg)
+            try:
+                coordonnee = float(valeur)
+            except (OverflowError, TypeError, ValueError) as err:
+                msg = f"La coordonnée {nom} doit être représentable en float64."
+                raise ValueError(msg) from err
+            if not np.isfinite(coordonnee):
+                msg = "Les coordonnées y et z doivent être des scalaires réels finis (booléens exclus)."
+                raise ValueError(msg)
+            coordonnees.append(coordonnee)
+        y_reel, z_reel = coordonnees
+
         abscisses_y = self.grille.abscisses_y
         abscisses_z = self.grille.abscisses_z
         pas_y = float(abscisses_y[1] - abscisses_y[0])
         pas_z = float(abscisses_z[1] - abscisses_z[0])
-        f_y = (y - float(abscisses_y[0])) / pas_y
-        f_z = (z - float(abscisses_z[0])) / pas_z
+        f_y = (y_reel - float(abscisses_y[0])) / pas_y
+        f_z = (z_reel - float(abscisses_z[0])) / pas_z
         if f_y < 0.0 or f_y > abscisses_y.size - 1 or f_z < 0.0 or f_z > abscisses_z.size - 1:
             msg = "Le point de comparaison sort de la fenêtre de la grille EDP."
             raise ValueError(msg)
