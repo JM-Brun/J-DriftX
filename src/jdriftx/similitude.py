@@ -43,6 +43,8 @@ def _reel_fini(valeur: object, nom: str) -> float:
 
 def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> np.ndarray:
     """Convertit un tableau numerique reel en float64 sans coercition textuelle."""
+    if isinstance(valeur, Real) and not isinstance(valeur, bool):
+        return np.asarray(_reel_fini(valeur, nom))
     try:
         brut = np.asarray(valeur)
     except (TypeError, ValueError, OverflowError) as err:
