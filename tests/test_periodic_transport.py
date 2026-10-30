@@ -487,9 +487,7 @@ def test_periodic_decay_matches_direct_formula_at_moderate_scales() -> None:
     length, time, diffusivity = 2.0, 0.7, 0.03
     wave_number = 2.0 * np.pi / length
     expected_decay = np.exp(-diffusivity * wave_number**2 * time)
-    actual = periodic_transport._facteur_decroissance_periodique(
-        diffusivity, length, time
-    )
+    actual = periodic_transport._facteur_decroissance_periodique(diffusivity, length, time)
     assert actual == pytest.approx(expected_decay, rel=2e-15)
 
 
@@ -501,9 +499,7 @@ def test_exact_solution_reduces_advective_displacement_when_product_overflows() 
     exact_period = Fraction.from_float(length)
     exact_displacement = Fraction.from_float(velocity) * Fraction.from_float(time)
     reduced_displacement = exact_displacement % exact_period
-    expected_phase = 2.0 * np.pi * float(
-        (-reduced_displacement) % exact_period / exact_period
-    )
+    expected_phase = 2.0 * np.pi * float((-reduced_displacement) % exact_period / exact_period)
     expected = 1.0 + 0.3 * np.sin(expected_phase)
 
     actual = periodic_sine_solution(
@@ -523,8 +519,8 @@ def test_exact_solution_reduces_large_coordinates_before_phase_evaluation() -> N
     length = 1e-200
     coordinate = 1e308
     exact_period = Fraction.from_float(length)
-    expected_phase = 2.0 * np.pi * float(
-        (Fraction.from_float(coordinate) % exact_period) / exact_period
+    expected_phase = (
+        2.0 * np.pi * float((Fraction.from_float(coordinate) % exact_period) / exact_period)
     )
     expected = 1.0 + 0.3 * np.sin(expected_phase)
     actual = periodic_sine_solution(
