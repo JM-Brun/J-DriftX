@@ -25,6 +25,18 @@ from numpy.typing import ArrayLike
 UMIN_PAR_DEFAUT = 0.1
 
 
+def _contient_booleen(valeur: object) -> bool:
+    """Détecte les booléens avant toute conversion numérique avec NumPy."""
+    if isinstance(valeur, np.ndarray):
+        if valeur.dtype.kind == "b":
+            return True
+        return valeur.dtype.kind == "O" and any(
+            isinstance(element, (bool, np.bool_)) for element in valeur.flat
+        )
+    brut = np.asarray(valeur, dtype=object)
+    return any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
+
+
 def _temps_float64(valeur: np.longdouble, contexte: str) -> float:
     """Convertit un temps positif en float64 sans overflow ni underflow silencieux."""
     if not np.isfinite(valeur) or valeur > np.finfo(float).max:
@@ -55,6 +67,9 @@ def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
         ValueError: si une entrée est non finie ou si le temps positif
             n'est pas representable en float64.
     """
+    if any(isinstance(value, (bool, np.bool_)) for value in (a, b, vitesse)):
+        msg = "a, b et vitesse doivent etre reels (booleens exclus)."
+        raise ValueError(msg)
     if not all(isfinite(value) for value in (a, b, vitesse)):
         msg = "a, b et vitesse doivent etre finis."
         raise ValueError(msg)
@@ -92,6 +107,12 @@ def temps_transport(
             le seuil umin, ou si le coût total n'est pas représentable en
             float64 ou s'arrondit a zero.
     """
+    if _contient_booleen(ligne) or _contient_booleen(vent):
+        msg = "ligne et vent doivent contenir des valeurs reelles (booleens exclus)."
+        raise ValueError(msg)
+    if isinstance(umin, (bool, np.bool_)):
+        msg = "umin doit etre reel (booleens exclus)."
+        raise ValueError(msg)
     pts = np.asarray(ligne, dtype=float)
     u_seg = np.asarray(vent, dtype=float)
 
@@ -162,6 +183,9 @@ def pseudo_distance_uniforme(
             si la vitesse est nulle, ou si le déplacement ou le coût déborde
             du format flottant.
     """
+    if any(_contient_booleen(valeur) for valeur in (a, b, vent)):
+        msg = "a, b et vent doivent contenir des valeurs reelles (booleens exclus)."
+        raise ValueError(msg)
     point_a = np.asarray(a, dtype=float)
     point_b = np.asarray(b, dtype=float)
     vitesse = np.asarray(vent, dtype=float)
