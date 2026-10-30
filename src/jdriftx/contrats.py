@@ -159,11 +159,12 @@ class ReliefMntAscii:
     sans_donnee: float | None = None
 
     def __post_init__(self) -> None:
-        """Valide la grille et la geometrie, sinon leve une ValueError."""
-        if self.altitudes.ndim != 2 or self.altitudes.size == 0:
+        """Valide et fige la grille et sa geometrie."""
+        altitudes = np.array(self.altitudes, dtype=float, copy=True)
+        if altitudes.ndim != 2 or altitudes.size == 0:
             msg = "La grille d altitudes doit etre bidimensionnelle non vide."
             raise ValueError(msg)
-        if not np.all(np.isfinite(self.altitudes)):
+        if not np.all(np.isfinite(altitudes)):
             msg = "Les altitudes doivent etre finies."
             raise ValueError(msg)
         if not np.isfinite(self.pas) or self.pas <= 0.0:
@@ -172,6 +173,11 @@ class ReliefMntAscii:
         if not np.isfinite(self.x0) or not np.isfinite(self.y0):
             msg = "L origine de la grille doit etre finie."
             raise ValueError(msg)
+        if self.sans_donnee is not None and not np.isfinite(self.sans_donnee):
+            msg = "La valeur sans donnee doit etre finie."
+            raise ValueError(msg)
+        altitudes.setflags(write=False)
+        object.__setattr__(self, "altitudes", altitudes)
 
     @classmethod
     def depuis_texte(cls, texte: str) -> Self:
@@ -231,6 +237,9 @@ class ReliefMntAscii:
         x_arr = np.asarray(x, dtype=float)
         y_arr = np.asarray(y, dtype=float)
         _verifie_formes(x_arr, y_arr)
+        if not np.all(np.isfinite(x_arr)) or not np.all(np.isfinite(y_arr)):
+            msg = "Les coordonnees doivent etre finies."
+            raise ValueError(msg)
         nrows, ncols = self.altitudes.shape
         colonne = (x_arr - self.x0) / self.pas
         ligne = (y_arr - self.y0) / self.pas
