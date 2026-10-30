@@ -78,8 +78,8 @@ def test_relief_synthetique_delegue_au_module_terrain() -> None:
     ("parametres", "message"),
     [
         ({"width": 0.0}, "largeur"),
-        ({"height": float("nan")}, "finis"),
-        ({"center_x": float("inf")}, "finis"),
+        ({"height": float("nan")}, "fini"),
+        ({"center_x": float("inf")}, "fini"),
         ({"kind": "unknown"}, "inconnu"),
     ],
 )
@@ -95,7 +95,7 @@ def test_relief_synthetique_rejette_les_parametres_invalides(
 def test_reliefs_rejettent_les_coordonnees_non_finies() -> None:
     """Les implémentations de relief appliquent le même contrat d'entrée."""
     for relief in (ReliefPlat(), ReliefSynthetique(kind="hill")):
-        with pytest.raises(ValueError, match="coordonnees doivent etre finies"):
+        with pytest.raises(ValueError, match="valeurs finies"):
             relief.altitude(np.array([float("nan")]), np.array([0.0]))
 
 
@@ -499,7 +499,7 @@ def test_mnt_ascii_rejette_sentinelle_sans_donnee_non_finie(champ: str, valeur: 
     }
 
     # When / Then — la construction rejette la sentinelle.
-    with pytest.raises(ValueError, match=r"sans donnee.*finie"):
+    with pytest.raises(ValueError, match=r"sans donnee.*fini"):
         ReliefMntAscii(**valeurs)  # type: ignore[arg-type]
 
 

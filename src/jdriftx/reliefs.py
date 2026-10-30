@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from numbers import Real
 from pathlib import Path
 from typing import Self
 
@@ -10,6 +11,37 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 from jdriftx.terrain import TerrainKind, terrain_surface
+
+
+def _reel_fini(valeur: object, nom: str) -> float:
+    """Valide un scalaire reel fini et representable en float."""
+    if isinstance(valeur, bool) or not isinstance(valeur, Real):
+        raise ValueError(f"{nom} doit etre un nombre reel (booleen exclu).")
+    try:
+        resultat = float(valeur)
+    except (OverflowError, TypeError, ValueError) as err:
+        raise ValueError(f"{nom} doit etre representable comme float fini.") from err
+    if not np.isfinite(resultat):
+        raise ValueError(f"{nom} doit etre fini.")
+    return resultat
+
+
+def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> NDArray[np.float64]:
+    """Convertit un tableau de nombres reels en float64 sans coercition textuelle."""
+    try:
+        brut = np.asarray(valeur)
+    except (TypeError, ValueError, OverflowError) as err:
+        raise ValueError(f"{nom} doit etre un tableau numerique reel.") from err
+    if brut.dtype.kind not in "iuf":
+        msg = f"{nom} doit etre un tableau numerique reel (booleens et complexes exclus)."
+        raise ValueError(msg)
+    try:
+        resultat = np.asarray(brut, dtype=np.float64)
+    except (TypeError, ValueError, OverflowError) as err:
+        raise ValueError(f"{nom} doit etre representable en float64.") from err
+    if not np.all(np.isfinite(resultat)):
+        raise ValueError(f"{nom} doit contenir uniquement des valeurs finies.")
+    return resultat
 
 
 def _verifie_coordonnees(x_arr: NDArray[np.floating], y_arr: NDArray[np.floating]) -> None:
@@ -64,8 +96,8 @@ class ReliefPlat:
 
     def altitude(self, x: ArrayLike, y: ArrayLike) -> NDArray[np.float64]:
         """Retourne une altitude nulle (m) aux points (x, y)."""
-        x_arr = np.asarray(x, dtype=float)
-        y_arr = np.asarray(y, dtype=float)
+        x_arr = _tableau_reel_fini(x, "Les coordonnees x")
+        y_arr = _tableau_reel_fini(y, "Les coordonnees y")
         _verifie_coordonnees(x_arr, y_arr)
         return np.zeros_like(x_arr)
 
@@ -90,21 +122,25 @@ class ReliefSynthetique:
 
     def __post_init__(self) -> None:
         """Valide les paramètres avant qu'un relief soit utilisable."""
-        parametres = (self.height, self.width, self.center_x, self.center_y)
-        if not all(np.isfinite(value) for value in parametres):
-            msg = "Les paramètres du relief doivent être finis."
-            raise ValueError(msg)
-        if self.width <= 0.0:
+        height = _reel_fini(self.height, "La hauteur du relief")
+        width = _reel_fini(self.width, "La largeur du relief")
+        center_x = _reel_fini(self.center_x, "Le centre x du relief")
+        center_y = _reel_fini(self.center_y, "Le centre y du relief")
+        if width <= 0.0:
             msg = "La largeur du relief doit être strictement positive."
             raise ValueError(msg)
-        if self.kind not in ("flat", "hill", "valley", "ridge"):
+        if not isinstance(self.kind, str) or self.kind not in ("flat", "hill", "valley", "ridge"):
             msg = f"Type de relief inconnu : {self.kind!r}."
             raise ValueError(msg)
+        object.__setattr__(self, "height", height)
+        object.__setattr__(self, "width", width)
+        object.__setattr__(self, "center_x", center_x)
+        object.__setattr__(self, "center_y", center_y)
 
     def altitude(self, x: ArrayLike, y: ArrayLike) -> NDArray[np.float64]:
         """Evalue l altitude du relief (m) aux points (x, y) : delegation pure."""
-        x_arr = np.asarray(x, dtype=float)
-        y_arr = np.asarray(y, dtype=float)
+        x_arr = _tableau_reel_fini(x, "Les coordonnees x")
+        y_arr = _tableau_reel_fini(y, "Les coordonnees y")
         _verifie_coordonnees(x_arr, y_arr)
         return terrain_surface(
             x_arr,
@@ -143,21 +179,20 @@ class ReliefMntAscii:
 
     def __post_init__(self) -> None:
         """Valide et fige la grille et sa geometrie."""
-        altitudes = np.array(self.altitudes, dtype=float, copy=True)
+        altitudes = _tableau_reel_fini(self.altitudes, "Les altitudes").copy()
         if altitudes.ndim != 2 or altitudes.size == 0:
             msg = "La grille d altitudes doit etre bidimensionnelle non vide."
             raise ValueError(msg)
-        if not np.all(np.isfinite(altitudes)):
-            msg = "Les altitudes doivent etre finies."
-            raise ValueError(msg)
-        if not np.isfinite(self.pas) or self.pas <= 0.0:
+        pas = _reel_fini(self.pas, "Le pas de grille")
+        x0 = _reel_fini(self.x0, "L origine x de la grille")
+        y0 = _reel_fini(self.y0, "L origine y de la grille")
+        sans_donnee = (
+            None
+            if self.sans_donnee is None
+            else _reel_fini(self.sans_donnee, "La valeur sans donnee")
+        )
+        if pas <= 0.0:
             msg = "Le pas de grille doit etre strictement positif."
-            raise ValueError(msg)
-        if not np.isfinite(self.x0) or not np.isfinite(self.y0):
-            msg = "L origine de la grille doit etre finie."
-            raise ValueError(msg)
-        if self.sans_donnee is not None and not np.isfinite(self.sans_donnee):
-            msg = "La valeur sans donnee doit etre finie."
             raise ValueError(msg)
         # A read-only flag on an owning ndarray can be re-enabled by its caller.
         # A bytes-backed array makes the validated storage immutable at NumPy level.
@@ -165,6 +200,10 @@ class ReliefMntAscii:
             altitudes.shape
         )
         object.__setattr__(self, "altitudes", altitudes_immutable)
+        object.__setattr__(self, "pas", pas)
+        object.__setattr__(self, "x0", x0)
+        object.__setattr__(self, "y0", y0)
+        object.__setattr__(self, "sans_donnee", sans_donnee)
 
     @classmethod
     def depuis_texte(cls, texte: str) -> Self:
@@ -231,8 +270,8 @@ class ReliefMntAscii:
             ValueError: formes differentes, point hors emprise ou cellule
                 sans donnee a poids non nul dans l interpolation.
         """
-        x_arr = np.asarray(x, dtype=float)
-        y_arr = np.asarray(y, dtype=float)
+        x_arr = _tableau_reel_fini(x, "Les coordonnees x")
+        y_arr = _tableau_reel_fini(y, "Les coordonnees y")
         _verifie_coordonnees(x_arr, y_arr)
         nrows, ncols = self.altitudes.shape
         colonne = _coordonnees_normalisees(x_arr, self.x0, self.pas)
