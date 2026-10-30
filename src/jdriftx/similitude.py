@@ -99,9 +99,7 @@ def _exponentielle_log(log_valeur: ArrayLike) -> np.ndarray:
         with np.errstate(over="raise", under="ignore", invalid="raise"):
             return np.asarray(np.exp(log_valeur))
     except FloatingPointError as err:
-        raise ValueError(
-            "La concentration theorique n'est pas representable en float64."
-        ) from err
+        raise ValueError("La concentration theorique n'est pas representable en float64.") from err
 
 
 def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
