@@ -27,7 +27,7 @@ def _interpole_lineairement_stable(
     b: ArrayLike,
     poids: ArrayLike,
 ) -> NDArray[np.float64]:
-    """Calcule une interpolation convexe sans différence ou somme débordante."""
+    """Sélectionne une forme dont la branche retenue évite le débordement."""
     a_arr = np.asarray(a, dtype=np.float64)
     b_arr = np.asarray(b, dtype=np.float64)
     poids_arr = np.asarray(poids, dtype=np.float64)
