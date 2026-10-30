@@ -176,8 +176,7 @@ class ParametresEdp:
             self.hauteur_max,
         )
         if any(
-            isinstance(valeur, (bool, np.bool_, complex, np.complexfloating))
-            for valeur in valeurs
+            isinstance(valeur, (bool, np.bool_, complex, np.complexfloating)) for valeur in valeurs
         ):
             msg = "Les paramètres EDP doivent être réels (booléens exclus ; complexes exclus)."
             raise ValueError(msg)
@@ -300,8 +299,7 @@ class CoefficientsDiffusion:
         """Refuse les coefficients booléens avant tout calcul de diffusion."""
         valeurs = (self.a_y, self.d_y, self.b_z, self.d_z)
         if any(
-            isinstance(value, (bool, np.bool_, complex, np.complexfloating))
-            for value in valeurs
+            isinstance(value, (bool, np.bool_, complex, np.complexfloating)) for value in valeurs
         ):
             msg = (
                 "Les coefficients de diffusion doivent être réels "
