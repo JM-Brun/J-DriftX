@@ -13,6 +13,8 @@ Mohammadi, 2008) ; formules de Briggs reprises par Martin (1976).
 
 from __future__ import annotations
 
+from math import isfinite
+
 import numpy as np
 from numpy.typing import ArrayLike
 
@@ -30,10 +32,18 @@ def _valide_classe(classe: str | ClasseStabilite) -> ClasseStabilite:
         raise ValueError(msg) from err
 
 
+def _distance_sous_le_vent(x_arr: np.ndarray) -> np.ndarray:
+    """Verifie que la distance sous le vent ne contient que des valeurs finies."""
+    if not np.all(np.isfinite(x_arr)):
+        msg = "La distance sous le vent doit etre finie."
+        raise ValueError(msg)
+    return x_arr
+
+
 def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
     """Ecart-type horizontal du panache (m) a la distance sous le vent x (m)."""
     classe_stable = _valide_classe(classe)
-    x_arr = np.asarray(x, dtype=float)
+    x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
     if np.any(x_arr < 0.0):
         msg = "La distance sous le vent doit etre positive ou nulle."
         raise ValueError(msg)
@@ -44,7 +54,7 @@ def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
 def sigma_z(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
     """Ecart-type vertical du panache (m) a la distance sous le vent x (m)."""
     classe_stable = _valide_classe(classe)
-    x_arr = np.asarray(x, dtype=float)
+    x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
     if np.any(x_arr < 0.0):
         msg = "La distance sous le vent doit etre positive ou nulle."
         raise ValueError(msg)
@@ -67,6 +77,9 @@ def concentration_panache(
 ) -> np.ndarray:
     """Concentration (kg m^-3) du panache gaussien au point (x, y, z).
 
+    Les tableaux x, y et z sont combines selon les regles de diffusion de
+    NumPy (broadcasting) ; la forme du resultat est la forme diffusee commune.
+
     Args:
         x: distance sous le vent (m), strictement positive.
         y: coordonnee laterale (m).
@@ -78,19 +91,30 @@ def concentration_panache(
 
     Returns:
         Concentration au point demande (reflection au sol incluse).
+
+    Raises:
+        ValueError: si un parametre scalaire n'est pas fini, si la distance
+            sous le vent n'est pas strictement positive, ou si y ou z
+            contient une coordonnee non finie.
     """
+    if not all(isfinite(valeur) for valeur in (debit, u, hauteur)):
+        msg = "debit, u et hauteur doivent etre finis."
+        raise ValueError(msg)
     if u <= 0.0:
         msg = "La vitesse du vent doit etre strictement positive."
         raise ValueError(msg)
     if debit < 0.0:
         msg = "Le debit d'emission doit etre positif ou nul."
         raise ValueError(msg)
-    x_arr = np.asarray(x, dtype=float)
+    x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
     if np.any(x_arr <= 0.0):
         msg = "La distance sous le vent doit etre strictement positive."
         raise ValueError(msg)
     y_arr = np.asarray(y, dtype=float)
     z_arr = np.asarray(z, dtype=float)
+    if not np.all(np.isfinite(y_arr)) or not np.all(np.isfinite(z_arr)):
+        msg = "y et z doivent contenir uniquement des coordonnees finies."
+        raise ValueError(msg)
 
     sy = sigma_y(x_arr, classe)
     sz = sigma_z(x_arr, classe)
@@ -114,6 +138,9 @@ def concentration_puff(
 ) -> np.ndarray:
     """Concentration (kg m^-3) d'un puff gaussien au point (x, y, z) et a l'instant t.
 
+    Les tableaux x, y et z sont combines selon les regles de diffusion de
+    NumPy (broadcasting) ; la forme du resultat est la forme diffusee commune.
+
     Args:
         x: coordonnee sous le vent du point (m).
         y: coordonnee laterale (m).
@@ -127,7 +154,15 @@ def concentration_puff(
     Returns:
         Concentration du puff, avec isotropie longitudinale approchee
         (sigma_x de l'ordre de sigma_y a distance egale du parcours).
+
+    Raises:
+        ValueError: si un parametre scalaire n'est pas fini, si une
+            coordonnee du point n'est pas finie, ou si la distance
+            parcourue u*t n'est pas representable.
     """
+    if not all(isfinite(valeur) for valeur in (t, masse, u, x0)):
+        msg = "t, masse, u et x0 doivent etre finis."
+        raise ValueError(msg)
     if t <= 0.0:
         msg = "Le temps doit etre strictement positif."
         raise ValueError(msg)
@@ -141,8 +176,15 @@ def concentration_puff(
     x_arr = np.asarray(x, dtype=float)
     y_arr = np.asarray(y, dtype=float)
     z_arr = np.asarray(z, dtype=float)
+    axes = (x_arr, y_arr, z_arr)
+    if not all(np.all(np.isfinite(axe)) for axe in axes):
+        msg = "x, y et z doivent contenir uniquement des coordonnees finies."
+        raise ValueError(msg)
 
     distance = u * t
+    if not isfinite(distance):
+        msg = "La distance parcourue doit rester finie."
+        raise ValueError(msg)
     if distance <= 0.0:
         msg = "La distance parcourue doit etre strictement positive."
         raise ValueError(msg)

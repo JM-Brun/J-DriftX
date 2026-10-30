@@ -22,12 +22,16 @@ def terrain_surface(
     """Evaluate a dimensionless synthetic terrain elevation on a coordinate grid.
 
     The returned values are teaching examples, not measured topography. No flow
-    field or physical effect of terrain is inferred by this function.
+    field or physical effect of terrain is inferred by this function. The grids
+    x and y must share the same shape; NumPy broadcasting is not applied.
     """
     x_arr = np.asarray(x, dtype=float)
     y_arr = np.asarray(y, dtype=float)
     if x_arr.shape != y_arr.shape:
         msg = "x and y must have identical shapes."
+        raise ValueError(msg)
+    if not np.all(np.isfinite(x_arr)) or not np.all(np.isfinite(y_arr)):
+        msg = "x and y must contain only finite coordinates."
         raise ValueError(msg)
     parameters = (height, width, center_x, center_y)
     if not all(np.isfinite(value) for value in parameters):

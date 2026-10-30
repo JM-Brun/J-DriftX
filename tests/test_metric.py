@@ -477,3 +477,35 @@ def test_1d_first_arrival_gradient_matches_closed_form() -> None:
     # Then — les estimations coïncident avec les formules fermées.
     assert derivee_v == pytest.approx(-tau / vitesse, rel=1e-6)
     assert derivee_b == pytest.approx(1.0 / vitesse, rel=1e-6)
+
+
+def test_uniform_pseudodistance_rejects_overflowing_displacement() -> None:
+    """Des points finis dont le déplacement déborde sont refusés."""
+    # Given — deux points finis dont la différence dépasse le float64.
+    a = np.array([-1.0e308, 0.0])
+    b = np.array([1.0e308, 0.0])
+    # When / Then — l'évaluation est refusée au lieu de retourner +inf.
+    with pytest.raises(ValueError, match="deplacement b - a doit rester fini"):
+        pseudo_distance_uniforme(a, b, np.array([1.0, 0.0]))
+
+
+def test_uniform_pseudodistance_rejects_overflowing_projection() -> None:
+    """Un déplacement fini dont la projection déborde est refusé."""
+    # Given — un déplacement fini sur les deux axes, projeté sur une direction
+    # diagonale : le produit scalaire déborde le float64.
+    a = np.array([-1.0e308, -1.0e308])
+    b = np.array([7.0e307, 7.0e307])
+    # When / Then — l'évaluation est refusée au lieu de retourner +inf.
+    with pytest.raises(ValueError, match="cout longitudinal doit rester fini"):
+        pseudo_distance_uniforme(a, b, np.array([1.0, 1.0]))
+
+
+def test_polyline_cost_rejects_overflowing_total() -> None:
+    """Des coûts de segments finis dont la somme déborde sont refusés."""
+    # Given — un zigzag de quatre segments de 1e308 m à 1 m/s : chaque coût
+    # de segment est fini, la somme déborde le float64.
+    ligne = np.array([[0.0, 0.0], [1.0e308, 0.0], [0.0, 0.0], [1.0e308, 0.0], [0.0, 0.0]])
+    vent = np.ones((4, 2))
+    # When / Then — aucune somme infinie n'est retournée silencieusement.
+    with pytest.raises(ValueError, match="cout total doit rester fini"):
+        temps_transport(ligne, vent)
