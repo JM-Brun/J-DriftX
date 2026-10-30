@@ -12,6 +12,8 @@ from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, CasS0
 from jdriftx.contrats import PanacheGaussien
 from jdriftx.experiences.reference_independante import (
     DIFFUSION_BRIGGS,
+    EchantillonneurBilineaire,
+    GrilleEdp,
     PARAMETRES_EDP_DEFAUT,
     CoefficientsDiffusion,
     ComparaisonReference,
@@ -19,6 +21,7 @@ from jdriftx.experiences.reference_independante import (
     PointComparaison,
     RouteEdp,
     SolutionEdp,
+    TrancheEdp,
     _pas_longitudinal,
     comparer_reference,
     construire_manifeste,
@@ -419,3 +422,77 @@ def test_le_modele_de_diffusion_est_injectable() -> None:
     assert np.array_equal(double.tranches[0].champ, reference.tranches[0].champ)
     # Then — la tranche du dernier arc diffère : le point d'extension est effectif.
     assert not np.array_equal(double.tranches[-1].champ, reference.tranches[-1].champ)
+
+
+
+def test_grille_edp_copie_et_fige_ses_axes() -> None:
+    """Une grille ne partage pas ses axes mutables avec l'appelant."""
+    # Given — des axes fournis dans des tableaux mutables.
+    axe_y = np.array([-1.0, 0.0, 1.0])
+    axe_z = np.array([0.0, 1.0])
+    # When — une grille est construite, puis les tableaux sources sont modifiés.
+    grille = GrilleEdp(abscisses_y=axe_y, abscisses_z=axe_z)
+    axe_y[0] = -10.0
+    axe_z[0] = -10.0
+    # Then — les axes sont copiés et non modifiables.
+    assert grille.abscisses_y[0] == -1.0
+    assert grille.abscisses_z[0] == 0.0
+    with pytest.raises(ValueError):
+        grille.abscisses_y[0] = 4.0
+
+
+def test_tranche_edp_copie_et_fige_son_champ() -> None:
+    """Une tranche conserve son champ même si le tableau source change."""
+    # Given — un champ bidimensionnel mutable.
+    champ = np.ones((3, 2))
+    # When — une tranche est construite, puis le champ source est modifié.
+    tranche = TrancheEdp(x=100.0, champ=champ)
+    champ[0, 0] = 99.0
+    # Then — la tranche conserve la copie initiale et interdit l'écriture.
+    assert tranche.champ[0, 0] == 1.0
+    with pytest.raises(ValueError):
+        tranche.champ[0, 0] = 0.0
+
+
+def test_solution_edp_fige_ses_axes_et_normalise_ses_tranches() -> None:
+    """Une solution expose des axes immuables et une séquence de tranches figée."""
+    # Given — une solution construite à partir de tableaux mutables.
+    axe_y = np.array([-1.0, 0.0, 1.0])
+    axe_z = np.array([0.0, 1.0])
+    tranche = TrancheEdp(x=100.0, champ=np.ones((3, 2)))
+    # When — la solution est construite.
+    solution = SolutionEdp(
+        x_entree=100.0,
+        pas_longitudinal=0.5,
+        abscisses_y=axe_y,
+        abscisses_z=axe_z,
+        tranches=[tranche],
+    )
+    axe_y[0] = -10.0
+    # Then — les axes sont copiés et les tranches sont stockées dans un tuple.
+    assert solution.abscisses_y[0] == -1.0
+    assert isinstance(solution.tranches, tuple)
+    with pytest.raises(ValueError):
+        solution.abscisses_z[0] = 5.0
+
+
+def test_echantillonneur_bilineaire_ne_partage_pas_un_champ_mutable() -> None:
+    """L'échantillonneur protège son champ des mutations de son appelant."""
+    # Given — une grille et un champ mutable compatible.
+    grille = GrilleEdp(np.array([-1.0, 0.0, 1.0]), np.array([0.0, 1.0]))
+    champ = np.ones((3, 2))
+    # When — l'échantillonneur est créé puis le champ source est modifié.
+    echantillonneur = EchantillonneurBilineaire(champ, grille)
+    champ[:] = 99.0
+    # Then — l'échantillonnage reste basé sur les données initiales.
+    assert echantillonneur.concentration(0.0, 0.5) == pytest.approx(1.0)
+
+
+def test_parametres_edp_refusent_les_valeurs_non_finies() -> None:
+    """Les paramètres de grille EDP ne peuvent pas contenir NaN ou infini."""
+    # Given — des paramètres contenant une valeur non finie.
+    # When / Then — la construction échoue avec un message de domaine.
+    with pytest.raises(ValueError, match="finis"):
+        ParametresEdp(float("nan"), 2.0, 340.0, 240.0)
+    with pytest.raises(ValueError, match="finis"):
+        ParametresEdp(2.5, 2.0, 340.0, float("inf"))
