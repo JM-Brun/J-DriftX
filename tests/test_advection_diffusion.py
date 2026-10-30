@@ -54,3 +54,48 @@ def test_negative_diffusivity_is_rejected() -> None:
     # Given / When / Then — une diffusivité négative déclenche le refus.
     with pytest.raises(ValueError, match="non-negative"):
         gaussian_advection_diffusion(np.array([0.0]), 1.0, diffusivity=-0.1)
+
+
+@pytest.mark.parametrize(
+    "bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf, 10**400]
+)
+@pytest.mark.parametrize(
+    "parameter",
+    ["time", "mass", "initial_center", "velocity", "diffusivity", "initial_sigma"],
+)
+def test_gaussian_solution_rejects_non_real_or_non_finite_parameters(
+    parameter: str, bad: object
+) -> None:
+    """Les paramètres scalaires sont des réels finis représentables en float64."""
+    parameters: dict[str, object] = {
+        "time": 1.0,
+        "mass": 1.0,
+        "initial_center": 0.0,
+        "velocity": 1.0,
+        "diffusivity": 0.1,
+        "initial_sigma": 0.5,
+    }
+    parameters[parameter] = bad
+    with pytest.raises(ValueError, match="must be"):
+        gaussian_advection_diffusion(
+            np.array([0.0]), parameters.pop("time"), **parameters
+        )  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize(
+    "coordinates",
+    [
+        np.array([True]),
+        [0.0, True],
+        np.array([1.0 + 2.0j]),
+        np.array(["1.0"]),
+        np.array([np.nan]),
+        np.array([np.inf]),
+    ],
+)
+def test_gaussian_solution_rejects_non_real_or_non_finite_coordinates(
+    coordinates: object,
+) -> None:
+    """Les coordonnées sont des tableaux réels finis sans coercition silencieuse."""
+    with pytest.raises(ValueError, match="must be"):
+        gaussian_advection_diffusion(coordinates, 1.0)
