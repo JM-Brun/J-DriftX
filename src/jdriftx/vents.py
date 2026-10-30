@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 import numpy as np
@@ -131,9 +132,25 @@ class VentProfilPuissance:
         if not np.isfinite(z) or z <= 0.0:
             msg = "z doit être strictement positif ; la hauteur doit être finie."
             raise ValueError(msg)
-        u = self.u_reference * (z / self.z_reference) ** self.exposant
-        if not np.isfinite(u):
-            msg = "Le profil de vent doit rester fini."
+        # Garder le calcul direct dans le domaine usuel pour préserver ses
+        # arrondis ; ne passer au domaine logarithmique qu'en cas de perte
+        # de représentabilité d'un intermédiaire ou du résultat direct.
+        try:
+            rapport = z / self.z_reference
+            u = self.u_reference * rapport**self.exposant
+        except OverflowError:
+            u = math.inf
+        if not np.isfinite(u) or u <= 0.0:
+            log_u = math.log(self.u_reference) + self.exposant * (
+                math.log(z) - math.log(self.z_reference)
+            )
+            try:
+                u = math.exp(log_u)
+            except OverflowError as err:
+                msg = "Le profil de vent doit rester fini et strictement positif."
+                raise ValueError(msg) from err
+        if not np.isfinite(u) or u <= 0.0:
+            msg = "Le profil de vent doit rester fini et strictement positif."
             raise ValueError(msg)
         return u, 0.0, 0.0
 
