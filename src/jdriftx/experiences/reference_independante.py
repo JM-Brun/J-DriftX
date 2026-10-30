@@ -57,9 +57,9 @@ from typing import Protocol
 import numpy as np
 from pydantic import BaseModel, ConfigDict
 
+from jdriftx._protocoles import ModeleConcentration
 from jdriftx.benchmarks.cas import CasS0, PointMesure
 from jdriftx.benchmarks.metriques import fac2, nmse
-from jdriftx._protocoles import ModeleConcentration
 from jdriftx.concentrations import PanacheGaussien
 from jdriftx.similitude import sigma_y, sigma_z
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
