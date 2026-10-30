@@ -76,7 +76,12 @@ def _ecart_type_vertical(x_arr: np.ndarray, classe_stable: ClasseStabilite) -> n
 
 
 def _rapport_difference(a: ArrayLike, b: ArrayLike, sigma: np.ndarray) -> np.ndarray:
-    """Calcule (a-b)/sigma avec un intermédiaire étendu avant conversion float64."""
+    """Calcule (a-b)/sigma avec un intermédiaire étendu avant conversion float64.
+
+    La précision et la plage de `np.longdouble` dépendent de la plateforme :
+    certaines plateformes l'implémentent avec la même précision que float64.
+    Les cas extrêmes ne sont donc pas garantis bit-identiques entre plateformes.
+    """
     with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
         difference = np.asarray(a, dtype=np.longdouble) - np.asarray(b, dtype=np.longdouble)
         return np.asarray(difference / np.asarray(sigma, dtype=np.longdouble), dtype=float)
@@ -90,8 +95,13 @@ def _exponentielle_log(log_valeur: ArrayLike) -> np.ndarray:
     """
     if np.any(np.asarray(log_valeur) > _LOG_FLOAT_MAX):
         raise ValueError("La concentration theorique n'est pas representable en float64.")
-    with np.errstate(over="raise", under="ignore", invalid="raise"):
-        return np.asarray(np.exp(log_valeur))
+    try:
+        with np.errstate(over="raise", under="ignore", invalid="raise"):
+            return np.asarray(np.exp(log_valeur))
+    except FloatingPointError as err:
+        raise ValueError(
+            "La concentration theorique n'est pas representable en float64."
+        ) from err
 
 
 def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
