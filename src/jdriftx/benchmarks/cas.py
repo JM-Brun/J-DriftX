@@ -111,7 +111,10 @@ class CasS0(CasSynthetique):
         """
         parametres = (self.z_mesure, *self.arcs, *self.positions_laterales)
         if any(isinstance(valeur, (bool, np.bool_)) for valeur in parametres):
-            msg = "L altitude, les arcs et les positions laterales doivent etre numeriques (booleens exclus)."
+            msg = (
+                "L altitude, les arcs et les positions laterales doivent etre numeriques "
+                "(booleens exclus)."
+            )
             raise ValueError(msg)
         if not all(math.isfinite(valeur) for valeur in parametres):
             msg = "L altitude, les arcs et les positions laterales doivent etre finis."
