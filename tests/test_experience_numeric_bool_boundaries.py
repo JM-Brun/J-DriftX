@@ -85,7 +85,9 @@ def test_source_gaussienne_refuse_les_coordonnees_booleennes(booleen: bool | np.
     # Given — une position contenant une coordonnée booléenne.
     # When / Then — la construction est refusée.
     with pytest.raises(ValueError, match="booléens exclus"):
-        superposition_sources.SourceGaussienne(position=(booleen, 1200.0), amplitude=1.0, longueur=300.0)
+        superposition_sources.SourceGaussienne(
+            position=(booleen, 1200.0), amplitude=1.0, longueur=300.0
+        )
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
@@ -172,7 +174,10 @@ def test_scenario_identification_refuse_les_coordonnees_booleennes(
     if champ in {"vent", "source_vrai", "candidat_decale"}:
         valeurs[champ] = (booleen, 1500.0)
     elif champ == "mesures_vent":
-        valeurs[champ] = ((booleen, 1500.0), *identification_source.SCENARIO_DEFAUT.mesures_vent[1:])
+        valeurs[champ] = (
+            (booleen, 1500.0),
+            *identification_source.SCENARIO_DEFAUT.mesures_vent[1:],
+        )
     else:
         valeurs[champ] = ((booleen, 1500.0), *identification_source.SCENARIO_DEFAUT.capteurs[1:])
     # When / Then — la validation du scénario refuse la coordonnée booléenne.
@@ -186,7 +191,12 @@ def test_fonction_concentration_refuse_un_debit_booleen(booleen: bool | np.bool_
     # Given — un scénario valide et un débit booléen.
     # When / Then — l'évaluation est refusée avant le calcul.
     with pytest.raises(ValueError, match="booléens exclus"):
-        identification_source.concentration(identification_source.SCENARIO_DEFAUT, (1300.0, 1300.0), (1500.0, 1500.0), booleen)
+        identification_source.concentration(
+            identification_source.SCENARIO_DEFAUT,
+            (1300.0, 1300.0),
+            (1500.0, 1500.0),
+            booleen,
+        )
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
@@ -197,7 +207,12 @@ def test_fonction_concentration_refuse_les_coordonnees_booleennes(
     # Given — un point d'évaluation booléen et un scénario valide.
     # When / Then — l'évaluation est refusée avant le calcul.
     with pytest.raises(ValueError, match="booléens exclus"):
-        identification_source.concentration(identification_source.SCENARIO_DEFAUT, (booleen, 1300.0), (1500.0, 1500.0), 2.0)
+        identification_source.concentration(
+            identification_source.SCENARIO_DEFAUT,
+            (booleen, 1300.0),
+            (1500.0, 1500.0),
+            2.0,
+        )
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
