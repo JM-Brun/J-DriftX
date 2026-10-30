@@ -86,7 +86,7 @@ def test_gaussian_solution_rejects_non_real_or_non_finite_parameters(
     "coordinates",
     [
         np.array([True]),
-        np.array([0.0, True]),
+        [0.0, True],
         np.array([1.0 + 2.0j]),
         np.array(["1.0"]),
         np.array([np.nan]),
@@ -94,7 +94,7 @@ def test_gaussian_solution_rejects_non_real_or_non_finite_parameters(
     ],
 )
 def test_gaussian_solution_rejects_non_real_or_non_finite_coordinates(
-    coordinates: np.ndarray,
+    coordinates: object,
 ) -> None:
     """Les coordonnées sont des tableaux réels finis sans coercition silencieuse."""
     with pytest.raises(ValueError):
