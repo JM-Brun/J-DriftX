@@ -13,12 +13,26 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from numbers import Real
 
 from jdriftx.stabilite import ClasseStabilite
 
 __all__ = [
     "SourcePanache",
 ]
+
+
+def _reel_fini(valeur: object, nom: str) -> float:
+    """Convertit un scalaire reel en float fini, sinon leve ValueError."""
+    if isinstance(valeur, bool) or not isinstance(valeur, Real):
+        raise ValueError(f"{nom} doit etre un nombre reel (booleen exclu).")
+    try:
+        resultat = float(valeur)
+    except (OverflowError, TypeError, ValueError) as err:
+        raise ValueError(f"{nom} doit etre representable comme float fini.") from err
+    if not math.isfinite(resultat):
+        raise ValueError(f"{nom} doit etre fini.")
+    return resultat
 
 
 @dataclass(frozen=True)
@@ -39,13 +53,19 @@ class SourcePanache:
 
     def __post_init__(self) -> None:
         """Valide les invariants de la source, sinon leve une ValueError."""
-        if not math.isfinite(self.debit) or self.debit <= 0.0:
-            msg = "Le debit d emission doit etre fini et strictement positif."
-            raise ValueError(msg)
-        if not math.isfinite(self.u) or self.u <= 0.0:
-            msg = "La vitesse du vent doit etre finie et strictement positive."
-            raise ValueError(msg)
-        if not math.isfinite(self.hauteur) or self.hauteur < 0.0:
-            msg = "La hauteur de source doit etre finie et positive ou nulle."
-            raise ValueError(msg)
-        ClasseStabilite(self.classe)
+        debit = _reel_fini(self.debit, "Le debit d emission")
+        u = _reel_fini(self.u, "La vitesse du vent")
+        hauteur = _reel_fini(self.hauteur, "La hauteur de source")
+        if debit <= 0.0:
+            raise ValueError("Le debit d emission doit etre strictement positif.")
+        if u <= 0.0:
+            raise ValueError("La vitesse du vent doit etre strictement positive.")
+        if hauteur < 0.0:
+            raise ValueError("La hauteur de source doit etre positive ou nulle.")
+        try:
+            ClasseStabilite(self.classe)
+        except (TypeError, ValueError) as err:
+            raise ValueError(f"Classe de stabilite invalide : {self.classe!r}.") from err
+        object.__setattr__(self, "debit", debit)
+        object.__setattr__(self, "u", u)
+        object.__setattr__(self, "hauteur", hauteur)

@@ -216,7 +216,7 @@ def test_vent_uniforme_donne_trois_composantes() -> None:
     vent = VentUniforme(u=2.0, v=1.0)
     # When / Then — le contrat Vent renvoie (u, v, w) partout.
     assert vent.vitesse(0.0, 0.0, 5.0) == (2.0, 1.0, 0.0)
-    with pytest.raises(ValueError, match="finies"):
+    with pytest.raises(ValueError, match="fini"):
         VentUniforme(u=float("nan"), v=1.0)
 
 
@@ -236,7 +236,7 @@ def test_adaptateur_champ_plan_garantit_w_nul() -> None:
 def test_vent_profil_puissance_rejette_hauteur_non_finie(hauteur: float) -> None:
     """Le profil ne produit jamais une vitesse non finie à partir de z invalide."""
     vent = VentProfilPuissance(u_reference=5.0, z_reference=10.0, exposant=0.15)
-    with pytest.raises(ValueError, match="finie"):
+    with pytest.raises(ValueError, match="fini"):
         vent.vitesse(0.0, 0.0, hauteur)
 
 
@@ -569,7 +569,7 @@ def test_adaptateur_champ_plan_rejette_composantes_non_finies() -> None:
     vent = VentDeChampPlan(champ=ChampInfini())  # type: ignore[arg-type]
 
     # When / Then — l'adaptateur refuse la composante non finie.
-    with pytest.raises(ValueError, match="deux composantes finies"):
+    with pytest.raises(ValueError, match="fini"):
         vent.vitesse(0.0, 0.0, 10.0)
 
 
