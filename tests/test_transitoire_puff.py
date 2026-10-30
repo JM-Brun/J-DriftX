@@ -23,7 +23,6 @@ import numpy as np
 import pytest
 from pydantic import ValidationError
 
-import jdriftx.experiences.transitoire_puff.comparaison as module_comparaison
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, PointMesure
 from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT, SourceImpulsionnelle, temps_dirige
 from jdriftx.experiences.reference_independante import (
