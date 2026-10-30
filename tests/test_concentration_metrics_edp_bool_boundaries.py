@@ -153,12 +153,13 @@ def test_derivee_sigma_carre_refuse_les_scalaires_booleens(
 
 @pytest.mark.parametrize("champ", ["a_y", "d_y", "b_z", "d_z"])
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
-def test_coefficients_diffusion_refusent_les_booleens(
-    champ: str, booleen: bool | np.bool_
-) -> None:
+def test_coefficients_diffusion_refusent_les_booleens(champ: str, booleen: bool | np.bool_) -> None:
     """Les coefficients de diffusion typés réels excluent les booléens."""
     valeurs: dict[str, float | bool | np.bool_] = {
-        "a_y": 0.08, "d_y": 0.0002, "b_z": 0.06, "d_z": 0.0003
+        "a_y": 0.08,
+        "d_y": 0.0002,
+        "b_z": 0.06,
+        "d_z": 0.0003,
     }
     valeurs[champ] = booleen
     with pytest.raises(ValueError, match="booléens exclus"):
