@@ -13,7 +13,7 @@ Cette actualisation complète l'état des lieux initial sans modifier les décis
 - **PR #314** : réduction des phases et calcul robuste des composantes du champ analytique ; fusionnée, CI complète verte (666 tests, 95 %).
 - **PR #315** : actualisation de cette cartographie et inventaire des usages de l'API racine ; fusionnée.
 - **PR #316** : garde-fous AST sur les frontières architecturales, les dépendances de rendu et les cycles d'import ; fusionnée, CI complète verte (683 tests, 95 %).
-- **PR #318** : immutabilité des tableaux détenus par `DatasetS0`, `GrilleEdp`, `TrancheEdp` et `SolutionEdp`, ainsi que contrôles des paramètres finis ; PR ouverte en brouillon, CI complète verte (691 tests, 95 %).
+- **PR #318** : immutabilité des tableaux détenus par `DatasetS0`, `GrilleEdp`, `TrancheEdp` et `SolutionEdp`, ainsi que contrôles des paramètres finis ; fusionnée, CI complète verte (691 tests, 95 %).
 
 Les CI établissent des garanties logicielles dans leur périmètre, pas une validation physique. Le cas de débordement de l'interpolation bilinéaire du MNT est maintenant reproductible et reste à corriger séparément.
 
@@ -60,7 +60,7 @@ Interdits transverses : cycle quelconque ; import de rendu (matplotlib/plotly/st
 
 ## 4. État de P0 — frontières NumPy
 
-Le P0 a déjà produit plusieurs tranches fusionnées. Les corrections numériques #311/#313/#314 sont maintenant intégrées ; l'audit des objets portant des tableaux est porté par #318 (ouverte, brouillon, CI verte). Le P0 n'est pas clos tant que cette tranche n'est pas revue/intégrée et que le débordement bilinéaire MNT décrit ci-dessous n'est pas traité.
+Le P0 a déjà produit plusieurs tranches fusionnées. Les corrections numériques #311/#313/#314 sont maintenant intégrées ; l'audit des objets portant des tableaux est intégré par #318 (fusionnée, CI verte). Le P0 n'est pas clos tant que cette tranche n'est pas revue/intégrée et que le débordement bilinéaire MNT décrit ci-dessous n'est pas traité.
 
 - **#302** : immutabilité réelle (bytes-backed `np.frombuffer`) et sentinelle `nodata` finie de `ReliefMntAscii`, coordonnées d'interpolation validées ;
 - **#304** : audit `source` (déjà conforme), gardes `similitude` (scalaires et grilles finis, débordement `u·t`, distance sous le vent), `metric` (débordement `b − a`, somme des coûts), `terrain` (coordonnées finies) ;
@@ -71,7 +71,7 @@ Le P0 a déjà produit plusieurs tranches fusionnées. Les corrections numériqu
 - **#311 (fusionnée)** : extension de la robustesse des lois de Briggs et des concentrations panache/puff aux échelles extrêmes ; CI verte, 672 tests, couverture 95 % ;
 - **#313 (fusionnée)** : représentabilité des métriques et temps de transport, y compris les intermédiaires de norme et de produit scalaire ; CI verte, 669 tests, couverture 95 % ;
 - **#314 (fusionnée)** : réduction des phases périodiques et calcul représentable des composantes du champ analytique ; CI verte, 666 tests, couverture 95 % ;
-- **#318 (ouverte en brouillon, CI verte)** : copie défensive et immutabilité profonde des tableaux de `DatasetS0`, `GrilleEdp`, `TrancheEdp` et `SolutionEdp`, validation des formes et paramètres finis ; 691 tests, couverture 95 %.
+- **#318 (fusionnée)** : copie défensive et immutabilité profonde des tableaux de `DatasetS0`, `GrilleEdp`, `TrancheEdp` et `SolutionEdp`, validation des formes et paramètres finis ; CI verte, 691 tests, couverture 95 %.
 
 Les corrections #311/#313/#314 sont intégrées et testées ; elles ne valident pas physiquement les modèles.
 
@@ -109,7 +109,7 @@ Conclusion : l'inventaire interne est terminé ; la réduction de l'API racine e
 
 ## 8. Suites (P0 résiduel, P2/P3 de #303)
 
-- **P0 résiduel** : faire relire et intégrer #318 (immutabilité des tableaux et contrats des objets EDP) ; corriger le débordement bilinéaire MNT reproduit ci-dessus dans une PR distincte.
+- **P0 résiduel** : corriger le débordement bilinéaire MNT reproduit ci-dessus dans une PR distincte ; poursuivre l'audit des autres frontières d'entrée non couvertes.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
 - **P3** : contrôle d'architecture statique désormais intégré par #316 (`tests/test_architecture_boundaries.py`) ; il couvre la matrice d'imports, les dépendances de rendu et les cycles statiques, sans couvrir les imports dynamiques.
 - La réduction de `__init__.py` suit l'inventaire d'usage du §6.
