@@ -224,7 +224,27 @@ class ReliefMntAscii:
         ):
             msg = "Interpolation sur une cellule sans donnee."
             raise ValueError(msg)
-        z = z00 * p00 + z10 * p10 + z01 * p01 + z11 * p11
+        # Normaliser les altitudes avant la somme : chaque terme pondéré est
+        # alors de module inférieur ou égal à 1, même près de float64.max.
+        echelle = np.maximum.reduce(
+            (np.abs(z00), np.abs(z10), np.abs(z01), np.abs(z11))
+        )
+        echelle_sure = np.where(echelle == 0.0, 1.0, echelle)
+        z_normalise = (
+            (z00 / echelle_sure) * p00
+            + (z10 / echelle_sure) * p10
+            + (z01 / echelle_sure) * p01
+            + (z11 / echelle_sure) * p11
+        )
+        # Les poids sont convexes en arithmétique exacte. Borner le résultat
+        # normalisé neutralise un éventuel dépassement d'arrondi de leur somme.
+        borne_min = np.minimum.reduce(
+            (z00 / echelle_sure, z10 / echelle_sure, z01 / echelle_sure, z11 / echelle_sure)
+        )
+        borne_max = np.maximum.reduce(
+            (z00 / echelle_sure, z10 / echelle_sure, z01 / echelle_sure, z11 / echelle_sure)
+        )
+        z = np.clip(z_normalise, borne_min, borne_max) * echelle
         return np.asarray(z, dtype=float)
 
 
