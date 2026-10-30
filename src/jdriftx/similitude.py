@@ -187,9 +187,7 @@ def concentration_panache(
         exposant_source = -0.5 * np.square(rz_source)
         exposant_image = -0.5 * np.square(rz_image)
         exposant_vertical = np.logaddexp(exposant_source, exposant_image)
-        log_amplitude = (
-            np.log(debit) - np.log(2.0 * np.pi) - np.log(u) - np.log(sy) - np.log(sz)
-        )
+        log_amplitude = np.log(debit) - np.log(2.0 * np.pi) - np.log(u) - np.log(sy) - np.log(sz)
         log_concentration = log_amplitude + exposant_lateral + exposant_vertical
     return _exponentielle_log(log_concentration)
 
@@ -265,12 +263,6 @@ def concentration_puff(
     rz = _rapport_difference(z_arr, 0.0, sz)
     with np.errstate(over="ignore", invalid="ignore"):
         exposant = -0.5 * (np.square(rx) + np.square(ry) + np.square(rz))
-        log_amplitude = (
-            np.log(masse)
-            - 1.5 * np.log(2.0 * np.pi)
-            - np.log(sx)
-            - np.log(sy)
-            - np.log(sz)
-        )
+        log_amplitude = np.log(masse) - 1.5 * np.log(2.0 * np.pi) - np.log(sx) - np.log(sy) - np.log(sz)
         log_concentration = log_amplitude + exposant
     return _exponentielle_log(log_concentration)
