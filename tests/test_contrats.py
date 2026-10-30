@@ -520,6 +520,8 @@ def test_superposition_rejette_le_debordement_sans_avertissement_numpy() -> None
     )
 
     # When / Then — même sous une politique NumPy stricte, le contrat métier prévaut.
-    with np.errstate(over="raise", invalid="raise"):
-        with pytest.raises(ValueError, match="doit rester finie"):
-            superposition.concentration(0.0, 0.0, 0.0)
+    with (
+        np.errstate(over="raise", invalid="raise"),
+        pytest.raises(ValueError, match="doit rester finie"),
+    ):
+        superposition.concentration(0.0, 0.0, 0.0)
