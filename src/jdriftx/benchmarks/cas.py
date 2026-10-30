@@ -16,6 +16,7 @@ developpement mathematique n est duplique.
 
 from __future__ import annotations
 
+import math
 from abc import ABC, abstractmethod
 from collections.abc import Callable
 from dataclasses import dataclass
@@ -45,6 +46,12 @@ class PointMesure:
     x: float
     y: float
     z: float
+
+    def __post_init__(self) -> None:
+        """Refuse une coordonnee non finie : le point doit rester representable."""
+        if not all(math.isfinite(valeur) for valeur in (self.x, self.y, self.z)):
+            msg = "Les coordonnees d un point de mesure doivent etre finies."
+            raise ValueError(msg)
 
 
 class CasSynthetique(ABC):
@@ -98,6 +105,10 @@ class CasS0(CasSynthetique):
         portes par SourcePanache : le cas ne revalide pas ce que la
         valeur partagee garantit deja (docs/41).
         """
+        parametres = (self.z_mesure, *self.arcs, *self.positions_laterales)
+        if not all(math.isfinite(valeur) for valeur in parametres):
+            msg = "L altitude, les arcs et les positions laterales doivent etre finis."
+            raise ValueError(msg)
         if self.z_mesure < 0.0:
             msg = "L altitude de mesure doit etre positive ou nulle."
             raise ValueError(msg)
@@ -152,8 +163,8 @@ def enregistrer_cas(usine: Callable[[], CasSynthetique]) -> Callable[[], CasSynt
     """Enregistre une usine de cas apres verification des invariants.
 
     Verifications a l enregistrement : identifiant unique, grille non
-    vide, verite strictement positive sur la grille. Une usine invalide
-    leve une ValueError et ne modifie pas le registre.
+    vide, verite finie et strictement positive sur la grille. Une usine
+    invalide leve une ValueError et ne modifie pas le registre.
     """
     cas = usine()
     if cas.identifiant in _USINES:
@@ -163,7 +174,11 @@ def enregistrer_cas(usine: Callable[[], CasSynthetique]) -> Callable[[], CasSynt
     if not points:
         msg = f"Le cas {cas.identifiant} expose une grille vide."
         raise ValueError(msg)
-    if np.any(cas.verite(points) <= 0.0):
+    verite = cas.verite(points)
+    if not np.all(np.isfinite(verite)):
+        msg = f"Le cas {cas.identifiant} expose une verite non finie."
+        raise ValueError(msg)
+    if np.any(verite <= 0.0):
         msg = f"Le cas {cas.identifiant} expose une verite non strictement positive."
         raise ValueError(msg)
     _USINES[cas.identifiant] = usine
