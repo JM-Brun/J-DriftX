@@ -5,6 +5,7 @@ import math
 from dataclasses import FrozenInstanceError, replace
 
 import pytest
+import numpy as np
 
 from jdriftx.experiences.reconstruction_vent import (
     SCENARIO_DEFAUT,
@@ -201,3 +202,51 @@ def test_le_manifeste_exporte_un_dict_serialisable() -> None:
     assert isinstance(export["limites"], list)
     for valeur in export.values():
         assert not isinstance(valeur, (Rectangle, ScenarioReconstruction))
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("champ", ["coin", "largeur", "hauteur"])
+def test_le_rectangle_refuse_les_parametres_booleens(
+    booleen: bool | np.bool_, champ: str
+) -> None:
+    """Le coin et les dimensions du rectangle excluent les booléens."""
+    # Given — un champ géométrique remplacé par un booléen.
+    valeurs: dict[str, object] = {
+        "coin": (0.0, 0.0),
+        "largeur": 100.0,
+        "hauteur": 100.0,
+    }
+    valeurs[champ] = (booleen, 0.0) if champ == "coin" else booleen
+    # When / Then — la construction du rectangle est refusée.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        Rectangle(**valeurs)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_le_rectangle_contient_refuse_un_point_booleen(booleen: bool | np.bool_) -> None:
+    """Le prédicat d'appartenance refuse lui aussi les coordonnées booléennes."""
+    # Given — un rectangle valide et un point booléen.
+    rectangle = SCENARIO_DEFAUT.domaine
+    # When / Then — l'évaluation du prédicat est refusée.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        rectangle.contient((booleen, 1.0))
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("champ", ["mesures", "trajectoire"])
+def test_le_scenario_refuse_les_points_booleens(
+    booleen: bool | np.bool_, champ: str
+) -> None:
+    """Les mesures et points de trajectoire excluent les coordonnées booléennes."""
+    # Given — une mesure ou un point de trajectoire booléen.
+    valeurs: dict[str, object] = {
+        "mesures": ((250.0, 500.0), (750.0, 500.0)),
+        "trajectoire": ((150.0, 575.0), (250.0, 575.0), (250.0, 625.0), (150.0, 625.0)),
+    }
+    if champ == "mesures":
+        valeurs[champ] = ((booleen, 500.0), (750.0, 500.0))
+    else:
+        valeurs[champ] = ((150.0, booleen), (250.0, 575.0))
+    # When / Then — la construction du scénario est refusée.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        _scenario_modifie(**valeurs)
