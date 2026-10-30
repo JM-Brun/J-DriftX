@@ -154,18 +154,24 @@ def test_adaptateur_trajectoire_refuse_un_tuple_de_taille_incorrecte() -> None:
     with pytest.raises(ValueError, match="tuple de 3 composantes"):
         adaptateur(0.0, 1.0, 2.0)
 
+
 @pytest.mark.parametrize(
     ("constructeur", "message"),
     [
-        (lambda: AdaptateurTrajectoire2D(vent=object(), hauteur=1.0), "methode vitesse"),
-        (lambda: VentDeChampPlan(champ=object()), "fonction_courant et vitesse"),
+        (
+            lambda: AdaptateurTrajectoire2D(vent=object(), hauteur=1.0),  # type: ignore[arg-type]
+            "methode vitesse",
+        ),
+        (
+            lambda: VentDeChampPlan(champ=object()),  # type: ignore[arg-type]
+            "fonction_courant et vitesse",
+        ),
     ],
 )
 def test_adaptateurs_rejettent_les_dependances_sans_methodes_requises(
     constructeur: object,
     message: str,
 ) -> None:
-    """Les dépendances injectées doivent réellement satisfaire leur interface."""
+    """Les dependances injectees doivent reellement satisfaire leur interface."""
     with pytest.raises(TypeError, match=message):
         constructeur()  # type: ignore[operator]
-
