@@ -684,11 +684,7 @@ class EchantillonneurBilineaire:
             if isinstance(valeur, (bool, np.bool_)) or not isinstance(
                 valeur, (int, float, np.integer, np.floating)
             ):
-                msg = (
-                    "Les coordonnées y et z doivent être des scalaires réels finis "
-                    "(booléens exclus)."
-                )
-                raise ValueError(msg)
+                raise ValueError(msg_coordonnees)
             try:
                 coordonnee = float(valeur)
             except (OverflowError, TypeError, ValueError) as err:
