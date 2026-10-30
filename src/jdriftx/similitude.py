@@ -82,7 +82,7 @@ def _rapport_difference(a: ArrayLike, b: ArrayLike, sigma: np.ndarray) -> np.nda
         return np.asarray(rapport, dtype=float)
 
 
-def _exponentielle_log(log_valeur: np.ndarray) -> np.ndarray:
+def _exponentielle_log(log_valeur: ArrayLike) -> np.ndarray:
     """Exponentie un logarithme, en refusant tout depassement de float64.
 
     Le sous-debordement est arrondi a zero selon les regles IEEE-754 ; c'est
@@ -92,7 +92,7 @@ def _exponentielle_log(log_valeur: np.ndarray) -> np.ndarray:
     if np.any(log_valeur > limite):
         raise FloatingPointError("La concentration depasse la plage representable en float64.")
     with np.errstate(over="raise", under="ignore", invalid="raise"):
-        return np.exp(log_valeur)
+        return np.asarray(np.exp(log_valeur))
 
 def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
     """Ecart-type horizontal du panache (m) a la distance sous le vent x (m)."""
