@@ -19,6 +19,21 @@ IntegrationMethod = Literal["euler", "rk4"]
 _MAXIMUM_STEPS: Final[int] = 10_000_000
 
 
+def _reel_fini(valeur: object, nom: str) -> float:
+    """Valide un scalaire réel fini et représentable en float64."""
+    if isinstance(valeur, (bool, np.bool_)) or not isinstance(valeur, Real):
+        msg = f"{nom} must be a finite real scalar (booleans and complex values excluded)."
+        raise ValueError(msg)
+    try:
+        resultat = float(valeur)
+    except (OverflowError, TypeError, ValueError) as err:
+        raise ValueError(f"{nom} must be representable as finite float64.") from err
+    if not np.isfinite(resultat):
+        raise ValueError(f"{nom} must be finite.")
+    return resultat
+
+
+
 def integrate_trajectory(
     velocity: Velocity,
     x0: float,
@@ -44,11 +59,11 @@ def integrate_trajectory(
             coordinates or cannot advance floating-point time (explicit
             failure instead of silently truncating the trajectory).
     """
-    values = (x0, y0, t0, t_end, dt)
-    if any(isinstance(value, (bool, np.bool_)) for value in values):
-        raise ValueError("Initial values and time parameters must be real (booleans excluded).")
-    if not all(np.isfinite(value) for value in values):
-        raise ValueError("Initial values and time parameters must be finite.")
+    x0 = _reel_fini(x0, "x0")
+    y0 = _reel_fini(y0, "y0")
+    t0 = _reel_fini(t0, "t0")
+    t_end = _reel_fini(t_end, "t_end")
+    dt = _reel_fini(dt, "dt")
     if dt <= 0:
         raise ValueError("dt must be strictly positive.")
     if t_end < t0:
@@ -60,14 +75,13 @@ def integrate_trajectory(
         result = velocity(time, px, py)
         if not isinstance(result, tuple) or len(result) != 2:
             raise ValueError("velocity must return a pair of finite components.")
-        if not all(
-            isinstance(component, Real) and not isinstance(component, bool) for component in result
-        ):
-            raise ValueError("velocity must return a pair of finite components.")
-        components = (float(result[0]), float(result[1]))
-        if not all(np.isfinite(component) for component in components):
-            raise ValueError("velocity must return a pair of finite components.")
-        return components
+        try:
+            return (
+                _reel_fini(result[0], "velocity component"),
+                _reel_fini(result[1], "velocity component"),
+            )
+        except ValueError as err:
+            raise ValueError("velocity must return a pair of finite components.") from err
 
     times = [float(t0)]
     xs = [float(x0)]
