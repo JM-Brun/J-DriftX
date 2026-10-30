@@ -350,7 +350,7 @@ def test_mnt_ascii_rejette_sentinelle_sans_donnee_non_finie(
     }
 
     # When / Then — la construction rejette la sentinelle.
-    with pytest.raises(ValueError, match="sans donnee.*finie"):
+    with pytest.raises(ValueError, match=r"sans donnee.*finie"):
         ReliefMntAscii(**valeurs)  # type: ignore[arg-type]
 
 
@@ -363,5 +363,5 @@ def test_mnt_ascii_rejette_coordonnees_non_finies(
     relief = ReliefMntAscii.depuis_texte(MNT_ASCII)
 
     # When / Then — l'évaluation est refusée explicitement.
-    with pytest.raises(ValueError, match="coordonnees.*finies"):
+    with pytest.raises(ValueError, match=r"coordonnees.*finies"):
         relief.altitude(*coordonnees)
