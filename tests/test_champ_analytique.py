@@ -166,3 +166,65 @@ def test_la_superposition_est_aussi_a_divergence_nulle() -> None:
         divergence_max = max(divergence_max, abs(du_dx + dv_dy))
     # Then — elle est nulle à la précision de différenciation près.
     assert divergence_max < 1e-6
+
+
+@pytest.mark.parametrize("longueur", [1e-308, 5e-324])
+def test_le_nombre_d_onde_debordant_est_rejete_a_la_construction(longueur: float) -> None:
+    """Étant donné une longueur si petite que k déborde, la construction est refusée.
+
+    Le nombre d'onde k = 2π/longueur peut déborder vers l'infini alors que
+    la longueur est finie et strictement positive : le contrat refuse la
+    construction plutôt que d'évaluer silencieusement en NaN.
+    """
+    # Given — une longueur positive sous la limite de débordement de k.
+    # When / Then — la construction est refusée.
+    with pytest.raises(ValueError, match="nombre d'onde"):
+        ChampFonctionCourant(amplitude=1.0, longueur=longueur)
+
+
+@pytest.mark.parametrize(("x", "y"), [(float("nan"), 0.0), (0.0, float("inf"))])
+def test_les_coordonnees_non_finies_sont_rejetees(x: float, y: float) -> None:
+    """Les évaluations du champ refusent les coordonnées non finies avant tout calcul."""
+    # Given — un champ valide et une coordonnée non finie.
+    champ = ChampFonctionCourant(amplitude=1.0, longueur=1.0)
+    # When / Then — la fonction de courant et la vitesse refusent l'évaluation.
+    with pytest.raises(ValueError, match="coordonnées doivent être finies"):
+        champ.fonction_courant(x, y)
+    with pytest.raises(ValueError, match="coordonnées doivent être finies"):
+        champ.vitesse(x, y)
+
+
+def test_la_vitesse_debordante_est_rejetee() -> None:
+    """Étant donné des paramètres finis valides, une vitesse infinie est refusée.
+
+    Le produit amplitude · k peut déborder vers l'infini alors que chaque
+    paramètre est fini et valide : l'évaluation lève ValueError plutôt que
+    de retourner une composante infinie silencieuse.
+    """
+    # Given — un champ dont amplitude · k dépasse le plus grand float64.
+    champ = ChampFonctionCourant(amplitude=1e200, longueur=6.283e-201)
+    # un point où sin(k·x) et cos(k·y) sont non nuls.
+    point = (math.pi / 4.0) / champ.nombre_donde
+    # When / Then — l'évaluation de la vitesse est refusée.
+    with pytest.raises(ValueError, match="vitesse du champ doit rester finie"):
+        champ.vitesse(point, point)
+
+
+def test_la_superposition_debordante_est_rejetee() -> None:
+    """Étant donné des vitesses finies extrêmes, la somme ne déborde pas en silence.
+
+    Chaque champ retourne des composantes finies, mais leur somme dépasse
+    le plus grand float64 : la superposition lève ValueError au lieu de
+    retourner +inf, comme la superposition de panaches.
+    """
+    # Given — deux champs identiques de vitesse 1,5e308 au point choisi.
+    champ = ChampFonctionCourant(amplitude=1.5e308 / (2.0 * math.pi), longueur=1.0)
+    superposition = SuperpositionChamps((champ, champ))
+    # When / Then — la somme déborde au point où sin(k·x) et cos(k·y) valent 1.
+    with pytest.raises(ValueError, match="superposition doit rester finie"):
+        superposition.vitesse(0.25, 0.0)
+    # Et la somme des fonctions de courant déborde au centre des cellules.
+    champ_psi = ChampFonctionCourant(amplitude=1.5e308, longueur=1.0)
+    superposition_psi = SuperpositionChamps((champ_psi, champ_psi))
+    with pytest.raises(ValueError, match="superposition doit rester finie"):
+        superposition_psi.fonction_courant(0.25, 0.25)
