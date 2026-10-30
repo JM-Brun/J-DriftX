@@ -38,11 +38,16 @@ from dataclasses import dataclass
 from importlib import metadata
 from typing import Literal
 
+import numpy as np
+
 NiveauFidelite = Literal["R0", "R1", "R2"]
 
 
 def _valide_positif(nom: str, valeur: float) -> None:
     """Lève ValueError si le paramètre n'est pas fini et strictement positif."""
+    if isinstance(valeur, (bool, np.bool_)):
+        msg = f"Le paramètre {nom} doit être numérique (booléens exclus)."
+        raise ValueError(msg)
     if not math.isfinite(valeur) or valeur <= 0.0:
         msg = f"Le paramètre {nom} doit être fini et strictement positif."
         raise ValueError(msg)
