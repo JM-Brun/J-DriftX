@@ -78,8 +78,15 @@ class VentDeChampPlan:
     champ: ChampPlan
 
     def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
-        """Evalue le vent (u, v, 0) du champ plan au point (x, y)."""
+        """Evalue le vent (u, v, 0) du champ plan au point (x, y).
+
+        Raises:
+            ValueError: si le champ delegue retourne une composante non finie.
+        """
         u, v = self.champ.vitesse(x, y)
+        if not np.all(np.isfinite((u, v))):
+            msg = "Le champ de vent doit retourner deux composantes finies."
+            raise ValueError(msg)
         return u, v, 0.0
 
 
@@ -115,11 +122,19 @@ class VentProfilPuissance:
             raise ValueError(msg)
 
     def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
-        """Evalue le vent (u(z), 0, 0) au point (x, y, z)."""
+        """Evalue le vent (u(z), 0, 0) au point (x, y, z).
+
+        Raises:
+            ValueError: si z est invalide ou si le profil deborde vers
+                une vitesse infinie.
+        """
         if not np.isfinite(z) or z <= 0.0:
             msg = "z doit être strictement positif ; la hauteur doit être finie."
             raise ValueError(msg)
         u = self.u_reference * (z / self.z_reference) ** self.exposant
+        if not np.isfinite(u):
+            msg = "Le profil de vent doit rester fini."
+            raise ValueError(msg)
         return u, 0.0, 0.0
 
 

@@ -153,6 +153,9 @@ class ReliefMntAscii:
             raise ValueError(msg)
         ncols = entete["ncols"]
         nrows = entete["nrows"]
+        if not np.isfinite(ncols) or not np.isfinite(nrows):
+            msg = "ncols et nrows doivent etre finis."
+            raise ValueError(msg)
         if ncols != int(ncols) or nrows != int(nrows) or ncols < 1 or nrows < 1:
             msg = "ncols et nrows doivent etre des entiers au moins 1."
             raise ValueError(msg)
