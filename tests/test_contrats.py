@@ -712,4 +712,3 @@ def test_mnt_ascii_rejette_une_coordonnees_extreme_hors_emprise() -> None:
         pytest.raises(ValueError, match="emprise horizontale"),
     ):
         relief.altitude(maximum, 0.0)
-
