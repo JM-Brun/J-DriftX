@@ -101,6 +101,16 @@ def _tableau_immuable(
     strictement_croissant: bool = False,
 ) -> np.ndarray:
     """Valide puis détache un tableau dans un tampon réellement non modifiable."""
+    if isinstance(valeur, np.ndarray):
+        bool_present = valeur.dtype.kind == "b" or (
+            valeur.dtype.kind == "O"
+            and any(isinstance(element, (bool, np.bool_)) for element in valeur.flat)
+        )
+    else:
+        brut = np.asarray(valeur, dtype=object)
+        bool_present = any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
+    if bool_present:
+        raise ValueError(f"{nom} doit contenir des valeurs numeriques (booleens exclus).")
     tableau = np.asarray(valeur, dtype=float)
     if tableau.ndim != dimension or tableau.size < taille_minimale:
         raise ValueError(f"{nom} doit avoir {dimension} dimension(s) et être non vide.")
@@ -158,6 +168,9 @@ class ParametresEdp:
             self.demi_largeur_y,
             self.hauteur_max,
         )
+        if any(isinstance(valeur, (bool, np.bool_)) for valeur in valeurs):
+            msg = "Les paramètres EDP doivent être numériques (booléens exclus)."
+            raise ValueError(msg)
         if not all(np.isfinite(valeur) for valeur in valeurs):
             msg = "Les paramètres EDP doivent être finis."
             raise ValueError(msg)
@@ -203,6 +216,9 @@ def derivee_sigma_carre(x: float, coefficient: float, d: float) -> float:
 
     Lever une ValueError si x n'est pas strictement positif.
     """
+    if any(isinstance(value, (bool, np.bool_)) for value in (x, coefficient, d)):
+        msg = "Les paramètres de dérivée doivent être numériques (booléens exclus)."
+        raise ValueError(msg)
     if x <= 0.0:
         msg = "La distance sous le vent doit être strictement positive."
         raise ValueError(msg)
@@ -226,6 +242,13 @@ class CoefficientsDiffusion:
     d_y: float
     b_z: float
     d_z: float
+
+    def __post_init__(self) -> None:
+        """Refuse les coefficients booléens avant tout calcul de diffusion."""
+        valeurs = (self.a_y, self.d_y, self.b_z, self.d_z)
+        if any(isinstance(value, (bool, np.bool_)) for value in valeurs):
+            msg = "Les coefficients de diffusion doivent être numériques (booléens exclus)."
+            raise ValueError(msg)
 
     def derivee_sigma_y_carre(self, x: float) -> float:
         """Dérivée exacte de sigma_y² en x (m), strictement positive."""
@@ -315,6 +338,9 @@ class TrancheEdp:
 
     def __post_init__(self) -> None:
         """Valide et fige le champ porté par la tranche."""
+        if isinstance(self.x, (bool, np.bool_)):
+            msg = "L'abscisse de la tranche doit être numérique (booléen exclu)."
+            raise ValueError(msg)
         if not np.isfinite(self.x):
             msg = "L'abscisse de la tranche doit être finie."
             raise ValueError(msg)
@@ -344,6 +370,14 @@ class SolutionEdp:
 
     def __post_init__(self) -> None:
         """Valide la cohérence de la solution et fige ses axes et sa séquence."""
+        if isinstance(self.x_entree, (bool, np.bool_)) or isinstance(
+            self.pas_longitudinal, (bool, np.bool_)
+        ):
+            msg = (
+                "L'abscisse d'entrée et le pas longitudinal doivent être numériques "
+                "(booléens exclus)."
+            )
+            raise ValueError(msg)
         if not np.isfinite(self.x_entree):
             msg = "L'abscisse d'entrée de la solution doit être finie."
             raise ValueError(msg)
