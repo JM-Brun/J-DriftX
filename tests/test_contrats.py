@@ -630,7 +630,10 @@ def test_adaptateur_champ_plan_rejette_les_sorties_invalides(resultat: object) -
         (lambda: AdaptateurTrajectoire2D(vent=object(), hauteur=1.0), "méthode vitesse"),
         (lambda: VentDeChampPlan(champ=object()), "fonction_courant et vitesse"),
         (lambda: AdaptateurTrajectoire2D(vent=VentUniforme(1.0, 0.0), hauteur="1"), "réel fini"),
-        (lambda: AdaptateurTrajectoire2D(vent=VentUniforme(1.0, 0.0), hauteur=10**1000), "réel fini"),
+        (
+            lambda: AdaptateurTrajectoire2D(vent=VentUniforme(1.0, 0.0), hauteur=10**1000),
+            "réel fini",
+        ),
     ],
 )
 def test_adaptateurs_vent_rejettent_les_dependances_ou_parametres_invalides(
