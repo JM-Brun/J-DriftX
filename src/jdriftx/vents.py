@@ -126,8 +126,8 @@ class VentProfilPuissance:
         """Evalue le vent (u(z), 0, 0) au point (x, y, z).
 
         Raises:
-            ValueError: si z est invalide ou si le profil deborde vers
-                une vitesse infinie.
+            ValueError: si z est invalide ou si la vitesse calculée n'est pas
+                représentable comme une valeur float64 finie et strictement positive.
         """
         if not np.isfinite(z) or z <= 0.0:
             msg = "z doit être strictement positif ; la hauteur doit être finie."
