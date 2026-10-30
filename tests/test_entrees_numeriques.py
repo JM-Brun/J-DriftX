@@ -70,7 +70,7 @@ def test_source_normalise_les_erreurs_de_classe(classe: object) -> None:
 @pytest.mark.parametrize("valeur", ["2.0", None, 2 + 0j, True, float("nan"), float("inf")])
 def test_vent_uniforme_rejette_les_composantes_invalides(valeur: object) -> None:
     """Les composantes constantes sont des scalaires reels finis, booleens exclus."""
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="nombre reel|fini"):
         VentUniforme(u=valeur, v=1.0)  # type: ignore[arg-type]
 
 
@@ -86,7 +86,7 @@ def test_profil_puissance_rejette_les_parametres_non_reels(
         "exposant": 0.15,
     }
     parametres[champ] = valeur
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="nombre reel|fini"):
         VentProfilPuissance(**parametres)  # type: ignore[arg-type]
 
 
@@ -94,7 +94,7 @@ def test_profil_puissance_rejette_les_parametres_non_reels(
 def test_profil_puissance_rejette_les_entrees_z_non_reelles(z: object) -> None:
     """La hauteur evaluee suit le meme contrat numerique que les parametres."""
     vent = VentProfilPuissance(u_reference=5.0, z_reference=10.0, exposant=0.15)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="nombre reel|fini"):
         vent.vitesse(0.0, 0.0, z)  # type: ignore[arg-type]
 
 
@@ -108,7 +108,7 @@ def test_adaptateur_trajectoire_accepte_une_hauteur_negative_finie() -> None:
 @pytest.mark.parametrize("hauteur", ["5.0", None, 5 + 0j, True, float("nan"), float("inf")])
 def test_adaptateur_trajectoire_rejette_les_hauteurs_non_reelles(hauteur: object) -> None:
     """La hauteur doit etre un scalaire reel fini, mais peut etre negative."""
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="nombre reel|fini"):
         AdaptateurTrajectoire2D(vent=VentUniforme(1.0, 0.0), hauteur=hauteur)  # type: ignore[arg-type]
 
 
