@@ -26,9 +26,9 @@ from pydantic import ValidationError
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, PointMesure
 from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT, SourceImpulsionnelle, temps_dirige
 from jdriftx.experiences.reference_independante import (
+    CoefficientsDiffusion,
     DIFFUSION_BRIGGS,
     PARAMETRES_EDP_DEFAUT,
-    CoefficientsDiffusion,
     ParametresEdp,
 )
 from jdriftx.experiences.transitoire_puff import (
