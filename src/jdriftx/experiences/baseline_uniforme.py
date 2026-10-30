@@ -42,7 +42,7 @@ from typing import Literal, Protocol, runtime_checkable
 from pydantic import BaseModel, ConfigDict
 
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, CasS0, PointMesure
-from jdriftx.contrats import PanacheGaussien
+from jdriftx.concentrations import PanacheGaussien
 from jdriftx.metric import pseudo_distance_uniforme
 from jdriftx.source import SourcePanache
 
