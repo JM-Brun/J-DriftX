@@ -172,3 +172,47 @@ def test_opposite_extreme_coordinates_do_not_overflow_before_scaling(
     # Then — le quotient analytique vaut 2 et le profil reste fini.
     assert np.isfinite(elevation).all()
     assert elevation[0, 0] == pytest.approx(expected)
+
+
+@pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf])
+def test_terrain_surface_rejects_non_real_or_non_finite_coordinates(bad: object) -> None:
+    """Les coordonnées brutes sont réelles, finies et sans coercition booléenne."""
+    with pytest.raises(ValueError):
+        terrain_surface(np.array([bad]), np.array([0.0]), "hill")
+
+
+@pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf])
+@pytest.mark.parametrize("parameter", ["height", "width", "center_x", "center_y"])
+def test_terrain_surface_rejects_non_real_or_non_finite_parameters(
+    parameter: str, bad: object
+) -> None:
+    """Chaque paramètre scalaire suit le même contrat réel fini."""
+    with pytest.raises(ValueError):
+        terrain_surface(
+            np.array([0.0]),
+            np.array([0.0]),
+            "hill",
+            **{parameter: bad},
+        )
+
+
+@pytest.mark.parametrize("coordinates", [[0.0, True], [0.0, 1.0 + 2.0j], ["0.0", "1.0"]])
+def test_terrain_surface_rejects_mixed_or_non_numeric_coordinate_sequences(
+    coordinates: list[object],
+) -> None:
+    """Les promotions NumPy ne masquent pas les booléens ou les complexes."""
+    with pytest.raises(ValueError):
+        terrain_surface(coordinates, [0.0, 0.0], "hill")  # type: ignore[arg-type]
+
+
+def test_terrain_surface_preserves_signed_height_and_centers() -> None:
+    """Les signes de hauteur et de coordonnées centrales restent libres."""
+    result = terrain_surface(
+        np.array([-1.0, 1.0]),
+        np.array([0.0, 0.0]),
+        "hill",
+        height=-2.0,
+        center_x=-1.0,
+        center_y=-3.0,
+    )
+    assert result[0] == pytest.approx(-2.0)
