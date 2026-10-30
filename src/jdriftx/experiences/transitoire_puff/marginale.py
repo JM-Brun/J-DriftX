@@ -80,7 +80,8 @@ class MarginaleFermee:
                 - 0.5 * np.square(rapport_z)
             )
 
-        if np.any(np.isnan(log_champ)) or np.any(log_champ > np.log(np.finfo(np.float64).max)):
+        log_max = np.log(np.finfo(np.float64).max)
+        if np.any(np.isnan(log_champ)) or np.any(log_champ > log_max):
             raise ValueError("The marginal Gaussian field is not representable as finite float64.")
         try:
             with np.errstate(over="raise", under="ignore", invalid="raise"):
