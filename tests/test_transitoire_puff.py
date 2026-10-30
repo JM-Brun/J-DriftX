@@ -29,7 +29,6 @@ from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT, SourceImpulsionnell
 from jdriftx.experiences.reference_independante import (
     CoefficientsDiffusion,
     DIFFUSION_BRIGGS,
-    GrilleEdp,
     PARAMETRES_EDP_DEFAUT,
     ParametresEdp,
 )
