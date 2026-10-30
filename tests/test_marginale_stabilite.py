@@ -7,7 +7,7 @@ import pytest
 
 from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT, SourceImpulsionnelle
 from jdriftx.experiences.reference_independante import GrilleEdp
-from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
+from jdriftx.experiences.transitoire_puff import MarginaleFermee
 from jdriftx.similitude import sigma_y, sigma_z
 
 
