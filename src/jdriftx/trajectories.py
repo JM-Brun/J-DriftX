@@ -28,10 +28,14 @@ def integrate_trajectory(
     """Integrate dx/dt=u(x,y,t), dy/dt=v(x,y,t) with Euler or classical RK4.
 
     The final step is shortened when the interval is not divisible by dt.
-    Coordinates and time are in user-chosen consistent units.
+    Coordinates and time are in user-chosen consistent units. Every accepted
+    step must advance representable time and produce finite coordinates.
 
     Raises:
-        ValueError: If initial values or step parameters are invalid.
+        ValueError: If initial values, step parameters, method, or velocity
+            output are invalid.
+        FloatingPointError: If a step cannot be represented with finite
+            coordinates or cannot advance floating-point time.
     """
     values = (x0, y0, t0, t_end, dt)
     if not all(np.isfinite(value) for value in values):
@@ -45,29 +49,41 @@ def integrate_trajectory(
 
     def rhs(time: float, px: float, py: float) -> tuple[float, float]:
         result = velocity(time, px, py)
-        if len(result) != 2 or not all(np.isfinite(value) for value in result):
-            raise ValueError("velocity must return two finite components.")
+        if (
+            not isinstance(result, tuple)
+            or len(result) != 2
+            or not all(np.isfinite(component) for component in result)
+        ):
+            raise ValueError("velocity must return a pair of finite components.")
         return float(result[0]), float(result[1])
 
     times = [float(t0)]
     xs = [float(x0)]
     ys = [float(y0)]
     while times[-1] < t_end:
-        t, x, y = times[-1], xs[-1], ys[-1]
-        step = min(dt, t_end - t)
+        time, x, y = times[-1], xs[-1], ys[-1]
+        step = min(dt, t_end - time)
+        next_time = time + step
+        if next_time <= time:
+            raise FloatingPointError(
+                "dt is too small to advance time at the current floating-point magnitude."
+            )
 
         if method == "euler":
-            ux, uy = rhs(t, x, y)
+            ux, uy = rhs(time, x, y)
             next_x, next_y = x + step * ux, y + step * uy
         else:
-            k1x, k1y = rhs(t, x, y)
-            k2x, k2y = rhs(t + step / 2, x + step * k1x / 2, y + step * k1y / 2)
-            k3x, k3y = rhs(t + step / 2, x + step * k2x / 2, y + step * k2y / 2)
-            k4x, k4y = rhs(t + step, x + step * k3x, y + step * k3y)
+            k1x, k1y = rhs(time, x, y)
+            k2x, k2y = rhs(time + step / 2, x + step * k1x / 2, y + step * k1y / 2)
+            k3x, k3y = rhs(time + step / 2, x + step * k2x / 2, y + step * k2y / 2)
+            k4x, k4y = rhs(time + step, x + step * k3x, y + step * k3y)
             next_x = x + step * (k1x + 2 * k2x + 2 * k3x + k4x) / 6
             next_y = y + step * (k1y + 2 * k2y + 2 * k3y + k4y) / 6
 
-        times.append(float(t + step))
+        if not np.isfinite(next_x) or not np.isfinite(next_y):
+            raise FloatingPointError("Trajectory coordinates became non-finite during integration.")
+
+        times.append(float(next_time))
         xs.append(float(next_x))
         ys.append(float(next_y))
 
