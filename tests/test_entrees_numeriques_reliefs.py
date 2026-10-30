@@ -69,6 +69,13 @@ def test_altitude_rejette_les_coordonnees_non_reelles(coordonnees: object) -> No
         relief.altitude(coordonnees, [0.0])  # type: ignore[arg-type]
 
 
+@pytest.mark.parametrize("coordonnees", ["1.0", [1 + 0j], [True], [float("nan")]])
+def test_mnt_altitude_rejette_les_coordonnees_non_reelles(coordonnees: object) -> None:
+    mnt = ReliefMntAscii(altitudes=[[1.0, 2.0], [3.0, 4.0]], x0=0.0, y0=0.0, pas=1.0)
+    with pytest.raises(ValueError, match=r"tableau numerique reel|valeurs finies"):
+        mnt.altitude(coordonnees, [0.0])  # type: ignore[arg-type]
+
+
 def test_panache_gaussien_refuse_une_source_de_mauvais_type_a_la_construction() -> None:
     with pytest.raises(TypeError, match="instance de SourcePanache"):
         PanacheGaussien(source=object())  # type: ignore[arg-type]
