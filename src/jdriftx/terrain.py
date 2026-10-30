@@ -10,6 +10,19 @@ from numpy.typing import NDArray
 TerrainKind = Literal["flat", "hill", "valley", "ridge"]
 
 
+def _contient_booleen(valeur: object) -> bool:
+    """Détecte les booléens avant une éventuelle promotion numérique NumPy."""
+    if isinstance(valeur, np.ndarray):
+        if valeur.dtype.kind == "b":
+            return True
+        if valeur.dtype.kind != "O":
+            return False
+        valeurs = valeur
+    else:
+        valeurs = np.asarray(valeur, dtype=object)
+    return any(isinstance(element, (bool, np.bool_)) for element in valeurs.flat)
+
+
 def _scaled_coordinate_difference(
     values: NDArray[np.float64], center: float, width: float
 ) -> NDArray[np.float64]:
@@ -38,6 +51,11 @@ def terrain_surface(
     field or physical effect of terrain is inferred by this function. The grids
     x and y must share the same shape; NumPy broadcasting is not applied.
     """
+    if _contient_booleen(x) or _contient_booleen(y):
+        raise ValueError("Coordinates must be numeric (booleans excluded).")
+    parameters = (height, width, center_x, center_y)
+    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
+        raise ValueError("Terrain parameters must be numeric (booleans excluded).")
     x_arr = np.asarray(x, dtype=float)
     y_arr = np.asarray(y, dtype=float)
     if x_arr.shape != y_arr.shape:
