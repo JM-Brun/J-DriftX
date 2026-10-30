@@ -57,7 +57,9 @@ def evaluer_prediction(
     metriques: Sequence[Metrique] = METRIQUES_DEFAUT,
 ) -> ResultatEvaluation:
     """Evalue une prediction contre une verite strictement positive."""
-    vrais = np.asarray(verite, dtype=float)
+    # Conserver le dtype d'origine jusqu'à la validation des métriques :
+    # une conversion float64 ici masquerait les entrées booléennes.
+    vrais = np.asarray(verite)
     return ResultatEvaluation(
         metriques=calculer_metriques(vrais, prediction, metriques),
         effectif=int(vrais.size),
