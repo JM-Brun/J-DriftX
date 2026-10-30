@@ -701,7 +701,9 @@ def test_puff_rejette_les_coordonnees_non_reelles(axe: str, valeur: object) -> N
     """Les tableaux de coordonnées du puff sont des réels finis stricts."""
     coordonnees: dict[str, object] = {"x": 900.0, "y": 0.0, "z": 1.0}
     coordonnees[axe] = valeur
-    with pytest.raises(ValueError, match=r"tableau numerique reel|valeurs finies|fini|representable"):
+    with pytest.raises(
+        ValueError, match=r"tableau numerique reel|valeurs finies|fini|representable"
+    ):
         concentration_puff(**coordonnees, t=300.0, masse=5.0, u=3.0, classe="D")  # type: ignore[arg-type]
 
 
