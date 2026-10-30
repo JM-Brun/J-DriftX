@@ -8,7 +8,6 @@ from jdriftx.trajectories import integrate_trajectory
 
 def test_constant_velocity_is_integrated_exactly_by_both_methods() -> None:
     """À vitesse constante, Euler et RK4 intègrent exactement l'intervalle."""
-
     # Given — un champ de vitesse constant (2, -1) m/s.
     def velocity(_t: float, _x: float, _y: float) -> tuple[float, float]:
         return (2.0, -1.0)
@@ -24,7 +23,6 @@ def test_constant_velocity_is_integrated_exactly_by_both_methods() -> None:
 
 def test_rk4_is_more_accurate_than_euler_for_rotational_field() -> None:
     """Sur champ rotationnel, RK4 est plus précis qu'Euler."""
-
     # Given — un champ en rotation solide et les deux méthodes au même pas.
     def velocity(_t: float, x: float, y: float) -> tuple[float, float]:
         return (-y, x)
@@ -53,3 +51,49 @@ def test_invalid_velocity_output_is_rejected() -> None:
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="finite components"):
         integrate_trajectory(lambda _t, _x, _y: (np.nan, 0.0), 0, 0, 0, 1, 0.1)
+
+
+def test_time_step_that_cannot_advance_float_time_is_rejected() -> None:
+    """Un pas de temps sous la résolution flottante ne doit pas boucler indéfiniment."""
+    # Given — un temps initial dont l'ULP dépasse le pas demandé.
+    initial_time = 1.0e16
+    end_time = initial_time + 2.0
+
+    # When / Then — le premier pas non représentable est rejeté.
+    with pytest.raises(FloatingPointError, match="too small to advance time"):
+        integrate_trajectory(
+            lambda _t, _x, _y: (1.0, 0.0),
+            0.0,
+            0.0,
+            initial_time,
+            end_time,
+            0.1,
+        )
+
+
+def test_non_finite_position_after_step_is_rejected() -> None:
+    """Un débordement de coordonnées ne doit pas être retourné silencieusement."""
+    # Given — une vitesse finie et un pas dont le produit déborde en float64.
+    maximum_float = np.finfo(float).max
+
+    # When / Then — l'intégration signale explicitement le dépassement.
+    with pytest.raises(FloatingPointError, match="coordinates became non-finite"):
+        integrate_trajectory(
+            lambda _t, _x, _y: (maximum_float, 0.0),
+            0.0,
+            0.0,
+            0.0,
+            2.0,
+            2.0,
+            "euler",
+        )
+
+
+def test_velocity_callback_must_return_a_pair() -> None:
+    """Une sortie qui ne respecte pas le contrat (ux, uy) est rejetée."""
+    # Given — un callback qui retourne une seule composante.
+    # When / Then — l'appel échoue avec une erreur de contrat explicite.
+    with pytest.raises(ValueError, match="pair of finite components"):
+        integrate_trajectory(
+            lambda _t, _x, _y: (1.0,), 0.0, 0.0, 0.0, 1.0, 0.1  # type: ignore[arg-type]
+        )
