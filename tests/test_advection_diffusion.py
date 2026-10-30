@@ -54,3 +54,23 @@ def test_negative_diffusivity_is_rejected() -> None:
     # Given / When / Then — une diffusivité négative déclenche le refus.
     with pytest.raises(ValueError, match="non-negative"):
         gaussian_advection_diffusion(np.array([0.0]), 1.0, diffusivity=-0.1)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_gaussian_solution_rejects_boolean_coordinates(booleen: bool | np.bool_) -> None:
+    """Les coordonnées booléennes sont rejetées avant conversion float64."""
+    with pytest.raises(ValueError, match="booleans excluded"):
+        gaussian_advection_diffusion(np.array([booleen]), 0.0)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize(
+    "parametre", ["time", "mass", "initial_center", "velocity", "diffusivity", "initial_sigma"]
+)
+def test_gaussian_solution_rejects_boolean_parameters(
+    booleen: bool | np.bool_, parametre: str
+) -> None:
+    """Les paramètres scalaires booléens sont rejetés avant le calcul de variance."""
+    parametres = {"time": 0.0, parametre: booleen}
+    with pytest.raises(ValueError, match="booleans excluded"):
+        gaussian_advection_diffusion(np.array([0.0]), **parametres)
