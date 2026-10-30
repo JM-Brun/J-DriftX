@@ -94,7 +94,12 @@ def _exponentielle_log(log_valeur: ArrayLike) -> np.ndarray:
         return np.asarray(np.exp(log_valeur))
 
 def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
-    """Ecart-type horizontal du panache (m) a la distance sous le vent x (m)."""
+    """Ecart-type horizontal du panache (m) a la distance sous le vent x (m).
+
+    Raises:
+        ValueError: si la classe ou la distance est invalide.
+        FloatingPointError: si un ecart-type positif n'est pas representable en float64.
+    """
     classe_stable = _valide_classe(classe)
     x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
     if np.any(x_arr < 0.0):
@@ -104,7 +109,12 @@ def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
 
 
 def sigma_z(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
-    """Ecart-type vertical du panache (m) a la distance sous le vent x (m)."""
+    """Ecart-type vertical du panache (m) a la distance sous le vent x (m).
+
+    Raises:
+        ValueError: si la classe ou la distance est invalide.
+        FloatingPointError: si un ecart-type positif n'est pas representable en float64.
+    """
     classe_stable = _valide_classe(classe)
     x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
     if np.any(x_arr < 0.0):
