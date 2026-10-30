@@ -93,7 +93,8 @@ def gaussian_advection_diffusion(
     diffusion_sigma = sqrt(2.0) * sqrt(diffusivity) * sqrt(time)
     sigma = hypot(initial_sigma, diffusion_sigma)
     if not np.isfinite(sigma):
-        raise ValueError("The effective Gaussian standard deviation is not representable as float64.")
+        msg = "The effective Gaussian standard deviation is not representable as float64."
+        raise ValueError(msg)
 
     center = initial_center + velocity * time
     if not np.isfinite(center):
