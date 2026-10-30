@@ -117,7 +117,7 @@ Conclusion : l'inventaire interne est terminé ; la réduction de l'API racine e
 
 ## 8. Suites (P0 résiduel, P2/P3 de #303)
 
-### Complément P0 — frontières des champs et géométries (PR #345)
+### Complément P0 — frontières des champs et géométries (issue #345, PR #346)
 
 La recherche des usages de `math.isfinite` a révélé un autre cas de coercition
 implicite : les booléens Python et NumPy sont des valeurs finies pour ces
