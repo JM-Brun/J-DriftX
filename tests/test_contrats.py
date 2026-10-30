@@ -548,3 +548,14 @@ def test_superposition_accepte_le_broadcasting_des_coordonnees() -> None:
     y = np.zeros((1, 3))
     resultat = superposition.concentration(x, y, 0.0)
     assert resultat.shape == (2, 3)
+
+def test_superposition_rejette_une_sortie_qui_n_est_pas_un_ndarray() -> None:
+    """Le contrat de sortie impose un tableau NumPy."""
+
+    class PanacheListe:
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
+            return [1.0]  # type: ignore[return-value]
+
+    superposition = SuperpositionPanaches(panaches=(PanacheListe(),))
+    with pytest.raises(TypeError, match="ndarray"):
+        superposition.concentration(0.0, 0.0, 0.0)
