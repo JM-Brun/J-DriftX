@@ -336,9 +336,7 @@ def test_mnt_ascii_copie_et_protege_sa_grille() -> None:
         ("sans_donnee", float("inf")),
     ],
 )
-def test_mnt_ascii_rejette_sentinelle_sans_donnee_non_finie(
-    champ: str, valeur: float
-) -> None:
+def test_mnt_ascii_rejette_sentinelle_sans_donnee_non_finie(champ: str, valeur: float) -> None:
     """Une sentinelle nodata doit être finie pour permettre une comparaison fiable."""
     # Given — une grille valide et une sentinelle non finie.
     valeurs: dict[str, object] = {
