@@ -14,6 +14,7 @@ la grille porte la demi-colonne miroir.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from numbers import Real
 
 import numpy as np
 
@@ -39,8 +40,25 @@ class MarginaleFermee:
     grille: GrilleEdp
 
     def champ(self, t: float) -> np.ndarray:
-        """Champ de la marginale fermée sur la grille, à l'instant t (s)."""
-        distance = self.source.u * t
+        """Champ de la marginale fermée sur la grille, à l'instant t (s).
+
+        L'instant doit être un réel float64 fini strictement positif : à t=0,
+        les écarts-types transverses sont nuls et la marginale n'est pas une
+        fonction gaussienne régulière sur la grille.
+        """
+        if isinstance(t, (bool, np.bool_)) or not isinstance(t, Real):
+            raise ValueError("t must be a finite real scalar (booleans excluded).")
+        try:
+            instant = float(t)
+        except (OverflowError, TypeError, ValueError) as err:
+            raise ValueError("t must be representable as finite float64.") from err
+        if not np.isfinite(instant):
+            raise ValueError("t must be finite.")
+        if instant <= 0.0:
+            raise ValueError("t must be strictly positive.")
+        distance = self.source.u * instant
+        if not np.isfinite(distance) or distance <= 0.0:
+            raise ValueError("The puff travel distance u*t must be finite and strictly positive.")
         sy = sigma_y(distance, self.source.classe)
         sz = sigma_z(distance, self.source.classe)
         mailles_y, mailles_z = self.grille.mailles()
