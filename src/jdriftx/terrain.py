@@ -7,6 +7,7 @@ from typing import Literal
 import numpy as np
 from numpy.typing import NDArray
 
+
 def _contient_booleen(valeur: object) -> bool:
     """Détecte les booléens avant toute conversion numérique avec NumPy."""
     if isinstance(valeur, np.ndarray):
