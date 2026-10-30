@@ -502,3 +502,73 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
     # When / Then — le débordement de la somme est refusé explicitement.
     with pytest.raises(ValueError, match="doit rester finie"):
         superposition.concentration(0.0, 0.0, 0.0)
+
+
+def test_mnt_ascii_interpolation_preserves_the_finite_convex_bound() -> None:
+    """Une moyenne convexe d'altitudes finies ne doit pas déborder."""
+    # Given — les quatre sommets d'une cellule valent le maximum float64.
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.full((2, 2), maximum),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+    # When — l'altitude est interpolée à l'intérieur de la cellule.
+    altitude = relief.altitude(0.1, 0.2)
+    # Then — les poids bilinéaires forment une combinaison convexe finie.
+    assert np.isfinite(altitude)
+    assert altitude == maximum
+
+
+def test_mnt_ascii_interpolation_preserves_a_tiny_active_corner() -> None:
+    """Un sommet de poids un conserve sa valeur malgré les autres échelles."""
+    # Given — le coin sud-ouest est subnormal et les trois autres coins sont énormes.
+    minimum = np.nextafter(0.0, 1.0)
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[maximum, maximum], [minimum, maximum]]),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+    # When — on évalue exactement au centre du coin sud-ouest.
+    altitude = relief.altitude(0.0, 0.0)
+    # Then — le poids un du coin actif doit préserver sa valeur subnormale.
+    assert altitude == minimum
+
+
+def test_mnt_ascii_interpolation_preserves_tiny_corner_at_grid_node() -> None:
+    """Un sommet subnormal conserve sa valeur à un nœud de la grille."""
+    # Given — le coin sud-est est subnormal et les autres coins valent float64.max.
+    minimum = np.nextafter(0.0, 1.0)
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[maximum, maximum], [maximum, minimum]]),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+    # When — on évalue exactement au nœud sud-est du MNT.
+    altitude = relief.altitude(1.0, 0.0)
+    # Then — l'interpolation restitue exactement le sommet actif.
+    assert altitude == minimum
+
+
+def test_mnt_ascii_interpolation_handles_opposite_sign_extremes() -> None:
+    """Une interpolation entre signes opposés reste finie aux extrêmes float64."""
+    # Given — les sommets alternent entre les deux extrêmes représentables.
+    maximum = np.finfo(float).max
+    relief = ReliefMntAscii(
+        altitudes=np.array([[maximum, -maximum], [-maximum, maximum]]),
+        x0=0.0,
+        y0=0.0,
+        pas=1.0,
+    )
+
+    # When — on évalue au centre géométrique de la cellule.
+    altitude = relief.altitude(0.5, 0.5)
+
+    # Then — les contributions symétriques s'annulent sans débordement.
+    assert np.isfinite(altitude)
+    assert altitude == 0.0
