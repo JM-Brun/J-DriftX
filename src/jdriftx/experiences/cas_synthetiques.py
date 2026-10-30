@@ -131,10 +131,6 @@ class DatasetS0:
         if points_x.size != self.cas.nombre_points:
             msg = "Le nombre de points du dataset doit correspondre au cas."
             raise ValueError(msg)
-        if np.any(concentrations <= 0.0):
-            msg = "Les concentrations du dataset doivent être strictement positives."
-            raise ValueError(msg)
-
         calibration = tuple(self.partition.calibration)
         evaluation = tuple(self.partition.evaluation)
         indices = calibration + evaluation
