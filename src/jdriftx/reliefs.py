@@ -69,6 +69,7 @@ class ReliefSynthetique:
         """Evalue l altitude du relief (m) aux points (x, y) : delegation pure."""
         x_arr = np.asarray(x, dtype=float)
         y_arr = np.asarray(y, dtype=float)
+        _verifie_coordonnees(x_arr, y_arr)
         return terrain_surface(
             x_arr,
             y_arr,
@@ -186,7 +187,7 @@ class ReliefMntAscii:
         """
         x_arr = np.asarray(x, dtype=float)
         y_arr = np.asarray(y, dtype=float)
-        _verifie_formes(x_arr, y_arr)
+        _verifie_coordonnees(x_arr, y_arr)
         if not np.all(np.isfinite(x_arr)) or not np.all(np.isfinite(y_arr)):
             msg = "Les coordonnees doivent etre finies."
             raise ValueError(msg)
