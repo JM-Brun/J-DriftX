@@ -64,9 +64,7 @@ def test_temps_transport_refuse_umin_booleen(booleen: bool | np.bool_) -> None:
     ],
 )
 @pytest.mark.parametrize("champ", ["a", "b", "vent"])
-def test_pseudo_distance_uniforme_refuse_les_tableaux_booleens(
-    valeur: object, champ: str
-) -> None:
+def test_pseudo_distance_uniforme_refuse_les_tableaux_booleens(valeur: object, champ: str) -> None:
     """Les deux points et le vent uniforme excluent les booléens avant coercition."""
     # Given — un point ou un vecteur de vent contenant un booléen.
     a: object = np.zeros(2)
@@ -100,9 +98,7 @@ def test_integrateur_refuse_les_conditions_initiales_booleennes(
     valeurs[champ] = booleen
     # When / Then — l'intégrateur refuse l'entrée avant le premier appel de vitesse.
     with pytest.raises(ValueError, match="booleans excluded"):
-        trajectories.integrate_trajectory(
-            lambda _t, _x, _y: (1.0, 0.0), **valeurs
-        )  # type: ignore[arg-type]
+        trajectories.integrate_trajectory(lambda _t, _x, _y: (1.0, 0.0), **valeurs)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
@@ -110,9 +106,7 @@ def test_integrateur_refuse_les_conditions_initiales_booleennes(
     "champ",
     ["speed", "angle_deg", "shear", "radial_strength", "probe_x", "probe_y"],
 )
-def test_explorateur_refuse_les_parametres_booleens(
-    booleen: bool | np.bool_, champ: str
-) -> None:
+def test_explorateur_refuse_les_parametres_booleens(booleen: bool | np.bool_, champ: str) -> None:
     """Les paramètres et coordonnées de lecture de l'explorateur excluent les booléens."""
     # Given — un champ de la configuration remplacé par un booléen.
     valeurs: dict[str, object] = {
