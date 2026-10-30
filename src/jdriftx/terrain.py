@@ -12,7 +12,8 @@ from numpy.typing import NDArray
 def _reel_fini(valeur: object, nom: str) -> float:
     """Valide un scalaire réel fini et représentable en float64."""
     if isinstance(valeur, (bool, np.bool_)) or not isinstance(valeur, Real):
-        raise ValueError(f"{nom} must be a finite real scalar (booleans and complex values excluded).")
+        msg = f"{nom} must be a finite real scalar (booleans and complex values excluded)."
+        raise ValueError(msg)
     try:
         resultat = float(valeur)
     except (OverflowError, TypeError, ValueError) as err:
@@ -32,7 +33,8 @@ def _tableau_reel_fini(valeur: object, nom: str) -> NDArray[np.float64]:
     if any(isinstance(element, (bool, np.bool_)) for element in valeurs_brutes.flat):
         raise ValueError(f"{nom} must be a real numeric array (booleans excluded).")
     if brut.dtype.kind not in "iuf":
-        raise ValueError(f"{nom} must be a real numeric array (complex and non-numeric values excluded).")
+        msg = f"{nom} must be a real numeric array (complex and non-numeric values excluded)."
+        raise ValueError(msg)
     try:
         with np.errstate(over="ignore", invalid="ignore"):
             resultat = np.asarray(brut, dtype=np.float64)
