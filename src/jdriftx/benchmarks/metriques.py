@@ -56,7 +56,11 @@ def _vecteurs_verifies(
 ) -> tuple[np.ndarray, np.ndarray]:
     """Convertit et valide : 1D, meme taille, non vides, finies, verite > 0."""
     if _contient_valeur_non_reelle(verite) or _contient_valeur_non_reelle(prediction):
-        raise ValueError(f"{nom} : verite et prediction doivent etre numeriques reelles (booleens exclus; complexes exclus).")
+        msg = (
+            f"{nom} : verite et prediction doivent etre numeriques reelles "
+            "(booleens exclus; complexes exclus)."
+        )
+        raise ValueError(msg)
     vrais = np.asarray(verite, dtype=float)
     predits = np.asarray(prediction, dtype=float)
     if vrais.shape != predits.shape or vrais.ndim != 1:
@@ -171,7 +175,11 @@ def calculer_metriques(
         msg = "Chaque metrique ne peut etre demandee qu une seule fois."
         raise ValueError(msg)
     if _contient_valeur_non_reelle(verite) or _contient_valeur_non_reelle(prediction):
-        raise ValueError("Verite et prediction doivent etre numeriques reelles (booleens exclus; complexes exclus).")
+        msg = (
+            "Verite et prediction doivent etre numeriques reelles "
+            "(booleens exclus; complexes exclus)."
+        )
+        raise ValueError(msg)
     vrais = np.asarray(verite, dtype=float)
     predits = np.asarray(prediction, dtype=float)
     return {m.nom: float(m.calcul(vrais, predits)) for m in metriques}
