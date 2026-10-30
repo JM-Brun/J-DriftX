@@ -32,6 +32,7 @@ d'export JSON (``model_dump`` de Pydantic), conformément à la charte.
 from __future__ import annotations
 
 import math
+from numbers import Real
 from importlib import metadata
 
 import numpy as np
@@ -74,6 +75,20 @@ class SourceImpulsionnelle(BaseModel):
     u: float = Field(gt=0.0)
     classe: str
     x0: float = Field(default=0.0, ge=0.0)
+
+    @field_validator("masse", "u", "x0", mode="before")
+    @classmethod
+    def _reel_fini(cls, valeur: object) -> float:
+        """Refuse les coercitions booléennes, textuelles et non finies."""
+        if isinstance(valeur, (bool, np.bool_)) or not isinstance(valeur, Real):
+            raise ValueError("Les paramètres de source doivent être des réels (booléens exclus).")
+        try:
+            resultat = float(valeur)
+        except (OverflowError, TypeError, ValueError) as err:
+            raise ValueError("Les paramètres de source doivent être représentables en float64.") from err
+        if not math.isfinite(resultat):
+            raise ValueError("Les paramètres de source doivent être finis.")
+        return resultat
 
     @field_validator("classe")
     @classmethod
