@@ -10,6 +10,19 @@ from numpy.typing import NDArray
 TerrainKind = Literal["flat", "hill", "valley", "ridge"]
 
 
+def _scaled_coordinate_difference(
+    values: NDArray[np.float64], center: float, width: float
+) -> NDArray[np.float64]:
+    """Calcule (values - center) / width sans débordement intermédiaire."""
+    opposite_signs = np.signbit(values) != np.signbit(center)
+    with np.errstate(over="ignore", under="ignore", invalid="ignore"):
+        # La soustraction directe est sûre pour des valeurs de même signe.
+        direct = (values - center) / width
+        # Pour des signes opposés, diviser avant de soustraire évite l'overflow.
+        scaled = values / width - center / width
+    return np.where(opposite_signs, scaled, direct)
+
+
 def terrain_surface(
     x: NDArray[np.floating],
     y: NDArray[np.floating],
@@ -42,11 +55,10 @@ def terrain_surface(
         raise ValueError(msg)
 
     # Normaliser avant de mettre au carré évite le sous-débordement de width**2.
-    # Les distances très grandes peuvent devenir infinies après normalisation ;
-    # exp(-inf) vaut zéro, ce qui correspond à la limite du profil gaussien.
+    # La soustraction est également ordonnée pour éviter un overflow préalable.
     with np.errstate(over="ignore", under="ignore", invalid="ignore"):
-        dx_scaled = (x_arr - center_x) / width
-        dy_scaled = (y_arr - center_y) / width
+        dx_scaled = _scaled_coordinate_difference(x_arr, center_x, width)
+        dy_scaled = _scaled_coordinate_difference(y_arr, center_y, width)
         radius_squared = 0.5 * (dx_scaled**2 + dy_scaled**2)
 
     if kind == "flat":
