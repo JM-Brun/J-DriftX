@@ -72,12 +72,28 @@ def test_relief_synthetique_delegue_au_module_terrain() -> None:
     assert np.array_equal(relief.altitude(grille_x, grille_y), attendu)
 
 
-def test_relief_synthetique_herite_des_rejets() -> None:
-    """Étant donné une largeur négative, le relief synthétique refuse la construction."""
-    # Given — un paramètre invalide pour le module terrain.
-    # When / Then — la délégation propage le rejet.
-    with pytest.raises(ValueError, match="width"):
-        ReliefSynthetique(kind="hill", width=0.0).altitude(np.zeros(3), np.zeros(3))
+@pytest.mark.parametrize(
+    ("parametres", "message"),
+    [
+        ({"width": 0.0}, "largeur"),
+        ({"height": float("nan")}, "finis"),
+        ({"center_x": float("inf")}, "finis"),
+        ({"kind": "unknown"}, "inconnu"),
+    ],
+)
+def test_relief_synthetique_rejette_les_parametres_invalides(
+    parametres: dict[str, object], message: str
+) -> None:
+    """Un relief invalide est refusé à la construction, pas à la première évaluation."""
+    with pytest.raises(ValueError, match=message):
+        ReliefSynthetique(kind="hill", **parametres)  # type: ignore[arg-type]
+
+
+def test_reliefs_rejettent_les_coordonnees_non_finies() -> None:
+    """Les implémentations de relief appliquent le même contrat d'entrée."""
+    for relief in (ReliefPlat(), ReliefSynthetique(kind="hill")):
+        with pytest.raises(ValueError, match="coordonnées doivent être finies"):
+            relief.altitude(np.array([float("nan")]), np.array([0.0]))
 
 
 def test_mnt_ascii_lit_les_centres_de_cellules() -> None:
@@ -211,6 +227,14 @@ def test_adaptateur_champ_plan_garantit_w_nul() -> None:
     # Then — les composantes planées sont celles du champ, w est nul.
     attendu = champ.vitesse(0.3, 0.4)
     assert (u, v, w) == (attendu[0], attendu[1], 0.0)
+
+
+@pytest.mark.parametrize("hauteur", [float("nan"), float("inf")])
+def test_vent_profil_puissance_rejette_hauteur_non_finie(hauteur: float) -> None:
+    """Le profil ne produit jamais une vitesse non finie à partir de z invalide."""
+    vent = VentProfilPuissance(u_reference=5.0, z_reference=10.0, exposant=0.15)
+    with pytest.raises(ValueError, match="finie"):
+        vent.vitesse(0.0, 0.0, hauteur)
 
 
 def test_vent_profil_puissance_suit_la_loi_standard() -> None:
