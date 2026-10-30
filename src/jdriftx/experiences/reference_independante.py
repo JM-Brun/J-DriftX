@@ -260,6 +260,9 @@ class CoefficientsDiffusion:
 
     def pas_longitudinal(self, x_debut: float, x_fin: float, parametres: ParametresEdp) -> float:
         """Plus grand pas en base/2^k stable au dernier arc (nombre de Fourier).
+        if isinstance(x_debut, (bool, np.bool_)):
+            msg = "La distance de début doit être numérique (booléen exclu)."
+            raise ValueError(msg)
 
         Le nombre de Fourier est évalué au dernier arc, là où sigma² croît le
         plus ; le pas de base est la distance d'entrée (100 m pour le cas S0
