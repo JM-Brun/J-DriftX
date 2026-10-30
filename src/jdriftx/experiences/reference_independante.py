@@ -216,6 +216,9 @@ def derivee_sigma_carre(x: float, coefficient: float, d: float) -> float:
 
     Lever une ValueError si x n'est pas strictement positif.
     """
+    if any(isinstance(value, (bool, np.bool_)) for value in (x, coefficient, d)):
+        msg = "Les paramètres de dérivée doivent être numériques (booléens exclus)."
+        raise ValueError(msg)
     if x <= 0.0:
         msg = "La distance sous le vent doit être strictement positive."
         raise ValueError(msg)
@@ -240,6 +243,12 @@ class CoefficientsDiffusion:
     b_z: float
     d_z: float
 
+    def __post_init__(self) -> None:
+        """Refuse les coefficients booléens avant tout calcul de diffusion."""
+        valeurs = (self.a_y, self.d_y, self.b_z, self.d_z)
+        if any(isinstance(value, (bool, np.bool_)) for value in valeurs):
+            raise ValueError("Les coefficients de diffusion doivent être numériques (booléens exclus).")
+
     def derivee_sigma_y_carre(self, x: float) -> float:
         """Dérivée exacte de sigma_y² en x (m), strictement positive."""
         return derivee_sigma_carre(x, self.a_y, self.d_y)
@@ -256,6 +265,8 @@ class CoefficientsDiffusion:
         figé) et il est divisé par deux jusqu'à ce que la somme des
         contributions transverse et verticale passe sous SEUIL_FOURIER.
         """
+        if isinstance(x_debut, (bool, np.bool_)):
+            raise ValueError("La distance d'entrée doit être numérique (booléen exclu).")
         dy = parametres.pas_transverse_y
         dz = parametres.pas_transverse_z
         for exposant in range(0, 41):
@@ -328,6 +339,9 @@ class TrancheEdp:
 
     def __post_init__(self) -> None:
         """Valide et fige le champ porté par la tranche."""
+        if isinstance(self.x, (bool, np.bool_)):
+            msg = "L'abscisse de la tranche doit être numérique (booléen exclu)."
+            raise ValueError(msg)
         if not np.isfinite(self.x):
             msg = "L'abscisse de la tranche doit être finie."
             raise ValueError(msg)
@@ -357,6 +371,11 @@ class SolutionEdp:
 
     def __post_init__(self) -> None:
         """Valide la cohérence de la solution et fige ses axes et sa séquence."""
+        if isinstance(self.x_entree, (bool, np.bool_)) or isinstance(
+            self.pas_longitudinal, (bool, np.bool_)
+        ):
+            msg = "L'abscisse d'entrée et le pas longitudinal doivent être numériques (booléens exclus)."
+            raise ValueError(msg)
         if not np.isfinite(self.x_entree):
             msg = "L'abscisse d'entrée de la solution doit être finie."
             raise ValueError(msg)
