@@ -38,5 +38,5 @@ def test_vitesse_reellement_sous_representable_est_refusee() -> None:
     vent = VentProfilPuissance(u_reference=1.0, z_reference=1.0e308, exposant=1.0)
 
     # When / Then — le résultat non représentable n'est pas retourné comme un zéro.
-    with pytest.raises(ValueError, match="doit rester finie et strictement positive"):
+    with pytest.raises(ValueError, match="doit rester fini et strictement positif"):
         vent.vitesse(0.0, 0.0, np.nextafter(0.0, 1.0))
