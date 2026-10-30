@@ -718,9 +718,7 @@ def test_mnt_ascii_rejette_une_coordonnees_extreme_hors_emprise() -> None:
 @pytest.mark.parametrize(
     "valeur", [True, np.bool_(True), float("nan"), float("inf"), "1.0", 1.0 + 0.0j]
 )
-def test_vent_uniforme_refuse_les_coordonnees_non_reelles(
-    axe: str, valeur: object
-) -> None:
+def test_vent_uniforme_refuse_les_coordonnees_non_reelles(axe: str, valeur: object) -> None:
     """Le vent uniforme valide le point même s'il est indépendant de ses coordonnées."""
     vent = VentUniforme(u=2.0, v=-1.0)
     coordonnees: dict[str, object] = {"x": 0.0, "y": 0.0, "z": 5.0}
@@ -746,9 +744,7 @@ def test_vent_profil_refuse_les_coordonnees_non_reelles(axe: str, valeur: object
 @pytest.mark.parametrize(
     "valeur", [True, np.bool_(True), float("nan"), float("inf"), "1.0", 1.0 + 0.0j]
 )
-def test_vent_champ_plan_refuse_les_coordonnees_non_reelles(
-    axe: str, valeur: object
-) -> None:
+def test_vent_champ_plan_refuse_les_coordonnees_non_reelles(axe: str, valeur: object) -> None:
     """L'adaptateur valide le point avant de déléguer à un ChampPlan personnalisé."""
 
     class ChampConstant:
@@ -769,9 +765,7 @@ def test_vent_champ_plan_refuse_les_coordonnees_non_reelles(
 @pytest.mark.parametrize(
     "valeur", [True, np.bool_(True), float("nan"), float("inf"), "1.0", 1.0 + 0.0j]
 )
-def test_adaptateur_trajectoire_refuse_les_entrees_non_reelles(
-    axe: str, valeur: object
-) -> None:
+def test_adaptateur_trajectoire_refuse_les_entrees_non_reelles(axe: str, valeur: object) -> None:
     """L'adaptateur valide temps et coordonnées avant un vent personnalisé."""
 
     class VentConstant:
