@@ -97,7 +97,7 @@ def test_source_gaussienne_refuse_les_coordonnees_booleennes_a_levaluation(
     source = superposition_sources.SCENARIO_DEFAUT.source_1
     # When / Then — l'évaluation est refusée avant le calcul gaussien.
     with pytest.raises(ValueError, match="booléens exclus"):
-        source.identification_source.concentration(booleen, 1200.0)
+        source.concentration(booleen, 1200.0)
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
@@ -237,7 +237,7 @@ def test_colline_refuse_les_coordonnees_booleennes_a_levaluation(
 
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
-def test_relief.concentrations_au_point_refuse_les_coordonnees_booleennes(
+def test_concentrations_au_point_refuse_les_coordonnees_booleennes(
     booleen: bool | np.bool_,
 ) -> None:
     """L'évaluation publique des concentrations de relief exclut les booléens."""
