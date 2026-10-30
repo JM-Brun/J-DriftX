@@ -127,8 +127,7 @@ def test_modules_du_package_sont_tous_classes_dans_un_contexte() -> None:
     modules_classes = {
         module
         for module in modules
-        if module in CONTEXTES
-        or any(module.startswith(f"{prefix}.") for prefix in CONTEXTES)
+        if module in CONTEXTES or any(module.startswith(f"{prefix}.") for prefix in CONTEXTES)
     }
     assert modules_classes == modules
 
@@ -158,9 +157,7 @@ def test_dependances_entre_contextes_respectent_la_cartographie() -> None:
             autorise = contexte_cible in DEPENDANCES_AUTORISEES[contexte_origine]
             exception_documentee = (origine, cible) in EXCEPTION_C2_C3
             if not autorise or (
-                contexte_origine == "C2"
-                and contexte_cible == "C3"
-                and not exception_documentee
+                contexte_origine == "C2" and contexte_cible == "C3" and not exception_documentee
             ):
                 violations.append(f"{origine} ({contexte_origine}) -> {cible} ({contexte_cible})")
 
