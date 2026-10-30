@@ -93,5 +93,5 @@ def test_gaussian_solution_rejects_non_real_or_non_finite_coordinates(
     coordinates: object,
 ) -> None:
     """Les coordonnées sont des tableaux réels finis sans coercition silencieuse."""
-    with pytest.raises(ValueError, match="must be"):
+    with pytest.raises(ValueError, match="finite coordinates"):
         gaussian_advection_diffusion(coordinates, 1.0)
