@@ -50,7 +50,8 @@ def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> np.ndarray:
     if brut.dtype.kind not in "iuf":
         raise ValueError(f"{nom} doit etre un tableau numerique reel (booleens et complexes exclus).")
     try:
-        resultat = np.asarray(brut, dtype=float)
+        with np.errstate(over="ignore", invalid="ignore"):
+            resultat = np.asarray(brut, dtype=float)
     except (TypeError, ValueError, OverflowError) as err:
         raise ValueError(f"{nom} doit etre representable en float64.") from err
     if not np.all(np.isfinite(resultat)):
@@ -209,7 +210,7 @@ def concentration_panache(
         raise ValueError("La vitesse du vent doit etre strictement positive.")
     if debit < 0.0:
         raise ValueError("Le debit d'emission doit etre positif ou nul.")
-    x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
+    x_arr = _distance_sous_le_vent(_tableau_reel_fini(x, "La distance sous le vent"))
     if np.any(x_arr <= 0.0):
         raise ValueError("La distance sous le vent doit etre strictement positive.")
     y_arr = _tableau_reel_fini(y, "La coordonnee y")
