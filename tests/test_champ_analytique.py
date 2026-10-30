@@ -4,6 +4,7 @@ import math
 from dataclasses import FrozenInstanceError
 
 import pytest
+import numpy as np
 
 from jdriftx.champ_analytique import ChampFonctionCourant, SuperpositionChamps
 from jdriftx.trajectories import integrate_trajectory
@@ -251,3 +252,33 @@ def test_vitesse_nulle_reste_evaluable_si_amplitude_fois_k_deborde() -> None:
     vitesse = champ.vitesse(0.0, 0.0)
     # Then — les facteurs trigonométriques nuls rendent les composantes exactement nulles.
     assert vitesse == (0.0, 0.0)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("champ", ["amplitude", "longueur"])
+def test_le_champ_refuse_les_parametres_booleens(
+    booleen: bool | np.bool_, champ: str
+) -> None:
+    """Les paramètres numériques du champ excluent les booléens."""
+    # Given — un paramètre du champ remplacé par un booléen.
+    parametres = {"amplitude": 1.0, "longueur": 1.0}
+    parametres[champ] = booleen
+    # When / Then — la construction est refusée avant tout calcul.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        ChampFonctionCourant(**parametres)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("methode", ["fonction_courant", "vitesse"])
+@pytest.mark.parametrize("axe", ["x", "y"])
+def test_les_evaluations_refusent_les_coordonnees_booleennes(
+    booleen: bool | np.bool_, methode: str, axe: str
+) -> None:
+    """Les évaluations du champ excluent les coordonnées booléennes."""
+    # Given — un point dont une coordonnée est booléenne.
+    champ = ChampFonctionCourant(amplitude=1.0, longueur=1.0)
+    coordonnees: dict[str, float | bool | np.bool_] = {"x": 0.1, "y": 0.2}
+    coordonnees[axe] = booleen
+    # When / Then — l'évaluation est refusée avant le calcul de phase.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        getattr(champ, methode)(**coordonnees)
