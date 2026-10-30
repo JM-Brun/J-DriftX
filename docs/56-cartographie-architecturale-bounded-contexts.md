@@ -76,6 +76,27 @@ Le P0 a déjà produit plusieurs tranches fusionnées. Les corrections numériqu
 Les corrections #311/#313/#314 sont intégrées et testées ; elles ne valident pas physiquement les modèles.
 
 **Interpolation bilinéaire MNT — correction présente sur `main`** : `ReliefMntAscii.altitude` délègue chaque interpolation linéaire à `_interpole_lineairement_stable`, qui utilise `a + t·(b − a)` pour deux valeurs de même signe et la forme pondérée pour des signes opposés. Cette sélection évite de faire dépendre le résultat retenu d'une expression intermédiaire susceptible de déborder. Les tests `test_mnt_ascii_interpolation_preserves_the_finite_convex_bound`, `test_mnt_ascii_interpolation_preserves_a_tiny_active_corner`, `test_mnt_ascii_interpolation_preserves_tiny_corner_at_grid_node` et `test_mnt_ascii_interpolation_handles_opposite_sign_extremes` couvrent les cas extrêmes correspondants. Il s'agit de garanties numériques ciblées sur l'interpolation, pas d'une validation topographique générale.
+### Complément P0 — cohérence des scalaires booléens (PR en cours)
+
+Une revue complémentaire a identifié des frontières d'objets où `math.isfinite` ou
+`np.isfinite` étaient utilisés seuls. Ces fonctions considèrent les booléens comme
+des valeurs numériques finies ; elles ne suffisent donc pas à garantir qu'une
+coordonnée ou un paramètre déclaré numérique est réellement un scalaire réel.
+
+La tranche dédiée couvre :
+
+- C1 : `similitude_objets.Point3D` et `ParametresPuff` ;
+- C4 : `CasSynthetiqueS0` et les tableaux détenus par `DatasetS0`, avant conversion
+  en `float64` ;
+- C5 : `PointMesure` et `CasS0`.
+
+Les booléens Python et NumPy sont rejetés explicitement. Les champs entiers
+`graine` et `nombre_points` de `CasSynthetiqueS0` sont également vérifiés à la
+construction afin d'éviter une erreur différée au moment de la génération.
+Aucune équation, unité, convention de génération, tolérance ou hypothèse physique
+n'est modifiée. La validation de `SourcePanache` reste la référence déjà en place
+pour les scalaires physiques.
+
 ## 5. Séparation de `contrats.py` — soldée par #302
 
 L'item P1 « séparer progressivement `contrats.py` » est **déjà effectif** sur `main` : `contrats.py` est une façade de 26 lignes ré-exportant 11 noms ; les protocoles vivent dans `_protocoles.py` ; les implémentations dans `reliefs.py`, `vents.py`, `concentrations.py` ; les chemins d'import historiques sont conservés et couverts par un test d'identité. Rien à refaire ; les futures implémentations de contrat vont dans leur module dédié, la façade n'ajoute que des ré-exports.
