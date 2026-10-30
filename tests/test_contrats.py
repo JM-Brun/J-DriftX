@@ -521,7 +521,6 @@ def test_mnt_ascii_interpolation_preserves_the_finite_convex_bound() -> None:
     assert altitude == maximum
 
 
-
 def test_mnt_ascii_interpolation_preserves_a_tiny_active_corner() -> None:
     """Un sommet de poids un conserve sa valeur malgré les autres échelles."""
     # Given — le coin sud-ouest est subnormal et les trois autres coins sont énormes.
