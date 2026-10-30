@@ -161,7 +161,6 @@ def _etat_initial_periodique(
     return x, dx, initial
 
 
-
 def _facteur_decroissance_periodique(diffusivity: float, length: float, time: float) -> float:
     """Évalue exp(-4*pi²*K*t/L²) sans former les produits ou carrés extrêmes."""
     if diffusivity == 0.0 or time == 0.0:
@@ -173,7 +172,6 @@ def _facteur_decroissance_periodique(diffusivity: float, length: float, time: fl
         return 0.0
     rate = exp(log_rate)
     return exp(-rate)
-
 
 
 def _phase_periodique(
