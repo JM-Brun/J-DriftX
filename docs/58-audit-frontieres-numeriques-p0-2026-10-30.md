@@ -148,3 +148,8 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 - Toute affirmation de validation physique du modèle.
 
 **Conclusion :** les écarts confirmés concernent d'abord les fonctions autonomes des modules pédagogiques. Les composants de configuration et les validateurs de `similitude.py` / `reliefs.py` sont déjà plus stricts. La prochaine PR de correction doit donc s'appuyer sur les contrats ci-dessus et les tests de frontière, sans ajouter de validation redondante aux objets déjà validés.
+
+
+### 3.6 `fields.vector_field` et `terrain.terrain_surface` — issue #379 / PR en cours
+
+Les deux fonctions autonomes refusent désormais les coordonnées qui ne sont pas des tableaux numériques réels float64, finis et sans coercition textuelle ; les booléens et complexes sont exclus avant conversion, y compris dans les séquences hétérogènes promues par NumPy. Les paramètres scalaires sont normalisés en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les contrôles de forme et `width > 0` sont conservés. Aucun signe n'est ajouté aux domaines de `speed`, `shear`, `radial_strength`, `height`, `center_x` ou `center_y`. Les tests couvrent les entrées invalides et des paramètres signés valides ; ils ne constituent pas une validation physique.
