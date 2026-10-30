@@ -176,8 +176,12 @@ class ReliefMntAscii:
         if self.sans_donnee is not None and not np.isfinite(self.sans_donnee):
             msg = "La valeur sans donnee doit etre finie."
             raise ValueError(msg)
-        altitudes.setflags(write=False)
-        object.__setattr__(self, "altitudes", altitudes)
+        # A read-only flag on an owning ndarray can be re-enabled by its caller.
+        # A bytes-backed array makes the validated storage immutable at NumPy level.
+        altitudes_immutable = np.frombuffer(altitudes.tobytes(), dtype=altitudes.dtype).reshape(
+            altitudes.shape
+        )
+        object.__setattr__(self, "altitudes", altitudes_immutable)
 
     @classmethod
     def depuis_texte(cls, texte: str) -> Self:
