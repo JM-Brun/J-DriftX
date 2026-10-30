@@ -10,6 +10,19 @@ from typing import Literal
 import numpy as np
 from numpy.typing import NDArray
 
+
+def _contient_booleen(valeur: object) -> bool:
+    """Détecte les booléens avant toute conversion numérique avec NumPy."""
+    if isinstance(valeur, np.ndarray):
+        if valeur.dtype.kind == "b":
+            return True
+        return valeur.dtype.kind == "O" and any(
+            isinstance(element, (bool, np.bool_)) for element in valeur.flat
+        )
+    brut = np.asarray(valeur, dtype=object)
+    return any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
+
+
 FieldKind = Literal["uniform", "shear", "radial"]
 
 
@@ -39,6 +52,9 @@ def vector_field(
     Raises:
         ValueError: If coordinates have different shapes or parameters are invalid.
     """
+    if _contient_booleen(x) or _contient_booleen(y):
+        msg = "Coordinates must be real-valued (booleans excluded)."
+        raise ValueError(msg)
     x_arr = np.asarray(x, dtype=float)
     y_arr = np.asarray(y, dtype=float)
     if x_arr.shape != y_arr.shape:
@@ -46,6 +62,10 @@ def vector_field(
         raise ValueError(msg)
     if not np.all(np.isfinite(x_arr)) or not np.all(np.isfinite(y_arr)):
         msg = "Coordinates must be finite."
+        raise ValueError(msg)
+    parameters = (speed, angle_deg, shear, radial_strength)
+    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
+        msg = "Field parameters must be real-valued (booleans excluded)."
         raise ValueError(msg)
     if not np.isfinite(speed) or not np.isfinite(angle_deg) or not np.isfinite(shear):
         msg = "Field parameters must be finite."

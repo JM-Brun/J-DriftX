@@ -160,7 +160,7 @@ en cause l'arbitrage antérieur de ne pas introduire de module transversal
 uniquement pour factoriser de petits helpers.
 
 
-### Complément P0 — autres expériences C4 (issue #347, PR #348)
+### Complément P0 — autres expériences C4 (issue #347, PR #352)
 
 L'audit des autres configurations d'expérience a étendu le même contrôle aux
 frontières suivantes :
@@ -178,6 +178,32 @@ Les entrées booléennes Python et NumPy sont rejetées avant les calculs.
 Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
 aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
 n'introduit aucun validateur transversal.
+
+### Complément P0 — noyaux numériques vectorisés (issue #353, PR #357)
+
+Une nouvelle vérification, après définition explicite du contrat d'exclusion des
+booléens, a révélé que plusieurs fonctions convertissaient immédiatement les
+coordonnées en `float64`. Cette conversion effaçait la nature booléenne avant
+les contrôles de finitude.
+
+La tranche couvre :
+
+- `fields.vector_field` : coordonnées et quatre paramètres du champ ;
+- `terrain.terrain_surface` : coordonnées et paramètres du relief ;
+- `advection_diffusion.gaussian_advection_diffusion` : coordonnées et
+  paramètres scalaires ;
+- `periodic_transport.periodic_sine_solution` et les solveurs périodiques :
+  coordonnées, paramètres et nombre de cellules.
+
+Les séquences Python sont inspectées avant coercition ; les tableaux NumPy
+booléens et objets contenant des booléens sont également rejetés. Les tableaux
+déjà convertis en dtype entier ne conservent plus l'information de provenance,
+limite inhérente à l'API ndarray et déjà documentée pour les autres frontières.
+
+Aucune formule, condition de stabilité, unité, condition aux limites ni valeur
+par défaut n'est modifiée. La note antérieure sur la conformité de
+`fields.py` et `advection_diffusion.py` portait sur les contrôles de finitude,
+pas sur l'exclusion explicite des booléens désormais exigée par le contrat.
 
 - **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
