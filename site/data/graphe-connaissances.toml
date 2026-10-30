@@ -1933,7 +1933,7 @@ relation = "utilise"
 
 [[aretes]]
 de = "experiences/baseline_uniforme"
-vers = "contrats"
+vers = "concentrations"
 relation = "utilise"
 
 [[aretes]]
@@ -1966,7 +1966,7 @@ relation = "utilise"
 
 [[aretes]]
 de = "experiences/reference_independante"
-vers = "contrats"
+vers = "concentrations"
 relation = "utilise"
 
 [[aretes]]
