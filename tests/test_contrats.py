@@ -315,6 +315,58 @@ def test_superposition_exige_un_panache() -> None:
         SuperpositionPanaches(panaches=())
 
 
+def test_superposition_refuse_une_collection_mutable() -> None:
+    """La collection doit respecter le tuple annoncé et l'immuabilité du modèle."""
+    panache = PanacheGaussien(
+        source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
+    )
+    with pytest.raises(TypeError, match="tuple"):
+        SuperpositionPanaches(panaches=[panache])  # type: ignore[arg-type]
+
+
+def test_superposition_refuse_un_objet_hors_protocole() -> None:
+    """Un élément incompatible est rejeté dès la construction."""
+    with pytest.raises(TypeError, match="ModeleConcentration"):
+        SuperpositionPanaches(panaches=(object(),))  # type: ignore[arg-type]
+
+
+def test_superposition_refuse_une_forme_de_sortie_incoherente() -> None:
+    """Une sortie ne doit pas être implicitement diffusée par NumPy."""
+
+    class ModeleFormeIncoherente:
+        def concentration(self, x, y, z) -> np.ndarray:
+            return np.zeros((1,), dtype=float)
+
+    panache = PanacheGaussien(
+        source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
+    )
+    superposition = SuperpositionPanaches(panaches=(panache, ModeleFormeIncoherente()))
+    with pytest.raises(ValueError, match="forme"):
+        superposition.concentration(np.zeros((2, 1)), np.zeros((1, 3)), 0.0)
+
+
+def test_superposition_accepte_le_broadcasting_des_entrees() -> None:
+    """Les entrées broadcastables produisent la forme commune attendue."""
+    panache = PanacheGaussien(
+        source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
+    )
+    superposition = SuperpositionPanaches(panaches=(panache,))
+    resultat = superposition.concentration(np.zeros((2, 1)), np.zeros((1, 3)), 1.0)
+    assert resultat.shape == (2, 3)
+
+
+def test_superposition_refuse_une_sortie_non_ndarray() -> None:
+    """Le protocole exige un ndarray, pas une liste Python."""
+
+    class ModeleListe:
+        def concentration(self, x, y, z):
+            return [0.0]
+
+    superposition = SuperpositionPanaches(panaches=(ModeleListe(),))
+    with pytest.raises(TypeError, match="ndarray"):
+        superposition.concentration(np.array([0.0]), np.array([0.0]), np.array([0.0]))
+
+
 def test_adaptateur_vent_stationnaire_alimente_les_trajectoires_2d() -> None:
     """Un vent horizontal est utilisable sans adapter chaque appelant."""
     # Given — un vent stationnaire horizontal échantillonné à hauteur fixe.
