@@ -23,7 +23,7 @@ def test_point3d_refuse_les_coordonnees_booleennes(booleen: bool, coord: str) ->
     valeurs = {"x": 1.0, "y": 2.0, "z": 3.0}
     valeurs[coord] = booleen
     # When / Then — la construction est refusee avant toute evaluation.
-    with pytest.raises(ValueError, match="booleens exclus"):]
+    with pytest.raises(ValueError, match="booleens exclus"):
         Point3D(**valeurs)
 
 
