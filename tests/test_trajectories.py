@@ -125,3 +125,17 @@ def test_excessive_step_count_is_rejected(monkeypatch: pytest.MonkeyPatch) -> No
     # When / Then — l'intégration refuse de boucler sans borne.
     with pytest.raises(ValueError, match="maximum"):
         integrate_trajectory(lambda _t, _x, _y: (1.0, 0.0), 0.0, 0.0, 0.0, 10.0, 0.1)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("parametre", ["x0", "y0", "t0", "t_end", "dt"])
+def test_integrate_trajectory_rejects_boolean_initial_values(
+    booleen: bool | np.bool_, parametre: str
+) -> None:
+    """Les positions et temps booléens sont rejetés avant l'intégration."""
+    # Given — une valeur initiale ou temporelle booléenne.
+    parametres = {"x0": 0.0, "y0": 0.0, "t0": 0.0, "t_end": 1.0, "dt": 0.1}
+    parametres[parametre] = booleen
+    # When / Then — la validation refuse le booléen avant le premier appel du champ.
+    with pytest.raises(ValueError, match="booleans excluded"):
+        integrate_trajectory(lambda _t, _x, _y: (1.0, 0.0), **parametres)
