@@ -56,10 +56,18 @@ class SuperpositionPanaches:
             raise ValueError(msg)
 
     def concentration(self, x: ArrayLike, y: ArrayLike, z: ArrayLike) -> np.ndarray:
-        """Somme les concentrations (kg m^-3) des panaches superposes."""
+        """Somme les concentrations (kg m^-3) des panaches superposes.
+
+        Raises:
+            ValueError: si les concentrations ou leur somme debordent
+                vers une valeur non finie.
+        """
         total = self.panaches[0].concentration(x, y, z)
         for panache in self.panaches[1:]:
             total = total + panache.concentration(x, y, z)
+        if not np.all(np.isfinite(total)):
+            msg = "La superposition doit rester finie."
+            raise ValueError(msg)
         return total
 
 

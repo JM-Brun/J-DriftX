@@ -418,3 +418,87 @@ def test_mnt_ascii_rejette_coordonnees_non_finies(
     # When / Then — l'évaluation est refusée explicitement.
     with pytest.raises(ValueError, match=r"coordonnees.*finies"):
         relief.altitude(*coordonnees)
+
+
+@pytest.mark.parametrize(
+    ("ligne", "valeur"),
+    [
+        ("ncols 3", "ncols inf"),
+        ("ncols 3", "ncols nan"),
+        ("nrows 3", "nrows inf"),
+        ("nrows 3", "nrows nan"),
+    ],
+)
+def test_mnt_ascii_rejette_dimensions_non_finies(ligne: str, valeur: str) -> None:
+    """Étant donné un en-tête .asc à dimension non finie, la lecture est refusée.
+
+    Sans garde, ncols inf déborde int() en OverflowError et nan en
+    ValueError interne : le contrat de lecture garde son message explicite.
+    """
+    # Given — un MNT dont ncols ou nrows vaut inf ou nan.
+    texte = MNT_ASCII.replace(ligne, valeur)
+    # When / Then — la lecture est refusée avec le message du contrat.
+    with pytest.raises(ValueError, match="ncols et nrows doivent etre finis"):
+        ReliefMntAscii.depuis_texte(texte)
+
+
+@pytest.mark.parametrize(("z", "z_reference"), [(1e308, 1e-308), (1e307, 1.0)])
+def test_vent_profil_puissance_rejette_le_debordement(z: float, z_reference: float) -> None:
+    """Étant donné des entrées finies extrêmes, le profil refuse le débordement.
+
+    Le quotient z / z_reference puis le produit par u_reference peuvent
+    déborder vers l'infini alors que chaque entrée reste finie : le contrat
+    Vent lève ValueError plutôt que de retourner une vitesse infinie.
+    """
+    # Given — un profil valide et des entrées finies mais extrêmes.
+    vent = VentProfilPuissance(u_reference=1e5, z_reference=z_reference, exposant=1.0)
+    # When / Then — le débordement du profil est refusé explicitement.
+    with pytest.raises(ValueError, match="doit rester fini"):
+        vent.vitesse(0.0, 0.0, z)
+
+
+def test_adaptateur_champ_plan_rejette_composantes_non_finies() -> None:
+    """Un champ plan délégué ne doit pas fuiter une vitesse non finie."""
+    # Given — un champ plan dont la composante u déborde.
+
+    class ChampInfini:
+        """Champ plan minimal : fonction_courant nulle, u infinie."""
+
+        def fonction_courant(self, x: float, y: float) -> float:
+            return 0.0
+
+        def vitesse(self, x: float, y: float) -> tuple[float, float]:
+            return float("inf"), 0.0
+
+    vent = VentDeChampPlan(champ=ChampInfini())  # type: ignore[arg-type]
+
+    # When / Then — l'adaptateur refuse la composante non finie.
+    with pytest.raises(ValueError, match="deux composantes finies"):
+        vent.vitesse(0.0, 0.0, 10.0)
+
+
+def test_superposition_rejette_le_debordement_de_somme() -> None:
+    """Étant donné des panaches finis extrêmes, la somme ne déborde pas en silence.
+
+    Chaque concentration reste finie, mais leur somme dépasse le plus
+    grand float64 : la superposition lève ValueError au lieu de retourner
+    +inf (frontière NumPy, hypothèse H8 de linéarité).
+    """
+    # Given — deux modèles constants finis dont la somme déborde.
+
+    class PanacheConstant:
+        """Modèle minimal : concentration constante et finie, paramétrée."""
+
+        def __init__(self, valeur: float) -> None:
+            self.valeur = valeur
+
+        def concentration(self, x, y, z) -> np.ndarray:
+            return np.full(np.shape(x), self.valeur)
+
+    superposition = SuperpositionPanaches(
+        panaches=(PanacheConstant(1.5e308), PanacheConstant(1.5e308))
+    )
+
+    # When / Then — le débordement de la somme est refusé explicitement.
+    with pytest.raises(ValueError, match="doit rester finie"):
+        superposition.concentration(0.0, 0.0, 0.0)
