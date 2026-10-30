@@ -2,7 +2,7 @@
 
 ## Statut
 
-Note d'architecture portant la tranche P1 du [chantier qualité #303](https://github.com/JM-Brun/J-DriftX/issues/303) : cartographie des dépendances, définition des contextes délimités (bounded contexts) et des règles de dépendances autorisées. **État des lieux initial de `main` au commit `8869419` ; actualisations successives du suivi au 30 octobre 2026, dont la base `main` après intégration de #315/#316 (commit `30db6a9`). Aucune migration ni réduction d'API n'est appliquée dans cette note** : les arbitrages de migration et le résidu MNT restent au propriétaire. Cette note ne change aucune équation, tolérance, contrat d'exécution ni test.
+Note d'architecture portant la tranche P1 du [chantier qualité #303](https://github.com/JM-Brun/J-DriftX/issues/303) : cartographie des dépendances, définition des contextes délimités (bounded contexts) et des règles de dépendances autorisées. **État des lieux initial de `main` au commit `8869419` ; actualisations successives du suivi au 30 octobre 2026. Aucune migration ni réduction d'API n'est appliquée dans cette note** : les arbitrages de migration restent au propriétaire. Cette note ne change aucune équation, tolérance, contrat d'exécution ni test.
 
 ## Actualisation du suivi — 30 octobre 2026
 
@@ -15,7 +15,7 @@ Cette actualisation complète l'état des lieux initial sans modifier les décis
 - **PR #316** : garde-fous AST sur les frontières architecturales, les dépendances de rendu et les cycles d'import ; fusionnée, CI complète verte (683 tests, 95 %).
 - **PR #318** : immutabilité des tableaux détenus par `DatasetS0`, `GrilleEdp`, `TrancheEdp` et `SolutionEdp`, ainsi que contrôles des paramètres finis ; fusionnée, CI complète verte (691 tests, 95 %).
 
-Les CI établissent des garanties logicielles dans leur périmètre, pas une validation physique. Le cas de débordement de l'interpolation bilinéaire du MNT est maintenant reproductible et reste à corriger séparément.
+Les CI établissent des garanties logicielles dans leur périmètre, pas une validation physique. Le cas extrême d'interpolation bilinéaire du MNT est désormais couvert par une interpolation linéaire stable et des tests de régression ciblés (voir §4).
 
 L'inventaire interne de l'API racine a été réalisé (§6.1). Il ne permet pas de conclure sur d'éventuels consommateurs externes ; aucune réduction d'API n'est proposée.
 
@@ -60,7 +60,7 @@ Interdits transverses : cycle quelconque ; import de rendu (matplotlib/plotly/st
 
 ## 4. État de P0 — frontières NumPy
 
-Le P0 a déjà produit plusieurs tranches fusionnées. Les corrections numériques #311/#313/#314 sont maintenant intégrées ; l'audit des objets portant des tableaux est intégré par #318 (fusionnée, CI verte). Le P0 n'est pas clos tant que cette tranche n'est pas revue/intégrée et que le débordement bilinéaire MNT décrit ci-dessous n'est pas traité.
+Le P0 a déjà produit plusieurs tranches fusionnées. Les corrections numériques #311/#313/#314 sont maintenant intégrées ; l'audit des objets portant des tableaux est intégré par #318 (fusionnée, CI verte). Les cas ciblés de l'interpolation bilinéaire MNT sont également traités sur `main` et couverts par des tests de régression. L'audit P0 reste ouvert pour les frontières d'entrée et exceptions qui n'ont pas encore été examinées.
 
 - **#302** : immutabilité réelle (bytes-backed `np.frombuffer`) et sentinelle `nodata` finie de `ReliefMntAscii`, coordonnées d'interpolation validées ;
 - **#304** : audit `source` (déjà conforme), gardes `similitude` (scalaires et grilles finis, débordement `u·t`, distance sous le vent), `metric` (débordement `b − a`, somme des coûts), `terrain` (coordonnées finies) ;
@@ -75,7 +75,7 @@ Le P0 a déjà produit plusieurs tranches fusionnées. Les corrections numériqu
 
 Les corrections #311/#313/#314 sont intégrées et testées ; elles ne valident pas physiquement les modèles.
 
-**Débordement bilinéaire MNT reproduit** : avec une grille 2×2 dont les quatre altitudes valent `np.finfo(float).max`, l'appel `ReliefMntAscii.altitude(0.1, 0.2)` peut retourner `inf` alors que l'interpolation convexe exacte doit rester égale à l'altitude maximale finie. Les poids sont non négatifs et leur somme théorique vaut 1 ; le débordement vient de l'arrondi de la somme pondérée en float64. Une correction stable de la combinaison convexe et un test de régression sont à réaliser dans une PR dédiée.
+**Interpolation bilinéaire MNT — correction présente sur `main`** : `ReliefMntAscii.altitude` délègue chaque interpolation linéaire à `_interpole_lineairement_stable`, qui utilise `a + t·(b − a)` pour deux valeurs de même signe et la forme pondérée pour des signes opposés. Cette sélection évite de faire dépendre le résultat retenu d'une expression intermédiaire susceptible de déborder. Les tests `test_mnt_ascii_interpolation_preserves_the_finite_convex_bound`, `test_mnt_ascii_interpolation_preserves_a_tiny_active_corner`, `test_mnt_ascii_interpolation_preserves_tiny_corner_at_grid_node` et `test_mnt_ascii_interpolation_handles_opposite_sign_extremes` couvrent les cas extrêmes correspondants. Il s'agit de garanties numériques ciblées sur l'interpolation, pas d'une validation topographique générale.
 ## 5. Séparation de `contrats.py` — soldée par #302
 
 L'item P1 « séparer progressivement `contrats.py` » est **déjà effectif** sur `main` : `contrats.py` est une façade de 26 lignes ré-exportant 11 noms ; les protocoles vivent dans `_protocoles.py` ; les implémentations dans `reliefs.py`, `vents.py`, `concentrations.py` ; les chemins d'import historiques sont conservés et couverts par un test d'identité. Rien à refaire ; les futures implémentations de contrat vont dans leur module dédié, la façade n'ajoute que des ré-exports.
@@ -109,7 +109,7 @@ Conclusion : l'inventaire interne est terminé ; la réduction de l'API racine e
 
 ## 8. Suites (P0 résiduel, P2/P3 de #303)
 
-- **P0 résiduel** : corriger le débordement bilinéaire MNT reproduit ci-dessus dans une PR distincte ; poursuivre l'audit des autres frontières d'entrée non couvertes.
+- **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
 - **P3** : contrôle d'architecture statique désormais intégré par #316 (`tests/test_architecture_boundaries.py`) ; il couvre la matrice d'imports, les dépendances de rendu et les cycles statiques, sans couvrir les imports dynamiques.
 - La réduction de `__init__.py` suit l'inventaire d'usage du §6.
