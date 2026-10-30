@@ -228,3 +228,27 @@ def test_la_superposition_debordante_est_rejetee() -> None:
     superposition_psi = SuperpositionChamps((champ_psi, champ_psi))
     with pytest.raises(ValueError, match="superposition doit rester finie"):
         superposition_psi.fonction_courant(0.25, 0.25)
+
+
+
+def test_les_coordonnees_extremes_sont_reduites_avant_le_calcul_de_phase() -> None:
+    """Une coordonnee finie ne doit pas faire deborder k*x avant la reduction periodique."""
+    # Given — un champ de longueur d'onde 1 m et une coordonnee finie extreme.
+    champ = ChampFonctionCourant(amplitude=1.0, longueur=1.0)
+    # When — le champ et sa vitesse sont evalues au point (1e308, 0.25).
+    psi = champ.fonction_courant(1.0e308, 0.25)
+    u, v = champ.vitesse(1.0e308, 0.25)
+    # Then — 1e308 est un multiple entier de la longueur d'onde en float64.
+    assert psi == pytest.approx(0.0, abs=1e-14)
+    assert u == pytest.approx(0.0, abs=1e-14)
+    assert v == pytest.approx(-2.0 * math.pi)
+
+
+def test_vitesse_nulle_reste_evaluable_si_amplitude_fois_k_deborde() -> None:
+    """Un facteur amplitude*k non representable ne doit pas masquer un zero exact."""
+    # Given — amplitude*k deborde, mais les deux composantes sont nulles en (0, 0).
+    champ = ChampFonctionCourant(amplitude=1.0e200, longueur=6.283e-201)
+    # When — la vitesse est evaluee au point de stagnation.
+    vitesse = champ.vitesse(0.0, 0.0)
+    # Then — les facteurs trigonométriques nuls rendent les composantes exactement nulles.
+    assert vitesse == (0.0, 0.0)
