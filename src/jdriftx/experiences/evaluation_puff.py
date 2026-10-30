@@ -32,8 +32,8 @@ d'export JSON (``model_dump`` de Pydantic), conformément à la charte.
 from __future__ import annotations
 
 import math
-from numbers import Real
 from importlib import metadata
+from numbers import Real
 
 import numpy as np
 from pydantic import BaseModel, ConfigDict, Field, field_validator
