@@ -64,3 +64,18 @@ def test_unknown_field_kind_raises() -> None:
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="Unknown field kind"):
         vector_field(np.zeros(2), np.zeros(2), "unknown")  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_vector_field_rejects_boolean_coordinates(booleen: bool | np.bool_) -> None:
+    """Les coordonnées booléennes ne sont pas converties en positions numériques."""
+    with pytest.raises(ValueError, match="booleans excluded"):
+        vector_field(np.array([booleen]), np.array([0.0]), "uniform")
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("parametre", ["speed", "angle_deg", "shear", "radial_strength"])
+def test_vector_field_rejects_boolean_parameters(booleen: bool | np.bool_, parametre: str) -> None:
+    """Les paramètres scalaires booléens sont rejetés avant l'évaluation du champ."""
+    with pytest.raises(ValueError, match="booleans excluded"):
+        vector_field(np.array([0.0]), np.array([0.0]), "uniform", **{parametre: booleen})
