@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT
-from jdriftx.experiences.reference_independante import GrilleEdp, PARAMETRES_EDP_DEFAUT
+from jdriftx.experiences.reference_independante import PARAMETRES_EDP_DEFAUT, GrilleEdp
 from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
 
 
