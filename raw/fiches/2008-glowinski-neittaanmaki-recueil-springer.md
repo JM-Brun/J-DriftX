@@ -3,7 +3,7 @@
 ## Identification du fichier
 
 - **État actuel (29 octobre 2026)** : le PDF intégral du recueil est présent dans `raw/Partial Differential Equations - Modelling and Numerical Simulation - R. Glowinski, P. Neittaanmaki (Springer, 2008) WW.pdf` et doit être conservé conformément à la décision explicite du mainteneur.
-- **Historique des PR** : ajouté via #54 ; retrait tenté via #67 ; restauration via #216 ; nouvelle suppression tentée via #262 puis annulée par restauration exacte via #264. Ne pas ouvrir une nouvelle PR de suppression sans demande explicite.
+- **Historique des PR** : ajouté via #54 ; retrait effectif via #67 puis restauration via #216 ; second retrait effectif via #262 puis restauration exacte via #264. Ne pas ouvrir une nouvelle PR de suppression sans demande explicite.
 - **Droits** : les droits de redistribution restent non résolus. La conservation du binaire dans le dépôt est la décision opérationnelle du mainteneur, pas une conclusion juridique ni une autorisation de redistribution.
 - **Nature** : recueil éditorial complet, et non tiré-à-part du seul chapitre utile au projet.
 - **Contrôle documentaire** : une copie consultée antérieurement a servi à contrôler la page de titre, l'ISBN, la table des matières et le texte du chapitre 14. Cela étaye l'identification bibliographique et la lecture scientifique initiale, mais ne signifie pas que le PDF intégral est redistribuable.
