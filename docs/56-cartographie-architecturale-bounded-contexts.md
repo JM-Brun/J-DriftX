@@ -2,19 +2,22 @@
 
 ## Statut
 
-Note d'architecture portant la tranche P1 du [chantier qualité #303](https://github.com/JM-Brun/J-DriftX/issues/303) : cartographie des dépendances, définition des contextes délimités (bounded contexts) et des règles de dépendances autorisées. **État des lieux initial de `main` au commit `8869419` ; actualisation du suivi sur la base `main` du 30 octobre 2026 (commit `e036dad`). Aucune migration ni réduction d'API n'est appliquée dans cette note** : les arbitrages de migration et le résidu MNT restent au propriétaire. Cette note ne change aucune équation, tolérance, contrat d'exécution ni test.
+Note d'architecture portant la tranche P1 du [chantier qualité #303](https://github.com/JM-Brun/J-DriftX/issues/303) : cartographie des dépendances, définition des contextes délimités (bounded contexts) et des règles de dépendances autorisées. **État des lieux initial de `main` au commit `8869419` ; actualisations successives du suivi au 30 octobre 2026, dont la base `main` après intégration de #315/#316 (commit `30db6a9`). Aucune migration ni réduction d'API n'est appliquée dans cette note** : les arbitrages de migration et le résidu MNT restent au propriétaire. Cette note ne change aucune équation, tolérance, contrat d'exécution ni test.
 
 ## Actualisation du suivi — 30 octobre 2026
 
-Cette actualisation complète l'état des lieux initial sans modifier les décisions d'architecture. Les trois tranches numériques suivantes sont maintenant implémentées dans des PR distinctes, CI verte, mais **non fusionnées** :
+Cette actualisation complète l'état des lieux initial sans modifier les décisions de migration :
 
-- **PR #311** : stabilité des évaluations gaussiennes panache/puff, associée à l'issue #307 ; CI complète verte (672 tests, 95 % de couverture).
-- **PR #313** : représentabilité des temps et coûts de transport dans `metric.py` ; CI complète verte (669 tests, 95 %).
-- **PR #314** : réduction des phases et calcul robuste des composantes du champ analytique ; CI complète verte (666 tests, 95 %).
+- **PR #311** : stabilité des évaluations gaussiennes panache/puff, associée à l'issue #307 ; fusionnée, CI complète verte (672 tests, 95 % de couverture).
+- **PR #313** : représentabilité des temps et coûts de transport dans `metric.py` ; fusionnée, CI complète verte (669 tests, 95 %).
+- **PR #314** : réduction des phases et calcul robuste des composantes du champ analytique ; fusionnée, CI complète verte (666 tests, 95 %).
+- **PR #315** : actualisation de cette cartographie et inventaire des usages de l'API racine ; fusionnée.
+- **PR #316** : garde-fous AST sur les frontières architecturales, les dépendances de rendu et les cycles d'import ; fusionnée, CI complète verte (683 tests, 95 %).
+- **PR #318** : immutabilité des tableaux détenus par `DatasetS0`, `GrilleEdp`, `TrancheEdp` et `SolutionEdp`, ainsi que contrôles des paramètres finis ; fusionnée, CI complète verte (691 tests, 95 %).
 
-Ces résultats ne ferment pas les items P0 avant revue et intégration. Ils ne valent pas validation physique. Le résidu théorique sur l'interpolation bilinéaire du MNT reste à arbitrer.
+Les CI établissent des garanties logicielles dans leur périmètre, pas une validation physique. Le cas de débordement de l'interpolation bilinéaire du MNT est maintenant reproductible et reste à corriger séparément.
 
-L'inventaire d'usage interne de l'API racine a également été précisé (§6.1). Il ne permet pas de conclure sur d'éventuels consommateurs externes ; en conséquence, aucune réduction d'API n'est proposée.
+L'inventaire interne de l'API racine a été réalisé (§6.1). Il ne permet pas de conclure sur d'éventuels consommateurs externes ; aucune réduction d'API n'est proposée.
 
 ## 1. Méthode et sources
 
@@ -35,11 +38,11 @@ Trois sources factuelles, aucune inférence au-delà :
 | **C5. Benchmarks de référence** ([docs/39](39-squelette-benchmarks-s0.md)) | `benchmarks/cas`, `benchmarks/metriques`, `benchmarks/reference` | cas synthétiques enregistrés, métriques FAC2/NMSE, pipeline d'évaluation | C1 (`cas` → `similitude`, `source`) |
 | **C6. Figures et rendu** | `figures/figure_01` … `figure_06`, `figures/wind_field_explorer` | générateurs SVG et explorateur, consomment des tranches typées | C4 (chaque figure → son expérience), `wind_field_explorer` → `fields` (C3) |
 | **C7. Outillage de traçabilité documentaire** | `graphe_connaissances`, `extraction_graphe`, `diagnostic_graphe` | rendu du registre TOML, inventaire, diagnostic ; aucun calcul scientifique | autonomes (aucune arête vers C1–C6) |
-| **C8. Applications, site et scripts** (hors package) | `apps/`, `site/`, `scripts/` | applications interactives, publication, contrôle | API publique du package (`__init__.py`) uniquement |
+| **C8. Applications, site et scripts** (hors package) | `apps/`, `site/`, `scripts/` | applications interactives, publication, contrôle | imports explicites de sous-modules C1/C3/C4/C5 selon le cas ; l'API racine n'est pas l'unique frontière utilisée |
 
 ## 3. Règles de dépendances proposées
 
-Constat préalable : **sur `main`, aucune inversion ni cycle n'existe** — les arêtes du registre vont toutes des contextes aval (C4–C7) vers l'amont (C1–C2), et chaque figure ne consomme que son expérience. La règle ci-dessous fige cet état de fait au lieu d'en inventer un nouveau ; elle servirait de base au contrôle d'architecture léger évoqué en P3 de #303.
+Constat préalable : **sur `main`, aucune inversion ni cycle n'existe** — les arêtes du registre vont des contextes aval vers l'amont, et chaque figure ne consomme que son expérience. Depuis la PR #316, les frontières décrites ici sont protégées par `tests/test_architecture_boundaries.py` : classification des modules, matrice d'imports, exception C2 → C3 et absence de cycles statiques. Le contrôle est volontairement limité aux imports statiques.
 
 | Depuis ↓ vers → | C1 | C2 | C3 | C4 | C5 | C6 | C7 |
 |---|---|---|---|---|---|---|---|
@@ -57,7 +60,7 @@ Interdits transverses : cycle quelconque ; import de rendu (matplotlib/plotly/st
 
 ## 4. État de P0 — frontières NumPy
 
-Le P0 a déjà produit plusieurs tranches fusionnées, mais **ne doit pas être déclaré clos tant que les PR numériques encore ouvertes ne sont pas intégrées** :
+Le P0 a déjà produit plusieurs tranches fusionnées. Les corrections numériques #311/#313/#314 sont maintenant intégrées ; l'audit des objets portant des tableaux est intégré par #318 (fusionnée, CI verte). Le P0 n'est pas clos tant que cette tranche n'est pas revue/intégrée et que le débordement bilinéaire MNT décrit ci-dessous n'est pas traité.
 
 - **#302** : immutabilité réelle (bytes-backed `np.frombuffer`) et sentinelle `nodata` finie de `ReliefMntAscii`, coordonnées d'interpolation validées ;
 - **#304** : audit `source` (déjà conforme), gardes `similitude` (scalaires et grilles finis, débordement `u·t`, distance sous le vent), `metric` (débordement `b − a`, somme des coûts), `terrain` (coordonnées finies) ;
@@ -65,13 +68,14 @@ Le P0 a déjà produit plusieurs tranches fusionnées, mais **ne doit pas être 
 - **#306** : somme `SuperpositionPanaches`, en-tête MNT (`ncols`/`nrows`) finis, profil de vent en loi de puissance, champ plan adapté ;
 - **#308** : nombre d'onde, coordonnées, vitesse et superposition de `champ_analytique` ;
 - **#309** : échelles extrêmes gaussiennes (exposants normalisés, chemin de secours logarithmique, exception documentée) ; les trois cas de l'[issue #307](https://github.com/JM-Brun/J-DriftX/issues/307) sont couverts par les tests ;
-- **#311 (ouverte, CI verte)** : extension de la robustesse des lois de Briggs et des concentrations panache/puff aux échelles extrêmes ; intégration en attente de revue ;
-- **#313 (ouverte, CI verte)** : représentabilité des métriques et temps de transport, y compris les intermédiaires de norme et de produit scalaire ;
-- **#314 (ouverte, CI verte)** : réduction des phases périodiques et calcul représentable des composantes du champ analytique.
+- **#311 (fusionnée)** : extension de la robustesse des lois de Briggs et des concentrations panache/puff aux échelles extrêmes ; CI verte, 672 tests, couverture 95 % ;
+- **#313 (fusionnée)** : représentabilité des métriques et temps de transport, y compris les intermédiaires de norme et de produit scalaire ; CI verte, 669 tests, couverture 95 % ;
+- **#314 (fusionnée)** : réduction des phases périodiques et calcul représentable des composantes du champ analytique ; CI verte, 666 tests, couverture 95 % ;
+- **#318 (fusionnée)** : copie défensive et immutabilité profonde des tableaux de `DatasetS0`, `GrilleEdp`, `TrancheEdp` et `SolutionEdp`, validation des formes et paramètres finis ; CI verte, 691 tests, couverture 95 %.
 
-Les PR #311/#313/#314 apportent des corrections logicielles testées ; elles ne valident pas physiquement les modèles. Les items correspondants restent ouverts jusqu'à intégration.
+Les corrections #311/#313/#314 sont intégrées et testées ; elles ne valident pas physiquement les modèles.
 
-**Résidu théorique identifié** : la somme bilinéaire pondérée de `ReliefMntAscii.altitude` (`z00·p00 + z10·p10 + z01·p01 + z11·p11`) n'est pas contrôlée — quatre altitudes finies proches du maximum float64 peuvent sommer en débordement silencieux. Aucun MNT réel connu du projet n'atteint ces ordres de grandeur. Décision au propriétaire : ajouter une garde explicite ou documenter l'hypothèse de plage physique du MNT.
+**Débordement bilinéaire MNT reproduit** : avec une grille 2×2 dont les quatre altitudes valent `np.finfo(float).max`, l'appel `ReliefMntAscii.altitude(0.1, 0.2)` peut retourner `inf` alors que l'interpolation convexe exacte doit rester égale à l'altitude maximale finie. Les poids sont non négatifs et leur somme théorique vaut 1 ; le débordement vient de l'arrondi de la somme pondérée en float64. Une correction stable de la combinaison convexe et un test de régression sont à réaliser dans une PR dédiée.
 ## 5. Séparation de `contrats.py` — soldée par #302
 
 L'item P1 « séparer progressivement `contrats.py` » est **déjà effectif** sur `main` : `contrats.py` est une façade de 26 lignes ré-exportant 11 noms ; les protocoles vivent dans `_protocoles.py` ; les implémentations dans `reliefs.py`, `vents.py`, `concentrations.py` ; les chemins d'import historiques sont conservés et couverts par un test d'identité. Rien à refaire ; les futures implémentations de contrat vont dans leur module dédié, la façade n'ajoute que des ré-exports.
@@ -90,7 +94,9 @@ Les modules d'enseignement C3 (`trajectories`, `fields`, `terrain`, `periodic_tr
 
 ### 6.1 Résultat et limite de l'inventaire d'usage
 
-- Aucun usage interne direct des symboles racine n'a été trouvé dans les imports des sources, applications et scripts inspectés.
+- Aucun usage direct des symboles ré-exportés à la racine n'a été trouvé dans les imports des sources, applications et scripts inspectés ; ces consommateurs utilisent explicitement les sous-modules.
+- Exemples constatés : `apps/convergence_lab.py` importe `periodic_transport` ; `apps/interactive_lab.py` importe `fields` et `terrain` ; `apps/scientific_validation.py` importe `advection_diffusion` et `trajectories` ; `scripts/benchmark_baseline_uniforme.py` importe `benchmarks.cas`, `experiences.baseline_uniforme` et `source`.
+- Les modules C3 utilisés par les applications ne sont volontairement pas ré-exportés à la racine. Les déplacer ou les supprimer casserait donc des consommateurs internes même en l'absence d'import racine.
 - Le dépôt vérifie des ré-exports de compatibilité ciblés, mais ne fournit pas d'inventaire des notebooks personnels, scripts hors dépôt, installations publiées ou consommateurs externes.
 - L'absence d'usage interne n'est pas une preuve d'absence d'usage public. Les exports du noyau, des contrats et des expériences restent donc inchangés.
 - Toute réduction ultérieure devra être une décision explicite de versionnement/API, accompagnée d'une période de dépréciation si le package devient consommé hors du dépôt.
@@ -103,9 +109,9 @@ Conclusion : l'inventaire interne est terminé ; la réduction de l'API racine e
 
 ## 8. Suites (P0 résiduel, P2/P3 de #303)
 
-- **P0 résiduel** : faire relire et intégrer #311, #313 et #314 avant de cocher les tranches correspondantes ; arbitrer séparément le cas théorique de débordement de l'interpolation bilinéaire du MNT.
+- **P0 résiduel** : corriger le débordement bilinéaire MNT reproduit ci-dessus dans une PR distincte ; poursuivre l'audit des autres frontières d'entrée non couvertes.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
-- **P3** : une fois les règles du §3 validées par le propriétaire, un contrôle d'architecture léger (imports interdits C1←C4/C6, absence de cycles) devient réalisable — #303 le conditionne explicitement à la définition des frontières, que cette note fournit.
+- **P3** : contrôle d'architecture statique désormais intégré par #316 (`tests/test_architecture_boundaries.py`) ; il couvre la matrice d'imports, les dépendances de rendu et les cycles statiques, sans couvrir les imports dynamiques.
 - La réduction de `__init__.py` suit l'inventaire d'usage du §6.
 
 ## Références
