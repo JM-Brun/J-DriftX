@@ -27,4 +27,8 @@ def test_protocoles_publics_reexportent_les_protocoles_canoniques() -> None:
     """Les protocoles conservent leur identité à travers les deux façades publiques."""
     assert contrats.Relief is protocoles.Relief is PACKAGE.Relief
     assert contrats.Vent is protocoles.Vent is PACKAGE.Vent
-    assert (\n        contrats.ModeleConcentration\n        is protocoles.ModeleConcentration\n        is PACKAGE.ModeleConcentration\n    )
+    assert (
+        contrats.ModeleConcentration
+        is protocoles.ModeleConcentration
+        is PACKAGE.ModeleConcentration
+    )
