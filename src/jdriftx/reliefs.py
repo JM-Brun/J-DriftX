@@ -9,7 +9,6 @@ from typing import Self
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
-from jdriftx._protocoles import Relief
 from jdriftx.terrain import TerrainKind, terrain_surface
 
 
