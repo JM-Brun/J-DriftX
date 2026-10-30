@@ -68,17 +68,8 @@ class MarginaleFermee:
         with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
             rapport_y = mailles_y / sy
             rapport_z = mailles_z / sz
-            log_amplitude = (
-                np.log(self.source.masse)
-                - np.log(2.0 * np.pi)
-                - np.log(sy)
-                - np.log(sz)
-            )
-            log_champ = (
-                log_amplitude
-                - 0.5 * np.square(rapport_y)
-                - 0.5 * np.square(rapport_z)
-            )
+            log_amplitude = np.log(self.source.masse) - np.log(2.0 * np.pi) - np.log(sy) - np.log(sz)
+            log_champ = log_amplitude - 0.5 * np.square(rapport_y) - 0.5 * np.square(rapport_z)
 
         log_max = np.log(np.finfo(np.float64).max)
         if np.any(np.isnan(log_champ)) or np.any(log_champ > log_max):
