@@ -72,7 +72,7 @@ class SuperpositionPanaches:
         addition NumPy masque une incohérence par broadcasting implicite.
 
         Raises:
-            TypeError: si un modèle ne renvoie pas un ndarray.
+            TypeError: si un modèle ne renvoie pas un ndarray flottant réel.
             ValueError: si les entrées ne sont pas broadcastables, si une
                 sortie a une forme inattendue ou si la somme n'est pas finie.
         """
