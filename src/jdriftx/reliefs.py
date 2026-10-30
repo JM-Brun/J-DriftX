@@ -22,6 +22,23 @@ def _verifie_coordonnees(x_arr: NDArray[np.floating], y_arr: NDArray[np.floating
         raise ValueError(msg)
 
 
+def _coordonnees_normalisees(
+    coordonnees: NDArray[np.float64],
+    origine: float,
+    pas: float,
+) -> NDArray[np.float64]:
+    """Calcule (coordonnees - origine) / pas sans débordement intermédiaire."""
+    meme_signe = np.signbit(coordonnees) == np.signbit(origine)
+    with np.errstate(over="ignore"):
+        difference = coordonnees - origine
+    with np.errstate(over="ignore", divide="ignore", under="ignore", invalid="ignore"):
+        indices_directs = difference / pas
+        echelle = np.maximum(np.maximum(np.abs(coordonnees), abs(origine)), pas)
+        difference_normalisee = coordonnees / echelle - origine / echelle
+        indices_normalises = difference_normalisee / (pas / echelle)
+    return np.asarray(np.where(meme_signe, indices_directs, indices_normalises), dtype=float)
+
+
 def _interpole_lineairement_stable(
     a: ArrayLike,
     b: ArrayLike,
@@ -218,8 +235,8 @@ class ReliefMntAscii:
         y_arr = np.asarray(y, dtype=float)
         _verifie_coordonnees(x_arr, y_arr)
         nrows, ncols = self.altitudes.shape
-        colonne = (x_arr - self.x0) / self.pas
-        ligne = (y_arr - self.y0) / self.pas
+        colonne = _coordonnees_normalisees(x_arr, self.x0, self.pas)
+        ligne = _coordonnees_normalisees(y_arr, self.y0, self.pas)
         if np.any(colonne < 0.0) or np.any(colonne > ncols - 1):
             msg = "Point hors de l emprise horizontale du MNT."
             raise ValueError(msg)
