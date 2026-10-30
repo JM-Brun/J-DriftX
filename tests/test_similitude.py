@@ -353,7 +353,7 @@ def test_sigmas_rejettent_distance_non_finie(valeur: float) -> None:
     """Une distance sous le vent non finie est refusée par les deux écarts-types."""
     # Given — une distance NaN ou infinie, classe Pasquill objet D.
     # When / Then — les deux appels sont refusés avant tout calcul.
-    with pytest.raises(ValueError, match="doit etre finie"):
+    with pytest.raises(ValueError, match="valeurs finies"):
         sigma_y(valeur, ClasseStabilite.D)
     with pytest.raises(ValueError, match="doit etre finie"):
         sigma_z(valeur, ClasseStabilite.D)
@@ -382,7 +382,7 @@ def test_panache_rejette_scalaire_non_fini(parametre: dict[str, float]) -> None:
     fixes = {"debit": 1.0, "u": 3.0, "hauteur": 0.0}
     fixes.update(parametre)
     # When / Then — l'appel est refusé avant tout calcul.
-    with pytest.raises(ValueError, match="doivent etre finis"):
+    with pytest.raises(ValueError, match="fini"):
         concentration_panache(500.0, 0.0, 1.0, classe=ClasseStabilite.D, **fixes)
 
 
@@ -405,7 +405,7 @@ def test_panache_rejette_grille_non_finie(y: np.ndarray, z: np.ndarray) -> None:
     """Une coordonnée latérale ou verticale non finie est refusée."""
     # Given — un NaN ou un infini dans la grille y ou z.
     # When / Then — l'appel est refusé.
-    with pytest.raises(ValueError, match="coordonnees finies"):
+    with pytest.raises(ValueError, match="valeurs finies"):
         concentration_panache(500.0, y, z, debit=1.0, u=3.0, classe=ClasseStabilite.D)
 
 
@@ -626,3 +626,70 @@ def test_puff_distance_extreme_ne_produit_pas_de_valeur_non_finie() -> None:
     # Then — la concentration est finie (eventuellement arrondie a zero).
     assert np.isfinite(resultat)
     assert float(resultat) >= 0.0
+
+
+@pytest.mark.parametrize("valeur", ["500.0", None, True, 1 + 0j, float("nan"), float("inf")])
+def test_sigmas_rejettent_les_types_et_valeurs_non_numeriques(valeur: object) -> None:
+    """Les distances des fonctions sigma exigent des valeurs réelles finies."""
+    with pytest.raises(ValueError):
+        sigma_y(valeur, "D")  # type: ignore[arg-type]
+    with pytest.raises(ValueError):
+        sigma_z(valeur, "D")  # type: ignore[arg-type]
+
+
+def test_sigma_rejette_un_entier_non_representable() -> None:
+    """Un entier arbitrairement grand ne fuit pas OverflowError."""
+    with pytest.raises(ValueError, match="representable"):
+        sigma_y(10**400, "D")
+
+
+@pytest.mark.parametrize("champ", ["debit", "u", "hauteur"])
+@pytest.mark.parametrize("valeur", ["1.0", None, True, 1 + 0j, float("nan"), float("inf")])
+def test_panache_rejette_les_scalaires_non_reels(champ: str, valeur: object) -> None:
+    """Les paramètres scalaires du panache sont des réels finis, booléens exclus."""
+    parametres: dict[str, object] = {"debit": 1.0, "u": 3.0, "hauteur": 0.0}
+    parametres[champ] = valeur
+    with pytest.raises(ValueError):
+        concentration_panache(500.0, 0.0, 1.0, classe="D", **parametres)  # type: ignore[arg-type]
+
+
+def test_panache_rejette_un_entier_scalaire_non_representable() -> None:
+    """La conversion d'un entier scalaire trop grand est contextualisée."""
+    with pytest.raises(ValueError, match="representable"):
+        concentration_panache(500.0, 0.0, 1.0, debit=10**400, u=3.0, classe="D")
+
+
+@pytest.mark.parametrize("axe", ["x", "y", "z"])
+@pytest.mark.parametrize("valeur", ["1.0", None, [True], [1 + 0j], [float("nan")], [float("inf")]])
+def test_panache_rejette_les_coordonnees_non_reelles(axe: str, valeur: object) -> None:
+    """Les tableaux de coordonnées ne subissent pas de coercition implicite."""
+    coordonnees: dict[str, object] = {"x": 500.0, "y": 0.0, "z": 1.0}
+    coordonnees[axe] = valeur
+    with pytest.raises(ValueError):
+        concentration_panache(**coordonnees, debit=1.0, u=3.0, classe="D")  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("champ", ["t", "masse", "u", "x0"])
+@pytest.mark.parametrize("valeur", ["1.0", None, True, 1 + 0j, float("nan"), float("inf")])
+def test_puff_rejette_les_scalaires_non_reels(champ: str, valeur: object) -> None:
+    """Les paramètres scalaires du puff sont des réels finis, booléens exclus."""
+    parametres: dict[str, object] = {"t": 300.0, "masse": 5.0, "u": 3.0, "x0": 0.0}
+    parametres[champ] = valeur
+    with pytest.raises(ValueError):
+        concentration_puff(900.0, 0.0, 1.0, classe="D", **parametres)  # type: ignore[arg-type]
+
+
+def test_puff_rejette_un_entier_scalaire_non_representable() -> None:
+    """La conversion d'un entier scalaire trop grand est contextualisée."""
+    with pytest.raises(ValueError, match="representable"):
+        concentration_puff(900.0, 0.0, 1.0, t=300.0, masse=10**400, u=3.0, classe="D")
+
+
+@pytest.mark.parametrize("axe", ["x", "y", "z"])
+@pytest.mark.parametrize("valeur", ["1.0", None, [True], [1 + 0j], [float("nan")], [float("inf")]])
+def test_puff_rejette_les_coordonnees_non_reelles(axe: str, valeur: object) -> None:
+    """Les tableaux de coordonnées du puff sont des réels finis stricts."""
+    coordonnees: dict[str, object] = {"x": 900.0, "y": 0.0, "z": 1.0}
+    coordonnees[axe] = valeur
+    with pytest.raises(ValueError):
+        concentration_puff(**coordonnees, t=300.0, masse=5.0, u=3.0, classe="D")  # type: ignore[arg-type]
