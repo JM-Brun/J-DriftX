@@ -32,6 +32,7 @@ from jdriftx.experiences.reference_independante import (
     PARAMETRES_EDP_DEFAUT,
     ParametresEdp,
 )
+from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
 from jdriftx.experiences.transitoire_puff import (
     ComparaisonTransitoire,
     FacteurLongitudinalAnalytique,
