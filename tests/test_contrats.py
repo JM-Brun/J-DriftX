@@ -317,9 +317,7 @@ def test_superposition_exige_un_panache() -> None:
 
 def test_superposition_refuse_une_collection_mutable() -> None:
     """La collection doit respecter le tuple annoncé et l'immuabilité du modèle."""
-    panache = PanacheGaussien(
-        source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
-    )
+    panache = PanacheGaussien(source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0))
     with pytest.raises(TypeError, match="tuple"):
         SuperpositionPanaches(panaches=[panache])  # type: ignore[arg-type]
 
@@ -344,9 +342,7 @@ def test_superposition_refuse_une_forme_de_sortie_incoherente() -> None:
     """Une sortie ne doit pas être implicitement diffusée par NumPy."""
 
     class ModeleFormeIncoherente:
-        def concentration(
-            self, x: object, y: object, z: object
-        ) -> np.ndarray:
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
             return np.zeros((1,), dtype=float)
 
     panache = PanacheGaussien(
@@ -354,9 +350,7 @@ def test_superposition_refuse_une_forme_de_sortie_incoherente() -> None:
     )
     superposition = SuperpositionPanaches(panaches=(panache, ModeleFormeIncoherente()))
     with pytest.raises(ValueError, match="forme"):
-        superposition.concentration(
-            np.full((2, 1), 100.0), np.zeros((1, 3)), 0.0
-        )
+        superposition.concentration(np.full((2, 1), 100.0), np.zeros((1, 3)), 0.0)
 
 
 def test_superposition_accepte_le_broadcasting_des_entrees() -> None:
@@ -365,9 +359,7 @@ def test_superposition_accepte_le_broadcasting_des_entrees() -> None:
         source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
     )
     superposition = SuperpositionPanaches(panaches=(panache,))
-    resultat = superposition.concentration(
-        np.full((2, 1), 100.0), np.zeros((1, 3)), 1.0
-    )
+    resultat = superposition.concentration(np.full((2, 1), 100.0), np.zeros((1, 3)), 1.0)
     assert resultat.shape == (2, 3)
 
 
@@ -375,9 +367,7 @@ def test_superposition_refuse_une_sortie_non_ndarray() -> None:
     """Le protocole exige un ndarray, pas une liste Python."""
 
     class ModeleListe:
-        def concentration(
-            self, x: np.ndarray, y: np.ndarray, z: np.ndarray
-        ) -> list[float]:
+        def concentration(self, x: np.ndarray, y: np.ndarray, z: np.ndarray) -> list[float]:
             return [0.0]
 
     superposition = SuperpositionPanaches(panaches=(ModeleListe(),))  # type: ignore[arg-type]
@@ -389,9 +379,7 @@ def test_superposition_refuse_une_sortie_non_reelle() -> None:
     """Une concentration complexe ne satisfait pas le contrat physique réel."""
 
     class ModeleComplexe:
-        def concentration(
-            self, x: np.ndarray, y: np.ndarray, z: np.ndarray
-        ) -> np.ndarray:
+        def concentration(self, x: np.ndarray, y: np.ndarray, z: np.ndarray) -> np.ndarray:
             return np.array([1.0 + 2.0j])
 
     superposition = SuperpositionPanaches(panaches=(ModeleComplexe(),))  # type: ignore[arg-type]
