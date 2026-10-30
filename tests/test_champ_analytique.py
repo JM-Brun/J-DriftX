@@ -3,8 +3,8 @@
 import math
 from dataclasses import FrozenInstanceError
 
-import pytest
 import numpy as np
+import pytest
 
 from jdriftx.champ_analytique import ChampFonctionCourant, SuperpositionChamps
 from jdriftx.trajectories import integrate_trajectory
