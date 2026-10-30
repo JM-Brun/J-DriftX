@@ -489,15 +489,17 @@ def test_uniform_pseudodistance_rejects_overflowing_displacement() -> None:
         pseudo_distance_uniforme(a, b, np.array([1.0, 0.0]))
 
 
-def test_uniform_pseudodistance_rejects_overflowing_projection() -> None:
-    """Un déplacement fini dont la projection déborde est refusé."""
-    # Given — un déplacement fini sur les deux axes, projeté sur une direction
-    # diagonale : le produit scalaire déborde le float64.
+def test_uniform_pseudodistance_accepts_overflowing_projection_if_cost_is_finite() -> None:
+    """Un produit scalaire intermediaire debordant n'invalide pas un cout fini."""
+    # Given — deplacement fini dont le produit scalaire avec le vent depasse
+    # float64, mais dont le quotient par u.u reste representable.
     a = np.array([-1.0e308, -1.0e308])
     b = np.array([7.0e307, 7.0e307])
-    # When / Then — l'évaluation est refusée au lieu de retourner +inf.
-    with pytest.raises(ValueError, match="cout longitudinal doit rester fini"):
-        pseudo_distance_uniforme(a, b, np.array([1.0, 1.0]))
+    vent = np.array([1.0, 1.0])
+    # When — le cout longitudinal est evalue.
+    obtenu = pseudo_distance_uniforme(a, b, vent)
+    # Then — le cout exact vaut 1.7e308 s et reste representable.
+    assert obtenu == pytest.approx(1.7e308, rel=1e-15)
 
 
 def test_polyline_cost_rejects_overflowing_total() -> None:
@@ -509,3 +511,40 @@ def test_polyline_cost_rejects_overflowing_total() -> None:
     # When / Then — aucune somme infinie n'est retournée silencieusement.
     with pytest.raises(ValueError, match="cout total doit rester fini"):
         temps_transport(ligne, vent)
+
+
+
+def test_1d_first_arrival_rejects_unrepresentable_positive_time() -> None:
+    """Un temps positif qui deborde float64 est refuse explicitement."""
+    with pytest.raises(ValueError, match="premiere arrivee.*representable"):
+        temps_premiere_arrivee_1d(0.0, 1.0e308, 1.0e-308)
+
+
+def test_1d_first_arrival_rejects_time_underflow() -> None:
+    """Un temps positif qui s'arrondirait a zero est refuse."""
+    with pytest.raises(ValueError, match="premiere arrivee.*representable"):
+        temps_premiere_arrivee_1d(0.0, 5.0e-324, 1.0e308)
+
+
+def test_uniform_pseudodistance_handles_finite_components_with_overflowing_norm() -> None:
+    """Une norme de vitesse > float64 ne fait pas s'effondrer le cout a zero."""
+    a = np.zeros(2)
+    b = np.array([1.0e308, 1.0e308])
+    vent = np.array([1.5e308, 1.5e308])
+    obtenu = pseudo_distance_uniforme(a, b, vent)
+    assert obtenu == pytest.approx(2.0 / 3.0)
+
+
+def test_polyline_cost_handles_overflowing_norms_when_ratio_is_finite() -> None:
+    """Des normes non representables peuvent avoir un rapport representable."""
+    ligne = np.array([[0.0, 0.0], [1.5e308, 1.5e308]])
+    vent = np.array([[1.5e308, 1.5e308]])
+    assert temps_transport(ligne, vent) == pytest.approx(1.0)
+
+
+def test_polyline_cost_rejects_unrepresentable_positive_time() -> None:
+    """Un cout positif qui deborde float64 est refuse explicitement."""
+    ligne = np.array([[0.0, 0.0], [1.0e308, 0.0]])
+    vent = np.array([[1.0e-308, 0.0]])
+    with pytest.raises(ValueError, match="cout total.*representable"):
+        temps_transport(ligne, vent, umin=1.0e-309)
