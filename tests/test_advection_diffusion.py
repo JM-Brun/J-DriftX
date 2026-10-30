@@ -146,3 +146,24 @@ def test_gaussian_rejects_unrepresentable_advected_center_explicitly() -> None:
             diffusivity=0.0,
             initial_sigma=1.0,
         )
+
+
+def test_gaussian_peak_log_domain_preserves_subnormal_mass_contribution() -> None:
+    """Un logarithme évite le sous-débordement prématuré du numérateur."""
+    smallest_positive = float(np.nextafter(0.0, 1.0))
+    sigma = 1e-308
+    actual = gaussian_advection_diffusion(
+        np.array([0.0]),
+        0.0,
+        mass=smallest_positive,
+        initial_center=0.0,
+        velocity=0.0,
+        diffusivity=0.0,
+        initial_sigma=sigma,
+    )
+    expected = np.exp(
+        np.log(smallest_positive)
+        - 0.5 * np.log(2.0 * np.pi)
+        - np.log(sigma)
+    )
+    assert actual[0] == pytest.approx(expected, rel=2e-14)
