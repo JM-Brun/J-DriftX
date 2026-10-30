@@ -13,19 +13,10 @@ package (audit docs/25, recommandation 7).
 
 from jdriftx.champ_analytique import ChampFonctionCourant, ChampPlan, SuperpositionChamps
 from jdriftx.constraints import linearite, linearite_panache, positivite
-from jdriftx.contrats import (
-    ModeleConcentration,
-    PanacheGaussien,
-    Relief,
-    ReliefMntAscii,
-    ReliefPlat,
-    ReliefSynthetique,
-    SuperpositionPanaches,
-    Vent,
-    VentDeChampPlan,
-    VentProfilPuissance,
-    VentUniforme,
-)
+from jdriftx._protocoles import ModeleConcentration, Relief, Vent
+from jdriftx.concentrations import PanacheGaussien, SuperpositionPanaches
+from jdriftx.reliefs import ReliefMntAscii, ReliefPlat, ReliefSynthetique
+from jdriftx.vents import VentDeChampPlan, VentProfilPuissance, VentUniforme
 from jdriftx.experiences import (
     ChampUniforme,
     ManifesteReconstruction,
