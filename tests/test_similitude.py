@@ -391,9 +391,7 @@ def test_panache_rejette_distance_infinie() -> None:
     # Given — x = +inf : le contrôle de signe passe, les sigmas débordent.
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="doit etre finie"):
-        concentration_panache(
-            float("inf"), 0.0, 1.0, debit=1.0, u=3.0, classe=ClasseStabilite.D
-        )
+        concentration_panache(float("inf"), 0.0, 1.0, debit=1.0, u=3.0, classe=ClasseStabilite.D)
 
 
 @pytest.mark.parametrize(
