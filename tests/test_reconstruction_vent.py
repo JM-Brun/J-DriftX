@@ -4,8 +4,8 @@ import json
 import math
 from dataclasses import FrozenInstanceError, replace
 
-import pytest
 import numpy as np
+import pytest
 
 from jdriftx.experiences.reconstruction_vent import (
     SCENARIO_DEFAUT,
