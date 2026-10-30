@@ -5,8 +5,10 @@ from dataclasses import replace
 import numpy as np
 import pytest
 
-from jdriftx.experiences.identification_source import SCENARIO_DEFAUT as IDENTIFICATION_DEFAUT
-from jdriftx.experiences.identification_source import concentration
+from jdriftx.experiences.identification_source import (
+    concentration,
+    SCENARIO_DEFAUT as IDENTIFICATION_DEFAUT,
+)
 from jdriftx.experiences.modele_reduit_edp import SCENARIO_DEFAUT as EDP_DEFAUT
 from jdriftx.experiences.relief import (
     COLLINE_1_DEFAUT,
