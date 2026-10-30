@@ -52,6 +52,7 @@ from __future__ import annotations
 import time
 from dataclasses import dataclass
 from importlib import metadata
+from itertools import pairwise
 from typing import Protocol
 
 import numpy as np
@@ -374,7 +375,7 @@ class SolutionEdp:
         if any(
             not np.isfinite(position) for position in positions
         ) or any(
-            suivant <= precedent for precedent, suivant in zip(positions[:-1], positions[1:], strict=True)
+            suivant <= precedent for precedent, suivant in pairwise(positions)
         ):
             msg = "Les abscisses des tranches doivent être finies et croissantes."
             raise ValueError(msg)
