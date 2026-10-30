@@ -46,6 +46,6 @@ def test_facade_historique_reexporte_les_implementations_canoniques() -> None:
 
 def test_protocoles_publics_reexportent_les_protocoles_canoniques() -> None:
     """Les protocoles conservent leur identité à travers les deux façades publiques."""
-    assert ContratRelief is ProtocoleRelief is Relief
-    assert ContratVent is ProtocoleVent is Vent
-    assert ContratConcentration is ProtocoleConcentration is ModeleConcentration
+    assert ContratRelief is ProtocoleRelief is jdriftx.Relief
+    assert ContratVent is ProtocoleVent is jdriftx.Vent
+    assert ContratConcentration is ProtocoleConcentration is jdriftx.ModeleConcentration
