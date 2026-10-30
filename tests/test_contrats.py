@@ -502,3 +502,20 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
     # When / Then — le débordement de la somme est refusé explicitement.
     with pytest.raises(ValueError, match="doit rester finie"):
         superposition.concentration(0.0, 0.0, 0.0)
+
+
+@pytest.mark.parametrize(
+    ("texte", "message_attendu"),
+    [
+        (MNT_ASCII.replace("ncols 3", "ncols 2\\nncols 3"), "dupliquee"),
+        (MNT_ASCII.replace("7 8 9", "7 huit 9"), "non numerique"),
+    ],
+)
+def test_mnt_ascii_rejette_les_entrees_ambigues_ou_non_numeriques(
+    texte: str, message_attendu: str
+) -> None:
+    """Le parseur refuse les clés dupliquées et les cellules non numériques."""
+    # Given — un en-tête ambigu ou une valeur raster qui n'est pas un nombre.
+    # When / Then — la lecture échoue avec une erreur contextualisée.
+    with pytest.raises(ValueError, match=message_attendu):
+        ReliefMntAscii.depuis_texte(texte)
