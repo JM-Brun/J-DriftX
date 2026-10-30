@@ -5,9 +5,10 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT
-from jdriftx.experiences.reference_independante import PARAMETRES_EDP_DEFAUT, GrilleEdp
 import jdriftx.experiences.transitoire_puff.marginale as module_marginale
+
+from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT
+from jdriftx.experiences.reference_independante import GrilleEdp, PARAMETRES_EDP_DEFAUT
 
 
 @pytest.mark.parametrize(
