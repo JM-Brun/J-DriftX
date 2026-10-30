@@ -33,7 +33,10 @@ class Point3D:
 
     def __post_init__(self) -> None:
         """Rejette les coordonnées infinies ou indéfinies."""
-        if not all(math.isfinite(value) for value in (self.x, self.y, self.z)):
+        coordonnees = (self.x, self.y, self.z)
+        if any(isinstance(value, (bool, np.bool_)) for value in coordonnees):
+            raise ValueError("Les coordonnees du point doivent etre numeriques (booleens exclus).")
+        if not all(math.isfinite(value) for value in coordonnees):
             raise ValueError("Les coordonnees du point doivent etre finies.")
 
 
@@ -49,6 +52,9 @@ class ParametresPuff:
 
     def __post_init__(self) -> None:
         """Valide les paramètres physiques et normalise la classe de stabilité."""
+        parametres = (self.t, self.masse, self.u, self.x0)
+        if any(isinstance(value, (bool, np.bool_)) for value in parametres):
+            raise ValueError("Les parametres du puff doivent etre numeriques (booleens exclus).")
         if not math.isfinite(self.t) or self.t <= 0.0:
             raise ValueError("Le temps doit etre fini et strictement positif.")
         if not math.isfinite(self.masse) or self.masse < 0.0:
