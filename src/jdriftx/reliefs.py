@@ -160,6 +160,9 @@ class ReliefMntAscii:
             cle = jetons[position].lower()
             if cle not in attendus and cle != "nodata_value":
                 break
+            if cle in entete:
+                msg = f"Cle d entete .asc dupliquee : {cle}."
+                raise ValueError(msg)
             try:
                 entete[cle] = float(jetons[position + 1])
             except ValueError as err:
@@ -182,7 +185,11 @@ class ReliefMntAscii:
         if pas <= 0.0:
             msg = "cellsize doit etre strictement positif."
             raise ValueError(msg)
-        valeurs = np.asarray(jetons[position:], dtype=float)
+        try:
+            valeurs = np.asarray(jetons[position:], dtype=float)
+        except ValueError as err:
+            msg = "La grille contient une valeur d altitude non numerique."
+            raise ValueError(msg) from err
         if valeurs.size != int(ncols) * int(nrows):
             msg = "La grille ne contient pas ncols x nrows valeurs."
             raise ValueError(msg)
