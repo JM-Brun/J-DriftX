@@ -507,7 +507,7 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
 @pytest.mark.parametrize(
     ("texte", "message_attendu"),
     [
-        (MNT_ASCII.replace("ncols 3", "ncols 2\\nncols 3"), "dupliquee"),
+        (MNT_ASCII.replace("ncols 3", "ncols 2\nncols 3"), "dupliquee"),
         (MNT_ASCII.replace("7 8 9", "7 huit 9"), "non numerique"),
     ],
 )
