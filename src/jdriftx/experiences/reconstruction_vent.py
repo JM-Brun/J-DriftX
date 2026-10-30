@@ -21,6 +21,8 @@ from dataclasses import dataclass
 from importlib import metadata
 from typing import Literal
 
+import numpy as np
+
 from jdriftx.champ_analytique import ChampFonctionCourant, ChampPlan, SuperpositionChamps
 
 NiveauFidelite = Literal["R0", "R1", "R2"]
@@ -54,7 +56,11 @@ class Rectangle:
     def __post_init__(self) -> None:
         """Valide le coin et des dimensions finies strictement positives."""
         _valide_point("coin", self.coin)
-        if not all(math.isfinite(d) and d > 0.0 for d in (self.largeur, self.hauteur)):
+        dimensions = (self.largeur, self.hauteur)
+        if any(isinstance(valeur, (bool, np.bool_)) for valeur in dimensions):
+            msg = "La largeur et la hauteur doivent être numériques (booléens exclus)."
+            raise ValueError(msg)
+        if not all(math.isfinite(d) and d > 0.0 for d in dimensions):
             msg = "La largeur et la hauteur doivent être finies et strictement positives."
             raise ValueError(msg)
 
@@ -65,6 +71,7 @@ class Rectangle:
 
     def contient(self, point: tuple[float, float]) -> bool:
         """Indique si le point appartient au rectangle, frontière incluse."""
+        _valide_point("point", point)
         x, y = point
         return (
             self.coin[0] <= x <= self.coin[0] + self.largeur
