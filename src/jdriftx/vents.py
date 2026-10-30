@@ -28,7 +28,7 @@ class AdaptateurTrajectoire2D:
             msg = "La hauteur d'échantillonnage doit être finie."
             raise ValueError(msg)
 
-    def __call__(self, temps: float, x: float, y: float) -> tuple[float, float]:
+    def __call__(self, _temps: float, x: float, y: float) -> tuple[float, float]:
         """Retourne (u, v) au point (x, y, hauteur), si w est nul."""
         u, v, w = self.vent.vitesse(x, y, self.hauteur)
         if not np.all(np.isfinite((u, v, w))):
