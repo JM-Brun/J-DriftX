@@ -126,9 +126,9 @@ La matrice ligne par ligne des revendications, versions, unités, hypothèses et
 
 Conformément à la section 6, les statuts et verrous ci-dessus sont amendés par décision du propriétaire, sur preuve :
 
-- **Preuve.** Contrôle visuel du PDF éditeur 2006 versionné (équations (1), (2) p. 635 et (4) p. 636) et du texte JESA de comparaison désigné (HAL `hal-00468863`, équations [1]–[7]), intégré par la PR #277 (fusionnée), transcription littérale et sans réparation conjecturale.
+- **Preuve.** Contrôle visuel du PDF éditeur 2006 versionné (équations (1), (2) p. 635 et (4) p. 636) et du manuscrit de comparaison désigné (HAL `hal-00468863`, équations [1]–[7]), intégré par la PR #277 (fusionnée), transcription littérale et sans réparation conjecturale.
 - **Décision du propriétaire.** La même PR relève CL-03 et CL-04 de la [note 49](49-matrice-revendications-baseline.md) à « partiellement définie » ; le registre enregistre les anomalies conditionnelles nouvelles (DRX-ERR-016/017/018, PR #278) et requalifie DRX-ERR-004/008/009/012.
-- **Amendements de cette note.** (a) similitude : le verrou de transcription visuelle de l’équation (2) est levé, le statut « partiellement définie » est inchangé (champ proche et interprétation des paramètres restent ouverts) ; (b) assimilation : « annoncée seulement » devient « partiellement définie » — les équations sont transcrites, mais la formulation imprimée de (4) reste ambiguë (DRX-ERR-016) et l’identifiabilité n’est pas établie ; (c) instantané de la section 4 actualisé (fac-similé partiellement vérifié, texte JESA désigné).
+- **Amendements de cette note.** (a) similitude : le verrou de transcription visuelle de l’équation (2) est levé, le statut « partiellement définie » est inchangé (champ proche et interprétation des paramètres restent ouverts) ; (b) assimilation : « annoncée seulement » devient « partiellement définie » — les équations sont transcrites, mais la formulation imprimée de (4) reste ambiguë (DRX-ERR-016) et l’identifiabilité n’est pas établie ; (c) instantané de la section 4 actualisé (fac-similé partiellement vérifié, manuscrit désigné).
 - Les statuts « annoncée seulement » de l’évaluation réduite et « non reproductible » du bilan sources/puits sont inchangés.
 
 ## Références internes
