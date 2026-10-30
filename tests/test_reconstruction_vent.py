@@ -206,9 +206,7 @@ def test_le_manifeste_exporte_un_dict_serialisable() -> None:
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["coin", "largeur", "hauteur"])
-def test_le_rectangle_refuse_les_parametres_booleens(
-    booleen: bool | np.bool_, champ: str
-) -> None:
+def test_le_rectangle_refuse_les_parametres_booleens(booleen: bool | np.bool_, champ: str) -> None:
     """Le coin et les dimensions du rectangle excluent les booléens."""
     # Given — un champ géométrique remplacé par un booléen.
     valeurs: dict[str, object] = {
@@ -234,9 +232,7 @@ def test_le_rectangle_contient_refuse_un_point_booleen(booleen: bool | np.bool_)
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["mesures", "trajectoire"])
-def test_le_scenario_refuse_les_points_booleens(
-    booleen: bool | np.bool_, champ: str
-) -> None:
+def test_le_scenario_refuse_les_points_booleens(booleen: bool | np.bool_, champ: str) -> None:
     """Les mesures et points de trajectoire excluent les coordonnées booléennes."""
     # Given — une mesure ou un point de trajectoire booléen.
     valeurs: dict[str, object] = {
