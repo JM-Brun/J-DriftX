@@ -6,7 +6,8 @@ The sinusoidal exact solution is a verification target, not part of the solver.
 
 from __future__ import annotations
 
-from math import ceil
+from fractions import Fraction
+from math import ceil, exp, log
 from numbers import Integral, Real
 from typing import Final
 
@@ -160,6 +161,41 @@ def _etat_initial_periodique(
     return x, dx, initial
 
 
+def _facteur_decroissance_periodique(diffusivity: float, length: float, time: float) -> float:
+    """Évalue exp(-4*pi²*K*t/L²) sans former les produits ou carrés extrêmes."""
+    if diffusivity == 0.0 or time == 0.0:
+        return 1.0
+
+    log_rate = log(4.0 * np.pi**2) + log(diffusivity) + log(time) - 2.0 * log(length)
+    # exp(-rate) rounds to zero once rate is above this conservative threshold.
+    if log_rate >= log(746.0):
+        return 0.0
+    rate = exp(log_rate)
+    return exp(-rate)
+
+
+def _phase_periodique(
+    coordinates: NDArray[np.float64], velocity: float, time: float, length: float
+) -> NDArray[np.float64]:
+    """Réduit x-u*t modulo L avant de calculer la phase, sans former k*(x-u*t)."""
+    displacement = velocity * time
+    if np.isfinite(displacement):
+        displacement_modulo = float(np.remainder(displacement, length))
+    else:
+        # Exact fallback: finite float inputs can have a non-representable product,
+        # while its remainder modulo the finite period remains representable.
+        exact_remainder = (
+            Fraction.from_float(velocity) * Fraction.from_float(time)
+        ) % Fraction.from_float(length)
+        displacement_modulo = float(exact_remainder)
+
+    with np.errstate(over="ignore", invalid="ignore"):
+        coordinates_modulo = np.remainder(coordinates, length)
+        relative_modulo = np.remainder(coordinates_modulo - displacement_modulo, length)
+        phase = 2.0 * np.pi * (relative_modulo / length)
+    return np.asarray(phase, dtype=np.float64)
+
+
 def periodic_sine_solution(
     x: NDArray[np.floating],
     time: float,
@@ -190,12 +226,11 @@ def periodic_sine_solution(
     if diffusivity < 0:
         raise ValueError("diffusivity must be non-negative.")
     coordinates = _tableau_reel_fini(x, "Coordinates")
-    wave_number = 2.0 * np.pi / length
-    decay = np.exp(-diffusivity * wave_number**2 * time)
+    decay = _facteur_decroissance_periodique(diffusivity, length, time)
+    phase = _phase_periodique(coordinates, velocity, time, length)
     return np.asarray(
-        mean_concentration
-        + amplitude * decay * np.sin(wave_number * (coordinates - velocity * time)),
-        dtype=float,
+        mean_concentration + amplitude * decay * np.sin(phase),
+        dtype=np.float64,
     )
 
 
