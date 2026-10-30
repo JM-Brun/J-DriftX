@@ -5,6 +5,7 @@ from dataclasses import FrozenInstanceError
 from importlib import metadata
 
 import pytest
+import numpy as np
 
 import jdriftx.experiences.uniforme as module_uniforme
 from jdriftx.experiences.uniforme import (
@@ -159,3 +160,36 @@ def test_le_manifeste_signale_une_version_non_installee(
     manifeste = construire_manifeste(SCENARIO_DEFAUT, resoudre_scenario(SCENARIO_DEFAUT))
     # Then — la version est explicitement marquée « non-installe ».
     assert manifeste.version_code == "non-installe"
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("axe", [0, 1])
+def test_le_champ_uniforme_refuse_les_composantes_booleennes(
+    booleen: bool | np.bool_, axe: int
+) -> None:
+    """Les composantes du vecteur de vent excluent les booléens."""
+    # Given — un vecteur de vent avec une composante booléenne.
+    vent = [2.0, 0.0]
+    vent[axe] = booleen
+    # When / Then — la construction du champ est refusée.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        ChampUniforme(vent=tuple(vent))
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("point", ["origine", "cible"])
+def test_le_scenario_refuse_les_coordonnees_booleennes(
+    booleen: bool | np.bool_, point: str
+) -> None:
+    """Les coordonnées des points du scénario excluent les booléens."""
+    # Given — un point du scénario dont une coordonnée est booléenne.
+    origine = (0.0, 0.0)
+    cible = (300.0, 65.0)
+    valeurs = [origine, cible]
+    indice = 0 if point == "origine" else 1
+    coordonnees = list(valeurs[indice])
+    coordonnees[0] = booleen
+    valeurs[indice] = tuple(coordonnees)
+    # When / Then — la construction du scénario est refusée.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        ScenarioUniforme(champ=SCENARIO_DEFAUT.champ, origine=valeurs[0], cible=valeurs[1])
