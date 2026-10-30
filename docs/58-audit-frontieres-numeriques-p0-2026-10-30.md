@@ -150,15 +150,3 @@ Les deux fonctions autonomes refusent désormais les coordonnées qui ne sont pa
 ### 3.7 `integrate_trajectory` et `gaussian_advection_diffusion` — issue #381 / PR #383
 
 Les deux frontières normalisent désormais leurs scalaires en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution gaussienne rejettent booléens, complexes, chaînes et valeurs non finies avant conversion. Le callback de trajectoire conserve le contrat d'un tuple de deux composantes, avec une erreur de validation stable pour les composantes non réelles ou non représentables. Les domaines existants et les formules sont inchangés. Les débordements intermédiaires de la solution gaussienne restent explicitement hors de cette tranche.
-
-
-### 3.9 Largeurs extrêmes de la solution gaussienne — issue #388 / PR #389
-
-La variance analytique `sigma0**2 + 2*K*time` est remplacée dans l'évaluation par le calcul équivalent de l'écart-type :
-`hypot(sigma0, sqrt(2)*sqrt(K)*sqrt(time))`.
-Cette formulation évite le carré sous-débordant de `sigma0` et le produit `K*time` débordant lorsque l'écart-type résultant reste représentable. L'amplitude au pic est évaluée dans le domaine logarithmique, afin d'éviter à la fois le débordement d'une division directe et le sous-débordement prématuré d'une division intermédiaire. Les tests couvrent les trois reproductions gaussiennes de #388. Un centre advecté non représentable est maintenant signalé par une `ValueError` explicite plutôt que propagé en NaN/inf. Cela ne constitue ni une modification de la solution mathématique, ni une validation physique ; les limites d'échelle du centre et les cas périodiques restent ouverts.
-
-
-### 3.10 Facteur de décroissance et phase périodiques — issue #388 / PR #390
-
-Le facteur analytique `exp(-K(2*pi/L)^2*t)` est évalué à partir du logarithme du taux positif `4*pi²*K*t/L²`. Les cas `K=0` et `t=0` sont traités exactement. La phase est calculée après réduction de `x` et du déplacement `u*t` modulo `L`, sans former le nombre d'onde ni les produits intermédiaires susceptibles de déborder. Si `u*t` déborde en float64, son reste modulo `L` est calculé à partir des représentations rationnelles exactes des flottants d'entrée. Les tests couvrent les échelles extrêmes et l'équivalence dans le régime usuel. Ils caractérisent la robustesse logicielle, pas la validité physique ; la précision des coordonnées d'entrée reste limitée par leur représentation float64.
