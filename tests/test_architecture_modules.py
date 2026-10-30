@@ -1,18 +1,6 @@
 """Vérifie la séparation des modules et la compatibilité des imports historiques."""
 
-from jdriftx import (
-    ModeleConcentration,
-    PanacheGaussien,
-    Relief,
-    ReliefMntAscii,
-    ReliefPlat,
-    ReliefSynthetique,
-    SuperpositionPanaches,
-    Vent,
-    VentDeChampPlan,
-    VentProfilPuissance,
-    VentUniforme,
-)
+import jdriftx
 from jdriftx._protocoles import (
     ModeleConcentration as ProtocoleConcentration,
     Relief as ProtocoleRelief,
@@ -46,14 +34,14 @@ from jdriftx.vents import (
 
 def test_facade_historique_reexporte_les_implementations_canoniques() -> None:
     """Les anciens imports restent des alias des classes définies par domaine."""
-    assert ContratPanache is ModelePanache is PanacheGaussien
-    assert ContratSuperposition is SuperpositionPanaches
-    assert ContratReliefMnt is ModeleReliefMnt is ReliefMntAscii
-    assert ContratReliefPlat is ModeleReliefPlat is ReliefPlat
-    assert ContratReliefSynthetique is ModeleReliefSynthetique is ReliefSynthetique
-    assert ContratVentChamp is ModeleVentChamp is VentDeChampPlan
-    assert ContratVentProfil is ModeleVentProfil is VentProfilPuissance
-    assert ContratVentUniforme is ModeleVentUniforme is VentUniforme
+    assert ContratPanache is ModelePanache is jdriftx.PanacheGaussien
+    assert ContratSuperposition is jdriftx.SuperpositionPanaches
+    assert ContratReliefMnt is ModeleReliefMnt is jdriftx.ReliefMntAscii
+    assert ContratReliefPlat is ModeleReliefPlat is jdriftx.ReliefPlat
+    assert ContratReliefSynthetique is ModeleReliefSynthetique is jdriftx.ReliefSynthetique
+    assert ContratVentChamp is ModeleVentChamp is jdriftx.VentDeChampPlan
+    assert ContratVentProfil is ModeleVentProfil is jdriftx.VentProfilPuissance
+    assert ContratVentUniforme is ModeleVentUniforme is jdriftx.VentUniforme
 
 
 def test_protocoles_publics_reexportent_les_protocoles_canoniques() -> None:
