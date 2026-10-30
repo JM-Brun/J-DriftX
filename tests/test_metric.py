@@ -547,3 +547,69 @@ def test_polyline_cost_rejects_unrepresentable_positive_time() -> None:
     vent = np.array([[1.0e-308, 0.0]])
     with pytest.raises(ValueError, match=r"cout total.*representable"):
         temps_transport(ligne, vent, umin=1.0e-309)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("parametre", ["a", "b", "vitesse"])
+def test_1d_first_arrival_rejects_boolean_scalars(booleen: bool | np.bool_, parametre: str) -> None:
+    """Les scalaires booléens ne sont pas des positions ou vitesses réelles."""
+    # Given — un scalaire booléen substitué à une entrée physique.
+    valeurs: dict[str, float | bool | np.bool_] = {"a": 0.0, "b": 10.0, "vitesse": 2.0}
+    valeurs[parametre] = booleen
+    # When / Then — l'entrée est rejetée avant le calcul du déplacement.
+    with pytest.raises(ValueError, match="booleens exclus"):
+        temps_premiere_arrivee_1d(**valeurs)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("argument", ["ligne", "vent"])
+def test_polyline_cost_rejects_boolean_sequences(booleen: bool | np.bool_, argument: str) -> None:
+    """Les booléens présents dans des séquences sont détectés avant promotion NumPy."""
+    # Given — une coordonnée ou une composante de vitesse booléenne.
+    ligne: list[list[float | bool | np.bool_]] = [[0.0, 0.0], [1.0, 0.0]]
+    vent: list[list[float | bool | np.bool_]] = [[1.0, 0.0]]
+    if argument == "ligne":
+        ligne[1][0] = booleen
+    else:
+        vent[0][0] = booleen
+    # When / Then — la conversion float64 ne masque pas le booléen.
+    with pytest.raises(ValueError, match="booleens exclus"):
+        temps_transport(ligne, vent)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_polyline_cost_rejects_boolean_speed_threshold(booleen: bool | np.bool_) -> None:
+    """Le seuil umin exclut les booléens même s'ils sont finis et positifs."""
+    with pytest.raises(ValueError, match="booleen exclu"):
+        temps_transport([[0.0, 0.0], [1.0, 0.0]], [[1.0, 0.0]], umin=booleen)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize("argument", ["a", "b", "vent"])
+def test_uniform_pseudodistance_rejects_boolean_sequences(
+    booleen: bool | np.bool_, argument: str
+) -> None:
+    """Les vecteurs booléens sont refusés avant conversion en float64."""
+    # Given — une coordonnée ou une composante du vent booléenne.
+    a: list[float | bool | np.bool_] = [0.0, 0.0]
+    b: list[float | bool | np.bool_] = [1.0, 0.0]
+    vent: list[float | bool | np.bool_] = [1.0, 0.0]
+    cible = {"a": a, "b": b, "vent": vent}[argument]
+    cible[0] = booleen
+    # When / Then — l'entrée est rejetée avant le produit scalaire.
+    with pytest.raises(ValueError, match="booleens exclus"):
+        pseudo_distance_uniforme(a, b, vent)
+
+
+@pytest.mark.parametrize("argument", ["a", "b", "vent"])
+def test_uniform_pseudodistance_rejects_boolean_ndarrays(argument: str) -> None:
+    """Les ndarray booléens sont refusés sans copie objet des tableaux numériques."""
+    # Given — un vecteur booléen pour l'un des trois arguments.
+    a = np.array([0.0, 0.0])
+    b = np.array([1.0, 0.0])
+    vent = np.array([1.0, 0.0])
+    cible = {"a": a, "b": b, "vent": vent}[argument]
+    cible[:] = np.array([True, False])
+    # When / Then — le dtype booléen est refusé.
+    with pytest.raises(ValueError, match="booleens exclus"):
+        pseudo_distance_uniforme(a, b, vent)
