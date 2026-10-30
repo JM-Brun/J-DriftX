@@ -14,8 +14,8 @@ from jdriftx.experiences import (
 from jdriftx.experiences.cas_synthetiques import (
     CAS_S0_DEFAUT,
     CLAUSE_NON_VALIDATION,
-    DatasetS0,
     VERSION_GENERATEUR,
+    DatasetS0,
 )
 from jdriftx.source import SourcePanache
 
