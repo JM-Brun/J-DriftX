@@ -359,12 +359,38 @@ def test_superposition_refuse_une_sortie_non_ndarray() -> None:
     """Le protocole exige un ndarray, pas une liste Python."""
 
     class ModeleListe:
-        def concentration(self, x, y, z):
+        def concentration(
+            self, x: np.ndarray, y: np.ndarray, z: np.ndarray
+        ) -> list[float]:
             return [0.0]
 
-    superposition = SuperpositionPanaches(panaches=(ModeleListe(),))
+    superposition = SuperpositionPanaches(panaches=(ModeleListe(),))  # type: ignore[arg-type]
     with pytest.raises(TypeError, match="ndarray"):
         superposition.concentration(np.array([0.0]), np.array([0.0]), np.array([0.0]))
+
+
+def test_superposition_refuse_une_sortie_non_reelle() -> None:
+    """Une concentration complexe ne satisfait pas le contrat physique réel."""
+
+    class ModeleComplexe:
+        def concentration(
+            self, x: np.ndarray, y: np.ndarray, z: np.ndarray
+        ) -> np.ndarray:
+            return np.array([1.0 + 2.0j])
+
+    superposition = SuperpositionPanaches(panaches=(ModeleComplexe(),))
+    with pytest.raises(TypeError, match="réelle et numérique"):
+        superposition.concentration(np.array([0.0]), np.array([0.0]), np.array([0.0]))
+
+
+def test_superposition_refuse_des_entrees_non_broadcastables() -> None:
+    """Les formes d'entrée incompatibles sont refusées explicitement."""
+    panache = PanacheGaussien(
+        source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
+    )
+    superposition = SuperpositionPanaches(panaches=(panache,))
+    with pytest.raises(ValueError, match="broadcastables"):
+        superposition.concentration(np.zeros((2, 2)), np.zeros((3,)), 0.0)
 
 
 def test_adaptateur_vent_stationnaire_alimente_les_trajectoires_2d() -> None:
