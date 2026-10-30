@@ -608,8 +608,27 @@ def test_uniform_pseudodistance_rejects_boolean_ndarrays(argument: str) -> None:
     a = np.array([0.0, 0.0])
     b = np.array([1.0, 0.0])
     vent = np.array([1.0, 0.0])
-    cible = {"a": a, "b": b, "vent": vent}[argument]
-    cible[:] = np.array([True, False])
+    if argument == "a":
+        a = np.array([True, False])
+    elif argument == "b":
+        b = np.array([True, False])
+    else:
+        vent = np.array([True, False])
     # When / Then — le dtype booléen est refusé.
     with pytest.raises(ValueError, match="booleens exclus"):
         pseudo_distance_uniforme(a, b, vent)
+
+
+@pytest.mark.parametrize("argument", ["ligne", "vent"])
+def test_polyline_cost_rejects_boolean_ndarrays(argument: str) -> None:
+    """Les ndarray booléens sont rejetés avant leur conversion en float64."""
+    # Given — un tableau booléen utilisé comme coordonnées ou vitesses.
+    ligne = np.array([[0.0, 0.0], [1.0, 0.0]])
+    vent = np.array([[1.0, 0.0]])
+    if argument == "ligne":
+        ligne = np.array([[False, False], [True, False]])
+    else:
+        vent = np.array([[True, False]])
+    # When / Then — le dtype booléen est détecté sans conversion numérique.
+    with pytest.raises(ValueError, match="booleens exclus"):
+        temps_transport(ligne, vent)
