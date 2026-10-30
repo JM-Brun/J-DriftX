@@ -69,7 +69,7 @@ def test_unknown_field_kind_raises() -> None:
 @pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf])
 def test_vector_field_rejects_non_real_or_non_finite_coordinates(bad: object) -> None:
     """Les coordonnées brutes sont réelles, finies et sans coercition booléenne."""
-    with pytest.raises(ValueError, match="numeric array|finite coordinates"):
+    with pytest.raises(ValueError, match=r"numeric array|finite coordinates"):
         vector_field(np.array([bad]), np.array([0.0]), "uniform")
 
 
