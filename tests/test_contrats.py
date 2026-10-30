@@ -492,7 +492,7 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
         def __init__(self, valeur: float) -> None:
             self.valeur = valeur
 
-        def concentration(self, x, y, z) -> np.ndarray:
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
             return np.full(np.shape(x), self.valeur)
 
     superposition = SuperpositionPanaches(
@@ -525,11 +525,11 @@ def test_superposition_refuse_le_broadcasting_implicite_des_sorties() -> None:
         def __init__(self, forme: tuple[int, ...]) -> None:
             self.forme = forme
 
-        def concentration(self, x, y, z) -> np.ndarray:
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
             return np.ones(self.forme, dtype=float)
 
     superposition = SuperpositionPanaches(
-        panaches=(PanacheForme((2,)), PanacheForme((1,)))  # type: ignore[arg-type]
+        panaches=(PanacheForme((2,)), PanacheForme((1,)))
     )
     coordonnees = np.array([0.0, 1.0])
     with pytest.raises(ValueError, match=r"attendue \(2,\)"):
@@ -540,10 +540,10 @@ def test_superposition_accepte_le_broadcasting_des_coordonnees() -> None:
     """La forme attendue est le broadcasting des trois coordonnées."""
 
     class PanacheForme:
-        def concentration(self, x, y, z) -> np.ndarray:
+        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
             return np.ones((2, 3), dtype=float)
 
-    superposition = SuperpositionPanaches(panaches=(PanacheForme(),))  # type: ignore[arg-type]
+    superposition = SuperpositionPanaches(panaches=(PanacheForme(),))
     x = np.zeros((2, 1))
     y = np.zeros((1, 3))
     resultat = superposition.concentration(x, y, 0.0)
