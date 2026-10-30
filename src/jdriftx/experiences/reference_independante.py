@@ -186,12 +186,23 @@ class ParametresEdp:
         if self.hauteur_max <= 0.0:
             msg = "La hauteur maximale doit être strictement positive."
             raise ValueError(msg)
-        rapport_y = 2.0 * self.demi_largeur_y / self.pas_transverse_y
-        if abs(rapport_y - round(rapport_y)) > 1e-9:
+        with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+            rapport_y = (
+                np.float64(self.demi_largeur_y)
+                / np.float64(self.pas_transverse_y)
+                * np.float64(2.0)
+            )
+            rapport_z = np.float64(self.hauteur_max) / np.float64(self.pas_transverse_z)
+        if not np.isfinite(rapport_y) or rapport_y <= 0.0:
+            msg = "Le rapport de discrétisation latérale doit être représentable en float64."
+            raise ValueError(msg)
+        if not np.isfinite(rapport_z) or rapport_z <= 0.0:
+            msg = "Le rapport de discrétisation verticale doit être représentable en float64."
+            raise ValueError(msg)
+        if abs(rapport_y - np.rint(rapport_y)) > 1e-9:
             msg = "La fenêtre doit être un multiple entier du pas transverse."
             raise ValueError(msg)
-        rapport_z = self.hauteur_max / self.pas_transverse_z
-        if abs(rapport_z - round(rapport_z)) > 1e-9:
+        if abs(rapport_z - np.rint(rapport_z)) > 1e-9:
             msg = "La hauteur doit être un multiple entier du pas vertical."
             raise ValueError(msg)
 
@@ -219,11 +230,40 @@ def derivee_sigma_carre(x: float, coefficient: float, d: float) -> float:
     if any(isinstance(value, (bool, np.bool_)) for value in (x, coefficient, d)):
         msg = "Les paramètres de dérivée doivent être numériques (booléens exclus)."
         raise ValueError(msg)
-    if x <= 0.0:
+    try:
+        with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+            x_reel = np.float64(x)
+            coefficient_reel = np.float64(coefficient)
+            d_reel = np.float64(d)
+    except (OverflowError, TypeError, ValueError) as err:
+        msg = "Les paramètres de dérivée doivent être représentables en float64."
+        raise ValueError(msg) from err
+    if not all(np.isfinite(value) for value in (x_reel, coefficient_reel, d_reel)):
+        msg = "Les paramètres de dérivée doivent être finis et représentables en float64."
+        raise ValueError(msg)
+    if x_reel <= 0.0:
         msg = "La distance sous le vent doit être strictement positive."
         raise ValueError(msg)
-    variance = (coefficient * x) ** 2 / (1.0 + d * x)
-    return float(variance * (2.0 / x - d / (1.0 + d * x)))
+    with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+        produit = coefficient_reel * x_reel
+        carre = produit * produit
+        denominateur = 1.0 + d_reel * x_reel
+        variance = carre / denominateur
+        facteur_derivee = 2.0 / x_reel - d_reel / denominateur
+        resultat = variance * facteur_derivee
+    sous_debordement = (
+        (coefficient_reel != 0.0 and produit == 0.0)
+        or (produit != 0.0 and carre == 0.0)
+        or (carre != 0.0 and variance == 0.0)
+        or (variance != 0.0 and facteur_derivee != 0.0 and resultat == 0.0)
+    )
+    if sous_debordement or not all(
+        np.isfinite(value)
+        for value in (produit, carre, denominateur, variance, facteur_derivee, resultat)
+    ):
+        msg = "La dérivée de sigma² n'est pas représentable en float64."
+        raise ValueError(msg)
+    return float(resultat)
 
 
 @dataclass(frozen=True)
