@@ -179,6 +179,22 @@ Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
 aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
 n'introduit aucun validateur transversal.
 
+### Complément P0 — métriques, trajectoires et explorateur (issue #360)
+
+Le contrôle des valeurs finies acceptait encore les booléens dans plusieurs
+interfaces annotées avec des scalaires réels :
+
+- `metric.temps_premiere_arrivee_1d` : positions et vitesse ;
+- `metric.temps_transport` : polyligne, vent et seuil `umin` ;
+- `metric.pseudo_distance_uniforme` : points et vecteur de vent ;
+- `trajectories.integrate_trajectory` : conditions initiales et paramètres
+  temporels (la callback vitesse excluait déjà les booléens Python) ;
+- `WindFieldExplorerConfig` : paramètres du champ et coordonnées de lecture.
+
+Les tableaux et séquences sont inspectés avant coercition en `float64`.
+Aucune formule de temps, équation d'intégration, convention d'accessibilité ou
+règle de rendu n'est modifiée.
+
 - **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
 - **P3** : contrôle d'architecture statique désormais intégré par #316 (`tests/test_architecture_boundaries.py`) ; il couvre la matrice d'imports, les dépendances de rendu et les cycles statiques, sans couvrir les imports dynamiques.
