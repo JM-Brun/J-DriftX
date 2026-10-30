@@ -155,7 +155,7 @@ def test_integrator_rejects_unrepresentable_or_non_real_callback_components(
     bad: object,
 ) -> None:
     """Les composantes du callback suivent le même contrat scalaire réel fini."""
-    with pytest.raises(ValueError, match="finite real components"):
+    with pytest.raises(ValueError, match="finite components"):
         integrate_trajectory(
             lambda _t, _x, _y: (bad, 0.0),  # type: ignore[return-value]
             0.0, 0.0, 0.0, 1.0, 0.1,
