@@ -81,7 +81,7 @@ def integrate_trajectory(
                 _reel_fini(result[1], "velocity component"),
             )
         except ValueError as err:
-            raise ValueError("velocity must return a pair of finite real components.") from err
+            raise ValueError("velocity must return a pair of finite components.") from err
 
     times = [float(t0)]
     xs = [float(x0)]
