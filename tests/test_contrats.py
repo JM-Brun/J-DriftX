@@ -394,7 +394,7 @@ def test_superposition_refuse_une_sortie_non_reelle() -> None:
         ) -> np.ndarray:
             return np.array([1.0 + 2.0j])
 
-    superposition = SuperpositionPanaches(panaches=(ModeleComplexe(),))
+    superposition = SuperpositionPanaches(panaches=(ModeleComplexe(),))  # type: ignore[arg-type]
     with pytest.raises(TypeError, match="flottant réel"):
         superposition.concentration(np.array([0.0]), np.array([0.0]), np.array([0.0]))
 
