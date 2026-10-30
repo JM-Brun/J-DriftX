@@ -230,7 +230,6 @@ def test_la_superposition_debordante_est_rejetee() -> None:
         superposition_psi.fonction_courant(0.25, 0.25)
 
 
-
 def test_les_coordonnees_extremes_sont_reduites_avant_le_calcul_de_phase() -> None:
     """Une coordonnee finie ne doit pas faire deborder k*x avant la reduction periodique."""
     # Given — un champ de longueur d'onde 1 m et une coordonnee finie extreme.
