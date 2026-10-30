@@ -1,5 +1,7 @@
 """Regression tests for strict numerical input validation in similitude functions."""
 
+from collections.abc import Callable
+
 import numpy as np
 import pytest
 
@@ -8,7 +10,9 @@ from jdriftx.similitude import concentration_panache, concentration_puff, sigma_
 
 @pytest.mark.parametrize("fonction", [sigma_y, sigma_z])
 @pytest.mark.parametrize("valeur", [[1.0, True], [False, 2.0], [[1.0, 2.0], [3.0, True]]])
-def test_sigmas_rejettent_les_booleens_meles_aux_reels(fonction, valeur) -> None:
+def test_sigmas_rejettent_les_booleens_meles_aux_reels(
+    fonction: Callable[..., np.ndarray], valeur: object
+) -> None:
     """A bool must not be silently promoted to an integer by NumPy."""
     with pytest.raises(ValueError, match="booleens exclus"):
         fonction(valeur, "D")
