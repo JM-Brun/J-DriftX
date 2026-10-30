@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from math import hypot, sqrt
+from math import exp, hypot, log, sqrt
 from numbers import Real
 
 import numpy as np
@@ -100,12 +100,18 @@ def gaussian_advection_diffusion(
     if not np.isfinite(center):
         raise ValueError("The advected Gaussian center is not representable as float64.")
 
-    # Divide sequentially: forming sqrt(2*pi)*sigma first can overflow even
-    # when the peak concentration itself is representable.
-    with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
-        peak = (mass / sqrt(2.0 * np.pi)) / sigma
-    if not np.isfinite(peak):
-        raise ValueError("The peak Gaussian concentration is not representable as float64.")
+    # Evaluate the peak in the log domain: direct division can overflow,
+    # while dividing mass by sqrt(2*pi) first can underflow prematurely.
+    if mass == 0.0:
+        peak = 0.0
+    else:
+        log_peak = log(mass) - 0.5 * log(2.0 * np.pi) - log(sigma)
+        try:
+            peak = exp(log_peak)
+        except OverflowError as err:
+            raise ValueError(
+                "The peak Gaussian concentration is not representable as float64."
+            ) from err
 
     with np.errstate(over="ignore", under="ignore", invalid="ignore"):
         standardized_distance = (x_arr - center) / sigma
