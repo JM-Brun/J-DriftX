@@ -687,24 +687,24 @@ def test_mnt_ascii_normalise_les_coordonnees_sans_debordement() -> None:
     """Une différence intermédiaire supérieure à float64.max reste calculable."""
     maximum = np.finfo(float).max
     relief = ReliefMntAscii(
-        altitudes=np.array([[0.0, 2.0]]),
+        altitudes=np.array([[0.0, 2.0, 4.0]]),
         x0=-0.75 * maximum,
         y0=0.0,
-        pas=maximum,
+        pas=0.8 * maximum,
     )
     with np.errstate(over="raise", invalid="raise", divide="raise"):
         altitude = relief.altitude(0.75 * maximum, 0.0)
-    assert altitude == 1.5
+    assert altitude == 3.75
 
 
 def test_mnt_ascii_rejette_une_coordonnees_extreme_hors_emprise() -> None:
     """Un indice hors emprise reste une ValueError, même si sa différence déborde."""
     maximum = np.finfo(float).max
     relief = ReliefMntAscii(
-        altitudes=np.array([[0.0, 2.0]]),
+        altitudes=np.array([[0.0, 2.0, 4.0]]),
         x0=-0.75 * maximum,
         y0=0.0,
-        pas=maximum,
+        pas=0.8 * maximum,
     )
     with np.errstate(over="raise", invalid="raise", divide="raise"):
         with pytest.raises(ValueError, match="emprise horizontale"):
