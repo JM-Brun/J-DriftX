@@ -695,7 +695,7 @@ def test_mnt_ascii_normalise_les_coordonnees_sans_debordement() -> None:
     )
     with np.errstate(over="raise", invalid="raise", divide="raise"):
         altitude = relief.altitude(0.75 * maximum, 0.0)
-    assert altitude == 3.75
+    assert altitude.item() == 3.75
 
 
 def test_mnt_ascii_rejette_une_coordonnees_extreme_hors_emprise() -> None:
