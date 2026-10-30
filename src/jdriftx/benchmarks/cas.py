@@ -49,7 +49,11 @@ class PointMesure:
 
     def __post_init__(self) -> None:
         """Refuse une coordonnee non finie : le point doit rester representable."""
-        if not all(math.isfinite(valeur) for valeur in (self.x, self.y, self.z)):
+        coordonnees = (self.x, self.y, self.z)
+        if any(isinstance(valeur, (bool, np.bool_)) for valeur in coordonnees):
+            msg = "Les coordonnees d un point de mesure doivent etre numeriques (booleens exclus)."
+            raise ValueError(msg)
+        if not all(math.isfinite(valeur) for valeur in coordonnees):
             msg = "Les coordonnees d un point de mesure doivent etre finies."
             raise ValueError(msg)
 
@@ -106,6 +110,12 @@ class CasS0(CasSynthetique):
         valeur partagee garantit deja (docs/41).
         """
         parametres = (self.z_mesure, *self.arcs, *self.positions_laterales)
+        if any(isinstance(valeur, (bool, np.bool_)) for valeur in parametres):
+            msg = (
+                "L altitude, les arcs et les positions laterales doivent etre numeriques "
+                "(booleens exclus)."
+            )
+            raise ValueError(msg)
         if not all(math.isfinite(valeur) for valeur in parametres):
             msg = "L altitude, les arcs et les positions laterales doivent etre finis."
             raise ValueError(msg)
