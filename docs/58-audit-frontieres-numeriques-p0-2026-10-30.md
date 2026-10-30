@@ -145,3 +145,8 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 ### 3.6 `fields.vector_field` et `terrain.terrain_surface` — issue #379 / PR #380
 
 Les deux fonctions autonomes refusent désormais les coordonnées qui ne sont pas des tableaux numériques réels float64, finis et sans coercition textuelle ; les booléens et complexes sont exclus avant conversion, y compris dans les séquences hétérogènes promues par NumPy. Les paramètres scalaires sont normalisés en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les contrôles de forme et `width > 0` sont conservés. Aucun signe n'est ajouté aux domaines de `speed`, `shear`, `radial_strength`, `height`, `center_x` ou `center_y`. Les tests couvrent les entrées invalides et des paramètres signés valides ; ils ne constituent pas une validation physique.
+
+
+### 3.8 `periodic_sine_solution` et solveurs périodiques — issue #384 / PR #385
+
+La solution exacte et le validateur partagé des deux solveurs normalisent les paramètres en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution exacte sont contrôlées avant conversion, sans booléens, complexes ni coercition textuelle. Le nombre de cellules accepte les entiers Python et NumPy, booléens exclus, et contrôle la représentabilité de la dimension NumPy ; les flottants entiers restent refusés. Les deux solveurs consomment les paramètres normalisés renvoyés par le validateur commun. Les équations, domaines physiques, critères de stabilité et méthodes restent inchangés.
