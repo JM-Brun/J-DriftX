@@ -40,6 +40,34 @@ class ChampPlan(Protocol):
         ...
 
 
+def _phase_periodique(coord: float, longueur: float) -> float:
+    """Reduit une coordonnee modulo la longueur avant le calcul de phase."""
+    return 2.0 * math.pi * (math.remainder(coord, longueur) / longueur)
+
+
+def _produit_float64(*facteurs: float) -> float:
+    """Multiplie des facteurs finis sans overflow intermediaire."""
+    mantisse = 1.0
+    exposant = 0
+    for facteur in facteurs:
+        if facteur == 0.0:
+            return 0.0
+        mantisse_facteur, exposant_facteur = math.frexp(facteur)
+        mantisse *= mantisse_facteur
+        exposant += exposant_facteur
+        mantisse, correction = math.frexp(mantisse)
+        exposant += correction
+    try:
+        resultat = math.ldexp(mantisse, exposant)
+    except OverflowError as err:
+        raise ValueError("La vitesse du champ doit rester finie.") from err
+    if not math.isfinite(resultat):
+        raise ValueError("La vitesse du champ doit rester finie.")
+    if resultat == 0.0:
+        raise ValueError("La vitesse du champ est sous-representable en float64.")
+    return resultat
+
+
 def _verifie_coordonnees(x: float, y: float) -> None:
     """Refuse les coordonnées non finies avant toute évaluation du champ."""
     if not (math.isfinite(x) and math.isfinite(y)):
@@ -92,20 +120,25 @@ class ChampFonctionCourant:
             ValueError: si les coordonnées ne sont pas finies.
         """
         _verifie_coordonnees(x, y)
-        k = self.nombre_donde
-        return self.amplitude * math.sin(k * x) * math.sin(k * y)
+        phase_x = _phase_periodique(x, self.longueur)
+        phase_y = _phase_periodique(y, self.longueur)
+        return self.amplitude * math.sin(phase_x) * math.sin(phase_y)
 
     def vitesse(self, x: float, y: float) -> tuple[float, float]:
         """Évalue (u, v) = (∂ψ/∂y, -∂ψ/∂x) en m s⁻¹, divergence nulle par construction.
 
         Raises:
             ValueError: si les coordonnées ne sont pas finies ou si une
-                composante deborde vers une valeur non finie.
+                composante de vitesse n'est pas representable en float64.
         """
         _verifie_coordonnees(x, y)
         k = self.nombre_donde
-        u = self.amplitude * k * math.sin(k * x) * math.cos(k * y)
-        v = -self.amplitude * k * math.cos(k * x) * math.sin(k * y)
+        phase_x = _phase_periodique(x, self.longueur)
+        phase_y = _phase_periodique(y, self.longueur)
+        sin_x, cos_x = math.sin(phase_x), math.cos(phase_x)
+        sin_y, cos_y = math.sin(phase_y), math.cos(phase_y)
+        u = _produit_float64(self.amplitude, k, sin_x, cos_y)
+        v = -_produit_float64(self.amplitude, k, cos_x, sin_y)
         if not (math.isfinite(u) and math.isfinite(v)):
             msg = "La vitesse du champ doit rester finie."
             raise ValueError(msg)
