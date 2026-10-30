@@ -44,7 +44,9 @@ def test_vector_field_refuse_les_parametres_booleens(
     parametres[champ] = booleen
     # When / Then — le champ refuse le paramètre avant toute opération trigonométrique.
     with pytest.raises(ValueError, match="booleans excluded"):
-        fields.vector_field(np.zeros(2), np.zeros(2), "uniform", **parametres)  # type: ignore[arg-type]
+        fields.vector_field(
+            np.zeros(2), np.zeros(2), "uniform", **parametres
+        )  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize(
@@ -85,7 +87,9 @@ def test_terrain_surface_refuse_les_parametres_booleens(
     parametres[champ] = booleen
     # When / Then — le terrain refuse le paramètre avant l'évaluation.
     with pytest.raises(ValueError, match="booleans excluded"):
-        terrain.terrain_surface(np.zeros(2), np.zeros(2), "hill", **parametres)  # type: ignore[arg-type]
+        terrain.terrain_surface(
+            np.zeros(2), np.zeros(2), "hill", **parametres
+        )  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize(
@@ -148,7 +152,13 @@ def test_periodic_sine_solution_refuse_les_coordonnees_booleennes(
     # When / Then — la solution refuse la conversion numérique.
     with pytest.raises(ValueError, match="booleans excluded"):
         periodic_transport.periodic_sine_solution(
-            valeur, 0.1, length=1.0, mean_concentration=1.0, amplitude=0.5, velocity=0.4, diffusivity=0.01
+            valeur,
+            0.1,
+            length=1.0,
+            mean_concentration=1.0,
+            amplitude=0.5,
+            velocity=0.4,
+            diffusivity=0.01,
         )  # type: ignore[arg-type]
 
 
