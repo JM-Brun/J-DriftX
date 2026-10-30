@@ -332,6 +332,7 @@ def test_adaptateur_vent_stationnaire_alimente_les_trajectoires_2d() -> None:
 
 def test_adaptateur_vent_refuse_une_composante_verticale_non_nulle() -> None:
     """Un intégrateur 2D ne doit pas masquer une vitesse verticale."""
+
     class VentVertical:
         def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
             return 1.0, 0.0, 0.1
