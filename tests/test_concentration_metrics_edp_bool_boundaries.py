@@ -173,3 +173,37 @@ def test_pas_longitudinal_refuse_un_debut_booleen(booleen: bool | np.bool_) -> N
     parametres = ParametresEdp(2.5, 2.0, 340.0, 240.0)
     with pytest.raises(ValueError, match="booléen exclu"):
         coefficients.pas_longitudinal(booleen, 800.0, parametres)
+
+
+@pytest.mark.parametrize(
+    ("pas_y", "pas_z", "demi_largeur", "hauteur"),
+    [
+        (1e-308, 2.0, 1e308, 240.0),
+        (2.5, 1e-308, 340.0, 1e308),
+        (1e308, 2.0, 1e-308, 240.0),
+        (2.5, 1e308, 340.0, 1e-308),
+    ],
+)
+def test_parametres_edp_refusent_les_rapports_de_grille_non_representables(
+    pas_y: float, pas_z: float, demi_largeur: float, hauteur: float
+) -> None:
+    """Les rapports de multiplicité ne débordent ni ne sous-débordent silencieusement."""
+    with pytest.raises(ValueError, match="rapport de discrétisation"):
+        ParametresEdp(pas_y, pas_z, demi_largeur, hauteur)
+
+
+@pytest.mark.parametrize(
+    ("x", "coefficient", "d"),
+    [
+        (1e308, 1.0, 0.0),
+        (1e-308, 1e-308, 0.0),
+        (np.float64(np.inf), 1.0, 0.0),
+        (100.0, 1.0, np.float64(np.nan)),
+    ],
+)
+def test_derivee_sigma_carre_refuse_les_calculs_non_representables(
+    x: float | np.float64, coefficient: float, d: float | np.float64
+) -> None:
+    """Les entrées non finies et les intermédiaires non représentables sont explicites."""
+    with pytest.raises(ValueError, match="représentable"):
+        derivee_sigma_carre(x, coefficient, d)

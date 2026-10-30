@@ -217,6 +217,10 @@ Les frontières publiques suivantes rejettent explicitement les booléens Python
 
 Les tableaux et séquences sont inspectés avant coercition en `float64`. Aucune formule de temps, équation d'intégration, convention d'accessibilité ou règle de rendu n'est modifiée.
 
+### Complément P0 — représentabilité des calculs EDP (issue #366, PR #372)
+
+L'audit a confirmé que les paramètres de grille pouvaient être individuellement finis et positifs tout en donnant un rapport de multiplicité non représentable ; le chemin antérieur atteignait alors `round(inf)`. Les rapports sont désormais calculés avec une division ordonnée pour éviter un débordement intermédiaire inutile, puis contrôlés avant l'arrondi. Les rapports nuls par sous-débordement sont également rejetés. La dérivée analytique `derivee_sigma_carre` normalise les entrées en float64, contrôle les valeurs non finies et vérifie la représentabilité des intermédiaires et du résultat ; les débordements et sous-débordements silencieux sont convertis en `ValueError` contextualisée. Les expressions mathématiques, les coefficients, les domaines de signe et les unités restent inchangés. Ces garde-fous logiciels ne constituent pas une analyse de stabilité physique.
+
 ### Complément P0 — champs de concentration, métriques et grille EDP (issue #364, PR #371)
 
 Le balayage des frontières C1/C5 a identifié des coercitions booléennes dans le champ passé à `constraints.positivite`, les observations des métriques FAC2/NMSE (y compris la façade `calculer_metriques`), et les tableaux et scalaires de `experiences.reference_independante`. La façade `benchmarks.reference.evaluer_prediction` conserve désormais le dtype de la vérité jusqu'à la validation des métriques.
