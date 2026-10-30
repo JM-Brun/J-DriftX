@@ -538,9 +538,9 @@ def test_mnt_ascii_interpolation_preserves_a_tiny_active_corner() -> None:
     assert altitude == minimum
 
 
-def test_mnt_ascii_interpolation_preserves_tiny_corner_at_unit_weight() -> None:
-    """Un sommet subnormal conserve sa valeur lorsque son poids vaut un."""
-    # Given — le coin sud-est est subnormal et le coin voisin vaut float64.max.
+def test_mnt_ascii_interpolation_preserves_tiny_corner_at_grid_node() -> None:
+    """Un sommet subnormal conserve sa valeur à un nœud de la grille."""
+    # Given — le coin sud-est est subnormal et les autres coins valent float64.max.
     minimum = np.nextafter(0.0, 1.0)
     maximum = np.finfo(float).max
     relief = ReliefMntAscii(
@@ -549,7 +549,7 @@ def test_mnt_ascii_interpolation_preserves_tiny_corner_at_unit_weight() -> None:
         y0=0.0,
         pas=1.0,
     )
-    # When — on évalue exactement au centre du coin sud-est (poids horizontal 1).
+    # When — on évalue exactement au nœud sud-est du MNT.
     altitude = relief.altitude(1.0, 0.0)
     # Then — l'interpolation restitue exactement le sommet actif.
     assert altitude == minimum
