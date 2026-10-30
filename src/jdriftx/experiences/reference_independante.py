@@ -676,7 +676,7 @@ class EchantillonneurBilineaire:
         grille : les points de comparaison doivent rester dans le domaine.
         """
         coordonnees: list[float] = []
-        msg_coordonnees = "Les coordonnées y et z doivent être des scalaires réels finis (booléens exclus)."
+        msg_coordonnees = "Les coordonnées y et z doivent être réelles et finies (booléens exclus)."
         for nom, valeur in (("y", y), ("z", z)):
             if isinstance(valeur, (bool, np.bool_)) or not isinstance(
                 valeur, (int, float, np.integer, np.floating)
