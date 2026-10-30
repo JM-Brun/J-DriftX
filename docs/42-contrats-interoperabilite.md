@@ -1,6 +1,6 @@
 # Contrats d'interopérabilité : protocoles PEP 544 entre relief, vent, sources et concentrations
 
-> **Statut — modularisation demandée le 29 octobre 2026 : si un élément change (terrain/relief, sources/puits, champ de vent 2D/3D, concentrations), les interfaçages doivent continuer de se faire simplement, en s'appuyant sur les standards autant que possible (MNT, …).** Ce document et son exécution répondent à ce mandat : trois contrats (relief, vent, concentration) et leurs adaptateurs sont extraits dans un module isolé ([contrats.py](../src/jdriftx/contrats.py)) ; les éléments existants ([champ_analytique.py](../src/jdriftx/champ_analytique.py), [terrain.py](../src/jdriftx/terrain.py), [source.py](../src/jdriftx/source.py), [similitude.py](../src/jdriftx/similitude.py)) sont branchés derrière ces contrats sans modification. Aucune définition mathématique, aucun seuil ([#43](https://github.com/JM-Brun/J-DriftX/issues/43)), aucune vérité exacte n'est modifié.
+> **Statut — modularisation demandée le 29 octobre 2026 : si un élément change (terrain/relief, sources/puits, champ de vent 2D/3D, concentrations), les interfaçages doivent continuer de se faire simplement, en s'appuyant sur les standards autant que possible (MNT, …).** Ce document et son exécution répondent à ce mandat : trois contrats (relief, vent, concentration) et leurs adaptateurs sont isolés par responsabilité. Les protocoles sont définis dans [`_protocoles.py`](../src/jdriftx/_protocoles.py), les reliefs dans [`reliefs.py`](../src/jdriftx/reliefs.py), les vents dans [`vents.py`](../src/jdriftx/vents.py) et les modèles de concentration dans [`concentrations.py`](../src/jdriftx/concentrations.py). [`contrats.py`](../src/jdriftx/contrats.py) reste une façade de compatibilité pour les imports historiques ; les éléments existants ([champ_analytique.py](../src/jdriftx/champ_analytique.py), [terrain.py](../src/jdriftx/terrain.py), [source.py](../src/jdriftx/source.py), [similitude.py](../src/jdriftx/similitude.py)) sont branchés derrière ces contrats sans modification. Aucune définition mathématique, aucun seuil ([#43](https://github.com/JM-Brun/J-DriftX/issues/43)), aucune vérité exacte n'est modifié.
 
 ## 1. Question et modes de contribution
 
@@ -23,12 +23,14 @@ Les contrats sont des protocoles PEP 544 à typage structurel — le même méca
 | Contrat | Signature | Implémentations livrées | Rôle |
 |---|---|---|---|
 | `Relief` | `altitude(x, y)` (vectorisé, grilles) | `ReliefPlat`, `ReliefSynthetique`, `ReliefMntAscii` | Géométrie du sol pour le rendu, la planification de prélèvements et les futurs cas de terrain |
-| `Vent` | `vitesse(x, y, z) -> (u, v, w)` (ponctuel, comme l'intégration des trajectoires) | `VentUniforme`, `VentDeChampPlan`, `VentProfilPuissance` | Champ de vent plan ou 3D, interchangeable derrière une seule signature |
-| `ModeleConcentration` | `concentration(x, y, z)` (vectorisé) | `PanacheGaussien`, `SuperpositionPanaches` | Modèle de concentration interchangeable (similitude aujourd'hui, solveurs demain) |
+| `Vent` | `vitesse(x, y, z) -> (u, v, w)` (ponctuel) | `VentUniforme`, `VentDeChampPlan`, `VentProfilPuissance`, `AdaptateurTrajectoire2D` | Champ de vent plan ou 3D, interchangeable derrière une seule signature |
+| `ModeleConcentration` | `concentration(x, y, z)` (vectorisé) | `PanacheGaussien`, `SuperpositionPanaches` | Modèle de concentration interchangeable (similitude analytique et condition d'entrée des solveurs) |
 
-Le choix vectorisé/ponctuel suit l'usage réel : le relief et les concentrations s'évaluent sur des grilles (rendu, jeux de mesures), le vent s'échantillonne point par point (intégration des trajectoires, [trajectories.py](../src/jdriftx/trajectories.py)).
+Le choix vectorisé/ponctuel suit l'usage réel : le relief et les concentrations s'évaluent sur des grilles (rendu, jeux de mesures), le vent s'échantillonne point par point. L'adaptateur explicite vers l'intégrateur 2D est limité aux champs stationnaires sans composante verticale.
 
-Deux autres protocoles suivent la même règle hors du module des contrats : `ModeleDiffusion` (docs/51 — modèle de diffusion injectable de la comparaison à référence indépendante) et `StructureLongitudinale` (docs/54 — structure longitudinale injectable de l'EDP transitoire du puff).
+Un adaptateur explicite `AdaptateurTrajectoire2D` relie un `Vent` stationnaire à l'intégrateur cinématique 2D (`trajectories.integrate_trajectory`) en fixant la hauteur ; il refuse une composante verticale non nulle au lieu de la perdre silencieusement. Il ne transforme donc ni un champ instationnaire ni un mouvement 3D en équivalent 2D.
+
+Les autres points de substitution suivent la même règle hors du module des contrats : `ModeleDiffusion` et `SolveurDeReference` (docs/51 — physique de diffusion et algorithme de résolution séparés dans la comparaison à référence indépendante), ainsi que `StructureLongitudinale` (docs/54 — structure longitudinale injectable de l'EDP transitoire du puff). Les routes doivent dépendre de ces contrats et non instancier directement une implémentation alternative ; l'implémentation FTCS reste le défaut et sa comparaison scientifique documentée n'est pas étendue automatiquement aux solveurs injectés.
 
 ## 4. Standards retenus
 
@@ -38,7 +40,7 @@ Deux autres protocoles suivent la même règle hors du module des contrats : `Mo
 
 ## 5. Registre du graphe
 
-Le module `contrats.py` rejoint le registre ([site/data/graphe-connaissances.toml](../site/data/graphe-connaissances.toml)) — nœud module `contrats` et quatre arêtes structurelles « utilise » : `contrats` → `terrain`, `contrats` → `champ_analytique`, `contrats` → `source`, `contrats` → `similitude`. Le nœud rejoint la vue « Code, propriétés et preuves », groupe dédié « Contrats d'interface » ; le rendu ([site/projet/_graphes-mermaid.md](../site/projet/_graphes-mermaid.md)) est régénéré et committé avec le registre, la synchronisation octet par octet restant vérifiée par la CI.
+Les modules `_protocoles.py`, `reliefs.py`, `vents.py`, `concentrations.py` et la façade `contrats.py` sont représentés dans le registre ([site/data/graphe-connaissances.toml](../site/data/graphe-connaissances.toml)). Les dépendances sont explicitées par responsabilité : les reliefs utilisent `terrain`, les vents utilisent `champ_analytique`, les concentrations utilisent `source` et `similitude`, et la façade réexporte les contrats et implémentations. Les nœuds rejoignent la vue « Code, propriétés et preuves », groupe dédié « Contrats d'interface » ; le rendu ([site/projet/_graphes-mermaid.md](../site/projet/_graphes-mermaid.md)) est régénéré et committé avec le registre, la synchronisation octet par octet restant vérifiée par la CI.
 
 ## 6. Limites
 
@@ -48,7 +50,7 @@ Le relief du contrat est une **géométrie** (altitude du sol) : aucun effet du 
 
 | Élément | Statut |
 |---|---|
-| Contrats `Relief`, `Vent`, `ModeleConcentration` (PEP 544) | **Livrés** ([contrats.py](../src/jdriftx/contrats.py)) |
+| Contrats `Relief`, `Vent`, `ModeleConcentration` (PEP 544) | **Livrés** ([`_protocoles.py`](../src/jdriftx/_protocoles.py), réexportés par [`contrats.py`](../src/jdriftx/contrats.py)) |
 | Adaptateurs des éléments existants (terrain, champ plan, source, similitude) | **Livrés**, délégation pure sans duplication |
 | MNT standard ESRI ASCII Grid (`.asc`) | **Lu et interpolé** (bilinéaire, emprise et nodata explicites) |
 | Profil de vent en loi de puissance | **Livré** (standard de couche de surface) |
@@ -58,5 +60,6 @@ Le relief du contrat est une **géométrie** (altitude du sol) : aucun effet du 
 
 ## Références
 
-- Exécution : [contrats.py](../src/jdriftx/contrats.py) ; tests : [test_contrats.py](../tests/test_contrats.py).
-- Contexte interne : docs/24 (objets de stabilité), docs/25 (harmonisation OOP), docs/39 section 7 (standards de données), docs/40 (standards de qualité, PEP 544), docs/41 (unification de la source), docs/51 et docs/54 (protocoles hors module des contrats : `ModeleDiffusion`, `StructureLongitudinale`) ; contrats inchangés : [#43](https://github.com/JM-Brun/J-DriftX/issues/43).
+- Implémentations : [reliefs.py](../src/jdriftx/reliefs.py), [vents.py](../src/jdriftx/vents.py), [concentrations.py](../src/jdriftx/concentrations.py) ; protocoles : [_protocoles.py](../src/jdriftx/_protocoles.py) ; façade historique : [contrats.py](../src/jdriftx/contrats.py).
+- Tests : [test_contrats.py](../tests/test_contrats.py) et [test_architecture_modules.py](../tests/test_architecture_modules.py) (identité et compatibilité des imports).
+- Contexte interne : docs/24 (objets de stabilité), docs/25 (harmonisation OOP), docs/39 section 7 (standards de données), docs/40 (standards de qualité, PEP 544), docs/41 (unification de la source), docs/51 et docs/54 (protocoles hors module des contrats : `ModeleDiffusion`, `SolveurDeReference`, `StructureLongitudinale`) ; contrats inchangés : [#43](https://github.com/JM-Brun/J-DriftX/issues/43).

@@ -11,21 +11,10 @@ ils servent aux applications interactives et aux tests, pas à l'API publique du
 package (audit docs/25, recommandation 7).
 """
 
+from jdriftx._protocoles import ModeleConcentration, Relief, Vent
 from jdriftx.champ_analytique import ChampFonctionCourant, ChampPlan, SuperpositionChamps
+from jdriftx.concentrations import PanacheGaussien, SuperpositionPanaches
 from jdriftx.constraints import linearite, linearite_panache, positivite
-from jdriftx.contrats import (
-    ModeleConcentration,
-    PanacheGaussien,
-    Relief,
-    ReliefMntAscii,
-    ReliefPlat,
-    ReliefSynthetique,
-    SuperpositionPanaches,
-    Vent,
-    VentDeChampPlan,
-    VentProfilPuissance,
-    VentUniforme,
-)
 from jdriftx.experiences import (
     ChampUniforme,
     ManifesteReconstruction,
@@ -39,6 +28,7 @@ from jdriftx.experiences import (
     resoudre_scenario,
 )
 from jdriftx.metric import pseudo_distance_uniforme, temps_transport
+from jdriftx.reliefs import ReliefMntAscii, ReliefPlat, ReliefSynthetique
 from jdriftx.similitude import concentration_panache, concentration_puff, sigma_y, sigma_z
 from jdriftx.similitude_objets import (
     ParametresPuff,
@@ -48,6 +38,7 @@ from jdriftx.similitude_objets import (
 )
 from jdriftx.source import SourcePanache
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
+from jdriftx.vents import VentDeChampPlan, VentProfilPuissance, VentUniforme
 
 __version__ = "0.1.0"
 

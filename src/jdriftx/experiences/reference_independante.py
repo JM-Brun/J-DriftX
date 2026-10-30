@@ -57,9 +57,10 @@ from typing import Protocol
 import numpy as np
 from pydantic import BaseModel, ConfigDict
 
+from jdriftx._protocoles import ModeleConcentration
 from jdriftx.benchmarks.cas import CasS0, PointMesure
 from jdriftx.benchmarks.metriques import fac2, nmse
-from jdriftx.contrats import PanacheGaussien
+from jdriftx.concentrations import PanacheGaussien
 from jdriftx.similitude import sigma_y, sigma_z
 from jdriftx.stabilite import ClasseStabilite, FormeSigmaZ
 
@@ -80,6 +81,7 @@ __all__ = [
     "RouteEdp",
     "RouteFermee",
     "SolutionEdp",
+    "SolveurDeReference",
     "SolveurEdp",
     "TrancheEdp",
     "comparer_reference",
@@ -292,6 +294,19 @@ class SolutionEdp:
     tranches: tuple[TrancheEdp, ...]
 
 
+class SolveurDeReference(Protocol):
+    """Contrat d'un solveur produisant une solution échantillonnable.
+
+    Une route de comparaison dépend de la structure de sortie, pas du schéma
+    numérique. Un solveur alternatif peut donc remplacer FTCS s'il fournit
+    les mêmes coordonnées et tranches, sans hériter de SolveurEdp.
+    """
+
+    def resoudre(self) -> SolutionEdp:
+        """Retourne la solution sur la grille et aux arcs du cas configuré."""
+        ...
+
+
 @dataclass(frozen=True)
 class GrilleEdp:
     """Géométrie de la grille EDP : nœuds latéraux symétriques, colonne du sol.
@@ -370,6 +385,7 @@ class SolveurEdp:
         cas : cas S0 figé portant la source et les arcs de mesure.
         parametres : paramètres numériques de la grille transverse/verticale.
         modele : modèle de diffusion (Briggs par défaut).
+        condition_entree : champ initial (panache gaussien partagé par défaut).
     """
 
     def __init__(
@@ -377,11 +393,15 @@ class SolveurEdp:
         cas: CasS0,
         parametres: ParametresEdp,
         modele: ModeleDiffusion = DIFFUSION_BRIGGS,
+        condition_entree: ModeleConcentration | None = None,
     ) -> None:
-        """Injecte les trois considérations : cas, géométrie, physique."""
+        """Injecte le cas, la géométrie, la diffusion et le champ d'entrée."""
         self.cas = cas
         self.parametres = parametres
         self.modele = modele
+        self.condition_entree = (
+            condition_entree if condition_entree is not None else PanacheGaussien(source=cas.source)
+        )
 
     def resoudre(self) -> SolutionEdp:
         """Résout du premier au dernier arc : modèle, grille, pas, arcs, marche.
@@ -427,8 +447,17 @@ class SolveurEdp:
         pas_y = self.parametres.pas_transverse_y
         pas_z = self.parametres.pas_transverse_z
         mailles_y, mailles_z = grille.mailles()
-        panache = PanacheGaussien(source=self.cas.source)
-        champ = np.asarray(panache.concentration(x_entree, mailles_y, mailles_z), dtype=float)
+        champ = np.asarray(
+            self.condition_entree.concentration(x_entree, mailles_y, mailles_z),
+            dtype=float,
+        )
+        if champ.shape != mailles_y.shape:
+            msg = "La condition d'entrée doit retourner un champ de même forme que la grille."
+            raise ValueError(msg)
+        if not np.all(np.isfinite(champ)):
+            msg = "La condition d'entrée doit retourner des concentrations finies."
+            raise ValueError(msg)
+        champ = champ.copy()
         champ[0, :] = 0.0
         champ[-1, :] = 0.0
         champ[:, -1] = 0.0
@@ -477,15 +506,16 @@ def resoudre_edp(
     cas: CasS0,
     parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT,
     modele: ModeleDiffusion = DIFFUSION_BRIGGS,
+    condition_entree: ModeleConcentration | None = None,
 ) -> SolutionEdp:
     """Résout l'EDP de diffusion marchée en x, du premier au dernier arc.
 
-    Point d'entrée public inchangé (note 51) : délègue au solveur, même
-    comportement numérique. Le modèle de diffusion est injectable — c'est
-    le point d'extension de S0-b (cisaillement) ; le schéma et la grille
-    restent ceux de l'étape 5.
+    Le solveur FTCS et le panache gaussien restent les défauts. Le modèle de
+    diffusion et la condition initiale sont injectables ; cette dernière
+    doit respecter le contrat ModeleConcentration et retourner un champ
+    fini de la forme de la grille.
     """
-    return SolveurEdp(cas, parametres, modele).resoudre()
+    return SolveurEdp(cas, parametres, modele, condition_entree).resoudre()
 
 
 def _pas_longitudinal(
@@ -601,9 +631,10 @@ class RouteEdp:
     sans facteur historique).
 
     Attributs :
-        cas : cas S0 figé résolu par le schéma FTCS.
+        cas : cas S0 figé auquel le solveur injecté est appliqué.
         parametres : paramètres numériques de la grille transverse/verticale.
         modele : modèle de diffusion (Briggs par défaut).
+        solveur : implémentation du protocole SolveurDeReference, optionnelle.
     """
 
     def __init__(
@@ -611,16 +642,18 @@ class RouteEdp:
         cas: CasS0,
         parametres: ParametresEdp = PARAMETRES_EDP_DEFAUT,
         modele: ModeleDiffusion = DIFFUSION_BRIGGS,
+        solveur: SolveurDeReference | None = None,
     ) -> None:
-        """Injecte les mêmes considérations que le solveur (points d'extension)."""
+        """Injecte le solveur ; FTCS reste l'implémentation par défaut."""
         self.cas = cas
         self.parametres = parametres
         self.modele = modele
+        self.solveur = solveur if solveur is not None else SolveurEdp(cas, parametres, modele)
 
     def mesurer(self, points: tuple[PointMesure, ...]) -> MesureEdp:
         """Résout, échantillonne et intègre la route EDP ; coût mesuré ensemble."""
         debut = time.perf_counter()
-        solution = SolveurEdp(self.cas, self.parametres, self.modele).resoudre()
+        solution = self.solveur.resoudre()
         grille = GrilleEdp(abscisses_y=solution.abscisses_y, abscisses_z=solution.abscisses_z)
         tranches = {tranche.x: tranche for tranche in solution.tranches}
         valeurs: list[float] = []
