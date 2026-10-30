@@ -34,6 +34,16 @@ FRACTION_CALIBRATION = 0.7
 
 def _tableau_immuable(valeur: np.ndarray, nom: str) -> np.ndarray:
     """Copie un vecteur float64 dans un tampon réellement non modifiable."""
+    if isinstance(valeur, np.ndarray):
+        bool_present = valeur.dtype.kind == "b" or (
+            valeur.dtype.kind == "O"
+            and any(isinstance(element, (bool, np.bool_)) for element in valeur.flat)
+        )
+    else:
+        brut = np.asarray(valeur, dtype=object)
+        bool_present = any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
+    if bool_present:
+        raise ValueError(f"{nom} doit contenir des valeurs numeriques (booleens exclus).")
     tableau = np.array(valeur, dtype=float, copy=True)
     if tableau.ndim != 1 or tableau.size == 0:
         raise ValueError(f"{nom} doit être un vecteur 1D non vide.")
@@ -76,6 +86,19 @@ class CasSynthetiqueS0:
         garantie à la construction (docs/41).
         """
         parametres = (self.altitude, self.x_min, self.x_max, self.y_max)
+        if any(isinstance(valeur, (bool, np.bool_)) for valeur in parametres):
+            msg = "Les parametres physiques du cas doivent etre numeriques (booleens exclus)."
+            raise ValueError(msg)
+        if isinstance(self.graine, (bool, np.bool_)) or not isinstance(
+            self.graine, (int, np.integer)
+        ):
+            msg = "La graine doit etre un entier."
+            raise ValueError(msg)
+        if isinstance(self.nombre_points, (bool, np.bool_)) or not isinstance(
+            self.nombre_points, (int, np.integer)
+        ):
+            msg = "Le nombre de points doit etre un entier."
+            raise ValueError(msg)
         if not all(np.isfinite(valeur) for valeur in parametres):
             msg = "Les paramètres physiques du cas doivent être finis."
             raise ValueError(msg)
