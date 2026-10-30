@@ -104,3 +104,14 @@ def test_velocity_callback_must_return_a_pair() -> None:
             1.0,
             0.1,  # type: ignore[arg-type]
         )
+
+
+@pytest.mark.parametrize("invalid_component", ["bad", 1.0 + 2.0j, None])
+def test_velocity_callback_rejects_non_real_components(invalid_component: object) -> None:
+    """Les composantes non réelles ou non numériques donnent une ValueError stable."""
+
+    def velocity(_t: float, _x: float, _y: float) -> tuple[float, float]:
+        return 1.0, invalid_component  # type: ignore[return-value]
+
+    with pytest.raises(ValueError, match="pair of finite components"):
+        integrate_trajectory(velocity, 0.0, 0.0, 0.0, 1.0, 0.1)

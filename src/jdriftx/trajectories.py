@@ -7,6 +7,7 @@ turbulent dispersion, deposition, or feedback on the flow.
 from __future__ import annotations
 
 from collections.abc import Callable
+from numbers import Real
 from typing import Literal
 
 import numpy as np
@@ -52,13 +53,16 @@ def integrate_trajectory(
 
     def rhs(time: float, px: float, py: float) -> tuple[float, float]:
         result = velocity(time, px, py)
-        if (
-            not isinstance(result, tuple)
-            or len(result) != 2
-            or not all(np.isfinite(component) for component in result)
+        if not isinstance(result, tuple) or len(result) != 2:
+            raise ValueError("velocity must return a pair of finite components.")
+        if not all(
+            isinstance(component, Real) and not isinstance(component, bool) for component in result
         ):
             raise ValueError("velocity must return a pair of finite components.")
-        return float(result[0]), float(result[1])
+        components = (float(result[0]), float(result[1]))
+        if not all(np.isfinite(component) for component in components):
+            raise ValueError("velocity must return a pair of finite components.")
+        return components
 
     times = [float(t0)]
     xs = [float(x0)]
