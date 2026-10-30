@@ -45,6 +45,8 @@ def integrate_trajectory(
             failure instead of silently truncating the trajectory).
     """
     values = (x0, y0, t0, t_end, dt)
+    if any(isinstance(value, (bool, np.bool_)) for value in values):
+        raise ValueError("Initial values and time parameters must be real (booleans excluded).")
     if not all(np.isfinite(value) for value in values):
         raise ValueError("Initial values and time parameters must be finite.")
     if dt <= 0:
