@@ -1,6 +1,6 @@
 """Vérifie la séparation des modules et la compatibilité des imports historiques."""
 
-from importlib import import_module
+import importlib
 
 from jdriftx._protocoles import (
     ModeleConcentration as ProtocoleConcentration,
@@ -32,7 +32,7 @@ from jdriftx.vents import (
     VentUniforme as ModeleVentUniforme,
 )
 
-PACKAGE = import_module("jdriftx")
+PACKAGE = importlib.import_module("jdriftx")
 
 
 def test_facade_historique_reexporte_les_implementations_canoniques() -> None:
