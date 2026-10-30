@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import math
 
+import numpy as np
 import pytest
 from pydantic import ValidationError
 
@@ -215,3 +216,28 @@ def test_la_version_non_installee_est_supportee(
     manifeste = module_puff.construire_manifeste(evaluations)
     # Then — la version est explicitement rapportée comme non installée.
     assert manifeste.version_code == "non-installe"
+
+
+@pytest.mark.parametrize(
+    ("field", "bad"),
+    [
+        ("masse", True),
+        ("masse", np.bool_(True)),
+        ("masse", float("inf")),
+        ("masse", float("nan")),
+        ("masse", 1.0 + 2.0j),
+        ("masse", "1.0"),
+        ("u", True),
+        ("u", float("inf")),
+        ("x0", True),
+        ("x0", float("inf")),
+    ],
+)
+def test_source_impulsionnelle_rejects_non_real_or_non_finite_scalars(
+    field: str, bad: object
+) -> None:
+    """Les champs physiques sont des scalaires réels finis avant coercition Pydantic."""
+    parameters: dict[str, object] = {"masse": 1.0, "u": 3.0, "classe": "C", "x0": 0.0}
+    parameters[field] = bad
+    with pytest.raises(ValidationError):
+        SourceImpulsionnelle(**parameters)
