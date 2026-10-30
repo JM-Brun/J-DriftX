@@ -76,7 +76,7 @@ def test_gaussian_solution_rejects_non_real_or_non_finite_parameters(
         "initial_sigma": 0.5,
     }
     parameters[parameter] = bad
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="must be"):
         gaussian_advection_diffusion(
             np.array([0.0]), parameters.pop("time"), **parameters
         )  # type: ignore[arg-type]
@@ -97,5 +97,5 @@ def test_gaussian_solution_rejects_non_real_or_non_finite_coordinates(
     coordinates: object,
 ) -> None:
     """Les coordonnées sont des tableaux réels finis sans coercition silencieuse."""
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="must be"):
         gaussian_advection_diffusion(coordinates, 1.0)
