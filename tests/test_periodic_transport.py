@@ -338,3 +338,108 @@ def test_step_ratio_overflow_is_rejected_as_value_error(solveur: Callable[..., o
     # When / Then — la garde refuse avant que math.ceil ne déborde.
     with pytest.raises(ValueError, match="maximum"):
         solveur(n_cells=16, length=1.0, end_time=1e308, dt=1e-308)
+
+
+@pytest.mark.parametrize(
+    ("parameter", "bad"),
+    [
+        ("time", True),
+        ("time", np.bool_(True)),
+        ("time", 1.0 + 2.0j),
+        ("time", "1.0"),
+        ("time", np.nan),
+        ("time", np.inf),
+        ("length", 1.0 + 2.0j),
+        ("mean_concentration", "1.0"),
+        ("amplitude", 1.0 + 2.0j),
+        ("velocity", 1.0 + 2.0j),
+        ("diffusivity", 1.0 + 2.0j),
+    ],
+)
+def test_exact_solution_rejects_non_real_or_non_finite_parameters(
+    parameter: str, bad: object
+) -> None:
+    """La solution exacte valide ses scalaires comme réels float64 finis."""
+    parameters: dict[str, object] = {
+        "time": 0.0,
+        "length": 1.0,
+        "mean_concentration": 1.0,
+        "amplitude": 0.3,
+        "velocity": 0.4,
+        "diffusivity": 0.01,
+    }
+    parameters[parameter] = bad
+    with pytest.raises(ValueError):
+        periodic_sine_solution(np.linspace(0.0, 1.0, 8), **parameters)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize(
+    "coordinates",
+    [
+        np.array([True]),
+        [0.0, True],
+        np.array([1.0 + 2.0j]),
+        np.array(["1.0"]),
+        np.array([np.nan]),
+        np.array([np.inf]),
+    ],
+)
+def test_exact_solution_rejects_non_real_or_non_finite_coordinates(
+    coordinates: object,
+) -> None:
+    """La solution exacte refuse les coordonnées ambiguës avant conversion."""
+    with pytest.raises(ValueError):
+        periodic_sine_solution(
+            coordinates,  # type: ignore[arg-type]
+            0.0,
+            length=1.0,
+            mean_concentration=1.0,
+            amplitude=0.3,
+            velocity=0.4,
+            diffusivity=0.01,
+        )
+
+
+@pytest.mark.parametrize("solveur", [solve_periodic_sine_transport, solve_periodic_upwind_euler])
+def test_periodic_solvers_accept_numpy_integer_cell_counts(solveur: Callable[..., object]) -> None:
+    """Les scalaires entiers NumPy représentent bien un nombre de cellules."""
+    x, concentration, _ = solveur(
+        n_cells=np.int64(16),
+        length=1.0,
+        end_time=0.0,
+        dt=0.001,
+    )
+    assert x.shape == concentration.shape == (16,)
+
+
+@pytest.mark.parametrize("bad", [True, np.bool_(True), 16.0, 10**400])
+def test_periodic_solvers_reject_invalid_cell_count_types(bad: object) -> None:
+    """Le nombre de cellules est un entier non booléen représentable comme dimension."""
+    with pytest.raises(ValueError, match="n_cells"):
+        solve_periodic_sine_transport(
+            n_cells=bad,  # type: ignore[arg-type]
+            length=1.0,
+            end_time=0.0,
+            dt=0.001,
+        )
+
+
+@pytest.mark.parametrize("parameter", ["length", "end_time", "dt", "mean_concentration", "amplitude", "velocity", "diffusivity"])
+@pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.inf])
+def test_periodic_solvers_reject_non_real_or_non_finite_parameters(
+    parameter: str, bad: object
+) -> None:
+    """Les deux solveurs partagent le contrat réel fini des paramètres."""
+    parameters: dict[str, object] = {
+        "n_cells": 16,
+        "length": 1.0,
+        "end_time": 0.0,
+        "dt": 0.001,
+        "mean_concentration": 1.0,
+        "amplitude": 0.3,
+        "velocity": 0.4,
+        "diffusivity": 0.01,
+    }
+    parameters[parameter] = bad
+    with pytest.raises(ValueError):
+        solve_periodic_sine_transport(**parameters)  # type: ignore[arg-type]
