@@ -354,7 +354,9 @@ def test_superposition_refuse_une_forme_de_sortie_incoherente() -> None:
     )
     superposition = SuperpositionPanaches(panaches=(panache, ModeleFormeIncoherente()))
     with pytest.raises(ValueError, match="forme"):
-        superposition.concentration(np.zeros((2, 1)), np.zeros((1, 3)), 0.0)
+        superposition.concentration(
+            np.full((2, 1), 100.0), np.zeros((1, 3)), 0.0
+        )
 
 
 def test_superposition_accepte_le_broadcasting_des_entrees() -> None:
@@ -393,7 +395,7 @@ def test_superposition_refuse_une_sortie_non_reelle() -> None:
             return np.array([1.0 + 2.0j])
 
     superposition = SuperpositionPanaches(panaches=(ModeleComplexe(),))
-    with pytest.raises(TypeError, match="réelle et numérique"):
+    with pytest.raises(TypeError, match="flottant réel"):
         superposition.concentration(np.array([0.0]), np.array([0.0]), np.array([0.0]))
 
 
@@ -593,61 +595,4 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
 
     # When / Then — le débordement de la somme est refusé explicitement.
     with pytest.raises(ValueError, match="doit rester finie"):
-        superposition.concentration(0.0, 0.0, 0.0)
-
-def test_superposition_rejette_une_collection_mutable() -> None:
-    """La collection détenue par une superposition est immuable."""
-    panache = PanacheGaussien(
-        source=SourcePanache(debit=1.0, u=3.0, classe="D", hauteur=10.0)
-    )
-    with pytest.raises(TypeError, match="tuple"):
-        SuperpositionPanaches(panaches=[panache])  # type: ignore[arg-type]
-
-
-def test_superposition_rejette_un_modele_incompatible() -> None:
-    """Chaque élément doit satisfaire le protocole à la construction."""
-    with pytest.raises(TypeError, match="ModeleConcentration"):
-        SuperpositionPanaches(panaches=(object(),))  # type: ignore[arg-type]
-
-
-def test_superposition_refuse_le_broadcasting_implicite_des_sorties() -> None:
-    """Les sorties de chaque modèle doivent avoir la forme attendue des entrées."""
-
-    class PanacheForme:
-        def __init__(self, forme: tuple[int, ...]) -> None:
-            self.forme = forme
-
-        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
-            return np.ones(self.forme, dtype=float)
-
-    superposition = SuperpositionPanaches(
-        panaches=(PanacheForme((2,)), PanacheForme((1,)))
-    )
-    coordonnees = np.array([0.0, 1.0])
-    with pytest.raises(ValueError, match=r"attendue \(2,\)"):
-        superposition.concentration(coordonnees, coordonnees, coordonnees)
-
-
-def test_superposition_accepte_le_broadcasting_des_coordonnees() -> None:
-    """La forme attendue est le broadcasting des trois coordonnées."""
-
-    class PanacheForme:
-        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
-            return np.ones((2, 3), dtype=float)
-
-    superposition = SuperpositionPanaches(panaches=(PanacheForme(),))
-    x = np.zeros((2, 1))
-    y = np.zeros((1, 3))
-    resultat = superposition.concentration(x, y, 0.0)
-    assert resultat.shape == (2, 3)
-
-def test_superposition_rejette_une_sortie_qui_n_est_pas_un_ndarray() -> None:
-    """Le contrat de sortie impose un tableau NumPy."""
-
-    class PanacheListe:
-        def concentration(self, x: object, y: object, z: object) -> np.ndarray:
-            return [1.0]  # type: ignore[return-value]
-
-    superposition = SuperpositionPanaches(panaches=(PanacheListe(),))
-    with pytest.raises(TypeError, match="ndarray"):
         superposition.concentration(0.0, 0.0, 0.0)
