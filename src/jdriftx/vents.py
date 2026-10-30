@@ -61,7 +61,8 @@ class AdaptateurTrajectoire2D:
 
     def __post_init__(self) -> None:
         """Valide et normalise la hauteur fixe de l'echantillonnage."""
-        object.__setattr__(self, "hauteur", _reel_fini(self.hauteur, "La hauteur d echantillonnage"))
+        hauteur = _reel_fini(self.hauteur, "La hauteur d echantillonnage")
+        object.__setattr__(self, "hauteur", hauteur)
         if not callable(getattr(self.vent, "vitesse", None)):
             raise TypeError("Le vent doit exposer une methode vitesse callable.")
 
@@ -113,7 +114,7 @@ class VentDeChampPlan:
     champ: ChampPlan
 
     def __post_init__(self) -> None:
-        """Valide les méthodes requises par le protocole ChampPlan."""
+        """Valide les methodes requises par le protocole ChampPlan."""
         if not callable(getattr(self.champ, "fonction_courant", None)) or not callable(
             getattr(self.champ, "vitesse", None)
         ):
