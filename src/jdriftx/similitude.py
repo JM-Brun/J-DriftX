@@ -195,22 +195,25 @@ def concentration_panache(
         debit: emission massique (kg s^-1).
         u: vitesse du vent (m s^-1), strictement positive.
         classe: classe de stabilite de Pasquill (A a F), lettre ou ClasseStabilite.
-        hauteur: hauteur effective de la source (m).
+        hauteur: hauteur effective de la source (m), positive ou nulle.
 
     Returns:
         Concentration au point demande (reflection au sol incluse).
 
     Raises:
         ValueError: si la classe de stabilite est inconnue, si un parametre
-            scalaire n'est pas fini, si la distance sous le vent n'est pas
-            strictement positive, si y ou z contient une coordonnee non
-            finie, ou si la concentration theorique n'est pas representable
-            en float64 (singularite pres de la source).
+            scalaire n'est pas fini, si la hauteur de source est negative,
+            si la distance sous le vent n'est pas strictement positive, si
+            y ou z contient une coordonnee non finie, ou si la concentration
+            theorique n'est pas representable en float64 (singularite pres
+            de la source).
     """
     classe_stable = _valide_classe(classe)
     debit = _reel_fini(debit, "Le debit")
     u = _reel_fini(u, "La vitesse du vent")
     hauteur = _reel_fini(hauteur, "La hauteur de source")
+    if hauteur < 0.0:
+        raise ValueError("La hauteur de source doit etre positive ou nulle.")
     if u <= 0.0:
         raise ValueError("La vitesse du vent doit etre strictement positive.")
     if debit < 0.0:

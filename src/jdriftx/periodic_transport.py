@@ -13,6 +13,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 _FLOAT_EPS: Final[float] = 1e-10
+_MAXIMUM_STEPS: Final[int] = 10_000_000
 
 
 def _validate_periodic_parameters(
@@ -33,7 +34,8 @@ def _validate_periodic_parameters(
 
     Raises:
         ValueError: If any parameter is non-finite or out of range, the grid
-            is too coarse, or the concentration profile would be negative.
+            is too coarse, the concentration profile would be negative, or
+            the requested number of time steps exceeds the safety limit.
     """
     parameters = (length, end_time, dt, mean_concentration, amplitude, velocity, diffusivity)
     if not all(np.isfinite(value) for value in parameters):
@@ -50,6 +52,16 @@ def _validate_periodic_parameters(
         raise ValueError("Concentration must remain non-negative: mean >= amplitude >= 0.")
     if diffusivity < 0:
         raise ValueError("diffusivity must be non-negative.")
+    if end_time > 0.0:
+        # A huge or unrepresentable step ratio must fail as a ValueError:
+        # end_time / dt can overflow to inf, which math.ceil would otherwise
+        # turn into an unexplained OverflowError.
+        step_ratio = end_time / dt
+        if not np.isfinite(step_ratio) or ceil(step_ratio) > _MAXIMUM_STEPS:
+            raise ValueError(
+                "The requested number of time steps exceeds the maximum of "
+                f"{_MAXIMUM_STEPS}; reduce end_time or increase dt."
+            )
 
 
 def _etat_initial_periodique(
@@ -137,8 +149,9 @@ def solve_periodic_sine_transport(
     adjusted so that the integration ends exactly at end_time.
 
     Raises:
-        ValueError: For invalid parameters or a time step outside the RK4
-            stability region for the discrete spatial operator.
+        ValueError: For invalid parameters, a time step outside the RK4
+            stability region for the discrete spatial operator, or a step
+            count above the safety limit.
     """
     _validate_periodic_parameters(
         n_cells=n_cells,
@@ -210,6 +223,7 @@ def solve_periodic_upwind_euler(
 
     This first-order conservative scheme is an independent cross-check against
     the centered-space/RK4 solver. It requires |u|*dt/dx + 2*K*dt/dx**2 <= 1.
+    The shared validation rejects a step count above the safety limit.
     """
     _validate_periodic_parameters(
         n_cells=n_cells,

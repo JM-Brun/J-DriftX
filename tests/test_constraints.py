@@ -63,3 +63,22 @@ def test_linearite_panache_rejette_classe_inconnue() -> None:
     # When / Then — l'erreur historique est levée à l'évaluation du modèle.
     with pytest.raises(ValueError, match="Classe de stabilite inconnue"):
         linearite_panache(point, 1.0, 2.5, u=3.0, classe="X")
+
+
+@pytest.mark.parametrize("tolerance", [-1e-12, float("inf"), float("nan")])
+def test_positivite_rejette_une_tolerance_invalide(tolerance: float) -> None:
+    """Une tolérance négative ou non finie est refusée."""
+    # Given — un champ positif et une tolérance invalide.
+    champ = np.linspace(0.0, 1.0, 10)
+    # When / Then — l'appel est refusé avant la vérification.
+    with pytest.raises(ValueError, match="tolerance"):
+        positivite(champ, tol=tolerance)
+
+
+def test_positivite_rejette_une_tolerance_booleenne() -> None:
+    """Un booléen en tolérance est refusé, conformément à la charte qualité."""
+    # Given — un champ positif et la valeur True.
+    champ = np.linspace(0.0, 1.0, 10)
+    # When / Then — l'appel est refusé avant la vérification.
+    with pytest.raises(ValueError, match="booleen exclu"):
+        positivite(champ, tol=True)

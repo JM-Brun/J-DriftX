@@ -1,9 +1,12 @@
 """Tests for the independent periodic advection-diffusion solver."""
 
+from collections.abc import Callable
+
 import numpy as np
 import pytest
 from numpy.typing import NDArray
 
+from jdriftx import periodic_transport
 from jdriftx.periodic_transport import (
     periodic_sine_solution,
     solve_periodic_sine_transport,
@@ -300,3 +303,38 @@ def test_upwind_euler_handles_negative_velocity() -> None:
     # Then — l'erreur reste du même ordre que le cas de référence à vent positif.
     assert erreur < 5e-3
     assert float(np.mean(actual)) == pytest.approx(1.0, abs=1e-12)
+
+
+def test_step_count_above_the_real_limit_is_rejected() -> None:
+    """Une demande de plus de dix millions de pas est refusée sans intégrer."""
+    # Given — end_time / dt exige plus de dix millions de pas.
+    # When / Then — la garde réelle refuse la configuration immédiatement.
+    with pytest.raises(ValueError, match="maximum"):
+        solve_periodic_sine_transport(n_cells=16, length=1.0, end_time=1.0, dt=9e-8)
+
+
+@pytest.mark.parametrize(
+    "solveur",
+    [solve_periodic_sine_transport, solve_periodic_upwind_euler],
+)
+def test_excessive_step_count_is_rejected_for_both_solvers(
+    solveur: Callable[..., object], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """La garde partagée sur le nombre de pas protège les deux solveurs."""
+    # Given — une garde abaissée à quatre pas et une demande de dix pas.
+    monkeypatch.setattr(periodic_transport, "_MAXIMUM_STEPS", 4)
+    # When / Then — chaque solveur refuse la configuration avant toute intégration.
+    with pytest.raises(ValueError, match="maximum"):
+        solveur(n_cells=16, length=1.0, end_time=1.0, dt=0.1)
+
+
+@pytest.mark.parametrize(
+    "solveur",
+    [solve_periodic_sine_transport, solve_periodic_upwind_euler],
+)
+def test_step_ratio_overflow_is_rejected_as_value_error(solveur: Callable[..., object]) -> None:
+    """Un rapport end_time/dt qui déborde devient une ValueError explicite."""
+    # Given — un rapport end_time / dt hors de tout domaine représentable.
+    # When / Then — la garde refuse avant que math.ceil ne déborde.
+    with pytest.raises(ValueError, match="maximum"):
+        solveur(n_cells=16, length=1.0, end_time=1e308, dt=1e-308)

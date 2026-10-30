@@ -701,3 +701,24 @@ def test_puff_rejette_les_coordonnees_non_reelles(axe: str, valeur: object) -> N
     coordonnees[axe] = valeur
     with pytest.raises(ValueError, match=r"tableau numerique reel|valeurs finies|representable"):
         concentration_puff(**coordonnees, t=300.0, masse=5.0, u=3.0, classe="D")  # type: ignore[arg-type]
+
+
+def test_panache_rejette_une_hauteur_negative() -> None:
+    """Une hauteur de source strictement négative est refusée par le noyau."""
+    # Given — une hauteur de source strictement négative (source enterrée).
+    # When / Then — l'appel est refusé avant toute évaluation.
+    with pytest.raises(ValueError, match="positive ou nulle"):
+        concentration_panache(
+            500.0, 10.0, 2.0, debit=1.0, u=3.0, classe="D", hauteur=-10.0
+        )
+
+
+def test_panache_accepte_une_hauteur_nulle() -> None:
+    """Une hauteur de source nulle reste valide : la source est au sol."""
+    # Given — une source au sol, la garde n'exclut que le strictement négatif.
+    # When — le panache est évalué au sol à distance raisonnable.
+    c = concentration_panache(
+        500.0, 0.0, 0.0, debit=1.0, u=3.0, classe="D", hauteur=0.0
+    )
+    # Then — la concentration au sol est strictement positive (image superposée).
+    assert float(c) > 0.0

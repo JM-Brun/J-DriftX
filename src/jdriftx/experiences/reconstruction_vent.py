@@ -150,8 +150,10 @@ class ResultatReconstruction:
         vent_mesure_1: vent du choix 1 à la première mesure, en m s^-1.
         vent_mesure_2: vent du choix 1 à la seconde mesure, en m s^-1.
         ecart_entre_choix: écart maximal entre les deux choix aux mesures (m s^-1).
-        divergence_max_choix_1: divergence numérique maximale du choix 1 (s^-1).
-        divergence_max_choix_2: divergence numérique maximale du choix 2 (s^-1).
+        divergence_max_choix_1: divergence numérique maximale du choix 1,
+            mesurée sur la fenêtre d'évaluation (côté 2000 m, pas 100 m), en s^-1.
+        divergence_max_choix_2: divergence numérique maximale du choix 2,
+            mesurée sur la fenêtre d'évaluation (côté 2000 m, pas 100 m), en s^-1.
         longueur_trajectoire: longueur de la polyligne relevée au sol (m).
     """
 
