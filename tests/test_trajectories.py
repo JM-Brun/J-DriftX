@@ -105,6 +105,7 @@ def test_velocity_callback_must_return_a_pair() -> None:
             0.1,  # type: ignore[arg-type]
         )
 
+
 @pytest.mark.parametrize("invalid_component", ["bad", 1.0 + 2.0j, None])
 def test_velocity_callback_rejects_non_real_components(invalid_component: object) -> None:
     """Les composantes non réelles ou non numériques donnent une ValueError stable."""
