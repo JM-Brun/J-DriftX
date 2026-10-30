@@ -117,6 +117,27 @@ Conclusion : l'inventaire interne est terminé ; la réduction de l'API racine e
 
 ## 8. Suites (P0 résiduel, P2/P3 de #303)
 
+### Complément P0 — frontières des champs et géométries (PR #345)
+
+La recherche des usages de `math.isfinite` a révélé un autre cas de coercition
+implicite : les booléens Python et NumPy sont des valeurs finies pour ces
+fonctions. Le correctif ciblé couvre :
+
+- C1 : paramètres et coordonnées de `ChampFonctionCourant` ;
+- C4 : composantes du vent de `ChampUniforme`, coordonnées de
+  `ScenarioUniforme`, paramètres géométriques de `Rectangle`, ainsi que les
+  points de mesures et de trajectoire de `ScenarioReconstruction` ;
+- l'appel direct à `Rectangle.contient`, qui doit respecter le même contrat
+  que la construction des scénarios.
+
+Les booléens sont rejetés avant les calculs de phase, de norme ou de
+comparaison géométrique. Les formules du champ, les unités, les coordonnées
+et les hypothèses des expériences restent inchangées. Les validateurs
+`_valide_point` restent locaux à leurs contextes : cette tranche ne remet pas
+en cause l'arbitrage antérieur de ne pas introduire de module transversal
+uniquement pour factoriser de petits helpers.
+
+
 - **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
 - **P3** : contrôle d'architecture statique désormais intégré par #316 (`tests/test_architecture_boundaries.py`) ; il couvre la matrice d'imports, les dépendances de rendu et les cycles statiques, sans couvrir les imports dynamiques.
