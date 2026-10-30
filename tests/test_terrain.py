@@ -142,8 +142,8 @@ def test_tiny_positive_width_remains_finite_at_terrain_center(
 @pytest.mark.parametrize(
     ("kind", "x_value", "y_value", "expected"),
     [
-        ("hill", 1.0e308, 0.0, 2.0 * np.exp(-2.0)),
-        ("valley", 1.0e308, 0.0, -2.0 * np.exp(-2.0)),
+        ("hill", 1.0e308, -1.0e308, 2.0 * np.exp(-2.0)),
+        ("valley", 1.0e308, -1.0e308, -2.0 * np.exp(-2.0)),
         ("ridge", 0.0, 1.0e308, 2.0 * np.exp(-2.0)),
     ],
 )
