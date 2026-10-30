@@ -6,7 +6,7 @@ The sinusoidal exact solution is a verification target, not part of the solver.
 
 from __future__ import annotations
 
-from math import ceil
+from math import ceil, exp, log
 from numbers import Integral, Real
 from typing import Final
 
@@ -160,6 +160,25 @@ def _etat_initial_periodique(
     return x, dx, initial
 
 
+
+def _facteur_decroissance_periodique(diffusivity: float, length: float, time: float) -> float:
+    """Évalue exp(-4*pi²*K*t/L²) sans former les produits ou carrés extrêmes."""
+    if diffusivity == 0.0 or time == 0.0:
+        return 1.0
+
+    log_rate = (
+        log(4.0 * np.pi**2)
+        + log(diffusivity)
+        + log(time)
+        - 2.0 * log(length)
+    )
+    # exp(-rate) rounds to zero once rate is above this conservative threshold.
+    if log_rate >= log(746.0):
+        return 0.0
+    rate = exp(log_rate)
+    return exp(-rate)
+
+
 def periodic_sine_solution(
     x: NDArray[np.floating],
     time: float,
@@ -191,7 +210,7 @@ def periodic_sine_solution(
         raise ValueError("diffusivity must be non-negative.")
     coordinates = _tableau_reel_fini(x, "Coordinates")
     wave_number = 2.0 * np.pi / length
-    decay = np.exp(-diffusivity * wave_number**2 * time)
+    decay = _facteur_decroissance_periodique(diffusivity, length, time)
     return np.asarray(
         mean_concentration
         + amplitude * decay * np.sin(wave_number * (coordinates - velocity * time)),
