@@ -12,10 +12,13 @@ from numpy.typing import ArrayLike, NDArray
 from jdriftx.terrain import TerrainKind, terrain_surface
 
 
-def _verifie_formes(x_arr: NDArray[np.floating], y_arr: NDArray[np.floating]) -> None:
-    """Rejette les grilles x et y de formes différentes."""
+def _verifie_coordonnees(x_arr: NDArray[np.floating], y_arr: NDArray[np.floating]) -> None:
+    """Valide la forme et la finitude des coordonnées spatiales."""
     if x_arr.shape != y_arr.shape:
         msg = "x et y doivent avoir des formes identiques."
+        raise ValueError(msg)
+    if not np.all(np.isfinite(x_arr)) or not np.all(np.isfinite(y_arr)):
+        msg = "Les coordonnées doivent être finies."
         raise ValueError(msg)
 
 
@@ -27,7 +30,7 @@ class ReliefPlat:
         """Retourne une altitude nulle (m) aux points (x, y)."""
         x_arr = np.asarray(x, dtype=float)
         y_arr = np.asarray(y, dtype=float)
-        _verifie_formes(x_arr, y_arr)
+        _verifie_coordonnees(x_arr, y_arr)
         return np.zeros_like(x_arr)
 
 
@@ -48,6 +51,19 @@ class ReliefSynthetique:
     width: float = 1.5
     center_x: float = 0.0
     center_y: float = 0.0
+
+    def __post_init__(self) -> None:
+        """Valide les paramètres avant qu'un relief soit utilisable."""
+        parametres = (self.height, self.width, self.center_x, self.center_y)
+        if not all(np.isfinite(value) for value in parametres):
+            msg = "Les paramètres du relief doivent être finis."
+            raise ValueError(msg)
+        if self.width <= 0.0:
+            msg = "La largeur du relief doit être strictement positive."
+            raise ValueError(msg)
+        if self.kind not in ("flat", "hill", "valley", "ridge"):
+            msg = f"Type de relief inconnu : {self.kind!r}."
+            raise ValueError(msg)
 
     def altitude(self, x: ArrayLike, y: ArrayLike) -> NDArray[np.float64]:
         """Evalue l altitude du relief (m) aux points (x, y) : delegation pure."""
