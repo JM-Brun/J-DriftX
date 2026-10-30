@@ -85,7 +85,8 @@ class SourceImpulsionnelle(BaseModel):
         try:
             resultat = float(valeur)
         except (OverflowError, TypeError, ValueError) as err:
-            raise ValueError("Les paramètres de source doivent être représentables en float64.") from err
+            msg = "Les paramètres de source doivent être représentables en float64."
+            raise ValueError(msg) from err
         if not math.isfinite(resultat):
             raise ValueError("Les paramètres de source doivent être finis.")
         return resultat
