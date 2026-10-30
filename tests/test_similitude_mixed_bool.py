@@ -33,7 +33,7 @@ def test_sigmas_rejettent_les_booleens_meles_aux_reels(
 )
 @pytest.mark.parametrize("axe", ["x", "y", "z"])
 def test_concentrations_rejettent_les_booleens_meles_aux_reels(
-    fonction, parametres, axe: str
+    fonction: Callable[..., np.ndarray], parametres: dict[str, object], axe: str
 ) -> None:
     """Coordinates preserve strict bool exclusion before NumPy type promotion."""
     coordonnees = {"x": 500.0, "y": 0.0, "z": 1.0}
