@@ -125,3 +125,38 @@ def test_excessive_step_count_is_rejected(monkeypatch: pytest.MonkeyPatch) -> No
     # When / Then — l'intégration refuse de boucler sans borne.
     with pytest.raises(ValueError, match="maximum"):
         integrate_trajectory(lambda _t, _x, _y: (1.0, 0.0), 0.0, 0.0, 0.0, 10.0, 0.1)
+
+
+@pytest.mark.parametrize(
+    "bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf, 10**400]
+)
+@pytest.mark.parametrize("parameter", ["x0", "y0", "t0", "t_end", "dt"])
+def test_integrator_rejects_non_real_or_non_finite_scalar_inputs(
+    parameter: str, bad: object
+) -> None:
+    """Les paramètres d'entrée sont des scalaires réels finis représentables en float64."""
+    values: dict[str, object] = {
+        "x0": 0.0,
+        "y0": 0.0,
+        "t0": 0.0,
+        "t_end": 1.0,
+        "dt": 0.1,
+    }
+    values[parameter] = bad
+    with pytest.raises(ValueError, match="must be"):
+        integrate_trajectory(
+            lambda _t, _x, _y: (1.0, 0.0),
+            values["x0"], values["y0"], values["t0"], values["t_end"], values["dt"],
+        )  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", 10**400])
+def test_integrator_rejects_unrepresentable_or_non_real_callback_components(
+    bad: object,
+) -> None:
+    """Les composantes du callback suivent le même contrat scalaire réel fini."""
+    with pytest.raises(ValueError, match="finite components"):
+        integrate_trajectory(
+            lambda _t, _x, _y: (bad, 0.0),  # type: ignore[return-value]
+            0.0, 0.0, 0.0, 1.0, 0.1,
+        )
