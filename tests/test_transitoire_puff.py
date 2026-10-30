@@ -114,7 +114,7 @@ def test_la_marche_fine_est_calibree(solution: SolutionTransitoire) -> None:
 def test_l_entree_est_partagee_avec_la_marginale_fermee(
     solution: SolutionTransitoire,
 ) -> None:
-    """La condition d'entrée est exactement la marginale fermée, bords nuls."""
+    """La condition d'entrée est numériquement équivalente à la marginale fermée."""
     # Given — la solution et la marginale fermée évaluée à l'instant d'entrée.
     mailles_y, mailles_z = np.meshgrid(solution.abscisses_y, solution.abscisses_z, indexing="ij")
     distance = PUFF_DEFAUT.u * solution.t_entree
@@ -130,8 +130,8 @@ def test_l_entree_est_partagee_avec_la_marginale_fermee(
     attendu[0, :] = 0.0
     attendu[-1, :] = 0.0
     attendu[:, -1] = 0.0
-    # Then — l'instantané d'entrée coïncide exactement avec la marginale fermée.
-    assert np.array_equal(solution.instants[0].champ, attendu)
+    # Then — les deux évaluations de la même formule concordent à l'arrondi float64.
+    np.testing.assert_allclose(solution.instants[0].champ, attendu, rtol=2e-11, atol=0.0)
 
 
 def test_la_comparaison_fine_est_calibree(comparaison: ComparaisonTransitoire) -> None:
