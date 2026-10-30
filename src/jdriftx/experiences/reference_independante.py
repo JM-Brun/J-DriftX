@@ -511,10 +511,10 @@ def resoudre_edp(
 ) -> SolutionEdp:
     """Résout l'EDP de diffusion marchée en x, du premier au dernier arc.
 
-    Point d'entrée public inchangé (note 51) : délègue au solveur, même
-    comportement numérique. Le modèle de diffusion est injectable — c'est
-    le point d'extension de S0-b (cisaillement) ; le schéma et la grille
-    restent ceux de l'étape 5.
+    Le solveur FTCS et le panache gaussien restent les défauts. Le modèle de
+    diffusion et la condition initiale sont injectables ; cette dernière
+    doit respecter le contrat ModeleConcentration et retourner un champ
+    fini de la forme de la grille.
     """
     return SolveurEdp(cas, parametres, modele, condition_entree).resoudre()
 
@@ -635,6 +635,7 @@ class RouteEdp:
         cas : cas S0 figé résolu par le schéma FTCS.
         parametres : paramètres numériques de la grille transverse/verticale.
         modele : modèle de diffusion (Briggs par défaut).
+        solveur : implémentation du protocole SolveurDeReference, optionnelle.
     """
 
     def __init__(
@@ -648,7 +649,7 @@ class RouteEdp:
         self.cas = cas
         self.parametres = parametres
         self.modele = modele
-        self.solveur = solveur or SolveurEdp(cas, parametres, modele)
+        self.solveur = solveur if solveur is not None else SolveurEdp(cas, parametres, modele)
 
     def mesurer(self, points: tuple[PointMesure, ...]) -> MesureEdp:
         """Résout, échantillonne et intègre la route EDP ; coût mesuré ensemble."""
