@@ -126,7 +126,7 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 | Ordre | Cible | État | Motif |
 |---|---|---|---|
 | 1 | `fields.vector_field`, `terrain.terrain_surface` | Correction proposée #380, CI à vérifier | Contrôles réels finis, booléens/complexes exclus |
-| 2 | `integrate_trajectory`, `gaussian_advection_diffusion` | À traiter | Contrôles scalaires permissifs et/ou coercition booléenne des tableaux |
+| 2 | `integrate_trajectory`, `gaussian_advection_diffusion` | Correction proposée #384, CI à vérifier | Contrôles réels finis, conversions et erreurs homogénéisées |
 | 3 | `periodic_sine_solution`, helper périodique partagé | À traiter | Cohérence du contrat commun et des fonctions publiques |
 | 4 | Adaptateurs `vents.py` | Corrigé #374 | Contrat ponctuel explicité et appliqué avant délégation |
 | 5 | `EchantillonneurBilineaire.concentration` | Corrigé #369 | Contrat ponctuel autonome contrôlé avant conversion en indice |
