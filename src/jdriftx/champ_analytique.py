@@ -40,6 +40,13 @@ class ChampPlan(Protocol):
         ...
 
 
+def _verifie_coordonnees(x: float, y: float) -> None:
+    """Refuse les coordonnées non finies avant toute évaluation du champ."""
+    if not (math.isfinite(x) and math.isfinite(y)):
+        msg = "Les coordonnées doivent être finies."
+        raise ValueError(msg)
+
+
 @dataclass(frozen=True)
 class ChampFonctionCourant:
     """Champ plan stationnaire incompressible à fonction de courant sinusoïdale.
@@ -57,12 +64,20 @@ class ChampFonctionCourant:
     longueur: float
 
     def __post_init__(self) -> None:
-        """Valide l'invariant : amplitude finie non nulle, longueur finie positive."""
+        """Valide l'invariant : amplitude finie non nulle, longueur finie positive.
+
+        Raises:
+            ValueError: si un parametre est non fini, nul, ou si le nombre
+                d'onde deborde vers l'infini.
+        """
         if not math.isfinite(self.amplitude) or self.amplitude == 0.0:
             msg = "L'amplitude de la fonction de courant doit être finie et non nulle."
             raise ValueError(msg)
         if not math.isfinite(self.longueur) or self.longueur <= 0.0:
             msg = "La longueur d'onde doit être finie et strictement positive."
+            raise ValueError(msg)
+        if not math.isfinite(self.nombre_donde):
+            msg = "Le nombre d'onde doit rester fini."
             raise ValueError(msg)
 
     @property
@@ -71,15 +86,29 @@ class ChampFonctionCourant:
         return 2.0 * math.pi / self.longueur
 
     def fonction_courant(self, x: float, y: float) -> float:
-        """Évalue la fonction de courant ψ(x, y) en m² s⁻¹."""
+        """Évalue la fonction de courant ψ(x, y) en m² s⁻¹.
+
+        Raises:
+            ValueError: si les coordonnées ne sont pas finies.
+        """
+        _verifie_coordonnees(x, y)
         k = self.nombre_donde
         return self.amplitude * math.sin(k * x) * math.sin(k * y)
 
     def vitesse(self, x: float, y: float) -> tuple[float, float]:
-        """Évalue (u, v) = (∂ψ/∂y, -∂ψ/∂x) en m s⁻¹, divergence nulle par construction."""
+        """Évalue (u, v) = (∂ψ/∂y, -∂ψ/∂x) en m s⁻¹, divergence nulle par construction.
+
+        Raises:
+            ValueError: si les coordonnées ne sont pas finies ou si une
+                composante deborde vers une valeur non finie.
+        """
+        _verifie_coordonnees(x, y)
         k = self.nombre_donde
         u = self.amplitude * k * math.sin(k * x) * math.cos(k * y)
         v = -self.amplitude * k * math.cos(k * x) * math.sin(k * y)
+        if not (math.isfinite(u) and math.isfinite(v)):
+            msg = "La vitesse du champ doit rester finie."
+            raise ValueError(msg)
         return u, v
 
 
@@ -104,18 +133,32 @@ class SuperpositionChamps:
             raise ValueError(msg)
 
     def fonction_courant(self, x: float, y: float) -> float:
-        """Évalue la somme des fonctions de courant au point (x, y)."""
+        """Évalue la somme des fonctions de courant au point (x, y).
+
+        Raises:
+            ValueError: si la somme deborde vers une valeur non finie.
+        """
         total = 0.0
         for champ in self.champs:
             total += champ.fonction_courant(x, y)
+        if not math.isfinite(total):
+            msg = "La superposition doit rester finie."
+            raise ValueError(msg)
         return total
 
     def vitesse(self, x: float, y: float) -> tuple[float, float]:
-        """Évalue la somme des composantes de vitesse au point (x, y)."""
+        """Évalue la somme des composantes de vitesse au point (x, y).
+
+        Raises:
+            ValueError: si une somme deborde vers une valeur non finie.
+        """
         u = 0.0
         v = 0.0
         for champ in self.champs:
             du, dv = champ.vitesse(x, y)
             u += du
             v += dv
+        if not (math.isfinite(u) and math.isfinite(v)):
+            msg = "La superposition doit rester finie."
+            raise ValueError(msg)
         return u, v
