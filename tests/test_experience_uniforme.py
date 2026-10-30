@@ -4,8 +4,8 @@ import math
 from dataclasses import FrozenInstanceError
 from importlib import metadata
 
-import pytest
 import numpy as np
+import pytest
 
 import jdriftx.experiences.uniforme as module_uniforme
 from jdriftx.experiences.uniforme import (
