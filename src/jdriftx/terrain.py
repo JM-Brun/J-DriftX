@@ -41,9 +41,14 @@ def terrain_surface(
         msg = "width must be strictly positive."
         raise ValueError(msg)
 
-    dx = x_arr - center_x
-    dy = y_arr - center_y
-    radius_squared = (dx**2 + dy**2) / (2.0 * width**2)
+    # Normaliser avant de mettre au carré évite le sous-débordement de width**2.
+    # Les distances très grandes peuvent devenir infinies après normalisation ;
+    # exp(-inf) vaut zéro, ce qui correspond à la limite du profil gaussien.
+    with np.errstate(over="ignore", under="ignore", invalid="ignore"):
+        dx_scaled = (x_arr - center_x) / width
+        dy_scaled = (y_arr - center_y) / width
+        radius_squared = 0.5 * (dx_scaled**2 + dy_scaled**2)
+
     if kind == "flat":
         z = np.zeros_like(x_arr)
     elif kind == "hill":
@@ -51,7 +56,7 @@ def terrain_surface(
     elif kind == "valley":
         z = -height * np.exp(-radius_squared)
     elif kind == "ridge":
-        z = height * np.exp(-(dy**2) / (2.0 * width**2))
+        z = height * np.exp(-0.5 * dy_scaled**2)
     else:
         msg = f"Unknown terrain kind: {kind!r}."
         raise ValueError(msg)
