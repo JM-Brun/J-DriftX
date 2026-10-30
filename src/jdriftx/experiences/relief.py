@@ -50,7 +50,11 @@ _TOLERANCE_SOL_PLAT = 0.5
 
 def _valide_point(nom: str, point: tuple[float, float]) -> None:
     """Lève ValueError si le point n'est pas un couple de coordonnées finies."""
-    if len(tuple(point)) != 2 or not all(math.isfinite(c) for c in tuple(point)):
+    coordonnees = tuple(point)
+    if len(coordonnees) != 2 or any(isinstance(valeur, (bool, np.bool_)) for valeur in coordonnees):
+        msg = f"Le point {nom} doit être un couple (x, y) numérique (booléens exclus)."
+        raise ValueError(msg)
+    if not all(math.isfinite(c) for c in coordonnees):
         msg = f"Le point {nom} doit être un couple (x, y) de coordonnées finies."
         raise ValueError(msg)
 
@@ -80,6 +84,9 @@ class CollineGaussienne:
     def __post_init__(self) -> None:
         """Valide le centre, la hauteur et l'échelle gaussienne."""
         _valide_point("centre", self.centre)
+        if any(isinstance(valeur, (bool, np.bool_)) for valeur in (self.hauteur, self.echelle)):
+            msg = "La hauteur et l'échelle doivent être numériques (booléens exclus)."
+            raise ValueError(msg)
         if not math.isfinite(self.hauteur) or self.hauteur <= 0.0:
             msg = "La hauteur doit être finie et strictement positive."
             raise ValueError(msg)
@@ -119,7 +126,11 @@ def _valide_collines(collines: tuple[CollineGaussienne, ...], fenetre: Rectangle
 
 def _valide_vent(vent: tuple[float, float]) -> None:
     """Valide un vent uniforme de composantes finies et de norme positive."""
-    if len(tuple(vent)) != 2 or not all(math.isfinite(c) for c in tuple(vent)):
+    composantes = tuple(vent)
+    if len(composantes) != 2 or any(isinstance(valeur, (bool, np.bool_)) for valeur in composantes):
+        msg = "Le vent doit contenir deux composantes numériques (booléens exclus)."
+        raise ValueError(msg)
+    if not all(math.isfinite(c) for c in composantes):
         msg = "Le vent doit être un couple (u, v) de composantes finies."
         raise ValueError(msg)
     if math.hypot(vent[0], vent[1]) <= 0.0:
@@ -129,6 +140,15 @@ def _valide_vent(vent: tuple[float, float]) -> None:
 
 def _valide_parametres(scenario: ScenarioRelief) -> None:
     """Valide le débit, la classe de stabilité, les hauteurs et le seuil."""
+    parametres = (
+        scenario.debit,
+        scenario.hauteur_source,
+        scenario.seuil,
+        scenario.hauteur_evaluation,
+    )
+    if any(isinstance(valeur, (bool, np.bool_)) for valeur in parametres):
+        msg = "Les paramètres physiques doivent être numériques (booléens exclus)."
+        raise ValueError(msg)
     if not math.isfinite(scenario.debit) or scenario.debit <= 0.0:
         msg = "Le débit doit être strictement positif."
         raise ValueError(msg)
@@ -150,6 +170,7 @@ def _valide_parametres(scenario: ScenarioRelief) -> None:
 
 def _valide_source(scenario: ScenarioRelief) -> None:
     """Valide une source dans la fenêtre, sur un sol quasi plat, au vent des collines."""
+    _valide_point("source", scenario.source)
     if not scenario.fenetre.contient(scenario.source):
         msg = "La source doit être dans la fenêtre."
         raise ValueError(msg)
