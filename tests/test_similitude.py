@@ -611,9 +611,7 @@ def test_sigmas_representables_aux_tres_grandes_distances(classe: ClasseStabilit
 def test_panache_distance_extreme_ne_produit_pas_de_valeur_non_finie() -> None:
     """Une concentration sous-representable a grande distance s'arrondit a zero."""
     # Given / When — le panache est evalue a une distance finie extreme.
-    resultat = concentration_panache(
-        1.0e308, 0.0, 0.0, debit=1.0, u=3.0, classe=ClasseStabilite.A
-    )
+    resultat = concentration_panache(1.0e308, 0.0, 0.0, debit=1.0, u=3.0, classe=ClasseStabilite.A)
     # Then — aucun NaN ni inf n'est retourne.
     assert np.isfinite(resultat)
     assert float(resultat) >= 0.0
@@ -623,8 +621,7 @@ def test_puff_distance_extreme_ne_produit_pas_de_valeur_non_finie() -> None:
     """Un puff a tres grande distance reste dans le domaine float64."""
     # Given / When — u*t vaut 1e308 sans debordement.
     resultat = concentration_puff(
-        1.0e308, 0.0, 0.0, t=1.0e154, masse=1.0,
-        u=1.0e154, classe=ClasseStabilite.A
+        1.0e308, 0.0, 0.0, t=1.0e154, masse=1.0, u=1.0e154, classe=ClasseStabilite.A
     )
     # Then — la concentration est finie (eventuellement arrondie a zero).
     assert np.isfinite(resultat)
