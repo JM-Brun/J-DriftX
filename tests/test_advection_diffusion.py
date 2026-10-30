@@ -56,9 +56,7 @@ def test_negative_diffusivity_is_rejected() -> None:
         gaussian_advection_diffusion(np.array([0.0]), 1.0, diffusivity=-0.1)
 
 
-@pytest.mark.parametrize(
-    "bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf, 10**400]
-)
+@pytest.mark.parametrize("bad", [True, np.bool_(True), 1.0 + 2.0j, "1.0", np.nan, np.inf, 10**400])
 @pytest.mark.parametrize(
     "parameter",
     ["time", "mass", "initial_center", "velocity", "diffusivity", "initial_sigma"],
@@ -77,9 +75,7 @@ def test_gaussian_solution_rejects_non_real_or_non_finite_parameters(
     }
     parameters[parameter] = bad
     with pytest.raises(ValueError, match="must be"):
-        gaussian_advection_diffusion(
-            np.array([0.0]), parameters.pop("time"), **parameters
-        )  # type: ignore[arg-type]
+        gaussian_advection_diffusion(np.array([0.0]), parameters.pop("time"), **parameters)  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize(
