@@ -338,3 +338,46 @@ def test_step_ratio_overflow_is_rejected_as_value_error(solveur: Callable[..., o
     # When / Then — la garde refuse avant que math.ceil ne déborde.
     with pytest.raises(ValueError, match="maximum"):
         solveur(n_cells=16, length=1.0, end_time=1e308, dt=1e-308)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_periodic_exact_solution_rejects_boolean_coordinates(booleen: bool | np.bool_) -> None:
+    """La solution exacte refuse les coordonnées booléennes avant conversion."""
+    with pytest.raises(ValueError, match="booleans excluded"):
+        periodic_sine_solution(
+            np.array([booleen]), 0.0, length=1.0, mean_concentration=1.0,
+            amplitude=0.3, velocity=0.4, diffusivity=0.01,
+        )
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+@pytest.mark.parametrize(
+    "parametre", ["time", "length", "mean_concentration", "amplitude", "velocity", "diffusivity"]
+)
+def test_periodic_exact_solution_rejects_boolean_parameters(
+    booleen: bool | np.bool_, parametre: str
+) -> None:
+    """La solution exacte refuse les paramètres scalaires booléens."""
+    parametres = {
+        "time": 0.0, "length": 1.0, "mean_concentration": 1.0,
+        "amplitude": 0.3, "velocity": 0.4, "diffusivity": 0.01,
+        parametre: booleen,
+    }
+    with pytest.raises(ValueError, match="booleans excluded"):
+        periodic_sine_solution(np.array([0.0]), **parametres)
+
+
+@pytest.mark.parametrize("solveur", [solve_periodic_sine_transport, solve_periodic_upwind_euler])
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_periodic_solvers_reject_boolean_parameters(solveur, booleen: bool | np.bool_) -> None:
+    """Les solveurs refusent les paramètres booléens avant le calcul du pas."""
+    with pytest.raises(ValueError, match="booleans excluded"):
+        solveur(n_cells=16, length=1.0, end_time=0.1, dt=0.001, velocity=booleen)
+
+
+def test_periodic_solver_rejects_boolean_cell_count() -> None:
+    """Un booléen ne satisfait pas le contrat entier du nombre de cellules."""
+    with pytest.raises(ValueError, match="booleans excluded"):
+        solve_periodic_sine_transport(
+            n_cells=True, length=1.0, end_time=0.1, dt=0.001
+        )
