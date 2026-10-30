@@ -26,10 +26,10 @@ from __future__ import annotations
 import itertools
 import math
 from dataclasses import dataclass
-
-import numpy as np
 from importlib import metadata
 from typing import Literal
+
+import numpy as np
 
 from jdriftx.champ_analytique import ChampFonctionCourant, ChampPlan
 from jdriftx.experiences.reconstruction_vent import Rectangle
