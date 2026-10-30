@@ -160,7 +160,7 @@ en cause l'arbitrage antérieur de ne pas introduire de module transversal
 uniquement pour factoriser de petits helpers.
 
 
-### Complément P0 — autres expériences C4 (issue #347, PR #348)
+### Complément P0 — autres expériences C4 (issue #347, PR #352)
 
 L'audit des autres configurations d'expérience a étendu le même contrôle aux
 frontières suivantes :
@@ -179,21 +179,49 @@ Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
 aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
 n'introduit aucun validateur transversal.
 
-### Complément P0 — métriques, trajectoires et explorateur (issue #360)
+### Complément P0 — noyaux numériques vectorisés (issue #353, PR #357)
 
-Le contrôle des valeurs finies acceptait encore les booléens dans plusieurs
-interfaces annotées avec des scalaires réels :
+Une nouvelle vérification, après définition explicite du contrat d'exclusion des
+booléens, a révélé que plusieurs fonctions convertissaient immédiatement les
+coordonnées en `float64`. Cette conversion effaçait la nature booléenne avant
+les contrôles de finitude.
+
+La tranche couvre :
+
+- `fields.vector_field` : coordonnées et quatre paramètres du champ ;
+- `terrain.terrain_surface` : coordonnées et paramètres du relief ;
+- `advection_diffusion.gaussian_advection_diffusion` : coordonnées et
+  paramètres scalaires ;
+- `periodic_transport.periodic_sine_solution` et les solveurs périodiques :
+  coordonnées, paramètres et nombre de cellules.
+
+Les séquences Python sont inspectées avant coercition ; les tableaux NumPy
+booléens et objets contenant des booléens sont également rejetés. Les tableaux
+déjà convertis en dtype entier ne conservent plus l'information de provenance,
+limite inhérente à l'API ndarray et déjà documentée pour les autres frontières.
+
+Aucune formule, condition de stabilité, unité, condition aux limites ni valeur
+par défaut n'est modifiée. La note antérieure sur la conformité de
+`fields.py` et `advection_diffusion.py` portait sur les contrôles de finitude,
+pas sur l'exclusion explicite des booléens désormais exigée par le contrat.
+
+### Complément P0 — métriques, trajectoires et explorateur (issue #360, PR #362)
+
+Les frontières publiques suivantes rejettent explicitement les booléens Python et NumPy avant coercition numérique :
 
 - `metric.temps_premiere_arrivee_1d` : positions et vitesse ;
 - `metric.temps_transport` : polyligne, vent et seuil `umin` ;
 - `metric.pseudo_distance_uniforme` : points et vecteur de vent ;
-- `trajectories.integrate_trajectory` : conditions initiales et paramètres
-  temporels (la callback vitesse excluait déjà les booléens Python) ;
+- `trajectories.integrate_trajectory` : conditions initiales et paramètres temporels ;
 - `WindFieldExplorerConfig` : paramètres du champ et coordonnées de lecture.
 
-Les tableaux et séquences sont inspectés avant coercition en `float64`.
-Aucune formule de temps, équation d'intégration, convention d'accessibilité ou
-règle de rendu n'est modifiée.
+Les tableaux et séquences sont inspectés avant coercition en `float64`. Aucune formule de temps, équation d'intégration, convention d'accessibilité ou règle de rendu n'est modifiée.
+
+### Complément P0 — champs de concentration, métriques et grille EDP (issue #364, PR #365)
+
+Le balayage des frontières C1/C5 a identifié des coercitions booléennes dans le champ passé à `constraints.positivite`, les observations des métriques FAC2/NMSE (y compris la façade `calculer_metriques`), et les tableaux et scalaires de `experiences.reference_independante`. La façade `benchmarks.reference.evaluer_prediction` conserve désormais le dtype de la vérité jusqu'à la validation des métriques.
+
+Les booléens sont rejetés avant promotion en `float64`, y compris dans les séquences mixtes et les tableaux de type objet. Les formules, tolérances, unités, géométries, coefficients, conditions aux limites et domaines de signe restent inchangés. Ces tests établissent des contrats logiciels, pas une validation physique.
 
 - **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.

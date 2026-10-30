@@ -7,6 +7,19 @@ from typing import Literal
 import numpy as np
 from numpy.typing import NDArray
 
+
+def _contient_booleen(valeur: object) -> bool:
+    """Détecte les booléens avant toute conversion numérique avec NumPy."""
+    if isinstance(valeur, np.ndarray):
+        if valeur.dtype.kind == "b":
+            return True
+        return valeur.dtype.kind == "O" and any(
+            isinstance(element, (bool, np.bool_)) for element in valeur.flat
+        )
+    brut = np.asarray(valeur, dtype=object)
+    return any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
+
+
 TerrainKind = Literal["flat", "hill", "valley", "ridge"]
 
 
@@ -38,6 +51,9 @@ def terrain_surface(
     field or physical effect of terrain is inferred by this function. The grids
     x and y must share the same shape; NumPy broadcasting is not applied.
     """
+    if _contient_booleen(x) or _contient_booleen(y):
+        msg = "x and y must contain real-valued coordinates (booleans excluded)."
+        raise ValueError(msg)
     x_arr = np.asarray(x, dtype=float)
     y_arr = np.asarray(y, dtype=float)
     if x_arr.shape != y_arr.shape:
@@ -47,6 +63,9 @@ def terrain_surface(
         msg = "x and y must contain only finite coordinates."
         raise ValueError(msg)
     parameters = (height, width, center_x, center_y)
+    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
+        msg = "Terrain parameters must be real-valued (booleans excluded)."
+        raise ValueError(msg)
     if not all(np.isfinite(value) for value in parameters):
         msg = "Terrain parameters must be finite."
         raise ValueError(msg)
