@@ -6,7 +6,38 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from jdriftx._protocoles import Vent
 from jdriftx.champ_analytique import ChampPlan
+
+
+@dataclass(frozen=True)
+class AdaptateurTrajectoire2D:
+    """Expose un vent stationnaire horizontal au contrat cinématique 2D.
+
+    Le temps est ignoré et la hauteur est fixée. L'adaptateur refuse tout
+    vent avec une composante verticale non nulle : l'intégrateur 2D ne
+    pourrait pas représenter ce mouvement sans perte physique.
+    """
+
+    vent: Vent
+    hauteur: float
+
+    def __post_init__(self) -> None:
+        """Valide la hauteur fixe de l'échantillonnage."""
+        if not np.isfinite(self.hauteur):
+            msg = "La hauteur d'échantillonnage doit être finie."
+            raise ValueError(msg)
+
+    def __call__(self, temps: float, x: float, y: float) -> tuple[float, float]:
+        """Retourne (u, v) au point (x, y, hauteur), si w est nul."""
+        u, v, w = self.vent.vitesse(x, y, self.hauteur)
+        if not np.all(np.isfinite((u, v, w))):
+            msg = "Le champ de vent doit retourner trois composantes finies."
+            raise ValueError(msg)
+        if w != 0.0:
+            msg = "Un vent vertical ne peut pas être adapté à une trajectoire 2D."
+            raise ValueError(msg)
+        return float(u), float(v)
 
 
 @dataclass(frozen=True)
@@ -92,6 +123,7 @@ class VentProfilPuissance:
         return u, 0.0, 0.0
 
 __all__ = [
+    "AdaptateurTrajectoire2D",
     "VentDeChampPlan",
     "VentProfilPuissance",
     "VentUniforme",
