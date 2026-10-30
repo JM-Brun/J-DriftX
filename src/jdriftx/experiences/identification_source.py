@@ -184,9 +184,11 @@ def _valide_capteurs(scenario: ScenarioIdentification) -> None:
 
 def _valide_detection(scenario: ScenarioIdentification) -> None:
     """Vérifie l'indice, le seuil et l'unicité du capteur de détection."""
-    if isinstance(scenario.indice_detection, (bool, np.bool_)) or not isinstance(
-        scenario.indice_detection, int
-    ) or not 0 <= scenario.indice_detection < 5:
+    if (
+        isinstance(scenario.indice_detection, (bool, np.bool_))
+        or not isinstance(scenario.indice_detection, int)
+        or not 0 <= scenario.indice_detection < 5
+    ):
         msg = "L'indice de détection doit désigner l'un des cinq capteurs."
         raise ValueError(msg)
     if isinstance(scenario.seuil_detection, (bool, np.bool_)):
