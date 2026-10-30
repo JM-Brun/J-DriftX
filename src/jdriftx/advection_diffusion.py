@@ -8,7 +8,6 @@ import numpy as np
 from numpy.typing import NDArray
 
 
-
 def _reel_fini(valeur: object, nom: str) -> float:
     """Valide un scalaire réel fini et représentable en float64."""
     if isinstance(valeur, (bool, np.bool_)) or not isinstance(valeur, Real):
