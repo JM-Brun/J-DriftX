@@ -9,6 +9,20 @@ from __future__ import annotations
 from math import ceil
 from typing import Final
 
+
+
+def _contient_booleen(valeur: object) -> bool:
+    """Détecte les booléens avant une éventuelle promotion numérique NumPy."""
+    if isinstance(valeur, np.ndarray):
+        if valeur.dtype.kind == "b":
+            return True
+        if valeur.dtype.kind != "O":
+            return False
+        valeurs = valeur
+    else:
+        valeurs = np.asarray(valeur, dtype=object)
+    return any(isinstance(element, (bool, np.bool_)) for element in valeurs.flat)
+
 import numpy as np
 from numpy.typing import NDArray
 
@@ -38,6 +52,10 @@ def _validate_periodic_parameters(
             the requested number of time steps exceeds the safety limit.
     """
     parameters = (length, end_time, dt, mean_concentration, amplitude, velocity, diffusivity)
+    if isinstance(n_cells, (bool, np.bool_)) or any(
+        isinstance(value, (bool, np.bool_)) for value in parameters
+    ):
+        raise ValueError("Periodic solver parameters must be numeric (booleans excluded).")
     if not all(np.isfinite(value) for value in parameters):
         raise ValueError("Parameters must be finite.")
     if not isinstance(n_cells, int) or n_cells < 8:
@@ -109,6 +127,8 @@ def periodic_sine_solution(
     mean + amplitude*exp(-K*k**2*t)*sin(k*(x-u*t)).
     """
     parameters = (time, length, mean_concentration, amplitude, velocity, diffusivity)
+    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
+        raise ValueError("Parameters must be numeric (booleans excluded).")
     if not all(np.isfinite(value) for value in parameters):
         raise ValueError("Parameters must be finite.")
     if time < 0:
@@ -119,6 +139,8 @@ def periodic_sine_solution(
         raise ValueError("Concentration must remain non-negative: mean >= amplitude >= 0.")
     if diffusivity < 0:
         raise ValueError("diffusivity must be non-negative.")
+    if _contient_booleen(x):
+        raise ValueError("Coordinates must be numeric (booleans excluded).")
     coordinates = np.asarray(x, dtype=float)
     if not np.all(np.isfinite(coordinates)):
         raise ValueError("Coordinates must be finite.")
