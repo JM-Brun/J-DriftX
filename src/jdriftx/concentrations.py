@@ -22,6 +22,11 @@ class PanacheGaussien:
 
     source: SourcePanache
 
+    def __post_init__(self) -> None:
+        """Verifie le type de la source au moment de la composition."""
+        if not isinstance(self.source, SourcePanache):
+            raise TypeError("source doit etre une instance de SourcePanache.")
+
     def concentration(self, x: ArrayLike, y: ArrayLike, z: ArrayLike) -> np.ndarray:
         """Evalue les concentrations (kg m^-3) par delegation a la similitude."""
         return concentration_panache(
