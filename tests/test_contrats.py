@@ -334,7 +334,9 @@ def test_superposition_refuse_une_forme_de_sortie_incoherente() -> None:
     """Une sortie ne doit pas être implicitement diffusée par NumPy."""
 
     class ModeleFormeIncoherente:
-        def concentration(self, x, y, z) -> np.ndarray:
+        def concentration(
+            self, x: object, y: object, z: object
+        ) -> np.ndarray:
             return np.zeros((1,), dtype=float)
 
     panache = PanacheGaussien(
@@ -351,7 +353,9 @@ def test_superposition_accepte_le_broadcasting_des_entrees() -> None:
         source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
     )
     superposition = SuperpositionPanaches(panaches=(panache,))
-    resultat = superposition.concentration(np.zeros((2, 1)), np.zeros((1, 3)), 1.0)
+    resultat = superposition.concentration(
+        np.full((2, 1), 100.0), np.zeros((1, 3)), 1.0
+    )
     assert resultat.shape == (2, 3)
 
 
