@@ -24,6 +24,7 @@ import pytest
 from pydantic import ValidationError
 
 import jdriftx.experiences.transitoire_puff.comparaison as module_comparaison
+import jdriftx.experiences.transitoire_puff.marginale as module_marginale
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, PointMesure
 from jdriftx.experiences.evaluation_puff import PUFF_DEFAUT, SourceImpulsionnelle, temps_dirige
 from jdriftx.experiences.reference_independante import (
@@ -45,7 +46,6 @@ from jdriftx.experiences.transitoire_puff import (
     construire_manifeste,
     resoudre_transitoire,
 )
-from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
 from jdriftx.similitude import sigma_y, sigma_z
 
 
@@ -383,7 +383,7 @@ def test_les_routes_sont_assemblees_separement(
 def test_marginale_fermee_rejects_invalid_time(instant: object) -> None:
     """La marginale exige un instant réel fini strictement positif."""
     grille = GrilleEdp.depuis_parametres(PARAMETRES_EDP_DEFAUT)
-    marginale = MarginaleFermee(source=PUFF_DEFAUT, grille=grille)
+    marginale = module_marginale.MarginaleFermee(source=PUFF_DEFAUT, grille=grille)
     with pytest.raises(ValueError, match=r"t must|strictly positive"):
         marginale.champ(instant)  # type: ignore[arg-type]
 
