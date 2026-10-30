@@ -148,3 +148,8 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 - Toute affirmation de validation physique du modèle.
 
 **Conclusion :** les écarts confirmés concernent d'abord les fonctions autonomes des modules pédagogiques. Les composants de configuration et les validateurs de `similitude.py` / `reliefs.py` sont déjà plus stricts. La prochaine PR de correction doit donc s'appuyer sur les contrats ci-dessus et les tests de frontière, sans ajouter de validation redondante aux objets déjà validés.
+
+
+### 3.7 `integrate_trajectory` et `gaussian_advection_diffusion` — issue #381 / PR en cours
+
+Les deux frontières normalisent maintenant leurs scalaires en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution gaussienne rejettent booléens, complexes, chaînes et valeurs non finies avant conversion. Le callback de trajectoire conserve le contrat d'un tuple de deux composantes, avec une erreur de validation stable pour les composantes non réelles ou non représentables. Les domaines existants et les formules sont inchangés. Les débordements intermédiaires de la solution gaussienne restent explicitement hors de cette tranche.
