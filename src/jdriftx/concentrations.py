@@ -64,7 +64,10 @@ class SuperpositionPanaches:
         """
         total = self.panaches[0].concentration(x, y, z)
         for panache in self.panaches[1:]:
-            total = total + panache.concentration(x, y, z)
+            # Overflow is an expected invalid-input path: report it through
+            # the public ValueError contract instead of emitting a NumPy warning.
+            with np.errstate(over="ignore", invalid="ignore"):
+                total = total + panache.concentration(x, y, z)
         if not np.all(np.isfinite(total)):
             msg = "La superposition doit rester finie."
             raise ValueError(msg)
