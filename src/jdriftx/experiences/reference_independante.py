@@ -385,6 +385,7 @@ class SolveurEdp:
         cas : cas S0 figé portant la source et les arcs de mesure.
         parametres : paramètres numériques de la grille transverse/verticale.
         modele : modèle de diffusion (Briggs par défaut).
+        condition_entree : champ initial (panache gaussien partagé par défaut).
     """
 
     def __init__(
@@ -632,7 +633,7 @@ class RouteEdp:
     sans facteur historique).
 
     Attributs :
-        cas : cas S0 figé résolu par le schéma FTCS.
+        cas : cas S0 figé auquel le solveur injecté est appliqué.
         parametres : paramètres numériques de la grille transverse/verticale.
         modele : modèle de diffusion (Briggs par défaut).
         solveur : implémentation du protocole SolveurDeReference, optionnelle.
