@@ -25,7 +25,7 @@ Une modélisation à complexité réduite honnête publie ses limites au même n
 ## Limites méthodologiques
 
 - **Validation quantitative** : l'héritage Drift-X souffre d'un déficit de benchmarks chiffrés publics. *Contrôle* : premier livrable de la reprise (M1) — voir l'[Audit de l'héritage](../projet/audit.qmd) (annexe).
-- **Formalisation de la métrique** : dispersée entre publications historiques. *Contrôle* : poursuivre la synthèse à partir des sources primaires accessibles et conserver les incertitudes explicitement signalées ; les vérifications qui nécessitent la lecture de la thèse restent suspendues jusqu'à l'accès au texte intégral. Le dépôt de la thèse ne doit pas être traité comme un livrable M0 disponible tant que ce texte n'est pas accessible.
+- **Formalisation de la métrique** : dispersée entre publications historiques. *Contrôle* : poursuivre la synthèse à partir des sources primaires déjà obtenues et conserver les incertitudes explicitement signalées. Le PDF de thèse est désormais versionné dans `raw/` ; des passages ciblés sont examinés dans l'[audit de thèse](../../docs/43-audit-these-brun-conservation-g0s.md), sans prétendre à une lecture intégrale. La page de titre et l'identité binaire avec le fichier HAL restent à vérifier à partir des éléments de provenance existants ; ne pas suspendre les travaux en attente d'une nouvelle acquisition.
 - **Calibration** : aux moindres carrés dans l'héritage. *Contrôle* : régularisation puis bayésien (M2–M3), alignement sur les standards STE [@hutchinson2017ste].
 
 ## Stratégie générale de maîtrise du risque

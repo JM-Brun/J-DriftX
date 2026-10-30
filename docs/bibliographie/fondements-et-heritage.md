@@ -8,7 +8,7 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 
 ## Références
 
-### Thèse de J.-M. Brun — titre et année à confirmer
+### Mohammadi & Brun (2006) — *C. R. Mécanique*
 
 - **Lien :** source scientifique fondatrice, directement liée.
 - **Référence :** *Comptes Rendus Mécanique*, 334(10), 634–638. DOI [10.1016/j.crme.2006.06.007](https://doi.org/10.1016/j.crme.2006.06.007). [PDF éditeur/archives ouvertes](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf).
@@ -39,7 +39,7 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 - **Référence :** chapitre 14, *Computational Science and Engineering / Partial Differential Equations: Modelling and Numerical Simulation*, Springer. [DOI 10.1007/978-1-4020-8758-5_14](https://doi.org/10.1007/978-1-4020-8758-5_14).
 - **Idées pertinentes :** modèle réduit, hiérarchie multi-échelle et applications de dispersion.
 - **Conséquence :** distinguer les résultats établis dans le chapitre des hypothèses qui restent à revalider avec le code et les données actuels.
-- **Statut :** accès partiel/extrait selon les notes du dépôt ; chapitre complet à vérifier.
+- **Statut :** le PDF intégral du recueil Springer 2008 est conservé dans `raw/` conformément à la décision du mainteneur ; le chapitre 14 occupe les pages imprimées 245–256. Les pages 245–246 ont un extrait PDF et une extraction OCR ; des notes analytiques couvrent le chapitre, mais elles ne valent pas transcription verbatim ni contrôle visuel exhaustif de toutes les équations/figures. Les droits de redistribution restent à instruire séparément (issue #18).
 
 ### Bozon, Mohammadi & Sinfort (2008) — *Similitude and non symmetric geometry for dispersion modelling*
 
@@ -71,7 +71,7 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 - **Référence :** *Journal Européen des Systèmes Automatisés*, 44(4–5), 445–461. [DOI 10.3166/jesa.44.445-461](https://doi.org/10.3166/jesa.44.445-461).
 - **Idées pertinentes :** version étendue/éditoriale du travail sur le modèle et le SIG.
 - **Conséquence :** comparer précisément le manuscrit HAL et la version publiée avant de traiter ces documents comme deux contributions indépendantes.
-- **Statut :** DOI recensé ; texte intégral à vérifier.
+- **Statut :** le PDF final JESA 2010 a déjà été obtenu par une voie appropriée, mais son binaire distinct n'est pas identifié dans `raw/`. Le manuscrit auteur HAL 2009 est une version distincte ; retrouver la copie JESA déjà obtenue et effectuer la comparaison directe sans relancer l'acquisition.
 
 ## Questions de travail
 
