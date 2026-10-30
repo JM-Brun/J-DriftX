@@ -369,6 +369,7 @@ def test_le_solveur_valide_le_champ_de_condition_entree(
 
 def test_la_route_accepte_un_solveur_alternatif(solution: SolutionEdp) -> None:
     """La route dépend du contrat de sortie, pas de l'implémentation FTCS."""
+
     # Given — un solveur structurel qui fournit une solution compatible.
     class SolveurInjecte:
         def __init__(self, resultat: SolutionEdp) -> None:
