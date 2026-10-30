@@ -1,6 +1,7 @@
 """Tests for the independent periodic advection-diffusion solver."""
 
 from collections.abc import Callable
+from fractions import Fraction
 
 import numpy as np
 import pytest
@@ -490,3 +491,49 @@ def test_periodic_decay_matches_direct_formula_at_moderate_scales() -> None:
         diffusivity, length, time
     )
     assert actual == pytest.approx(expected_decay, rel=2e-15)
+
+
+def test_exact_solution_reduces_advective_displacement_when_product_overflows() -> None:
+    """La phase reste calculable si velocity*time déborde mais son modulo existe."""
+    length = 1e-200
+    velocity = 1e308
+    time = 1e308
+    exact_period = Fraction.from_float(length)
+    exact_displacement = Fraction.from_float(velocity) * Fraction.from_float(time)
+    reduced_displacement = exact_displacement % exact_period
+    expected_phase = 2.0 * np.pi * float(
+        (-reduced_displacement) % exact_period / exact_period
+    )
+    expected = 1.0 + 0.3 * np.sin(expected_phase)
+
+    actual = periodic_sine_solution(
+        np.array([0.0]),
+        time,
+        length=length,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=velocity,
+        diffusivity=0.0,
+    )
+    assert actual[0] == pytest.approx(expected, rel=2e-14, abs=2e-14)
+
+
+def test_exact_solution_reduces_large_coordinates_before_phase_evaluation() -> None:
+    """Les coordonnées très grandes sont réduites modulo la période avant k*x."""
+    length = 1e-200
+    coordinate = 1e308
+    exact_period = Fraction.from_float(length)
+    expected_phase = 2.0 * np.pi * float(
+        (Fraction.from_float(coordinate) % exact_period) / exact_period
+    )
+    expected = 1.0 + 0.3 * np.sin(expected_phase)
+    actual = periodic_sine_solution(
+        np.array([coordinate]),
+        0.0,
+        length=length,
+        mean_concentration=1.0,
+        amplitude=0.3,
+        velocity=0.0,
+        diffusivity=0.0,
+    )
+    assert actual[0] == pytest.approx(expected, rel=2e-14, abs=2e-14)
