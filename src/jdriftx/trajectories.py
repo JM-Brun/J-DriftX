@@ -29,13 +29,16 @@ def integrate_trajectory(
 
     The final step is shortened when the interval is not divisible by dt.
     Coordinates and time are in user-chosen consistent units. Every accepted
-    step must advance representable time and produce finite coordinates.
+    step must advance representable time and produce finite coordinates. The
+    velocity callback must return a tuple of two finite components; other
+    sequence types (lists, arrays) are rejected on purpose.
 
     Raises:
         ValueError: If initial values, step parameters, method, or velocity
             output are invalid.
         FloatingPointError: If a step cannot be represented with finite
-            coordinates or cannot advance floating-point time.
+            coordinates or cannot advance floating-point time (explicit
+            failure instead of silently truncating the trajectory).
     """
     values = (x0, y0, t0, t_end, dt)
     if not all(np.isfinite(value) for value in values):
