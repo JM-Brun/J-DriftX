@@ -169,4 +169,5 @@ def calculer_metriques(
     if _contient_booleen(verite) or _contient_booleen(prediction):
         raise ValueError("Verite et prediction doivent etre numeriques (booleens exclus).")
     vrais = np.asarray(verite, dtype=float)
+    predits = np.asarray(prediction, dtype=float)
     return {m.nom: float(m.calcul(vrais, predits)) for m in metriques}
