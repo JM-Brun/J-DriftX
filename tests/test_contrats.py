@@ -670,18 +670,15 @@ def test_mnt_ascii_interpolation_handles_opposite_sign_extremes() -> None:
     assert altitude == 0.0
 
 
-@pytest.mark.parametrize(
-    ("texte", "message_attendu"),
-    [
-        (MNT_ASCII.replace("ncols 3", "ncols 2\nncols 3"), "dupliquee"),
-        (MNT_ASCII.replace("7 8 9", "7 huit 9"), "non numerique"),
-    ],
-)
-def test_mnt_ascii_rejette_les_entrees_ambigues_ou_non_numeriques(
-    texte: str, message_attendu: str
-) -> None:
-    """Le parseur refuse les clés dupliquées et les cellules non numériques."""
-    # Given — un en-tête ambigu ou une valeur raster qui n'est pas un nombre.
-    # When / Then — la lecture échoue avec une erreur contextualisée.
-    with pytest.raises(ValueError, match=message_attendu):
+def test_mnt_ascii_rejette_une_cle_entete_dupliquee() -> None:
+    """Le parseur refuse les clés d'en-tête répétées."""
+    texte = MNT_ASCII.replace("ncols 3", "ncols 2\\nncols 3")
+    with pytest.raises(ValueError, match="dupliquee"):
+        ReliefMntAscii.depuis_texte(texte)
+
+
+def test_mnt_ascii_rejette_une_cellule_non_numerique() -> None:
+    """Le parseur contextualise les valeurs raster non numériques."""
+    texte = MNT_ASCII.replace("7 8 9", "7 huit 9")
+    with pytest.raises(ValueError, match="non numerique"):
         ReliefMntAscii.depuis_texte(texte)
