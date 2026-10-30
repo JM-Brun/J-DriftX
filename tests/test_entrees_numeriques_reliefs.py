@@ -10,9 +10,7 @@ from jdriftx.source import SourcePanache
 
 @pytest.mark.parametrize("valeur", ["1.0", None, 1 + 0j, True, float("nan"), float("inf")])
 @pytest.mark.parametrize("champ", ["height", "width", "center_x", "center_y"])
-def test_relief_synthetique_rejette_les_parametres_invalides(
-    champ: str, valeur: object
-) -> None:
+def test_relief_synthetique_rejette_les_parametres_invalides(champ: str, valeur: object) -> None:
     """Les paramètres de relief exigent des scalaires reels finis."""
     parametres: dict[str, object] = {
         "kind": "hill",
