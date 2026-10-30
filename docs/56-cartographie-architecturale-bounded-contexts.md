@@ -2,7 +2,7 @@
 
 ## Statut
 
-Note d'architecture portant la tranche P1 du [chantier qualité #303](https://github.com/JM-Brun/J-DriftX/issues/303) : cartographie des dépendances, définition des contextes délimités (bounded contexts) et des règles de dépendances autorisées. **État des lieux factuel de `main` au 30 octobre 2026 (commit 8869419) ; aucune décision n'est appliquée dans cette note** : les arbitrages (réduction de `__init__.py`, déplacement de l'outillage de graphe, gardes résiduelles) restent au propriétaire. Cette note ne change aucune équation, tolérance, contrat d'exécution ni test.
+Note d'architecture portant la tranche P1 du [chantier qualité #303](https://github.com/JM-Brun/J-DriftX/issues/303) : cartographie des dépendances, définition des contextes délimités (bounded contexts) et des règles de dépendances autorisées. **État des lieux initial de `main` au commit `8869419` ; actualisation du suivi sur la base `main` du 30 octobre 2026 (commit `e036dad`). Aucune décision de migration n'est appliquée dans cette note** : les arbitrages (réduction de `__init__.py`, déplacement de l'outillage de graphe, gardes résiduelles) restent au propriétaire. Cette note ne change aucune équation, tolérance, contrat d'exécution ni test.
 
 ## Actualisation du suivi — 30 octobre 2026
 
