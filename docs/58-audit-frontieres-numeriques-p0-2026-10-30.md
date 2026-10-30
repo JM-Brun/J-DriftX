@@ -91,6 +91,20 @@ Les deux solveurs (`solve_periodic_sine_transport`, `solve_periodic_upwind_euler
 
 Point à vérifier séparément : `isinstance(n_cells, int)` rejette certains scalaires entiers NumPy ; `bool` est actuellement rejeté indirectement car inférieur à 8, mais sans règle explicite « booléens exclus ». Toute évolution doit définir le contrat entier (entier Python seulement ou `numbers.Integral`), préserver les messages attendus et couvrir les deux solveurs.
 
+### 3.6 `fields.vector_field` et `terrain.terrain_surface` — issue #379 / PR #380
+
+Les deux fonctions autonomes refusent désormais les coordonnées qui ne sont pas des tableaux numériques réels float64, finis et sans coercition textuelle ; les booléens et complexes sont exclus avant conversion, y compris dans les séquences hétérogènes promues par NumPy. Les paramètres scalaires sont normalisés en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les contrôles de forme et `width > 0` sont conservés. Aucun signe n'est ajouté aux domaines de `speed`, `shear`, `radial_strength`, `height`, `center_x` ou `center_y`. Les tests couvrent les entrées invalides et des paramètres signés valides ; ils ne constituent pas une validation physique.
+
+
+### 3.7 `integrate_trajectory` et `gaussian_advection_diffusion` — issue #381 / PR #383
+
+Les deux frontières normalisent désormais leurs scalaires en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution gaussienne rejettent booléens, complexes, chaînes et valeurs non finies avant conversion. Le callback de trajectoire conserve le contrat d'un tuple de deux composantes, avec une erreur de validation stable pour les composantes non réelles ou non représentables. Les domaines existants et les formules sont inchangés. Les débordements intermédiaires de la solution gaussienne restent explicitement hors de cette tranche.
+
+
+### 3.8 `periodic_sine_solution` et solveurs périodiques — issue #384 / PR #387
+
+La solution exacte et le validateur partagé des deux solveurs normalisent les paramètres en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution exacte sont contrôlées avant conversion, sans booléens, complexes ni coercition textuelle. Le nombre de cellules accepte les entiers Python et NumPy, booléens exclus, et contrôle la représentabilité de la dimension NumPy ; les flottants entiers restent refusés. Les deux solveurs consomment les paramètres normalisés renvoyés par le validateur commun. Les équations, domaines physiques, critères de stabilité et méthodes restent inchangés.
+
 ## 4. Adaptateurs et méthodes ponctuelles : contrat à clarifier avant correction
 
 ### 4.1 `VentDeChampPlan.vitesse`, `AdaptateurTrajectoire2D.__call__`, `VentUniforme.vitesse` et `VentProfilPuissance.vitesse`
@@ -115,7 +129,7 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 ## 6. Stratégie de correction proposée
 
 1. Fixer le contrat commun des scalaires réels et des tableaux réels : booléens exclus, complexes exclus, valeurs finies, coercition textuelle interdite, conversion float64 représentable.
-2. Examiner si les helpers équivalents de `similitude.py` et `reliefs.py` peuvent être extraits dans un module interne commun sans modifier les messages publics ni les comportements acceptés. Ne pas créer cette abstraction avant d'avoir comparé précisément leurs contrats et leurs usages.
+2. Conserver les helpers de validation locaux aux bounded contexts, conformément aux arbitrages de docs/56 et docs/57 : aucune factorisation transversale n'est justifiée à ce stade. Réexaminer uniquement si un contrat commun explicite et plusieurs consommateurs le démontrent.
 3. Appliquer les validations uniquement aux fonctions autonomes qui en ont besoin ; laisser les wrappers s'appuyer sur les objets validés lorsqu'ils garantissent déjà les invariants.
 4. Préserver les domaines physiques existants : ne pas transformer un paramètre signé en paramètre positif sans justification mathématique.
 5. Ajouter les tests de non-régression au niveau de chaque frontière publique : `bool`, `np.bool_`, tableau booléen, séquence mixte nombre/bool, NaN, infini, forme incorrecte et valeurs numériques valides usuelles.
@@ -126,7 +140,7 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 | Ordre | Cible | État | Motif |
 |---|---|---|---|
 | 1 | `fields.vector_field`, `terrain.terrain_surface` | PR #380 — CI verte | Contrôles réels finis, booléens/complexes exclus |
-| 2 | `integrate_trajectory`, `gaussian_advection_diffusion` | Correction proposée #384, CI à vérifier | Contrôles réels finis, conversions et erreurs homogénéisées |
+| 2 | `integrate_trajectory`, `gaussian_advection_diffusion` | PR #383 — CI verte | Contrôles réels finis, conversions et erreurs homogénéisées |
 | 3 | `periodic_sine_solution`, helper périodique partagé | PR #387 — CI à vérifier | Contrats réels finis, entiers NumPy et validation partagée |
 | 4 | Adaptateurs `vents.py` | Corrigé #374 | Contrat ponctuel explicité et appliqué avant délégation |
 | 5 | `EchantillonneurBilineaire.concentration` | Corrigé #369 | Contrat ponctuel autonome contrôlé avant conversion en indice |
@@ -139,19 +153,4 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 - Modification des équations, des hypothèses physiques ou des unités.
 - Toute affirmation de validation physique du modèle.
 
-**Conclusion actualisée :** les frontières #369, #374 et #380 sont traitées en code ; la CI de #380 est verte. Les corrections #383 sur l'intégrateur et la solution gaussienne restent soumises à la CI complète. Le dernier bloc prioritaire du périmètre initial est `periodic_sine_solution` et son validateur partagé.
-
-
-### 3.6 `fields.vector_field` et `terrain.terrain_surface` — issue #379 / PR #380
-
-Les deux fonctions autonomes refusent désormais les coordonnées qui ne sont pas des tableaux numériques réels float64, finis et sans coercition textuelle ; les booléens et complexes sont exclus avant conversion, y compris dans les séquences hétérogènes promues par NumPy. Les paramètres scalaires sont normalisés en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les contrôles de forme et `width > 0` sont conservés. Aucun signe n'est ajouté aux domaines de `speed`, `shear`, `radial_strength`, `height`, `center_x` ou `center_y`. Les tests couvrent les entrées invalides et des paramètres signés valides ; ils ne constituent pas une validation physique.
-
-
-### 3.7 `integrate_trajectory` et `gaussian_advection_diffusion` — issue #381 / PR #383
-
-Les deux frontières normalisent désormais leurs scalaires en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution gaussienne rejettent booléens, complexes, chaînes et valeurs non finies avant conversion. Le callback de trajectoire conserve le contrat d'un tuple de deux composantes, avec une erreur de validation stable pour les composantes non réelles ou non représentables. Les domaines existants et les formules sont inchangés. Les débordements intermédiaires de la solution gaussienne restent explicitement hors de cette tranche.
-
-
-### 3.8 `periodic_sine_solution` et solveurs périodiques — issue #384 / PR #387
-
-La solution exacte et le validateur partagé des deux solveurs normalisent les paramètres en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution exacte sont contrôlées avant conversion, sans booléens, complexes ni coercition textuelle. Le nombre de cellules accepte les entiers Python et NumPy, booléens exclus, et contrôle la représentabilité de la dimension NumPy ; les flottants entiers restent refusés. Les deux solveurs consomment les paramètres normalisés renvoyés par le validateur commun. Les équations, domaines physiques, critères de stabilité et méthodes restent inchangés.
+**Conclusion actualisée :** les frontières #369, #374, #380 et #383 sont traitées en code et leurs CI sont vertes. La PR #387 traite le dernier bloc prioritaire du périmètre initial : `periodic_sine_solution` et son validateur partagé.
