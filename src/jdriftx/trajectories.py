@@ -74,20 +74,14 @@ def integrate_trajectory(
             next_x, next_y = x + step * ux, y + step * uy
         else:
             k1x, k1y = rhs(time, x, y)
-            k2x, k2y = rhs(
-                time + step / 2, x + step * k1x / 2, y + step * k1y / 2
-            )
-            k3x, k3y = rhs(
-                time + step / 2, x + step * k2x / 2, y + step * k2y / 2
-            )
+            k2x, k2y = rhs(time + step / 2, x + step * k1x / 2, y + step * k1y / 2)
+            k3x, k3y = rhs(time + step / 2, x + step * k2x / 2, y + step * k2y / 2)
             k4x, k4y = rhs(time + step, x + step * k3x, y + step * k3y)
             next_x = x + step * (k1x + 2 * k2x + 2 * k3x + k4x) / 6
             next_y = y + step * (k1y + 2 * k2y + 2 * k3y + k4y) / 6
 
         if not np.isfinite(next_x) or not np.isfinite(next_y):
-            raise FloatingPointError(
-                "Trajectory coordinates became non-finite during integration."
-            )
+            raise FloatingPointError("Trajectory coordinates became non-finite during integration.")
 
         times.append(float(next_time))
         xs.append(float(next_x))
