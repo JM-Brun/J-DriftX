@@ -96,6 +96,7 @@ class CollineGaussienne:
 
     def altitude(self, x: float, y: float) -> float:
         """Évalue l'altitude de la colline au point (x, y), en m."""
+        _valide_point("evaluation", (x, y))
         grille_x = np.asarray([[x]], dtype=float)
         grille_y = np.asarray([[y]], dtype=float)
         surface = terrain_surface(
@@ -299,6 +300,7 @@ def concentrations_au_point(scenario: ScenarioRelief, x: float, y: float) -> tup
     Returns:
         Le couple (concentration sans correction, concentration avec correction).
     """
+    _valide_point("evaluation", (x, y))
     u, v = scenario.vent
     norme = math.hypot(u, v)
     dx = x - scenario.source[0]
