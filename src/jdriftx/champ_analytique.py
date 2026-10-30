@@ -34,11 +34,11 @@ class ChampPlan(Protocol):
     """
 
     def fonction_courant(self, x: float, y: float) -> float:
-        """Évalue la fonction de courant ψ(x, y) en m² s⁻¹."""
+        """Évalue ψ(x, y) en m² s⁻¹ pour deux coordonnées réelles finies."""
         ...
 
     def vitesse(self, x: float, y: float) -> tuple[float, float]:
-        """Évalue les composantes (u, v) du champ en m s⁻¹."""
+        """Évalue (u, v) en m s⁻¹ pour deux coordonnées réelles finies."""
         ...
 
 
