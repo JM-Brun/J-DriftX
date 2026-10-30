@@ -129,7 +129,7 @@ class ChampFonctionCourant:
 
         Raises:
             ValueError: si les coordonnées ne sont pas finies ou si une
-                composante deborde vers une valeur non finie.
+                composante de vitesse n'est pas representable en float64.
         """
         _verifie_coordonnees(x, y)
         k = self.nombre_donde
