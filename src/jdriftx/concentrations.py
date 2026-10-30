@@ -62,4 +62,7 @@ class SuperpositionPanaches:
             total = total + panache.concentration(x, y, z)
         return total
 
-__all__ = ["PanacheGaussien", "SuperpositionPanaches"]
+__all__ = [
+    "PanacheGaussien",
+    "SuperpositionPanaches",
+]
