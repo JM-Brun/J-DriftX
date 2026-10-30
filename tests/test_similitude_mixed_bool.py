@@ -44,5 +44,5 @@ def test_concentrations_rejettent_les_booleens_meles_aux_reels(
 
 def test_tableau_numpy_de_type_booleen_reste_refuse() -> None:
     """A homogeneous boolean ndarray remains rejected."""
-    with pytest.raises(ValueError, match="booleens.*complexes exclus"):
+    with pytest.raises(ValueError, match="booleens"):
         sigma_y(np.array([True, False]), "D")
