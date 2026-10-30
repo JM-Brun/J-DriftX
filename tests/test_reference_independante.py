@@ -11,12 +11,12 @@ import jdriftx.experiences.reference_independante as module_reference
 from jdriftx.benchmarks.cas import CAS_S0_DEFAUT, CasS0
 from jdriftx.contrats import PanacheGaussien
 from jdriftx.experiences.reference_independante import (
+    CoefficientsDiffusion,
+    ComparaisonReference,
     DIFFUSION_BRIGGS,
     EchantillonneurBilineaire,
     GrilleEdp,
     PARAMETRES_EDP_DEFAUT,
-    CoefficientsDiffusion,
-    ComparaisonReference,
     ParametresEdp,
     PointComparaison,
     RouteEdp,
@@ -437,9 +437,9 @@ def test_grille_edp_copie_et_fige_ses_axes() -> None:
     # Then — les axes sont copiés et non modifiables.
     assert grille.abscisses_y[0] == -1.0
     assert grille.abscisses_z[0] == 0.0
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="read-only"):
         grille.abscisses_y[0] = 4.0
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="WRITEABLE"):
         grille.abscisses_y.setflags(write=True)
 
 
@@ -452,9 +452,9 @@ def test_tranche_edp_copie_et_fige_son_champ() -> None:
     champ[0, 0] = 99.0
     # Then — la tranche conserve la copie initiale et interdit l'écriture.
     assert tranche.champ[0, 0] == 1.0
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="read-only"):
         tranche.champ[0, 0] = 0.0
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="WRITEABLE"):
         tranche.champ.setflags(write=True)
 
 
@@ -476,7 +476,7 @@ def test_solution_edp_fige_ses_axes_et_normalise_ses_tranches() -> None:
     # Then — les axes sont copiés et les tranches sont stockées dans un tuple.
     assert solution.abscisses_y[0] == -1.0
     assert isinstance(solution.tranches, tuple)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="read-only"):
         solution.abscisses_z[0] = 5.0
 
 
@@ -490,7 +490,7 @@ def test_echantillonneur_bilineaire_ne_partage_pas_un_champ_mutable() -> None:
     champ[:] = 99.0
     # Then — l'échantillonnage reste basé sur les données initiales.
     assert echantillonneur.concentration(0.0, 0.5) == pytest.approx(1.0)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="WRITEABLE"):
         echantillonneur.champ.setflags(write=True)
 
 
