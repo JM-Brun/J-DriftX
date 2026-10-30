@@ -6,6 +6,19 @@ import numpy as np
 from numpy.typing import NDArray
 
 
+def _contient_booleen(valeur: object) -> bool:
+    """Détecte les booléens avant une éventuelle promotion numérique NumPy."""
+    if isinstance(valeur, np.ndarray):
+        if valeur.dtype.kind == "b":
+            return True
+        if valeur.dtype.kind != "O":
+            return False
+        valeurs = valeur
+    else:
+        valeurs = np.asarray(valeur, dtype=object)
+    return any(isinstance(element, (bool, np.bool_)) for element in valeurs.flat)
+
+
 def gaussian_advection_diffusion(
     x: NDArray[np.floating],
     time: float,
@@ -27,6 +40,8 @@ def gaussian_advection_diffusion(
     model. The finite plotted domain may omit part of the Gaussian tail.
     """
     parameters = (time, mass, initial_center, velocity, diffusivity, initial_sigma)
+    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
+        raise ValueError("Parameters must be numeric (booleans excluded).")
     if not all(np.isfinite(value) for value in parameters):
         raise ValueError("Parameters must be finite.")
     if time < 0:
@@ -38,6 +53,8 @@ def gaussian_advection_diffusion(
     if initial_sigma <= 0:
         raise ValueError("initial_sigma must be strictly positive.")
 
+    if _contient_booleen(x):
+        raise ValueError("Coordinates must be numeric (booleans excluded).")
     x_arr = np.asarray(x, dtype=float)
     if not np.all(np.isfinite(x_arr)):
         raise ValueError("Coordinates must be finite.")
