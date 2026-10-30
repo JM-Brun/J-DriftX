@@ -376,12 +376,15 @@ def test_les_routes_sont_assemblees_separement(
     assert assemblee.cout_edp_s == edp.cout_s
 
 
-@pytest.mark.parametrize("instant", [True, np.bool_(True), 0.0, -1.0, float("nan"), float("inf"), 1.0 + 2.0j, "1.0"])
+@pytest.mark.parametrize(
+    "instant",
+    [True, np.bool_(True), 0.0, -1.0, float("nan"), float("inf"), 1.0 + 2.0j, "1.0"],
+)
 def test_marginale_fermee_rejects_invalid_time(instant: object) -> None:
     """La marginale exige un instant réel fini strictement positif."""
     grille = GrilleEdp.depuis_parametres(PARAMETRES_EDP_DEFAUT)
     marginale = MarginaleFermee(source=PUFF_DEFAUT, grille=grille)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"t must|strictly positive"):
         marginale.champ(instant)  # type: ignore[arg-type]
 
 
