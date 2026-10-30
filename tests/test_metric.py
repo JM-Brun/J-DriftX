@@ -509,7 +509,7 @@ def test_polyline_cost_rejects_overflowing_total() -> None:
     ligne = np.array([[0.0, 0.0], [1.0e308, 0.0], [0.0, 0.0], [1.0e308, 0.0], [0.0, 0.0]])
     vent = np.ones((4, 2))
     # When / Then — aucune somme infinie n'est retournée silencieusement.
-    with pytest.raises(ValueError, match="cout total doit rester fini"):
+    with pytest.raises(ValueError, match=r"cout total.*representable"):
         temps_transport(ligne, vent)
 
 
