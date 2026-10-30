@@ -345,9 +345,7 @@ def test_superposition_refuse_une_forme_de_sortie_incoherente() -> None:
         def concentration(self, x: object, y: object, z: object) -> np.ndarray:
             return np.zeros((1,), dtype=float)
 
-    panache = PanacheGaussien(
-        source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
-    )
+    panache = PanacheGaussien(source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0))
     superposition = SuperpositionPanaches(panaches=(panache, ModeleFormeIncoherente()))
     with pytest.raises(ValueError, match="forme"):
         superposition.concentration(np.full((2, 1), 100.0), np.zeros((1, 3)), 0.0)
@@ -355,9 +353,7 @@ def test_superposition_refuse_une_forme_de_sortie_incoherente() -> None:
 
 def test_superposition_accepte_le_broadcasting_des_entrees() -> None:
     """Les entrées broadcastables produisent la forme commune attendue."""
-    panache = PanacheGaussien(
-        source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
-    )
+    panache = PanacheGaussien(source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0))
     superposition = SuperpositionPanaches(panaches=(panache,))
     resultat = superposition.concentration(np.full((2, 1), 100.0), np.zeros((1, 3)), 1.0)
     assert resultat.shape == (2, 3)
@@ -389,9 +385,7 @@ def test_superposition_refuse_une_sortie_non_reelle() -> None:
 
 def test_superposition_refuse_des_entrees_non_broadcastables() -> None:
     """Les formes d'entrée incompatibles sont refusées explicitement."""
-    panache = PanacheGaussien(
-        source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0)
-    )
+    panache = PanacheGaussien(source=SourcePanache(debit=1.0, u=3.0, classe="C", hauteur=1.0))
     superposition = SuperpositionPanaches(panaches=(panache,))
     with pytest.raises(ValueError, match="broadcastables"):
         superposition.concentration(np.zeros((2, 2)), np.zeros((3,)), 0.0)
