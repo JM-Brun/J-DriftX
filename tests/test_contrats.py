@@ -672,7 +672,7 @@ def test_mnt_ascii_interpolation_handles_opposite_sign_extremes() -> None:
 
 def test_mnt_ascii_rejette_une_cle_entete_dupliquee() -> None:
     """Le parseur refuse les clés d'en-tête répétées."""
-    texte = MNT_ASCII.replace("ncols 3", "ncols 2\\nncols 3")
+    texte = MNT_ASCII.replace("ncols 3", "ncols 2\nncols 3")
     with pytest.raises(ValueError, match="dupliquee"):
         ReliefMntAscii.depuis_texte(texte)
 
