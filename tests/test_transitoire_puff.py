@@ -44,6 +44,7 @@ from jdriftx.experiences.transitoire_puff import (
     construire_manifeste,
     resoudre_transitoire,
 )
+import jdriftx.experiences.transitoire_puff.comparaison as module_comparaison
 from jdriftx.similitude import sigma_y, sigma_z
 
 
