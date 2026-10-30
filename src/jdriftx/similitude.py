@@ -14,6 +14,7 @@ Mohammadi, 2008) ; formules de Briggs reprises par Martin (1976).
 from __future__ import annotations
 
 from math import isfinite, log
+from numbers import Real
 
 import numpy as np
 from numpy.typing import ArrayLike
@@ -25,6 +26,40 @@ CLASSES: tuple[str, ...] = tuple(classe.value for classe in ClasseStabilite)
 # Logarithme du plus grand float64 : en deca, exp() reste finie ; au-dela,
 # la concentration theorique n'est pas representable et le contrat le refuse.
 _LOG_FLOAT_MAX = log(1.7976931348623157e308)
+
+
+def _reel_fini(valeur: object, nom: str) -> float:
+    """Valide un scalaire reel fini et representable en float64."""
+    if isinstance(valeur, bool) or not isinstance(valeur, Real):
+        raise ValueError(f"{nom} doit etre un nombre reel (booleen exclu).")
+    try:
+        resultat = float(valeur)
+    except (OverflowError, TypeError, ValueError) as err:
+        raise ValueError(f"{nom} doit etre representable en float64 fini.") from err
+    if not isfinite(resultat):
+        raise ValueError(f"{nom} doit contenir uniquement des valeurs finies.")
+    return resultat
+
+
+def _tableau_reel_fini(valeur: ArrayLike, nom: str) -> np.ndarray:
+    """Convertit un tableau numerique reel en float64 sans coercition textuelle."""
+    if isinstance(valeur, Real) and not isinstance(valeur, bool):
+        return np.asarray(_reel_fini(valeur, nom))
+    try:
+        brut = np.asarray(valeur)
+    except (TypeError, ValueError, OverflowError) as err:
+        raise ValueError(f"{nom} doit etre un tableau numerique reel.") from err
+    if brut.dtype.kind not in "iuf":
+        msg = f"{nom} doit etre un tableau numerique reel "
+        raise ValueError(msg + "(booleens et complexes exclus).")
+    try:
+        with np.errstate(over="ignore", invalid="ignore"):
+            resultat = np.asarray(brut, dtype=float)
+    except (TypeError, ValueError, OverflowError) as err:
+        raise ValueError(f"{nom} doit etre representable en float64.") from err
+    if not np.all(np.isfinite(resultat)):
+        raise ValueError(f"{nom} doit contenir uniquement des valeurs finies.")
+    return resultat
 
 
 def _valide_classe(classe: str | ClasseStabilite) -> ClasseStabilite:
@@ -110,7 +145,7 @@ def sigma_y(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
         FloatingPointError: si un ecart-type positif n'est pas representable en float64.
     """
     classe_stable = _valide_classe(classe)
-    x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
+    x_arr = _distance_sous_le_vent(_tableau_reel_fini(x, "La distance sous le vent"))
     if np.any(x_arr < 0.0):
         msg = "La distance sous le vent doit etre positive ou nulle."
         raise ValueError(msg)
@@ -125,7 +160,7 @@ def sigma_z(x: ArrayLike, classe: str | ClasseStabilite) -> np.ndarray:
         FloatingPointError: si un ecart-type positif n'est pas representable en float64.
     """
     classe_stable = _valide_classe(classe)
-    x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
+    x_arr = _distance_sous_le_vent(_tableau_reel_fini(x, "La distance sous le vent"))
     if np.any(x_arr < 0.0):
         msg = "La distance sous le vent doit etre positive ou nulle."
         raise ValueError(msg)
@@ -171,18 +206,18 @@ def concentration_panache(
             en float64 (singularite pres de la source).
     """
     classe_stable = _valide_classe(classe)
-    if not all(isfinite(valeur) for valeur in (debit, u, hauteur)):
-        raise ValueError("debit, u et hauteur doivent etre finis.")
+    debit = _reel_fini(debit, "Le debit")
+    u = _reel_fini(u, "La vitesse du vent")
+    hauteur = _reel_fini(hauteur, "La hauteur de source")
     if u <= 0.0:
         raise ValueError("La vitesse du vent doit etre strictement positive.")
     if debit < 0.0:
         raise ValueError("Le debit d'emission doit etre positif ou nul.")
-    x_arr = _distance_sous_le_vent(np.asarray(x, dtype=float))
+    x_arr = _distance_sous_le_vent(_tableau_reel_fini(x, "La distance sous le vent"))
     if np.any(x_arr <= 0.0):
         raise ValueError("La distance sous le vent doit etre strictement positive.")
-    y_arr, z_arr = np.asarray(y, dtype=float), np.asarray(z, dtype=float)
-    if not np.all(np.isfinite(y_arr)) or not np.all(np.isfinite(z_arr)):
-        raise ValueError("y et z doivent contenir uniquement des coordonnees finies.")
+    y_arr = _tableau_reel_fini(y, "La coordonnee y")
+    z_arr = _tableau_reel_fini(z, "La coordonnee z")
     if debit == 0.0:
         return np.zeros(np.broadcast_shapes(x_arr.shape, y_arr.shape, z_arr.shape))
 
@@ -244,17 +279,19 @@ def concentration_puff(
         FloatingPointError: si un ecart-type positif n'est pas representable en float64.
     """
     classe_stable = _valide_classe(classe)
-    if not all(isfinite(valeur) for valeur in (t, masse, u, x0)):
-        raise ValueError("t, masse, u et x0 doivent etre finis.")
+    t = _reel_fini(t, "Le temps")
+    masse = _reel_fini(masse, "La masse emise")
+    u = _reel_fini(u, "La vitesse du vent")
+    x0 = _reel_fini(x0, "La position initiale")
     if t <= 0.0:
         raise ValueError("Le temps doit etre strictement positif.")
     if masse < 0.0:
         raise ValueError("La masse emise doit etre positive ou nulle.")
     if u <= 0.0:
         raise ValueError("La vitesse du vent doit etre strictement positive.")
-    x_arr, y_arr, z_arr = (np.asarray(v, dtype=float) for v in (x, y, z))
-    if not all(np.all(np.isfinite(axe)) for axe in (x_arr, y_arr, z_arr)):
-        raise ValueError("x, y et z doivent contenir uniquement des coordonnees finies.")
+    x_arr = _tableau_reel_fini(x, "La coordonnee x")
+    y_arr = _tableau_reel_fini(y, "La coordonnee y")
+    z_arr = _tableau_reel_fini(z, "La coordonnee z")
     distance = u * t
     if not isfinite(distance) or distance <= 0.0:
         raise ValueError("La distance parcourue doit rester finie et strictement positive.")

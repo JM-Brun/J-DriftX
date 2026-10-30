@@ -241,7 +241,7 @@ def test_objets_et_noyau_gardent_chacune_leur_frontiere_non_finie() -> None:
     # When / Then — chaque couche leve son propre message de refus.
     with pytest.raises(ValueError, match=r"coordonnees.*finies"):
         Point3D(x=float("nan"), y=0.0, z=0.0)
-    with pytest.raises(ValueError, match="coordonnees finies"):
+    with pytest.raises(ValueError, match=r"coordonnee.*valeurs finies"):
         concentration_panache(
             500.0,
             np.array([float("inf")]),
