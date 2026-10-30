@@ -217,7 +217,7 @@ Les frontières publiques suivantes rejettent explicitement les booléens Python
 
 Les tableaux et séquences sont inspectés avant coercition en `float64`. Aucune formule de temps, équation d'intégration, convention d'accessibilité ou règle de rendu n'est modifiée.
 
-### Complément P0 — entrées complexes dans les contrats réels (issue #377, PR en préparation)
+### Complément P0 — entrées complexes dans les contrats réels (issue #377, PR #378)
 
 Une coercition NumPy `complex128 -> float64` peut supprimer la partie imaginaire avec un avertissement au lieu d'échouer. Les frontières de concentration, métriques et référence EDP doivent donc exclure explicitement les tableaux complexes et les séquences mixtes complexes avant conversion. Les scalaires géométriques, coefficients, distances et paramètres de dérivée doivent également être réels avant toute comparaison ou calcul. Le contrat reste réel ; aucune formule, unité, géométrie ou restriction de signe n'est modifiée.
 
