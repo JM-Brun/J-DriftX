@@ -501,6 +501,30 @@ libelle = "contrats.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/contrats.py"
 
 [[noeuds]]
+id = "_protocoles"
+type = "module"
+libelle = "_protocoles.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/_protocoles.py"
+
+[[noeuds]]
+id = "reliefs"
+type = "module"
+libelle = "reliefs.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/reliefs.py"
+
+[[noeuds]]
+id = "vents"
+type = "module"
+libelle = "vents.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/vents.py"
+
+[[noeuds]]
+id = "concentrations"
+type = "module"
+libelle = "concentrations.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/concentrations.py"
+
+[[noeuds]]
 id = "constraints"
 type = "module"
 libelle = "constraints.py"
@@ -1837,21 +1861,56 @@ relation = "utilise"
 
 [[aretes]]
 de = "contrats"
+vers = "_protocoles"
+relation = "utilise"
+
+[[aretes]]
+de = "contrats"
+vers = "reliefs"
+relation = "utilise"
+
+[[aretes]]
+de = "contrats"
+vers = "vents"
+relation = "utilise"
+
+[[aretes]]
+de = "contrats"
+vers = "concentrations"
+relation = "utilise"
+
+[[aretes]]
+de = "reliefs"
+vers = "_protocoles"
+relation = "utilise"
+
+[[aretes]]
+de = "reliefs"
 vers = "terrain"
 relation = "utilise"
 
 [[aretes]]
-de = "contrats"
+de = "vents"
+vers = "_protocoles"
+relation = "utilise"
+
+[[aretes]]
+de = "vents"
 vers = "champ_analytique"
 relation = "utilise"
 
 [[aretes]]
-de = "contrats"
+de = "concentrations"
+vers = "_protocoles"
+relation = "utilise"
+
+[[aretes]]
+de = "concentrations"
 vers = "source"
 relation = "utilise"
 
 [[aretes]]
-de = "contrats"
+de = "concentrations"
 vers = "similitude"
 relation = "utilise"
 
@@ -1874,7 +1933,7 @@ relation = "utilise"
 
 [[aretes]]
 de = "experiences/baseline_uniforme"
-vers = "contrats"
+vers = "concentrations"
 relation = "utilise"
 
 [[aretes]]
@@ -1907,7 +1966,7 @@ relation = "utilise"
 
 [[aretes]]
 de = "experiences/reference_independante"
-vers = "contrats"
+vers = "concentrations"
 relation = "utilise"
 
 [[aretes]]
@@ -2091,6 +2150,7 @@ noeuds = [
   "experiences/transitoire_puff/routes",
   "experiences/transitoire_puff/solveur",
   "similitude", "similitude_objets", "stabilite", "source", "contrats",
+  "_protocoles", "reliefs", "vents", "concentrations",
   "constraints", "periodic_transport", "advection_diffusion",
   "trajectories", "fields", "terrain", "figures/figure_01",
   "figures/figure_02", "figures/figure_03", "figures/figure_04", "figures/figure_05", "figures/figure_06",
@@ -2157,7 +2217,7 @@ noeuds = [
   [[graphes.groupes]]
   id = "ctr"
   titre = "Contrats d'interface (docs/42)"
-  noeuds = ["contrats"]
+  noeuds = ["contrats", "_protocoles", "reliefs", "vents", "concentrations"]
 
   [[graphes.groupes]]
   id = "rfs"

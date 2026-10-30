@@ -20,6 +20,8 @@ from jdriftx.contrats import (
 from jdriftx.similitude import concentration_panache
 from jdriftx.source import SourcePanache
 from jdriftx.terrain import terrain_surface
+from jdriftx.trajectories import integrate_trajectory
+from jdriftx.vents import AdaptateurTrajectoire2D
 
 MNT_ASCII = """ncols 3
 nrows 3
@@ -72,12 +74,29 @@ def test_relief_synthetique_delegue_au_module_terrain() -> None:
     assert np.array_equal(relief.altitude(grille_x, grille_y), attendu)
 
 
-def test_relief_synthetique_herite_des_rejets() -> None:
-    """Étant donné une largeur négative, le relief synthétique refuse la construction."""
-    # Given — un paramètre invalide pour le module terrain.
-    # When / Then — la délégation propage le rejet.
-    with pytest.raises(ValueError, match="width"):
-        ReliefSynthetique(kind="hill", width=0.0).altitude(np.zeros(3), np.zeros(3))
+@pytest.mark.parametrize(
+    ("parametres", "message"),
+    [
+        ({"width": 0.0}, "largeur"),
+        ({"height": float("nan")}, "finis"),
+        ({"center_x": float("inf")}, "finis"),
+        ({"kind": "unknown"}, "inconnu"),
+    ],
+)
+def test_relief_synthetique_rejette_les_parametres_invalides(
+    parametres: dict[str, object], message: str
+) -> None:
+    """Un relief invalide est refusé à la construction, pas à la première évaluation."""
+    configuration = {"kind": "hill", **parametres}
+    with pytest.raises(ValueError, match=message):
+        ReliefSynthetique(**configuration)  # type: ignore[arg-type]
+
+
+def test_reliefs_rejettent_les_coordonnees_non_finies() -> None:
+    """Les implémentations de relief appliquent le même contrat d'entrée."""
+    for relief in (ReliefPlat(), ReliefSynthetique(kind="hill")):
+        with pytest.raises(ValueError, match="coordonnees doivent etre finies"):
+            relief.altitude(np.array([float("nan")]), np.array([0.0]))
 
 
 def test_mnt_ascii_lit_les_centres_de_cellules() -> None:
@@ -213,6 +232,14 @@ def test_adaptateur_champ_plan_garantit_w_nul() -> None:
     assert (u, v, w) == (attendu[0], attendu[1], 0.0)
 
 
+@pytest.mark.parametrize("hauteur", [float("nan"), float("inf")])
+def test_vent_profil_puissance_rejette_hauteur_non_finie(hauteur: float) -> None:
+    """Le profil ne produit jamais une vitesse non finie à partir de z invalide."""
+    vent = VentProfilPuissance(u_reference=5.0, z_reference=10.0, exposant=0.15)
+    with pytest.raises(ValueError, match="finie"):
+        vent.vitesse(0.0, 0.0, hauteur)
+
+
 def test_vent_profil_puissance_suit_la_loi_standard() -> None:
     """Étant donné le profil en loi de puissance, u(z) suit la référence à l'exposant."""
     # Given — un profil standard : 5 m/s à 10 m, exposant 0.15.
@@ -288,6 +315,34 @@ def test_superposition_exige_un_panache() -> None:
         SuperpositionPanaches(panaches=())
 
 
+def test_adaptateur_vent_stationnaire_alimente_les_trajectoires_2d() -> None:
+    """Un vent horizontal est utilisable sans adapter chaque appelant."""
+    # Given — un vent stationnaire horizontal échantillonné à hauteur fixe.
+    adaptateur = AdaptateurTrajectoire2D(
+        vent=VentUniforme(u=2.0, v=-1.0),
+        hauteur=10.0,
+    )
+
+    # When — l'intégrateur 2D consomme directement l'adaptateur callable.
+    temps, x, y = integrate_trajectory(adaptateur, 0.0, 0.0, 0.0, 1.0, 0.25)
+
+    # Then — la trajectoire respecte exactement le champ uniforme.
+    assert np.allclose(x, 2.0 * temps)
+    assert np.allclose(y, -temps)
+
+
+def test_adaptateur_vent_refuse_une_composante_verticale_non_nulle() -> None:
+    """Un intégrateur 2D ne doit pas masquer une vitesse verticale."""
+
+    class VentVertical:
+        def vitesse(self, x: float, y: float, z: float) -> tuple[float, float, float]:
+            return 1.0, 0.0, 0.1
+
+    adaptateur = AdaptateurTrajectoire2D(vent=VentVertical(), hauteur=10.0)
+    with pytest.raises(ValueError, match="vent vertical"):
+        adaptateur(0.0, 0.0, 0.0)
+
+
 def test_le_typage_structurel_reconnait_les_contrats() -> None:
     """Étant donné les implémentations, chacune satisfait son protocole (PEP 544)."""
     # Given — un objet de chaque contrat.
@@ -310,3 +365,56 @@ def test_le_typage_structurel_reconnait_les_contrats() -> None:
     assert not isinstance(42, Relief)
     assert not isinstance(42, Vent)
     assert not isinstance(42, ModeleConcentration)
+
+
+def test_mnt_ascii_copie_et_protege_sa_grille() -> None:
+    """La grille est possédée par le relief et ne peut pas être mutée après validation."""
+    # Given — une grille source mutable transmise au constructeur.
+    altitudes = np.arange(4, dtype=float).reshape(2, 2)
+    relief = ReliefMntAscii(altitudes=altitudes, x0=0.0, y0=0.0, pas=1.0)
+
+    # When — le tableau d'origine est modifié après construction.
+    altitudes[0, 0] = 99.0
+
+    # Then — le relief conserve les données validées et expose une grille en lecture seule.
+    assert relief.altitudes[0, 0] == 0.0
+    with pytest.raises(ValueError, match="read-only"):
+        relief.altitudes[0, 0] = 42.0
+    with pytest.raises(ValueError, match="WRITEABLE"):
+        relief.altitudes.setflags(write=True)
+
+
+@pytest.mark.parametrize(
+    ("champ", "valeur"),
+    [
+        ("sans_donnee", float("nan")),
+        ("sans_donnee", float("inf")),
+    ],
+)
+def test_mnt_ascii_rejette_sentinelle_sans_donnee_non_finie(champ: str, valeur: float) -> None:
+    """Une sentinelle nodata doit être finie pour permettre une comparaison fiable."""
+    # Given — une grille valide et une sentinelle non finie.
+    valeurs: dict[str, object] = {
+        "altitudes": np.zeros((2, 2)),
+        "x0": 0.0,
+        "y0": 0.0,
+        "pas": 1.0,
+        champ: valeur,
+    }
+
+    # When / Then — la construction rejette la sentinelle.
+    with pytest.raises(ValueError, match=r"sans donnee.*finie"):
+        ReliefMntAscii(**valeurs)  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("coordonnees", [(float("nan"), 0.0), (0.0, float("inf"))])
+def test_mnt_ascii_rejette_coordonnees_non_finies(
+    coordonnees: tuple[float, float],
+) -> None:
+    """L'interpolation refuse les coordonnées non finies avant tout calcul d'index."""
+    # Given — un MNT valide et une coordonnée non finie.
+    relief = ReliefMntAscii.depuis_texte(MNT_ASCII)
+
+    # When / Then — l'évaluation est refusée explicitement.
+    with pytest.raises(ValueError, match=r"coordonnees.*finies"):
+        relief.altitude(*coordonnees)

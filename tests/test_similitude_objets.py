@@ -3,6 +3,7 @@
 import math
 
 import hypothesis
+import numpy as np
 import pytest
 
 from jdriftx.similitude import concentration_panache, concentration_puff
@@ -222,3 +223,30 @@ def test_parametres_puff_normalisent_la_classe_et_sont_immuables() -> None:
     assert parametres.classe is ClasseStabilite.D
     with pytest.raises(AttributeError):
         parametres.t = 2.0  # type: ignore[misc]
+
+
+def test_puff_objet_rejete_la_distance_parcourue_non_finie() -> None:
+    """Given t et u finis dont le produit u*t deborde, when le noyau evalue, then refus."""
+    point = Point3D(x=1.0, y=0.0, z=0.0)
+    parametres = ParametresPuff(t=1.0e200, masse=1.0, u=1.0e200, classe=ClasseStabilite.D)
+
+    with pytest.raises(ValueError, match="distance parcourue doit rester finie"):
+        concentration_puff_au_point(point, parametres)
+
+
+def test_objets_et_noyau_gardent_chacune_leur_frontiere_non_finie() -> None:
+    """L'API objet refuse les scalaires non finis ; le noyau refuse les grilles."""
+    # Given — un point non fini pour la couche objet, une grille non finie
+    # pour le noyau vectorise.
+    # When / Then — chaque couche leve son propre message de refus.
+    with pytest.raises(ValueError, match=r"coordonnees.*finies"):
+        Point3D(x=float("nan"), y=0.0, z=0.0)
+    with pytest.raises(ValueError, match="coordonnees finies"):
+        concentration_panache(
+            500.0,
+            np.array([float("inf")]),
+            1.0,
+            debit=1.0,
+            u=3.0,
+            classe=ClasseStabilite.D,
+        )

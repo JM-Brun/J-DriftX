@@ -63,3 +63,15 @@ def test_mismatched_shapes_are_rejected() -> None:
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="identical shapes"):
         terrain_surface(np.zeros((2, 2)), np.zeros((3, 3)), "flat")
+
+
+def test_non_finite_coordinates_are_rejected() -> None:
+    """Non-finite grid coordinates are rejected."""
+    # Given — grids containing NaN or an infinity.
+    x_mauvais = np.array([0.0, float("nan")])
+    y_mauvais = np.array([0.0, float("inf")])
+    # When / Then — the call is rejected instead of returning NaN.
+    with pytest.raises(ValueError, match="finite coordinates"):
+        terrain_surface(x_mauvais, np.zeros(2), "flat")
+    with pytest.raises(ValueError, match="finite coordinates"):
+        terrain_surface(np.zeros(2), y_mauvais, "flat")

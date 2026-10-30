@@ -172,6 +172,10 @@ graph TD
   end
   subgraph ctr["Contrats d'interface (docs/42)"]
     contrats["contrats.py"]::module
+    _protocoles["_protocoles.py"]::module
+    reliefs["reliefs.py"]::module
+    vents["vents.py"]::module
+    concentrations["concentrations.py"]::module
   end
   subgraph rfs["Solveurs de référence"]
     periodic_transport["periodic_transport.py"]::module
@@ -316,20 +320,27 @@ graph TD
   source -->|"utilise"| stabilite
   benchmarks_cas -->|"utilise"| source
   experiences_cas_synthetiques -->|"utilise"| source
-  contrats -->|"utilise"| terrain
-  contrats -->|"utilise"| champ_analytique
-  contrats -->|"utilise"| source
-  contrats -->|"utilise"| similitude
+  contrats -->|"utilise"| _protocoles
+  contrats -->|"utilise"| reliefs
+  contrats -->|"utilise"| vents
+  contrats -->|"utilise"| concentrations
+  reliefs -->|"utilise"| _protocoles
+  reliefs -->|"utilise"| terrain
+  vents -->|"utilise"| _protocoles
+  vents -->|"utilise"| champ_analytique
+  concentrations -->|"utilise"| _protocoles
+  concentrations -->|"utilise"| source
+  concentrations -->|"utilise"| similitude
   experiences_baseline_uniforme -->|"utilise"| c_pdist
   experiences_baseline_uniforme -->|"utilise"| benchmarks_cas
   experiences_baseline_uniforme -->|"utilise"| source
-  experiences_baseline_uniforme -->|"utilise"| contrats
+  experiences_baseline_uniforme -->|"utilise"| concentrations
   t_baseline_uniforme -->|"couvre"| experiences_baseline_uniforme
   experiences_reference_independante -->|"utilise"| benchmarks_cas
   experiences_reference_independante -->|"utilise"| benchmarks_metriques
   experiences_reference_independante -->|"utilise"| similitude
   experiences_reference_independante -->|"utilise"| stabilite
-  experiences_reference_independante -->|"utilise"| contrats
+  experiences_reference_independante -->|"utilise"| concentrations
   t_reference_independante -->|"couvre"| experiences_reference_independante
   experiences_evaluation_puff -->|"utilise"| benchmarks_cas
   experiences_evaluation_puff -->|"utilise"| similitude
@@ -386,6 +397,10 @@ graph TD
 | stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
 | source.py | Module de code | [source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/source.py) |
 | contrats.py | Module de code | [contrats.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/contrats.py) |
+| _protocoles.py | Module de code | [_protocoles.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/_protocoles.py) |
+| reliefs.py | Module de code | [reliefs.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/reliefs.py) |
+| vents.py | Module de code | [vents.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/vents.py) |
+| concentrations.py | Module de code | [concentrations.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/concentrations.py) |
 | constraints.py | Module de code | [constraints.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/constraints.py) |
 | periodic_transport.py | Module de code | [periodic_transport.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/periodic_transport.py) |
 | advection_diffusion.py | Module de code | [advection_diffusion.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/advection_diffusion.py) |
