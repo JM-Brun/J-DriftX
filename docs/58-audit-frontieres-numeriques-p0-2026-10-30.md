@@ -39,7 +39,7 @@ Contrat explicite :
 - `speed`, `angle_deg`, `shear` et `radial_strength` sont finis ;
 - `kind` appartient à `uniform | shear | radial`.
 
-Écart observé : les tableaux sont convertis immédiatement avec `np.asarray(..., dtype=float)`. Une entrée booléenne ou une séquence contenant des booléens peut donc être convertie en 0/1 avant le contrôle de finitude. Les contrôles `np.isfinite` des paramètres scalaires acceptent également les booléens.
+Écart initial corrigé dans la PR #380 : les coordonnées et paramètres sont maintenant contrôlés avant conversion ; booléens, complexes, chaînes et valeurs non finies sont refusés.
 
 Le signe des paramètres `speed`, `shear` et `radial_strength` n'est pas restreint par la formule actuelle ; ne pas ajouter de contrainte de positivité sans décision physique/documentée.
 
@@ -51,7 +51,7 @@ Contrat explicite :
 - `width > 0` ;
 - `kind` dans `flat | hill | valley | ridge`.
 
-Écart observé : même coercition booléenne que dans `fields.vector_field`, pour les coordonnées comme pour les paramètres scalaires. Le contrôle `width <= 0` ne corrige pas ce défaut de type.
+Écart initial corrigé dans la PR #380 : la fonction autonome applique désormais le même contrat de tableau réel fini et de paramètres scalaires représentables, tout en conservant `width > 0` comme seul domaine de signe ajouté.
 
 Attention à la couche `ReliefSynthetique.altitude` : elle valide déjà ses coordonnées avec le helper de `reliefs.py` avant de déléguer à `terrain_surface`. Il ne faut pas ajouter une deuxième validation spécifique dans ce wrapper. La fonction autonome `terrain_surface`, elle, reste une frontière indépendante.
 
@@ -63,7 +63,7 @@ Contrat explicite :
 - méthode `euler | rk4` ;
 - le callback retourne un tuple de deux composantes réelles finies ; les booléens sont déjà exclus pour les composantes retournées.
 
-Écart observé : le contrôle initial `np.isfinite` accepte les booléens pour les coordonnées et les paramètres temporels. La validation des sorties du callback est plus stricte que celle des entrées.
+Écart initial corrigé dans la PR #383 : les entrées et les composantes du callback sont désormais validées comme scalaires réels finis et représentables en float64 ; les erreurs de conversion sont normalisées.
 
 Ne pas ajouter une seconde validation des coordonnées à chaque étape si l'intégrateur garantit déjà que l'état accepté est fini ; conserver les contrôles d'avancement temporel et de finitude après intégration, qui protègent des débordements calculés.
 
@@ -74,9 +74,9 @@ Contrat explicite :
 - `initial_center`, `velocity` et les autres paramètres sont finis ;
 - `x` est un tableau numérique réel fini.
 
-Écart observé : `np.isfinite` accepte les booléens dans les paramètres scalaires et `np.asarray(x, dtype=float)` les convertit silencieusement dans les coordonnées. La fonction est autonome et ne reçoit pas de configuration validée.
+Écart initial corrigé dans la PR #383 : paramètres scalaires et coordonnées suivent désormais un contrat réel fini explicite, sans coercition booléenne, complexe ou textuelle.
 
-Les éventuels débordements de `initial_sigma**2`, `diffusivity*time`, `velocity*time` ou de l'évaluation gaussienne sont un sujet distinct : ne pas les confondre avec la validation de type et les traiter seulement après analyse numérique dédiée.
+Les débordements et sous-débordements intermédiaires sont bien distincts du contrat de type. Des reproductions ont été établies et sont suivies dans l'issue #388 ; aucune formule n'est modifiée dans les PR de validation d'entrée.
 
 ### 3.5 `periodic_transport.periodic_sine_solution`
 
@@ -85,9 +85,9 @@ Contrat explicite :
 - `time >= 0`, `length > 0`, `mean_concentration >= amplitude >= 0`, `diffusivity >= 0` ;
 - coordonnées réelles finies.
 
-Écart observé : les booléens passent les contrôles `np.isfinite` des paramètres et peuvent être convertis en flottants dans `x`.
+Écart initial corrigé dans la PR #387 : les paramètres et coordonnées sont contrôlés avant calcul, et les solveurs partagent le validateur qui renvoie les valeurs normalisées.
 
-Les deux solveurs (`solve_periodic_sine_transport`, `solve_periodic_upwind_euler`) passent par `_validate_periodic_parameters`, partagé depuis la PR #82. Ne pas dupliquer cette validation dans chaque solveur. L'audit doit cependant vérifier le contrat de type de ce helper partagé et de `periodic_sine_solution`, qui est aussi appelable seule.
+Les deux solveurs (`solve_periodic_sine_transport`, `solve_periodic_upwind_euler`) passent par `_validate_periodic_parameters`, partagé depuis la PR #82. La PR #387 conserve ce point de validation unique et étend le contrat de type ; `periodic_sine_solution`, appelable seule, valide ses propres entrées.
 
 Point à vérifier séparément : `isinstance(n_cells, int)` rejette certains scalaires entiers NumPy ; `bool` est actuellement rejeté indirectement car inférieur à 8, mais sans règle explicite « booléens exclus ». Toute évolution doit définir le contrat entier (entier Python seulement ou `numbers.Integral`), préserver les messages attendus et couvrir les deux solveurs.
 
@@ -104,6 +104,10 @@ Les deux frontières normalisent désormais leurs scalaires en float64 après co
 ### 3.8 `periodic_sine_solution` et solveurs périodiques — issue #384 / PR #387
 
 La solution exacte et le validateur partagé des deux solveurs normalisent les paramètres en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution exacte sont contrôlées avant conversion, sans booléens, complexes ni coercition textuelle. Le nombre de cellules accepte les entiers Python et NumPy, booléens exclus, et contrôle la représentabilité de la dimension NumPy ; les flottants entiers restent refusés. Les deux solveurs consomment les paramètres normalisés renvoyés par le validateur commun. Les équations, domaines physiques, critères de stabilité et méthodes restent inchangés.
+
+
+
+**Analyse numérique différée — issue #388.** Des entrées finies admises par les domaines actuels peuvent encore provoquer un sous-débordement de `initial_sigma**2` (NaN au centre), un débordement de ce carré (`OverflowError`) ou une variance infinie qui annule artificiellement la concentration. La solution périodique peut aussi lever `OverflowError` en calculant `wave_number**2` alors que `time=0` ou `diffusivity=0` impose un facteur de décroissance exactement égal à 1. Ces cas demandent une dérivation numérique distincte ; ils ne sont pas corrigés par les seules validations d'entrée.
 
 ## 4. Adaptateurs et méthodes ponctuelles : contrat à clarifier avant correction
 
@@ -145,12 +149,13 @@ Ces composants doivent servir de référence de comportement. Éviter de créer 
 | 4 | Adaptateurs `vents.py` | Corrigé #374 | Contrat ponctuel explicité et appliqué avant délégation |
 | 5 | `EchantillonneurBilineaire.concentration` | Corrigé #369 | Contrat ponctuel autonome contrôlé avant conversion en indice |
 
-## 8. Hors périmètre de cette étape
+## 8. Analyse numérique différée et hors périmètre
 
 - Harmonisation `Literal` / `StrEnum` : sujet de typage et de cohérence, pas une correction P0 de frontière numérique.
 - Remplacement des tuples de résultats par des dataclasses : changement d'API potentiellement cassant.
 - Refonte générale OOP ou factorisation des solveurs numériques.
 - Modification des équations, des hypothèses physiques ou des unités.
 - Toute affirmation de validation physique du modèle.
+- Analyse des débordements intermédiaires de la gaussienne et de la solution périodique : issue #388.
 
 **Conclusion actualisée :** les frontières #369, #374, #380 et #383 sont traitées en code et leurs CI sont vertes. La PR #387 traite le dernier bloc prioritaire du périmètre initial : `periodic_sine_solution` et son validateur partagé.
