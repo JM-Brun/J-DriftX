@@ -165,6 +165,8 @@ def test_dataset_copie_et_fige_ses_tableaux() -> None:
     assert copie.points_x[0] == valeur_initiale
     with pytest.raises(ValueError):
         copie.points_x[0] = 0.0
+    with pytest.raises(ValueError):
+        copie.points_x.setflags(write=True)
 
 
 def test_dataset_refuse_des_tableaux_de_formes_differentes() -> None:
