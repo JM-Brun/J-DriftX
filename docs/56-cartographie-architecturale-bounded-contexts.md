@@ -179,7 +179,7 @@ Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
 aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
 n'introduit aucun validateur transversal.
 
-### Complément P0 — noyaux numériques vectorisés (issue #353, PR à créer)
+### Complément P0 — noyaux numériques vectorisés (issue #353, PR #357)
 
 Une nouvelle vérification, après définition explicite du contrat d'exclusion des
 booléens, a révélé que plusieurs fonctions convertissaient immédiatement les
