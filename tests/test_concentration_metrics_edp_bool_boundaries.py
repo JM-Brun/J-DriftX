@@ -331,9 +331,7 @@ def test_derivee_sigma_carre_refuse_les_scalaires_complexes(champ: str) -> None:
 @pytest.mark.parametrize("champ", ["a_y", "d_y", "b_z", "d_z"])
 def test_coefficients_diffusion_refusent_les_complexes(champ: str) -> None:
     """Les coefficients de diffusion sont des scalaires réels."""
-    valeurs: dict[str, object] = {
-        "a_y": 0.08, "d_y": 0.0002, "b_z": 0.06, "d_z": 0.0003
-    }
+    valeurs: dict[str, object] = {"a_y": 0.08, "d_y": 0.0002, "b_z": 0.06, "d_z": 0.0003}
     valeurs[champ] = 1.0 + 2.0j
     with pytest.raises(ValueError, match="complexes exclus"):
         CoefficientsDiffusion(**valeurs)  # type: ignore[arg-type]
