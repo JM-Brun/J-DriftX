@@ -1,5 +1,7 @@
 """Tests for synthetic terrain functions."""
 
+from typing import Literal
+
 import numpy as np
 import pytest
 
@@ -82,7 +84,7 @@ def test_non_finite_coordinates_are_rejected() -> None:
     [("hill", 2.0), ("valley", -2.0), ("ridge", 2.0)],
 )
 def test_tiny_positive_width_remains_finite_at_terrain_center(
-    kind: str, expected: float
+    kind: Literal["hill", "valley", "ridge"], expected: float
 ) -> None:
     """Une largeur très petite ne doit pas créer de NaN au centre du relief."""
     # Given — une largeur positive dont le carré sous-déborde en float64.
@@ -93,7 +95,7 @@ def test_tiny_positive_width_remains_finite_at_terrain_center(
     elevation = terrain_surface(
         coordinates,
         coordinates,
-        kind,  # type: ignore[arg-type]
+        kind,
         height=2.0,
         width=width,
     )
