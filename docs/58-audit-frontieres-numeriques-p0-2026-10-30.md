@@ -150,3 +150,10 @@ Les deux fonctions autonomes refusent désormais les coordonnées qui ne sont pa
 ### 3.7 `integrate_trajectory` et `gaussian_advection_diffusion` — issue #381 / PR #383
 
 Les deux frontières normalisent désormais leurs scalaires en float64 après contrôle du type réel, de la finitude et de la représentabilité. Les coordonnées de la solution gaussienne rejettent booléens, complexes, chaînes et valeurs non finies avant conversion. Le callback de trajectoire conserve le contrat d'un tuple de deux composantes, avec une erreur de validation stable pour les composantes non réelles ou non représentables. Les domaines existants et les formules sont inchangés. Les débordements intermédiaires de la solution gaussienne restent explicitement hors de cette tranche.
+
+
+### 3.9 Largeurs extrêmes de la solution gaussienne — issue #388 / PR #389
+
+La variance analytique `sigma0**2 + 2*K*time` est remplacée dans l'évaluation par le calcul équivalent de l'écart-type :
+`hypot(sigma0, sqrt(2)*sqrt(K)*sqrt(time))`.
+Cette formulation évite le carré sous-débordant de `sigma0` et le produit `K*time` débordant lorsque l'écart-type résultant reste représentable. La normalisation de l'amplitude est effectuée séquentiellement pour ne pas former inutilement le produit `sqrt(2*pi)*sigma`. Les tests couvrent les trois reproductions gaussiennes de #388. Un centre advecté non représentable est maintenant signalé par une `ValueError` explicite plutôt que propagé en NaN/inf. Cela ne constitue ni une modification de la solution mathématique, ni une validation physique ; les limites d'échelle du centre et les cas périodiques restent ouverts.
