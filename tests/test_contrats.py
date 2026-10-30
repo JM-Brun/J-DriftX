@@ -504,7 +504,6 @@ def test_superposition_rejette_le_debordement_de_somme() -> None:
         superposition.concentration(0.0, 0.0, 0.0)
 
 
-
 def test_mnt_ascii_interpolation_preserves_the_finite_convex_bound() -> None:
     """Une moyenne convexe d'altitudes finies ne doit pas déborder."""
     # Given — les quatre sommets d'une cellule valent le maximum float64.
