@@ -52,7 +52,8 @@ def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
         inaccessible sous la dynamique constante spécifiée.
 
     Raises:
-        ValueError: si une entrée est non finie ou si le temps positif n'est pas representable en float64.
+        ValueError: si une entrée est non finie ou si le temps positif
+            n'est pas representable en float64.
     """
     if not all(isfinite(value) for value in (a, b, vitesse)):
         msg = "a, b et vitesse doivent etre finis."
