@@ -52,7 +52,7 @@ def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
         inaccessible sous la dynamique constante spécifiée.
 
     Raises:
-        ValueError: si une entrée est non finie.
+        ValueError: si une entrée est non finie ou si le temps positif n'est pas representable en float64.
     """
     if not all(isfinite(value) for value in (a, b, vitesse)):
         msg = "a, b et vitesse doivent etre finis."
@@ -89,7 +89,7 @@ def temps_transport(
     Raises:
         ValueError: si les formes sont incohérentes, si une vitesse est sous
             le seuil umin, ou si le coût total n'est pas représentable en
-            float64.
+            float64 ou s'arrondit a zero.
     """
     pts = np.asarray(ligne, dtype=float)
     u_seg = np.asarray(vent, dtype=float)
