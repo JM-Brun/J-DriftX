@@ -35,10 +35,10 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-
-import numpy as np
 from importlib import metadata
 from typing import Literal
+
+import numpy as np
 
 NiveauFidelite = Literal["R0", "R1", "R2"]
 
