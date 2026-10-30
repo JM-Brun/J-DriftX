@@ -15,9 +15,7 @@ def test_constant_velocity_is_integrated_exactly_by_both_methods() -> None:
 
     # When — la trajectoire est intégrée de t = 0 à t = 1 par chaque méthode.
     for method in ("euler", "rk4"):
-        times, x, y = integrate_trajectory(
-            velocity, 1.0, 3.0, 0.0, 1.0, 0.3, method
-        )
+        times, x, y = integrate_trajectory(velocity, 1.0, 3.0, 0.0, 1.0, 0.3, method)
         # Then — l'intervalle est couvert exactement et la position est exacte.
         assert times[-1] == pytest.approx(1.0)
         assert x[-1] == pytest.approx(3.0)
@@ -32,12 +30,8 @@ def test_rk4_is_more_accurate_than_euler_for_rotational_field() -> None:
         return (-y, x)
 
     # When — deux tours de cercle sont intégrés par chaque méthode.
-    _, x_euler, y_euler = integrate_trajectory(
-        velocity, 1.0, 0.0, 0.0, 2.0, 0.1, "euler"
-    )
-    _, x_rk4, y_rk4 = integrate_trajectory(
-        velocity, 1.0, 0.0, 0.0, 2.0, 0.1, "rk4"
-    )
+    _, x_euler, y_euler = integrate_trajectory(velocity, 1.0, 0.0, 0.0, 2.0, 0.1, "euler")
+    _, x_rk4, y_rk4 = integrate_trajectory(velocity, 1.0, 0.0, 0.0, 2.0, 0.1, "rk4")
     exact_x, exact_y = np.cos(2.0), np.sin(2.0)
     error_euler = np.hypot(x_euler[-1] - exact_x, y_euler[-1] - exact_y)
     error_rk4 = np.hypot(x_rk4[-1] - exact_x, y_rk4[-1] - exact_y)
@@ -50,9 +44,7 @@ def test_invalid_step_is_rejected() -> None:
     # Given — un pas de temps nul.
     # When / Then — l'appel est refusé.
     with pytest.raises(ValueError, match="strictly positive"):
-        integrate_trajectory(
-            lambda _t, _x, _y: (1.0, 0.0), 0, 0, 0, 1, 0
-        )
+        integrate_trajectory(lambda _t, _x, _y: (1.0, 0.0), 0, 0, 0, 1, 0)
 
 
 def test_invalid_velocity_output_is_rejected() -> None:
