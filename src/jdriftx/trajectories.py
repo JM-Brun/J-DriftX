@@ -22,7 +22,8 @@ _MAXIMUM_STEPS: Final[int] = 10_000_000
 def _reel_fini(valeur: object, nom: str) -> float:
     """Valide un scalaire réel fini et représentable en float64."""
     if isinstance(valeur, (bool, np.bool_)) or not isinstance(valeur, Real):
-        raise ValueError(f"{nom} must be a finite real scalar (booleans and complex values excluded).")
+        msg = f"{nom} must be a finite real scalar (booleans and complex values excluded)."
+        raise ValueError(msg)
     try:
         resultat = float(valeur)
     except (OverflowError, TypeError, ValueError) as err:
