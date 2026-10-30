@@ -631,9 +631,9 @@ def test_puff_distance_extreme_ne_produit_pas_de_valeur_non_finie() -> None:
 @pytest.mark.parametrize("valeur", ["500.0", None, True, 1 + 0j, float("nan"), float("inf")])
 def test_sigmas_rejettent_les_types_et_valeurs_non_numeriques(valeur: object) -> None:
     """Les distances des fonctions sigma exigent des valeurs réelles finies."""
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"nombre reel|valeurs finies|representable"):
         sigma_y(valeur, "D")  # type: ignore[arg-type]
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"nombre reel|valeurs finies|representable"):
         sigma_z(valeur, "D")  # type: ignore[arg-type]
 
 
@@ -649,7 +649,7 @@ def test_panache_rejette_les_scalaires_non_reels(champ: str, valeur: object) -> 
     """Les paramètres scalaires du panache sont des réels finis, booléens exclus."""
     parametres: dict[str, object] = {"debit": 1.0, "u": 3.0, "hauteur": 0.0}
     parametres[champ] = valeur
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"nombre reel|valeurs finies|representable"):
         concentration_panache(500.0, 0.0, 1.0, classe="D", **parametres)  # type: ignore[arg-type]
 
 
@@ -665,7 +665,7 @@ def test_panache_rejette_les_coordonnees_non_reelles(axe: str, valeur: object) -
     """Les tableaux de coordonnées ne subissent pas de coercition implicite."""
     coordonnees: dict[str, object] = {"x": 500.0, "y": 0.0, "z": 1.0}
     coordonnees[axe] = valeur
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"tableau numerique reel|valeurs finies|representable"):
         concentration_panache(**coordonnees, debit=1.0, u=3.0, classe="D")  # type: ignore[arg-type]
 
 
@@ -675,7 +675,7 @@ def test_puff_rejette_les_scalaires_non_reels(champ: str, valeur: object) -> Non
     """Les paramètres scalaires du puff sont des réels finis, booléens exclus."""
     parametres: dict[str, object] = {"t": 300.0, "masse": 5.0, "u": 3.0, "x0": 0.0}
     parametres[champ] = valeur
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"nombre reel|valeurs finies|representable"):
         concentration_puff(900.0, 0.0, 1.0, classe="D", **parametres)  # type: ignore[arg-type]
 
 
@@ -691,7 +691,7 @@ def test_puff_rejette_les_coordonnees_non_reelles(axe: str, valeur: object) -> N
     """Les tableaux de coordonnées du puff sont des réels finis stricts."""
     coordonnees: dict[str, object] = {"x": 900.0, "y": 0.0, "z": 1.0}
     coordonnees[axe] = valeur
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"tableau numerique reel|valeurs finies|representable"):
         concentration_puff(
             **coordonnees, t=300.0, masse=5.0, u=3.0, classe="D"
         )  # type: ignore[arg-type]
