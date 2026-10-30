@@ -685,4 +685,3 @@ def test_mnt_ascii_rejette_les_entrees_ambigues_ou_non_numeriques(
     # When / Then — la lecture échoue avec une erreur contextualisée.
     with pytest.raises(ValueError, match=message_attendu):
         ReliefMntAscii.depuis_texte(texte)
-
