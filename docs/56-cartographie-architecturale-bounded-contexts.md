@@ -160,6 +160,25 @@ en cause l'arbitrage antérieur de ne pas introduire de module transversal
 uniquement pour factoriser de petits helpers.
 
 
+### Complément P0 — autres expériences C4 (issue #347, PR #348)
+
+L'audit des autres configurations d'expérience a étendu le même contrôle aux
+frontières suivantes :
+
+- `relief` : points, vent, paramètres des collines et paramètres physiques
+  du scénario ; les évaluations publiques d'altitude et de concentration
+  vérifient aussi leurs coordonnées ;
+- `superposition_sources` : positions, paramètres des sources, seuils,
+  mesures et évaluations directes ;
+- `identification_source` : points, vent, diffusivité, débit, seuils, pas de
+  grille et indice de détection (qui doit exclure `bool`, sous-classe de `int`) ;
+- `modele_reduit_edp` : paramètres positifs du scénario.
+
+Les entrées booléennes Python et NumPy sont rejetées avant les calculs.
+Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
+aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
+n'introduit aucun validateur transversal.
+
 - **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
 - **P3** : contrôle d'architecture statique désormais intégré par #316 (`tests/test_architecture_boundaries.py`) ; il couvre la matrice d'imports, les dépendances de rendu et les cycles statiques, sans couvrir les imports dynamiques.
