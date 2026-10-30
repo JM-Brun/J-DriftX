@@ -256,9 +256,7 @@ def test_vitesse_nulle_reste_evaluable_si_amplitude_fois_k_deborde() -> None:
 
 @pytest.mark.parametrize("booleen", [True, np.bool_(True)])
 @pytest.mark.parametrize("champ", ["amplitude", "longueur"])
-def test_le_champ_refuse_les_parametres_booleens(
-    booleen: bool | np.bool_, champ: str
-) -> None:
+def test_le_champ_refuse_les_parametres_booleens(booleen: bool | np.bool_, champ: str) -> None:
     """Les paramètres numériques du champ excluent les booléens."""
     # Given — un paramètre du champ remplacé par un booléen.
     parametres = {"amplitude": 1.0, "longueur": 1.0}
