@@ -573,6 +573,75 @@ def test_adaptateur_champ_plan_rejette_composantes_non_finies() -> None:
         vent.vitesse(0.0, 0.0, 10.0)
 
 
+@pytest.mark.parametrize(
+    "resultat",
+    [
+        [1.0, 2.0, 0.0],
+        (1.0, 2.0),
+        (1.0, "2.0", 0.0),
+        (1.0, 2.0 + 1.0j, 0.0),
+        (1.0, float("inf"), 0.0),
+        (1.0, 10**1000, 0.0),
+    ],
+)
+def test_adaptateur_trajectoire_rejette_les_sorties_de_vent_invalides(
+    resultat: object,
+) -> None:
+    """L'adaptateur 2D exige un tuple de trois réels finis représentables."""
+
+    class VentInvalide:
+        def vitesse(self, x: float, y: float, z: float) -> object:
+            return resultat
+
+    adaptateur = AdaptateurTrajectoire2D(vent=VentInvalide(), hauteur=10.0)  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="trois composantes réelles finies"):
+        adaptateur(0.0, 0.0, 0.0)
+
+
+@pytest.mark.parametrize(
+    "resultat",
+    [
+        [1.0, 2.0],
+        (1.0,),
+        ("1.0", 2.0),
+        (1.0 + 2.0j, 2.0),
+        (float("nan"), 2.0),
+        (10**1000, 2.0),
+    ],
+)
+def test_adaptateur_champ_plan_rejette_les_sorties_invalides(resultat: object) -> None:
+    """L'adaptateur de champ plan normalise les sorties mal typées en ValueError."""
+
+    class ChampInvalide:
+        def fonction_courant(self, x: float, y: float) -> float:
+            return 0.0
+
+        def vitesse(self, x: float, y: float) -> object:
+            return resultat
+
+    vent = VentDeChampPlan(champ=ChampInvalide())  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="deux composantes réelles finies"):
+        vent.vitesse(0.0, 0.0, 10.0)
+
+
+@pytest.mark.parametrize(
+    ("adaptateur", "message"),
+    [
+        (lambda: AdaptateurTrajectoire2D(vent=object(), hauteur=1.0), "méthode vitesse"),
+        (lambda: VentDeChampPlan(champ=object()), "fonction_courant et vitesse"),
+        (lambda: AdaptateurTrajectoire2D(vent=VentUniforme(1.0, 0.0), hauteur="1"), "réel fini"),
+        (lambda: AdaptateurTrajectoire2D(vent=VentUniforme(1.0, 0.0), hauteur=10**1000), "réel fini"),
+    ],
+)
+def test_adaptateurs_vent_rejettent_les_dependances_ou_parametres_invalides(
+    adaptateur: object,
+    message: str,
+) -> None:
+    """Les dépendances injectées et la hauteur respectent le contrat runtime."""
+    with pytest.raises((TypeError, ValueError), match=message):
+        adaptateur()  # type: ignore[operator]
+
+
 def test_superposition_rejette_le_debordement_de_somme() -> None:
     """Étant donné des panaches finis extrêmes, la somme ne déborde pas en silence.
 
