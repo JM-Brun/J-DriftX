@@ -12,6 +12,7 @@ from jdriftx.experiences.relief import (
     COLLINE_1_DEFAUT,
     SCENARIO_DEFAUT as RELIEF_DEFAUT,
     CollineGaussienne,
+    concentrations_au_point,
 )
 from jdriftx.experiences.superposition_sources import (
     SCENARIO_DEFAUT as SUPERPOSITION_DEFAUT,
@@ -230,3 +231,38 @@ def test_scenario_edp_refuse_les_parametres_booleens(
     # When / Then — la construction du scénario est refusée.
     with pytest.raises(ValueError, match="booléens exclus"):
         replace(EDP_DEFAUT, **{champ: booleen})
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_colline_refuse_les_coordonnees_booleennes_a_levaluation(
+    booleen: bool | np.bool_,
+) -> None:
+    """L'évaluation directe d'une colline exclut les coordonnées booléennes."""
+    # Given — une colline valide et un point d'évaluation booléen.
+    colline = COLLINE_1_DEFAUT
+    # When / Then — l'évaluation du relief est refusée avant la conversion NumPy.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        colline.altitude(booleen, 1600.0)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_concentrations_au_point_refuse_les_coordonnees_booleennes(
+    booleen: bool | np.bool_,
+) -> None:
+    """L'évaluation publique des concentrations de relief exclut les booléens."""
+    # Given — un scénario valide et un point d'évaluation booléen.
+    # When / Then — l'évaluation est refusée avant les calculs de concentration.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        concentrations_au_point(RELIEF_DEFAUT, booleen, 1600.0)
+
+
+@pytest.mark.parametrize("booleen", [True, np.bool_(True)])
+def test_scenario_superposition_refuse_les_mesures_booleennes(
+    booleen: bool | np.bool_,
+) -> None:
+    """Les points de mesure du scénario de superposition excluent les booléens."""
+    # Given — une mesure du scénario contenant une coordonnée booléenne.
+    mesures = ((booleen, 400.0), *SUPERPOSITION_DEFAUT.mesures[1:])
+    # When / Then — la validation du scénario est refusée.
+    with pytest.raises(ValueError, match="booléens exclus"):
+        replace(SUPERPOSITION_DEFAUT, mesures=mesures)
