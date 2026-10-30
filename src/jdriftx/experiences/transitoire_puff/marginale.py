@@ -62,13 +62,35 @@ class MarginaleFermee:
         sy = sigma_y(distance, self.source.classe)
         sz = sigma_z(distance, self.source.classe)
         mailles_y, mailles_z = self.grille.mailles()
-        champ = (
-            self.source.masse
-            / (2.0 * np.pi * sy * sz)
-            * np.exp(-(mailles_y**2) / (2.0 * sy**2))
-            * np.exp(-(mailles_z**2) / (2.0 * sz**2))
-        )
-        return np.asarray(champ, dtype=float)
+
+        # Keep the Gaussian normalization and exponents in log/ratio form:
+        # sy*sz and sy**2/sz**2 can underflow although the final field is finite.
+        with np.errstate(over="ignore", under="ignore", invalid="ignore", divide="ignore"):
+            rapport_y = mailles_y / sy
+            rapport_z = mailles_z / sz
+            log_amplitude = (
+                np.log(self.source.masse)
+                - np.log(2.0 * np.pi)
+                - np.log(sy)
+                - np.log(sz)
+            )
+            log_champ = (
+                log_amplitude
+                - 0.5 * np.square(rapport_y)
+                - 0.5 * np.square(rapport_z)
+            )
+
+        log_max = np.log(np.finfo(np.float64).max)
+        if np.any(np.isnan(log_champ)) or np.any(log_champ > log_max):
+            raise ValueError("The marginal Gaussian field is not representable as finite float64.")
+        try:
+            with np.errstate(over="raise", under="ignore", invalid="raise"):
+                champ = np.exp(log_champ)
+        except FloatingPointError as err:
+            raise ValueError(
+                "The marginal Gaussian field is not representable as finite float64."
+            ) from err
+        return np.asarray(champ, dtype=np.float64)
 
     def masse(self, champ: np.ndarray) -> float:
         """Masse d'un champ de marginale sur la grille (trapèzes doubles)."""
