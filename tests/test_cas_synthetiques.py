@@ -12,9 +12,9 @@ from jdriftx.experiences import (
     generer_dataset_s0,
 )
 from jdriftx.experiences.cas_synthetiques import (
-    DatasetS0,
     CAS_S0_DEFAUT,
     CLAUSE_NON_VALIDATION,
+    DatasetS0,
     VERSION_GENERATEUR,
 )
 from jdriftx.source import SourcePanache
@@ -163,9 +163,9 @@ def test_dataset_copie_et_fige_ses_tableaux() -> None:
     points_x[0] = points_x[0] + 1.0
     # Then — le dataset conserve sa valeur initiale et ses tableaux sont réellement immuables.
     assert copie.points_x[0] == valeur_initiale
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="read-only"):
         copie.points_x[0] = 0.0
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="WRITEABLE"):
         copie.points_x.setflags(write=True)
 
 
