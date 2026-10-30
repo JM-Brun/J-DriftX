@@ -102,7 +102,7 @@ def _tableau_immuable(
 ) -> np.ndarray:
     """Valide puis détache un tableau dans un tampon réellement non modifiable."""
     if isinstance(valeur, np.ndarray):
-        bool_present = valeur.dtype.kind in {"b", "c"} or (
+        valeur_non_reelle = valeur.dtype.kind in {"b", "c"} or (
             valeur.dtype.kind == "O"
             and any(
                 isinstance(element, (bool, np.bool_, complex, np.complexfloating))
@@ -111,11 +111,11 @@ def _tableau_immuable(
         )
     else:
         brut = np.asarray(valeur, dtype=object)
-        bool_present = any(
+        valeur_non_reelle = any(
             isinstance(element, (bool, np.bool_, complex, np.complexfloating))
             for element in brut.flat
         )
-    if bool_present:
+    if valeur_non_reelle:
         raise ValueError(f"{nom} doit contenir des valeurs reelles (booleens exclus; complexes exclus).")
     tableau = np.asarray(valeur, dtype=float)
     if tableau.ndim != dimension or tableau.size < taille_minimale:
