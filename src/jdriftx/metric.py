@@ -25,6 +25,19 @@ from numpy.typing import ArrayLike
 UMIN_PAR_DEFAUT = 0.1
 
 
+def _contient_booleen(valeur: ArrayLike) -> bool:
+    """Détecte les booléens avant une éventuelle promotion numérique NumPy."""
+    if isinstance(valeur, np.ndarray):
+        if valeur.dtype.kind == "b":
+            return True
+        if valeur.dtype.kind != "O":
+            return False
+        valeurs = valeur
+    else:
+        valeurs = np.asarray(valeur, dtype=object)
+    return any(isinstance(element, (bool, np.bool_)) for element in valeurs.flat)
+
+
 def _temps_float64(valeur: np.longdouble, contexte: str) -> float:
     """Convertit un temps positif en float64 sans overflow ni underflow silencieux."""
     if not np.isfinite(valeur) or valeur > np.finfo(float).max:
@@ -55,6 +68,8 @@ def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
         ValueError: si une entrée est non finie ou si le temps positif
             n'est pas representable en float64.
     """
+    if any(isinstance(value, (bool, np.bool_)) for value in (a, b, vitesse)):
+        raise ValueError("a, b et vitesse doivent etre numeriques (booleens exclus).")
     if not all(isfinite(value) for value in (a, b, vitesse)):
         msg = "a, b et vitesse doivent etre finis."
         raise ValueError(msg)
@@ -92,6 +107,12 @@ def temps_transport(
             le seuil umin, ou si le coût total n'est pas représentable en
             float64 ou s'arrondit a zero.
     """
+    if _contient_booleen(ligne):
+        raise ValueError("ligne doit contenir des coordonnees numeriques (booleens exclus).")
+    if _contient_booleen(vent):
+        raise ValueError("vent doit contenir des vitesses numeriques (booleens exclus).")
+    if isinstance(umin, (bool, np.bool_)):
+        raise ValueError("umin doit etre numerique (booleen exclu).")
     pts = np.asarray(ligne, dtype=float)
     u_seg = np.asarray(vent, dtype=float)
 
@@ -162,6 +183,10 @@ def pseudo_distance_uniforme(
             si la vitesse est nulle, ou si le déplacement ou le coût déborde
             du format flottant.
     """
+    if _contient_booleen(a) or _contient_booleen(b):
+        raise ValueError("a et b doivent contenir des coordonnees numeriques (booleens exclus).")
+    if _contient_booleen(vent):
+        raise ValueError("vent doit contenir des vitesses numeriques (booleens exclus).")
     point_a = np.asarray(a, dtype=float)
     point_b = np.asarray(b, dtype=float)
     vitesse = np.asarray(vent, dtype=float)
