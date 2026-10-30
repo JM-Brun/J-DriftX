@@ -91,6 +91,7 @@ __all__ = [
     "resoudre_edp",
 ]
 
+
 def _tableau_immuable(
     valeur: np.ndarray,
     nom: str,
@@ -375,9 +376,7 @@ class SolutionEdp:
             msg = "Chaque tranche doit avoir la forme de la grille de la solution."
             raise ValueError(msg)
         positions = tuple(tranche.x for tranche in tranches)
-        if any(
-            not np.isfinite(position) for position in positions
-        ) or any(
+        if any(not np.isfinite(position) for position in positions) or any(
             suivant <= precedent for precedent, suivant in pairwise(positions)
         ):
             msg = "Les abscisses des tranches doivent être finies et croissantes."
