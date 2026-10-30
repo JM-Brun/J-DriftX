@@ -179,6 +179,10 @@ Aucune formule de transport, loi gaussienne, équation EDP, unité, condition
 aux limites, hypothèse ou valeur par défaut n'est modifiée. La tranche
 n'introduit aucun validateur transversal.
 
+### Complément P0 — champs de concentration, métriques et grille EDP (issue #364)
+
+Le balayage des frontières C1/C5 a trouvé trois familles de coercitions booléennes : le champ passé à `constraints.positivite`, les vérités/prédictions des métriques FAC2/NMSE (y compris leur façade `calculer_metriques`), et les tableaux/paramètres de `experiences.reference_independante`. La tranche rejette `bool` et `numpy.bool_` avant promotion float64, sans copier systématiquement les grands tableaux numériques typés en dtype objet. Elle contrôle également les quatre paramètres scalaires de `ParametresEdp`. Les formules, tolérances, unités, géométries et domaines de signe restent inchangés ; ces tests établissent des contrats logiciels, pas une validation physique.
+
 - **P0 résiduel** : poursuivre l'audit des validations d'entrée, des exceptions et des cas limites sur les frontières non encore couvertes ; le défaut bilinéaire MNT décrit au §4 n'est plus un travail restant.
 - **P2** : l'annexe A liste les modules > 15 ko. La règle de #303 s'applique : la taille seule ne justifie pas une extraction ; chaque candidat exige une évaluation de cohésion. Le précédent `transitoire_puff` (monolithe 648 lignes → package 5 modules, identité numérique prouvée par tests inchangés, [docs/54](54-transitoire-puff-edp-transitoire-marginale.md)) est le gabarit à réutiliser.
 - **P3** : contrôle d'architecture statique désormais intégré par #316 (`tests/test_architecture_boundaries.py`) ; il couvre la matrice d'imports, les dépendances de rendu et les cycles statiques, sans couvrir les imports dynamiques.
