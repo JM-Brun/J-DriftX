@@ -313,7 +313,6 @@ def test_la_version_non_installee_est_supportee(
     assert manifeste.version_code == "non-installe"
 
 
-
 def test_la_condition_entree_est_un_modele_de_concentration_injectable() -> None:
     """Le solveur accepte un autre champ initial via le contrat concentration."""
     # Given — un cas réduit et un modèle initial qui double le panache analytique.
