@@ -45,7 +45,6 @@ from jdriftx.experiences.transitoire_puff import (
     construire_manifeste,
     resoudre_transitoire,
 )
-from jdriftx.experiences.transitoire_puff.marginale import MarginaleFermee
 from jdriftx.similitude import sigma_y, sigma_z
 
 
