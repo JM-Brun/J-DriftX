@@ -226,9 +226,7 @@ class ReliefMntAscii:
             raise ValueError(msg)
         # Normaliser les altitudes avant la somme : chaque terme pondéré est
         # alors de module inférieur ou égal à 1, même près de float64.max.
-        echelle = np.maximum.reduce(
-            (np.abs(z00), np.abs(z10), np.abs(z01), np.abs(z11))
-        )
+        echelle = np.maximum.reduce((np.abs(z00), np.abs(z10), np.abs(z01), np.abs(z11)))
         echelle_sure = np.where(echelle == 0.0, 1.0, echelle)
         z_normalise = (
             (z00 / echelle_sure) * p00
