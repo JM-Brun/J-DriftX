@@ -32,7 +32,10 @@ Choix numériques, tous étiquetés « reconstruction » :
 La route `RouteEdp` dépend désormais du protocole structurel `SolveurDeReference`
 (`resoudre() -> SolutionEdp`), et non directement de la classe FTCS. Le
 `SolveurEdp` actuel reste le solveur par défaut ; un solveur alternatif peut
-être injecté sans modifier l'échantillonnage ni l'assemblage de la mesure.
+être injecté sans modifier l'échantillonnage ni l'assemblage de la mesure. Le
+solveur accepte aussi une condition initiale injectable via le contrat
+`ModeleConcentration` ; le panache gaussien partagé reste le défaut. La forme
+et la finitude du champ retourné sont contrôlées à cette frontière.
 
 Cette substituabilité est une frontière logicielle, pas une validation
 numérique automatique. Un solveur injecté doit respecter les invariants de
@@ -104,7 +107,7 @@ Conformément à la [note 48](48-cas-reference-autonome-ecoulement-uniforme.md) 
 
 | Objet du dépôt | Rôle |
 |---|---|
-| [experiences/reference_independante.py](../src/jdriftx/experiences/reference_independante.py) | Module étape 5 : résolution EDP, protocole `SolveurDeReference`, comparaison, manifeste étiqueté |
+| [experiences/reference_independante.py](../src/jdriftx/experiences/reference_independante.py) | Module étape 5 : résolution EDP, protocole `SolveurDeReference`, condition initiale injectable, comparaison, manifeste étiqueté |
 | [tests/test_reference_independante.py](../tests/test_reference_independante.py) | 19 tests GWT : calibrage, symétrie, convergence, entrée partagée, export JSON |
 | [benchmarks/cas.py](../src/jdriftx/benchmarks/cas.py) | Cas S0 figé, grille et vérité (route fermée) |
 | [benchmarks/metriques.py](../src/jdriftx/benchmarks/metriques.py) | FAC2/NMSE préenregistrées, conventions inchangées |
