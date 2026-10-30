@@ -367,6 +367,9 @@ class SolutionEdp:
         if not tranches:
             msg = "La solution doit contenir au moins une tranche."
             raise ValueError(msg)
+        if not all(isinstance(tranche, TrancheEdp) for tranche in tranches):
+            msg = "Les tranches de la solution doivent être des objets TrancheEdp."
+            raise ValueError(msg)
         forme_attendue = (abscisses_y.size, abscisses_z.size)
         if any(tranche.champ.shape != forme_attendue for tranche in tranches):
             msg = "Chaque tranche doit avoir la forme de la grille de la solution."
