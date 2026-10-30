@@ -21,17 +21,20 @@ import numpy as np
 from numpy.typing import ArrayLike
 
 
-def _contient_booleen(valeur: object) -> bool:
-    """Détecte les booléens avant une éventuelle promotion numérique NumPy."""
+def _contient_valeur_non_reelle(valeur: object) -> bool:
+    """Détecte booléens et complexes avant promotion numérique NumPy."""
     if isinstance(valeur, np.ndarray):
-        if valeur.dtype.kind == "b":
+        if valeur.dtype.kind in {"b", "c"}:
             return True
         if valeur.dtype.kind != "O":
             return False
         valeurs = valeur
     else:
         valeurs = np.asarray(valeur, dtype=object)
-    return any(isinstance(element, (bool, np.bool_)) for element in valeurs.flat)
+    return any(
+        isinstance(element, (bool, np.bool_, complex, np.complexfloating))
+        for element in valeurs.flat
+    )
 
 
 __all__ = [
@@ -52,8 +55,8 @@ def _vecteurs_verifies(
     verite: ArrayLike, prediction: ArrayLike, nom: str
 ) -> tuple[np.ndarray, np.ndarray]:
     """Convertit et valide : 1D, meme taille, non vides, finies, verite > 0."""
-    if _contient_booleen(verite) or _contient_booleen(prediction):
-        raise ValueError(f"{nom} : verite et prediction doivent etre numeriques (booleens exclus).")
+    if _contient_valeur_non_reelle(verite) or _contient_valeur_non_reelle(prediction):
+        raise ValueError(f"{nom} : verite et prediction doivent etre numeriques reelles (booleens exclus; complexes exclus).")
     vrais = np.asarray(verite, dtype=float)
     predits = np.asarray(prediction, dtype=float)
     if vrais.shape != predits.shape or vrais.ndim != 1:
@@ -167,8 +170,8 @@ def calculer_metriques(
     if len({m.nom for m in metriques}) != len(metriques):
         msg = "Chaque metrique ne peut etre demandee qu une seule fois."
         raise ValueError(msg)
-    if _contient_booleen(verite) or _contient_booleen(prediction):
-        raise ValueError("Verite et prediction doivent etre numeriques (booleens exclus).")
+    if _contient_valeur_non_reelle(verite) or _contient_valeur_non_reelle(prediction):
+        raise ValueError("Verite et prediction doivent etre numeriques reelles (booleens exclus; complexes exclus).")
     vrais = np.asarray(verite, dtype=float)
     predits = np.asarray(prediction, dtype=float)
     return {m.nom: float(m.calcul(vrais, predits)) for m in metriques}
