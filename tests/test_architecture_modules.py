@@ -2,53 +2,29 @@
 
 import importlib
 
-from jdriftx._protocoles import (
-    ModeleConcentration as ProtocoleConcentration,
-    Relief as ProtocoleRelief,
-    Vent as ProtocoleVent,
-)
-from jdriftx.concentrations import PanacheGaussien as ModelePanache
-from jdriftx.contrats import (
-    ModeleConcentration as ContratConcentration,
-    PanacheGaussien as ContratPanache,
-    Relief as ContratRelief,
-    ReliefMntAscii as ContratReliefMnt,
-    ReliefPlat as ContratReliefPlat,
-    ReliefSynthetique as ContratReliefSynthetique,
-    SuperpositionPanaches as ContratSuperposition,
-    Vent as ContratVent,
-    VentDeChampPlan as ContratVentChamp,
-    VentProfilPuissance as ContratVentProfil,
-    VentUniforme as ContratVentUniforme,
-)
-from jdriftx.reliefs import (
-    ReliefMntAscii as ModeleReliefMnt,
-    ReliefPlat as ModeleReliefPlat,
-    ReliefSynthetique as ModeleReliefSynthetique,
-)
-from jdriftx.vents import (
-    VentDeChampPlan as ModeleVentChamp,
-    VentProfilPuissance as ModeleVentProfil,
-    VentUniforme as ModeleVentUniforme,
-)
+import jdriftx._protocoles as protocoles
+import jdriftx.concentrations as concentrations
+import jdriftx.contrats as contrats
+import jdriftx.reliefs as reliefs
+import jdriftx.vents as vents
 
 PACKAGE = importlib.import_module("jdriftx")
 
 
 def test_facade_historique_reexporte_les_implementations_canoniques() -> None:
     """Les anciens imports restent des alias des classes définies par domaine."""
-    assert ContratPanache is ModelePanache is PACKAGE.PanacheGaussien
-    assert ContratSuperposition is PACKAGE.SuperpositionPanaches
-    assert ContratReliefMnt is ModeleReliefMnt is PACKAGE.ReliefMntAscii
-    assert ContratReliefPlat is ModeleReliefPlat is PACKAGE.ReliefPlat
-    assert ContratReliefSynthetique is ModeleReliefSynthetique is PACKAGE.ReliefSynthetique
-    assert ContratVentChamp is ModeleVentChamp is PACKAGE.VentDeChampPlan
-    assert ContratVentProfil is ModeleVentProfil is PACKAGE.VentProfilPuissance
-    assert ContratVentUniforme is ModeleVentUniforme is PACKAGE.VentUniforme
+    assert contrats.PanacheGaussien is concentrations.PanacheGaussien is PACKAGE.PanacheGaussien
+    assert contrats.SuperpositionPanaches is concentrations.SuperpositionPanaches
+    assert contrats.ReliefMntAscii is reliefs.ReliefMntAscii is PACKAGE.ReliefMntAscii
+    assert contrats.ReliefPlat is reliefs.ReliefPlat is PACKAGE.ReliefPlat
+    assert contrats.ReliefSynthetique is reliefs.ReliefSynthetique is PACKAGE.ReliefSynthetique
+    assert contrats.VentDeChampPlan is vents.VentDeChampPlan is PACKAGE.VentDeChampPlan
+    assert contrats.VentProfilPuissance is vents.VentProfilPuissance is PACKAGE.VentProfilPuissance
+    assert contrats.VentUniforme is vents.VentUniforme is PACKAGE.VentUniforme
 
 
 def test_protocoles_publics_reexportent_les_protocoles_canoniques() -> None:
     """Les protocoles conservent leur identité à travers les deux façades publiques."""
-    assert ContratRelief is ProtocoleRelief is PACKAGE.Relief
-    assert ContratVent is ProtocoleVent is PACKAGE.Vent
-    assert ContratConcentration is ProtocoleConcentration is PACKAGE.ModeleConcentration
+    assert contrats.Relief is protocoles.Relief is PACKAGE.Relief
+    assert contrats.Vent is protocoles.Vent is PACKAGE.Vent
+    assert contrats.ModeleConcentration is protocoles.ModeleConcentration is PACKAGE.ModeleConcentration
