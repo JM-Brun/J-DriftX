@@ -21,6 +21,19 @@ from jdriftx.similitude import concentration_panache
 from jdriftx.stabilite import ClasseStabilite
 
 
+def _contient_booleen(valeur: object) -> bool:
+    """Détecte les booléens avant une éventuelle promotion numérique NumPy."""
+    if isinstance(valeur, np.ndarray):
+        if valeur.dtype.kind == "b":
+            return True
+        if valeur.dtype.kind != "O":
+            return False
+        valeurs = valeur
+    else:
+        valeurs = np.asarray(valeur, dtype=object)
+    return any(isinstance(element, (bool, np.bool_)) for element in valeurs.flat)
+
+
 def positivite(concentration: ArrayLike, tol: float = 1e-12) -> bool:
     """Verifie qu'un champ de concentration est positif (a tol pres).
 
@@ -41,6 +54,8 @@ def positivite(concentration: ArrayLike, tol: float = 1e-12) -> bool:
     if not np.isfinite(tolerance) or tolerance < 0.0:
         msg = "La tolerance doit etre finie et positive ou nulle."
         raise ValueError(msg)
+    if _contient_booleen(concentration):
+        raise ValueError("La concentration doit contenir des valeurs numeriques (booleens exclus).")
     c = np.asarray(concentration, dtype=float)
     return bool(np.all(c >= -tolerance))
 
