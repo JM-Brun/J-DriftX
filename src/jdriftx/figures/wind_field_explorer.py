@@ -60,6 +60,9 @@ class WindFieldExplorerConfig:
             self.probe_x,
             self.probe_y,
         )
+        if any(isinstance(value, (bool, np.bool_)) for value in values):
+            msg = "Les paramètres de l'explorateur doivent être réels (booléens exclus)."
+            raise ValueError(msg)
         if not all(math.isfinite(value) for value in values):
             msg = "Les paramètres de l'explorateur doivent être finis."
             raise ValueError(msg)
