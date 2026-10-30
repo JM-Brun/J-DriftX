@@ -247,10 +247,7 @@ class CoefficientsDiffusion:
         """Refuse les coefficients booléens avant tout calcul de diffusion."""
         valeurs = (self.a_y, self.d_y, self.b_z, self.d_z)
         if any(isinstance(value, (bool, np.bool_)) for value in valeurs):
-            msg = (
-                "Les coefficients de diffusion doivent être numériques "
-                "(booléens exclus)."
-            )
+            msg = "Les coefficients de diffusion doivent être numériques (booléens exclus)."
             raise ValueError(msg)
 
     def derivee_sigma_y_carre(self, x: float) -> float:
@@ -378,10 +375,7 @@ class SolutionEdp:
         if isinstance(self.x_entree, (bool, np.bool_)) or isinstance(
             self.pas_longitudinal, (bool, np.bool_)
         ):
-            msg = (
-                "L'abscisse d'entrée et le pas longitudinal doivent être numériques "
-                "(booléens exclus)."
-            )
+            msg = "L'abscisse d'entrée et le pas longitudinal doivent être numériques (booléens exclus)."
             raise ValueError(msg)
         if not np.isfinite(self.x_entree):
             msg = "L'abscisse d'entrée de la solution doit être finie."
