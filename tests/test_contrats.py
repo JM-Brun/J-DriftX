@@ -707,7 +707,9 @@ def test_mnt_ascii_rejette_une_coordonnees_extreme_hors_emprise() -> None:
         y0=0.0,
         pas=0.8 * maximum,
     )
-    with np.errstate(over="raise", invalid="raise", divide="raise"):
-        with pytest.raises(ValueError, match="emprise horizontale"):
-            relief.altitude(maximum, 0.0)
+    with (
+        np.errstate(over="raise", invalid="raise", divide="raise"),
+        pytest.raises(ValueError, match="emprise horizontale"),
+    ):
+        relief.altitude(maximum, 0.0)
 
