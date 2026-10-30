@@ -16,6 +16,18 @@ _FLOAT_EPS: Final[float] = 1e-10
 _MAXIMUM_STEPS: Final[int] = 10_000_000
 
 
+def _contient_booleen(valeur: object) -> bool:
+    """Détecte les booléens avant toute conversion numérique avec NumPy."""
+    if isinstance(valeur, np.ndarray):
+        if valeur.dtype.kind == "b":
+            return True
+        return valeur.dtype.kind == "O" and any(
+            isinstance(element, (bool, np.bool_)) for element in valeur.flat
+        )
+    brut = np.asarray(valeur, dtype=object)
+    return any(isinstance(element, (bool, np.bool_)) for element in brut.flat)
+
+
 def _validate_periodic_parameters(
     n_cells: int,
     length: float,
@@ -38,9 +50,11 @@ def _validate_periodic_parameters(
             the requested number of time steps exceeds the safety limit.
     """
     parameters = (length, end_time, dt, mean_concentration, amplitude, velocity, diffusivity)
+    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
+        raise ValueError("Parameters must be real-valued (booleans excluded).")
     if not all(np.isfinite(value) for value in parameters):
         raise ValueError("Parameters must be finite.")
-    if not isinstance(n_cells, int) or n_cells < 8:
+    if isinstance(n_cells, (bool, np.bool_)) or not isinstance(n_cells, int) or n_cells < 8:
         raise ValueError("n_cells must be an integer greater than or equal to 8.")
     if length <= 0:
         raise ValueError("length must be strictly positive.")
@@ -109,6 +123,8 @@ def periodic_sine_solution(
     mean + amplitude*exp(-K*k**2*t)*sin(k*(x-u*t)).
     """
     parameters = (time, length, mean_concentration, amplitude, velocity, diffusivity)
+    if any(isinstance(value, (bool, np.bool_)) for value in parameters):
+        raise ValueError("Parameters must be real-valued (booleans excluded).")
     if not all(np.isfinite(value) for value in parameters):
         raise ValueError("Parameters must be finite.")
     if time < 0:
@@ -119,6 +135,8 @@ def periodic_sine_solution(
         raise ValueError("Concentration must remain non-negative: mean >= amplitude >= 0.")
     if diffusivity < 0:
         raise ValueError("diffusivity must be non-negative.")
+    if _contient_booleen(x):
+        raise ValueError("Coordinates must be real-valued (booleans excluded).")
     coordinates = np.asarray(x, dtype=float)
     if not np.all(np.isfinite(coordinates)):
         raise ValueError("Coordinates must be finite.")
