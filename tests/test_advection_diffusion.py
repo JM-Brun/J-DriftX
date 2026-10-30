@@ -95,3 +95,54 @@ def test_gaussian_solution_rejects_non_real_or_non_finite_coordinates(
     """Les coordonnées sont des tableaux réels finis sans coercition silencieuse."""
     with pytest.raises(ValueError, match=r"real numeric array|finite coordinates|finite values"):
         gaussian_advection_diffusion(coordinates, 1.0)
+
+
+@pytest.mark.parametrize(
+    ("initial_sigma", "expected"),
+    [
+        (1e-200, 1.0 / (np.sqrt(2.0 * np.pi) * 1e-200)),
+        (1e308, 1.0 / (np.sqrt(2.0 * np.pi) * 1e308)),
+    ],
+)
+def test_gaussian_zero_diffusion_handles_extreme_initial_widths(
+    initial_sigma: float, expected: float
+) -> None:
+    """Le calcul direct de sigma évite le carré sous-débordant ou débordant."""
+    actual = gaussian_advection_diffusion(
+        np.array([0.0]),
+        0.0,
+        mass=1.0,
+        initial_center=0.0,
+        velocity=0.0,
+        diffusivity=0.0,
+        initial_sigma=initial_sigma,
+    )
+    assert actual[0] == pytest.approx(expected, rel=2e-15)
+
+
+def test_gaussian_large_diffusion_uses_representable_standard_deviation() -> None:
+    """Une variance intermédiaire infinie n'empêche pas une largeur finie."""
+    actual = gaussian_advection_diffusion(
+        np.array([0.0]),
+        1.0,
+        mass=1.0,
+        initial_center=0.0,
+        velocity=0.0,
+        diffusivity=1e308,
+        initial_sigma=0.5,
+    )
+    expected = 1.0 / (np.sqrt(2.0 * np.pi) * np.sqrt(2.0e308))
+    assert actual[0] == pytest.approx(expected, rel=2e-15)
+
+
+def test_gaussian_rejects_unrepresentable_advected_center_explicitly() -> None:
+    """Un centre advecté hors float64 produit une erreur de domaine numérique claire."""
+    with pytest.raises(ValueError, match="advected Gaussian center"):
+        gaussian_advection_diffusion(
+            np.array([0.0]),
+            2.0,
+            initial_center=0.0,
+            velocity=1e308,
+            diffusivity=0.0,
+            initial_sigma=1.0,
+        )
