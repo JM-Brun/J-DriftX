@@ -89,6 +89,7 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `53-evaluation-puff-source-impulsionnelle.md` | Évaluation dirigée d'une source impulsionnelle (puff) : temps dirigé t = τ, maximum temporel C(t), écart quantifié |
 | `54-transitoire-puff-edp-transitoire-marginale.md` | EDP transitoire du puff : marche en temps de la marginale transverse, structure longitudinale analytique, écarts calibrés |
 | `55-releve-equations-manuscrit-2009-comparaison-jesa.md` | Relevé vérifiable du manuscrit auteur HAL 2009 et protocole de comparaison différentielle avec l'article JESA 2010 ; comparaison éditeur encore non terminée |
+| `58-audit-frontieres-numeriques-p0-2026-10-30.md` | Audit P0 des frontières numériques publiques : types, finitude, représentabilité, exceptions et contrats inter-modules |
 | `56-cartographie-architecturale-bounded-contexts.md` | Cartographie des dépendances et contextes délimités, règles de dépendances proposées, état P0/P1 du chantier qualité #303 et inventaire des modules volumineux |
 | `57-evaluations-cohesion-modules-volumineux.md` | Évaluations de cohésion P2 des modules volumineux de l’annexe A de la note 56 : verdicts par module, grille EDP partagée, duplications transverses |
 | `58-audit-frontieres-numeriques-p0-2026-10-30.md` | Audit des contrats numériques des fonctions publiques autonomes : coercition booléenne, frontières coordonnées, adaptateurs et plan de correction sans validation redondante |
