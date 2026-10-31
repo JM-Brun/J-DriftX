@@ -173,3 +173,13 @@ def test_adaptateurs_rejettent_les_dependances_sans_methodes_requises(
     """Les dependances injectees doivent reellement satisfaire leur interface."""
     with pytest.raises(TypeError, match=message):
         constructeur()  # type: ignore[operator]
+
+
+def test_adaptateur_trajectoire_documente_le_refus_differe_du_profil_de_puissance() -> None:
+    """Une hauteur refusee par le vent echoue au premier appel, par son contrat propre."""
+    # Given : un adaptateur construit avec une hauteur negative finie et valide.
+    vent = VentProfilPuissance(u_reference=5.0, z_reference=10.0, exposant=0.15)
+    adaptateur = AdaptateurTrajectoire2D(vent=vent, hauteur=-5.0)
+    # When / Then : la construction reussit, le refus vient du contrat du vent.
+    with pytest.raises(ValueError, match="z doit etre strictement positif"):
+        adaptateur(0.0, 1.0, 2.0)
