@@ -29,7 +29,7 @@ RACINE = Path(__file__).resolve().parents[2]
 CHEMIN_REGISTRE = RACINE / "site" / "data" / "graphe-connaissances.toml"
 CHEMIN_PARTIEL = RACINE / "site" / "projet" / "_graphes-mermaid.md"
 LIEN_LISTE_MANUELLE = "[liste manuelle](../references.qmd)"
-REGEX_CITATION = re.compile(r"@([A-Za-z][A-Za-z0-9_:-]*)")
+REGEX_CITATION = re.compile(r"(?<!\w)@([A-Za-z][A-Za-z0-9_:-]*)")
 REGEX_CLE_BIB = re.compile(r"^@\w+\{([^,\s]+),", re.MULTILINE)
 MOTIF_LEGENDE = (
     '<span style="display:inline-block;width:0.85em;height:0.85em;'
@@ -188,6 +188,7 @@ def valider(registre: Registre, racine: Path) -> None:
     erreurs.extend(_erreurs_groupes(registre))
     erreurs.extend(_erreurs_references(registre, racine))
     erreurs.extend(_erreurs_modules(registre, racine))
+    erreurs.extend(_erreurs_identifiants_mermaid(registre))
     if erreurs:
         raise ValueError("Registre invalide :\n- " + "\n- ".join(erreurs))
 
@@ -309,6 +310,33 @@ def _erreurs_modules(registre: Registre, racine: Path) -> list[str]:
     return resultats
 
 
+def _erreurs_identifiants_mermaid(registre: Registre) -> list[str]:
+    """Collisions d'identifiants Mermaid après remplacement des caractères interdits.
+
+    Les ids des nœuds et des groupes sont rendus par ``_identifiant``, qui
+    remplace tout caractère interdit par un tiret bas : deux ids distincts
+    (par exemple ``a-b`` et ``a_b``) peuvent donc converger vers le même
+    identifiant Mermaid et fusionner des nœuds sans le moindre avertissement.
+    La vérification porte sur l'union des ids de nœuds et de groupes, les
+    deux familles rendues dans les diagrammes ; les ids de graphes ne sont
+    pas rendus. L'union est globale, donc plus prudente qu'un contrôle par vue.
+    """
+    resultats: list[str] = []
+    bruts = [noeud.id for noeud in registre.noeuds]
+    bruts.extend(groupe.id for graphe in registre.graphes for groupe in graphe.groupes)
+    rendus: dict[str, str] = {}
+    for brut in sorted(set(bruts)):
+        rendu = _identifiant(brut)
+        if rendu in rendus:
+            resultats.append(
+                f"collision d'identifiants Mermaid : {rendus[rendu]} et {brut} "
+                f"(tous deux rendus {rendu})"
+            )
+        else:
+            rendus[rendu] = brut
+    return resultats
+
+
 def _lien_existe(lien: str, racine: Path) -> bool:
     """URL absolue : acceptée ; chemin relatif : le fichier doit exister."""
     if lien.startswith(("http://", "https://")):
@@ -337,7 +365,12 @@ def _modules(racine_paquet: Path) -> set[str]:
 
 
 def citations(registre: Registre, racine: Path) -> dict[str, list[PageCitante]]:
-    """Extrait, pour chaque référence, les pages du site qui la citent."""
+    """Extrait, pour chaque référence, les pages du site qui la citent.
+
+    Les mentions ``@cle`` dans les blocs de code et les adresses e-mail ne
+    comptent pas comme des citations : seule une mention hors bloc de code
+    et non précédée d'un caractère de mot est enregistrée.
+    """
     par_cle: dict[str, list[PageCitante]] = {
         noeud.id: [] for noeud in registre.noeuds if noeud.type == "reference"
     }
@@ -348,10 +381,29 @@ def citations(registre: Registre, racine: Path) -> dict[str, list[PageCitante]]:
         texte = page.read_text(encoding="utf-8")
         chemin = page.relative_to(racine_site).as_posix()
         titre = _titre_page(texte, page.stem)
-        for cle in dict.fromkeys(REGEX_CITATION.findall(texte)):
+        for cle in dict.fromkeys(_cles_hors_blocs_de_code(texte.splitlines())):
             if cle in par_cle:
                 par_cle[cle].append(PageCitante(chemin=chemin, titre=titre))
     return par_cle
+
+
+def _cles_hors_blocs_de_code(lignes: Sequence[str]) -> list[str]:
+    """Clés citées hors des blocs de code, ordre de première apparition.
+
+    Le découpage ligne à ligne reproduit la garde de ``extraction_graphe`` :
+    une ligne commençant par trois apostrophes inverses ou trois tildes
+    bascule l'état, et le contenu des blocs de code est ignoré.
+    """
+    cles: list[str] = []
+    dans_bloc_code = False
+    for ligne in lignes:
+        if ligne.lstrip().startswith(("\x60\x60\x60", "~~~")):
+            dans_bloc_code = not dans_bloc_code
+            continue
+        if dans_bloc_code:
+            continue
+        cles.extend(REGEX_CITATION.findall(ligne))
+    return cles
 
 
 def _titre_page(texte: str, nom: str) -> str:
