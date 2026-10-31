@@ -105,6 +105,9 @@ Pour chaque baseline :
 
 Une comparaison entre méthodes évaluées sur des jeux de données ou des conditions physiques différents ne permet pas de conclure à une supériorité.
 
+
+**Garde spécifique au coût d'une coordonnée de transport.** Toute future implémentation d'un objet $\tau$ en champ de vitesse variable doit comptabiliser le calcul de cet objet lui-même, et pas seulement l'évaluation finale de la concentration. Le protocole doit séparer au minimum : (i) préparation du champ et des données, (ii) construction des caractéristiques et/ou calcul de la projection lorsque la définition les exige, (iii) calcul de $\tau$ pour une requête, (iv) évaluation du modèle réduit, (v) calibration/recalibration et mémoire. Il doit préciser la charge (nombre de sources, cibles, requêtes et réutilisations), mesurer le coût total et le comparer à une baseline à précision comparable. Les coûts dépendent de l'objet mathématique : intégration d'une dynamique imposée pour $T_{\mathrm{arr}}$, caractéristique plus projection pour $T_{\mathrm{proj}}$ ; un solveur eikonal ne doit être compté que si la formulation choisie est effectivement un problème de temps minimal/navigation, pas par simple assimilation de $T_{\mathrm{arr}}$ à une eikonale. Aucun gain *mesh-free* ne peut être revendiqué si le coût de $\tau$ est omis ou déplacé hors du périmètre de mesure.
+
 ## 5. Critères de décision à fixer avant l'expérience
 
 Pour chaque hypothèse, renseigner avant le benchmark :
