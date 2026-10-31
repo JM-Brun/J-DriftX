@@ -195,22 +195,9 @@ def _audit_duplicate_keys(
 def _numeric_ranges(
     rows: list[dict[str, str | None]], fieldnames: list[str]
 ) -> dict[str, dict[str, float | int]]:
-    """Summarize observed numeric ranges without imputing or coercing nonnumeric markers."""
-    columns = [
-        "helium_release_height",
-        "helium_release_flow",
-        "sampling_latitude",
-        "sampling_longitude",
-        "sampling_height",
-        "sampling_flowrate",
-        "helium_concentration_decision_threshold",
-        "helium_concentration_sampling_bg_corrected",
-        "helium_concentration_sampling_bg_passage_corrected",
-    ]
+    """Summarize every parseable numeric column without coercing domain markers."""
     result = {}
-    for column in columns:
-        if column not in fieldnames:
-            continue
+    for column in fieldnames:
         parsed = []
         for row in rows:
             raw = _value(row, column)
@@ -229,6 +216,36 @@ def _numeric_ranges(
                 "numeric_count": len(parsed),
             }
     return result
+
+
+def _missingness_by_sampling_type(
+    rows: list[dict[str, str | None]], fieldnames: list[str]
+) -> dict[str, dict[str, dict[str, int]]]:
+    """Report literal markers separately for each documented sampler category."""
+    if "sampling_type" not in fieldnames:
+        return {}
+    types = sorted({_value(row, "sampling_type") for row in rows})
+    return {
+        kind: _missingness(
+            [row for row in rows if _value(row, "sampling_type") == kind], fieldnames
+        )
+        for kind in types
+    }
+
+
+def _numeric_ranges_by_sampling_type(
+    rows: list[dict[str, str | None]], fieldnames: list[str]
+) -> dict[str, dict[str, dict[str, float | int]]]:
+    """Summarize numeric fields by sampler category without assuming equivalence."""
+    if "sampling_type" not in fieldnames:
+        return {}
+    types = sorted({_value(row, "sampling_type") for row in rows})
+    return {
+        kind: _numeric_ranges(
+            [row for row in rows if _value(row, "sampling_type") == kind], fieldnames
+        )
+        for kind in types
+    }
 
 
 def _audit_passage_correction(
@@ -408,9 +425,11 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
         "rows_per_experiment": experiment_counts,
         "flag_counts": flag_counts,
         "missingness": _missingness(rows, fieldnames),
+        "missingness_by_sampling_type": _missingness_by_sampling_type(rows, fieldnames),
         "time_checks": _audit_times(rows, fieldnames),
         "duplicate_identity_check": _audit_duplicate_keys(rows, fieldnames),
         "numeric_ranges": _numeric_ranges(rows, fieldnames),
+        "numeric_ranges_by_sampling_type": _numeric_ranges_by_sampling_type(rows, fieldnames),
         "passage_correction_check": _audit_passage_correction(rows, fieldnames),
         "semantic_checks": {
             "EA_literal_NA_and_VEGA_populated": "passed" if not bag_violations else "failed",
