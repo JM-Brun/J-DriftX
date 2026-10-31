@@ -181,6 +181,8 @@ def test_depot_minimal_valide(tmp_path: Path) -> None:
             'justification = ""',
             "justification manquante",
         ),
+        ('id = "c-nu"', 'id = "c_demo"', "collision d'identifiants Mermaid"),
+        ('id = "objets"', 'id = "c_demo"', "collision d'identifiants Mermaid"),
     ],
 )
 def test_erreurs_de_validation(tmp_path: Path, avant: str, apres: str, motif: str) -> None:
@@ -224,6 +226,69 @@ def test_citations_pages_titres_et_doublons(tmp_path: Path) -> None:
 
     assert [(page.titre, page.chemin) for page in pages["cle2000"]] == [
         ("annexe", "annexe.qmd"),
+        ("Page", "theorie/page.qmd"),
+    ]
+
+
+def test_collision_nomme_les_deux_identifiants(tmp_path: Path) -> None:
+    """Étant donné deux nœuds dont les ids convergent après normalisation,
+    quand on valide, alors l'erreur nomme les deux ids et le rendu commun."""
+    racine = _depot_minimal(tmp_path / "depot")
+
+    registre = _registre_modifie(racine, ('id = "c-nu"', 'id = "c_demo"'))
+
+    with pytest.raises(ValueError, match="c-demo et c_demo"):
+        valider(registre, racine)
+
+
+def test_email_non_compte_comme_citation(tmp_path: Path) -> None:
+    """Étant donné une page dont la seule mention @ est une adresse e-mail,
+    quand on extrait les citations, alors la page n'est pas comptée."""
+    racine = _depot_minimal(tmp_path / "depot")
+    (racine / "site/annexe-mail.qmd").write_text(
+        "Contact : auteur@cle2000.example.org\n", encoding="utf-8"
+    )
+    registre = charger(racine / "site/data/graphe-connaissances.toml")
+
+    pages = citations(registre, racine)
+
+    assert [page.chemin for page in pages["cle2000"]] == ["annexe.qmd", "theorie/page.qmd"]
+
+
+def test_citation_dans_bloc_de_code_non_comptee(tmp_path: Path) -> None:
+    """Étant donné une page dont la seule citation est dans un bloc de code,
+    quand on extrait, alors la page n'apparaît pas parmi les pages citantes."""
+    racine = _depot_minimal(tmp_path / "depot")
+    (racine / "site/annexe-code.qmd").write_text(
+        '---\ntitle: "Annexe code"\n---\n\n```{.python}\n# cite [@cle2000] en exemple\n```\n',
+        encoding="utf-8",
+    )
+    registre = charger(racine / "site/data/graphe-connaissances.toml")
+
+    pages = citations(registre, racine)
+
+    assert [page.chemin for page in pages["cle2000"]] == ["annexe.qmd", "theorie/page.qmd"]
+
+
+def test_citation_apres_un_bloc_de_code_comptee(tmp_path: Path) -> None:
+    """Étant donné une citation en prose après un bloc de code fermé, quand
+    on extrait, alors la page compte exactement une fois."""
+    racine = _depot_minimal(tmp_path / "depot")
+    (racine / "site/annexe-mixte.qmd").write_text(
+        '---\ntitle: "Annexe mixte"\n---\n\n'
+        "```{.python}\n"
+        "# [@cle2000] dans le bloc de code\n"
+        "```\n\n"
+        "Citation en prose [@cle2000].\n",
+        encoding="utf-8",
+    )
+    registre = charger(racine / "site/data/graphe-connaissances.toml")
+
+    pages = citations(registre, racine)
+
+    assert [(page.titre, page.chemin) for page in pages["cle2000"]] == [
+        ("annexe", "annexe.qmd"),
+        ("Annexe mixte", "annexe-mixte.qmd"),
         ("Page", "theorie/page.qmd"),
     ]
 
