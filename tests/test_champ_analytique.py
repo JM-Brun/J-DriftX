@@ -282,7 +282,6 @@ def test_les_evaluations_refusent_les_coordonnees_booleennes(
         getattr(champ, methode)(**coordonnees)
 
 
-
 class _ChampLineaire:
     """Champ structurel de test : psi(x, y) = a * (x + y), vitesse (a, -a)."""
 

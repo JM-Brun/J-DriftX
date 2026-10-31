@@ -251,7 +251,6 @@ def test_le_scenario_refuse_les_points_booleens(booleen: bool | np.bool_, champ:
         _scenario_modifie(**valeurs)
 
 
-
 def test_le_manifeste_exporte_une_superposition_imbriquee_sans_inventer_de_parametres() -> None:
     """Un champ du protocole hors classe cellulaire est exporté par son type."""
     # Given — un scénario dont le choix 2 imbrique une superposition.
