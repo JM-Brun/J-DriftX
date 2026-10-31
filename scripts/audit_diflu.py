@@ -290,9 +290,7 @@ def _audit_passage_correction(
             )
             sample_duration = (sample_end - sample_start).total_seconds()
             release_duration = (release_end - release_start).total_seconds()
-            background_corrected = float(
-                _value(row, "helium_concentration_sampling_bg_corrected")
-            )
+            background_corrected = float(_value(row, "helium_concentration_sampling_bg_corrected"))
             passage_corrected = float(passage_raw)
         except (ValueError, TypeError):
             violations.append(
@@ -341,9 +339,7 @@ def _audit_passage_correction(
         "ea_significant_rows": ea_significant,
         "ea_rows_with_passage_correction": ea_with_correction,
         "ea_ratio_check": (
-            "not_applicable"
-            if not ea_significant
-            else "passed" if not violations else "failed"
+            "not_applicable" if not ea_significant else "passed" if not violations else "failed"
         ),
         "relative_tolerance": relative_tolerance,
         "max_relative_error": max_relative_error if ea_significant else None,
