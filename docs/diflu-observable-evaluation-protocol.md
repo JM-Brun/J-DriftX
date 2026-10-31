@@ -50,7 +50,7 @@ Ces comptes ne doivent pas être forcés à correspondre. L'audit doit établir 
 
 Les trois fichiers compacts versionnés ont été relus directement (tableau des prélèvements et deux dictionnaires). Le rapprochement des heures UTC de rejet, des débits et des durées permet d'identifier sans ambiguïté apparente les 15 événements de l'article dans le tableau de 2026. **Les identifiants ne sont toutefois pas identiques** : le premier événement de l'article, `1-1` (15/10/2019 à 13:45 UTC), correspond à `#1_3` dans le fichier 2026, et non à `#1_1`.
 
-| ID article | ID fichier 2026 | Début du rejet UTC | EA dans le fichier / échantillons article | EA marqués `significant` dans le fichier / nombre article |
+| ID article | ID fichier 2026 | Début du rejet UTC | EA dans le CSV / AS article (hypothèse EA↔AS) | EA `significant` dans le CSV / nombre article |
 |---|---|---|---:|---:|
 | 1-1 | `#1_3` | 15/10/2019 13:45 | 14 / 14 | 12 / 11 |
 | 1-2 | `#1_4` | 16/10/2019 07:10 | 14 / 14 | 13 / 11 |
@@ -69,7 +69,7 @@ Les trois fichiers compacts versionnés ont été relus directement (tableau des
 | 2-8 | `#2_8` | 12/12/2019 08:15 | 12 / 12 | 12 / 12 |
 | **Total** | **15 événements** |  | **186 / 194** | **153 / 148** |
 
-Les 194 échantillons et 148 résultats significatifs sont ceux rapportés par l'article (section 2.3.2, section 3.2 et tableau 1). Les colonnes « fichier » sont des recomptages du CSV, restreints aux lignes `EA` et aux 15 événements rapprochés, à partir du champ `helium_concentration_sampling_bg_corrected_flag`. Il subsiste donc deux écarts qui ne doivent pas être corrigés par hypothèse : **8 enregistrements EA non retrouvés** dans le fichier de 2026 (tous sur l'événement article `1-7` / fichier `#1_9`) et **5 classifications `significant` de plus** dans le fichier sur ces 15 événements. Les heures, débits et durées de rejet concordent ; cela ne suffit pas à expliquer les écarts d'échantillonnage et de classification. Il faut retrouver les identifiants/éventuels enregistrements absents ou une explication des règles de sélection avant de prétendre reproduire les statistiques de l'article.
+Les 194 échantillons sous le vent et 148 résultats significatifs sont ceux rapportés par l'article (sections 2.3.2 et 3.2, tableau 1). Les colonnes « CSV » sont des recomptages restreints aux lignes `EA` et aux 15 événements rapprochés, selon `helium_concentration_sampling_bg_corrected_flag`. **La correspondance entre EA (un sac unique par événement selon le dictionnaire 2026) et les « Atmospheric Samplers » (AS) de l'article est une hypothèse de travail, pas une équivalence explicitement établie par l'article** : celui-ci ne nomme pas les catégories EA/VEGA. Sous cette hypothèse EA↔AS, le CSV donne 186 lignes contre 194 échantillons article et 153 flags `significant` contre 148 ; l'écart de 8 lignes se concentre sur l'événement article `1-7` / CSV `#1_9` (6 EA dans le CSV contre 14 AS dans le tableau 1), et quatre événements ont des différences de significativité. Ces nombres sont donc des **écarts conditionnels à la correspondance EA↔AS**, pas encore la preuve de huit lignes manquantes ou d'une erreur de classification. Il faut confirmer le périmètre des AS et la place éventuelle des prélèvements VEGA dans l'article avant de qualifier ces écarts.
 
 Le fichier de 2026 contient en outre quatre événements de rejet qui ne figurent pas dans les 15 événements de l'article :
 
