@@ -307,7 +307,10 @@ def _audit_passage_correction(
             violations.append(
                 {
                     "row": row_number,
-                    "rule": "EA passage correction requires positive durations and nonzero concentration",
+                    "rule": (
+                        "EA passage correction requires positive durations and "
+                        "nonzero concentration"
+                    ),
                 }
             )
             continue
