@@ -296,13 +296,19 @@ def _audit_passage_correction(
             passage_corrected = float(passage_raw)
         except (ValueError, TypeError):
             violations.append(
-                {"row": row_number, "rule": "EA significant row lacks parseable times or concentrations"}
+                {
+                    "row": row_number,
+                    "rule": "EA significant row lacks parseable times or concentrations",
+                }
             )
             continue
 
         if sample_duration <= 0 or release_duration <= 0 or background_corrected == 0:
             violations.append(
-                {"row": row_number, "rule": "EA passage correction requires positive durations and nonzero concentration"}
+                {
+                    "row": row_number,
+                    "rule": "EA passage correction requires positive durations and nonzero concentration",
+                }
             )
             continue
 
@@ -314,7 +320,10 @@ def _audit_passage_correction(
             violations.append(
                 {
                     "row": row_number,
-                    "rule": "EA passage-correction ratio differs from sampling-duration/release-duration ratio",
+                    "rule": (
+                        "EA passage-correction ratio differs from sampling-duration/"
+                        "release-duration ratio"
+                    ),
                     "relative_error": relative_error,
                 }
             )
@@ -322,7 +331,11 @@ def _audit_passage_correction(
     return {
         "ea_significant_rows": ea_significant,
         "ea_rows_with_passage_correction": ea_with_correction,
-        "ea_ratio_check": "passed" if ea_significant and not violations else "failed",
+        "ea_ratio_check": (
+            "not_applicable"
+            if not ea_significant
+            else "passed" if not violations else "failed"
+        ),
         "relative_tolerance": relative_tolerance,
         "max_relative_error": max_relative_error if ea_significant else None,
         "ea_violations": violations,
