@@ -45,6 +45,10 @@ def integrate_trajectory(
     """Integrate dx/dt=u(x,y,t), dy/dt=v(x,y,t) with Euler or classical RK4.
 
     The final step is shortened when the interval is not divisible by dt.
+    That shortened step always advances representable time: distinct float64
+    times are at least one ulp apart, and once the current time reaches half
+    of t_end the remainder is computed exactly, so the last step lands on
+    t_end and can never round back to the current time.
     Coordinates and time are in user-chosen consistent units. Every accepted
     step must advance representable time and produce finite coordinates. The
     velocity callback must return a tuple of two finite components; other

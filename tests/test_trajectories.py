@@ -166,3 +166,87 @@ def test_integrator_rejects_unrepresentable_or_non_real_callback_components(
             1.0,
             0.1,
         )
+
+def test_final_step_lands_exactly_on_t_end_when_the_remainder_is_one_ulp() -> None:
+    """Un reste final d'un ulp atterrit exactement sur t_end, pour chaque methode."""
+
+    # Given — deux temps float64 consecutifs : le reste final vaut exactement un ulp.
+    def vitesse(_t: float, _x: float, _y: float) -> tuple[float, float]:
+        return (1.0, 0.0)
+
+    t0 = 1.0
+    t_end = float(np.nextafter(t0, np.inf))
+
+    # When — la trajectoire est integree jusqu'au reste d'un ulp par chaque methode.
+    for method in ("euler", "rk4"):
+        times, _, _ = integrate_trajectory(vitesse, 0.0, 0.0, t0, t_end, 1.0, method)
+
+        # Then — le dernier pas raccourci atterrit exactement sur t_end, sans erreur.
+        assert list(times) == [t0, t_end]
+
+
+def test_final_step_lands_exactly_on_t_end_across_a_binade_boundary() -> None:
+    """Un reste final egal a un demi-ulp de t_end atterrit exactement sur t_end."""
+
+    # Given — le temps initial est le plus grand float64 sous 1.0 : le reste
+    # final vaut exactement un demi-ulp de t_end (un ulp du temps initial).
+    def vitesse(_t: float, _x: float, _y: float) -> tuple[float, float]:
+        return (1.0, 0.0)
+
+    t0 = float(np.nextafter(1.0, -np.inf))
+    t_end = 1.0
+
+    # When — la trajectoire est integree jusqu'a la frontiere de binade.
+    for method in ("euler", "rk4"):
+        times, _, _ = integrate_trajectory(vitesse, 0.0, 0.0, t0, t_end, 1.0, method)
+
+        # Then — la somme exacte atterrit sur t_end, sans erreur de dernier pas.
+        assert list(times) == [t0, t_end]
+
+
+def test_final_step_lands_exactly_on_t_end_at_subnormal_scale() -> None:
+    """Le dernier pas reste exact a l'echelle sous-normale la plus fine."""
+
+    # Given — le plus petit float64 positif comme cible, depuis t = 0.
+    def vitesse(_t: float, _x: float, _y: float) -> tuple[float, float]:
+        return (1.0, 0.0)
+
+    t_end = 5e-324
+
+    # When — l'intervalle est couvert d'un seul pas raccourci.
+    for method in ("euler", "rk4"):
+        times, _, _ = integrate_trajectory(vitesse, 0.0, 0.0, 0.0, t_end, t_end, method)
+
+        # Then — le pas raccourci atterrit exactement sur le plus petit subnormal.
+        assert list(times) == [0.0, t_end]
+
+
+def test_final_step_of_one_ulp_succeeds_at_large_time_magnitude() -> None:
+    """A magnitude elevee, un reste d'un ulp franchit le dernier pas sans erreur."""
+
+    # Given — un temps initial dont l'ulp vaut 2 : le reste final est exactement
+    # un ulp, alors qu'un pas dt plus fin que l'ulp serait refuse par la garde.
+    def vitesse(_t: float, _x: float, _y: float) -> tuple[float, float]:
+        return (1.0, 0.0)
+
+    t0 = 1.0e16
+    t_end = float(np.nextafter(t0, np.inf))
+
+    # When — le dernier pas raccourci (un ulp) est franchi par RK4.
+    times, _, _ = integrate_trajectory(vitesse, 0.0, 0.0, t0, t_end, 4.0, "rk4")
+
+    # Then — la trajectoire se termine exactement sur t_end, en un seul pas.
+    assert list(times) == [t0, t_end]
+
+
+def test_half_ulp_dt_is_rejected_as_an_unrepresentable_step() -> None:
+    """Un dt d'un demi-ulp est refuse : la garde ne concerne que dt, jamais le reste."""
+
+    # Given — un dt egal au demi-ulp de t0 : l'arrondi ties-to-even ramene le
+    # temps calcule au temps courant (mantisse paire) — echec explicite documente.
+    def vitesse(_t: float, _x: float, _y: float) -> tuple[float, float]:
+        return (1.0, 0.0)
+
+    # When / Then — seul un dt sous la resolution flottante est refuse.
+    with pytest.raises(FloatingPointError, match="too small to advance time"):
+        integrate_trajectory(vitesse, 0.0, 0.0, 1.0, 2.0, 2.0**-53)
