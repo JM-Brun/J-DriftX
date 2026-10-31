@@ -263,3 +263,10 @@ Modules > 15 ko (candidats P2) :
 | `src/jdriftx/figures/wind_field_explorer.py` | 17 863 |
 
 Bandes 10–15 ko (surveillance) : `figures/figure_04.py` (14 709), `figures/figure_03.py` (14 278), `figures/figure_05.py` (14 165), `experiences/reconstruction_vent.py` (14 163), `figures/figure_01.py` (12 612), `experiences/baseline_uniforme.py` (11 239), `experiences/evaluation_puff.py` (10 770). Le dépassement du seuil de 300 lignes correspond approximativement à la bande > 11–12 ko ; l'évaluation P2 se fait sur la cohésion, pas sur le décompte.
+
+
+## Actualisation de clôture P0 — 31 octobre 2026
+
+Le complément P0 décrit dans docs/58 est désormais intégré dans `main` par les PR #380, #383, #387, #389, #390, #392 et #400. Les issues correspondantes #379, #381, #384, #388, #391 et #393 sont clôturées après vérification des merges. La conclusion reste bornée aux frontières et reproductions effectivement auditées ; elle ne vaut ni preuve d'exhaustivité, ni validation de stabilité physique, ni validation physique.
+
+Les observations P2/P3 distinctes de la revue #350 sont décomposées dans les issues #406 à #413. Les décisions de cohésion, d'API et de non-factorisation de docs/57 restent inchangées.
