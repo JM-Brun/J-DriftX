@@ -37,6 +37,9 @@ title: "Comparaison des complexités"
 
 **J-DriftX.** L'hypothèse structurelle est de réduire la préparation en utilisant des solutions de similitude et une formulation de temps de transport. Le prototype actuel ne réalise pas encore la métrique historique générale ni le champ de vent multi-niveaux. Le coût total, la précision et les invariants doivent donc être mesurés avant toute comparaison.
 
+
+**Coût de $\tau$ en champ variable.** Il doit être mesuré comme un poste autonome, puis réintégré au coût total : préparation/interpolation du champ, intégration des caractéristiques, recherche de projection pour $T_{\mathrm{proj}}$, éventuelle construction d'une carte de temps et évaluation du modèle. Le profil dépend de la définition retenue ; $T_{\mathrm{arr}}$ sous une dynamique imposée ne se confond pas avec un temps minimal de navigation résolu par une eikonale. Aucune complexité ni accélération n'est annoncée tant que l'algorithme, la charge de requêtes et la précision cible ne sont pas fixés. La comparaison doit inclure les coûts amortis et non amortis face à une baseline à précision comparable.
+
 ## Le coût du problème inverse
 
 Pour l'identification de source ([Assimilation & identification](assimilation-identification.qmd)), les méthodes à gradient peuvent nécessiter des évaluations du modèle direct et un gradient/adjoint. Le coût relatif dépend de l'algorithme : méthodes sans gradient, adjoints, différentiation automatique et approximations n'ont pas le même profil.
