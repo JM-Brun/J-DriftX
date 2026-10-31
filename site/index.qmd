@@ -10,6 +10,9 @@ title: "J-DriftX — dispersion atmosphérique à complexité réduite"
 
 > **Statut scientifique :** hypothèse de recherche en phase de cadrage et de validation. Les propriétés présentées ci-dessous sont des **objectifs de conception**, pas des capacités validées ; le README du dépôt consigne l'état réel de l'implémentation. Voir le [positionnement](etat-art/positionnement.qmd) et la [carte d'articulation](projet/carte-articulation.qmd).
 
+**Avant de lire les propriétés visées, consulter les garde-fous :** [limites météorologiques et de terrain](hypotheses/limites.qmd) · [panorama de l'état de l'art](etat-art/panorama.qmd) · [où se paie le coût](theorie/comparaison-complexites.qmd) · [positionnement et critères de comparaison](etat-art/positionnement.qmd).
+
+
 ## L'idée en une phrase
 
 Hypothèse étudiée : représenter certains panaches, puffs ou cas de dérive de pulvérisation **sans résoudre directement une EDP ni construire un maillage**, au moyen d'une **évaluation ponctuelle** fondée sur des solutions de similitude et une représentation non symétrique par temps de transport [@mohammadi2006crmeca; @brun2008]. La validité de cette généralisation, son coût total, sa calibration et son avantage prédictif restent à établir ; il ne s'agit pas encore d'une capacité validée.
