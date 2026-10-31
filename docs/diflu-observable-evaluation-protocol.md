@@ -45,6 +45,58 @@ Les sources donnent des comptes qui décrivent des périmètres différents :
 
 Ces comptes ne doivent pas être forcés à correspondre. L'audit doit établir la signification de chaque ligne et relier explicitement, lorsque c'est possible, les identifiants d'expérience, de prélèvement et de sac. Il faut aussi vérifier si les catégories EA et VEGA sont des méthodes, des instruments ou des représentations complémentaires d'un même événement, sans le présumer.
 
+
+### 3.1. Rapprochement vérifié avec l'article de 2022 et limites du rapprochement
+
+Les trois fichiers compacts versionnés ont été relus directement (tableau des prélèvements et deux dictionnaires). Le rapprochement des heures UTC de rejet, des débits et des durées permet d'identifier sans ambiguïté apparente les 15 événements de l'article dans le tableau de 2026. **Les identifiants ne sont toutefois pas identiques** : le premier événement de l'article, `1-1` (15/10/2019 à 13:45 UTC), correspond à `#1_3` dans le fichier 2026, et non à `#1_1`.
+
+| ID article | ID fichier 2026 | Début du rejet UTC | EA dans le CSV / AS article (hypothèse EA↔AS) | EA `significant` dans le CSV / nombre article |
+|---|---|---|---:|---:|
+| 1-1 | `#1_3` | 15/10/2019 13:45 | 14 / 14 | 12 / 11 |
+| 1-2 | `#1_4` | 16/10/2019 07:10 | 14 / 14 | 13 / 11 |
+| 1-3 | `#1_5` | 16/10/2019 09:30 | 14 / 14 | 13 / 13 |
+| 1-4 | `#1_6` | 16/10/2019 12:00 | 14 / 14 | 8 / 8 |
+| 1-5 | `#1_7` | 17/10/2019 07:05 | 14 / 14 | 8 / 8 |
+| 1-6 | `#1_8` | 17/10/2019 09:30 | 14 / 14 | 13 / 13 |
+| 1-7 | `#1_9` | 17/10/2019 12:45 | **6 / 14** | **5 / 4** |
+| 2-1 | `#2_1` | 10/12/2019 09:30 | 12 / 12 | 8 / 8 |
+| 2-2 | `#2_2` | 10/12/2019 12:40 | 12 / 12 | 12 / 12 |
+| 2-3 | `#2_3` | 10/12/2019 14:20 | 11 / 11 | 10 / 10 |
+| 2-4 | `#2_4` | 11/12/2019 08:45 | 13 / 13 | 7 / 6 |
+| 2-5 | `#2_5` | 11/12/2019 10:15 | 12 / 12 | 10 / 10 |
+| 2-6 | `#2_6` | 11/12/2019 13:00 | 13 / 13 | 12 / 12 |
+| 2-7 | `#2_7` | 11/12/2019 15:00 | 11 / 11 | 10 / 10 |
+| 2-8 | `#2_8` | 12/12/2019 08:15 | 12 / 12 | 12 / 12 |
+| **Total** | **15 événements** |  | **186 / 194** | **153 / 148** |
+
+Les 194 échantillons sous le vent et 148 résultats significatifs sont ceux rapportés par l'article (sections 2.3.2 et 3.2, tableau 1). Les colonnes « CSV » sont des recomptages restreints aux lignes `EA` et aux 15 événements rapprochés, selon `helium_concentration_sampling_bg_corrected_flag`. **La correspondance entre EA (un sac unique par événement selon le dictionnaire 2026) et les « Atmospheric Samplers » (AS) de l'article est une hypothèse de travail, pas une équivalence explicitement établie par l'article** : celui-ci ne nomme pas les catégories EA/VEGA. Sous cette hypothèse EA↔AS, le CSV donne 186 lignes contre 194 échantillons article et 153 flags `significant` contre 148 ; l'écart de 8 lignes se concentre sur l'événement article `1-7` / CSV `#1_9` (6 EA dans le CSV contre 14 AS dans le tableau 1), et quatre événements ont des différences de significativité. Ces nombres sont donc des **écarts conditionnels à la correspondance EA↔AS**, pas encore la preuve de huit lignes manquantes ou d'une erreur de classification. Il faut confirmer le périmètre des AS et la place éventuelle des prélèvements VEGA dans l'article avant de qualifier ces écarts.
+
+Le fichier de 2026 contient en outre quatre événements de rejet qui ne figurent pas dans les 15 événements de l'article :
+
+| ID fichier 2026 | Début UTC | Lignes EA | Lignes VEGA |
+|---|---|---:|---:|
+| `#1_1` | 15/10/2019 08:00 | 10 | 0 |
+| `#1_2` | 15/10/2019 10:15 | 14 | 6 |
+| `#2_9` | 12/12/2019 10:10 | 12 | 12 |
+| `#2_10` | 12/12/2019 13:00 | 12 | 12 |
+
+Ainsi, les 19 identifiants distincts du CSV correspondent bien à 15 événements rapprochés de l'article et à quatre événements supplémentaires présents dans le dépôt 2026. Les 387 lignes du CSV sont des enregistrements de prélèvement, pas 387 observations indépendantes : elles se répartissent en 234 lignes `EA` et 153 lignes `VEGA`. Sur les 15 événements communs, le CSV contient 309 lignes (186 `EA`, 123 `VEGA`) ; les quatre événements supplémentaires représentent 78 lignes (48 `EA`, 30 `VEGA`). Les deux campagnes restent des contextes expérimentaux distincts ; 19 identifiants de rejet ne démontrent pas à eux seuls 19 réalisations statistiquement indépendantes.
+
+### 3.2. Sémantique des méthodes et des champs : conséquences pour l'observable
+
+Le dictionnaire définit `EA` comme un prélèvement d'un sac unique par événement d'échantillonnage et `VEGA` comme un prélèvement séquentiel de plusieurs sacs pendant l'expérience. `sampling_bag_id` vaut littéralement `NA` pour EA et identifie les sacs VEGA. Ces deux types ne doivent pas être agrégés comme s'ils avaient la même résolution temporelle. En particulier, les 153 lignes VEGA ne sont pas 153 réplicats indépendants supplémentaires des 234 lignes EA.
+
+Le dictionnaire indique également que `sampling_flowrate` et son écart-type valent `NA` lorsque le préleveur ne dispose pas d'un enregistreur de débit ou que celui-ci fonctionne mal. Dans le CSV, les 153 lignes VEGA ont `NA` pour ce débit ; 65 des 234 lignes EA l'ont aussi. Ces absences ne sont pas des débits nuls et ne peuvent pas être imputées à zéro.
+
+Autre point à documenter : le champ `helium_concentration_sampling_bg_passage_corrected` est renseigné pour les 196 lignes EA marquées `significant`, mais reste `NA` pour les 127 lignes VEGA marquées `significant`. La description du dictionnaire (« calculé uniquement lorsque la concentration corrigée du fond est significative ») n'explicite pas cette restriction apparente à EA. Il faut demander/identifier la règle de traitement de VEGA avant d'utiliser ce champ comme cible commune aux deux méthodes.
+La transformation appliquée aux EA est néanmoins vérifiable : sur les 196 lignes EA significatives, le rapport `passage_corrected / bg_corrected` concorde avec `durée_du_prélèvement / durée_du_rejet` pour chaque ligne. Les rapports théoriques rencontrés sont 1,5 (15/10 min), 2,0 (20/10), 1,8 (15/8,33) et 1,667 (15/9) ; l'écart relatif maximal observé est d'environ 0,58 %, compatible avec l'arrondi des concentrations publiées. Il n'y a aucune ligne EA significative sans valeur de correction de passage. En revanche, les 127 VEGA significatifs n'ont tous aucune valeur de correction de passage. Cela confirme l'algorithme numérique appliqué aux EA, mais ne justifie pas d'appliquer la même correction aux VEGA : leur acquisition séquentielle en sacs de 5 minutes est un protocole temporel différent, dont la règle de traitement doit être explicitée par la source ou les auteurs.
+
+
+Enfin, le champ `helium_concentration_decision_threshold` décrit le seuil absolu de décision (1,05 × concentration de fond), tandis que `helium_concentration_sampling_bg_corrected` est déjà décrit comme corrigé du fond. Le flag de significativité ne doit donc pas être recalculé en comparant naïvement ces deux colonnes : le seuil s'applique à la concentration mesurée avant soustraction du fond, conformément à la section 2.3.3 de l'article. La transformation exacte entre mesure, concentration excédentaire et correction de passage doit être documentée avant toute réimplémentation.
+
+**Conséquence provisoire :** le rapprochement confirme la présence des 15 rejets étudiés dans l'article et identifie quatre rejets supplémentaires, mais il ne reproduit pas encore le décompte publié des prélèvements ni des résultats significatifs. L'ATC ne peut pas être construit comme une cible homogène sur les 387 lignes en divisant simplement une colonne de concentration par `helium_release_flow`. Il faut d'abord définir le sous-ensemble, la méthode de prélèvement, la correction de concentration, l'instant ou l'intervalle d'observation et l'unité de validation.
+
+
 ## 4. Protocole d'évaluation : garde-fous minimaux
 
 Avant tout benchmark :
