@@ -287,8 +287,8 @@ def test_citation_apres_un_bloc_de_code_comptee(tmp_path: Path) -> None:
     pages = citations(registre, racine)
 
     assert [(page.titre, page.chemin) for page in pages["cle2000"]] == [
-        ("annexe", "annexe.qmd"),
         ("Annexe mixte", "annexe-mixte.qmd"),
+        ("annexe", "annexe.qmd"),
         ("Page", "theorie/page.qmd"),
     ]
 
