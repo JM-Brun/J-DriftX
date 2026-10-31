@@ -231,6 +231,109 @@ def _numeric_ranges(
     return result
 
 
+def _audit_passage_correction(
+    rows: list[dict[str, str | None]], fieldnames: list[str]
+) -> dict[str, Any]:
+    """Check the EA passage-time factor; describe VEGA coverage without assuming a rule."""
+    required = {
+        "sampling_type",
+        "helium_concentration_sampling_bg_corrected_flag",
+        "helium_concentration_sampling_bg_corrected",
+        "helium_concentration_sampling_bg_passage_corrected",
+        "sampling_start_time",
+        "sampling_end_time",
+        "helium_release_start_time",
+        "helium_release_end_time",
+    }
+    if not required.issubset(fieldnames):
+        return {}
+
+    ea_significant = 0
+    ea_with_correction = 0
+    vega_significant = 0
+    vega_with_correction = 0
+    max_relative_error = 0.0
+    violations: list[dict[str, Any]] = []
+    relative_tolerance = 0.01
+
+    for row_number, row in enumerate(rows, start=2):
+        kind = _value(row, "sampling_type")
+        flag = _value(row, "helium_concentration_sampling_bg_corrected_flag")
+        if flag != "significant":
+            continue
+
+        passage_raw = _value(row, "helium_concentration_sampling_bg_passage_corrected")
+        if kind == "VEGA":
+            vega_significant += 1
+            if passage_raw not in {"", "NA"}:
+                vega_with_correction += 1
+            continue
+        if kind != "EA":
+            continue
+
+        ea_significant += 1
+        if passage_raw not in {"", "NA"}:
+            ea_with_correction += 1
+
+        try:
+            sample_start = datetime.fromisoformat(
+                _value(row, "sampling_start_time").replace("Z", "+00:00")
+            )
+            sample_end = datetime.fromisoformat(
+                _value(row, "sampling_end_time").replace("Z", "+00:00")
+            )
+            release_start = datetime.fromisoformat(
+                _value(row, "helium_release_start_time").replace("Z", "+00:00")
+            )
+            release_end = datetime.fromisoformat(
+                _value(row, "helium_release_end_time").replace("Z", "+00:00")
+            )
+            sample_duration = (sample_end - sample_start).total_seconds()
+            release_duration = (release_end - release_start).total_seconds()
+            background_corrected = float(
+                _value(row, "helium_concentration_sampling_bg_corrected")
+            )
+            passage_corrected = float(passage_raw)
+        except (ValueError, TypeError):
+            violations.append(
+                {"row": row_number, "rule": "EA significant row lacks parseable times or concentrations"}
+            )
+            continue
+
+        if sample_duration <= 0 or release_duration <= 0 or background_corrected == 0:
+            violations.append(
+                {"row": row_number, "rule": "EA passage correction requires positive durations and nonzero concentration"}
+            )
+            continue
+
+        expected_ratio = sample_duration / release_duration
+        observed_ratio = passage_corrected / background_corrected
+        relative_error = abs(observed_ratio - expected_ratio) / expected_ratio
+        max_relative_error = max(max_relative_error, relative_error)
+        if relative_error > relative_tolerance:
+            violations.append(
+                {
+                    "row": row_number,
+                    "rule": "EA passage-correction ratio differs from sampling-duration/release-duration ratio",
+                    "relative_error": relative_error,
+                }
+            )
+
+    return {
+        "ea_significant_rows": ea_significant,
+        "ea_rows_with_passage_correction": ea_with_correction,
+        "ea_ratio_check": "passed" if ea_significant and not violations else "failed",
+        "relative_tolerance": relative_tolerance,
+        "max_relative_error": max_relative_error if ea_significant else None,
+        "ea_violations": violations,
+        "vega_significant_rows": vega_significant,
+        "vega_rows_with_passage_correction": vega_with_correction,
+        "vega_interpretation": (
+            "Coverage is reported descriptively; no correction rule is inferred for VEGA."
+        ),
+    }
+
+
 def audit_sampling_csv(path: Path) -> dict[str, Any]:
     """Audit structure and emit descriptive data-quality checks without rewriting source values."""
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
@@ -290,6 +393,7 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
         "time_checks": _audit_times(rows, fieldnames),
         "duplicate_identity_check": _audit_duplicate_keys(rows, fieldnames),
         "numeric_ranges": _numeric_ranges(rows, fieldnames),
+        "passage_correction_check": _audit_passage_correction(rows, fieldnames),
         "semantic_checks": {
             "EA_literal_NA_and_VEGA_populated": "passed" if not bag_violations else "failed",
             "sampling_bag_violations": bag_violations,
