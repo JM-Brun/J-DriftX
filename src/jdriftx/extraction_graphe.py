@@ -71,35 +71,70 @@ def _extraire_python(racine: Path) -> list[FaitExtrait]:
 
 
 def _faits_symboles(arbre: ast.Module, chemin: str, est_test: bool) -> list[FaitExtrait]:
-    """Extrait récursivement les symboles Python en conservant leur nom qualifié."""
+    """Extrait récursivement les symboles Python en conservant leur nom qualifié.
+
+    Les définitions placées dans des blocs ``if`` et ``try`` au niveau module
+    sont extraites sans évaluer leurs conditions : l'analyse observe la
+    structure du code, elle ne l'exécute jamais. Les autres conteneurs
+    d'instructions (``with``, boucles, ``match``) restent hors périmètre.
+    """
     faits: list[FaitExtrait] = []
 
     def visiter(noeuds: list[ast.stmt], prefixe: str = "") -> None:
         for noeud in noeuds:
-            if not isinstance(noeud, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
-                continue
-            qualifie = f"{prefixe}.{noeud.name}" if prefixe else noeud.name
-            if isinstance(noeud, ast.ClassDef):
-                kind = "python_class"
-            elif est_test and noeud.name.startswith("test_"):
-                kind = "test_function"
-            elif isinstance(noeud, ast.AsyncFunctionDef):
-                kind = "python_async_function"
-            else:
-                kind = "python_function"
-            faits.append(
-                FaitExtrait(
-                    id=f"{kind}:{chemin}::{qualifie}",
-                    kind=kind,
-                    label=qualifie,
-                    path=chemin,
-                    line=noeud.lineno,
+            if isinstance(noeud, (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
+                qualifie = f"{prefixe}.{noeud.name}" if prefixe else noeud.name
+                if isinstance(noeud, ast.ClassDef):
+                    kind = "python_class"
+                elif est_test and noeud.name.startswith("test_"):
+                    kind = "test_function"
+                elif isinstance(noeud, ast.AsyncFunctionDef):
+                    kind = "python_async_function"
+                else:
+                    kind = "python_function"
+                faits.append(
+                    FaitExtrait(
+                        id=f"{kind}:{chemin}::{qualifie}",
+                        kind=kind,
+                        label=qualifie,
+                        path=chemin,
+                        line=noeud.lineno,
+                    )
                 )
-            )
-            visiter(noeud.body, qualifie)
+                visiter(noeud.body, qualifie)
+            elif isinstance(noeud, ast.If):
+                visiter(noeud.body, prefixe)
+                visiter(noeud.orelse, prefixe)
+            elif isinstance(noeud, ast.Try):
+                for gestionnaire in noeud.handlers:
+                    visiter(gestionnaire.body, prefixe)
+                visiter(noeud.body, prefixe)
+                visiter(noeud.orelse, prefixe)
+                visiter(noeud.finalbody, prefixe)
 
     visiter(arbre.body)
     return faits
+
+
+def _titre_frontmatter(lignes: Sequence[str], nom: str) -> str:
+    """Titre déclaré dans le frontmatter YAML, ou nom du fichier par défaut.
+
+    Le titre d'une page Quarto est l'entrée ``title`` de l'en-tête YAML délimité
+    par des lignes ``---`` en tête de page. La lecture ignore donc une ligne
+    ``title:`` placée dans le corps de la page et ne borne plus l'en-tête à un
+    nombre fixe de lignes : un frontmatter long reste lu en entier. Un
+    frontmatter qui ne se referme pas n'est pas un en-tête valide : le nom du
+    fichier est conservé.
+    """
+    if not lignes or lignes[0].strip() != "---":
+        return nom
+    for ligne in lignes[1:]:
+        if ligne.strip() == "---":
+            return nom
+        correspondance = REGEX_TITRE.match(ligne)
+        if correspondance:
+            return correspondance.group(1).strip()
+    return nom
 
 
 def _extraire_quarto(racine: Path) -> list[FaitExtrait]:
@@ -111,12 +146,7 @@ def _extraire_quarto(racine: Path) -> list[FaitExtrait]:
             continue
         relatif = chemin.relative_to(racine).as_posix()
         lignes = chemin.read_text(encoding="utf-8").splitlines()
-        titre_page = chemin.stem
-        for numero, ligne in enumerate(lignes, start=1):
-            correspondance = REGEX_TITRE.match(ligne)
-            if correspondance and numero <= 30:
-                titre_page = correspondance.group(1).strip()
-                break
+        titre_page = _titre_frontmatter(lignes, chemin.stem)
         faits.append(
             FaitExtrait(
                 id=f"quarto_page:{relatif}",
