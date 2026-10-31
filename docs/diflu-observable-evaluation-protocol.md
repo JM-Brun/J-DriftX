@@ -125,3 +125,25 @@ La notice Dataverse indique l'Etalab Open Licence 2.0. Toute réutilisation doit
 ## Étapes restantes
 
 Voir l'[issue #221](https://github.com/JM-Brun/J-DriftX/issues/221) pour la checklist d'audit sur les fichiers téléchargés et la décision finale d'usage MVP.
+
+### 3.3. Inventaire descriptif des champs numériques du CSV de prélèvements
+
+Les plages ci-dessous sont calculées sur les 387 lignes du fixture versionné, sans imputation des marqueurs littéraux. Elles décrivent les valeurs observées, pas leur validité physique ni leur précision.
+
+| Champ | Valeurs numériques | Min–max | Commentaire |
+|---|---:|---:|---|
+| Latitude du rejet (°) | 387 | 50.51371–50.51404 | WGS84 selon le dictionnaire |
+| Longitude du rejet (°) | 387 | 2.67255–2.67270 | WGS84 selon le dictionnaire |
+| Hauteur du rejet (m) | 387 | 1.9–10.2 | |
+| Débit de rejet (g/s) | 387 | 1.49–5.49 | |
+| Latitude de prélèvement (°) | 387 | 50.51361–50.51870 | WGS84 selon le dictionnaire |
+| Longitude de prélèvement (°) | 387 | 2.67169–2.67490 | WGS84 selon le dictionnaire |
+| Hauteur de prélèvement (m) | 387 | 0.15–3.4 | EA : 0.15–3.4 m ; VEGA : 0.2–1.3 m |
+| Débit de prélèvement (L/min) | 169 | 0.049–0.428 | 65 EA et les 153 VEGA ont `NA` |
+| Écart-type du débit (L/min) | 169 | 0.002–0.104 | Même couverture que le débit |
+| Concentration corrigée du fond (g/m³) | 323 | 5.14×10⁻⁵–3.95×10⁻³ | 196 EA et 127 VEGA numériques ; 64 résultats `< LC` |
+| Concentration corrigée du passage (g/m³) | 196 | 1.07×10⁻⁴–4.39×10⁻³ | EA uniquement ; 127 VEGA significatifs sont également `NA` |
+
+Les champs de coordonnées et de hauteurs du rejet/prélèvement sont renseignés sur les 387 lignes. En revanche, ce constat ne valide pas les coordonnées, la référence verticale, l'exactitude des positions ni la représentativité des hauteurs. L'inventaire du fichier séparé `DIFLU_instrument_locations` reste à effectuer avant de considérer l'audit spatial comme complet.
+
+La couverture des débits est structurée par type : 169/234 EA ont un débit numérique, contre 0/153 VEGA. Le dictionnaire autorise des `NA` lorsqu'un enregistreur est absent ou défaillant, mais ne permet pas d'affirmer laquelle de ces causes s'applique à chaque ligne. Aucune correction de concentration ne doit donc être réimplémentée pour VEGA à partir du débit moyen EA.
