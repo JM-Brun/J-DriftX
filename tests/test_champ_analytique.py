@@ -280,3 +280,90 @@ def test_les_evaluations_refusent_les_coordonnees_booleennes(
     # When / Then — l'évaluation est refusée avant le calcul de phase.
     with pytest.raises(ValueError, match="booléens exclus"):
         getattr(champ, methode)(**coordonnees)
+
+
+class _ChampLineaire:
+    """Champ structurel de test : psi(x, y) = a * (x + y), vitesse (a, -a)."""
+
+    def __init__(self, a: float) -> None:
+        self.a = a
+
+    def fonction_courant(self, x: float, y: float) -> float:
+        """Évalue a * (x + y), divergence nulle par construction."""
+        return self.a * (x + y)
+
+    def vitesse(self, x: float, y: float) -> tuple[float, float]:
+        """Évalue les dérivées croisées (a, -a) de la fonction de courant."""
+        return self.a, -self.a
+
+
+def test_la_superposition_accepte_un_champ_structurel_defini_hors_du_module() -> None:
+    """Le typage est structurel : tout objet satisfaisant ChampPlan est superposable."""
+    # Given — un champ linéaire hors du module et un champ cellulaire superposés.
+    champ_cellulaire = ChampFonctionCourant(amplitude=1.0, longueur=1.0)
+    superposition = SuperpositionChamps((_ChampLineaire(2.0), champ_cellulaire))
+    x, y = 0.3, 0.7
+    # When — la superposition est évaluée au point.
+    psi = superposition.fonction_courant(x, y)
+    u, v = superposition.vitesse(x, y)
+    # Then — les contributions linéaire et cellulaire s'ajoutent exactement.
+    assert psi == pytest.approx(2.0 * (x + y) + champ_cellulaire.fonction_courant(x, y))
+    u_cellulaire, v_cellulaire = champ_cellulaire.vitesse(x, y)
+    assert (u, v) == (2.0 + u_cellulaire, -2.0 + v_cellulaire)
+
+
+def test_la_superposition_accepte_une_superposition_imbriquee() -> None:
+    """La superposition se compose elle-même : le contrat est le protocole ChampPlan."""
+    # Given — une superposition imbriquée dans une superposition, et un point.
+    champ_1 = ChampFonctionCourant(amplitude=800.0, longueur=1000.0)
+    champ_2 = ChampFonctionCourant(amplitude=400.0, longueur=500.0)
+    champ_3 = ChampFonctionCourant(amplitude=100.0, longueur=250.0)
+    superposition_interne = SuperpositionChamps((champ_1, champ_2))
+    superposition = SuperpositionChamps((superposition_interne, champ_3))
+    x, y = 137.0, 643.0
+    # When — la superposition englobante est évaluée au point.
+    psi = superposition.fonction_courant(x, y)
+    u, v = superposition.vitesse(x, y)
+    # Then — les contributions des trois champs sous-jacents s'ajoutent.
+    assert psi == pytest.approx(
+        superposition_interne.fonction_courant(x, y) + champ_3.fonction_courant(x, y)
+    )
+    u_interne, v_interne = superposition_interne.vitesse(x, y)
+    u_3, v_3 = champ_3.vitesse(x, y)
+    assert (u, v) == (u_interne + u_3, v_interne + v_3)
+
+
+def test_la_superposition_rejette_un_element_sans_methodes_requises() -> None:
+    """Chaque élément doit exposer fonction_courant et vitesse callables."""
+    # Given — un objet quelconque à la place d'un champ plan.
+    # When / Then — la construction est refusée à la frontière, pas au premier appel.
+    with pytest.raises(TypeError, match="fonction_courant et vitesse"):
+        SuperpositionChamps((object(),))  # type: ignore[arg-type]
+
+
+def test_la_fonction_de_courant_sous_representable_est_rejetee() -> None:
+    """Un produit de facteurs non nuls qui sous-déborde est refusé, comme pour la vitesse.
+
+    Pour une longueur d'onde extrême, sin(k·x) est non nul mais assez petit
+    pour que le produit amplitude · sin · sin sous-déborde vers zéro : la
+    fonction de courant retournait silencieusement 0.0 alors que la vitesse
+    levait une exception pour les mêmes paramètres.
+    """
+    # Given — un champ de longueur d'onde 1e308 m, évalué en (1.0, 1.0).
+    champ = ChampFonctionCourant(amplitude=1.0, longueur=1.0e308)
+    # When / Then — la valeur sous-débordée est refusée explicitement.
+    with pytest.raises(ValueError, match="sous-representable"):
+        champ.fonction_courant(1.0, 1.0)
+    # Et la vitesse refusait déjà ce point : les deux contrats coïncident.
+    with pytest.raises(ValueError, match="sous-representable"):
+        champ.vitesse(1.0, 1.0)
+
+
+def test_la_fonction_de_courant_nulle_aux_bords_de_cellule_reste_exacte() -> None:
+    """Un facteur trigonométrique nul reste un zéro mathématique exact, même extrême."""
+    # Given — un champ d'amplitude extrême et un point sur un bord de cellule.
+    champ = ChampFonctionCourant(amplitude=1.0e308, longueur=1.0)
+    # When — la fonction de courant est évaluée sur le bord (phase nulle).
+    psi = champ.fonction_courant(0.0, 0.25)
+    # Then — le zéro mathématique est retourné sans erreur de représentabilité.
+    assert psi == 0.0

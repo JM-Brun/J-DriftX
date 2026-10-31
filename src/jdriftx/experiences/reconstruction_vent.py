@@ -237,6 +237,24 @@ def resoudre_scenario(scenario: ScenarioReconstruction) -> ResultatReconstructio
     )
 
 
+def _parametres_champ(champ: ChampPlan) -> dict[str, object]:
+    """Exporte les paramètres d'un champ du scénario pour le manifeste.
+
+    Seule la classe cellulaire expose amplitude et longueur ; toute autre
+    implémentation du protocole est exportée par son type, sans inventer
+    de paramètres.
+
+    Args:
+        champ: champ plan du scénario (protocole ``ChampPlan``).
+
+    Returns:
+        Un dictionnaire sérialisable pour la frontière JSON du manifeste.
+    """
+    if isinstance(champ, ChampFonctionCourant):
+        return {"amplitude": champ.amplitude, "longueur": champ.longueur}
+    return {"type": type(champ).__name__}
+
+
 @dataclass(frozen=True)
 class ManifesteReconstruction:
     """Manifeste immuable reliant l'expérience à sa spécification et ses limites.
@@ -281,8 +299,7 @@ class ManifesteReconstruction:
                 "amplitude_choix_1": scenario.champ_choix_1.amplitude,
                 "longueur_choix_1": scenario.champ_choix_1.longueur,
                 "champs_choix_2": [
-                    {"amplitude": champ.amplitude, "longueur": champ.longueur}
-                    for champ in scenario.champ_choix_2.champs
+                    _parametres_champ(champ) for champ in scenario.champ_choix_2.champs
                 ],
                 "mesures": [list(mesure) for mesure in scenario.mesures],
                 "parcelle": [
