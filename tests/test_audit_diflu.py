@@ -89,12 +89,6 @@ def test_audit_reports_descriptive_counts_and_detection_flag_consistency(
     assert report["time_checks"]["reversed_interval_rows"] == []
     assert report["duplicate_identity_check"]["duplicate_key_row_count"] == 0
     assert report["semantic_checks"]["detection_flag_consistency"] == "passed"
-    assert report["passage_correction_check"]["ea_significant_rows"] == 196
-    assert report["passage_correction_check"]["ea_rows_with_passage_correction"] == 196
-    assert report["passage_correction_check"]["ea_ratio_check"] == "passed"
-    assert report["passage_correction_check"]["max_relative_error"] < 0.01
-    assert report["passage_correction_check"]["vega_significant_rows"] == 127
-    assert report["passage_correction_check"]["vega_rows_with_passage_correction"] == 0
     assert report["missingness"]["helium_concentration_sampling_bg_corrected"]["literal_NA"] == 1
 
 
@@ -160,3 +154,9 @@ def test_versioned_diflu_fixture_has_reproducible_audit_summary() -> None:
     assert report["duplicate_identity_check"]["duplicate_key_row_count"] == 0
     assert report["semantic_checks"]["EA_literal_NA_and_VEGA_populated"] == "passed"
     assert report["semantic_checks"]["detection_flag_consistency"] == "passed"
+    assert report["passage_correction_check"]["ea_significant_rows"] == 196
+    assert report["passage_correction_check"]["ea_rows_with_passage_correction"] == 196
+    assert report["passage_correction_check"]["ea_ratio_check"] == "passed"
+    assert report["passage_correction_check"]["max_relative_error"] < 0.01
+    assert report["passage_correction_check"]["vega_significant_rows"] == 127
+    assert report["passage_correction_check"]["vega_rows_with_passage_correction"] == 0
