@@ -303,7 +303,13 @@ def _audit_passage_correction(
             )
             continue
 
-        if sample_duration <= 0 or release_duration <= 0 or background_corrected == 0:
+        if (
+            sample_duration <= 0
+            or release_duration <= 0
+            or background_corrected == 0
+            or not math.isfinite(background_corrected)
+            or not math.isfinite(passage_corrected)
+        ):
             violations.append(
                 {
                     "row": row_number,
