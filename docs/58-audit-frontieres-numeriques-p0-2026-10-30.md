@@ -179,3 +179,33 @@ Pydantic acceptait les booléens comme nombres et les infinis dans les champs `m
 ### 3.12 Marginale gaussienne du puff — issue #393 / PR #400
 
 La formule de `MarginaleFermee.champ(t)` présentait un sous-débordement du produit `sy*sz` et des carrés `sy²` / `sz²`, alors que le pic final pouvait rester représentable. La PR #400 conserve la formule analytique et évalue les exposants par rapports normalisés, puis l'amplitude en domaine logarithmique. Le sous-débordement du résultat final est arrondi à zéro selon IEEE-754 ; une concentration théorique positive hors float64 est refusée explicitement. Les tests couvrent la reproduction à petites échelles, l'équivalence avec la formule directe aux échelles usuelles et le rejet d'un pic non représentable. Ils ne constituent pas une validation physique.
+
+
+## 9. État de clôture de la séquence P0 — 31 octobre 2026
+
+Les dernières tranches du périmètre audité sont désormais fusionnées dans `main` :
+- PR #380 : fonctions autonomes `fields.vector_field` et `terrain.terrain_surface` ;
+- PR #383 : `integrate_trajectory` et `gaussian_advection_diffusion` ;
+- PR #387 : `periodic_sine_solution` et validateur partagé des solveurs ;
+- PR #389 : robustesse float64 de la solution gaussienne ;
+- PR #390 : décroissance et phase périodiques ;
+- PR #392 : scalaires de `SourceImpulsionnelle`, temps et distance parcourue de la marginale ;
+- PR #400 : stabilité de la formule gaussienne de la marginale.
+
+Les issues #379, #381, #384, #388, #391 et #393 sont clôturées après vérification des PR fusionnées. Cette clôture signifie que les reproductions et contrats logiciels identifiés dans ces issues ont été traités ; elle ne démontre ni l'exhaustivité de l'audit numérique, ni la stabilité de tout schéma, ni la validité physique des modèles.
+
+### 9.1 Observations distinctes non-P0
+
+Les observations restantes de la revue adversariale #350 ne sont pas incluses dans le périmètre P0 et sont suivies par :
+- #406 : substituabilité de `SuperpositionChamps` ;
+- #407 : variantes ESRI ASCII Grid et emprise MNT ;
+- #408 : collisions d'identifiants Mermaid et extraction des citations ;
+- #409 : périmètre AST de `extraction_graphe` ;
+- #410 : portée de mypy strict sur les tests ;
+- #411 : contrat de hauteur de `AdaptateurTrajectoire2D` ;
+- #412 : cohérence des erreurs de `champ_analytique` ;
+- #413 : dernier pas temporel à demi-ulp de `integrate_trajectory`.
+
+Ces issues imposent une reproduction et une clarification du contrat avant correction. Elles ne qualifient pas d'avance chaque observation de défaut avéré.
+
+Les décisions de cohésion et de non-factorisation de docs/57 restent applicables. Aucune extraction ni factorisation n'est autorisée par ce seul inventaire.
