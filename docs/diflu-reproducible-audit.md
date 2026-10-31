@@ -28,7 +28,7 @@ uv run python scripts/audit_diflu.py --output-dir /tmp/diflu-audit --timeout 90
 
 Le script résout les fichiers par leur nom dans le listing Dataverse, récupère les métadonnées détaillées, demande explicitement les octets originaux avec `?format=original`, vérifie la taille et le MD5 publiés quand disponibles, calcule un SHA-256, puis écrit `audit-report.json`.
 
-Les trois fichiers de départ sont le tableau des prélèvements, le dictionnaire des médias et le dictionnaire des variables. Le rapport conserve les noms et identifiants Dataverse ainsi que les noms originaux, les URL, les tailles et les contrôles d’intégrité.
+Les trois fichiers de départ sont le tableau des prélèvements, le dictionnaire des médias et le dictionnaire des variables. Le rapport conserve les noms et identifiants Dataverse ainsi que les noms originaux, les URL, les tailles et les contrôles d’intégrité. Pour le tableau de prélèvements, il inventorie les marqueurs `NA`/`< LC` par colonne et par type de préleveur, et calcule les plages de toutes les colonnes numériques interprétables, globalement et par type EA/VEGA. Les identifiants textuels et les marqueurs de domaine ne sont pas convertis en nombres.
 
 ## Préparer un corpus de référence versionnable
 
@@ -66,4 +66,4 @@ Ces tests simulent les cas de taille/MD5 conformes et non conformes, la règle s
 
 ## Limites
 
-Un contrôle d’intégrité démontre que les octets reçus correspondent aux métadonnées disponibles ; il ne démontre ni la validité scientifique des mesures ni leur exhaustivité. L’audit sémantique élargi de la PR #251 rapporte les comptes par expérience, les marqueurs `NA`/`< LC` par colonne, la cohérence des drapeaux de détection, les durées d’échantillonnage, les clés d’identité répétées et les plages numériques observées. Ces diagnostics ne prouvent ni l’indépendance statistique des expériences, ni la validité physique des variables, ni l’adéquation de l’ATC. Le fixture versionné sert de test de régression, pas de substitut à l'examen scientifique.
+Un contrôle d’intégrité démontre que les octets reçus correspondent aux métadonnées disponibles ; il ne démontre ni la validité scientifique des mesures ni leur exhaustivité. L’audit sémantique élargi de la PR #251 rapporte les comptes par expérience, les marqueurs `NA`/`< LC` par colonne, la cohérence des drapeaux de détection, les durées d’échantillonnage, les clés d’identité répétées et les plages numériques observées pour toutes les colonnes numériques interprétables, globalement et par type de préleveur. Ces diagnostics ne prouvent ni l’indépendance statistique des expériences, ni la validité physique des variables, ni l’adéquation de l’ATC. Le fixture versionné sert de test de régression, pas de substitut à l'examen scientifique.
