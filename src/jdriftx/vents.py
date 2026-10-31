@@ -58,6 +58,11 @@ class AdaptateurTrajectoire2D:
     Le temps est ignore et la hauteur est fixee. L'adaptateur refuse tout
     vent avec une composante verticale non nulle : l'integrateur 2D ne
     pourrait pas representer ce mouvement sans perte physique.
+    La hauteur fixee est un scalaire reel fini, sans contrainte de signe :
+    le contrat ``Vent`` ne fixe aucun domaine pour la coordonnee z. Un vent
+    concret peut refuser certaines hauteurs, mais seulement a l evaluation et
+    par son propre contrat (le profil de puissance exige z strictement
+    positif) ; le refus vient alors du contrat du vent, pas de l adaptateur.
     """
 
     vent: Vent
