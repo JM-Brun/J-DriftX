@@ -167,6 +167,7 @@ def test_integrator_rejects_unrepresentable_or_non_real_callback_components(
             0.1,
         )
 
+
 def test_final_step_lands_exactly_on_t_end_when_the_remainder_is_one_ulp() -> None:
     """Un reste final d'un ulp atterrit exactement sur t_end, pour chaque methode."""
 
