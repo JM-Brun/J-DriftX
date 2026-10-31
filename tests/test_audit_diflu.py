@@ -92,6 +92,51 @@ def test_audit_reports_descriptive_counts_and_detection_flag_consistency(
     assert report["missingness"]["helium_concentration_sampling_bg_corrected"]["literal_NA"] == 1
 
 
+def test_audit_checks_ea_passage_ratio_and_reports_vega_coverage(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "sampling.csv"
+    path.write_text(
+        "sampling_type,sampling_bag_id,helium_concentration_sampling_bg_corrected_flag,"
+        "helium_concentration_sampling_bg_corrected,"
+        "helium_concentration_sampling_bg_passage_corrected,"
+        "sampling_start_time,sampling_end_time,helium_release_start_time,helium_release_end_time\n"
+        "EA,NA,significant,0.001,0.0015,2026-01-01T00:00:00Z,"
+        "2026-01-01T00:15:00Z,2026-01-01T00:00:00Z,2026-01-01T00:10:00Z\n"
+        "VEGA,V1_1,significant,0.0001,NA,2026-01-01T00:00:00Z,"
+        "2026-01-01T00:05:00Z,2026-01-01T00:00:00Z,2026-01-01T00:10:00Z\n",
+        encoding="utf-8",
+    )
+
+    report = audit_sampling_csv(path)
+    check = report["passage_correction_check"]
+
+    assert check["ea_significant_rows"] == 1
+    assert check["ea_rows_with_passage_correction"] == 1
+    assert check["ea_ratio_check"] == "passed"
+    assert check["max_relative_error"] == pytest.approx(0.0)
+    assert check["vega_significant_rows"] == 1
+    assert check["vega_rows_with_passage_correction"] == 0
+
+
+def test_audit_detects_inconsistent_ea_passage_ratio(tmp_path: Path) -> None:
+    path = tmp_path / "sampling.csv"
+    path.write_text(
+        "sampling_type,sampling_bag_id,helium_concentration_sampling_bg_corrected_flag,"
+        "helium_concentration_sampling_bg_corrected,"
+        "helium_concentration_sampling_bg_passage_corrected,"
+        "sampling_start_time,sampling_end_time,helium_release_start_time,helium_release_end_time\n"
+        "EA,NA,significant,0.001,0.002,2026-01-01T00:00:00Z,"
+        "2026-01-01T00:15:00Z,2026-01-01T00:00:00Z,2026-01-01T00:10:00Z\n",
+        encoding="utf-8",
+    )
+
+    report = audit_sampling_csv(path)
+
+    assert report["passage_correction_check"]["ea_ratio_check"] == "failed"
+    assert len(report["passage_correction_check"]["ea_violations"]) == 1
+
+
 def test_versioned_diflu_fixture_has_reproducible_audit_summary() -> None:
     fixture = Path(__file__).parent / "fixtures/diflu/source/DIFLU_helium_release_sampling.csv"
     if not fixture.exists():
@@ -109,3 +154,9 @@ def test_versioned_diflu_fixture_has_reproducible_audit_summary() -> None:
     assert report["duplicate_identity_check"]["duplicate_key_row_count"] == 0
     assert report["semantic_checks"]["EA_literal_NA_and_VEGA_populated"] == "passed"
     assert report["semantic_checks"]["detection_flag_consistency"] == "passed"
+    assert report["passage_correction_check"]["ea_significant_rows"] == 196
+    assert report["passage_correction_check"]["ea_rows_with_passage_correction"] == 196
+    assert report["passage_correction_check"]["ea_ratio_check"] == "passed"
+    assert report["passage_correction_check"]["max_relative_error"] < 0.01
+    assert report["passage_correction_check"]["vega_significant_rows"] == 127
+    assert report["passage_correction_check"]["vega_rows_with_passage_correction"] == 0

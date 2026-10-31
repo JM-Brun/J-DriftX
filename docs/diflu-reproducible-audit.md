@@ -50,6 +50,8 @@ Les fichiers copiés et le manifeste doivent être inspectés puis ajoutés à G
 - Les valeurs `EA` doivent porter la valeur littérale `NA` dans `sampling_bag_id`, conformément au dictionnaire.
 - Les valeurs `VEGA` doivent avoir un identifiant de sac renseigné.
 - Les contrôles d’intégrité échouent explicitement si une taille ou un MD5 publié ne correspond pas.
+- Pour les EA significatifs, le rapport vérifie que `passage_corrected / bg_corrected` correspond à `durée du prélèvement / durée du rejet`, avec une tolérance relative de 1 % pour les arrondis des concentrations ; les anomalies sont listées par ligne.
+- Pour les VEGA significatifs, le rapport décrit la couverture du champ de correction de passage sans inférer ni imposer une règle physique.
 - Les valeurs `NA` ne sont pas globalement converties en valeurs manquantes.
 
 Le CSV original et l’export TSV transformé de Dataverse ne sont pas interchangeables. L’API annonce, pour le tableau principal, un original de 75 701 octets avec MD5 `d4477017be8efa2ed0f920499c319e3e`, alors que la taille publiée pour l’export TSV ne correspond pas au corps TSV observé pendant l’audit. Le script demande donc l’original explicitement et ne compare pas ses octets à la taille du TSV.
