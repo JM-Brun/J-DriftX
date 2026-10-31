@@ -7,7 +7,10 @@ from dataclasses import FrozenInstanceError, replace
 import numpy as np
 import pytest
 
+from jdriftx.champ_analytique import SuperpositionChamps
 from jdriftx.experiences.reconstruction_vent import (
+    CHAMP_CHOIX_1,
+    PERTURBATION,
     SCENARIO_DEFAUT,
     Rectangle,
     ScenarioReconstruction,
@@ -246,3 +249,18 @@ def test_le_scenario_refuse_les_points_booleens(booleen: bool | np.bool_, champ:
     # When / Then — la construction du scénario est refusée.
     with pytest.raises(ValueError, match="booléens exclus"):
         _scenario_modifie(**valeurs)
+
+
+def test_le_manifeste_exporte_une_superposition_imbriquee_sans_inventer_de_parametres() -> None:
+    """Un champ du protocole hors classe cellulaire est exporté par son type."""
+    # Given — un scénario dont le choix 2 imbrique une superposition.
+    champ_choix_2 = SuperpositionChamps((CHAMP_CHOIX_1, SuperpositionChamps((PERTURBATION,))))
+    scenario = _scenario_modifie(champ_choix_2=champ_choix_2)
+    manifeste = construire_manifeste(scenario, resoudre_scenario(scenario))
+    # When — l'export frontière est produit.
+    export = manifeste.vers_dict()
+    # Then — le champ cellulaire garde ses paramètres, l'imbriquée est exportée par type.
+    parametres = json.loads(json.dumps(export))["parametres"]
+    champs = parametres["champs_choix_2"]
+    assert champs[0] == {"amplitude": 800.0, "longueur": 1000.0}
+    assert champs[1] == {"type": "SuperpositionChamps"}
