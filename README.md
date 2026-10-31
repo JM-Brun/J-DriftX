@@ -10,6 +10,9 @@ Le projet historique est un **socle à reconstruire et à auditer, pas un carcan
 
 > **Statut scientifique :** hypothèse de recherche en phase de cadrage et de validation. La figure et la documentation conceptuelle illustrent l'approche envisagée ; elles ne constituent pas une validation de ses performances.
 
+**Lire aussi les limites avant les propriétés :** [limites météorologiques et de terrain](https://jm-brun.github.io/J-DriftX/hypotheses/limites.html) · [panorama de l'état de l'art](https://jm-brun.github.io/J-DriftX/etat-art/panorama.html) · [où se paie le coût](https://jm-brun.github.io/J-DriftX/theorie/comparaison-complexites.html) · [positionnement et critères de comparaison](https://jm-brun.github.io/J-DriftX/etat-art/positionnement.html).
+
+
 ## Héritage (2006–2009)
 
 | Année | Référence | Support |
