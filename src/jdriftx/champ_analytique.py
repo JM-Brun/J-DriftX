@@ -47,7 +47,7 @@ def _phase_periodique(coord: float, longueur: float) -> float:
     return 2.0 * math.pi * (math.remainder(coord, longueur) / longueur)
 
 
-def _produit_float64(*facteurs: float) -> float:
+def _produit_float64(*facteurs: float, sujet: str = "La vitesse du champ") -> float:
     """Multiplie des facteurs finis sans overflow intermediaire."""
     mantisse = 1.0
     exposant = 0
@@ -62,11 +62,11 @@ def _produit_float64(*facteurs: float) -> float:
     try:
         resultat = math.ldexp(mantisse, exposant)
     except OverflowError as err:
-        raise ValueError("La vitesse du champ doit rester finie.") from err
+        raise ValueError(f"{sujet} doit rester finie.") from err
     if not math.isfinite(resultat):
-        raise ValueError("La vitesse du champ doit rester finie.")
+        raise ValueError(f"{sujet} doit rester finie.")
     if resultat == 0.0:
-        raise ValueError("La vitesse du champ est sous-representable en float64.")
+        raise ValueError(f"{sujet} est sous-representable en float64.")
     return resultat
 
 
@@ -125,13 +125,20 @@ class ChampFonctionCourant:
     def fonction_courant(self, x: float, y: float) -> float:
         """Évalue la fonction de courant ψ(x, y) en m² s⁻¹.
 
+        Un facteur trigonométrique nul (bord ou centre de cellule) donne un
+        zéro mathématique exact ; en revanche, un produit de facteurs non
+        nuls sous-representable en float64 est refusé, comme pour la vitesse.
+
         Raises:
-            ValueError: si les coordonnées ne sont pas finies.
+            ValueError: si les coordonnées ne sont pas finies ou si la valeur
+                est sous-representable en float64.
         """
         _verifie_coordonnees(x, y)
         phase_x = _phase_periodique(x, self.longueur)
         phase_y = _phase_periodique(y, self.longueur)
-        return self.amplitude * math.sin(phase_x) * math.sin(phase_y)
+        return _produit_float64(
+            self.amplitude, math.sin(phase_x), math.sin(phase_y), sujet="La fonction de courant"
+        )
 
     def vitesse(self, x: float, y: float) -> tuple[float, float]:
         """Évalue (u, v) = (∂ψ/∂y, -∂ψ/∂x) en m s⁻¹, divergence nulle par construction.
@@ -163,16 +170,24 @@ class SuperpositionChamps:
     vitesse. L'invariant est simplement la présence d'au moins un champ.
 
     Attributes:
-        champs: tuple non vide de champs superposés.
+        champs: tuple non vide de champs superposés, chacun satisfaisant le
+            protocole ``ChampPlan`` : superpositions imbriquées et
+            implémentations structurelles substituables.
     """
 
-    champs: tuple[ChampFonctionCourant, ...]
+    champs: tuple[ChampPlan, ...]
 
     def __post_init__(self) -> None:
-        """Valide l'invariant : au moins un champ dans la superposition."""
+        """Valide l'invariant : au moins un champ, chacun exposant le protocole."""
         if not self.champs:
             msg = "La superposition exige au moins un champ."
             raise ValueError(msg)
+        for champ in self.champs:
+            if not callable(getattr(champ, "fonction_courant", None)) or not callable(
+                getattr(champ, "vitesse", None)
+            ):
+                msg = "Chaque champ doit exposer fonction_courant et vitesse callable."
+                raise TypeError(msg)
 
     def fonction_courant(self, x: float, y: float) -> float:
         """Évalue la somme des fonctions de courant au point (x, y).
