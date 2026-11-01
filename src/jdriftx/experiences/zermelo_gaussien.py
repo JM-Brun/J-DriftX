@@ -195,11 +195,12 @@ class ModeleGZ1:
         return (float(commande[0]), float(commande[1]), float(commande[2]))
 
     def jauge_randers(
-        self, vitesse: tuple[float, float, float] | NDArray[np.float64], temps: float
+        self, deplacement: tuple[float, float, float] | NDArray[np.float64], temps: float
     ) -> float:
-        """Temps local F(v), uniquement si R'(t)>||u||.
+        """Norme F(v) en secondes pour un déplacement tangent v (m).
 
-        Cette jauge instantanée n'est pas une formule de portée cumulée GZ-1.
+        Définie uniquement si R'(t)>||u||. Cette jauge instantanée n'est
+        pas une formule de portée cumulée pour le système GZ-1.
         """
         t = _scalaire_positif(temps, "Le temps")
         if t >= self.t_etoile:
@@ -209,7 +210,7 @@ class ModeleGZ1:
         norme_vent = float(np.linalg.norm(u))
         if c <= norme_vent:
             raise ValueError("Randers régulier exige strictement R'(t) > ||u||.")
-        v = np.asarray(_vecteur3(vitesse, "La vitesse"), dtype=float)
+        v = np.asarray(_vecteur3(deplacement, "Le déplacement"), dtype=float)
         a = c * c - norme_vent * norme_vent
         produit = float(u @ v)
         return (sqrt(produit * produit + a * float(v @ v)) - produit) / a
