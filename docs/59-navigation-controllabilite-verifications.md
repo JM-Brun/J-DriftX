@@ -362,9 +362,9 @@ Exemple minimal :
 from jdriftx.experiences import ModeleGZ1
 
 modele = ModeleGZ1(
-    masse=1.0e6,       # kg
-    seuil=1.0,         # kg m^-3
-    diffusivite=0.5,   # m^2 s^-1
+    masse=1.0e6,  # kg
+    seuil=1.0,  # kg m^-3
+    diffusivite=0.5,  # m^2 s^-1
     vent=(2.0, 0.0, 0.0),  # m s^-1
 )
 t = 0.4 * modele.t_etoile
