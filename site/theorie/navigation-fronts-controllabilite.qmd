@@ -1,0 +1,288 @@
+---
+title: "Navigation de Zermelo, fronts et Hamilton–Jacobi"
+---
+
+# Navigation de Zermelo, fronts et Hamilton–Jacobi
+
+Cette page établit un résultat analytique limité mais exact : pour un puff gaussien tridimensionnel en espace libre, un vent uniforme constant et une vitesse de contrôle égale à la vitesse d'expansion du rayon d'isoconcentration, le temps minimal de navigation coïncide avec le premier contact du front avec une cible fixe. Elle dérive ensuite la formulation Hamilton–Jacobi instationnaire correspondante.
+
+**Ce résultat ne redéfinit pas le temps de première arrivée passif** de la page [Métrique travel-time](metrique-travel-time.qmd). Il introduit un problème de contrôle distinct, noté (T_{\\mathrm{nav}}), et le compare au temps de première intersection du front, noté (T_{\\mathrm{front}}).
+
+## 1. Périmètre et statut des résultats
+
+Les niveaux de preuve doivent rester distincts :
+
+| Élément | Statut dans cette page |
+|---|---|
+| Rayon et vitesse d'expansion d'une isoconcentration gaussienne | Dérivation analytique exacte dans le modèle de puff posé ci-dessous |
+| Ensemble atteignable sous le contrôle isotrope prescrit | Démonstration analytique exacte, pour la classe de contrôles mesurables spécifiée |
+| Égalité (T_{\\mathrm{nav}}=T_{\\mathrm{front}}) | Théorème conditionnel démontré sous les hypothèses S0 |
+| Équation de Hamilton–Jacobi du front de contrôlabilité | Dérivation du Hamiltonien du problème de contrôle ; interprétation en solution de viscosité sous les hypothèses usuelles de la théorie HJ |
+| Équivalence avec un front d'advection–diffusion général | **Non démontrée** et non revendiquée |
+| Validité physique de la borne de contrôle (c(t)) | Hypothèse de modélisation, non conséquence de la seule solution gaussienne |
+
+Les démonstrations concernent le modèle mathématique explicite ci-dessous. Elles ne constituent ni une validation expérimentale ni une validation d'un modèle atmosphérique général.
+
+## 2. Puff gaussien et cinématique du front
+
+Considérons un puff gaussien tridimensionnel en espace libre, de masse (M>0), avec diffusivité constante isotrope (K>0), centré en (x_0) :
+
+[
+C(x,t)=\\frac{M}{(4\\pi Kt)^{3/2}}
+\\exp\\left(-\\frac{\\lVert x-x_0\\rVert^2}{4Kt}\\right),
+\\qquad t>0.
+]
+
+Pour un seuil fixé (C_0>0), le niveau (C(x,t)=C_0) est une sphère de rayon (R(t)), lorsque ce rayon est réel. En posant
+
+[
+\\Lambda(t)=\\ln\\left(\\frac{M}{C_0(4\\pi Kt)^{3/2}}\\right),
+]
+
+on obtient
+
+[
+R(t)^2=4Kt\\,\\Lambda(t).
+]
+
+Le rayon est réel si et seulement si \\(\\Lambda(t)\\geq 0\\). Sa dérivée vaut
+
+[
+c(t):=R'(t)=\\frac{2K}{R(t)}
+\\left(\\Lambda(t)-\\frac32\\right),
+\\qquad R(t)>0.
+]
+
+Définissons
+
+[
+t_* = \\frac{1}{4\\pi K}
+\\left(\\frac{M}{C_0e^{3/2}}\\right)^{2/3}.
+]
+
+Alors :
+
+- (R(t)) est strictement croissant pour (0<t<t_*) ;
+- (R'(t_*)=0), et (R) atteint son maximum à (t_*) ;
+- (R) décroît pour (t_*<t<e,t_*) ;
+- (R(t)) est réel sur (0<t\\leq e,t_*), puis le niveau (C=C_0) n'a plus de sphère réelle.
+
+**Restriction essentielle.** La vitesse de contrôle (c(t)=R'(t)) est une borne positive seulement sur la phase d'expansion (0<t<t_*). La prolonger comme borne \\(\\lVert s\\rVert\\leq c(t)\\) après (t_*) serait invalide puisque (c(t)<0). Le théorème ci-dessous s'arrête donc au temps (t_*).
+
+## 3. Problème de navigation S0
+
+On suppose que le centre du puff est transporté par un vent uniforme constant (u\\in\\mathbb R^3). Une trajectoire contrôlée satisfait
+
+[
+\\dot X(t)=u+s(t), \\qquad
+\\lVert s(t)\\rVert\\leq c(t)=R'(t)
+\\quad\\text{p.p. sur }(0,t_*).
+]
+
+Le départ est au centre du puff à l'âge zéro, au sens de la limite (X(0+)=x_0). La cible (x_B\\ne x_0) est fixe. On définit :
+
+[
+T_{\\mathrm{nav}}=\\inf\\{t\\in(0,t_*]:
+x_B\\text{ est atteinte par une trajectoire admissible à l'instant }t\\},
+]
+
+et
+
+[
+T_{\\mathrm{front}}=\\inf\\{t\\in(0,t_*]:
+\\lVert x_B-(x_0+ut)\\rVert\\leq R(t)\\}.
+]
+
+La convention est (+\\infty) si l'ensemble correspondant est vide. Le temps de front est ainsi le premier instant où la boule délimitée par l'isoconcentration contient la cible ; par continuité, pour une cible initialement extérieure, ce premier instant est un contact avec la frontière.
+
+### 3.1 Ensemble atteignable
+
+Pour tout (t\\in(0,t_*]), l'ensemble des positions atteignables à l'instant (t), en autorisant les contrôles mesurables vérifiant la borne presque partout, est exactement
+
+[
+\\mathcal R(t)=\\overline B(x_0+ut,R(t)).
+]
+
+**Preuve — inclusion directe.** Pour toute trajectoire admissible,
+
+[
+X(t)-(x_0+ut)=\\int_0^t s(\\tau)\\,d\\tau.
+]
+
+Par l'inégalité triangulaire pour l'intégrale et la borne sur le contrôle,
+
+[
+\\lVert X(t)-(x_0+ut)\\rVert
+\\leq\\int_0^t\\lVert s(\\tau)\\rVert d\\tau
+\\leq\\int_0^t R'(\\tau)d\\tau
+=R(t)-R(0+)=R(t).
+]
+
+On a (R(0+)=0), d'où l'inclusion dans la boule annoncée.
+
+**Preuve — inclusion réciproque.** Soit (zin\\mathbb R^3) tel que (\\lVert z\\rVert\\leq R(t)). Pour (z\\ne0), choisissons
+
+[
+s(\\tau)=\\frac{z}{R(t)}R'(\\tau), \\qquad 0<\\tau\\leq t.
+]
+
+Alors (s) est mesurable, (\\lVert s(\\tau)\\rVert\\leq R'(\\tau)), et
+
+[
+\\int_0^t s(\\tau)d\\tau
+=\\frac{z}{R(t)}\\int_0^t R'(\\tau)d\\tau=z.
+]
+
+Pour (z=0), prendre (s=0). Toute position de la boule est donc atteignable. Cela achève la preuve.
+
+### 3.2 Égalité des temps
+
+**Théorème S0.** Sous les hypothèses de la section 3, pour toute cible fixe (x_B\\ne x_0),
+
+[
+\\boxed{T_{\\mathrm{nav}}=T_{\\mathrm{front}}.}
+]
+
+**Preuve.** L'égalité de l'ensemble atteignable montre que (x_B) est atteignable à l'instant (t) si et seulement si
+
+[
+\\lVert x_B-(x_0+ut)\\rVert\\leq R(t).
+]
+
+Les ensembles d'instants admissibles dans les définitions de (T_{\\mathrm{nav}}) et (T_{\\mathrm{front}}) sont donc identiques. Leurs infimums sont égaux. Pour une cible distincte du centre initial, la distance au centre est strictement positive à (t=0) ; le premier instant de contact, s'il existe, est sur la frontière par continuité. \\(\\square\\)
+
+**Remarque sur la singularité initiale.** Lorsque (t\\to0+), (R(t)\\to0) mais (R'(t)\\to+\\infty). Cette singularité est intégrable :
+
+[
+\\int_0^t R'(\\tau)d\\tau=R(t)<\\infty.
+]
+
+Le contrôle construit dans la preuve peut donc être non borné au voisinage de zéro tout en étant intégrable et admissible presque partout. Le théorème est établi pour cette classe de contrôles mesurables avec borne ponctuelle (R'(t)), pas pour une classe imposant en plus (s\\in L^\\infty(0,t_*)). Sous cette dernière restriction, l'égalité exacte de l'ensemble atteignable n'est pas démontrée ici.
+
+## 4. Pourquoi le résultat ne vaut pas sans ces hypothèses
+
+Le théorème S0 est volontairement étroit.
+
+- **Départ à âge positif (t_0>0), au centre du puff à cet âge.** Le même raisonnement donne un rayon atteignable (R(t)-R(t_0)), et non (R(t)). Le front d'isoconcentration reste de rayon (R(t)) autour du centre advecté. Les deux temps ne sont donc pas identifiés en général.
+- **Cible mobile.** Il faut résoudre une condition d'interception dépendant de la trajectoire de la cible ; la preuve pour une cible fixe ne suffit pas.
+- **Vent spatialement variable (u(x,t)).** Le déplacement du centre n'est plus une translation uniforme commune à toutes les trajectoires. L'ensemble atteignable n'est plus obtenu par la simple boule translatée de la preuve.
+- **Diffusion physique générale.** Un front de concentration issu d'une équation d'advection–diffusion n'est pas, en général, un front de contrôlabilité. Leur coïncidence doit être démontrée pour un modèle et des hypothèses précis.
+- **Phase de contraction du puff.** (R'(t)<0) après (t_*) ; cette dérivée ne peut pas être utilisée comme borne positive de vitesse de contrôle.
+
+Ces cas sont des extensions ouvertes, et non des corollaires implicites du théorème S0.
+
+## 5. Hamiltonien et équation de Hamilton–Jacobi instationnaire
+
+Considérons maintenant le problème de contrôle général
+
+[
+\\dot X=u(X,t)+s(t), \\qquad
+s(t)\\in\\overline B(0,c(X,t)),
+]
+
+avec (c(x,t)\\geq0). Pour une fonction test (p\\in\\mathbb R^d), le Hamiltonien de maximisation associé à la vitesse admissible est le support de l'ensemble des vitesses :
+
+[
+H(x,t,p)=\\sup_{\\lVert s\\rVert\\leq c(x,t)}
+(u(x,t)+s)\\cdot p
+=u(x,t)\\cdot p+c(x,t)\\lVert p\\rVert.
+]
+
+En représentant le front de la région atteignable par un niveau zéro \\(\\phi(x,t)=0\\), avec la région atteignable du côté \\(\\phi\\leq0\\), l'équation de niveau correspondante est
+
+[
+\\boxed{\\phi_t+u(x,t)\\cdot\\nabla\\phi
++c(x,t)\\lVert\\nabla\\phi\\rVert=0.}
+]
+
+Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié. Lorsque le front développe des coins ou des changements de topologie, une solution classique peut ne plus exister ; la formulation pertinente est alors celle des solutions de viscosité, sous les hypothèses usuelles de continuité et de coercivité/contrôle appropriées.
+
+### 5.1 Vérification dans le cas S0
+
+Dans le cas uniforme, prenons
+
+[
+\\phi(x,t)=\\lVert x-x_0-ut\\rVert-R(t).
+]
+
+Partout où le gradient est défini,
+
+[
+\\nabla\\phi=\\frac{x-x_0-ut}{\\lVert x-x_0-ut\\rVert},
+\\qquad
+\\phi_t=-u\\cdot\\nabla\\phi-R'(t).
+]
+
+Avec (c(t)=R'(t)), on obtient bien
+
+[
+\\phi_t+u\\cdot\\nabla\\phi+c(t)\\lVert\\nabla\\phi\\rVert=0.
+]
+
+Cette vérification retrouve le front sphérique de la preuve S0. Au centre de la boule, la norme n'est pas différentiable ; la formulation de niveau doit alors être comprise au sens de viscosité.
+
+### 5.2 Ne pas confondre trois équations
+
+- L'équation ci-dessus est une équation de front de **contrôlabilité**, issue de l'ensemble des vitesses admissibles.
+- Une équation d'advection–diffusion gouverne une concentration et sa masse ; elle contient un opérateur diffusif et des conditions aux limites propres.
+- Une eikonale stationnaire de temps minimal, telle que (u\\cdot\\nabla T+c\\lVert\\nabla T\\rVert=1), correspond à un problème de coût de navigation dans un cadre stationnaire approprié. Elle ne remplace pas directement l'équation instationnaire du front.
+
+Une équation de niveau de contrôlabilité ne prouve donc pas qu'un niveau d'isoconcentration d'une EDP d'advection–diffusion générale satisfait la même équation.
+
+## 6. Géométrie de Zermelo et forme de Randers
+
+À un instant et en un point fixés, considérons la vitesse admissible
+
+[
+v=u+s, \\qquad \\lVert s\\rVert\\leq c,
+]
+
+avec (c>\\lVert u\\rVert). Posons (A=c^2-\\lVert u\\rVert^2>0). Le temps infinitésimal de navigation est donné par la jauge de Zermelo
+
+[
+F(v)=
+\\frac{\\sqrt{(u\\cdot v)^2+A\\lVert v\\rVert^2}-u\\cdot v}{A}.
+]
+
+Elle s'écrit sous la forme de Randers (F(v)=\\sqrt{a_{ij}v^iv^j}+b_iv^i), avec
+
+[
+a_{ij}=\\frac{A\\delta_{ij}+u_i u_j}{A^2},
+\\qquad b_i=-\\frac{u_i}{A}.
+]
+
+Si (\\mu=1-\\lVert u\\rVert^2/c^2), alors (A=c^2\\mu) et
+
+[
+a_{ij}=\\frac{c^2\\mu\\delta_{ij}+u_i u_j}{c^4\\mu^2},
+\\qquad b_i=-\\frac{u_i}{c^2\\mu}.
+]
+
+Le facteur (\\mu^2) au dénominateur de (a_{ij}) est essentiel. La condition sous-critique (\\lVert u\\rVert<c) garantit (A>0). Lorsque (c) dépend du temps, cette expression décrit une géométrie de navigation **instantanée** ; elle ne transforme pas à elle seule le problème instationnaire en une métrique de Finsler stationnaire globale.
+
+Cette construction concerne la navigation contrôlée de Zermelo. Elle ne requalifie pas la construction historique projetée (T_{\\mathrm{proj}}) en métrique de Finsler. Pour le statut des objets historiques et les axiomes, voir [Métrique travel-time](metrique-travel-time.qmd) et [Métriques non riemanniennes](metriques-non-riemanniennes.qmd).
+
+## 7. Conséquences pour les méthodes numériques
+
+L'équation HJ instationnaire fournit un cadre de calcul pour le front de contrôlabilité, mais ne justifie pas à elle seule le choix d'un algorithme.
+
+Avant de revendiquer un solveur de type Fast Marching ou une méthode eikonale, il faut notamment établir :
+
+1. si le problème est stationnaire ou instationnaire ;
+2. la monotonie et la stabilité du schéma discret ;
+3. la causalité de l'ordre de mise à jour ;
+4. la convexité du Hamiltonien dans la variable duale (p) ;
+5. le traitement des fronts non réguliers, des changements topologiques et des conditions aux limites ;
+6. la convergence vers la solution de viscosité pertinente.
+
+Pour le cas S0 uniforme, la solution analytique \\(\\phi(x,t)=\\lVert x-x_0-ut\\rVert-R(t)\\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
+
+## 8. Résumé des conclusions et prochaines extensions
+
+**Démontré ici :** dans le problème S0, l'ensemble atteignable à l'instant (t) est la boule fermée de centre (x_0+ut) et de rayon (R(t)), et (T_{\\mathrm{nav}}=T_{\\mathrm{front}}) pour une cible fixe distincte du centre initial.
+
+**Dérivé ici :** le Hamiltonien (H=u\\cdot p+c\\lVert p\\rVert), l'équation HJ instationnaire correspondante et la forme de Randers du problème de navigation sous-critique instantané.
+
+**Non établi :** l'équivalence pour un départ à âge positif, une cible mobile, un vent variable, une classe de contrôles globalement bornés ou un front issu d'une équation d'advection–diffusion générale.
+
+La suite scientifique doit traiter ces extensions une par une, en conservant pour chacune un énoncé, des hypothèses, une preuve ou un contre-exemple, puis seulement un test numérique. Le registre de preuve du projet doit refléter ces statuts sans convertir une démonstration conditionnelle en validation physique.
