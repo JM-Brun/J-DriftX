@@ -61,10 +61,12 @@ Ne pas rouvrir ces PR. La branche de #435 est désormais redondante sur le plan 
 
 L'inventaire précédent identifiait 16 branches de travail. Les décisions ci-dessous sont des candidates, pas une autorisation de suppression aveugle :
 
-- **Candidates à supprimer après une dernière comparaison avec `main`** : `docs/comparaison-jesa-2010-manuscrit-2009`, `docs/finalize-audit-followups`, `rebase/edp-overflow-current-bool-v2` (aucun commit propre détecté au contrôle précédent).
-- **Doublon exact à supprimer en conservant l'autre nom** : `rebase/edp-overflow-on-current-bool-2026-10-30` était identique à `fix/complex-inputs-concentration-edp-2026-10-30`.
-- **Branche remplacée par la PR #438** : `audit/diflu-atc-reference-extrema-ci-2026-11-01`. Vérifier que son diff net est désormais entièrement couvert avant suppression.
-- **Branches à ne pas supprimer sur la seule base du retard** : les branches `fix/*` sur les frontières booléennes, les entrées numériques, le parseur MNT et la stabilité puff ont des commits propres et des recouvrements entre elles. Vérifier les PR historiques fusionnées et l'équivalence des patches branche par branche.
+- Les anciennes refs `docs/comparaison-jesa-2010-manuscrit-2009`, `docs/finalize-audit-followups` et `rebase/edp-overflow-current-bool-v2` ne sont plus présentes dans la recherche paginée des branches distantes au contrôle du 2026-11-01. Ne pas les traiter comme des suppressions encore à effectuer.
+- **Doublon exact à supprimer en conservant l'autre nom** : `rebase/edp-overflow-on-current-bool-2026-10-30` et `fix/complex-inputs-concentration-edp-2026-10-30` ont le même diff net par rapport à `main` (3 commits en avance, 269 en retard, mêmes trois fichiers). Conserver une seule branche après vérification finale de l'identité des refs.
+- **Branches ATC supersédées par la PR #438** : `audit/diflu-atc-reference-extrema-ci-2026-11-01` (ancienne branche de #435) et `audit/diflu-atc-extrema-current-main-2026-11-01` (branche fusionnée de #438). Le code, les tests et le protocole sont présents dans `main`; vérifier les têtes de refs avant suppression.
+- **Branche documentaire à comparer avant décision** : `docs/diflu-article-dataset-crosswalk-2026-10-31` a encore un commit propre et 12 lignes de diff dans le protocole ; le contenu paraît repris/évolué dans `main`, mais vérifier le sens de ces lignes avant suppression.
+- **Branches à ne pas supprimer sur la seule base du retard** : les dix branches `fix/*` portent des changements sur les frontières booléennes, les entrées numériques, le parseur MNT, les trajectoires et la stabilité puff. Elles ont des commits propres et des recouvrements entre elles ; établir leur correspondance avec les PR historiques fusionnées et comparer les fichiers avant toute suppression.
+- La branche `docs/s0-zermelo-hj-proof` apparaît aussi dans l'inventaire actuel mais relève d'un autre sujet ; la laisser hors de ce nettoyage.
 
 Le nombre de commits en avance/en retard n'est pas une preuve suffisante d'équivalence fonctionnelle. Pour chaque suppression, comparer le diff net à `main`, vérifier les PR associées et conserver au moins une référence canonique du correctif. La suppression des refs distantes reste une opération GitHub/CLI distincte de la fermeture d'une PR.
 
