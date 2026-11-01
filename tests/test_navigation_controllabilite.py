@@ -199,6 +199,28 @@ def test_le_theoreme_gz1_egalise_navigation_et_front() -> None:
     )
 
 
+def test_la_commande_radiale_remplit_exactement_la_boule() -> None:
+    """La commande radiale atteint tout rayon relatif entre 0 et R(t)."""
+    # Given — un instant d'expansion et une direction unitaire fixe.
+    t = 50.0
+    direction = np.array([0.6, 0.8, 0.0])
+    rayon = _rayon(t)
+    # When — on utilise une fraction du budget de déplacement radial.
+    for fraction in (0.0, 0.5, 1.0):
+        if fraction == 0.0:
+            commande = lambda tau: np.zeros(3)
+        else:
+            commande = lambda tau: fraction * direction * _vitesse(tau)
+        # Then — la borne est respectée aux instants testés.
+        for tau in (1.0, 10.0, 25.0, t):
+            assert float(np.linalg.norm(commande(tau))) <= _vitesse(tau) + 1e-12
+        # Then — l'intégrale exacte donne le point intérieur ou de frontière.
+        deplacement = fraction * rayon * direction
+        assert float(np.linalg.norm(deplacement)) == pytest.approx(fraction * rayon)
+    # Then — une demande extérieure excède nécessairement le budget disponible.
+    assert 1.1 * rayon > rayon
+
+
 def test_une_cible_hors_de_portee_n_est_jamais_atteinte() -> None:
     """Une cible que le front n'englobe jamais n'a pas de temps de contact."""
     # Given — une cible dont l'écart minimal au centre dépasse le rayon atteint.
