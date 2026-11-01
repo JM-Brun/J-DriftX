@@ -20,11 +20,11 @@ Le modèle exclut les frontières, le dépôt, les réactions, les sources conti
 
 ## 2. Du noyau gaussien au rayon du seuil
 
-Le noyau fondamental est
-$$
+Le noyau s'obtient en retirant d'abord le vent. Posons $y=x-ut$ et $\widetilde C(y,t)=C(y+ut,t)$. À $y$ fixé, la règle de chaîne donne $\partial_t\widetilde C=\partial_t C+u\cdot\nabla C$, tandis que $\Delta_y\widetilde C=\Delta_x C$. L'EDP devient donc $\partial_t\widetilde C=K\Delta_y\widetilde C$, l'équation de la chaleur. En dimension 1, son noyau normalisé est $(4\pi Kt)^{-1/2}\exp(-y^2/(4Kt))$. En dimension 3, l'isotropie permet de multiplier les trois noyaux 1D : le préfacteur devient $(4\pi Kt)^{-3/2}$ et les trois carrés s'additionnent dans la norme euclidienne. On multiplie par la masse $M$, puis on revient au référentiel fixe :
+$
 C(x,t)=\frac{M}{(4\pi Kt)^{3/2}}
 \exp\left(-\frac{\|x-x_0-ut\|^2}{4Kt}\right).
-$$
+$
 
 Deux facteurs ont une interprétation simple :
 
