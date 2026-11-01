@@ -28,7 +28,7 @@ def modele() -> ModeleGZ1:
 
 def test_parametres_et_domaines_sont_valides() -> None:
     """Les scalaires non positifs et coordonnées non réelles sont refusés."""
-    with pytest.raises(ValueError, match="Masse"):
+    with pytest.raises(ValueError, match="masse"):
         ModeleGZ1(masse=0.0, seuil=1.0, diffusivite=1.0)
     with pytest.raises(ValueError, match="Seuil"):
         ModeleGZ1(masse=1.0, seuil=float("nan"), diffusivite=1.0)
@@ -39,7 +39,7 @@ def test_parametres_et_domaines_sont_valides() -> None:
     with pytest.raises(ValueError, match="vecteur"):
         ModeleGZ1(masse=1.0, seuil=1.0, diffusivite=1.0, vent=(True, 1.0, 0.0))
     modele_invalide = ModeleGZ1(masse=1.0, seuil=1.0, diffusivite=1.0)
-    with pytest.raises(ValueError, match="Temps"):
+    with pytest.raises(ValueError, match="temps"):
         modele_invalide.rayon(0.0)
 
 
