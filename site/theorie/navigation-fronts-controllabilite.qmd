@@ -381,7 +381,7 @@ La relation entre ces trois objets est donc une **parenté de famille (source im
 
 **Démontré ici :** dans le problème GZ-1, l'ensemble atteignable à l'instant \(t\) est la boule fermée de centre \(x_0+ut\) et de rayon \(R(t)\), et \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) pour une cible fixe distincte du centre initial.
 
-**Dérivé ici :** le Hamiltonien \(H=u\cdot p+c\lVert p\rVert\), l'équation HJ instationnaire correspondante et la forme de Randers du problème de navigation sous-critique instantané.
+**Dérivé ici :** le Hamiltonien \(H=u\cdot p+c\lVert p\rVert\), l'équation HJ instationnaire, la solution de viscosité GZ-1 unique par reparamétrisation et formule de Hopf–Lax, ainsi que la forme de Randers dans le domaine sous-critique instantané.
 
 **Non établi :** l'équivalence pour un départ à âge positif, une cible mobile, un vent variable, une classe de contrôles globalement bornés ou un front issu d'une équation d'advection–diffusion générale. Aucun solveur HJ n'est encore implémenté ni validé dans le dépôt par cette page.
 
