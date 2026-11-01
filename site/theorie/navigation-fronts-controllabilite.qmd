@@ -454,6 +454,23 @@ Hors du cône aval, `T=+∞` par convention. Sur l'axe aval, la formule redonne
 Elle ne démontre pas le cas GZ-1 supercritique instationnaire où `c(t)=R'(t)`
 varie avec le temps.
 
+Il ne faut pas remplacer simplement `c` par `c(t)` dans le cône. Dans GZ-1,
+la vitesse de contrôle est d'abord supérieure à `‖u‖`, puis devient inférieure
+après `t_Z`. La géométrie instantanée de la boule des vitesses change donc de
+régime, mais l'ensemble atteignable à l'instant `t` dépend de tout le budget
+accumulé depuis le départ :
+
+\[
+\left\|X(t)-(x_0+ut)\right\|
+\leq\int_0^t c(\tau)\,d\tau=R(t).
+\]
+
+Les commandes appliquées tôt, lorsque `c(τ) > ‖u‖`, contribuent encore au
+déplacement relatif final. Le théorème GZ-1 donne ainsi une boule atteignable
+pour chaque `t ≤ t_*`, même après le seuil instantané `t_Z`. Le cône aval à
+borne constante est un résultat distinct ; le seuil `t_Z` borne la régularité
+de la métrique de Randers instantanée, pas la portée du système instationnaire.
+
 ## 7. Conséquences pour les méthodes numériques
 
 L'équation HJ instationnaire fournit un cadre de calcul pour le front de contrôlabilité, mais ne justifie pas à elle seule le choix d'un algorithme.
