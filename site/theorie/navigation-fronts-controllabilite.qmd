@@ -37,6 +37,17 @@ Considérons l'équation d'advection–diffusion sur \(\mathbb R^3\), sans front
 \partial_t C+u\cdot\nabla C=K\Delta C,\qquad C(\cdot,0)=M\,\delta_{x_0}.
 \]
 
+Le noyau se comprend par un changement de référentiel galiléen. Posons \(y=x-ut\) et \(\widetilde C(y,t)=C(y+ut,t)\). Comme \(u\) est constant, la règle de chaîne donne
+
+\[
+\partial_t\widetilde C
+=\partial_t C+u\cdot\nabla_x C,
+\qquad
+\Delta_y\widetilde C=\Delta_x C.
+\]
+
+L'équation d'advection–diffusion devient donc l'équation de la chaleur \(\partial_t\widetilde C=K\Delta_y\widetilde C\), avec la même masse ponctuelle initiale en \(x_0\). En dimension 1, le noyau de chaleur normalisé est \((4\pi Kt)^{-1/2}\exp(-y^2/(4Kt))\). L'isotropie et la séparation des trois coordonnées donnent le produit de trois noyaux 1D, donc le facteur \((4\pi Kt)^{-3/2}\) et l'exponentielle en norme euclidienne. On multiplie par \(M\), puis on revient au référentiel fixe : le centre est simplement translaté de \(ut\).
+
 Le centre advecté est \(x_c(t)=x_0+ut\). Pour \(t>0\), le noyau fondamental est :
 
 \[
