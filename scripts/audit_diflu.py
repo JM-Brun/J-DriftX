@@ -352,8 +352,6 @@ def _audit_passage_correction(
     }
 
 
-
-
 ARTICLE_EVENT_CROSSWALK = {
     "#1_3": "1-1",
     "#1_4": "1-2",
@@ -399,15 +397,12 @@ def _audit_atc_candidate(
     for row_number, row in enumerate(rows, start=2):
         if (
             _value(row, "sampling_type") != "EA"
-            or _value(row, "helium_concentration_sampling_bg_corrected_flag")
-            != "significant"
+            or _value(row, "helium_concentration_sampling_bg_corrected_flag") != "significant"
         ):
             continue
         eligible_rows += 1
         try:
-            concentration = float(
-                _value(row, "helium_concentration_sampling_bg_passage_corrected")
-            )
+            concentration = float(_value(row, "helium_concentration_sampling_bg_passage_corrected"))
             release_flow = float(_value(row, "helium_release_flow"))
         except ValueError:
             invalid_rows.append({"row": row_number, "reason": "missing_or_non_numeric_input"})
@@ -424,9 +419,7 @@ def _audit_atc_candidate(
             {
                 "row": row_number,
                 "experiment_id": _value(row, "experiment_id"),
-                "article_experiment": ARTICLE_EVENT_CROSSWALK.get(
-                    _value(row, "experiment_id")
-                ),
+                "article_experiment": ARTICLE_EVENT_CROSSWALK.get(_value(row, "experiment_id")),
                 "sampling_id": _value(row, "sampling_id"),
                 "atc_s_m3": concentration / release_flow,
             }
@@ -460,12 +453,8 @@ def _audit_atc_candidate(
         computed_max = article_summary["maximum"]
         min_reference = ARTICLE_ATC_REFERENCE["minimum"]
         max_reference = ARTICLE_ATC_REFERENCE["maximum"]
-        min_error = abs(computed_min["atc_s_m3"] - min_reference["value"]) / min_reference[
-            "value"
-        ]
-        max_error = abs(computed_max["atc_s_m3"] - max_reference["value"]) / max_reference[
-            "value"
-        ]
+        min_error = abs(computed_min["atc_s_m3"] - min_reference["value"]) / min_reference["value"]
+        max_error = abs(computed_max["atc_s_m3"] - max_reference["value"]) / max_reference["value"]
         event_ids_match = (
             ARTICLE_EVENT_CROSSWALK.get(computed_min["experiment_id"])
             == min_reference["experiment"]
@@ -491,9 +480,7 @@ def _audit_atc_candidate(
         }
 
     return {
-        "formula": (
-            "helium_concentration_sampling_bg_passage_corrected / helium_release_flow"
-        ),
+        "formula": ("helium_concentration_sampling_bg_passage_corrected / helium_release_flow"),
         "unit": "s m-3",
         "scope": "EA significant rows only; VEGA is not inferred or imputed",
         "eligible_ea_significant_rows": eligible_rows,
