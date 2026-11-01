@@ -38,7 +38,7 @@ Ce document sépare résultats vérifiés, inférences et questions ouvertes. Le
 
 ## 3. PR et artefacts — état vérifié le 2026-11-01
 
-Les PR de la séquence DIFLU sont désormais intégrées ou explicitement supersédées. **Aucune PR n'est actuellement ouverte** dans le dépôt au dernier contrôle.
+Les PR scientifiques de la séquence DIFLU sont désormais intégrées ou explicitement supersédées. La présente actualisation du document est portée par la PR documentaire [#439](https://github.com/JM-Brun/J-DriftX/pull/439).
 
 | PR | Objet | État vérifié |
 |---|---|---|
