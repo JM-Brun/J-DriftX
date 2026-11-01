@@ -277,12 +277,18 @@ def test_le_regime_supercritique_definit_un_cone() -> None:
     # Then — le cône amont opposé est rejeté, même si son sinus est petit.
     amont_oblique = np.array([-math.cos(0.1), math.sin(0.1), 0.0]) * 10.0
     assert _temps_navigation_cone(amont_oblique, c) is None
+    # Given — au seuil critique c = |u|, les directions aval restent accessibles.
+    critique = float(np.linalg.norm(VENT))
+    assert _temps_navigation_cone(axe, critique) is not None
+    # Then — la direction exactement transverse est seulement limite, pas atteinte.
+    transverse = np.array([0.0, 10.0, 0.0])
+    assert _temps_navigation_cone(transverse, critique) is None
 
 
 def test_le_front_satisfait_l_equation_hamilton_jacobi() -> None:
     """La valeur de Hopf–Lax max(|x - u t| - R(t), 0) résout HJ
     hors du coin du front ; le plateau intérieur est également vérifié."""
-    # Given — trois points du front au temps t = 40, en phase d'expansion.
+    # Given — trois points extérieurs au front au temps t = 40.
     t = 40.0
     points = (
         np.array([50.0, 20.0, 5.0]),
@@ -300,7 +306,7 @@ def test_le_front_satisfait_l_equation_hamilton_jacobi() -> None:
         np.array([0.0, 1.0, 0.0]),
         np.array([0.0, 0.0, 1.0]),
     )
-    points += (VENT * t,)  # point strictement intérieur : gradient et dérivée nuls.
+    points += (VENT * t,)  # point intérieur : gradient et dérivée nuls.
     for x in points:
         # When — les dérivées de φ sont prises par différences finies centrées.
         grad = np.array(
