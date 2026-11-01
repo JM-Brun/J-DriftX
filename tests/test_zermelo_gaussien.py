@@ -97,9 +97,9 @@ def test_front_et_fonction_de_valeur_hj_ont_le_plateau_nul(modele: ModeleGZ1) ->
     assert modele.concentration(tuple(point_front), t) == pytest.approx(modele.seuil, rel=1e-12)
     assert modele.valeur_hj(tuple(centre), t) == 0.0
     assert modele.valeur_hj(tuple(centre + 0.5 * rayon * np.array([1.0, 0.0, 0.0])), t) == 0.0
-    assert modele.valeur_hj(
-        tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t
-    ) == pytest.approx(0.0)
+    assert modele.valeur_hj(tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t) == pytest.approx(
+        0.0
+    )
     assert modele.valeur_hj(
         tuple(centre + 2.0 * rayon * np.array([1.0, 0.0, 0.0])), t
     ) == pytest.approx(rayon)
