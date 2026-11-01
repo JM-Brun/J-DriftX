@@ -65,7 +65,20 @@ car $\Lambda'=-3/(2t)$. Ainsi
 $$
 c(t)=R'(t)=\frac{2K}{R(t)}\left(\Lambda(t)-\frac32\right)
 =\frac{3K}{R(t)}\ln\frac{t_*}{t}.
-$$
+$
+
+On peut aussi démontrer que cette vitesse décroît strictement pendant l'expansion. En dérivant la forme précédente :
+$
+R''(t)=2K\left[
+\frac{\Lambda'(t)}{R(t)}-
+\frac{(\Lambda(t)-3/2)R'(t)}{R(t)^2}
+\right]
+=2K\left[
+-\frac{3}{2tR(t)}-
+\frac{(\Lambda(t)-3/2)R'(t)}{R(t)^2}
+\right]<0,
+$
+car, sur $0<t<t_*$, $R>0$, $R'>0$ et $\Lambda-3/2>0$. Ainsi $c$ décroît de $+\infty$ à $0$. Pour un vent non nul de norme fixe $\|u\|$, l'équation $c(t_Z)=\|u\|$ possède donc une unique solution : le passage sous-critique/supercritique de la géométrie instantanée de Randers est unique.
 
 Le signe est désormais lisible : $c(t)>0$ avant $t_*$, $c(t_*)=0$, puis $c(t)<0$ pendant la contraction. Le niveau disparaît à $t_{\rm ext}=et_*$. Le contrôle ne peut pas avoir une borne de norme négative ; GZ-1 est donc limité à $0<t\leq t_*$. De plus, $R'(t)\to+\infty$ quand $t\to0^+$, mais
 $$
