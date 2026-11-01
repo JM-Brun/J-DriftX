@@ -232,8 +232,8 @@ $$
 En posant $A=c^2-\|u\|^2$, on obtient
 $$
 AF^2+2(u\cdot v)F-\|v\|^2=0.
-$$
-Pour $A>0$, la racine positive est
+$
+Le produit des deux racines vaut $-\|v\|^2/A<0$ pour $v\ne0$ : il existe donc exactement une racine positive, qui est le temps minimal. Pour $A>0$, cette racine est
 $$
 F(v)=\frac{\sqrt{(u\cdot v)^2+A\|v\|^2}-u\cdot v}{A}.
 $$
