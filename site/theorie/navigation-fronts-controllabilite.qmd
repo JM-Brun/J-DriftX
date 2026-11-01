@@ -183,7 +183,7 @@ H(x,t,p)=\sup_{\lVert s\rVert\leq c(x,t)}
 =u(x,t)\cdot p+c(x,t)\lVert p\rVert.
 \]
 
-En représentant le front de la région atteignable par un niveau zéro \(\phi(x,t)=0\), avec la région atteignable du côté \(\phi\leq0\), l'équation de niveau correspondante est
+Pour un départ ponctuel en \(x_0\), on peut prendre la donnée initiale \(\phi(x,0)=\lVert x-x_0\rVert\), dont le sous-niveau zéro est le singleton \(\{x_0\}\). En représentant ensuite le front de la région atteignable par un niveau zéro \(\phi(x,t)=0\), avec la région atteignable du côté \(\phi\leq0\), l'équation de niveau correspondante est
 
 \[
 \boxed{\phi_t+u(x,t)\cdot\nabla\phi
@@ -278,12 +278,12 @@ Avant de revendiquer un solveur de type Fast Marching ou une méthode eikonale, 
 
 Pour le cas GZ-1 uniforme, la solution analytique \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
 
-## 8. Conclusions et prochaines extensions
+## 8. Relation avec les expériences puff déjà présentes dans J-DriftX\n\nLe mot « puff » désigne ici plusieurs objets qu'il faut garder distincts :\n\n| Objet | Modèle / calcul | Ce qu'il établit | Ce qu'il n'établit pas |\n|---|---|---|---|\n| **GZ-1 (cette page)** | Noyau fondamental 3D isotrope à diffusivité constante \(K\), sur \(\mathbb R^3\), avec vent uniforme et impulsion de masse \(M\). | Preuve exacte de l'ensemble atteignable et de \(T_{\\mathrm{nav}}=T_{\\mathrm{front}}\) sous les hypothèses énoncées. | Ne valide pas les paramétrisations empiriques du package, les données expérimentales ou une méthode numérique. |\n| **Évaluation dirigée du puff** ([note 53](../../docs/53-evaluation-puff-source-impulsionnelle.md)) | Temps dirigé par pseudo-distance uniforme, concentration par `concentration_puff`, avec paramètres Briggs et isotropie longitudinale approchée \(\\sigma_x\\approx\\sigma_y\\). | Cohérence interne de cette route sur la grille synthétique S0 et les 12 points documentés. | N'est pas le noyau fondamental isotrope de GZ-1 ; le maximum temporel est recherché sur une grille, pas optimisé exactement. |\n| **Route EDP transitoire** ([note 54](../../docs/54-transitoire-puff-edp-transitoire-marginale.md)) | Marche FTCS en temps de la marginale transverse du puff, puis reconstruction de la concentration aux points. | Comparaison numérique de deux routes sur le cas figé, avec erreurs et limites de troncature documentées. | N'est ni un solveur HJ du front de contrôlabilité ni une preuve de l'égalité GZ-1. |\n\nLa relation entre ces trois objets est donc une **parenté de famille (source impulsionnelle gaussienne)**, pas une identité de modèle. En particulier, le cas de référence S0 des notes 48–54 est un benchmark du dépôt ; l'étiquette GZ-1 est réservée au théorème de navigation présenté ici. Toute comparaison quantitative entre GZ-1 et `concentration_puff` nécessitera d'abord une mise en correspondance des noyaux, des coordonnées, des unités et des hypothèses de diffusion.\n\n## 9. Conclusions et prochaines extensions
 
 **Démontré ici :** dans le problème S0, l'ensemble atteignable à l'instant \(t\) est la boule fermée de centre \(x_0+ut\) et de rayon \(R(t)\), et \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) pour une cible fixe distincte du centre initial.
 
 **Dérivé ici :** le Hamiltonien \(H=u\cdot p+c\lVert p\rVert\), l'équation HJ instationnaire correspondante et la forme de Randers du problème de navigation sous-critique instantané.
 
-**Non établi :** l'équivalence pour un départ à âge positif, une cible mobile, un vent variable, une classe de contrôles globalement bornés ou un front issu d'une équation d'advection–diffusion générale.
+**Non établi :** l'équivalence pour un départ à âge positif, une cible mobile, un vent variable, une classe de contrôles globalement bornés ou un front issu d'une équation d'advection–diffusion générale. Aucun solveur HJ n'est encore implémenté ni validé dans le dépôt par cette page.
 
 La suite scientifique doit traiter ces extensions une par une, en conservant pour chacune un énoncé, des hypothèses, une preuve ou un contre-exemple, puis seulement un test numérique. Le registre de preuve du projet reflète ces statuts sans convertir une démonstration conditionnelle en validation physique.
