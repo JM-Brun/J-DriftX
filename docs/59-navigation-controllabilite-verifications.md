@@ -200,7 +200,21 @@ En séparant le radical et le terme linéaire, on lit la forme de Randers :
 $$
 a_{ij}=\frac{A\delta_{ij}+u_i u_j}{A^2},
 \qquad b_i=-\frac{u_i}{A}.
-$$
+$
+
+La régularité peut aussi se vérifier algébriquement. Pour tout $\xi\ne0$,
+$
+\xi^i a_{ij}\xi^j=\frac{A\|\xi\|^2+(u\cdot\xi)^2}{A^2}>0,
+$
+ce qui montre que $a$ est définie positive. Son inverse est
+$
+a^{ij}=A\delta_{ij}-\frac{A}{c^2}u_i u_j,
+$
+et donc
+$
+b_i a^{ij}b_j=\frac{\|u\|^2}{c^2}<1.
+$
+C'est la condition de régularité de Randers : la norme duale de $b$ relativement à $a$ est strictement inférieure à un.
 
 L'intuition géométrique est simple : la boule des vitesses absolues est $\overline B(u,c)$. Si $c>\|u\|$, l'origine est à l'intérieur et toutes les directions sont accessibles ; la jauge de Randers est régulière. Si $c\leq\|u\|$, certaines directions deviennent inaccessibles : la formule ne définit plus une métrique de Randers régulière sur tout l'espace tangent. Dans GZ-1, $c(t)$ varie ; la formule décrit une géométrie instantanée et n'est pas une métrique stationnaire globale.
 
