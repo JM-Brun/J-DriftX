@@ -222,6 +222,9 @@ class ModeleGZ1:
         convexe. Son minimum unique est trouvé par dichotomie sur g'_B,
         puis le premier zéro par dichotomie sur l'intervalle croissant.
         Cette méthode détecte aussi le contact tangent sans balayage discret.
+        Un résidu positif inférieur à 1e-12 de l'échelle géométrique est
+        classé comme tangence à la précision float64 ; un minimum négatif,
+        même très proche de zéro, conserve la dichotomie du premier zéro.
         """
         b = np.asarray(_vecteur3(cible, "La cible"), dtype=float)
         delta = b - self._origine_array
@@ -250,7 +253,7 @@ class ModeleGZ1:
         tolerance = 1e-12 * max(1.0, float(delta @ delta), self.rayon_maximal**2)
         if g_min > tolerance:
             return None
-        if abs(g_min) <= tolerance:
+        if g_min >= 0.0:
             return t_min
 
         bas, haut = 0.0, t_min
