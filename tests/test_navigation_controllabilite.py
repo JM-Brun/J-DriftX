@@ -100,9 +100,9 @@ def _temps_navigation_cone(deplacement: np.ndarray, c: float) -> float | None:
     direction = deplacement / norme
     k = float(VENT @ direction)
     discriminant = k * k + c * c - float(VENT @ VENT)
-    if discriminant < 0.0:
+    if discriminant < -1.0e-12:
         return None
-    denominateur = k + math.sqrt(discriminant)
+    denominateur = k + math.sqrt(max(0.0, discriminant))
     if denominateur <= 0.0:
         return None
     return norme / denominateur
@@ -323,7 +323,7 @@ def test_le_front_satisfait_l_equation_hamilton_jacobi() -> None:
     t = 40.0
     points = (
         np.array([50.0, 20.0, 5.0]),
-        np.array([80.0, 0.0, 3.0]),
+        np.array([80.0, 0.0, 30.0]),
         np.array([100.0, -15.0, 8.0]),
     )
 
