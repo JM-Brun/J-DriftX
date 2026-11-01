@@ -31,6 +31,19 @@ Deux facteurs ont une interprétation simple :
 1. $M/(4\pi Kt)^{3/2}$ est la concentration au centre. La masse ne disparaît pas : elle se répartit dans un volume caractéristique qui croît comme $(Kt)^{3/2}$.
 2. L'exponentielle fait décroître la concentration avec la distance au centre advecté $x_0+ut$. L'isotropie de $K$ rend les niveaux sphériques.
 
+La conservation de masse se vérifie directement par l'intégrale gaussienne. En notant $x_c=x_0+ut$, le changement de variable par translation donne
+$
+\begin{aligned}
+\int_{\mathbb R^3}C(x,t)\,dx
+&=\frac{M}{(4\pi Kt)^{3/2}}
+\int_{\mathbb R^3}e^{-\|x-x_c\|^2/(4Kt)}\,dx\\
+&=\frac{M}{(4\pi Kt)^{3/2}}(4\pi Kt)^{3/2}=M.
+\end{aligned}
+$
+Le facteur de dilution est exactement compensé par le volume gaussien ; le vent ne change pas l'intégrale, car une translation conserve la masse.
+
+Contrôle des unités : $[K]=L^2T^{-1}$ et $[M/C_0]=L^3$. Le rapport à l'intérieur du logarithme est donc sans dimension, tandis que $[t_*]=T$, $[R]=L$ et $[R']=LT^{-1}$. C'est un contrôle utile : un logarithme d'une grandeur dimensionnée signalerait une erreur de formule.
+
 À seuil $C=C_0$, on prend le logarithme :
 $$
 \ln\frac{M}{C_0(4\pi Kt)^{3/2}}
