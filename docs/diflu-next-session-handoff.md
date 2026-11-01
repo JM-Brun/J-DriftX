@@ -36,22 +36,39 @@ Ce document sépare résultats vérifiés, inférences et questions ouvertes. Le
 - Les coordonnées x/y de l'article ne sont pas reconstruites sur l'ensemble des points.
 - Aucune validation de généralisation à des conditions météo ou géométriques non observées n'a été faite.
 
-## 3. PR et artefacts
+## 3. PR et artefacts — état vérifié le 2026-11-01
 
-Les PR suivantes étaient **ouvertes et non fusionnées** au point de reprise ; recharger leur état avant toute action.
+Les PR de la séquence DIFLU sont désormais intégrées ou explicitement supersédées. **Aucune PR n'est actuellement ouverte** dans le dépôt au dernier contrôle.
 
-| PR | Objet | État connu au 2026-11-01 |
+| PR | Objet | État vérifié |
 |---|---|---|
-| [#428](https://github.com/JM-Brun/J-DriftX/pull/428) | Correction des comptes article (194 prélèvements, 148 significatifs) et crosswalk | CI succès ; ouverte |
-| [#432](https://github.com/JM-Brun/J-DriftX/pull/432) | Faisceau d'indices EA≈AS et limites | CI succès ; ouverte |
-| [#433](https://github.com/JM-Brun/J-DriftX/pull/433) | Valeurs manquantes et plages numériques par champ/type | CI succès ; ouverte |
-| [#435](https://github.com/JM-Brun/J-DriftX/pull/435) | Calcul ATC reproductible et contrôle des extrema | deux runs CI succès ; ouverte, mergeable |
+| [#428](https://github.com/JM-Brun/J-DriftX/pull/428) | Comptes article (194 prélèvements, 148 significatifs) et crosswalk | Fusionnée dans `main` |
+| [#432](https://github.com/JM-Brun/J-DriftX/pull/432) | Faisceau d'indices EA≈AS et limites | Fusionnée dans `main` |
+| [#433](https://github.com/JM-Brun/J-DriftX/pull/433) | Valeurs manquantes et plages numériques par champ/type | Fusionnée dans `main` |
+| [#436](https://github.com/JM-Brun/J-DriftX/pull/436) | Document de passation | Fusionnée dans `main` |
+| [#438](https://github.com/JM-Brun/J-DriftX/pull/438) | Calcul ATC reproductible et contrôle des extrema sur le `main` courant | Fusionnée dans `main` ; CI complète réussie |
 
-Pour #435, head contrôlé : `e324b78dc6e95ce7524a166da60e5b63dc38728e`. Runs `41293871755` et `41293860350` : terminés, conclusion `success`.
+La PR #438 a été fusionnée par squash le 2026-11-01. Commit de merge : `570a66c8ac21980bb69d37f54c868b03680112e0`. Son run CI #1808 est terminé avec succès : rendu Quarto, contrôles documentaires, Ruff lint/format, mypy, pytest et génération/archivage du diagnostic de graphe.
 
-PR supersédées déjà fermées : #431 (remplacée par #433) et #434 (remplacée par #435). Ne pas les rouvrir.
+PR fermées sans fusion :
+- #434, première version de l'audit ATC, remplacée après retour Ruff ;
+- #435, branche devenue divergente (12 commits de retard), remplacée par #438 recréée depuis `main` ;
+- #431, déjà remplacée par #433.
 
-Fichiers/scripts :
+Ne pas rouvrir ces PR. La branche de #435 est désormais redondante sur le plan fonctionnel, mais sa suppression doit attendre la vérification finale de son diff par rapport à `main`.
+
+### Branches résiduelles : nettoyage à terminer
+
+L'inventaire précédent identifiait 16 branches de travail. Les décisions ci-dessous sont des candidates, pas une autorisation de suppression aveugle :
+
+- **Candidates à supprimer après une dernière comparaison avec `main`** : `docs/comparaison-jesa-2010-manuscrit-2009`, `docs/finalize-audit-followups`, `rebase/edp-overflow-current-bool-v2-2026-10-30` (aucun commit propre détecté au contrôle précédent).
+- **Doublon exact à supprimer en conservant l'autre nom** : `rebase/edp-overflow-on-current-bool-2026-10-30` était identique à `fix/complex-inputs-concentration-edp-2026-10-30`.
+- **Branche remplacée par la PR #438** : `audit/diflu-atc-reference-extrema-ci-2026-11-01`. Vérifier que son diff net est désormais entièrement couvert avant suppression.
+- **Branches à ne pas supprimer sur la seule base du retard** : les branches `fix/*` sur les frontières booléennes, les entrées numériques, le parseur MNT et la stabilité puff ont des commits propres et des recouvrements entre elles. Vérifier les PR historiques fusionnées et l'équivalence des patches branche par branche.
+
+Le nombre de commits en avance/en retard n'est pas une preuve suffisante d'équivalence fonctionnelle. Pour chaque suppression, comparer le diff net à `main`, vérifier les PR associées et conserver au moins une référence canonique du correctif. La suppression des refs distantes reste une opération GitHub/CLI distincte de la fermeture d'une PR.
+
+Fichiers/scripts de référence :
 - `scripts/audit_diflu.py`
 - `scripts/vendor_diflu_reference.py`
 - `tests/fixtures/diflu/source/`
@@ -59,18 +76,19 @@ Fichiers/scripts :
 - `docs/diflu-observable-evaluation-protocol.md`
 - `docs/audits/15a-audit-bibliographique.md`
 
-Issues : [#221](https://github.com/JM-Brun/J-DriftX/issues/221) (rapprochement article/CSV et ATC), [#204](https://github.com/JM-Brun/J-DriftX/issues/204) (récupération/intégrité). L'issue privée #167 et la PR privée #192 avaient été signalées comme ouvertes lors du dernier contrôle : vérifier leur état actuel.
+Issues : [#221](https://github.com/JM-Brun/J-DriftX/issues/221) (rapprochement article/CSV et ATC), [#204](https://github.com/JM-Brun/J-DriftX/issues/204) (récupération/intégrité). L'issue privée #167 et la PR privée #192 ne sont pas couvertes par cet inventaire public : vérifier séparément leur état et leur accès.
 
 ## 4. Prochaines tâches — ordre d'exécution
 
-### P0 — Synchroniser et revoir les PR
+### P0 — Finaliser le nettoyage des branches
 
-1. Recharger statut, base/head, checks, commentaires et conflits de #428/#432/#433/#435.
-2. Examiner les diffs et chevauchements : #428, #432 et #435 modifient le même protocole documentaire. Vérifier la cohérence de leur cumul.
-3. Déterminer un ordre de fusion sûr ; ne fusionner qu'après revue des diffs et checks verts. Ne pas fusionner automatiquement.
-4. Après fusion éventuelle, rejouer les tests sur `main`.
+1. Recharger l'inventaire des refs distantes après la fusion de #438.
+2. Refaire les comparaisons `main...branch` des candidates listées en section 3 ; vérifier les diffs de fichiers, pas seulement les nombres de commits.
+3. Confirmer que les branches sans commits propres et le doublon exact ne contiennent aucun artefact utile non repris ailleurs.
+4. Vérifier les branches `fix/*` contre les PR historiques fusionnées avant de décider de leur suppression ; ne pas regrouper des changements concurrents sans analyse de patch.
+5. Supprimer les refs distantes uniquement après cette vérification, puis actualiser la liste des branches et ce document.
 
-**Sortie attendue :** audit et documentation cohérents sur la branche principale, sans PR concurrentes obsolètes.
+**Sortie attendue :** inventaire exhaustif et à jour, branches redondantes supprimées, branches conservées justifiées et aucun correctif unique perdu.
 
 ### P1 — Résoudre `#1_9`
 
