@@ -53,6 +53,7 @@ Les fichiers copiés et le manifeste doivent être inspectés puis ajoutés à G
 - Pour les EA significatifs, le rapport vérifie que `passage_corrected / bg_corrected` correspond à `durée du prélèvement / durée du rejet`, avec une tolérance relative de 1 % pour les arrondis des concentrations ; les anomalies sont listées par ligne.
 - Pour les VEGA significatifs, le rapport décrit la couverture du champ de correction de passage sans inférer ni imposer une règle physique.
 - Les valeurs `NA` ne sont pas globalement converties en valeurs manquantes.
+- Le rapport expose `numeric_ranges` et `numeric_ranges_by_sampling_type` (min, max, effectif numérique) ainsi que `missingness_by_sampling_type` (comptes séparés de `NA`, cellules vides et `< LC`) pour chaque catégorie présente.
 
 Le CSV original et l’export TSV transformé de Dataverse ne sont pas interchangeables. L’API annonce, pour le tableau principal, un original de 75 701 octets avec MD5 `d4477017be8efa2ed0f920499c319e3e`, alors que la taille publiée pour l’export TSV ne correspond pas au corps TSV observé pendant l’audit. Le script demande donc l’original explicitement et ne compare pas ses octets à la taille du TSV.
 
