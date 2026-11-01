@@ -369,6 +369,146 @@ def _audit_passage_correction(
     }
 
 
+ARTICLE_EVENT_CROSSWALK = {
+    "#1_3": "1-1",
+    "#1_4": "1-2",
+    "#1_5": "1-3",
+    "#1_6": "1-4",
+    "#1_7": "1-5",
+    "#1_8": "1-6",
+    "#1_9": "1-7",
+    "#2_1": "2-1",
+    "#2_2": "2-2",
+    "#2_3": "2-3",
+    "#2_4": "2-4",
+    "#2_5": "2-5",
+    "#2_6": "2-6",
+    "#2_7": "2-7",
+    "#2_8": "2-8",
+}
+ARTICLE_ATC_REFERENCE = {
+    "minimum": {"value": 2.0e-5, "experiment": "1-4"},
+    "maximum": {"value": 1.5e-3, "experiment": "2-4"},
+}
+ARTICLE_ATC_ROUNDING_TOLERANCE = 0.02
+
+
+def _audit_atc_candidate(
+    rows: list[dict[str, str | None]], fieldnames: list[str]
+) -> dict[str, Any]:
+    """Compute the article-defined ATC for eligible EA rows and check published extrema."""
+    required = {
+        "experiment_id",
+        "sampling_id",
+        "sampling_type",
+        "helium_concentration_sampling_bg_corrected_flag",
+        "helium_concentration_sampling_bg_passage_corrected",
+        "helium_release_flow",
+    }
+    if not required.issubset(fieldnames):
+        return {}
+
+    records: list[dict[str, Any]] = []
+    invalid_rows: list[dict[str, Any]] = []
+    eligible_rows = 0
+    for row_number, row in enumerate(rows, start=2):
+        if (
+            _value(row, "sampling_type") != "EA"
+            or _value(row, "helium_concentration_sampling_bg_corrected_flag") != "significant"
+        ):
+            continue
+        eligible_rows += 1
+        try:
+            concentration = float(_value(row, "helium_concentration_sampling_bg_passage_corrected"))
+            release_flow = float(_value(row, "helium_release_flow"))
+        except (TypeError, ValueError):
+            invalid_rows.append({"row": row_number, "reason": "missing_or_non_numeric_input"})
+            continue
+        if (
+            concentration <= 0
+            or release_flow <= 0
+            or not math.isfinite(concentration)
+            or not math.isfinite(release_flow)
+        ):
+            invalid_rows.append({"row": row_number, "reason": "non_positive_or_non_finite_input"})
+            continue
+        records.append(
+            {
+                "row": row_number,
+                "experiment_id": _value(row, "experiment_id"),
+                "article_experiment": ARTICLE_EVENT_CROSSWALK.get(_value(row, "experiment_id")),
+                "sampling_id": _value(row, "sampling_id"),
+                "atc_s_m3": concentration / release_flow,
+            }
+        )
+
+    def summarize(items: list[dict[str, Any]]) -> dict[str, Any]:
+        if not items:
+            return {"count": 0, "minimum": None, "maximum": None}
+        minimum = min(items, key=lambda item: item["atc_s_m3"])
+        maximum = max(items, key=lambda item: item["atc_s_m3"])
+        return {
+            "count": len(items),
+            "minimum": {
+                "atc_s_m3": minimum["atc_s_m3"],
+                "experiment_id": minimum["experiment_id"],
+                "sampling_id": minimum["sampling_id"],
+            },
+            "maximum": {
+                "atc_s_m3": maximum["atc_s_m3"],
+                "experiment_id": maximum["experiment_id"],
+                "sampling_id": maximum["sampling_id"],
+            },
+        }
+
+    article_records = [item for item in records if item["article_experiment"] is not None]
+    article_summary = summarize(article_records)
+    all_summary = summarize(records)
+    reference_check = {"status": "not_applicable"}
+    if article_records:
+        computed_min = article_summary["minimum"]
+        computed_max = article_summary["maximum"]
+        min_reference = ARTICLE_ATC_REFERENCE["minimum"]
+        max_reference = ARTICLE_ATC_REFERENCE["maximum"]
+        min_error = abs(computed_min["atc_s_m3"] - min_reference["value"]) / min_reference["value"]
+        max_error = abs(computed_max["atc_s_m3"] - max_reference["value"]) / max_reference["value"]
+        event_ids_match = (
+            ARTICLE_EVENT_CROSSWALK.get(computed_min["experiment_id"])
+            == min_reference["experiment"]
+            and ARTICLE_EVENT_CROSSWALK.get(computed_max["experiment_id"])
+            == max_reference["experiment"]
+        )
+        reference_check = {
+            "published_minimum_s_m3": min_reference["value"],
+            "published_minimum_experiment": min_reference["experiment"],
+            "computed_minimum_relative_error": min_error,
+            "published_maximum_s_m3": max_reference["value"],
+            "published_maximum_experiment": max_reference["experiment"],
+            "computed_maximum_relative_error": max_error,
+            "relative_tolerance": ARTICLE_ATC_ROUNDING_TOLERANCE,
+            "event_ids_match": event_ids_match,
+            "status": (
+                "passed"
+                if event_ids_match
+                and min_error <= ARTICLE_ATC_ROUNDING_TOLERANCE
+                and max_error <= ARTICLE_ATC_ROUNDING_TOLERANCE
+                else "failed"
+            ),
+        }
+
+    return {
+        "formula": ("helium_concentration_sampling_bg_passage_corrected / helium_release_flow"),
+        "unit": "s m-3",
+        "scope": "EA significant rows only; VEGA is not inferred or imputed",
+        "eligible_ea_significant_rows": eligible_rows,
+        "rows_with_atc": len(records),
+        "invalid_rows": invalid_rows,
+        "all_dataset_events": all_summary,
+        "article_mapped_events": article_summary,
+        "article_reference_extrema_check": reference_check,
+    }
+
+
 def audit_sampling_csv(path: Path) -> dict[str, Any]:
     """Audit structure and emit descriptive data-quality checks without rewriting source values."""
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
@@ -431,6 +571,7 @@ def audit_sampling_csv(path: Path) -> dict[str, Any]:
         "numeric_ranges": _numeric_ranges(rows, fieldnames),
         "numeric_ranges_by_sampling_type": _numeric_ranges_by_sampling_type(rows, fieldnames),
         "passage_correction_check": _audit_passage_correction(rows, fieldnames),
+        "atc_candidate_check": _audit_atc_candidate(rows, fieldnames),
         "semantic_checks": {
             "EA_literal_NA_and_VEGA_populated": "passed" if not bag_violations else "failed",
             "sampling_bag_violations": bag_violations,
