@@ -188,7 +188,13 @@ Considérons le problème de contrôle général
 s(t)\in\overline B(0,c(X,t)),
 \]
 
-avec \(c(x,t)\geq0\). Le Hamiltonien de maximisation associé à l'ensemble des vitesses admissibles est le support de cet ensemble :
+avec \(c(x,t)\geq0\). Le Hamiltonien de maximisation associé à l'ensemble des vitesses admissibles est le support de cet ensemble. On sépare le vent, qui impose le terme \(u\cdot p\), et le contrôle :
+
+\[
+\sup_{\lVert s\rVert\leq c}s\cdot p=c\lVert p\rVert.
+\]
+
+Cette dernière égalité est l'inégalité de Cauchy–Schwarz, avec égalité pour \(s=c\,p/\lVert p\rVert\) lorsque \(p\ne0\). Le contrôle optimal pointe donc dans la direction du gradient. Ainsi,
 
 \[
 H(x,t,p)=\sup_{\lVert s\rVert\leq c(x,t)}
@@ -286,7 +292,33 @@ F(v)=
 \frac{\sqrt{(u\cdot v)^2+A\lVert v\rVert^2}-u\cdot v}{A}.
 \]
 
-Elle prend la forme de Randers \(F(v)=\sqrt{a_{ij}v^iv^j}+b_iv^i\), avec
+La jauge est le temps nécessaire pour produire un déplacement infinitésimal \(v\) : pendant un temps \(F(v)\), le contrôle moyen doit compenser le vent, donc \(\lVert v/F(v)-u\rVert=c\). En élevant au carré,
+
+\[
+\lVert v\rVert^2-2F(u\cdot v)+F^2\lVert u\rVert^2=c^2F^2,
+\]
+
+soit
+
+\[
+A F^2+2(u\cdot v)F-\lVert v\rVert^2=0.
+\]
+
+La racine positive est précisément
+
+\[
+F(v)=\frac{\sqrt{(u\cdot v)^2+A\lVert v\rVert^2}-u\cdot v}{A}.
+\]
+
+Pour la décomposer, on met le radical sous la forme d'une norme quadratique :
+
+\[
+\frac{\sqrt{(u\cdot v)^2+A\lVert v\rVert^2}}{A}
+-\frac{u\cdot v}{A}
+=\sqrt{a_{ij}v^iv^j}+b_iv^i,
+\]
+
+avec
 
 \[
 a_{ij}=\frac{A\delta_{ij}+u_i u_j}{A^2},
@@ -301,6 +333,8 @@ a_{ij}=\frac{c^2\mu\delta_{ij}+u_i u_j}{c^4\mu^2},
 \]
 
 Le facteur \(\mu^2\) au dénominateur de \(a_{ij}\) est essentiel. La condition sous-critique \(\lVert u\rVert<c\) garantit \(A>0\). Lorsque \(c\) dépend du temps, cette expression décrit une géométrie de navigation **instantanée** ; elle ne transforme pas à elle seule le problème instationnaire en une métrique de Finsler stationnaire globale.
+
+**Intuition géométrique.** Le vent translate la boule des vitesses relatives \(\overline B(u,c)\). Si \(c>\lVert u\rVert\), l'origine est strictement à l'intérieur de cette boule : toutes les directions de déplacement sont possibles et le temps infinitésimal définit une norme de Randers régulière. À la limite \(c=\lVert u\rVert\), l'origine touche la frontière ; si \(c<\lVert u\rVert\), certaines directions deviennent inaccessibles, ce qui explique pourquoi la formule de Randers régulière ne peut pas être prolongée à toutes les directions.
 
 Cette construction concerne la navigation contrôlée de Zermelo. Elle ne requalifie pas la construction historique projetée \(T_{\mathrm{proj}}\) en métrique de Finsler. Pour le statut des objets historiques et leurs axiomes, voir [Métrique travel-time](metrique-travel-time.qmd) et [Métriques non riemanniennes](metriques-non-riemanniennes.qmd).
 
