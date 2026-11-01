@@ -125,3 +125,15 @@ La notice Dataverse indique l'Etalab Open Licence 2.0. Toute réutilisation doit
 ## Étapes restantes
 
 Voir l'[issue #221](https://github.com/JM-Brun/J-DriftX/issues/221) pour la checklist d'audit sur les fichiers téléchargés et la décision finale d'usage MVP.
+
+### 3.2. Deux types de préleveurs : ne pas confondre sacs, instruments et échantillons publiés
+
+La relecture directe des dictionnaires du dépôt 2026 apporte une précision qui interdit de réduire sans preuve le terme générique « Atmospheric Samplers » (AS) de l'article à la seule catégorie EA :
+
+- le dictionnaire des variables définit `EA` comme un prélèvement d'un sac unique par événement, et `VEGA` comme le prélèvement séquentiel de plusieurs sacs pendant un événement ;
+- le dictionnaire des médias décrit explicitement les « EA-type air samplers (orange case) » et les « VEGA-type air samplers (grey case) » ; l'image 16, datée du 10/12/2019, montre les deux types ensemble ;
+- l'article de 2022 décrit les AS comme des pompes connectées à des sacs Tedlar, mais ne nomme ni EA ni VEGA.
+
+Sur les 15 événements rapprochés de l'article, le CSV contient 186 lignes EA et 123 lignes VEGA, soit 309 enregistrements de sacs au total. Les 123 lignes VEGA ne sont pas 123 préleveurs indépendants : elles correspondent à des prélèvements séquentiels rattachés à des identifiants de préleveur. Il faut donc séparer au minimum trois unités : instrument/préleveur, sac prélevé et résultat analytique. Les 194 « air samples » de l'article ne peuvent pas être comparés mécaniquement aux 186 lignes EA, ni aux 309 lignes du CSV.
+
+**Conclusion mise à jour :** la nature instrumentale de EA et VEGA est désormais documentée, mais le périmètre exact des 194 résultats de l'article (EA seulement, ou combinaison/sélection des deux types) n'est toujours pas démontré. Le tableau de rapprochement EA↔AS reste une comparaison conditionnelle, pas une preuve de huit mesures manquantes. Aucune ligne ne doit être ajoutée, supprimée ou reclassée pour forcer l'égalité des comptes. La résolution exige une documentation de protocole ou une confirmation des auteurs précisant quels préleveurs et quels sacs alimentent les 194 résultats publiés.
