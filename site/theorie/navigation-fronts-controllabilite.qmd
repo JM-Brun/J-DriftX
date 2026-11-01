@@ -103,6 +103,14 @@ T_{\mathrm{front}}=\inf\{t\in(0,t_*]:
 \lVert x_B-(x_0+ut)\rVert\leq R(t)\}.
 \]
 
+En posant
+
+\[
+g_B(t)=\lVert x_B-x_0-ut\rVert^2-4Kt\,\Lambda(t),
+\]
+
+le premier contact est le premier zéro de \(g_B\) dans \((0,t_*]\), lorsque ce zéro existe. Le critère d'existence équivalent est \(\min_{0<t\leq t_*}g_B(t)\leq0\). En général, avec \(u\ne0\), \(g_B\) n'est pas monotone et l'équation scalaire n'a pas de solution fermée simple ; il faut rechercher le premier zéro, sans confondre cette recherche avec une intégration de trajectoire passive. Dans le cas particulier \(u=0\), le contact existe si et seulement si \(\lVert x_B-x_0\rVert\leq R_{\max}\).
+
 La convention est \(+\infty\) si l'ensemble correspondant est vide. Pour une cible initialement extérieure, le premier instant où la boule contient la cible est un contact avec la frontière, par continuité.
 
 ### 3.1 Ensemble atteignable
@@ -235,7 +243,7 @@ abla\phi+c(t)\lVert
 abla\phi\rVert=0.
 \]
 
-Cette vérification retrouve le front sphérique de la preuve S0. Au centre de la boule, la norme n'est pas différentiable ; la formulation doit alors être comprise au sens de viscosité.
+Cette vérification retrouve le front sphérique de la preuve GZ-1. Au centre de la boule, la norme n'est pas différentiable ; la formulation doit alors être comprise au sens de viscosité.
 
 ### 5.2 Ne pas confondre trois objets
 
