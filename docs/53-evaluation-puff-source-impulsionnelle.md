@@ -59,7 +59,8 @@
 
 Le [théorème GZ-1](../site/theorie/navigation-fronts-controllabilite.qmd) étudie un autre modèle : le noyau fondamental 3D isotrope à diffusivité constante \(K\), en espace libre, avec une commande vectorielle \(s\) bornée par la vitesse d'expansion du niveau gaussien. Il démontre une égalité entre un temps minimal de navigation contrôlée \(T_{\mathrm{nav}}\) et un temps de premier contact du front \(T_{\mathrm{front}}\).
 
-La présente expérience ne met pas en œuvre ce problème de contrôle. Elle utilise la pseudo-distance uniforme \(\tau\), la solution paramétrée Briggs de \`concentration_puff\`, puis une recherche discrète du maximum temporel. Elle ne calcule ni \(T_{\mathrm{nav}}\), ni un front de contrôlabilité. La parenté « puff gaussien » ne suffit donc pas à transférer le théorème GZ-1 aux résultats de cette note ; les deux modèles et leurs observables doivent rester séparés.
+La présente expérience ne met pas en œuvre ce problème de contrôle. Elle utilise la pseudo-distance uniforme \(\tau\), la solution paramétrée Briggs de `concentration_puff`, puis une recherche discrète du maximum temporel. Elle ne calcule ni \(T_{\mathrm{nav}}\), ni un front de contrôlabilité. La parenté « puff gaussien » ne suffit donc pas à transférer le théorème GZ-1 aux résultats de cette note ; les deux modèles et leurs observables doivent rester séparés.
+
 ## 6. Relations au code
 
 | Objet du dépôt | Rôle |
