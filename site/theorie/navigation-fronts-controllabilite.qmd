@@ -46,16 +46,27 @@ Pour un seuil \(C_0>0\), le niveau \(C(x,t)=C_0\) est une sphère de rayon \(R(t
 \Lambda(t)=\ln\left(\frac{M}{C_0(4\pi Kt)^{3/2}}\right).
 \]
 
-Alors
+Le temps auquel le rayon atteint son maximum est
+
+\[
+t_*=\frac{1}{4\pi K}
+\left(\frac{M}{C_0e^{3/2}}\right)^{2/3}.
+\]
+
+En effet, \(\Lambda(t_*)=3/2\). On peut donc réécrire exactement
 
 \[
 R(t)^2=4Kt\,\Lambda(t)
 =6Kt\left(1+\ln\frac{t_*}{t}\right).
 \]
 
-Cette seconde écriture est obtenue en utilisant \(\Lambda(t_*)=3/2\). Elle rend immédiatement lisible la fenêtre où le rayon est réel : \(0<t\leq e\,t_*\), avec un rayon strictement positif pour \(0<t<e\,t_*\) et un rayon nul aux limites \(t\to0+\) et \(t=e\,t_*\). Le maximum vaut \(R_{\max}=\sqrt{6Kt_*}\).
+Le rayon est réel si et seulement si \(\Lambda(t)\geq0\), soit \(0<t\leq e\,t_*\). Il est strictement positif pour \(0<t<e\,t_*\), et tend vers zéro lorsque \(t\to0+\) ou à \(t=e\,t_*\). Le temps \(t_{\mathrm{ext}}=e\,t_*\) est l'instant où la concentration maximale au centre atteint le seuil \(C_0\) : le niveau se réduit alors au centre puis disparaît. Le rayon maximal vaut
 
-Le rayon est réel si et seulement si \(\Lambda(t)\geq0\). Le temps d'extinction du niveau est donc \(t_{\mathrm{ext}}=e\,t_*\) : à cet instant, la concentration maximale au centre atteint le seuil \(C_0\), et le niveau se réduit au centre. Sa dérivée est
+\[
+R_{\max}=R(t_*)=\sqrt{6Kt_*}.
+\]
+
+Sa dérivée est
 
 \[
 c(t):=R'(t)=\frac{2K}{R(t)}
@@ -64,18 +75,10 @@ c(t):=R'(t)=\frac{2K}{R(t)}
 \qquad R(t)>0.
 \]
 
-Définissons le temps du maximum du rayon :
+Ainsi, \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), puis décroît sur \(t_*<t<e\,t_*\). **La borne de contrôle \(c(t)=R'(t)\) n'est positive que pendant la phase d'expansion \(0<t<t_*\)**. Après \(t_*\), elle est négative et ne peut plus être utilisée comme borne de norme d'un contrôle. Le théorème GZ-1 est donc limité à \(0<t\leq t_*\).
 
-\[
-t_*=\frac{1}{4\pi K}
-\left(\frac{M}{C_0e^{3/2}}\right)^{2/3}.
-\]
-
-Alors \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), puis décroît sur \(t_*<t<e\,t_*\). Le rayon est réel jusqu'à \(e\,t_*\), inclus.
-
-**Restriction essentielle.** \(c(t)=R'(t)\) est une borne positive seulement pendant la phase d'expansion \(0<t<t_*\). Après \(t_*\), \(c(t)<0\) et ne peut plus être utilisée comme borne de norme d'un contrôle. Le théorème ci-dessous est limité à \(0<t\leq t_*\).
-
-## 3. Problème de navigation S0
+**Contrôle dimensionnel.** \([K]=\mathrm{m^2\,s^{-1}}\), \([M/C_0]=\mathrm{m^3}\), \([t_*]=\mathrm{s}\), \([R]=\mathrm m\) et \([c]=\mathrm{m\,s^{-1}}\). La solution conserve la masse : \(\int_{\mathbb R^3}C(x,t)\,dx=M\) pour tout \(t>0\).
+## 3. Problème de navigation GZ-1
 
 Une trajectoire contrôlée, exprimée dans le référentiel fixe, est une fonction absolument continue \(X:[0,t]\to\mathbb R^3\) qui vérifie
 
@@ -85,7 +88,7 @@ Une trajectoire contrôlée, exprimée dans le référentiel fixe, est une fonct
 \quad\text{p.p. sur }(0,t_*).
 \]
 
-Le contrôle \(s\) est mesurable. Comme \(R'\in L^1(0,t_*)\) sur tout intervalle \((0,t]\), la borne implique \(s\in L^1(0,t)\) et l'intégrale définissant la trajectoire existe. Le départ est au centre du puff à l'âge zéro, avec \(X(0)=x_0\). La cible \(x_B
+Le contrôle \(s\) est mesurable. Comme \(R'\in L^1(0,t_*)\) et \(\int_0^{t_*}R'(\tau)\,d\tau=R(t_*)<\infty\), la borne implique \(s\in L^1(0,t)\) pour tout \(t\leq t_*\), et l'intégrale définissant la trajectoire existe. Le départ est au centre du puff à l'âge zéro, avec \(X(0)=x_0\). La cible \(x_B
 e x_0\) est fixe. On définit
 
 \[
