@@ -21,6 +21,7 @@ from jdriftx.experiences.uniforme import (
     construire_manifeste,
     resoudre_scenario,
 )
+from jdriftx.experiences.zermelo_gaussien import ModeleGZ1
 
 __all__ = [
     "CasSynthetiqueS0",
@@ -28,6 +29,7 @@ __all__ = [
     "DatasetS0",
     "ManifesteReconstruction",
     "ManifesteScenario",
+    "ModeleGZ1",
     "PartitionS0",
     "Rectangle",
     "ResultatDirige",
