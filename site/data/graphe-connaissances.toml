@@ -436,6 +436,12 @@ libelle = "experiences/baseline_uniforme.py"
 lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/baseline_uniforme.py"
 
 [[noeuds]]
+id = "experiences/zermelo_gaussien"
+type = "module"
+libelle = "experiences/zermelo_gaussien.py"
+lien = "https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/zermelo_gaussien.py"
+
+[[noeuds]]
 id = "similitude"
 type = "module"
 libelle = "similitude.py"
@@ -2139,6 +2145,7 @@ sens = "TD"
 noeuds = [
   "metric", "champ_analytique", "experiences/uniforme",
   "experiences/baseline_uniforme",
+  "experiences/zermelo_gaussien",
   "experiences/reconstruction_vent", "experiences/cas_synthetiques",
   "experiences/superposition_sources", "experiences/relief",
   "experiences/modele_reduit_edp",
