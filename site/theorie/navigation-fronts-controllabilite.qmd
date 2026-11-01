@@ -215,7 +215,7 @@ H(x,t,p)=\sup_{\lVert s\rVert\leq c(x,t)}
 =u(x,t)\cdot p+c(x,t)\lVert p\rVert.
 \]
 
-Pour un départ ponctuel en \(x_0\), on peut prendre la donnée initiale \(\phi(x,0)=\lVert x-x_0\rVert\), dont le sous-niveau zéro est le singleton \(\{x_0\}\). En représentant ensuite le front de la région atteignable par un niveau zéro \(\phi(x,t)=0\), avec la région atteignable du côté \(\phi\leq0\), l'équation de niveau correspondante est
+Pour un départ ponctuel en \(x_0\), on prend la donnée initiale non négative \(\phi(x,0)=\lVert x-x_0\rVert\). La région atteignable est le sous-niveau \(\phi\leq0\), qui coïncide ici avec \(\phi=0\). Pour un départ ponctuel, la solution peut donc présenter un **plateau nul** à l'intérieur de la région atteignable : le front géométrique est la frontière \(\partial\{\phi\leq0\}\), et non nécessairement l'ensemble complet des points où \(\phi=0\). L'équation de niveau correspondante est
 
 \[
 \boxed{\phi_t+u(x,t)\cdot\nabla\phi
@@ -223,6 +223,8 @@ Pour un départ ponctuel en \(x_0\), on peut prendre la donnée initiale \(\phi(
 \]
 
 Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.
+
+### 5.1 Réparamétrisation du temps et unicité au départ singulier
 
 **Traitement exact de la singularité GZ-1.** Le coefficient \(c(t)=R'(t)\) n'est pas borné au voisinage de \(t=0\), mais il est positif et intégrable sur la phase d'expansion. Cette singularité peut être éliminée par un changement de référentiel et une reparamétrisation du temps :
 
