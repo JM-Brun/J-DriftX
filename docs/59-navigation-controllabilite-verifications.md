@@ -220,11 +220,11 @@ Cette preuve par reparamétrisation est spécifique au vent uniforme et à $c(t)
 
 ## 5. Randers : d'où vient la formule et pourquoi elle dégénère
 
-À un instant fixé, la vitesse absolue est $v=u+s$, avec $\|s\|\leq c$. Pour réaliser un déplacement $v$ en un temps minimal $F(v)$, la contrainte est saturée : si la vitesse relative était strictement inférieure à $c$, on pourrait réduire légèrement le temps tout en restant admissible. On impose donc
+À un instant fixé, la vitesse absolue est $v=u+s$, avec $\|s\|\leq c$. On cherche le temps minimal $F(v)$ pour parcourir un déplacement non nul $v$. En un temps $T$, la vitesse absolue moyenne nécessaire est $v/T$ et le contrôle correspondant est $v/T-u$. Au minimum, la contrainte est saturée : si $\|v/T-u\|<c$, la continuité permettrait de diminuer légèrement $T$ tout en restant admissible. On impose donc
 $
 \left\|\frac{v}{F(v)}-u\right\|=c.
 $
-Pour $c>\|u\|$, le membre de gauche tend vers $\|u\|<c$ lorsque $F\to+\infty$, et vers $+\infty$ lorsque $F\to0^+$. Il existe donc un unique temps positif où la contrainte est saturée.
+Pour $c>\|u\|$, le membre de gauche tend vers $\|u\|<c$ lorsque $F\to+\infty$, et vers $+\infty$ lorsque $F\to0^+$. L'équation possède un unique temps positif : après le changement $r=1/F$, son carré est un polynôme quadratique en $r$, dont le produit des racines est négatif. La racine positive est donc unique.
 Après multiplication par $F(v)$ et élévation au carré :
 $$
 \|v\|^2-2F(u\cdot v)+F^2\|u\|^2=c^2F^2.
@@ -283,11 +283,11 @@ u\cdot\omega>0,
 \qquad
 \sin\theta\leq\frac{c}{\|u\|}.
 $$
-C'est un **cône aval** : la condition sur le sinus seule serait incorrecte, car elle inclurait aussi le cône amont autour de $-u$.
+C'est un **cône aval** : la condition sur le sinus seule serait incorrecte, car elle inclurait aussi le cône amont autour de $-u$. L'intuition géométrique est celle d'une demi-droite issue de l'origine qui doit rencontrer la boule mobile $\overline B(ut,ct)$. La projection du centre $ut$ sur la droite dirigée par $\omega$ est positive exactement lorsque $u\cdot\omega>0$. La distance perpendiculaire du centre à cette droite vaut $t\sqrt{\|u\|^2-(u\cdot\omega)^2}=t\|u\|\sin\theta$. Une intersection existe donc lorsque cette distance ne dépasse pas le rayon $ct$, ce qui redonne $\sin\theta\leq c/\|u\|$ et explique le cône aval.
 
-Pour $c<\|u\|$, la frontière $\sin\theta=c/\|u\|$ est incluse : la demi-droite est tangente à la boule mobile en un point strictement positif. Au cas critique $c=\|u\|$, les directions exactement transverses ont $u\cdot\omega=0$ et ne sont pas atteignables en temps fini.
+Pour $c<\|u\|$, la frontière $\sin\theta=c/\|u\|$ est incluse : la demi-droite est tangente à la boule mobile à un point situé à distance strictement positive de l'origine. Au cas critique $c=\|u\|$, la demi-ouverture tend vers $\pi/2$, mais les directions exactement transverses ont $u\cdot\omega=0$ : la tangence se réduit à l'origine et aucun point $d\omega$ avec $d>0$ n'est atteint en temps fini.
 
-La plus grande racine positive
+Pour comprendre le temps minimal, remarquons que $q=d/t$ est l'inverse du temps, à un facteur $d$ près. La condition d'intersection donne un intervalle de valeurs admissibles de $q$ délimité par les racines $q_-$ et $q_+$. Le plus grand $q$ correspond donc au plus petit $t=d/q$. La plus grande racine positive
 $$
 q_+=u\cdot\omega+\sqrt{(u\cdot\omega)^2+c^2-\|u\|^2}
 $$
