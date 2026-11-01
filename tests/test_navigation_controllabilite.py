@@ -6,7 +6,7 @@ action et sa conséquence attendue.
 Couverture (issue #437, note docs/59) : cinématique exacte du front
 d'isoconcentration gaussien (rayon, vitesse d'expansion, temps du
 maximum, réalité du rayon jusqu'à e·t*), singularité initiale
-intégrable, ensemble atteignable et théorème S0 (égalité du temps de
+intégrable, ensemble atteignable et théorème GZ-1 (égalité du temps de
 navigation et du temps de contact du front) par trajectoire analytique à
 cap constant, rejet d'une cible hors de portée, identité de la jauge
 sous-critique et de la forme de Randers, cône d'accessibilité
@@ -164,7 +164,7 @@ def test_la_singularite_initiale_est_integrable() -> None:
     assert somme == pytest.approx(_rayon(haut) - _rayon(bas), rel=1e-6)
 
 
-def test_le_theoreme_s0_egalise_navigation_et_front() -> None:
+def test_le_theoreme_gz1_egalise_navigation_et_front() -> None:
     """T_nav = T_front : une trajectoire à cap constant atteint la cible
     exactement à l'instant du premier contact du front (page §3.2)."""
     # Given — une cible hors de l'axe du vent, et son instant de contact.
@@ -274,11 +274,14 @@ def test_le_regime_supercritique_definit_un_cone() -> None:
     assert _temps_navigation_cone(axe, c) == pytest.approx(10.0 / 3.0, rel=1e-12)
     # Then — remonter le vent est impossible : convention +∞.
     assert _temps_navigation_cone(-axe, c) is None
+    # Then — le cône amont opposé est rejeté, même si son sinus est petit.
+    amont_oblique = np.array([-math.cos(0.1), math.sin(0.1), 0.0]) * 10.0
+    assert _temps_navigation_cone(amont_oblique, c) is None
 
 
 def test_le_front_satisfait_l_equation_hamilton_jacobi() -> None:
-    """Le front analytique φ = |x - u t| - R(t) résout l'équation HJ du
-    front de contrôlabilité φ_t + u·∇φ + c(t)|∇φ| = 0 (page §5.1)."""
+    """La valeur de Hopf–Lax max(|x - u t| - R(t), 0) résout HJ
+    hors du coin du front ; le plateau intérieur est également vérifié."""
     # Given — trois points du front au temps t = 40, en phase d'expansion.
     t = 40.0
     points = (
@@ -288,7 +291,8 @@ def test_le_front_satisfait_l_equation_hamilton_jacobi() -> None:
     )
 
     def phi(x: np.ndarray, temps: float) -> float:
-        return float(np.linalg.norm(x - VENT * temps)) - _rayon(temps)
+        # Valeur de Hopf–Lax : plateau nul dans toute la boule atteignable.
+        return max(float(np.linalg.norm(x - VENT * temps)) - _rayon(temps), 0.0)
 
     pas = 1.0e-6
     directions = (
@@ -296,6 +300,7 @@ def test_le_front_satisfait_l_equation_hamilton_jacobi() -> None:
         np.array([0.0, 1.0, 0.0]),
         np.array([0.0, 0.0, 1.0]),
     )
+    points += (VENT * t,)  # point strictement intérieur : gradient et dérivée nuls.
     for x in points:
         # When — les dérivées de φ sont prises par différences finies centrées.
         grad = np.array(
