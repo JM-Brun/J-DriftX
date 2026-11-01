@@ -27,6 +27,8 @@ Cette page publie le résultat analytique conditionnel **GZ-1** (*Gaussian Zerme
 
 Les démonstrations concernent le modèle mathématique explicite ci-dessous. Elles ne constituent ni une validation expérimentale ni une validation d'un modèle atmosphérique général. Le modèle GZ-1 exclut notamment les frontières, le sol, le dépôt, les réactions, les sources continues, les variations spatiales ou temporelles de \(u\) et \(K\), ainsi que les écarts à l'isotropie.
 
+Pour une lecture progressive des intuitions, des démonstrations détaillées (ensemble atteignable, Hopf–Lax, Randers et cône aval) et de la correspondance avec les tests, voir la [note 59 — GZ-1](https://github.com/JM-Brun/J-DriftX/blob/main/docs/59-navigation-controllabilite-verifications.md).
+
 ## 2. Puff gaussien et cinématique du front
 
 Considérons l'équation d'advection–diffusion sur \(\mathbb R^3\), sans frontière, avec vent uniforme constant \(u\in\mathbb R^3\), diffusivité isotrope constante \(K>0\), et émission impulsionnelle de masse totale \(M>0\) au point \(x_0\) à l'instant initial :
