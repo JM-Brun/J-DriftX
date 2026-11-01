@@ -70,6 +70,45 @@ def test_extrait_symboles_python_et_tests(tmp_path: Path) -> None:
     assert "test_file:tests/test_noyau.py" in par_id
 
 
+def test_symboles_dans_if_et_try_au_niveau_module(tmp_path: Path) -> None:
+    """Étant donné des définitions dans des blocs if et try au niveau module,
+    quand on extrait, alors elles sont observées sans évaluer les conditions."""
+    racine = _depot_minimal(tmp_path / "depot")
+    (racine / "src/jdriftx/conditionnel.py").write_text(
+        "import sys\n"
+        "\n"
+        "if sys.version_info >= (3, 10):\n"
+        "    def moderne() -> int:\n"
+        "        return 1\n"
+        "else:\n"
+        "    def ancienne() -> int:\n"
+        "        return 2\n"
+        "\n"
+        "try:\n"
+        "    def ordinaire() -> int:\n"
+        "        return 3\n"
+        "except ImportError:\n"
+        "    def repli() -> int:\n"
+        "        return 4\n"
+        "\n"
+        'with open("f"):\n'
+        "    def ignoree() -> int:\n"
+        "        return 5\n",
+        encoding="utf-8",
+    )
+
+    faits = extraire_faits(racine)
+    identifiants = {fait.id for fait in faits}
+    par_id = {fait.id: fait for fait in faits}
+
+    assert "python_function:src/jdriftx/conditionnel.py::moderne" in identifiants
+    assert "python_function:src/jdriftx/conditionnel.py::ancienne" in identifiants
+    assert "python_function:src/jdriftx/conditionnel.py::ordinaire" in identifiants
+    assert "python_function:src/jdriftx/conditionnel.py::repli" in identifiants
+    assert "python_function:src/jdriftx/conditionnel.py::ignoree" not in identifiants
+    assert par_id["python_function:src/jdriftx/conditionnel.py::moderne"].line == 4
+
+
 def test_extrait_pages_titres_citations_et_liens(tmp_path: Path) -> None:
     """Les pages Quarto et éléments documentaires sont extraits sans arêtes."""
     racine = _depot_minimal(tmp_path / "depot")
@@ -90,6 +129,31 @@ def test_extrait_pages_titres_citations_et_liens(tmp_path: Path) -> None:
     assert "citation:site/theorie/modele.qmd:9:FausseCle" not in par_id
     assert all(fait.label != "Fausse section" for fait in faits)
     assert all(fait.origin_kind == "extracted" for fait in faits)
+
+
+def test_titre_au_dela_de_trente_lignes_est_lu(tmp_path: Path) -> None:
+    """Étant donné un frontmatter de plus de trente lignes, quand on extrait,
+    alors le titre déclaré reste lu, pas le nom du fichier."""
+    racine = _depot_minimal(tmp_path / "depot")
+    lignes = ["---", *['option: "x"'] * 32, 'title: "Titre tardif"', "---", "# Section"]
+    (racine / "site/tardif.qmd").write_text("\n".join(lignes) + "\n", encoding="utf-8")
+
+    faits = extraire_faits(racine)
+
+    par_id = {fait.id: fait for fait in faits}
+    assert par_id["quarto_page:site/tardif.qmd"].label == "Titre tardif"
+
+
+def test_titre_dans_le_corps_non_compte(tmp_path: Path) -> None:
+    """Étant donné une ligne title: dans le corps d'une page sans frontmatter,
+    quand on extrait, alors le titre reste le nom du fichier."""
+    racine = _depot_minimal(tmp_path / "depot")
+    (racine / "site/corps.qmd").write_text('# Page\ntitle: "Titre du corps"\n', encoding="utf-8")
+
+    faits = extraire_faits(racine)
+
+    par_id = {fait.id: fait for fait in faits}
+    assert par_id["quarto_page:site/corps.qmd"].label == "corps"
 
 
 def test_serialisation_est_deterministe_et_ne_deduit_pas_de_semantique(
