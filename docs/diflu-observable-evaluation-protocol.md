@@ -36,10 +36,10 @@ Ces éléments impliquent qu'une colonne de concentration brute, une concentrati
 
 ## 3. Réconcilier les unités d'observation avant les statistiques
 
-Les sources donnent des comptes qui décrivent des périmètres différents :
+Les sources donnent des comptes qui décrivent des périmètres différents. Attention à ne pas confondre les 194 prélèvements d'air en aval avec les 148 résultats significatifs : le premier est le nombre d'échantillons rapporté, le second le sous-ensemble dépassant le seuil de décision. Le dépôt 2026 décrit 19 événements de rejet au total, dont 15 correspondent à ceux étudiés dans l'article et quatre sont supplémentaires :
 
 - l'article de 2022 porte sur 15 expériences : 7 du 15 au 17 octobre 2019 et 8 du 10 au 12 décembre 2019 ;
-- il rapporte 194 prélèvements d'air significatifs en aval, auxquels s'ajoute un prélèvement amont de contrôle par expérience ;
+- il rapporte 194 prélèvements d'air en aval, dont 148 concentrations significatives, auxquels s'ajoute un prélèvement amont de contrôle par expérience ;
 - la notice du dépôt de données publiée en 2026 décrit 19 expériences et annonce des données supplémentaires (mesures intégrées, mesures d'hélium en temps réel, données météorologiques et micrométéorologiques, documentation instrumentale) ;
 - l'audit automatisé du fichier ciblé rapporte 387 lignes, dont 234 EA et 153 VEGA.
 
@@ -101,7 +101,7 @@ Enfin, le champ `helium_concentration_decision_threshold` décrit le seuil absol
 
 Avant tout benchmark :
 
-- [ ] confirmer la granularité d'une ligne et l'identifiant de l'essai indépendant ; l'audit structurel trouve 19 identifiants `experiment_id`, mais leur correspondance exacte avec les 15 expériences de l'article reste à établir ;
+- [ ] confirmer la granularité d'une ligne et l'identifiant de l'essai indépendant ; le rapprochement temporel et des conditions de rejet relie 15 des 19 identifiants `experiment_id` aux 15 expériences de l'article, tandis que quatre rejets supplémentaires sont présents dans le dépôt 2026 ; cette correspondance d'événements ne démontre pas à elle seule l'indépendance statistique des essais ;
 - [ ] définir une cible unique, sa formule, ses unités et les conditions d'inclusion ;
 - [ ] déterminer quelles covariables sont disponibles au moment de la prédiction et lesquelles risqueraient de divulguer indirectement la cible ;
 - [ ] auditer les valeurs manquantes, le seuil de significativité, les limites de détection et les corrections ;
