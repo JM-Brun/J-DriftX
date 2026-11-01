@@ -89,7 +89,10 @@ class ModeleGZ1:
     @property
     def t_etoile(self) -> float:
         """Temps du rayon maximal t* (s)."""
-        return (self.masse / (self.seuil * exp(1.5))) ** (2.0 / 3.0) / (4.0 * pi * self.diffusivite)
+        return float(
+            (self.masse / (self.seuil * exp(1.5))) ** (2.0 / 3.0)
+            / (4.0 * pi * self.diffusivite)
+        )
 
     @property
     def t_extinction(self) -> float:
@@ -146,7 +149,7 @@ class ModeleGZ1:
         resultat = amplitude * exp(exposant)
         if not isfinite(resultat):
             raise ValueError("La concentration n'est pas représentable en float64.")
-        return resultat
+        return float(resultat)
 
     def ensemble_atteignable(
         self, position: tuple[float, float, float] | NDArray[np.float64], temps: float
