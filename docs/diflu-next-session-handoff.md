@@ -36,39 +36,88 @@ Ce document sépare résultats vérifiés, inférences et questions ouvertes. Le
 - Les coordonnées x/y de l'article ne sont pas reconstruites sur l'ensemble des points.
 - Aucune validation de généralisation à des conditions météo ou géométriques non observées n'a été faite.
 
-## 3. PR et artefacts — état vérifié le 2026-11-01
+## 3. PR et artefacts — état vérifié le 2026-11-01 à 20:10 UTC
 
-Les PR scientifiques de la séquence DIFLU sont désormais intégrées ou explicitement supersédées. La présente actualisation du document est portée par la PR documentaire [#439](https://github.com/JM-Brun/J-DriftX/pull/439).
+Les intégrations récentes sont stabilisées. Au contrôle précédant cette mise à jour, aucune PR n'était ouverte ; cette actualisation est destinée à être publiée dans une PR documentaire dédiée.
 
 | PR | Objet | État vérifié |
 |---|---|---|
-| [#428](https://github.com/JM-Brun/J-DriftX/pull/428) | Comptes article (194 prélèvements, 148 significatifs) et crosswalk | Fusionnée dans `main` |
+| [#428](https://github.com/JM-Brun/J-DriftX/pull/428) | Comptes article et crosswalk | Fusionnée dans `main` |
 | [#432](https://github.com/JM-Brun/J-DriftX/pull/432) | Faisceau d'indices EA≈AS et limites | Fusionnée dans `main` |
-| [#433](https://github.com/JM-Brun/J-DriftX/pull/433) | Valeurs manquantes et plages numériques par champ/type | Fusionnée dans `main` |
-| [#436](https://github.com/JM-Brun/J-DriftX/pull/436) | Document de passation | Fusionnée dans `main` |
-| [#438](https://github.com/JM-Brun/J-DriftX/pull/438) | Calcul ATC reproductible et contrôle des extrema sur le `main` courant | Fusionnée dans `main` ; CI complète réussie |
+| [#433](https://github.com/JM-Brun/J-DriftX/pull/433) | Valeurs manquantes et plages numériques | Fusionnée dans `main` |
+| [#436](https://github.com/JM-Brun/J-DriftX/pull/436) | Document de passation initial | Fusionnée dans `main` |
+| [#438](https://github.com/JM-Brun/J-DriftX/pull/438) | Audit ATC et extrema publiés | Fusionnée dans `main`, CI complète réussie |
+| [#439](https://github.com/JM-Brun/J-DriftX/pull/439) | Actualisation précédente de la passation | Fusionnée dans `main` |
+| [#440](https://github.com/JM-Brun/J-DriftX/pull/440) | Preuve S0 navigation / Hamilton–Jacobi | Fusionnée dans `main` ; sujet théorique distinct de DIFLU |
 
-La PR #438 a été fusionnée par squash le 2026-11-01. Commit de merge : `570a66c8ac21980bb69d37f54c868b03680112e0`. Son run CI #1808 est terminé avec succès : rendu Quarto, contrôles documentaires, Ruff lint/format, mypy, pytest et génération/archivage du diagnostic de graphe.
+La PR #438 a été fusionnée par squash le 2026-11-01 (commit `570a66c8ac21980bb69d37f54c868b03680112e0`). Son run CI #1808 a réussi : rendu Quarto, contrôles documentaires, Ruff lint/format, mypy, pytest et diagnostic du graphe.
 
-PR fermées sans fusion :
-- #434, première version de l'audit ATC, remplacée après retour Ruff ;
-- #435, branche devenue divergente (12 commits de retard), remplacée par #438 recréée depuis `main` ;
-- #431, déjà remplacée par #433.
+La PR #440 a été fusionnée le 2026-11-01 (commit `5aa1b30fb0ea1ca0e9ce5546f263df085b31feaa`). Elle publie une preuve analytique S0, sans revendiquer de validation physique générale.
 
-Ne pas rouvrir ces PR. La branche de #435 est désormais redondante sur le plan fonctionnel, mais sa suppression doit attendre la vérification finale de son diff par rapport à `main`.
+### PR candidates examinées puis fermées
 
-### Branches résiduelles : nettoyage à terminer
+| PR | Branche | Décision |
+|---|---|---|
+| [#441](https://github.com/JM-Brun/J-DriftX/pull/441) | `fix/vectorized-core-bool-boundaries-2026-10-30` | Fermée : `main` contient déjà des validations réels finis/représentables, plus strictes que le patch booléen historique, et une suite de tests plus récente |
+| [#442](https://github.com/JM-Brun/J-DriftX/pull/442) | `fix/trajectory-advection-real-input-contract-2026-10-30` | Fermée : les contrats réels finis/représentables et les tests sont déjà intégrés ; `main` ajoute aussi les garde-fous de débordement et de dernier pas |
+| [#443](https://github.com/JM-Brun/J-DriftX/pull/443) | `fix/edp-intermediate-overflow-2026-10-30` | Fermée : les frontières EDP/métriques/contraintes dans `main` couvrent déjà les booléens, les complexes et les cas de représentabilité ; tests courants plus complets |
+| [#444](https://github.com/JM-Brun/J-DriftX/pull/444) | `fix/puff-marginale-log-domain-final-v3-2026-10-30` | Fermée : calcul logarithmique déjà intégré ; les tests de `main` couvrent notamment le sous-débordement final et évitent une égalité exacte trop stricte |
+| [#445](https://github.com/JM-Brun/J-DriftX/pull/445) | `docs/diflu-article-dataset-crosswalk-2026-10-31` | Fermée : le contenu EA/VEGA et la comparaison des périmètres sont déjà documentés et enrichis dans la section 3.2 de `main` |
 
-L'inventaire précédent identifiait 16 branches de travail. Les décisions ci-dessous sont des candidates, pas une autorisation de suppression aveugle :
+Ces fermetures ne signifient pas que les problèmes historiques étaient imaginaires : elles signifient que leurs correctifs ont été dépassés par des implémentations plus récentes déjà présentes dans `main`. Ne pas rouvrir ces PR ni réintroduire leurs versions anciennes.
 
-- Les anciennes refs `docs/comparaison-jesa-2010-manuscrit-2009`, `docs/finalize-audit-followups` et `rebase/edp-overflow-current-bool-v2` ne sont plus présentes dans la recherche paginée des branches distantes au contrôle du 2026-11-01. Ne pas les traiter comme des suppressions encore à effectuer.
-- **Doublon exact à supprimer en conservant l'autre nom** : `rebase/edp-overflow-on-current-bool-2026-10-30` et `fix/complex-inputs-concentration-edp-2026-10-30` sont **identiques** selon la comparaison GitHub (0 commit en avance/en retard, aucun fichier différent). Conserver `fix/complex-inputs-concentration-edp-2026-10-30` et supprimer le doublon `rebase/*`.
-- **Branches ATC supersédées par la PR #438** : `audit/diflu-atc-extrema-current-main-2026-11-01` (branche fusionnée de #438) a des contenus de fichiers strictement identiques à `main` pour le protocole, le script et ses tests : suppression sûre après vérification du head. `audit/diflu-atc-reference-extrema-ci-2026-11-01` (ancienne branche de #435) est supersédée, mais son script n'est pas identique à `main` ; vérifier les différences résiduelles avant suppression.
-- **Branche documentaire à comparer avant décision** : `docs/diflu-article-dataset-crosswalk-2026-10-31` a encore un commit propre et 12 lignes de diff dans le protocole ; le contenu paraît repris/évolué dans `main`, mais vérifier le sens de ces lignes avant suppression.
-- **Branches à ne pas supprimer sur la seule base du retard** : les dix branches `fix/*` portent des changements sur les frontières booléennes, les entrées numériques, le parseur MNT, les trajectoires et la stabilité puff. Elles ont des commits propres et des recouvrements entre elles ; établir leur correspondance avec les PR historiques fusionnées et comparer les fichiers avant toute suppression.
-- La branche `docs/s0-zermelo-hj-proof` apparaît aussi dans l'inventaire actuel mais relève d'un autre sujet ; la laisser hors de ce nettoyage.
+PR fermées sans fusion antérieures : #431 (remplacée par #433), #434 (première version ATC), #435 (branche divergente remplacée par #438), #324 (parseur MNT remplacé par #325), #341/#338 (remplacées par #342), #348, #358, #363, #365/#370, #382, #385/#386 et #394/#395/#396/#399. Certaines branches de ces PR ont été conservées dans l'inventaire pour audit, mais leurs fonctions ont depuis été intégrées ou renforcées dans `main`.
 
-Le nombre de commits en avance/en retard n'est pas une preuve suffisante d'équivalence fonctionnelle. Pour chaque suppression, comparer le diff net à `main`, vérifier les PR associées et conserver au moins une référence canonique du correctif. La suppression des refs distantes reste une opération GitHub/CLI distincte de la fermeture d'une PR.
+### Inventaire actuel des branches distantes et décision
+
+Au dernier inventaire, les branches distantes sont :
+
+| Branche | État du travail | Décision |
+|---|---|---|
+| `main` | Référence courante | **Conserver** |
+| `audit/diflu-atc-extrema-current-main-2026-11-01` | Trois fichiers concernés identiques à `main` après #438 | Supprimer |
+| `audit/diflu-atc-reference-extrema-ci-2026-11-01` | Ancienne tête de #435, supersédée par #438 | Supprimer |
+| `docs/diflu-article-dataset-crosswalk-2026-10-31` | Section 3.2 déjà présente et enrichie dans `main` ; #445 fermée | Supprimer |
+| `fix/c3-boolean-inputs-2026-10-30` | Contrats de réels et tests plus complets dans `main` | Supprimer |
+| `fix/complex-inputs-concentration-edp-2026-10-30` | Doublon exact de la branche `rebase/edp-overflow-on-current-bool-2026-10-30` ; contenu dépassé par `main` | Supprimer |
+| `fix/edp-intermediate-overflow-2026-10-30` | Contrôles EDP/overflow plus complets dans `main` | Supprimer |
+| `fix/entrees-numeriques-reliefs-concentrations-2026-10-30` | PR #332 fusionnée ; renforcée ensuite par #340 | Supprimer |
+| `fix/puff-marginale-log-domain-final-v2-2026-10-30` | Ancienne variante, dépassée par v3 puis par les tests courants de `main` | Supprimer |
+| `fix/puff-marginale-log-domain-final-v3-2026-10-30` | Algorithme log-domain déjà présent dans `main`, avec tests plus stricts | Supprimer |
+| `fix/reliefs-mixed-bool-validation-2026-10-30` | PR #340 fusionnée ; fichier de tests identique à `main` | Supprimer |
+| `fix/robustesse-parseur-mnt-ascii` | PR #324 non fusionnée, mais comportement repris par #325 ; tests courants plus complets | Supprimer |
+| `fix/trajectory-advection-real-input-contract-2026-10-30` | Supersédée par les contrats plus stricts et tests de `main` | Supprimer |
+| `fix/vectorized-core-bool-boundaries-2026-10-30` | Supersédée par les contrats plus stricts et tests de `main` | Supprimer |
+| `rebase/edp-overflow-on-current-bool-2026-10-30` | Doublon exact de `fix/complex-inputs-concentration-edp-2026-10-30` | Supprimer |
+
+**Conclusion de l'audit : aucune branche de travail listée ne justifie une PR supplémentaire à conserver.** Les quatre PR de code #441–#444 ont été ouvertes en brouillon pour contrôler leur delta, puis fermées après vérification que `main` contenait déjà une version plus complète. La PR documentaire #445 a été fermée pour la même raison. La seule PR ouverte après cet audit est la présente PR documentaire [#446](https://github.com/JM-Brun/J-DriftX/pull/446).
+
+### Nettoyage Git restant
+
+Les refs distantes listées ci-dessus sont candidates à suppression. Les outils de gestion utilisés pour cet audit permettent de comparer les refs, créer/mettre à jour des fichiers et gérer les PR, mais ne fournissent pas d'opération de suppression de branche. **Aucune branche n'a été supprimée par cet audit.**
+
+Après une dernière vérification de l'état local et distant, les commandes de nettoyage sont :
+
+```bash
+git fetch --prune origin
+git push origin --delete \
+  audit/diflu-atc-extrema-current-main-2026-11-01 \
+  audit/diflu-atc-reference-extrema-ci-2026-11-01 \
+  docs/diflu-article-dataset-crosswalk-2026-10-31 \
+  fix/c3-boolean-inputs-2026-10-30 \
+  fix/complex-inputs-concentration-edp-2026-10-30 \
+  fix/edp-intermediate-overflow-2026-10-30 \
+  fix/entrees-numeriques-reliefs-concentrations-2026-10-30 \
+  fix/puff-marginale-log-domain-final-v2-2026-10-30 \
+  fix/puff-marginale-log-domain-final-v3-2026-10-30 \
+  fix/reliefs-mixed-bool-validation-2026-10-30 \
+  fix/robustesse-parseur-mnt-ascii \
+  fix/trajectory-advection-real-input-contract-2026-10-30 \
+  fix/vectorized-core-bool-boundaries-2026-10-30 \
+  rebase/edp-overflow-on-current-bool-2026-10-30
+```
+
+Ne pas supprimer `main`. Refaire un inventaire après suppression et vérifier que les refs ont disparu.
 
 Fichiers/scripts de référence :
 - `scripts/audit_diflu.py`
