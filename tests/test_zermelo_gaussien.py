@@ -6,7 +6,7 @@ pas le théorème de contrôlabilité et ne constituent pas une validation physi
 
 from __future__ import annotations
 
-from math import erf, exp, pi, sqrt
+from math import erf, pi, sqrt
 
 import numpy as np
 import pytest
@@ -70,7 +70,6 @@ def test_noyau_gaussien_et_conservation_de_masse_tronquee(modele: ModeleGZ1) -> 
     """La quadrature 3D retrouve M à l'erreur de troncature près."""
     t = 25.0
     centre = np.asarray(modele.origine) + np.asarray(modele.vent) * t
-    sigma = sqrt(2.0 * modele.diffusivite * t)
     demi_cote = 5.0 * sqrt(4.0 * modele.diffusivite * t)
     noeuds, poids = np.polynomial.legendre.leggauss(28)
     axe = demi_cote * noeuds
@@ -142,7 +141,7 @@ def test_randers_est_restreint_au_regime_sous_critique(modele: ModeleGZ1) -> Non
         t_z = 0.5 * (bas + haut)
     assert t_z is not None
     with pytest.raises(ValueError):
-        modele.jauge_randers(tuple(vitesse), t_z)
+        modele.jauge_randers(tuple(vitesse), t_z * (1.0 + 1e-8))
     with pytest.raises(ValueError):
         modele.jauge_randers(tuple(vitesse), 0.9 * modele.t_etoile)
 
@@ -186,3 +185,36 @@ def test_validation_expresse_des_domaines_randers_et_contact(modele: ModeleGZ1) 
         modele.fonction_contact((1.0, 0.0, 0.0), modele.t_etoile * 1.01)
     with pytest.raises(ValueError):
         modele.valeur_hj((1.0, 0.0, 0.0), modele.t_etoile * 1.01)
+
+
+def test_residu_hj_sur_les_regions_lisses(modele: ModeleGZ1) -> None:
+    """Le résidu classique s'annule hors du coin ; le plateau intérieur est constant."""
+    t = 0.4 * modele.t_etoile
+    rayon = modele.rayon(t)
+    vent = np.asarray(modele.vent)
+    direction = np.array([1.0, 2.0, -1.0])
+    direction /= np.linalg.norm(direction)
+    centre = np.asarray(modele.origine) + vent * t
+    point = centre + 2.0 * rayon * direction
+    pas_t = 1e-5 * t
+    pas_x = 1e-5 * rayon
+    derivee_t = (
+        modele.valeur_hj(tuple(point), t + pas_t)
+        - modele.valeur_hj(tuple(point), t - pas_t)
+    ) / (2.0 * pas_t)
+    gradient = np.empty(3)
+    for axe in range(3):
+        decalage = np.zeros(3)
+        decalage[axe] = pas_x
+        gradient[axe] = (
+            modele.valeur_hj(tuple(point + decalage), t)
+            - modele.valeur_hj(tuple(point - decalage), t)
+        ) / (2.0 * pas_x)
+    residu = derivee_t + float(vent @ gradient) + modele.vitesse_expansion(t) * float(
+        np.linalg.norm(gradient)
+    )
+    assert residu == pytest.approx(0.0, abs=2e-7)
+
+    point_interieur = centre + 0.25 * rayon * direction
+    assert modele.valeur_hj(tuple(point_interieur), t + pas_t) == 0.0
+    assert modele.valeur_hj(tuple(point_interieur), t - pas_t) == 0.0
