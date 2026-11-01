@@ -28,7 +28,7 @@ uv run python scripts/audit_diflu.py --output-dir /tmp/diflu-audit --timeout 90
 
 Le script résout les fichiers par leur nom dans le listing Dataverse, récupère les métadonnées détaillées, demande explicitement les octets originaux avec `?format=original`, vérifie la taille et le MD5 publiés quand disponibles, calcule un SHA-256, puis écrit `audit-report.json`.
 
-Les trois fichiers de départ sont le tableau des prélèvements, le dictionnaire des médias et le dictionnaire des variables. Le rapport conserve les noms et identifiants Dataverse ainsi que les noms originaux, les URL, les tailles et les contrôles d’intégrité.
+Les trois fichiers de départ sont le tableau des prélèvements, le dictionnaire des médias et le dictionnaire des variables. Le rapport conserve les noms et identifiants Dataverse ainsi que les noms originaux, les URL, les tailles et les contrôles d’intégrité. Pour le tableau de prélèvements, il inventorie les marqueurs `NA`/`< LC` par colonne et par type de préleveur, et calcule les plages de toutes les colonnes numériques interprétables, globalement et par type EA/VEGA. Les identifiants textuels et les marqueurs de domaine ne sont pas convertis en nombres.
 
 ## Préparer un corpus de référence versionnable
 
@@ -53,6 +53,7 @@ Les fichiers copiés et le manifeste doivent être inspectés puis ajoutés à G
 - Pour les EA significatifs, le rapport vérifie que `passage_corrected / bg_corrected` correspond à `durée du prélèvement / durée du rejet`, avec une tolérance relative de 1 % pour les arrondis des concentrations ; les anomalies sont listées par ligne.
 - Pour les VEGA significatifs, le rapport décrit la couverture du champ de correction de passage sans inférer ni imposer une règle physique.
 - Les valeurs `NA` ne sont pas globalement converties en valeurs manquantes.
+- Le rapport expose `numeric_ranges` et `numeric_ranges_by_sampling_type` (min, max, effectif numérique) ainsi que `missingness_by_sampling_type` (comptes séparés de `NA`, cellules vides et `< LC`) pour chaque catégorie présente.
 
 Le CSV original et l’export TSV transformé de Dataverse ne sont pas interchangeables. L’API annonce, pour le tableau principal, un original de 75 701 octets avec MD5 `d4477017be8efa2ed0f920499c319e3e`, alors que la taille publiée pour l’export TSV ne correspond pas au corps TSV observé pendant l’audit. Le script demande donc l’original explicitement et ne compare pas ses octets à la taille du TSV.
 
@@ -66,4 +67,4 @@ Ces tests simulent les cas de taille/MD5 conformes et non conformes, la règle s
 
 ## Limites
 
-Un contrôle d’intégrité démontre que les octets reçus correspondent aux métadonnées disponibles ; il ne démontre ni la validité scientifique des mesures ni leur exhaustivité. L’audit sémantique élargi de la PR #251 rapporte les comptes par expérience, les marqueurs `NA`/`< LC` par colonne, la cohérence des drapeaux de détection, les durées d’échantillonnage, les clés d’identité répétées et les plages numériques observées. Ces diagnostics ne prouvent ni l’indépendance statistique des expériences, ni la validité physique des variables, ni l’adéquation de l’ATC. Le fixture versionné sert de test de régression, pas de substitut à l'examen scientifique.
+Un contrôle d’intégrité démontre que les octets reçus correspondent aux métadonnées disponibles ; il ne démontre ni la validité scientifique des mesures ni leur exhaustivité. L’audit sémantique élargi de la PR #251 rapporte les comptes par expérience, les marqueurs `NA`/`< LC` par colonne, la cohérence des drapeaux de détection, les durées d’échantillonnage, les clés d’identité répétées et les plages numériques observées pour toutes les colonnes numériques interprétables, globalement et par type de préleveur. Ces diagnostics ne prouvent ni l’indépendance statistique des expériences, ni la validité physique des variables, ni l’adéquation de l’ATC. Le fixture versionné sert de test de régression, pas de substitut à l'examen scientifique.
