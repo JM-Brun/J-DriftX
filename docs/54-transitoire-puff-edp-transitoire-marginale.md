@@ -80,10 +80,9 @@ Sigles et termes spécialisés utilisés par cette note, définis ici à leur pr
 
 ### Distinction avec le théorème GZ-1
 
-Le [théorème GZ-1](../site/theorie/navigation-fronts-controllabilite.qmd) porte sur le noyau fondamental 3D isotrope à diffusivité constante et sur un front de **contrôlabilité** construit à partir d'un ensemble de vitesses admissibles. La présente note porte sur une marginale transverse (Q(y,z,t)) et sur une résolution FTCS d'une EDP de **concentration**, comparée à la solution fermée du package.
+Le [théorème GZ-1](../site/theorie/navigation-fronts-controllabilite.qmd) porte sur le noyau fondamental 3D isotrope à diffusivité constante et sur un front de **contrôlabilité** construit à partir d'un ensemble de vitesses admissibles. La présente note porte sur une marginale transverse \(Q(y,z,t)\) et sur une résolution FTCS d'une EDP de **concentration**, comparée à la solution fermée du package.
 
-Les deux formulations ne sont pas interchangeables : le schéma FTCS de cette note n'est pas un solveur de l'équation Hamilton–Jacobi de GZ-1, et les erreurs de comparaison concentration–EDP ne constituent pas une vérification de l'égalité (T_{mathrm{nav}}=T_{mathrm{front}}). GZ-1 peut servir de référence théorique distincte pour une future implémentation HJ, après définition d'un protocole et d'une discrétisation propres.
-
+Les deux formulations ne sont pas interchangeables : le schéma FTCS de cette note n'est pas un solveur de l'équation Hamilton–Jacobi de GZ-1, et les erreurs de comparaison concentration–EDP ne constituent pas une vérification de l'égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\). GZ-1 peut servir de référence théorique distincte pour une future implémentation HJ, après définition d'un protocole et d'une discrétisation propres.
 ## 6. Relations au code
 
 | Objet du dépôt | Rôle |
