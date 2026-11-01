@@ -97,10 +97,16 @@ def test_front_et_fonction_de_valeur_hj_ont_le_plateau_nul(modele: ModeleGZ1) ->
     rayon = modele.rayon(t)
     assert modele.valeur_hj(tuple(centre), t) == 0.0
     assert modele.valeur_hj(tuple(centre + 0.5 * rayon * np.array([1.0, 0.0, 0.0])), t) == 0.0
-    assert modele.valeur_hj(tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t) == pytest.approx(0.0)
-    assert modele.valeur_hj(tuple(centre + 2.0 * rayon * np.array([1.0, 0.0, 0.0])), t) == pytest.approx(rayon)
+    assert modele.valeur_hj(
+        tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t
+    ) == pytest.approx(0.0)
+    assert modele.valeur_hj(
+        tuple(centre + 2.0 * rayon * np.array([1.0, 0.0, 0.0])), t
+    ) == pytest.approx(rayon)
     assert modele.ensemble_atteignable(tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t)
-    assert not modele.ensemble_atteignable(tuple(centre + 1.01 * rayon * np.array([1.0, 0.0, 0.0])), t)
+    assert not modele.ensemble_atteignable(
+        tuple(centre + 1.01 * rayon * np.array([1.0, 0.0, 0.0])), t
+    )
 
 
 def test_commande_radiale_respecte_la_borne_et_atteint_la_cible(modele: ModeleGZ1) -> None:
@@ -118,7 +124,9 @@ def test_commande_radiale_respecte_la_borne_et_atteint_la_cible(modele: ModeleGZ
         np.testing.assert_allclose(commande, derivee, rtol=2e-8, atol=1e-9)
     assert np.linalg.norm(z / modele.rayon(temps_final) * modele.rayon(temps_final) - z) < 1e-12
     with pytest.raises(ValueError):
-        modele.commande_radiale((2.0 * modele.rayon(temps_final), 0.0, 0.0), temps_final, temps_final)
+        modele.commande_radiale(
+            (2.0 * modele.rayon(temps_final), 0.0, 0.0), temps_final, temps_final
+        )
 
 
 def test_randers_est_restreint_au_regime_sous_critique(modele: ModeleGZ1) -> None:
