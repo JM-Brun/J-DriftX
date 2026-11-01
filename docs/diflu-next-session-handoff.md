@@ -1,0 +1,163 @@
+# DIFLU — état des travaux et plan de reprise
+
+> Point de reprise : **2026-11-01**. Périmètre : audit scientifique et reproductible du jeu DIFLU pour J-DriftX. Décision : poursuivre l'audit ; **ne pas lancer de benchmark** à ce stade.
+
+Ce document sépare résultats vérifiés, inférences et questions ouvertes. Les chiffres ci-dessous concernent les trois fichiers compacts versionnés dans `tests/fixtures/diflu/source/`, sauf indication contraire.
+
+## 1. Résultats établis
+
+- Le CSV de prélèvements contient **387 lignes**, **21 variables**, **19 identifiants de rejet** : **234 EA** et **153 VEGA**.
+- Les 19 rejets se répartissent en **15 événements rapprochés de l'article de 2022** et **4 événements supplémentaires** absents de l'article.
+- Le dictionnaire distingue EA (un sac unique par événement d'échantillonnage) et VEGA (prélèvements séquentiels multi-sacs). Ne pas agréger ces deux catégories comme des observations homogènes.
+- Pour les **196 lignes EA significatives**, la correction de passage est cohérente : `passage_corrected / bg_corrected` concorde avec `durée prélèvement / durée rejet`, erreur relative maximale ≈ **0,58 %**.
+- L'ATC candidat est calculé par `helium_concentration_sampling_bg_passage_corrected / helium_release_flow`, en **s m⁻³**.
+- Sur les **153 EA significatifs** des 15 événements de l'article, les extrema publiés sont reproduits à l'arrondi près :
+  - minimum : CSV `#1_6`, échantillon `B14`, **2,0227×10⁻⁵ s m⁻³**, article **2,0×10⁻⁵** ;
+  - maximum : CSV `#2_4`, échantillon `A7_D7`, **1,5084×10⁻³ s m⁻³**, article **1,5×10⁻³**.
+- Le maximum des 19 événements est sur `#1_1`, un rejet absent de l'article : ne pas le comparer aux extrema publiés pour les 15 événements.
+- Les distances géodésiques release→sampler des deux échantillons extrêmes sont à moins d'un mètre des normes radiales déduites des coordonnées publiées. Cela ne valide ni l'orientation signée x/y ni la projection selon le vent.
+
+## 2. Inférences fortes et limites
+
+### EA ≈ Atmospheric Samplers (AS) : faisceau d'indices, pas preuve textuelle
+
+- 14 identifiants EA distincts dans le CSV ; exactement 10 avec débit d'échantillonnage numérique, comme les 10 AS avec contrôleur de débit décrits dans l'article.
+- Les comptes EA concordent avec les comptes AS de l'article pour **14 événements sur 15**.
+- Débit EA médian observé : **0,171 L/min**, proche des **0,17 L/min** publiés.
+- Médiane du rapport écart-type/débit : **3,68 %**, proche des **3,4 %** publiés.
+- L'article ne nomme pas explicitement EA/VEGA. L'équivalence EA↔AS reste donc une hypothèse fortement étayée.
+
+### Écarts encore inexpliqués
+
+- Article `1-7` / CSV `#1_9` : l'article annonce 14 AS ; le CSV contient 6 EA et 9 VEGA. On ne sait pas si les périmètres ou méthodes de comptage diffèrent.
+- Sous l'hypothèse EA≈AS, les 15 événements donnent 186 EA contre 194 AS publiés et 153 EA significatifs contre 148 résultats significatifs dans l'article. Ne pas qualifier ces écarts de lignes manquantes ou d'erreurs de classification sans preuve.
+- Les 127 VEGA significatifs n'ont pas de correction de passage renseignée. Ne pas leur appliquer la règle EA par extrapolation.
+- Les séries météo/micrométéo, les fichiers de localisation et les métadonnées instrumentales n'ont pas encore été audités.
+- Les coordonnées x/y de l'article ne sont pas reconstruites sur l'ensemble des points.
+- Aucune validation de généralisation à des conditions météo ou géométriques non observées n'a été faite.
+
+## 3. PR et artefacts
+
+Les PR suivantes étaient **ouvertes et non fusionnées** au point de reprise ; recharger leur état avant toute action.
+
+| PR | Objet | État connu au 2026-11-01 |
+|---|---|---|
+| [#428](https://github.com/JM-Brun/J-DriftX/pull/428) | Correction des comptes article (194 prélèvements, 148 significatifs) et crosswalk | CI succès ; ouverte |
+| [#432](https://github.com/JM-Brun/J-DriftX/pull/432) | Faisceau d'indices EA≈AS et limites | CI succès ; ouverte |
+| [#433](https://github.com/JM-Brun/J-DriftX/pull/433) | Valeurs manquantes et plages numériques par champ/type | CI succès ; ouverte |
+| [#435](https://github.com/JM-Brun/J-DriftX/pull/435) | Calcul ATC reproductible et contrôle des extrema | deux runs CI succès ; ouverte, mergeable |
+
+Pour #435, head contrôlé : `e324b78dc6e95ce7524a166da60e5b63dc38728e`. Runs `41293871755` et `41293860350` : terminés, conclusion `success`.
+
+PR supersédées déjà fermées : #431 (remplacée par #433) et #434 (remplacée par #435). Ne pas les rouvrir.
+
+Fichiers/scripts :
+- `scripts/audit_diflu.py`
+- `scripts/vendor_diflu_reference.py`
+- `tests/fixtures/diflu/source/`
+- `docs/diflu-reproducible-audit.md`
+- `docs/diflu-observable-evaluation-protocol.md`
+- `docs/audits/15a-audit-bibliographique.md`
+
+Issues : [#221](https://github.com/JM-Brun/J-DriftX/issues/221) (rapprochement article/CSV et ATC), [#204](https://github.com/JM-Brun/J-DriftX/issues/204) (récupération/intégrité). L'issue privée #167 et la PR privée #192 avaient été signalées comme ouvertes lors du dernier contrôle : vérifier leur état actuel.
+
+## 4. Prochaines tâches — ordre d'exécution
+
+### P0 — Synchroniser et revoir les PR
+
+1. Recharger statut, base/head, checks, commentaires et conflits de #428/#432/#433/#435.
+2. Examiner les diffs et chevauchements : #428, #432 et #435 modifient le même protocole documentaire. Vérifier la cohérence de leur cumul.
+3. Déterminer un ordre de fusion sûr ; ne fusionner qu'après revue des diffs et checks verts. Ne pas fusionner automatiquement.
+4. Après fusion éventuelle, rejouer les tests sur `main`.
+
+**Sortie attendue :** audit et documentation cohérents sur la branche principale, sans PR concurrentes obsolètes.
+
+### P1 — Résoudre `#1_9`
+
+1. Extraire toutes les lignes `#1_9` sans agrégation, EA et VEGA séparément.
+2. Comparer `sampling_id`, `sampling_bag_id`, timestamps, durées, positions, hauteurs, flags, concentrations et débits disponibles.
+3. Reconstituer le périmètre des 14 AS et des 4 résultats significatifs à partir du tableau 1, des méthodes et des métadonnées.
+4. Vérifier si les 9 lignes VEGA entrent dans le périmètre des AS ; ne pas conclure sur la seule proximité des comptes.
+5. Si les sources ne permettent pas de trancher, écrire une question précise aux auteurs et consigner l'incertitude. Ne pas les contacter sans autorisation explicite.
+
+**Sortie attendue :** explication sourcée ou question précise restant à résoudre.
+
+### P1 — Auditer les métadonnées instrumentales
+
+1. Résoudre par nom dans le listing Dataverse, sans inventer d'identifiant, puis récupérer `DIFLU_instrument_locations.tab` et `DIFLU_instrument_metadata.tab`.
+2. Préserver les octets originaux et enregistrer taille, MD5 et SHA-256.
+3. Examiner structure, unités, référentiels, hauteurs, résolution et plages de mesure.
+4. Distinguer les instruments météo (anémomètres, station, lidar Doppler) des positions de prélèvement. Ne pas joindre automatiquement les localisations instrumentales aux samplers.
+5. Étendre la procédure d'audit seulement après compréhension de ces fichiers.
+
+**Sortie attendue :** dictionnaire de jointure explicite et référentiels identifiés, sans jointure spatiale ambiguë.
+
+### P1 — Auditer l'alignement temporel et les séries météo
+
+1. Inventorier les séries météo/micrométéo et leurs dictionnaires dans le dépôt complet.
+2. Confirmer fuseau et convention temporelle ; l'article utilise UTC pour les événements, mais ne pas supposer que toutes les séries partagent cette convention.
+3. Inventorier variables, unités, fréquences, instruments, trous, doublons et changements de configuration.
+4. Définir des fenêtres propres à chaque phénomène : rejet, prélèvement, intégration/transport. Ne pas moyenner automatiquement toute une expérience.
+5. Reconstituer les variables météo de l'article (notamment vitesse/direction du vent et conditions thermodynamiques) et comparer aux tableaux publiés.
+6. Quantifier l'incertitude d'alignement et la représentativité du vent mesuré pour chaque sampler.
+
+**Sortie attendue :** table événement→mesures météo traçable et règles d'agrégation justifiées.
+
+### P2 — Reconstruire la géométrie
+
+1. Établir origine, axes, signes, orientation et éventuelle correction liée au vent des coordonnées x/y de l'article.
+2. Recalculer les distances release→sampler WGS84 pour toutes les lignes.
+3. Comparer les distances radiales publiées lorsqu'elles sont disponibles.
+4. Reconstruire x/y uniquement si direction et convention sont suffisamment documentées ; sinon conserver les coordonnées géographiques et noter l'indétermination.
+5. Vérifier les hauteurs et références verticales avec les métadonnées instrumentales.
+
+**Sortie attendue :** transformation spatiale documentée et testée, ou décision motivée de ne pas reconstruire x/y.
+
+### P2 — Clarifier VEGA et les observables
+
+1. Déterminer le protocole temporel des sacs VEGA et leurs fenêtres d'échantillonnage.
+2. Rechercher la définition d'une concentration représentative par sac et de ses corrections physiques.
+3. Ne pas imputer les 127 corrections de passage VEGA absentes.
+4. Définir des observables séparés EA/VEGA si nécessaire ; les réunir seulement si leur comparabilité est démontrée.
+5. Documenter unités, seuils, limites de quantification et incertitudes.
+
+**Sortie attendue :** observable défini par type, ou VEGA explicitement exclu du premier cas d'étude.
+
+### P3 — Définir la validation physique, avant benchmark
+
+1. Préciser la tâche : reconstruction de champ, prédiction d'ATC en un point, profil, ou généralisation.
+2. Définir les variables disponibles à l'inférence et exclure toute fuite de cible.
+3. Définir l'unité indépendante de validation ; jamais de split aléatoire de lignes issues d'un même événement.
+4. Définir baselines physiques/statistiques, métriques, incertitudes et critères d'acceptation.
+5. Évaluer si 15 événements article (ou 19 rejets du dépôt) suffisent ; ne pas supposer leur indépendance.
+6. Privilégier d'abord comparaison déterministe à des modèles physiques et analyse de sensibilité. N'introduire un modèle appris que si la question et le nombre d'unités indépendantes le justifient.
+
+**Sortie attendue :** protocole préétabli avec split par événement/campagne justifié. Aucun score avant cette étape.
+
+## 5. Garde-fous
+
+- Un checksum prouve l'intégrité des octets, pas la validité physique ni l'exhaustivité.
+- La concordance des extrema ATC valide une partie de la chaîne de calcul, pas chaque ligne ni toute la distribution.
+- Ne pas confondre identifiants de rejet, prélèvements et unités expérimentales indépendantes.
+- EA≈AS reste une hypothèse étayée, non une équivalence explicitement écrite dans l'article.
+- Ne pas mélanger les quatre rejets supplémentaires aux 15 événements lors de la reproduction des extrema.
+- Ne pas assimiler VEGA à EA ni convertir les valeurs manquantes en zéro.
+- Ne pas recalculer les flags de significativité en comparant directement une concentration déjà corrigée du fond au seuil absolu.
+- Pas de benchmark, de validation croisée aléatoire ou de split par ligne avant validation des unités expérimentales, observables et covariables météo.
+- Pas de refactoring général de J-DriftX : rester sur les travaux nécessaires à la validité scientifique.
+
+## 6. Reprise pratique
+
+1. Lire ce document, puis `docs/diflu-observable-evaluation-protocol.md` et `docs/diflu-reproducible-audit.md`.
+2. Synchroniser GitHub : #428/#432/#433/#435, issues #221/#204 et issue privée #167.
+3. Rejouer :
+   ```bash
+   uv run pytest tests/test_audit_diflu.py tests/test_vendor_diflu_reference.py
+   ```
+4. Rejouer l'audit du fixture et contrôler : 387 lignes, 234 EA, 153 VEGA ; 196 EA significatifs ; 153 sur les 15 événements article ; extrema article conformes à l'arrondi ; maximum global sur `#1_1`.
+5. Commencer par le cas `#1_9` et les métadonnées instrumentales. Ne pas commencer par un benchmark.
+
+## 7. Sources primaires
+
+- Laguionie et al. (2022), *Investigation of a Gaussian Plume in the Vicinity of an Urban Cyclotron Using Helium as a Tracer Gas*, Atmosphere 13(8), 1223. [DOI 10.3390/atmos13081223](https://doi.org/10.3390/atmos13081223).
+- Laguionie, Connan & Darmau (2026), DIFLU, version 1. [DOI 10.57745/A9YC3C](https://doi.org/10.57745/A9YC3C).
