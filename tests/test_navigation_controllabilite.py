@@ -221,6 +221,23 @@ def test_la_commande_radiale_remplit_exactement_la_boule() -> None:
             np.testing.assert_allclose(derivee, commande(tau), atol=1e-6)
         # Then — la primitive passe de zéro à z sur [0, t].
         np.testing.assert_allclose(primitive(t), z, atol=1e-12)
+    # Then — même après le seuil instantané c(t) < |u|, le budget cumulé
+    # permet encore d'atteindre un point relatif situé en amont.
+    direction_amont = -VENT / float(np.linalg.norm(VENT))
+    assert _vitesse(t) < float(np.linalg.norm(VENT))
+    assert float(VENT @ direction_amont) < 0.0
+    deplacement_amont = rayon * direction_amont
+    np.testing.assert_allclose(
+        VENT * t + deplacement_amont,
+        VENT * t + direction_amont * _rayon(t),
+        atol=1e-12,
+    )
+    # La commande radiale qui le réalise reste admissible sur tout [0, t].
+    for tau in (1.0, 10.0, 25.0, t):
+        assert _vitesse(tau) > 0.0
+        assert float(np.linalg.norm(direction_amont * _vitesse(tau))) == pytest.approx(
+            _vitesse(tau)
+        )
     # Then — un point extérieur demanderait une commande au-delà de la borne.
     z_exterieur = 1.1 * rayon * direction
     assert float(np.linalg.norm((z_exterieur / rayon) * _vitesse(10.0))) > _vitesse(10.0)
