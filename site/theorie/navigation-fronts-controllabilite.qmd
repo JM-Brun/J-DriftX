@@ -247,6 +247,8 @@ La solution de viscosité de cette eikonale standard est unique par le principe 
 =\max\left(\lVert y-x_0\rVert-\rho,0\right).
 \]
 
+L'inégalité vient de \(\lVert z-x_0\rVert\geq\lVert y-x_0\rVert-\lVert y-z\rVert\). Elle est atteinte en prenant \(z=x_0\) si \(x_0\) appartient à la boule \(\overline B(y,\rho)\), sinon au point de cette boule situé sur le segment \([y,x_0]\) à distance \(\rho\) de \(y\).
+
 En revenant aux variables physiques, on obtient la solution de viscosité
 
 \[
