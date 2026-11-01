@@ -61,7 +61,7 @@ Ne pas rouvrir ces PR. La branche de #435 est désormais redondante sur le plan 
 
 L'inventaire précédent identifiait 16 branches de travail. Les décisions ci-dessous sont des candidates, pas une autorisation de suppression aveugle :
 
-- **Candidates à supprimer après une dernière comparaison avec `main`** : `docs/comparaison-jesa-2010-manuscrit-2009`, `docs/finalize-audit-followups`, `rebase/edp-overflow-current-bool-v2-2026-10-30` (aucun commit propre détecté au contrôle précédent).
+- **Candidates à supprimer après une dernière comparaison avec `main`** : `docs/comparaison-jesa-2010-manuscrit-2009`, `docs/finalize-audit-followups`, `rebase/edp-overflow-current-bool-v2` (aucun commit propre détecté au contrôle précédent).
 - **Doublon exact à supprimer en conservant l'autre nom** : `rebase/edp-overflow-on-current-bool-2026-10-30` était identique à `fix/complex-inputs-concentration-edp-2026-10-30`.
 - **Branche remplacée par la PR #438** : `audit/diflu-atc-reference-extrema-ci-2026-11-01`. Vérifier que son diff net est désormais entièrement couvert avant suppression.
 - **Branches à ne pas supprimer sur la seule base du retard** : les branches `fix/*` sur les frontières booléennes, les entrées numériques, le parseur MNT et la stabilité puff ont des commits propres et des recouvrements entre elles. Vérifier les PR historiques fusionnées et l'équivalence des patches branche par branche.
