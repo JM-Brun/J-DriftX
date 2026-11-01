@@ -93,7 +93,18 @@ c(t):=R'(t)=\frac{2K}{R(t)}
 
 Ainsi, \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), puis décroît sur \(t_*<t<e\,t_*\). **La borne de contrôle \(c(t)=R'(t)\) n'est positive que pendant la phase d'expansion \(0<t<t_*\)**. Après \(t_*\), elle est négative et ne peut plus être utilisée comme borne de norme d'un contrôle. Le théorème GZ-1 est donc limité à \(0<t\leq t_*\).
 
-**Contrôle dimensionnel.** \([K]=\mathrm{m^2\,s^{-1}}\), \([M/C_0]=\mathrm{m^3}\), \([t_*]=\mathrm{s}\), \([R]=\mathrm m\) et \([c]=\mathrm{m\,s^{-1}}\). La solution conserve la masse : \(\int_{\mathbb R^3}C(x,t)\,dx=M\) pour tout \(t>0\).
+**Contrôle dimensionnel et masse.** La concentration a l'unité \(\mathrm{kg\,m^{-3}}\), donc \([M/C_0]=\mathrm{m^3}\). Comme \([K]=\mathrm{m^2\,s^{-1}}\), le logarithme porte sur un rapport sans dimension, \([t_*]=\mathrm s\), \([R]=\mathrm m\) et \([c]=\mathrm{m\,s^{-1}}\). La conservation de la masse se vérifie directement par le changement de variable gaussien :
+
+\[
+\begin{aligned}
+\int_{\mathbb R^3} C(x,t)\,dx
+&=\frac{M}{(4\pi Kt)^{3/2}}
+\int_{\mathbb R^3}\exp\!\left(-\frac{\|x-x_c(t)\|^2}{4Kt}\right)dx\\
+&=\frac{M}{(4\pi Kt)^{3/2}}(4\pi Kt)^{3/2}=M.
+\end{aligned}
+\]
+
+Le facteur \((4\pi Kt)^{-3/2}\) ne détruit donc pas de masse : il compense exactement l'augmentation du volume occupé par la gaussienne. La concentration centrale décroît, mais la masse totale reste constante.
 ## 3. Problème de navigation GZ-1
 
 Une trajectoire contrôlée, exprimée dans le référentiel fixe, est une fonction absolument continue \(X:[0,t]\to\mathbb R^3\) qui vérifie
