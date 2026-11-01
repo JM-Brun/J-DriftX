@@ -119,7 +119,7 @@ T_{\mathrm{front}}
 =-t_*\,\frac{q}{W_{-1}(-q/e)}.
 \]
 
-La branche \(W_{-1}\) est indispensable : elle sélectionne \(0<T_{\mathrm{front}}\leq t_*\), donc le premier contact pendant l'expansion. La branche principale \(W_0\) donne la seconde intersection pendant la contraction, hors du domaine de contrôle GZ-1.
+La branche \(W_{-1}\) est indispensable : elle sélectionne \(0<T_{\mathrm{front}}\leq t_*\), donc le premier contact pendant l'expansion. Pour le voir, poser \(y=t/t_*\) transforme l'équation en \(q=y(1-\ln y)\) ; avec \(w=\ln y-1\), on obtient \(we^w=-q/e\), et la branche \(W_{-1}\) impose \(y\leq1\). La branche principale \(W_0\) donne la seconde intersection pendant la contraction, hors du domaine de contrôle GZ-1.
 
 La convention est \(+\infty\) si l'ensemble correspondant est vide. Pour une cible initialement extérieure, le premier instant où la boule contient la cible est un contact avec la frontière, par continuité.
 
