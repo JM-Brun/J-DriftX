@@ -43,6 +43,26 @@ nodata_value -9999
 1 -9999
 """
 
+MNT_ENREGISTRE_CENTRE = """ncols 3
+nrows 3
+xllcenter 5.0
+yllcenter 5.0
+cellsize 10.0
+1 2 3
+4 5 6
+7 8 9
+"""
+
+MNT_AXES_MIXTES = """ncols 3
+nrows 3
+xllcorner 0.0
+yllcenter 5.0
+cellsize 10.0
+1 2 3
+4 5 6
+7 8 9
+"""
+
 
 def test_relief_plat_renvoie_zero() -> None:
     """Étant donné le terrain plat, quand on évalue l'altitude, alors elle est nulle."""
@@ -130,6 +150,77 @@ def test_mnt_ascii_rejette_hors_emprise() -> None:
         relief.altitude(-1.0, 5.0)
     with pytest.raises(ValueError, match="emprise verticale"):
         relief.altitude(5.0, 40.0)
+
+
+def test_mnt_ascii_lit_l_enregistrement_au_centre() -> None:
+    """Étant donné un en-tête xllcenter/yllcenter, la géométrie est exacte."""
+    # Given — la même grille 3 x 3 enregistrée au centre de la cellule sud-ouest.
+    relief = ReliefMntAscii.depuis_texte(MNT_ENREGISTRE_CENTRE)
+    # When / Then — x0 et y0 sont les centres déclarés par l'en-tête.
+    assert relief.x0 == pytest.approx(5.0)
+    assert relief.y0 == pytest.approx(5.0)
+    # Et les centres de cellules portent l'altitude de leur cellule.
+    assert relief.altitude(5.0, 5.0) == pytest.approx(7.0)
+    assert relief.altitude(25.0, 25.0) == pytest.approx(3.0)
+
+
+def test_mnt_ascii_coin_et_centre_decrivent_le_meme_raster() -> None:
+    """Coin + demi-pas et centre déclarés coïncident sur toute l'emprise."""
+    # Given — le même raster sous les deux enregistrements du format Esri.
+    au_coin = ReliefMntAscii.depuis_texte(MNT_ASCII)
+    au_centre = ReliefMntAscii.depuis_texte(MNT_ENREGISTRE_CENTRE)
+    # When — on évalue une grille couvrant toute l'enveloppe des centres.
+    xs = np.linspace(5.0, 25.0, 21)
+    grille_x, grille_y = np.meshgrid(xs, xs)
+    # Then — les deux reliefs coïncident exactement, point par point.
+    assert np.array_equal(
+        au_coin.altitude(grille_x, grille_y),
+        au_centre.altitude(grille_x, grille_y),
+    )
+
+
+def test_mnt_ascii_lit_les_axes_mixtes() -> None:
+    """Chaque axe déclare indépendamment son enregistrement coin ou centre."""
+    # Given — un en-tête enregistré au coin en x, au centre en y.
+    relief = ReliefMntAscii.depuis_texte(MNT_AXES_MIXTES)
+    # When / Then — la géométrie suit chaque axe et l'altitude est exacte.
+    assert relief.x0 == pytest.approx(5.0)
+    assert relief.y0 == pytest.approx(5.0)
+    assert relief.altitude(5.0, 5.0) == pytest.approx(7.0)
+    assert relief.altitude(25.0, 25.0) == pytest.approx(3.0)
+
+
+def test_mnt_ascii_rejette_les_deux_enregistrements_d_un_axe() -> None:
+    """Étant donné xllcorner et xllcenter ensemble, la lecture est refusée."""
+    # Given — un en-tête incohérent portant les deux clés de l'axe x.
+    texte = MNT_ASCII.replace("xllcorner 0.0", "xllcorner 0.0\nxllcenter 5.0")
+    # When / Then — la lecture est refusée.
+    with pytest.raises(ValueError, match="exclusifs"):
+        ReliefMntAscii.depuis_texte(texte)
+
+
+def test_mnt_ascii_rejette_un_axe_origine_absent() -> None:
+    """Un en-tête sans aucune origine x est incomplet, quelle que soit la variante."""
+    # Given — un fichier .asc amputé de xllcorner.
+    texte = MNT_ASCII.replace("xllcorner 0.0\n", "")
+    # When / Then — la lecture est refusée.
+    with pytest.raises(ValueError, match="incomplete"):
+        ReliefMntAscii.depuis_texte(texte)
+
+
+def test_mnt_ascii_refuse_la_demi_cellule_exterieure() -> None:
+    """L'emprise d'interpolation est l'enveloppe des centres, sans extrapolation."""
+    # Given — le MNT 3 x 3 : centres de 5 à 25 m, raster de 0 à 30 m.
+    relief = ReliefMntAscii.depuis_texte(MNT_ASCII)
+    # When / Then — un point dans le raster mais hors de l'enveloppe des
+    # centres est refusé, sur chaque axe, sans extrapolation.
+    with pytest.raises(ValueError, match="emprise horizontale"):
+        relief.altitude(2.5, 15.0)
+    with pytest.raises(ValueError, match="emprise verticale"):
+        relief.altitude(15.0, 27.5)
+    # Et les bords de l'enveloppe des centres restent atteignables.
+    assert relief.altitude(5.0, 5.0) == pytest.approx(7.0)
+    assert relief.altitude(25.0, 25.0) == pytest.approx(3.0)
 
 
 def test_mnt_ascii_rejette_cellule_sans_donnee() -> None:
@@ -790,3 +881,4 @@ def test_vent_et_adaptateur_conservent_les_coordonnees_signees() -> None:
 
     adaptateur = AdaptateurTrajectoire2D(vent=VentConstant(), hauteur=10.0)  # type: ignore[arg-type]
     assert adaptateur(-5.0, -1.0, -2.0) == (2.0, -1.0)
+
