@@ -2197,6 +2197,7 @@ noeuds = [
   noeuds = [
     "champ_analytique", "experiences/uniforme",
   "experiences/baseline_uniforme",
+    "experiences/zermelo_gaussien",
     "experiences/reconstruction_vent", "experiences/cas_synthetiques",
     "experiences/superposition_sources", "experiences/relief",
     "experiences/modele_reduit_edp",
