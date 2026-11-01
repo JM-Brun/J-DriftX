@@ -21,7 +21,7 @@ Cette page publie le résultat analytique conditionnel **GZ-1** (*Gaussian Zerme
 | Rayon et vitesse d'expansion d'une isoconcentration gaussienne | Dérivation exacte dans le modèle posé ci-dessous |
 | Ensemble atteignable sous le contrôle isotrope prescrit | Démonstration analytique exacte pour les contrôles mesurables spécifiés |
 | Égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) | Théorème conditionnel démontré sous les hypothèses GZ-1 |
-| Équation HJ du front de contrôlabilité | Hamiltonien dérivé du problème de contrôle ; solution de viscosité sous les hypothèses usuelles |
+| Équation HJ du front de contrôlabilité | Hamiltonien dérivé ; solution explicite GZ-1 vérifiée pour (t>0) ; unicité au départ singulier non démontrée ici |
 | Équivalence avec un front d'advection–diffusion général | **Non démontrée** |
 | Validité physique de la borne de contrôle \(c(t)\) | Hypothèse de modélisation, non conséquence de la solution gaussienne |
 
@@ -226,7 +226,7 @@ abla\phi
 abla\phi\rVert=0.}
 \]
 
-Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.
+Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.\n\n**Réserve propre à GZ-1.** Le coefficient \(c(t)=R'(t)\) n'est pas borné au voisinage de \(t=0\), même s'il appartient à \(L^1(0,t_*)\). La fonction explicite \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) vérifie l'équation pour tout \(t>0\) aux points réguliers, avec interprétation de viscosité au centre. En revanche, l'unicité de la solution de viscosité depuis la donnée ponctuelle à \(t=0\), avec ce coefficient singulier mais intégrable, demande un résultat de comparaison adapté aux Hamiltoniens à croissance intégrable en temps, ou une limite contrôlée de problèmes démarrant à \(\varepsilon>0\). Cette justification supplémentaire n'est pas revendiquée dans cette page.
 
 ### 5.1 Vérification dans le cas GZ-1
 
