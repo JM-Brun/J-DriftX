@@ -34,6 +34,10 @@ def test_parametres_et_domaines_sont_valides() -> None:
         ModeleGZ1(masse=1.0, seuil=float("nan"), diffusivite=1.0)
     with pytest.raises(ValueError, match="vent"):
         ModeleGZ1(masse=1.0, seuil=1.0, diffusivite=1.0, vent=(1.0, 2.0, float("inf")))
+    with pytest.raises(ValueError, match="réel"):
+        ModeleGZ1(masse=True, seuil=1.0, diffusivite=1.0)
+    with pytest.raises(ValueError, match="vecteur"):
+        ModeleGZ1(masse=1.0, seuil=1.0, diffusivite=1.0, vent=(True, 1.0, 0.0))
     modele_invalide = ModeleGZ1(masse=1.0, seuil=1.0, diffusivite=1.0)
     with pytest.raises(ValueError, match="Temps"):
         modele_invalide.rayon(0.0)
