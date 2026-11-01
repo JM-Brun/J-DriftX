@@ -140,6 +140,33 @@ $$
 
 **Ce qui n'est pas démontré :** cette preuve ne donne pas $T_{\rm nav}=T_{\rm arr}$. Le temps passif $T_{\rm arr}$, le temps contrôlé $T_{\rm nav}$, le premier contact $T_{\rm front}$ et le coût historique projeté $T_{\rm proj}$ sont des objets distincts.
 
+### 3.4 Réduire le premier contact à une équation scalaire
+
+La condition de contact s'écrit
+$
+\|x_B-x_0-ut\|^2\leq R(t)^2=4Kt\Lambda(t).
+$
+On définit donc
+$
+g_B(t)=\|x_B-x_0-ut\|^2-4Kt\Lambda(t).
+$
+Le premier contact est le premier zéro de $g_B$ sur $0<t\leq t_*$. Comme $x_B\ne x_0$, la limite $g_B(0^+)=\|x_B-x_0\|^2$ est strictement positive. La fonction se prolonge continûment sur $[0,t_*]$ ; un contact existe si et seulement si son minimum sur cet intervalle est non positif. Avec un vent non nul, le terme quadratique en $t$ issu de la distance au centre advecté se combine au terme logarithmique : $g_B$ n'est pas nécessairement monotone. Un solveur scalaire doit donc sélectionner le **premier** zéro, pas n'importe quelle racine.
+
+Dans le cas sans vent, posons $d=\|x_B-x_0\|$ et $q=d^2/(6Kt_*)$. L'équation de contact devient
+$
+q=y(1-\ln y),\qquad y=t/t_*.
+$
+Le maximum de $y(1-\ln y)$ sur $0<y\leq1$ vaut $1$, atteint en $y=1$. Il existe donc un contact pendant l'expansion si et seulement si $q\leq1$, c'est-à-dire $d\leq R_{\max}$. Pour résoudre l'équation, posons $w=\ln y-1$. Alors $y=e^{1+w}$ et
+$
+we^w=-q/e,
+\qquad y=-\frac{q}{W(-q/e)}.
+$
+Les deux branches réelles ont des sens différents : $W_{-1}$ donne $y\leq1$ et sélectionne le premier contact sur l'expansion ; $W_0$ donne la seconde intersection sur la contraction, qui est hors du domaine de contrôle GZ-1. Ainsi
+$
+\boxed{T_{\rm front}=-t_*\frac{q}{W_{-1}(-q/e)}}.
+$
+Pour $q=1$, les deux branches coïncident en $-1$ et le contact est tangent à $t_*$. Pour $q>1$, le niveau n'atteint jamais la cible pendant l'expansion.
+
 ## 4. Pourquoi l'équation HJ a un plateau nul
 
 Pour un contrôle dans la boule $\|s\|\leq c(x,t)$, le Hamiltonien est le support de l'ensemble des vitesses :
