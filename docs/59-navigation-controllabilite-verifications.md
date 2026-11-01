@@ -385,7 +385,7 @@ c = modele.vitesse_expansion(t)
 | `premier_contact(x_B)` | Premier contact, ou `None` | Cible fixe, 0<t≤t* |
 | `valeur_hj(x,t)` | Fonction Hopf–Lax avec plateau nul (m) | 0<t≤t* |
 | `commande_radiale(z,T,τ)` | Vecteur de commande (m s⁻¹) | 0<τ≤T≤t*, ||z||≤R(T) |
-| `jauge_randers(v,t)` | Temps local F(v) (s) | R'(t)>||u|| |
+| `jauge_randers(v,t)` | Norme F(v) (s), v déplacement tangent (m) | R'(t)>||u|| |
 
 Les vecteurs d'entrée sont des triplets réels finis en mètres ou mètres
 par seconde selon leur rôle. Les paramètres M, C₀ et K sont strictement
