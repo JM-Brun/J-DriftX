@@ -6,7 +6,7 @@ status: "Démonstration analytique conditionnelle GZ-1 ; formulation HJ dérivé
 
 # Navigation de Zermelo, fronts et Hamilton–Jacobi
 
-Cette page publie le résultat analytique conditionnel **GZ-1** (*Gaussian Zermelo, résultat 1*) : pour le noyau fondamental gaussien tridimensionnel de l'équation d'advection–diffusion à coefficients constants, avec vent uniforme constant et vitesse de contrôle égale à la vitesse d'expansion du rayon d'isoconcentration, le temps minimal de navigation coïncide avec le premier contact du front avec une cible fixe. Elle dérive aussi la formulation Hamilton–Jacobi instationnaire.
+Cette page publie le résultat analytique conditionnel **GZ-1** (*Gaussian Zermelo, résultat 1*) : pour le noyau fondamental gaussien tridimensionnel de l'équation d'advection–diffusion à coefficients constants, avec vent uniforme constant et vitesse de contrôle égale à la vitesse d'expansion du rayon d'isoconcentration, le temps minimal de navigation coïncide avec le premier contact du front **pendant sa phase d'expansion** \(0<t\leq t_*\) avec une cible fixe. Elle dérive aussi la formulation Hamilton–Jacobi instationnaire.
 
 **Attention au nommage du projet :** GZ-1 n'est pas le « cas S0 uniforme » des notes 48–54, qui désigne un jeu de référence distinct fondé sur les paramétrisations de dispersion du package. GZ-1 est un résultat théorique idéal, pas une validation de l'implémentation `concentration_puff`.
 
