@@ -188,7 +188,7 @@ def test_premier_contact_vent_non_nul_selectionne_la_premiere_racine() -> None:
 
 def test_validation_expresse_des_domaines_randers_et_contact(modele: ModeleGZ1) -> None:
     """Les domaines hors hypothèses ne sont pas silencieusement extrapolés."""
-    with pytest.raises(ValueError, match="Temps"):
+    with pytest.raises(ValueError, match="temps"):
         modele.jauge_randers((1.0, 0.0, 0.0), 0.0)
     with pytest.raises(ValueError, match="contact"):
         modele.fonction_contact((1.0, 0.0, 0.0), modele.t_etoile * 1.01)
