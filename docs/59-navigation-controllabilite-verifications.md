@@ -409,9 +409,12 @@ La stricte convexité donne un unique minimum. L'implémentation localise
 d'abord ce minimum par dichotomie sur g'_B ; si g_B y est positif, il n'y
 a aucun contact. Sinon, une seconde dichotomie sur la branche décroissante
 retourne le premier zéro. Le cas tangent g_B(t*)=0 est ainsi traité sans
-dépendre d'un pas temporel de balayage. Cette propriété repose sur u
-constant et K constant ; elle ne se transpose pas telle quelle à des
-coefficients variables.
+dépendre d'un pas temporel de balayage. Le test numérique du minimum
+emploie une tolérance relative de 1e-12 sur l'échelle géométrique pour
+classer un résidu positif quasi nul comme tangence float64 ; si le minimum
+est négatif, même de faible amplitude, la dichotomie du premier zéro est
+conservée. Cette propriété repose sur u constant et K constant ; elle ne
+se transpose pas telle quelle à des coefficients variables.
 
 ### 9.3 Tests et reproduction
 
