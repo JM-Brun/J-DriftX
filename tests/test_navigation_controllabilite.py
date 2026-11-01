@@ -1,4 +1,4 @@
-"""Tests numériques de la page « Navigation de Zermelo, fronts et Hamilton–Jacobi ».
+"""Tests numériques de la page « Navigation de Zermelo, fronts et Hamilton-Jacobi ».
 
 Chaque test suit la forme GWT (Given-When-Then) : son contexte, son
 action et sa conséquence attendue.
@@ -11,7 +11,7 @@ navigation et du temps de contact du front) par trajectoire analytique à
 cap constant, rejet d'une cible hors de portée, identité de la jauge
 sous-critique et de la forme de Randers, cône d'accessibilité
 supercritique (frontière arcsin(c/|u|), convention +∞), résidu de
-l'équation de Hamilton–Jacobi du front et de l'eikonale stationnaire.
+l'équation de Hamilton-Jacobi du front et de l'eikonale stationnaire.
 
 Ces tests vérifient le modèle mathématique posé sur la page du site
 (puff gaussien tridimensionnel, vent uniforme constant, borne isotrope)
@@ -210,12 +210,12 @@ def test_la_commande_radiale_remplit_exactement_la_boule() -> None:
     for fraction in (0.0, 0.5, 1.0):
         z = fraction * rayon * direction
 
-        def commande(tau: float) -> np.ndarray:
+        def commande(tau: float, fraction: float = fraction, z: np.ndarray = z) -> np.ndarray:
             if fraction == 0.0:
                 return np.zeros(3)
             return (z / rayon) * _vitesse(tau)
 
-        def primitive(tau: float) -> np.ndarray:
+        def primitive(tau: float, z: np.ndarray = z) -> np.ndarray:
             return (z / rayon) * _rayon(tau)
 
         # Then — la commande respecte la borne et dérive bien de la primitive.
@@ -317,7 +317,7 @@ def test_le_regime_supercritique_definit_un_cone() -> None:
 
 
 def test_le_front_satisfait_l_equation_hamilton_jacobi() -> None:
-    """La valeur de Hopf–Lax max(|x - u t| - R(t), 0) résout HJ
+    """La valeur de Hopf-Lax max(|x - u t| - R(t), 0) résout HJ
     hors du coin du front ; le plateau intérieur est également vérifié."""
     # Given — trois points extérieurs au front au temps t = 40.
     t = 40.0
@@ -328,7 +328,7 @@ def test_le_front_satisfait_l_equation_hamilton_jacobi() -> None:
     )
 
     def phi(x: np.ndarray, temps: float) -> float:
-        # Valeur de Hopf–Lax : plateau nul dans toute la boule atteignable.
+        # Valeur de Hopf-Lax : plateau nul dans toute la boule atteignable.
         return max(float(np.linalg.norm(x - VENT * temps)) - _rayon(temps), 0.0)
 
     pas = 1.0e-6
