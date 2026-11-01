@@ -328,7 +328,7 @@ Les commandes utilisées tôt, lorsque $c(\tau)>\|u\|$, laissent donc un déplac
 | $t_*$ maximise $R$, $R(et_*)=0$ | test_t_etoile_maximise_le_rayon | Cas limites et décroissance échantillonnée de R' | Pas une preuve analytique |
 | $R'$ diverge mais est intégrable | test_la_singularite_initiale_est_integrable | Quadrature sur intervalle tronqué | L'intégrabilité exacte vient de $R(t)-R(0)$ |
 | $T_{\rm nav}=T_{\rm front}$ | test_le_theoreme_gz1_egalise_navigation_et_front | Une trajectoire constructive et sa borne | La preuve générale est la double inclusion §3 |
-| Commande radiale et ensemble atteignable | test_la_commande_radiale_remplit_exactement_la_boule | Dérivée de la primitive et respect de la borne | Test de cohérence, pas preuve générale |
+| Commande radiale et ensemble atteignable | test_la_commande_radiale_remplit_exactement_la_boule | Dérivée de la primitive, respect de la borne et atteinte d'un point relatif amont après $c(t)<\|u\|$ | Test de cohérence, pas preuve générale |
 | Cible hors de portée | test_une_cible_hors_de_portee_n_est_jamais_atteinte | Balayage temporel discret | Ne prouve pas l'absence de contact entre mailles |
 | Jauge Zermelo = Randers | test_la_jauge_sous_critique_est_une_randers | Identité algébrique, homogénéité et norme duale de b | Domaine sous-critique seulement |
 | Cône aval et cas critique | test_le_regime_supercritique_definit_un_cone | Intérieur, frontière, amont et direction transverse critique | Cas constant uniquement |
