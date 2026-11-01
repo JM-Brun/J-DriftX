@@ -22,6 +22,18 @@ Ce registre est une revue documentaire manuelle. Les contrôles automatiques vé
 | **Non-symétrie de la pseudo-distance uniforme** (p-nonsym → t-metric, teste-par) | [Tests de non-symétrie et frontière transversale](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py) | La référence uniforme a un coût fini vers l'aval, infini vers l'amont et un coût nul sur la frontière transversale dans les cas construits. | Ne s'étend pas automatiquement au coût de polyligne ni à une métrique en champ variable. **Testé**, référence uniforme seulement. |
 | **Gradient de la référence uniforme et du cas 1D** (p-adjoint → t-metric, teste-par) | [Tests des gradients de la référence uniforme et du cas 1D](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py) | Les expressions analytiques sont comparées aux différences finies pour les cas explicitement testés. | Ne valide pas un état adjoint pour un champ variable, ni les sensibilités du panache gaussien. **Testé**, références uniformes / cas 1D. |
 
+
+## Résultat analytique S0 — navigation et front gaussien
+
+Le théorème S0 est une **preuve analytique conditionnelle**, et non un test logiciel ou une validation physique. Son énoncé complet, ses hypothèses et sa démonstration sont publiés dans [Navigation de Zermelo, fronts et Hamilton–Jacobi](../theorie/navigation-fronts-controllabilite.qmd).
+
+| Résultat | Hypothèses déterminantes | Démonstration publiée | Hors de portée / statut |
+|---|---|---|---|
+| **Ensemble atteignable sphérique et égalité** \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) | Puff gaussien 3D en espace libre ; \(K,M,C_0\) constants ; vent uniforme constant ; départ au centre à âge zéro ; cible fixe distincte ; \(0<t\leq t_*\) ; contrôles mesurables avec \(\lVert s(t)\rVert\leq R'(t)\) p.p. sur la phase d'expansion. | Inclusion directe par inégalité triangulaire et inclusion réciproque par construction d'un contrôle radial ; égalité des ensembles d'instants admissibles. | Ne démontre pas l'équivalence avec \(T_{\mathrm{arr}}\), un départ à âge positif, une cible mobile, un vent variable, une classe globale \(L^\infty\) ou un front d'advection–diffusion général. **Démontré analytiquement sous hypothèses S0.** |
+| **Hamilton–Jacobi du front de contrôlabilité** | Contrôle isotrope \(\dot X=u(x,t)+s\), \(\lVert s\rVert\leq c(x,t)\). | Hamiltonien \(H=u\cdot p+c\lVert p\rVert\) et équation de niveau instationnaire publiés sur la même page. | La dérivation du Hamiltonien ne valide pas numériquement un schéma et ne transforme pas une EDP d'advection–diffusion en équation de contrôlabilité. **Dérivé analytiquement ; convergence numérique non établie ici.** |
+
+**Convention de traçabilité :** le statut « démontré analytiquement » est distinct de « testé », « validé physiquement » et « conjectural ». Aucun test numérique n'est cité comme preuve du théorème.
+
 ## Conventions de qualification
 
 - **SUPPORTED_BY / étayé par** : nécessite une source ou un argument explicitement localisé ; le lien seul n'est pas une justification.
