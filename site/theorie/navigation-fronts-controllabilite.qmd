@@ -226,7 +226,27 @@ abla\phi
 abla\phi\rVert=0.}
 \]
 
-Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.\n\n**Réserve propre à GZ-1.** Le coefficient \(c(t)=R'(t)\) n'est pas borné au voisinage de \(t=0\), même s'il appartient à \(L^1(0,t_*)\). La fonction explicite \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) vérifie l'équation pour tout \(t>0\) aux points réguliers, avec interprétation de viscosité au centre. En revanche, l'unicité de la solution de viscosité depuis la donnée ponctuelle à \(t=0\), avec ce coefficient singulier mais intégrable, demande un résultat de comparaison adapté aux Hamiltoniens à croissance intégrable en temps, ou une limite contrôlée de problèmes démarrant à \(\varepsilon>0\). Cette justification supplémentaire n'est pas revendiquée dans cette page.
+Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.\n\n**Traitement exact de la singularité GZ-1.** Le coefficient \(c(t)=R'(t)\) n'est pas borné au voisinage de \(t=0\), mais il est positif et intégrable sur la phase d'expansion. Cette singularité peut être éliminée par un changement de référentiel et une reparamétrisation du temps :
+
+1. Dans le référentiel mobile \(y=x-ut\), posons \(\psi(y,t)=\phi(y+ut,t)\). L'équation devient
+   \[
+   \psi_t+c(t)\lVert\nabla_y\psi\rVert=0.
+   \]
+2. Posons \(\rho=R(t)\). Sur \(0<t<t_*\), \(d\rho/dt=c(t)>0\), et \(\rho\) parcourt l'intervalle fini \((0,R_{\max})\), malgré \(c(t)\to+\infty\) à l'origine.
+3. En écrivant \(\widetilde\psi(y,\rho)=\psi(y,t(\rho))\), la règle de chaîne donne l'eikonale standard
+   \[
+   \partial_\rho\widetilde\psi+\lVert\nabla_y\widetilde\psi\rVert=0,
+   \qquad
+   \widetilde\psi(y,0)=\lVert y-x_0\rVert.
+   \]
+
+La solution de viscosité de cette eikonale standard est unique par le principe de comparaison usuel pour une donnée initiale lipschitzienne ; elle vaut \(\widetilde\psi(y,\rho)=\lVert y-x_0\rVert-\rho\). En revenant aux variables physiques, on retrouve
+
+\[
+\phi(x,t)=\lVert x-x_0-ut\rVert-R(t).
+\]
+
+Cette transformation donne donc, pour le cas GZ-1 uniforme, une justification de l'unicité au départ \(t=0\) sans supposer \(c\) borné. À \(t=t_*\), la solution se prolonge par continuité jusqu'au rayon maximal. Ce raisonnement dépend du vent uniforme constant et du fait que \(c(t)\) ne dépend que du temps ; il ne s'étend pas automatiquement au cas \(u(x,t)\), \(c(x,t)\).
 
 ### 5.1 Vérification dans le cas GZ-1
 
@@ -256,7 +276,7 @@ abla\phi\rVert=0.
 
 Cette vérification retrouve le front sphérique de la preuve GZ-1. Au centre de la boule, la norme n'est pas différentiable ; la formulation doit alors être comprise au sens de viscosité.
 
-### 5.2 Ne pas confondre trois objets
+### 5.3 Ne pas confondre trois objets
 
 - L'équation ci-dessus est une équation de front de **contrôlabilité**, issue de l'ensemble des vitesses admissibles.
 - Une équation d'advection–diffusion gouverne une concentration et sa masse ; elle contient un opérateur diffusif et des conditions aux limites propres.
