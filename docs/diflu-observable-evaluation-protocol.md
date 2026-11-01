@@ -98,9 +98,9 @@ Enfin, le champ `helium_concentration_decision_threshold` décrit le seuil absol
 
 L'article définit l'ATC comme le rapport entre la concentration de panache et le débit massique de rejet (§2.3.4). Il définit la concentration de panache des sacs comme la concentration significative après soustraction du fond et correction par le rapport durée d'échantillonnage / durée de rejet (§2.3.3). Le champ correspondant dans le dépôt est `helium_concentration_sampling_bg_passage_corrected` ; le dénominateur est `helium_release_flow`. Le calcul EA est donc :
 
-\\[
-ATC_{EA} = \\frac{\\texttt{helium\\_concentration\\_sampling\\_bg\\_passage\\_corrected}}{\\texttt{helium\\_release\\_flow}} \\quad [\\mathrm{s\\,m^{-3}}]
-\\]
+\[
+ATC_{EA} = \frac{\texttt{helium\_concentration\_sampling\_bg\_passage\_corrected}}{\texttt{helium\_release\_flow}} \quad [\mathrm{s\,m^{-3}}]
+\]
 
 Sur les 153 lignes EA significatives des 15 événements rapprochés, les deux extrema calculés reproduisent ceux de l'article à l'arrondi près :
 
