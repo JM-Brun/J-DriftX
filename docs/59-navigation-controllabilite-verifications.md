@@ -220,10 +220,11 @@ Cette preuve par reparamétrisation est spécifique au vent uniforme et à $c(t)
 
 ## 5. Randers : d'où vient la formule et pourquoi elle dégénère
 
-À un instant fixé, la vitesse absolue est $v=u+s$, avec $\|s\|\leq c$. Pour réaliser un déplacement $v$ en un temps $F(v)$, la vitesse relative moyenne doit vérifier
-$$
+À un instant fixé, la vitesse absolue est $v=u+s$, avec $\|s\|\leq c$. Pour réaliser un déplacement $v$ en un temps minimal $F(v)$, la contrainte est saturée : si la vitesse relative était strictement inférieure à $c$, on pourrait réduire légèrement le temps tout en restant admissible. On impose donc
+$
 \left\|\frac{v}{F(v)}-u\right\|=c.
-$$
+$
+Pour $c>\|u\|$, le membre de gauche tend vers $\|u\|<c$ lorsque $F\to+\infty$, et vers $+\infty$ lorsque $F\to0^+$. Il existe donc un unique temps positif où la contrainte est saturée.
 Après multiplication par $F(v)$ et élévation au carré :
 $$
 \|v\|^2-2F(u\cdot v)+F^2\|u\|^2=c^2F^2.
@@ -270,12 +271,12 @@ Posons $q=d/t>0$. Après division par $t$, on obtient
 $$
 q^2-2q(u\cdot\omega)+\|u\|^2-c^2\leq0.
 $$
-Une racine strictement positive existe si et seulement si
-$$
+Notons $k=u\cdot\omega$ et $\Delta=k^2+c^2-\|u\|^2$. Les racines sont $q_\pm=k\pm\sqrt\Delta$. Comme $c\leq\|u\|$, on a $\sqrt\Delta\leq|k|$ dès que $\Delta\geq0$. Si $k\leq0$, alors $q_+\leq0$ et aucune racine strictement positive n'existe ; si $k>0$, $q_+>0$. Le critère est donc
+$
 u\cdot\omega>0,
 \qquad
 \Delta=(u\cdot\omega)^2+c^2-\|u\|^2\geq0.
-$$
+$
 En notant $\theta$ l'angle entre $u$ et $\omega$, cela équivaut à
 $$
 u\cdot\omega>0,
