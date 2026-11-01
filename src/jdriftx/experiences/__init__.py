@@ -13,7 +13,6 @@ from jdriftx.experiences.reconstruction_vent import (
     ResultatReconstruction,
     ScenarioReconstruction,
 )
-from jdriftx.experiences.zermelo_gaussien import ModeleGZ1
 from jdriftx.experiences.uniforme import (
     ChampUniforme,
     ManifesteScenario,
@@ -22,14 +21,15 @@ from jdriftx.experiences.uniforme import (
     construire_manifeste,
     resoudre_scenario,
 )
+from jdriftx.experiences.zermelo_gaussien import ModeleGZ1
 
 __all__ = [
     "CasSynthetiqueS0",
     "ChampUniforme",
     "DatasetS0",
     "ManifesteReconstruction",
-    "ModeleGZ1",
     "ManifesteScenario",
+    "ModeleGZ1",
     "PartitionS0",
     "Rectangle",
     "ResultatDirige",
