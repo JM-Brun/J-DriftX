@@ -247,6 +247,8 @@ def test_la_jauge_sous_critique_est_une_randers() -> None:
     a = (aire * np.eye(3) + np.outer(VENT, VENT)) / aire**2
     b = -VENT / aire
     a_inverse = aire * np.eye(3) - (aire / c**2) * np.outer(VENT, VENT)
+    np.testing.assert_allclose(a @ a_inverse, np.eye(3), atol=1e-12)
+    assert bool(np.all(np.linalg.eigvalsh(a) > 0.0))
     norme_duale_b = float(b @ a_inverse @ b)
     assert norme_duale_b == pytest.approx(float(VENT @ VENT) / c**2, rel=1e-12)
     assert norme_duale_b < 1.0
