@@ -55,3 +55,16 @@ Ce lot couvre les relations propriété → tests les plus directement vérifiab
 - les relations de limitation ou de non-couverture, pour s'assurer que la limite est documentée à l'endroit indiqué.
 
 Aucune relation ne doit être considérée comme justifiée uniquement parce que ses deux nœuds existent ou que le graphe est rendu sans erreur.
+
+
+## GZ-1 — résultat analytique et oracle exécutable
+
+| Objet | Référence | Ce qui est établi | Ce qui ne l'est pas |
+|---|---|---|---|
+| Noyau gaussien, rayon, temps caractéristiques | `ModeleGZ1`, `tests/test_zermelo_gaussien.py` | Implémentation des formes fermées et cohérence numérique du noyau ; quadrature de masse avec troncature calculée | Pas de validation atmosphérique ; le modèle reste à coefficients constants en espace libre |
+| Ensemble atteignable et commande radiale | `ModeleGZ1.ensemble_atteignable`, `commande_radiale` | API conforme à la boule démontrée dans GZ-1 ; tests de commande constructive | Les tests ne remplacent pas la preuve par double inclusion de la note 59 |
+| Premier contact | `ModeleGZ1.premier_contact` | Minimum unique exploité via g''(t)>0 ; cas tangent et deux racines candidates testés | Pas d'extension à vent ou diffusivité variables |
+| Valeur HJ Hopf–Lax | `ModeleGZ1.valeur_hj` | Plateau nul implémenté ; résidu testé dans une région lisse | Aucun solveur HJ numérique n'est implémenté |
+| Jauge de Randers | `ModeleGZ1.jauge_randers` | Calcul local limité à R'(t)>||u|| ; identité de Zermelo testée | Aucune extrapolation au régime critique/supercritique ; le seuil instantané n'est pas une limite de portée cumulée |
+
+**Statut distinct à conserver :** (1) formule démontrée dans la page théorique et la note 59 ; (2) fonction implémentée dans `src/jdriftx/experiences/zermelo_gaussien.py` ; (3) cohérence exercée par les tests. Aucun de ces statuts ne vaut validation physique.
