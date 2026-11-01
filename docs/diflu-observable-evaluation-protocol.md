@@ -159,3 +159,23 @@ La relecture directe des dictionnaires du dépôt 2026 apporte une précision qu
 Sur les 15 événements rapprochés de l'article, le CSV contient 186 lignes EA et 123 lignes VEGA, soit 309 enregistrements de sacs au total. Les 123 lignes VEGA ne sont pas 123 préleveurs indépendants : elles correspondent à des prélèvements séquentiels rattachés à des identifiants de préleveur. Il faut donc séparer au minimum trois unités : instrument/préleveur, sac prélevé et résultat analytique. Les 194 « air samples » de l'article ne peuvent pas être comparés mécaniquement aux 186 lignes EA, ni aux 309 lignes du CSV.
 
 **Conclusion mise à jour :** la nature instrumentale de EA et VEGA est désormais documentée, mais le périmètre exact des 194 résultats de l'article (EA seulement, ou combinaison/sélection des deux types) n'est toujours pas démontré. Le tableau de rapprochement EA↔AS reste une comparaison conditionnelle, pas une preuve de huit mesures manquantes. Aucune ligne ne doit être ajoutée, supprimée ou reclassée pour forcer l'égalité des comptes. La résolution exige une documentation de protocole ou une confirmation des auteurs précisant quels préleveurs et quels sacs alimentent les 194 résultats publiés.
+
+
+### 3.3. Contrôle numérique reproductible des extrema ATC
+
+Le contrôle automatisé est exposé par `scripts/audit_diflu.py` sous `atc_candidate_check`. Il calcule, uniquement pour les lignes EA marquées `significant` et disposant de valeurs numériques positives et finies :
+
+```
+ATC = helium_concentration_sampling_bg_passage_corrected / helium_release_flow
+```
+
+L'unité est `s m-3`. Les 153 lignes EA significatives rattachées aux 15 événements de l'article donnent les extrema suivants :
+
+| Extrême | Événement article / CSV | Échantillon | ATC calculé | Valeur publiée |
+|---|---|---|---:|---:|
+| Minimum | 1-4 / `#1_6` | `B14` | 2,0227×10⁻⁵ s m⁻³ | 2,0×10⁻⁵ s m⁻³ |
+| Maximum | 2-4 / `#2_4` | `A7_D7` | 1,5084×10⁻³ s m⁻³ | 1,5×10⁻³ s m⁻³ |
+
+Le contrôle exige la concordance des identifiants d'événement et une erreur relative inférieure ou égale à 2 %, tolérance destinée à l'arrondi des valeurs publiées à deux chiffres significatifs. Sur le fixture versionné, les 196 lignes EA significatives des 19 événements ont une valeur ATC calculable ; 153 appartiennent aux 15 événements rapprochés de l'article. Le maximum global du dépôt est associé à `#1_1`, événement supplémentaire absent de l'article.
+
+Ce résultat reproduit les deux extrema publiés, mais ne constitue pas une validation ligne par ligne, ne résout pas l'écart entre 153 flags significatifs du CSV et 148 résultats significatifs publiés, et ne valide ni les coordonnées projetées, ni les covariables météorologiques, ni VEGA. Aucune valeur VEGA n'est imputée. Ce contrôle ne justifie pas le lancement d'un benchmark d'apprentissage.
