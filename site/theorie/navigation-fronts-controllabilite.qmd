@@ -27,6 +27,8 @@ Cette page publie le résultat analytique conditionnel **GZ-1** (*Gaussian Zerme
 
 Les démonstrations concernent le modèle mathématique explicite ci-dessous. Elles ne constituent ni une validation expérimentale ni une validation d'un modèle atmosphérique général. Le modèle GZ-1 exclut notamment les frontières, le sol, le dépôt, les réactions, les sources continues, les variations spatiales ou temporelles de \(u\) et \(K\), ainsi que les écarts à l'isotropie.
 
+Pour une lecture progressive des intuitions, des démonstrations détaillées (ensemble atteignable, Hopf–Lax, Randers et cône aval) et de la correspondance avec les tests, voir la [note 59 — GZ-1](https://github.com/JM-Brun/J-DriftX/blob/docs/gz1-supercritical-intuition-2026-11-01/docs/59-navigation-controllabilite-verifications.md).
+
 ## 2. Puff gaussien et cinématique du front
 
 Considérons l'équation d'advection–diffusion sur \(\mathbb R^3\), sans frontière, avec vent uniforme constant \(u\in\mathbb R^3\), diffusivité isotrope constante \(K>0\), et émission impulsionnelle de masse totale \(M>0\) au point \(x_0\) à l'instant initial :
@@ -35,6 +37,17 @@ Considérons l'équation d'advection–diffusion sur \(\mathbb R^3\), sans front
 \partial_t C+u\cdot\nabla C=K\Delta C,\qquad C(\cdot,0)=M\,\delta_{x_0}.
 \]
 
+Le noyau se comprend par un changement de référentiel galiléen. Posons \(y=x-ut\) et \(\widetilde C(y,t)=C(y+ut,t)\). Comme \(u\) est constant, la règle de chaîne donne
+
+\[
+\partial_t\widetilde C
+=\partial_t C+u\cdot\nabla_x C,
+\qquad
+\Delta_y\widetilde C=\Delta_x C.
+\]
+
+L'équation d'advection–diffusion devient donc l'équation de la chaleur \(\partial_t\widetilde C=K\Delta_y\widetilde C\), avec la même masse ponctuelle initiale en \(x_0\). En dimension 1, le noyau de chaleur normalisé est \((4\pi Kt)^{-1/2}\exp(-y^2/(4Kt))\). L'isotropie et la séparation des trois coordonnées donnent le produit de trois noyaux 1D, donc le facteur \((4\pi Kt)^{-3/2}\) et l'exponentielle en norme euclidienne. On multiplie par \(M\), puis on revient au référentiel fixe : le centre est simplement translaté de \(ut\).
+
 Le centre advecté est \(x_c(t)=x_0+ut\). Pour \(t>0\), le noyau fondamental est :
 
 \[
@@ -42,6 +55,8 @@ C(x,t)=\frac{M}{(4\pi Kt)^{3/2}}
 \exp\left(-\frac{\lVert x-x_0-ut\rVert^2}{4Kt}\right),
 \qquad t>0.
 \]
+
+**Intuition sur le noyau.** Le préfacteur \(M/(4\pi Kt)^{3/2}\) est la concentration au centre : la masse totale reste constante, mais elle se répartit dans un volume caractéristique qui croît comme \((Kt)^{3/2}\). L'exponentielle décrit la décroissance radiale autour du centre advecté. Le vent uniforme ne déforme donc pas le puff : il le translate, tandis que la diffusion l'élargit de manière isotrope.
 
 Pour un seuil \(C_0>0\), le niveau \(C(x,t)=C_0\) est une sphère de rayon \(R(t)\), lorsque ce rayon est réel. Posons
 
@@ -69,6 +84,15 @@ Le rayon est réel si et seulement si \(\Lambda(t)\geq0\), soit \(0<t\leq e\,t_*
 R_{\max}=R(t_*)=\sqrt{6Kt_*}.
 \]
 
+**Pourquoi le rayon croît puis décroît.** La concentration au centre diminue comme \(t^{-3/2}\). Le niveau fixé existe tant que cette concentration centrale dépasse \(C_0\), mais son rayon dépend aussi de la largeur diffusive. Le logarithme \(\Lambda(t)\) mesure la marge entre le maximum central et le seuil. En dérivant \(R^2=4Kt\Lambda(t)\), avec \(\Lambda'(t)=-3/(2t)\), on obtient
+
+\[
+2R R'=4K\left(\Lambda+t\Lambda'\right)
+=4K\left(\Lambda-\frac32\right).
+\]
+
+Le rayon est maximal lorsque \(\Lambda=3/2\), ce qui redonne \(t_*\). Avant cet instant, la croissance de la largeur domine la baisse du maximum central ; après, le seuil se rapproche du centre et le rayon diminue. Cette dérivation explique aussi pourquoi \(R'\) change de signe à \(t_*\).
+
 Sa dérivée est
 
 \[
@@ -80,7 +104,18 @@ c(t):=R'(t)=\frac{2K}{R(t)}
 
 Ainsi, \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), puis décroît sur \(t_*<t<e\,t_*\). **La borne de contrôle \(c(t)=R'(t)\) n'est positive que pendant la phase d'expansion \(0<t<t_*\)**. Après \(t_*\), elle est négative et ne peut plus être utilisée comme borne de norme d'un contrôle. Le théorème GZ-1 est donc limité à \(0<t\leq t_*\).
 
-**Contrôle dimensionnel.** \([K]=\mathrm{m^2\,s^{-1}}\), \([M/C_0]=\mathrm{m^3}\), \([t_*]=\mathrm{s}\), \([R]=\mathrm m\) et \([c]=\mathrm{m\,s^{-1}}\). La solution conserve la masse : \(\int_{\mathbb R^3}C(x,t)\,dx=M\) pour tout \(t>0\).
+**Contrôle dimensionnel et masse.** La concentration a l'unité \(\mathrm{kg\,m^{-3}}\), donc \([M/C_0]=\mathrm{m^3}\). Comme \([K]=\mathrm{m^2\,s^{-1}}\), le logarithme porte sur un rapport sans dimension, \([t_*]=\mathrm s\), \([R]=\mathrm m\) et \([c]=\mathrm{m\,s^{-1}}\). La conservation de la masse se vérifie directement par le changement de variable gaussien :
+
+\[
+\begin{aligned}
+\int_{\mathbb R^3} C(x,t)\,dx
+&=\frac{M}{(4\pi Kt)^{3/2}}
+\int_{\mathbb R^3}\exp\!\left(-\frac{\|x-x_c(t)\|^2}{4Kt}\right)dx\\
+&=\frac{M}{(4\pi Kt)^{3/2}}(4\pi Kt)^{3/2}=M.
+\end{aligned}
+\]
+
+Le facteur \((4\pi Kt)^{-3/2}\) ne détruit donc pas de masse : il compense exactement l'augmentation du volume occupé par la gaussienne. La concentration centrale décroît, mais la masse totale reste constante.
 ## 3. Problème de navigation GZ-1
 
 Une trajectoire contrôlée, exprimée dans le référentiel fixe, est une fonction absolument continue \(X:[0,t]\to\mathbb R^3\) qui vérifie
@@ -207,7 +242,13 @@ Considérons le problème de contrôle général
 s(t)\in\overline B(0,c(X,t)),
 \]
 
-avec \(c(x,t)\geq0\). Le Hamiltonien de maximisation associé à l'ensemble des vitesses admissibles est le support de cet ensemble :
+avec \(c(x,t)\geq0\). Le Hamiltonien de maximisation associé à l'ensemble des vitesses admissibles est le support de cet ensemble. Le terme du vent est immédiat ; pour le contrôle, Cauchy–Schwarz donne
+
+\[
+\sup_{\lVert s\rVert\leq c}s\cdot p\leq c\lVert p\rVert,
+\]
+
+et l'égalité est atteinte avec \(s=c\,p/\lVert p\rVert\) lorsque \(p\ne0\). Le contrôle qui maximise la progression dans la direction duale \(p\) pointe donc dans la direction de \(p\). On obtient
 
 \[
 H(x,t,p)=\sup_{\lVert s\rVert\leq c(x,t)}
@@ -292,12 +333,53 @@ F(v)=
 \frac{\sqrt{(u\cdot v)^2+A\lVert v\rVert^2}-u\cdot v}{A}.
 \]
 
-Elle prend la forme de Randers \(F(v)=\sqrt{a_{ij}v^iv^j}+b_iv^i\), avec
+La jauge \(F(v)\) est le temps minimal nécessaire pour réaliser le déplacement \(v\) à vitesse moyenne constante. Au minimum, la contrainte est saturée : si la vitesse relative était strictement inférieure à \(c\), on pourrait réduire légèrement le temps tout en restant admissible. On impose donc \(\lVert v/F-u\rVert=c\). Pour \(c>\lVert u\rVert\), le membre de gauche tend vers \(\lVert u\rVert<c\) lorsque \(F\to+\infty\), et vers \(+\infty\) lorsque \(F\to0^+\) ; l'équation sélectionne ainsi l'unique temps minimal positif. En élevant au carré,
+
+\[
+\lVert v\rVert^2-2F(u\cdot v)+F^2\lVert u\rVert^2=c^2F^2,
+\]
+
+puis
+
+\[
+A F^2+2(u\cdot v)F-\lVert v\rVert^2=0.
+\]
+
+Le produit des deux racines vaut \(-\lVert v\rVert^2/A<0\) pour \(v\ne0\) : il existe donc exactement une racine positive. C'est elle qui définit le temps minimal et donne la formule de Zermelo ci-dessus. Pour l'écrire sous la forme de Randers, on réécrit le radical comme une norme quadratique :
+
+\[
+\frac{\sqrt{(u\cdot v)^2+A\lVert v\rVert^2}}{A}
+-\frac{u\cdot v}{A}
+=\sqrt{a_{ij}v^iv^j}+b_iv^i,
+\]
+
+avec
 
 \[
 a_{ij}=\frac{A\delta_{ij}+u_i u_j}{A^2},
 \qquad b_i=-\frac{u_i}{A}.
 \]
+
+On vérifie la régularité de Randers sans se contenter de l'affirmer. Pour tout vecteur non nul \(\xi\),
+
+\[
+\xi^i a_{ij}\xi^j
+=\frac{A\lVert\xi\rVert^2+(u\cdot\xi)^2}{A^2}>0,
+\]
+
+car \(A>0\) : la partie quadratique est définie positive. Son inverse est
+
+\[
+a^{ij}=A\delta_{ij}-\frac{A}{c^2}u_i u_j,
+\]
+
+d'où
+
+\[
+b_i a^{ij}b_j=\frac{\lVert u\rVert^2}{c^2}<1.
+\]
+
+C'est exactement la condition de régularité d'une métrique de Randers : la norme duale de la partie linéaire \(b\), calculée avec \(a\), doit être strictement inférieure à un.
 
 Si \(\mu=1-\lVert u\rVert^2/c^2\), alors \(A=c^2\mu\) et
 
@@ -305,6 +387,8 @@ Si \(\mu=1-\lVert u\rVert^2/c^2\), alors \(A=c^2\mu\) et
 a_{ij}=\frac{c^2\mu\delta_{ij}+u_i u_j}{c^4\mu^2},
 \qquad b_i=-\frac{u_i}{c^2\mu}.
 \]
+
+**Lecture géométrique.** La boule des vitesses absolues est \(\overline B(u,c)\), c'est-à-dire la boule des vitesses propres translatée par le vent. Lorsque \(c>\lVert u\rVert\), l'origine est strictement à l'intérieur : toutes les directions de déplacement sont accessibles et le temps local définit une jauge de Randers régulière. Lorsque \(c\leq\lVert u\rVert\), l'origine est sur ou hors de cette boule ; certaines directions ne sont plus accessibles et la jauge ne peut plus être une métrique de Randers régulière sur tout l'espace tangent.
 
 Le facteur \(\mu^2\) au dénominateur de \(a_{ij}\) est essentiel. La condition sous-critique \(\lVert u\rVert<c\) garantit \(A>0\) et la régularité de Randers. Dans GZ-1, \(c(t)=R'(t)\) décroît strictement de \(+\infty\) à \(0\) sur \((0,t_*)\), car
 
@@ -317,6 +401,86 @@ Si \(u\ne0\), il existe donc un unique \(t_Z\in(0,t_*)\) tel que \(R'(t_Z)=\lVer
 Lorsque \(c\) dépend du temps, cette expression décrit une géométrie de navigation **instantanée** ; elle ne transforme pas à elle seule le problème instationnaire en une métrique de Finsler stationnaire globale.
 
 Cette construction concerne la navigation contrôlée de Zermelo. Elle ne requalifie pas la construction historique projetée \(T_{\mathrm{proj}}\) en métrique de Finsler. Pour le statut des objets historiques et leurs axiomes, voir [Métrique travel-time](metrique-travel-time.qmd) et [Métriques non riemanniennes](metriques-non-riemanniennes.qmd).
+
+### 6.1 Régime supercritique et cône d'accessibilité
+
+La formule de Randers exige `c > ‖u‖`. Lorsque `c ≤ ‖u‖`, la boule des vitesses
+absolues `B̄(u,c)` ne contient plus l'origine : on ne peut plus se déplacer dans
+toutes les directions. Pour une borne `c` **constante** et un vent uniforme `u`,
+on peut caractériser exactement les directions accessibles.
+
+Soit un déplacement `dω`, avec `d > 0` et `‖ω‖ = 1`. À l'instant `t`, il est
+atteignable si et seulement si `‖dω − ut‖ ≤ ct`. En posant `q=d/t > 0` et en
+divisant par `t`, cette condition devient
+
+\[
+\|q\omega-u\|^2\leq c^2
+\quad\Longleftrightarrow\quad
+q^2-2q(u\cdot\omega)+\|u\|^2-c^2\leq0.
+\]
+
+Notons \(k=u\cdot\omega\) et \(\Delta=k^2+c^2-\|u\|^2\). Les racines sont \(q_\pm=k\pm\sqrt\Delta\). Dans le régime \(c\leq\|u\|\), on a \(\sqrt\Delta\leq|k|\) dès que \(\Delta\geq0\). Si \(k\leq0\), alors \(q_+\leq0\) : aucune racine strictement positive n'existe. Si \(k>0\), alors \(q_+>0\). Le critère exact est donc
+
+\[
+u\cdot\omega>0,
+\qquad
+\Delta=(u\cdot\omega)^2+c^2-\|u\|^2\geq0.
+\]
+
+En notant `θ` l'angle entre `u` et `ω`, le critère est donc
+
+\[
+\boxed{u\cdot\omega>0,\qquad \sin\theta\leq\frac{c}{\|u\|}.}
+\]
+
+Les directions accessibles forment un **cône aval** d'axe `u` et de demi-angle
+`arcsin(c/‖u‖)`. La condition sur le sinus ne suffit pas à elle seule : elle
+inclurait aussi le cône symétrique autour de `−u`, qui est amont et inaccessible.
+
+Cette géométrie se lit directement sur la boule mobile. La projection du centre
+`ut` sur la droite dirigée par `ω` est positive exactement lorsque `u·ω > 0`.
+La distance perpendiculaire du centre à cette droite vaut
+`t‖u‖ sin θ`. Elle doit être inférieure ou égale au rayon `ct`, ce qui redonne
+`sin θ ≤ c/‖u‖`. Pour `c < ‖u‖`, l'égalité décrit une tangence à un point situé
+strictement en aval de l'origine : la frontière du cône est donc incluse.
+Au cas critique `c = ‖u‖`, le demi-angle limite vaut `π/2`, mais les directions
+exactement transverses ont `u·ω=0` : la tangence se réduit à l'origine, et aucun
+point non nul de ces directions n'est atteignable en temps fini.
+
+La plus grande racine positive
+
+\[
+q_+=u\cdot\omega+\sqrt{(u\cdot\omega)^2+c^2-\|u\|^2}
+\]
+
+maximise `q=d/t` et minimise donc le temps. On obtient
+
+\[
+\boxed{T(d\omega)=\frac{d}
+{u\cdot\omega+\sqrt{(u\cdot\omega)^2+c^2-\|u\|^2}}.}
+\]
+
+Hors du cône aval, `T=+∞` par convention. Sur l'axe aval, la formule redonne
+`T=d/(‖u‖+c)`. **Domaine strict :** cette dérivation suppose `c` et `u` constants.
+Elle ne démontre pas le cas GZ-1 supercritique instationnaire où `c(t)=R'(t)`
+varie avec le temps.
+
+Il ne faut pas remplacer simplement `c` par `c(t)` dans le cône. Dans GZ-1,
+la vitesse de contrôle est d'abord supérieure à `‖u‖`, puis devient inférieure
+après `t_Z`. La géométrie instantanée de la boule des vitesses change donc de
+régime, mais l'ensemble atteignable à l'instant `t` dépend de tout le budget
+accumulé depuis le départ :
+
+\[
+\left\|X(t)-(x_0+ut)\right\|
+\leq\int_0^t c(\tau)\,d\tau=R(t).
+\]
+
+Les commandes appliquées tôt, lorsque `c(τ) > ‖u‖`, contribuent encore au
+déplacement relatif final. Le théorème GZ-1 donne ainsi une boule atteignable
+pour chaque `t ≤ t_*`, même après le seuil instantané `t_Z`. Le cône aval à
+borne constante est un résultat distinct ; le seuil `t_Z` borne la régularité
+de la métrique de Randers instantanée, pas la portée du système instationnaire.
 
 ## 7. Conséquences pour les méthodes numériques
 
