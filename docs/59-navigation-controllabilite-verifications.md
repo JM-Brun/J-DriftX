@@ -269,13 +269,14 @@ Hors du cône aval, (T=+\infty) par convention. Cette dérivation est exacte pou
 | (t_*) maximise (R), (R(et_*)=0) | `test_t_etoile_maximise_le_rayon` | Cas limites de la formule | Pas une preuve analytique |
 | (R') diverge mais est intégrable | `test_la_singularite_initiale_est_integrable` | Quadrature sur un intervalle tronqué | L'intégrabilité exacte vient de (R(t)-R(0)) |
 | (T_{nav}=T_{front}) | `test_le_theoreme_gz1_egalise_navigation_et_front` | Une trajectoire constructive et sa borne | La preuve générale est la double inclusion §3 |
+| Commande radiale et ensemble atteignable | `test_la_commande_radiale_remplit_exactement_la_boule` | Dérivée de la primitive, borne et points intérieur/frontière | Test de cohérence, pas preuve générale |
 | Une cible est hors de portée | `test_une_cible_hors_de_portee_n_est_jamais_atteinte` | Balayage temporel discret | Ne prouve pas l'absence de contact entre les mailles |
 | Jauge Zermelo = Randers | `test_la_jauge_sous_critique_est_une_randers` | Identité algébrique et homogénéité | Domaine sous-critique seulement |
 | Cône aval et cas critique | `test_le_regime_supercritique_definit_un_cone` | Intérieur, frontière, amont et direction transverse critique | Cas constant uniquement |
 | Équation HJ | `test_le_front_satisfait_l_equation_hamilton_jacobi` | Résidu classique extérieur et plateau intérieur | Le coin est traité analytiquement par Hopf–Lax |
 | Eikonale stationnaire | `test_l_eikonale_stationnaire_en_champ_uniforme` | Résidu de la solution fermée | Ne valide pas le HJ instationnaire |
 
-Paramètres de test : (M=10^6), (K=0.5), (C_0=1), (u=(2,0,0)). Les tests sont des tests de cohérence déterministes en float64. Ils ne remplacent pas la preuve et ne démontrent pas une validité atmosphérique.
+Paramètres de test : (M=10^6), (K=0.5), (C_0=1), (u=(2,0,0)). Les onze tests sont des tests de cohérence déterministes en float64. Ils ne remplacent pas la preuve et ne démontrent pas une validité atmosphérique.
 
 ## 8. Frontières de validité et prochaines étapes
 
