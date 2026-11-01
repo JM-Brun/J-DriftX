@@ -3,15 +3,13 @@
 Chaque test suit la forme GWT (Given-When-Then) : son contexte, son
 action et sa conséquence attendue.
 
-Couverture (issue #437, note docs/59) : cinématique exacte du front
-d'isoconcentration gaussien (rayon, vitesse d'expansion, temps du
-maximum, réalité du rayon jusqu'à e·t*), singularité initiale
-intégrable, ensemble atteignable et théorème GZ-1 (égalité du temps de
-navigation et du temps de contact du front) par trajectoire analytique à
-cap constant, rejet d'une cible hors de portée, identité de la jauge
-sous-critique et de la forme de Randers, cône d'accessibilité
-supercritique (frontière arcsin(c/|u|), convention +∞), résidu de
-l'équation de Hamilton-Jacobi du front et de l'eikonale stationnaire.
+Couverture (11 tests, issue #437, note docs/59) : cinématique du front
+gaussien (rayon, dérivée, maximum et décroissance de R'), singularité
+initiale intégrable, ensemble atteignable et théorème GZ-1, commande
+radiale constructive, diagnostic de non-contact, identité Zermelo-Randers
+et critère de régularité, cône aval (frontière tangentielle, rejet amont
+et cas critique transverse), résidu HJ de la valeur de Hopf-Lax et résidu
+de l'eikonale stationnaire.
 
 Ces tests vérifient le modèle mathématique posé sur la page du site
 (puff gaussien tridimensionnel, vent uniforme constant, borne isotrope)
