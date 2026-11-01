@@ -323,7 +323,7 @@ puis
 A F^2+2(u\cdot v)F-\lVert v\rVert^2=0.
 \]
 
-La racine positive donne la formule de Zermelo ci-dessus. Pour l'écrire sous la forme de Randers, on réécrit le radical comme une norme quadratique :
+Le produit des deux racines vaut \(-\lVert v\rVert^2/A<0\) pour \(v\ne0\) : il existe donc exactement une racine positive. C'est elle qui définit le temps minimal et donne la formule de Zermelo ci-dessus. Pour l'écrire sous la forme de Randers, on réécrit le radical comme une norme quadratique :
 
 \[
 \frac{\sqrt{(u\cdot v)^2+A\lVert v\rVert^2}}{A}
