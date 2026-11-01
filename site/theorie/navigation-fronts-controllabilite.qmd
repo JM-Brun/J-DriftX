@@ -23,11 +23,11 @@ Les démonstrations concernent le modèle mathématique explicite ci-dessous. El
 
 ## 2. Puff gaussien et cinématique du front
 
-Considérons un puff gaussien tridimensionnel en espace libre, de masse \(M>0\), de diffusivité isotrope constante \(K>0\), centré en \(x_0\) :
+Considérons un puff gaussien tridimensionnel en espace libre, de masse \(M>0\), de diffusivité isotrope constante \(K>0\), advecté par un vent uniforme constant \(u\in\mathbb R^3\). Son centre est \(x_c(t)=x_0+ut\), où \(x_0\) est sa position initiale :
 
 \[
 C(x,t)=\frac{M}{(4\pi Kt)^{3/2}}
-\exp\left(-\frac{\lVert x-x_0\rVert^2}{4Kt}\right),
+\exp\left(-\frac{\lVert x-x_0-ut\rVert^2}{4Kt}\right),
 \qquad t>0.
 \]
 
@@ -64,7 +64,7 @@ Alors \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), puis
 
 ## 3. Problème de navigation S0
 
-Le centre du puff est transporté par un vent uniforme constant \(u\in\mathbb R^3\). Une trajectoire contrôlée vérifie
+Une trajectoire contrôlée, exprimée dans le référentiel fixe, vérifie
 
 \[
 \dot X(t)=u+s(t),\qquad
