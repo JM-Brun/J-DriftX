@@ -12,7 +12,7 @@ cette page ; (4) le protocole de vérification numérique et son mapping vers
 La page du site publie, pour le puff gaussien tridimensionnel en espace libre, vent
 uniforme constant, vitesse de contrôle égale à la vitesse d'expansion `c(t) = R'(t)`
 du rayon d'isoconcentration : l'ensemble atteignable exact
-`R(t) = B(x₀ + ut, R(t))`, le théorème `T_nav = T_front`, l'équation de
+`𝓡(t) = B̄(x₀ + ut, R(t))`, le théorème `T_nav = T_front`, l'équation de
 Hamilton–Jacobi du front de contrôlabilité et la forme de Randers de la jauge
 sous-critique. Cette note vérifie, développe et explicite ces résultats, puis traite
 le régime complémentaire `|u| ≥ c`, absent de la page initiale. Tout ce qui suit
@@ -69,11 +69,12 @@ trajectoires. Chaque relâchement est une extension ouverte, listée page §4.
    diffusive. Toute utilisation physique du quatrième objet exige une borne
    inférieure `t_min` de validité — à inscrire dans les hypothèses du catalogue,
    pas dans le code.
-3. **Cap constant, pas poursuite.** Quand `c(t) < ‖u‖`, la poursuite directe de la
-   cible co-mobile échoue (la cible fuit à la vitesse `‖u‖`) alors que le cap
-   constant atteint : la trajectoire optimale vise le point de coïncidence futur.
-   C'est le pont vers l'équation de Zermelo `dθ/dt` en champ cisaillé, où les
-   géodésiques se courbent pour chercher les vents favorables.
+3. **Cap constant dans le référentiel mobile.** Dans GZ-1, le contrôle qui atteint
+   un point donné est de direction constante dans le référentiel du centre advecté.
+   Cela découle de la borne qui dépend du temps mais pas de la position ni de la
+   direction. Ce n'est pas une loi générale de poursuite d'une cible, ni une preuve
+   sur les géodésiques en vent cisaillé ; ces problèmes exigent un Hamiltonien
+   spatialement variable et une analyse distincte.
 
 ## 4. Régime supercritique et cône d'accessibilité
 
@@ -92,8 +93,10 @@ Cette quadratique possède une racine positive si et seulement si `u·ω > 0` et
 **cône aval** : `u·ω > 0` et `sin θ ≤ c/‖u‖`. La seule condition sur le sinus
 serait insuffisante : elle sélectionnerait aussi un cône amont autour de `−u`.
 
-La frontière `sin θ = c/‖u‖` est incluse : la droite issue de l'origine est tangente
-à la boule mobile en un point strictement positif. La plus grande racine
+La frontière `sin θ = c/‖u‖` est incluse lorsque `c < ‖u‖` : la droite issue de
+l'origine est tangente à la boule mobile en un point strictement positif. Au cas
+critique `c = ‖u‖`, le demi-angle tend vers `π/2`, mais les directions exactement
+orthogonales ont `u·ω = 0` et restent inatteignables en temps fini. La plus grande racine
 `q₊ = u·ω + √((u·ω)² + c² − ‖u‖²)` maximise `q = d/t`, donc minimise le temps :
 
 `T(dω) = d / (u·ω + √((u·ω)² + c² − ‖u‖²))`.
@@ -156,7 +159,7 @@ float64) puis transcrites dans `tests/test_navigation_controllabilite.py` :
 | `t*` maximise `R` ; `Λ(e·t*) = 0` | `test_t_etoile_maximise_le_rayon` | abs 1e-9 |
 | Singularité intégrable (`∫₁¹⁰⁰ c = R(100) − R(1)`) | `test_la_singularite_initiale_est_integrable` | rel 1e-6 |
 | Théorème S0 : trajectoire à cap constant atteint la cible à `T_front` exactement | `test_le_theoreme_gz1_egalise_navigation_et_front` | abs 1e-9, ODE 1e-6 |
-| Cible hors de portée : aucun contact sur `(0, t*]` | `test_une_cible_hors_de_portee_n_est_jamais_atteinte` | balayage 20 000 points |
+| Cible hors de portée : aucun contact détecté sur `(0, t*]` | `test_une_cible_hors_de_portee_n_est_jamais_atteinte` | balayage 20 000 points (diagnostic discret, pas preuve d'absence) |
 | Jauge = forme de Randers (sous-critique), homogénéité, axe aval | `test_la_jauge_sous_critique_est_une_randers` | rel 1e-12 |
 | Cône aval : condition angulaire + `u·ω > 0`, frontière incluse, amont rejeté | `test_le_regime_supercritique_definit_un_cone` | frontière 1e-9 rad |
 | Équation HJ : résidu Hopf–Lax dans les zones lisses ; coin traité analytiquement | `test_le_front_satisfait_l_equation_hamilton_jacobi` | abs 1e-6 |
