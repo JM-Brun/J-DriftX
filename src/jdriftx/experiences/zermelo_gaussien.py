@@ -151,7 +151,7 @@ class ModeleGZ1:
     def fonction_contact(
         self, cible: tuple[float, float, float] | NDArray[np.float64], temps: float
     ) -> float:
-        """g_B(t)=|x_B−x₀−ut|²−R(t)² (m²), pour 0<t<=t*."""
+        """g_B(t)=|x_B-x_0-u*t|^2-R(t)^2 (m²), pour 0<t<=t*."""
         t = _scalaire_positif(temps, "Le temps")
         if t > self.t_etoile:
             raise ValueError("Le contact GZ-1 est recherché sur 0 < t <= t*.")
@@ -162,7 +162,7 @@ class ModeleGZ1:
     def valeur_hj(
         self, position: tuple[float, float, float] | NDArray[np.float64], temps: float
     ) -> float:
-        """Valeur Hopf–Lax max(|x−x₀−ut|−R(t),0), en mètres."""
+        """Valeur Hopf-Lax max(|x-x_0-u*t|-R(t),0), en mètres."""
         t = _scalaire_positif(temps, "Le temps")
         if t > self.t_etoile:
             raise ValueError("La valeur HJ GZ-1 est définie ici pour t <= t*.")
