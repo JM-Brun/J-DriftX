@@ -50,6 +50,7 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `12-catalogue-donnees-transport-dispersion.md` | Catalogue de jeux de données transport/dispersion |
 | `18-carte-articulation-scientifique.md` | Carte d'articulation scientifique |
 | `19-investigation-g0s-temps-de-parcours.md` | Investigation G0-S : temps de parcours dirigé ($T_{\mathrm{arr}}$/$T_{\mathrm{proj}}$) |
+| `../site/theorie/navigation-fronts-controllabilite.qmd` | Théorème GZ-1 : navigation de Zermelo, front gaussien, Hamilton–Jacobi instationnaire et limites de validité |
 | `20-audit-technique-jeux-donnees.md` | Audit technique des jeux de données (ERIES, DIFLU, DATEM, ETEX) |
 | `diflu-observable-evaluation-protocol.md` | Observable candidat ATC, corrections expérimentales, unité d'observation et garde-fous d'évaluation DIFLU ; protocole non validé tant que l'audit sémantique n'est pas clos |
 | `diflu-reproducible-audit.md` | Procédure de récupération des originaux, vérification d'intégrité, staging du corpus compact et audit hors ligne DIFLU |

@@ -1,10 +1,16 @@
 ---
 title: "Navigation de Zermelo, fronts et Hamilton–Jacobi"
+date: 2026-11-01
+status: "Démonstration analytique conditionnelle GZ-1 ; formulation HJ dérivée ; aucune validation physique ou validation de solveur revendiquée."
 ---
 
 # Navigation de Zermelo, fronts et Hamilton–Jacobi
 
-Cette page publie un résultat analytique conditionnel : pour un puff gaussien tridimensionnel en espace libre, un vent uniforme constant et une vitesse de contrôle égale à la vitesse d'expansion du rayon d'isoconcentration, le temps minimal de navigation coïncide avec le premier contact du front avec une cible fixe. Elle dérive aussi la formulation Hamilton–Jacobi instationnaire.
+Cette page publie le résultat analytique conditionnel **GZ-1** (*Gaussian Zermelo, résultat 1*) : pour le noyau fondamental gaussien tridimensionnel de l'équation d'advection–diffusion à coefficients constants, avec vent uniforme constant et vitesse de contrôle égale à la vitesse d'expansion du rayon d'isoconcentration, le temps minimal de navigation coïncide avec le premier contact du front **pendant sa phase d'expansion** \(0<t\leq t_*\) avec une cible fixe. Elle dérive aussi la formulation Hamilton–Jacobi instationnaire.
+
+**Attention au nommage du projet :** GZ-1 n'est pas le « cas S0 uniforme » des notes 48–54, qui désigne un jeu de référence distinct fondé sur les paramétrisations de dispersion du package. GZ-1 est un résultat théorique idéal, pas une validation de l'implémentation `concentration_puff`.
+
+**Rôle et statut.** Cette page est la référence publique pour l'énoncé, les hypothèses et les preuves du résultat GZ-1. Le résultat est démontré analytiquement dans son domaine précis ; la formulation HJ est dérivée du problème de contrôle. Aucun solveur HJ n'est encore implémenté ici et aucune validation expérimentale n'est revendiquée. Les expériences puff des notes 53–54 sont des objets voisins, mais ne constituent pas les hypothèses ni la preuve de GZ-1.
 
 **Ce résultat ne redéfinit pas le temps de première arrivée passif** \(T_{\mathrm{arr}}\) de la page [Métrique travel-time](metrique-travel-time.qmd). Il introduit un problème de contrôle distinct, noté \(T_{\mathrm{nav}}\), et le compare au temps de première intersection du front, noté \(T_{\mathrm{front}}\).
 
@@ -14,16 +20,22 @@ Cette page publie un résultat analytique conditionnel : pour un puff gaussien t
 |---|---|
 | Rayon et vitesse d'expansion d'une isoconcentration gaussienne | Dérivation exacte dans le modèle posé ci-dessous |
 | Ensemble atteignable sous le contrôle isotrope prescrit | Démonstration analytique exacte pour les contrôles mesurables spécifiés |
-| Égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) | Théorème conditionnel démontré sous les hypothèses S0 |
-| Équation HJ du front de contrôlabilité | Hamiltonien dérivé du problème de contrôle ; solution de viscosité sous les hypothèses usuelles |
+| Égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) | Théorème conditionnel démontré sous les hypothèses GZ-1 |
+| Équation HJ du front de contrôlabilité | Hamiltonien dérivé ; pour GZ-1, changement de référentiel puis reparamétrisation \(\rho=R(t)\) ramènent le problème à une eikonale standard et traitent la singularité intégrable à l'origine |
 | Équivalence avec un front d'advection–diffusion général | **Non démontrée** |
 | Validité physique de la borne de contrôle \(c(t)\) | Hypothèse de modélisation, non conséquence de la solution gaussienne |
 
-Les démonstrations concernent le modèle mathématique explicite ci-dessous. Elles ne constituent ni une validation expérimentale ni une validation d'un modèle atmosphérique général.
+Les démonstrations concernent le modèle mathématique explicite ci-dessous. Elles ne constituent ni une validation expérimentale ni une validation d'un modèle atmosphérique général. Le modèle GZ-1 exclut notamment les frontières, le sol, le dépôt, les réactions, les sources continues, les variations spatiales ou temporelles de \(u\) et \(K\), ainsi que les écarts à l'isotropie.
 
 ## 2. Puff gaussien et cinématique du front
 
-Considérons un puff gaussien tridimensionnel en espace libre, de masse \(M>0\), de diffusivité isotrope constante \(K>0\), advecté par un vent uniforme constant \(u\in\mathbb R^3\). Son centre est \(x_c(t)=x_0+ut\), où \(x_0\) est sa position initiale :
+Considérons l'équation d'advection–diffusion sur \(\mathbb R^3\), sans frontière, avec vent uniforme constant \(u\in\mathbb R^3\), diffusivité isotrope constante \(K>0\), et émission impulsionnelle de masse totale \(M>0\) au point \(x_0\) à l'instant initial :
+
+\[
+\partial_t C+u\cdot\nabla C=K\Delta C,\qquad C(\cdot,0)=M\,\delta_{x_0}.
+\]
+
+Le centre advecté est \(x_c(t)=x_0+ut\). Pour \(t>0\), le noyau fondamental est :
 
 \[
 C(x,t)=\frac{M}{(4\pi Kt)^{3/2}}
@@ -37,42 +49,50 @@ Pour un seuil \(C_0>0\), le niveau \(C(x,t)=C_0\) est une sphère de rayon \(R(t
 \Lambda(t)=\ln\left(\frac{M}{C_0(4\pi Kt)^{3/2}}\right).
 \]
 
-Alors
-
-\[
-R(t)^2=4Kt\,\Lambda(t).
-\]
-
-Le rayon est réel si et seulement si \(\Lambda(t)\geq0\). Sa dérivée est
-
-\[
-c(t):=R'(t)=\frac{2K}{R(t)}
-\left(\Lambda(t)-\frac32\right),
-\qquad R(t)>0.
-\]
-
-Définissons le temps du maximum du rayon :
+Le temps auquel le rayon atteint son maximum est
 
 \[
 t_*=\frac{1}{4\pi K}
 \left(\frac{M}{C_0e^{3/2}}\right)^{2/3}.
 \]
 
-Alors \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), puis décroît sur \(t_*<t<e\,t_*\). Le rayon est réel jusqu'à \(e\,t_*\), inclus.
-
-**Restriction essentielle.** \(c(t)=R'(t)\) est une borne positive seulement pendant la phase d'expansion \(0<t<t_*\). Après \(t_*\), \(c(t)<0\) et ne peut plus être utilisée comme borne de norme d'un contrôle. Le théorème ci-dessous est limité à \(0<t\leq t_*\).
-
-## 3. Problème de navigation S0
-
-Une trajectoire contrôlée, exprimée dans le référentiel fixe, vérifie
+En effet, \(\Lambda(t_*)=3/2\). On peut donc réécrire exactement
 
 \[
-\dot X(t)=u+s(t),\qquad
-\lVert s(t)\rVert\leq R'(t)
+R(t)^2=4Kt\,\Lambda(t)
+=6Kt\left(1+\ln\frac{t_*}{t}\right).
+\]
+
+Le rayon est réel si et seulement si \(\Lambda(t)\geq0\), soit \(0<t\leq e\,t_*\). Il est strictement positif pour \(0<t<e\,t_*\), et tend vers zéro lorsque \(t\to0+\) ou à \(t=e\,t_*\). Le temps \(t_{\mathrm{ext}}=e\,t_*\) est l'instant où la concentration maximale au centre atteint le seuil \(C_0\) : le niveau se réduit alors au centre puis disparaît. Le rayon maximal vaut
+
+\[
+R_{\max}=R(t_*)=\sqrt{6Kt_*}.
+\]
+
+Sa dérivée est
+
+\[
+c(t):=R'(t)=\frac{2K}{R(t)}
+\left(\Lambda(t)-\frac32\right)
+=\frac{3K}{R(t)}\ln\frac{t_*}{t},
+\qquad R(t)>0.
+\]
+
+Ainsi, \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), puis décroît sur \(t_*<t<e\,t_*\). **La borne de contrôle \(c(t)=R'(t)\) n'est positive que pendant la phase d'expansion \(0<t<t_*\)**. Après \(t_*\), elle est négative et ne peut plus être utilisée comme borne de norme d'un contrôle. Le théorème GZ-1 est donc limité à \(0<t\leq t_*\).
+
+**Contrôle dimensionnel.** \([K]=\mathrm{m^2\,s^{-1}}\), \([M/C_0]=\mathrm{m^3}\), \([t_*]=\mathrm{s}\), \([R]=\mathrm m\) et \([c]=\mathrm{m\,s^{-1}}\). La solution conserve la masse : \(\int_{\mathbb R^3}C(x,t)\,dx=M\) pour tout \(t>0\).
+## 3. Problème de navigation GZ-1
+
+Une trajectoire contrôlée, exprimée dans le référentiel fixe, est une fonction absolument continue \(X:[0,t]\to\mathbb R^3\) qui vérifie
+
+\[
+\dot X(\tau)=u+s(\tau)\quad\text{p.p.},\qquad
+\lVert s(\tau)\rVert\leq R'(\tau)
 \quad\text{p.p. sur }(0,t_*).
 \]
 
-Le départ est au centre du puff à l'âge zéro, au sens de \(X(0+)=x_0\). La cible \(x_B\ne x_0\) est fixe. On définit
+Le contrôle \(s\) est mesurable. Comme \(R'\in L^1(0,t_*)\) et \(\int_0^{t_*}R'(\tau)\,d\tau=R(t_*)<\infty\), la borne implique \(s\in L^1(0,t)\) pour tout \(t\leq t_*\), et l'intégrale définissant la trajectoire existe. Le départ est au centre du puff à l'âge zéro, avec \(X(0)=x_0\). La cible \(x_B
+e x_0\) est fixe. On définit
 
 \[
 T_{\mathrm{nav}}=\inf\{t\in(0,t_*]:
@@ -85,6 +105,21 @@ et
 T_{\mathrm{front}}=\inf\{t\in(0,t_*]:
 \lVert x_B-(x_0+ut)\rVert\leq R(t)\}.
 \]
+
+En posant
+
+\[
+g_B(t)=\lVert x_B-x_0-ut\rVert^2-4Kt\,\Lambda(t),
+\]
+
+le premier contact est le premier zéro de \(g_B\) dans \((0,t_*]\), lorsque ce zéro existe. Le critère d'existence équivalent est \(\min_{0<t\leq t_*}g_B(t)\leq0\). En général, avec \(u\ne0\), \(g_B\) n'est pas monotone et l'équation scalaire n'a pas de solution fermée simple ; il faut rechercher le premier zéro, sans confondre cette recherche avec une intégration de trajectoire passive. Dans le cas particulier \(u=0\), le contact existe si et seulement si \(d=\lVert x_B-x_0\rVert\leq R_{\max}\). Pour \(0<d\leq R_{\max}\), le premier contact sur la branche d'expansion admet même une expression avec la fonction de Lambert \(W\). En posant \(q=d^2/(6Kt_*)\in(0,1]\),
+
+\[
+T_{\mathrm{front}}
+=-t_*\,\frac{q}{W_{-1}(-q/e)}.
+\]
+
+La branche \(W_{-1}\) est indispensable : elle sélectionne \(0<T_{\mathrm{front}}\leq t_*\), donc le premier contact pendant l'expansion. Pour le voir, poser \(y=t/t_*\) transforme l'équation en \(q=y(1-\ln y)\) ; avec \(w=\ln y-1\), on obtient \(we^w=-q/e\), et la branche \(W_{-1}\) impose \(y\leq1\). La branche principale \(W_0\) donne la seconde intersection pendant la contraction, hors du domaine de contrôle GZ-1.
 
 La convention est \(+\infty\) si l'ensemble correspondant est vide. Pour une cible initialement extérieure, le premier instant où la boule contient la cible est un contact avec la frontière, par continuité.
 
@@ -130,7 +165,8 @@ Pour \(z=0\), prendre \(s=0\). Toute position de la boule est donc atteignable. 
 
 ### 3.2 Égalité des temps
 
-**Théorème S0.** Sous les hypothèses de la section 3, pour toute cible fixe \(x_B\ne x_0\),
+**Théorème GZ-1.** Sous les hypothèses de la section 3, pour toute cible fixe \(x_B
+e x_0\),
 
 \[
 \boxed{T_{\mathrm{nav}}=T_{\mathrm{front}}.}
@@ -150,7 +186,7 @@ Les ensembles d'instants admissibles dans les définitions de \(T_{\mathrm{nav}}
 \int_0^tR'(\tau)\,d\tau=R(t)<\infty.
 \]
 
-Le contrôle construit dans la preuve peut donc être non borné au voisinage de zéro tout en étant intégrable et admissible presque partout. Le théorème est établi pour cette classe de contrôles mesurables avec borne ponctuelle \(R'(t)\), pas pour une classe imposant en plus \(s\in L^\infty(0,t_*)\). Sous cette dernière restriction, l'égalité exacte de l'ensemble atteignable n'est pas démontrée ici.
+Plus précisément, lorsque \(t\to0+\), \(R(t)\sim\sqrt{6Kt\ln(t_*/t)}\) et \(R'(t)\sim\sqrt{\frac{3K}{2t}\ln(t_*/t)}\). La vitesse admissible diverge comme une singularité en \(t^{-1/2}\) corrigée logarithmiquement, mais reste intégrable puisque son intégrale vaut exactement \(R(t)\). Le contrôle construit dans la preuve peut donc être non borné au voisinage de zéro tout en étant intégrable et admissible presque partout. Le théorème est établi pour cette classe de contrôles mesurables avec borne ponctuelle \(R'(t)\), pas pour une classe imposant en plus \(s\in L^\infty(0,t_*)\). Sous cette dernière restriction, l'égalité exacte de l'ensemble atteignable n'est pas démontrée ici.
 
 ## 4. Limites et extensions non démontrées
 
@@ -160,7 +196,7 @@ Le contrôle construit dans la preuve peut donc être non borné au voisinage de
 - **Diffusion physique générale.** Un front de concentration issu d'une équation d'advection–diffusion n'est pas, en général, un front de contrôlabilité. Leur coïncidence doit être démontrée pour un modèle et des hypothèses précis.
 - **Phase de contraction.** \(R'(t)<0\) après \(t_*\) ; cette dérivée ne peut pas être utilisée comme borne positive de vitesse de contrôle.
 
-Ces cas sont des extensions ouvertes, et non des corollaires implicites du théorème S0.
+Ces cas sont des extensions ouvertes, et non des corollaires implicites du théorème GZ-1.
 
 ## 5. Hamiltonien et équation de Hamilton–Jacobi instationnaire
 
@@ -179,40 +215,61 @@ H(x,t,p)=\sup_{\lVert s\rVert\leq c(x,t)}
 =u(x,t)\cdot p+c(x,t)\lVert p\rVert.
 \]
 
-En représentant le front de la région atteignable par un niveau zéro \(\phi(x,t)=0\), avec la région atteignable du côté \(\phi\leq0\), l'équation de niveau correspondante est
+Pour un départ ponctuel en \(x_0\), on prend la donnée initiale non négative \(\phi(x,0)=\lVert x-x_0\rVert\). La région atteignable est le sous-niveau \(\phi\leq0\), qui coïncide ici avec \(\phi=0\). Pour un départ ponctuel, la solution peut donc présenter un **plateau nul** à l'intérieur de la région atteignable : le front géométrique est la frontière \(\partial\{\phi\leq0\}\), et non nécessairement l'ensemble complet des points où \(\phi=0\). L'équation de niveau correspondante est
 
 \[
 \boxed{\phi_t+u(x,t)\cdot\nabla\phi
 +c(x,t)\lVert\nabla\phi\rVert=0.}
 \]
 
-Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié. Lorsque le front développe des coins ou des changements de topologie, une solution classique peut ne plus exister ; la formulation pertinente est alors celle des solutions de viscosité, sous les hypothèses usuelles de continuité et de contrôle appropriées.
+Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.
 
-### 5.1 Vérification dans le cas S0
+### 5.1 Réparamétrisation du temps et unicité au départ singulier
 
-Dans le cas uniforme, posons
+**Traitement exact de la singularité GZ-1.** Le coefficient \(c(t)=R'(t)\) n'est pas borné au voisinage de \(t=0\), mais il est positif et intégrable sur la phase d'expansion. Cette singularité peut être éliminée par un changement de référentiel et une reparamétrisation du temps :
+
+1. Dans le référentiel mobile \(y=x-ut\), posons \(\psi(y,t)=\phi(y+ut,t)\). L'équation devient
+   \[
+   \psi_t+c(t)\lVert\nabla_y\psi\rVert=0.
+   \]
+2. Posons \(\rho=R(t)\). Sur \(0<t<t_*\), \(d\rho/dt=c(t)>0\), et \(\rho\) parcourt l'intervalle fini \((0,R_{\max})\), malgré \(c(t)\to+\infty\) à l'origine.
+3. En écrivant \(\widetilde\psi(y,\rho)=\psi(y,t(\rho))\), la règle de chaîne donne l'eikonale standard
+   \[
+   \partial_\rho\widetilde\psi+\lVert\nabla_y\widetilde\psi\rVert=0,
+   \qquad
+   \widetilde\psi(y,0)=\lVert y-x_0\rVert.
+   \]
+
+La solution de viscosité de cette eikonale standard est unique par le principe de comparaison usuel pour une donnée initiale lipschitzienne. La formule de Hopf–Lax donne ici
 
 \[
-\phi(x,t)=\lVert x-x_0-ut\rVert-R(t).
+\widetilde\psi(y,\rho)=\inf_{\lVert y-z\rVert\leq\rho}\lVert z-x_0\rVert
+=\max\left(\lVert y-x_0\rVert-\rho,0\right).
 \]
 
-Partout où le gradient est défini,
+L'inégalité vient de \(\lVert z-x_0\rVert\geq\lVert y-x_0\rVert-\lVert y-z\rVert\). Elle est atteinte en prenant \(z=x_0\) si \(x_0\) appartient à la boule \(\overline B(y,\rho)\), sinon au point de cette boule situé sur le segment \([y,x_0]\) à distance \(\rho\) de \(y\).
+
+En revenant aux variables physiques, on obtient la solution de viscosité
 
 \[
-\nabla\phi=\frac{x-x_0-ut}{\lVert x-x_0-ut\rVert},
-\qquad
-\phi_t=-u\cdot\nabla\phi-R'(t).
+\phi(x,t)=\max\left(\lVert x-x_0-ut\rVert-R(t),0\right).
 \]
 
-Avec \(c(t)=R'(t)\), on obtient
+Son ensemble nul est la boule atteignable fermée ; le front géométrique est la sphère frontière de cette boule. Le plateau nul n'altère donc pas l'ensemble atteignable, mais il interdit d'identifier sans précaution le front à tout le niveau zéro. Cette transformation donne, pour GZ-1 uniforme, une justification de l'unicité au départ \(t=0\) sans supposer \(c\) borné.
+
+**Attention à la fonction de niveau signée.** La fonction \(\lVert x-x_0-ut\rVert-R(t)\) a la même sphère zéro et peut servir de représentation signée après une réinitialisation numérique, mais ce n'est pas la solution de viscosité globale issue de la donnée ponctuelle \(\phi_0=\lVert x-x_0\rVert\) : au centre de la boule, elle échoue au test de supersolution au sens de viscosité. Il faut distinguer la fonction valeur HJ (avec plateau nul) de la fonction de distance signée éventuellement réinitialisée pour représenter le même front.
+
+### 5.2 Vérification dans le cas GZ-1
+
+Dans le cas uniforme, la solution de viscosité est
 
 \[
-\phi_t+u\cdot\nabla\phi+c(t)\lVert\nabla\phi\rVert=0.
+\phi(x,t)=\max\left(\lVert x-x_0-ut\rVert-R(t),0\right).
 \]
 
-Cette vérification retrouve le front sphérique de la preuve S0. Au centre de la boule, la norme n'est pas différentiable ; la formulation doit alors être comprise au sens de viscosité.
+À l'extérieur de la boule atteignable, \(\phi=\lVert x-x_0-ut\rVert-R(t)\), et le calcul classique donne \(\phi_t+u\cdot\nabla\phi+c(t)\lVert\nabla\phi\rVert=0\). À l'intérieur, \(\phi=0\) et l'équation est également satisfaite. À la frontière, la fonction présente un coin ; c'est précisément là que l'interprétation de viscosité est nécessaire. L'ensemble nul est la boule fermée, et sa frontière est le front sphérique de GZ-1.
 
-### 5.2 Ne pas confondre trois objets
+### 5.3 Ne pas confondre trois objets
 
 - L'équation ci-dessus est une équation de front de **contrôlabilité**, issue de l'ensemble des vitesses admissibles.
 - Une équation d'advection–diffusion gouverne une concentration et sa masse ; elle contient un opérateur diffusif et des conditions aux limites propres.
@@ -249,7 +306,15 @@ a_{ij}=\frac{c^2\mu\delta_{ij}+u_i u_j}{c^4\mu^2},
 \qquad b_i=-\frac{u_i}{c^2\mu}.
 \]
 
-Le facteur \(\mu^2\) au dénominateur de \(a_{ij}\) est essentiel. La condition sous-critique \(\lVert u\rVert<c\) garantit \(A>0\). Lorsque \(c\) dépend du temps, cette expression décrit une géométrie de navigation **instantanée** ; elle ne transforme pas à elle seule le problème instationnaire en une métrique de Finsler stationnaire globale.
+Le facteur \(\mu^2\) au dénominateur de \(a_{ij}\) est essentiel. La condition sous-critique \(\lVert u\rVert<c\) garantit \(A>0\) et la régularité de Randers. Dans GZ-1, \(c(t)=R'(t)\) décroît strictement de \(+\infty\) à \(0\) sur \((0,t_*)\), car
+
+\[
+R''(t)=2K\left(\frac{-3}{2tR(t)}-\frac{(\Lambda(t)-3/2)R'(t)}{R(t)^2}\right)<0.
+\]
+
+Si \(u\ne0\), il existe donc un unique \(t_Z\in(0,t_*)\) tel que \(R'(t_Z)=\lVert u\rVert\). La géométrie de Randers n'est régulière que pour \(0<t<t_Z\), où \(R'(t)>\lVert u\rVert\). À \(t=t_Z\), elle dégénère ; pour \(t_Z<t\leq t_*\), le vent domine la vitesse de contrôle et la boule des vitesses admissibles ne contient plus l'origine. Cela ne rend pas le système de contrôle ni son Hamiltonien HJ invalides : cela signifie seulement qu'une métrique de Randers régulière ne décrit plus toutes les directions de navigation. Si \(u=0\), la condition vaut pour tout \(0<t<t_*\), mais échoue à \(t=t_*\) où \(c=0\).
+
+Lorsque \(c\) dépend du temps, cette expression décrit une géométrie de navigation **instantanée** ; elle ne transforme pas à elle seule le problème instationnaire en une métrique de Finsler stationnaire globale.
 
 Cette construction concerne la navigation contrôlée de Zermelo. Elle ne requalifie pas la construction historique projetée \(T_{\mathrm{proj}}\) en métrique de Finsler. Pour le statut des objets historiques et leurs axiomes, voir [Métrique travel-time](metrique-travel-time.qmd) et [Métriques non riemanniennes](metriques-non-riemanniennes.qmd).
 
@@ -266,14 +331,59 @@ Avant de revendiquer un solveur de type Fast Marching ou une méthode eikonale, 
 5. le traitement des fronts non réguliers, des changements topologiques et des conditions aux limites ;
 6. la convergence vers la solution de viscosité pertinente.
 
-Pour le cas S0 uniforme, la solution analytique \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
+Pour le cas GZ-1 uniforme, la solution analytique \(\phi(x,t)=\max(\lVert x-x_0-ut\rVert-R(t),0)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
 
-## 8. Conclusions et prochaines extensions
+### 7.1 Protocole de vérification pour une future implémentation
 
-**Démontré ici :** dans le problème S0, l'ensemble atteignable à l'instant \(t\) est la boule fermée de centre \(x_0+ut\) et de rayon \(R(t)\), et \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) pour une cible fixe distincte du centre initial.
+Le cas GZ-1 fournit un oracle analytique compact. Une future implémentation devrait être vérifiée par étapes, en séparant les identités algébriques, la résolution du premier contact et la convergence du solveur :
 
-**Dérivé ici :** le Hamiltonien \(H=u\cdot p+c\lVert p\rVert\), l'équation HJ instationnaire correspondante et la forme de Randers du problème de navigation sous-critique instantané.
+| Vérification | Référence exacte | Ce que le test peut établir | Ce qu'il ne prouve pas |
+|---|---|---|---|
+| Rayon | \(R^2=4Kt\Lambda=6Kt[1+\ln(t_*/t)]\) | Cohérence de deux formes algébriques et des unités | Validité physique du noyau gaussien |
+| Vitesse du front | \(R'=3K\ln(t_*/t)/R\), comparée à une différence finie hors des singularités | Implémentation correcte de la dérivée | Admissibilité physique de cette vitesse comme commande |
+| Conservation de masse | \(\int_{\mathbb R^3}C\,dx=M\) | Intégration ou quadrature cohérente sur une fenêtre suffisamment grande, avec erreur de troncature mesurée | Conservation dans un domaine borné ou avec dépôt |
+| Premier contact, \(u=0\) | Formule Lambert \(W_{-1}\) de la section 3 | Résolution de la branche d'expansion et sélection du premier contact | Cas de vent variable |
+| Premier contact, \(u\ne0\) | Premier zéro de \(g_B(t)\) sur \((0,t_*]\) | Exactitude d'un solveur scalaire de contact | Temps passif \(T_{\mathrm{arr}}\) |
+| Résidu HJ | \(\phi(x,t)=\max(\lVert x-x_0-ut\rVert-R(t),0)\) | Résidu classique nul dans les régions intérieure et extérieure où \(\phi\) est différentiable | Traitement de viscosité du coin sur la frontière |
+| Jauge de Randers | Égalité entre la jauge de Zermelo et \(\sqrt{a_{ij}v^iv^j}+b_iv^i\) pour \(\lVert u\rVert<c\) | Cohérence algébrique de la forme de Randers dans son domaine régulier | Existence d'une métrique régulière dans le régime supercritique |
 
-**Non établi :** l'équivalence pour un départ à âge positif, une cible mobile, un vent variable, une classe de contrôles globalement bornés ou un front issu d'une équation d'advection–diffusion générale.
+Les tests numériques doivent être étiquetés **tests de cohérence ou de convergence**, jamais « preuve du théorème ». La preuve de l'ensemble atteignable est analytique et ne dépend pas d'un échantillonnage de trajectoires.
 
-La suite scientifique doit traiter ces extensions une par une, en conservant pour chacune un énoncé, des hypothèses, une preuve ou un contre-exemple, puis seulement un test numérique. Le registre de preuve du projet reflète ces statuts sans convertir une démonstration conditionnelle en validation physique.
+### 7.2 Singularité initiale et discrétisation temporelle
+
+Le point \(t=0\) est singulier pour la vitesse \(c(t)=R'(t)\), même si son intégrale est finie. Un schéma qui évalue naïvement \(c(0)\), ou qui le remplace par un plafond arbitraire, ne discrétise pas le problème GZ-1 tel qu'il est défini.
+
+Pour le premier pas \([0,\Delta t]\), l'incrément exact du rayon est
+
+\[
+\int_0^{\Delta t}c(\tau)\,d\tau=R(\Delta t),
+\]
+
+et non \(c(0)\Delta t\). Une méthode de référence peut donc initialiser directement le front à \(t=\Delta t\) par la boule \(\overline B(x_0+u\Delta t,R(\Delta t))\), ou employer une intégration qui respecte exactement cette première contribution. Si le calcul commence à un \(\varepsilon>0\), l'état initial doit être la boule de centre \(x_0+u\varepsilon\) et de rayon \(R(\varepsilon)\), et non un point artificiellement replacé au centre.
+
+Pour une méthode de niveau, il faut vérifier la convergence en raffinant séparément \(\Delta t\) et \(\Delta x\), sous une condition CFL appropriée, et comparer les fronts calculés à la boule analytique par une distance de Hausdorff ainsi que les temps de premier contact. Le coin de la fonction de distance sur la frontière du front relève de la solution de viscosité et non d'un résidu classique ponctuel.
+
+Enfin, imposer une borne globale \(\lVert s\rVert\leq S_{\max}\) change la classe de contrôles : ce n'est pas une simple stabilisation numérique de GZ-1, mais un autre problème dont l'ensemble atteignable doit être redémontré.
+
+
+## 8. Relation avec les expériences puff déjà présentes dans J-DriftX
+
+Le mot « puff » désigne ici plusieurs objets qu'il faut garder distincts :
+
+| Objet | Modèle / calcul | Ce qu'il établit | Ce qu'il n'établit pas |
+|---|---|---|---|
+| **GZ-1 (cette page)** | Noyau fondamental 3D isotrope à diffusivité constante \(K\), sur \(\mathbb R^3\), avec vent uniforme et impulsion de masse \(M\). | Preuve exacte de l'ensemble atteignable et de \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) sous les hypothèses énoncées. | Ne valide pas les paramétrisations empiriques du package, les données expérimentales ou une méthode numérique. |
+| **Évaluation dirigée du puff** ([note 53](https://github.com/JM-Brun/J-DriftX/blob/main/docs/53-evaluation-puff-source-impulsionnelle.md)) | Temps dirigé par pseudo-distance uniforme, concentration par `concentration_puff`, avec paramètres Briggs et isotropie longitudinale approchée \(\sigma_x\approx\sigma_y\). | Cohérence interne de cette route sur la grille synthétique S0 et les 12 points documentés. | N'est pas le noyau fondamental isotrope de GZ-1 ; le maximum temporel est recherché sur une grille, pas optimisé exactement. |
+| **Route EDP transitoire** ([note 54](https://github.com/JM-Brun/J-DriftX/blob/main/docs/54-transitoire-puff-edp-transitoire-marginale.md)) | Marche FTCS en temps de la marginale transverse du puff, puis reconstruction de la concentration aux points. | Comparaison numérique de deux routes sur le cas figé, avec erreurs et limites de troncature documentées. | N'est ni un solveur HJ du front de contrôlabilité ni une preuve de l'égalité GZ-1. |
+
+La relation entre ces trois objets est donc une **parenté de famille (source impulsionnelle gaussienne)**, pas une identité de modèle. En particulier, le cas de référence S0 des notes 48–54 est un benchmark du dépôt ; l'étiquette GZ-1 est réservée au théorème de navigation présenté ici. Toute comparaison quantitative entre GZ-1 et `concentration_puff` nécessitera d'abord une mise en correspondance des noyaux, des coordonnées, des unités et des hypothèses de diffusion.
+
+## 9. Conclusions et prochaines extensions
+
+**Démontré ici :** dans le problème GZ-1, l'ensemble atteignable à l'instant \(t\) est la boule fermée de centre \(x_0+ut\) et de rayon \(R(t)\), et \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) pour une cible fixe distincte du centre initial.
+
+**Dérivé ici :** le Hamiltonien \(H=u\cdot p+c\lVert p\rVert\), l'équation HJ instationnaire, la solution de viscosité GZ-1 unique par reparamétrisation et formule de Hopf–Lax, ainsi que la forme de Randers dans le domaine sous-critique instantané.
+
+**Non établi :** l'équivalence pour un départ à âge positif, une cible mobile, un vent variable, une classe de contrôles globalement bornés ou un front issu d'une équation d'advection–diffusion générale. Aucun solveur HJ n'est encore implémenté ni validé dans le dépôt par cette page.
+
+La suite scientifique doit traiter ces extensions une par une, en conservant pour chacune un énoncé, des hypothèses, une preuve ou un contre-exemple, puis seulement un test numérique. La première tâche d'implémentation est suivie dans l'[issue #448 — oracle analytique exécutable et tests de cohérence GZ-1](https://github.com/JM-Brun/J-DriftX/issues/448) ; le développement d'un solveur HJ viendra seulement après validation de cet oracle. Le registre de preuve du projet reflète ces statuts sans convertir une démonstration conditionnelle en validation physique.

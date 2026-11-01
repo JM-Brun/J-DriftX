@@ -28,6 +28,13 @@ La question préalable n'est pas « cette idée est-elle nouvelle ? », mais **q
 
 Ces trois objets peuvent se ressembler mais ne sont pas interchangeables. Une intégrale le long d'une ligne de courant n'est pas automatiquement le temps minimal entre deux points, et le temps minimal d'un navigateur n'est pas le temps d'un traceur passif purement advecté.
 
+### Résultat particulier documenté : GZ-1
+
+La page [Navigation de Zermelo, fronts et Hamilton–Jacobi](../site/theorie/navigation-fronts-controllabilite.qmd) établit le théorème conditionnel **GZ-1** pour un noyau fondamental gaussien 3D à diffusivité isotrope constante, un vent uniforme et une borne de commande \(c(t)=R'(t)\) sur la phase d'expansion. Le résultat est \(T_{\mathrm{nav}}=T_{\mathrm{front}}\), avec un ensemble atteignable démontré exactement. La formulation HJ du cas GZ-1 est également clarifiée : dans le référentiel mobile, la reparamétrisation \(\rho=R(t)\) ramène l'équation à l'eikonale standard et absorbe la singularité intégrable de \(R'(t)\) à l'origine. La formule de Hopf–Lax donne \(\phi=\max(\lVert x-x_0-ut\rVert-R(t),0)\) : le zéro représente la boule atteignable, dont la frontière est le front ; la distance signée réinitialisée ne doit pas être confondue avec la solution de viscosité globale.
+
+Ce résultat est une instance particulière du **temps minimal de navigation contrôlée**, comparée à un front d'isoconcentration dans ce modèle idéal. Il ne redéfinit pas \(T_{\mathrm{arr}}\), ne démontre rien de nouveau sur le coût projeté historique \(T_{\mathrm{proj}}\), et ne s'étend pas sans preuve aux champs variables ou à l'implémentation concentration_puff. Il ne doit pas être lu comme une extension des conclusions G0-S sur le temps passif.
+
+
 ### Vocabulaire minimal de mécanique des fluides
 
 - **Champ de vitesse** \(\mathbf u(\mathbf x,t)\): vecteur vitesse du fluide en chaque position et instant; son unité SI est le m·s⁻¹.
