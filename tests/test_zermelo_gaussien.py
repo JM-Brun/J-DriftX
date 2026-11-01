@@ -135,11 +135,11 @@ def test_commande_radiale_respecte_la_borne_et_atteint_la_cible(modele: ModeleGZ
 def test_randers_est_restreint_au_regime_sous_critique(modele: ModeleGZ1) -> None:
     """L'identité de la jauge est vérifiée seulement si c(t)>||u||."""
     temps = 1.0e-3 * modele.t_etoile
-    vitesse = np.array([3.0, 1.0, -0.5])
-    jauge = modele.jauge_randers(tuple(vitesse), temps)
+    deplacement = np.array([3.0, 1.0, -0.5])
+    jauge = modele.jauge_randers(tuple(deplacement), temps)
     vent = np.asarray(modele.vent)
     c = modele.vitesse_expansion(temps)
-    assert np.linalg.norm(vitesse / jauge - vent) == pytest.approx(c, rel=1e-12)
+    assert np.linalg.norm(deplacement / jauge - vent) == pytest.approx(c, rel=1e-12)
     t_z = None
     bas, haut = temps, modele.t_etoile
     if modele.vitesse_expansion(haut) < np.linalg.norm(vent):
@@ -152,9 +152,9 @@ def test_randers_est_restreint_au_regime_sous_critique(modele: ModeleGZ1) -> Non
         t_z = 0.5 * (bas + haut)
     assert t_z is not None
     with pytest.raises(ValueError, match="Randers régulier"):
-        modele.jauge_randers(tuple(vitesse), t_z * (1.0 + 1e-8))
+        modele.jauge_randers(tuple(deplacement), t_z * (1.0 + 1e-8))
     with pytest.raises(ValueError, match="Randers"):
-        modele.jauge_randers(tuple(vitesse), 0.9 * modele.t_etoile)
+        modele.jauge_randers(tuple(deplacement), 0.9 * modele.t_etoile)
 
 
 def test_premier_contact_sans_vent_et_cas_limites() -> None:
