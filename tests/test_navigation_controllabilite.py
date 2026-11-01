@@ -138,6 +138,9 @@ def test_t_etoile_maximise_le_rayon() -> None:
     # Then — le rayon croît avant t* et décroît après.
     assert _rayon(0.999 * t_etoile) < _rayon(t_etoile)
     assert _rayon(1.001 * t_etoile) < _rayon(t_etoile)
+    # Then — R' décroît strictement pendant la phase d'expansion.
+    vitesses = [_vitesse(t) for t in (10.0, 50.0, 100.0, 300.0)]
+    assert all(a > b for a, b in zip(vitesses, vitesses[1:]))
     # Then — le rayon reste réel jusqu'à e·t* exactement : Λ(e t*) = 0.
     assert abs(_lambda(math.e * t_etoile)) < 1.0e-9
     assert _rayon(math.e * t_etoile * (1.0 - 1.0e-9)) > 0.0
