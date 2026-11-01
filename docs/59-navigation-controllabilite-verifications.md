@@ -267,7 +267,7 @@ Hors du cône aval, $T=+\infty$ par convention. Cette dérivation est exacte pou
 | $T_{\rm nav}=T_{\rm front}$ | test_le_theoreme_gz1_egalise_navigation_et_front | Une trajectoire constructive et sa borne | La preuve générale est la double inclusion §3 |
 | Commande radiale et ensemble atteignable | test_la_commande_radiale_remplit_exactement_la_boule | Dérivée de la primitive et respect de la borne | Test de cohérence, pas preuve générale |
 | Cible hors de portée | test_une_cible_hors_de_portee_n_est_jamais_atteinte | Balayage temporel discret | Ne prouve pas l'absence de contact entre mailles |
-| Jauge Zermelo = Randers | test_la_jauge_sous_critique_est_une_randers | Identité algébrique et homogénéité | Domaine sous-critique seulement |
+| Jauge Zermelo = Randers | test_la_jauge_sous_critique_est_une_randers | Identité algébrique, homogénéité et norme duale de b | Domaine sous-critique seulement |
 | Cône aval et cas critique | test_le_regime_supercritique_definit_un_cone | Intérieur, frontière, amont et direction transverse critique | Cas constant uniquement |
 | Équation HJ | test_le_front_satisfait_l_equation_hamilton_jacobi | Résidu classique extérieur et plateau intérieur | Le coin est traité analytiquement par Hopf–Lax |
 | Eikonale stationnaire | test_l_eikonale_stationnaire_en_champ_uniforme | Résidu de la solution fermée | Ne valide pas le HJ instationnaire |
