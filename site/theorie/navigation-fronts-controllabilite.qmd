@@ -14,7 +14,7 @@ Cette page publie un résultat analytique conditionnel : pour un puff gaussien t
 |---|---|
 | Rayon et vitesse d'expansion d'une isoconcentration gaussienne | Dérivation exacte dans le modèle posé ci-dessous |
 | Ensemble atteignable sous le contrôle isotrope prescrit | Démonstration analytique exacte pour les contrôles mesurables spécifiés |
-| Égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) | Théorème conditionnel démontré sous les hypothèses S0 |
+| Égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) | Théorème conditionnel démontré sous les hypothèses GZ-1 |
 | Équation HJ du front de contrôlabilité | Hamiltonien dérivé du problème de contrôle ; solution de viscosité sous les hypothèses usuelles |
 | Équivalence avec un front d'advection–diffusion général | **Non démontrée** |
 | Validité physique de la borne de contrôle \(c(t)\) | Hypothèse de modélisation, non conséquence de la solution gaussienne |
@@ -44,7 +44,23 @@ Alors
 R(t)^2=4Kt\,\Lambda(t).
 \]
 
-Le rayon est réel si et seulement si \(\Lambda(t)\geq0\). Sa dérivée est
+**Lecture de la formule.** Le facteur \(M/(4\pi Kt)^{3/2}\) est la concentration au centre : la masse est répartie dans un volume caractéristique qui croît comme \((Kt)^{3/2}\). L'exponentielle décrit ensuite la décroissance radiale. À seuil fixé, prendre le logarithme transforme l'équation de niveau en une équation quadratique en distance : le niveau est donc une sphère centrée sur \(x_0+ut\), et non une ellipse dans ce modèle isotrope.
+
+Le temps \(t_*\) est choisi de sorte que \(\Lambda(t_*)=3/2\). Comme \(\Lambda(t)=\Lambda(t_*)+\tfrac32\ln(t_*/t)\), on obtient
+
+\[
+R(t)^2=6Kt\left(1+\ln\frac{t_*}{t}\right).
+\]
+
+Cette écriture sépare l'échelle diffusive \(Kt\) du facteur logarithmique lié au seuil. En dérivant \(R^2\), plutôt que la racine directement, on obtient sans ambiguïté
+
+\[
+2R(t)R'(t)=6K\ln\frac{t_*}{t},
+\qquad
+c(t)=R'(t)=\frac{3K\ln(t_*/t)}{R(t)}.
+\]
+
+Le signe de \(c\) est donc celui de \(\ln(t_*/t)\) : positif avant \(t_*\), nul au maximum, négatif après. Le rayon est réel si et seulement si \(\Lambda(t)\geq0\). Sa dérivée est
 
 \[
 c(t):=R'(t)=\frac{2K}{R(t)}
@@ -63,7 +79,7 @@ Alors \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), puis
 
 **Restriction essentielle.** \(c(t)=R'(t)\) est une borne positive seulement pendant la phase d'expansion \(0<t<t_*\). Après \(t_*\), \(c(t)<0\) et ne peut plus être utilisée comme borne de norme d'un contrôle. Le théorème ci-dessous est limité à \(0<t\leq t_*\).
 
-## 3. Problème de navigation S0
+## 3. Problème de navigation GZ-1
 
 Une trajectoire contrôlée, exprimée dans le référentiel fixe, vérifie
 
@@ -131,7 +147,7 @@ Pour \(z=0\), prendre \(s=0\). Toute position de la boule est donc atteignable. 
 
 ### 3.2 Égalité des temps
 
-**Théorème S0.** Sous les hypothèses de la section 3, pour toute cible fixe \(x_B\ne x_0\),
+**Théorème GZ-1.** Sous les hypothèses de la section 3, pour toute cible fixe \(x_B\ne x_0\),
 
 \[
 \boxed{T_{\mathrm{nav}}=T_{\mathrm{front}}.}
@@ -161,7 +177,7 @@ Le contrôle construit dans la preuve peut donc être non borné au voisinage de
 - **Diffusion physique générale.** Un front de concentration issu d'une équation d'advection–diffusion n'est pas, en général, un front de contrôlabilité. Leur coïncidence doit être démontrée pour un modèle et des hypothèses précis.
 - **Phase de contraction.** \(R'(t)<0\) après \(t_*\) ; cette dérivée ne peut pas être utilisée comme borne positive de vitesse de contrôle.
 
-Ces cas sont des extensions ouvertes, et non des corollaires implicites du théorème S0.
+Ces cas sont des extensions ouvertes, et non des corollaires implicites du théorème GZ-1.
 
 ## 5. Hamiltonien et équation de Hamilton–Jacobi instationnaire
 
@@ -189,29 +205,63 @@ En représentant le front de la région atteignable par un niveau zéro \(\phi(x
 
 Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié. Lorsque le front développe des coins ou des changements de topologie, une solution classique peut ne plus exister ; la formulation pertinente est alors celle des solutions de viscosité, sous les hypothèses usuelles de continuité et de contrôle appropriées.
 
-### 5.1 Vérification dans le cas S0
+### 5.1 Solution de viscosité exacte : référentiel mobile et temps cumulé
 
-Dans le cas uniforme, posons
+La fonction de distance signée
 
 \[
-\phi(x,t)=\lVert x-x_0-ut\rVert-R(t).
+d_s(x,t)=\lVert x-x_0-ut\rVert-R(t)
 \]
 
-Partout où le gradient est défini,
+est pratique pour représenter la frontière : son niveau zéro est bien la sphère recherchée. Mais **elle n'est pas la solution de viscosité globale** associée à la donnée initiale ponctuelle \(\phi(x,0)=\lVert x-x_0\rVert\). La solution exacte conserve un plateau nul à l'intérieur de la région atteignable.
+
+On le voit en deux changements de variables qui éliminent les difficultés du problème. D'abord, passons au référentiel qui suit le centre du puff :
 
 \[
-\nabla\phi=\frac{x-x_0-ut}{\lVert x-x_0-ut\rVert},
+y=x-ut,\qquad \psi(y,t)=\phi(y+ut,t).
+\]
+
+La contribution du vent disparaît et l'équation devient
+
+\[
+\psi_t+c(t)\lVert\nabla_y\psi\rVert=0.
+\]
+
+Ensuite, pendant la seule phase d'expansion, \(c(t)=R'(t)>0\). Le rayon est donc un temps de propagation cumulé :
+
+\[
+\rho=R(t)=\int_0^t c(\tau)\,d\tau.
+\]
+
+Comme \(R\) est strictement croissant sur \((0,t_*)\), on peut utiliser \(\rho\) comme variable temporelle. La singularité de \(c(t)\) en zéro ne pose pas de difficulté : son intégrale est finie et vaut exactement \(R(t)\). L'équation se réduit à l'éikonale évolutive standard
+
+\[
+\psi_\rho+\lVert\nabla_y\psi\rVert=0,
 \qquad
-\phi_t=-u\cdot\nabla\phi-R'(t).
+\psi(y,0)=\lVert y-x_0\rVert.
 \]
 
-Avec \(c(t)=R'(t)\), on obtient
+La formule de Hopf–Lax donne alors
 
 \[
-\phi_t+u\cdot\nabla\phi+c(t)\lVert\nabla\phi\rVert=0.
+\begin{aligned}
+\psi(y,\rho)
+&=\inf_{\lVert y-z\rVert\leq\rho}\lVert z-x_0\rVert\\
+&=\max\bigl(\lVert y-x_0\rVert-\rho,\,0\bigr).
+\end{aligned}
 \]
 
-Cette vérification retrouve le front sphérique de la preuve S0. Au centre de la boule, la norme n'est pas différentiable ; la formulation doit alors être comprise au sens de viscosité.
+**Pourquoi le maximum avec zéro apparaît-il ?** On cherche le point \(z\) le plus proche de \(x_0\), parmi ceux qui se trouvent à une distance au plus \(\rho\) de \(y\). Si la boule \(\overline B(y,\rho)\) contient \(x_0\), le minimum vaut zéro. Sinon, le point optimal est sur sa frontière, dans la direction de \(x_0\), et la distance minimale vaut \(\lVert y-x_0\rVert-\rho\).
+
+En revenant aux coordonnées physiques :
+
+\[
+\boxed{\phi(x,t)=\max\left(\lVert x-x_0-ut\rVert-R(t),0\right).}
+\]
+
+Son ensemble de zéros est toute la boule fermée atteignable ; le **front géométrique** est la frontière de cette boule. À l'extérieur, la fonction est la distance au front ; à l'intérieur, elle reste exactement nulle. La distance signée \(d_s\) a le même niveau zéro, mais elle prend des valeurs négatives à l'intérieur et échoue au test global de supersolution au centre. Elle peut servir de fonction de niveau après une réinitialisation numérique, pas être présentée comme la solution de viscosité issue de la donnée ponctuelle.
+
+La formule de Hopf–Lax établit ici la solution de viscosité pour GZ-1 grâce à ces deux changements de variables. Il ne faut pas extrapoler cette preuve telle quelle à un vent variable ou à une vitesse \(c(x,t)\) dépendant de la position.
 
 ### 5.2 Ne pas confondre trois objets
 
@@ -258,20 +308,50 @@ Cette construction concerne la navigation contrôlée de Zermelo. Elle ne requal
 
 La forme de Randers ci-dessus suppose \(c>\lVert u\rVert\), c'est-à-dire \(A>0\) : toutes les directions sont atteignables et la jauge est strictement convexe. Le régime complémentaire \(c\leq\lVert u\rVert\) — le régime usuel de la dispersion atmosphérique, où l'advection domine la propagation relative — doit être traité séparément : la jauge n'est plus définie pour toutes les directions.
 
-Considérons une borne isotrope **constante** \(c\) et un vent uniforme \(u\), avec \(\lVert u\rVert\geq c\). Un déplacement de direction unitaire \(\omega\) est atteignable si et seulement si le rayon \(\{\lambda\omega:\lambda>0\}\) rencontre une boule \(B(ut,ct)\) pour un temps \(t>0\). La distance de \(u\) à ce rayon vaut \(\lVert u\rVert\sin\theta\), où \(\theta\) est l'angle entre \(\omega\) et \(u\). La condition d'atteignabilité est donc exactement
+Considérons une borne isotrope **constante** \(c\) et un vent uniforme \(u\), avec \(\lVert u\rVert\geq c\). Dans le référentiel fixe, l'ensemble atteignable à l'instant \(t\) est la boule \(\overline B(ut,ct)\). Pour savoir si un déplacement \(d\omega\), avec \(d>0\) et \(\lVert\omega\rVert=1\), est atteignable, on cherche s'il existe \(t>0\) tel que
 
 \[
-\sin\theta\leq\frac{c}{\lVert u\rVert}.
+\lVert d\omega-ut\rVert\leq ct.
 \]
 
-Les directions atteignables forment un **cône d'accessibilité** d'axe \(u\) et de demi-angle \(\arcsin(c/\lVert u\rVert)\). Pour une direction intérieure au cône, le temps minimal de navigation admet la forme fermée
+Posons \(q=d/t>0\) et divisons par \(t\). La condition devient
 
 \[
-T(\mathrm{d}x)=\frac{\lVert\mathrm{d}x\rVert}
-{\omega\cdot u+\sqrt{(\omega\cdot u)^2+c^2-\lVert u\rVert^2}},
+\lVert q\omega-u\rVert^2\leq c^2
+\quad\Longleftrightarrow\quad
+q^2-2q(u\cdot\omega)+\lVert u\rVert^2-c^2\leq0.
 \]
 
-lorsque le dénominateur est strictement positif ; hors du cône, \(T=+\infty\) par convention. Sur l'axe aval, la formule redonne \(T=\lVert\mathrm{d}x\rVert/(\lVert u\rVert+c)\).
+C'est une inégalité quadratique en \(q\). Elle admet une solution strictement positive si et seulement si
+
+\[
+u\cdot\omega>0,
+\qquad
+\Delta=(u\cdot\omega)^2+c^2-\lVert u\rVert^2\geq0.
+\]
+
+En notant \(\theta\) l'angle entre \(u\) et \(\omega\), cela équivaut à être dans l'hémisphère aval et à vérifier
+
+\[
+\boxed{u\cdot\omega>0,\qquad \sin\theta\leq\frac{c}{\lVert u\rVert}.}
+\]
+
+Les directions atteignables forment donc un **cône aval** d'axe \(u\), de demi-angle \(\arcsin(c/\lVert u\rVert)\). L'inégalité sur le sinus seule ne suffit pas : elle sélectionnerait aussi un cône autour de \(-u\), qui est précisément la région amont non atteignable. L'égalité \(\sin\theta=c/\lVert u\rVert\) correspond à une tangence en un point positif du rayon lorsque \(c<\lVert u\rVert\) ; la frontière du cône est donc incluse.
+
+La plus grande racine positive de l'équation quadratique est
+
+\[
+q_+=u\cdot\omega+\sqrt{(u\cdot\omega)^2+c^2-\lVert u\rVert^2}.
+\]
+
+Puisque \(q=d/t\), le temps minimal est obtenu en maximisant \(q\), donc en prenant cette racine :
+
+\[
+\boxed{T(d\omega)=\frac{d}
+{u\cdot\omega+\sqrt{(u\cdot\omega)^2+c^2-\lVert u\rVert^2}}.}
+\]
+
+Hors du cône, aucune racine strictement positive n'existe et \(T=+\infty\) par convention. Sur l'axe aval, la formule redonne \(T=d/(\lVert u\rVert+c)\).
 
 Cette frontière donne une lecture géométrique de la non-atteignabilité amont : remonter le vent est impossible dès que \(c\leq\lVert u\rVert\). La convention \(T=+\infty\) hors du cône est la contrepartie ensembliste de la non-symétrie amont \(\tau(B,A)=+\infty\) testée pour la métrique travel-time. **Statut** : dérivation exacte pour la borne isotrope constante ; le cas instationnaire \(c(t)\) supercritique reste ouvert, au même titre que les extensions de la section 4.
 
@@ -288,13 +368,13 @@ Avant de revendiquer un solveur de type Fast Marching ou une méthode eikonale, 
 5. le traitement des fronts non réguliers, des changements topologiques et des conditions aux limites ;
 6. la convergence vers la solution de viscosité pertinente.
 
-Pour le cas S0 uniforme, la solution analytique \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
+Pour le cas GZ-1 uniforme, la solution analytique \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
 
-À ce jour, le cas analytique S0, l'égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) par trajectoire à cap constant, l'identité des deux formes de la jauge sous-critique, la frontière du cône supercritique et les résidus des équations de Hamilton–Jacobi et eikonale sont vérifiés numériquement par les tests unitaires du dépôt (`tests/test_navigation_controllabilite.py`, note `docs/59`).
+À ce jour, le cas analytique GZ-1, l'égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) par trajectoire à cap constant, l'identité des deux formes de la jauge sous-critique, la frontière du cône supercritique et les résidus des équations de Hamilton–Jacobi et eikonale sont vérifiés numériquement par les tests unitaires du dépôt (`tests/test_navigation_controllabilite.py`, note `docs/59`).
 
 ## 8. Conclusions et prochaines extensions
 
-**Démontré ici :** dans le problème S0, l'ensemble atteignable à l'instant \(t\) est la boule fermée de centre \(x_0+ut\) et de rayon \(R(t)\), et \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) pour une cible fixe distincte du centre initial.
+**Démontré ici :** dans le problème GZ-1, l'ensemble atteignable à l'instant \(t\) est la boule fermée de centre \(x_0+ut\) et de rayon \(R(t)\), et \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) pour une cible fixe distincte du centre initial.
 
 **Dérivé ici :** le Hamiltonien \(H=u\cdot p+c\lVert p\rVert\), l'équation HJ instationnaire correspondante, la forme de Randers du problème de navigation sous-critique instantané et le cône d'accessibilité supercritique à borne isotrope constante.
 
