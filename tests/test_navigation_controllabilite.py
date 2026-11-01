@@ -227,17 +227,22 @@ def test_la_commande_radiale_remplit_exactement_la_boule() -> None:
     assert _vitesse(t) < float(np.linalg.norm(VENT))
     assert float(VENT @ direction_amont) < 0.0
     deplacement_amont = rayon * direction_amont
-    np.testing.assert_allclose(
-        VENT * t + deplacement_amont,
-        VENT * t + direction_amont * _rayon(t),
-        atol=1e-12,
-    )
-    # La commande radiale qui le réalise reste admissible sur tout [0, t].
+
+    def commande_amont(tau: float) -> np.ndarray:
+        return direction_amont * _vitesse(tau)
+
+    def primitive_amont(tau: float) -> np.ndarray:
+        return direction_amont * _rayon(tau)
+
     for tau in (1.0, 10.0, 25.0, t):
-        assert _vitesse(tau) > 0.0
-        assert float(np.linalg.norm(direction_amont * _vitesse(tau))) == pytest.approx(
+        assert float(np.linalg.norm(commande_amont(tau))) == pytest.approx(
             _vitesse(tau)
         )
+        derivee = (primitive_amont(tau + pas) - primitive_amont(tau - pas)) / (2.0 * pas)
+        np.testing.assert_allclose(derivee, commande_amont(tau), atol=1e-6)
+    np.testing.assert_allclose(primitive_amont(t), deplacement_amont, atol=1e-12)
+    position_finale = VENT * t + primitive_amont(t)
+    np.testing.assert_allclose(position_finale - VENT * t, deplacement_amont, atol=1e-12)
     # Then — un point extérieur demanderait une commande au-delà de la borne.
     z_exterieur = 1.1 * rayon * direction
     assert float(np.linalg.norm((z_exterieur / rayon) * _vitesse(10.0))) > _vitesse(10.0)
