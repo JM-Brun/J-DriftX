@@ -1,5 +1,7 @@
 ---
 title: "Navigation de Zermelo, fronts et Hamilton–Jacobi"
+date: 2026-11-01
+status: "Démonstration analytique conditionnelle GZ-1 ; formulation HJ dérivée ; aucune validation physique ou validation de solveur revendiquée."
 ---
 
 # Navigation de Zermelo, fronts et Hamilton–Jacobi
@@ -7,6 +9,8 @@ title: "Navigation de Zermelo, fronts et Hamilton–Jacobi"
 Cette page publie le résultat analytique conditionnel **GZ-1** (*Gaussian Zermelo, résultat 1*) : pour le noyau fondamental gaussien tridimensionnel de l'équation d'advection–diffusion à coefficients constants, avec vent uniforme constant et vitesse de contrôle égale à la vitesse d'expansion du rayon d'isoconcentration, le temps minimal de navigation coïncide avec le premier contact du front avec une cible fixe. Elle dérive aussi la formulation Hamilton–Jacobi instationnaire.
 
 **Attention au nommage du projet :** GZ-1 n'est pas le « cas S0 uniforme » des notes 48–54, qui désigne un jeu de référence distinct fondé sur les paramétrisations de dispersion du package. GZ-1 est un résultat théorique idéal, pas une validation de l'implémentation `concentration_puff`.
+
+**Rôle et statut.** Cette page est la référence publique pour l'énoncé, les hypothèses et les preuves du résultat GZ-1. Le résultat est démontré analytiquement dans son domaine précis ; la formulation HJ est dérivée du problème de contrôle. Aucun solveur HJ n'est encore implémenté ici et aucune validation expérimentale n'est revendiquée. Les expériences puff des notes 53–54 sont des objets voisins, mais ne constituent pas les hypothèses ni la preuve de GZ-1.
 
 **Ce résultat ne redéfinit pas le temps de première arrivée passif** \(T_{\mathrm{arr}}\) de la page [Métrique travel-time](metrique-travel-time.qmd). Il introduit un problème de contrôle distinct, noté \(T_{\mathrm{nav}}\), et le compare au temps de première intersection du front, noté \(T_{\mathrm{front}}\).
 
@@ -109,7 +113,14 @@ En posant
 g_B(t)=\lVert x_B-x_0-ut\rVert^2-4Kt\,\Lambda(t),
 \]
 
-le premier contact est le premier zéro de \(g_B\) dans \((0,t_*]\), lorsque ce zéro existe. Le critère d'existence équivalent est \(\min_{0<t\leq t_*}g_B(t)\leq0\). En général, avec \(u\ne0\), \(g_B\) n'est pas monotone et l'équation scalaire n'a pas de solution fermée simple ; il faut rechercher le premier zéro, sans confondre cette recherche avec une intégration de trajectoire passive. Dans le cas particulier \(u=0\), le contact existe si et seulement si \(\lVert x_B-x_0\rVert\leq R_{\max}\).
+le premier contact est le premier zéro de \(g_B\) dans \((0,t_*]\), lorsque ce zéro existe. Le critère d'existence équivalent est \(\min_{0<t\leq t_*}g_B(t)\leq0\). En général, avec \(u\ne0\), \(g_B\) n'est pas monotone et l'équation scalaire n'a pas de solution fermée simple ; il faut rechercher le premier zéro, sans confondre cette recherche avec une intégration de trajectoire passive. Dans le cas particulier \(u=0\), le contact existe si et seulement si \(d=\lVert x_B-x_0\rVert\leq R_{\max}\). Pour \(0<d\leq R_{\max}\), le premier contact sur la branche d'expansion admet même une expression avec la fonction de Lambert \(W\). En posant \(q=d^2/(6Kt_*)\in(0,1]\),
+
+\[
+T_{\mathrm{front}}
+=-t_*\,\frac{q}{W_{-1}(-q/e)}.
+\]
+
+La branche \(W_{-1}\) est indispensable : elle sélectionne \(0<T_{\mathrm{front}}\leq t_*\), donc le premier contact pendant l'expansion. La branche principale \(W_0\) donne la seconde intersection pendant la contraction, hors du domaine de contrôle GZ-1.
 
 La convention est \(+\infty\) si l'ensemble correspondant est vide. Pour une cible initialement extérieure, le premier instant où la boule contient la cible est un contact avec la frontière, par continuité.
 
