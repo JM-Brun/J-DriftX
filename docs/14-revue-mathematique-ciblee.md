@@ -30,7 +30,7 @@ Ces trois objets peuvent se ressembler mais ne sont pas interchangeables. Une in
 
 ### Résultat particulier documenté : GZ-1
 
-La page [Navigation de Zermelo, fronts et Hamilton–Jacobi](../site/theorie/navigation-fronts-controllabilite.qmd) établit le théorème conditionnel **GZ-1** pour un noyau fondamental gaussien 3D à diffusivité isotrope constante, un vent uniforme et une borne de commande \(c(t)=R'(t)\) sur la phase d'expansion. Le résultat est \(T_{\mathrm{nav}}=T_{\mathrm{front}}\), avec un ensemble atteignable démontré exactement.
+La page [Navigation de Zermelo, fronts et Hamilton–Jacobi](../site/theorie/navigation-fronts-controllabilite.qmd) établit le théorème conditionnel **GZ-1** pour un noyau fondamental gaussien 3D à diffusivité isotrope constante, un vent uniforme et une borne de commande \(c(t)=R'(t)\) sur la phase d'expansion. Le résultat est \(T_{\mathrm{nav}}=T_{\mathrm{front}}\), avec un ensemble atteignable démontré exactement. La formulation HJ du cas GZ-1 est également clarifiée : dans le référentiel mobile, la reparamétrisation \(\rho=R(t)\) ramène l'équation à l'eikonale standard et absorbe la singularité intégrable de \(R'(t)\) à l'origine.
 
 Ce résultat est une instance particulière du **temps minimal de navigation contrôlée**, comparée à un front d'isoconcentration dans ce modèle idéal. Il ne redéfinit pas \(T_{\mathrm{arr}}\), ne démontre rien de nouveau sur le coût projeté historique \(T_{\mathrm{proj}}\), et ne s'étend pas sans preuve aux champs variables ou à l'implémentation concentration_puff. Il ne doit pas être lu comme une extension des conclusions G0-S sur le temps passif.
 
