@@ -160,3 +160,10 @@ def test_versioned_diflu_fixture_has_reproducible_audit_summary() -> None:
     assert report["passage_correction_check"]["max_relative_error"] < 0.01
     assert report["passage_correction_check"]["vega_significant_rows"] == 127
     assert report["passage_correction_check"]["vega_rows_with_passage_correction"] == 0
+    assert report["numeric_ranges"]["helium_release_latitude"]["numeric_count"] == 387
+    assert report["numeric_ranges"]["helium_release_longitude"]["numeric_count"] == 387
+    assert report["numeric_ranges"]["sampling_flowrate_sd"]["numeric_count"] == 169
+    assert report["missingness_by_sampling_type"]["EA"]["sampling_flowrate"]["literal_NA"] == 65
+    assert report["missingness_by_sampling_type"]["VEGA"]["sampling_flowrate"]["literal_NA"] == 153
+    assert report["numeric_ranges_by_sampling_type"]["EA"]["sampling_height"]["numeric_count"] == 234
+    assert report["numeric_ranges_by_sampling_type"]["VEGA"]["sampling_height"]["numeric_count"] == 153
