@@ -53,9 +53,7 @@ def _vitesse(t: float) -> float:
 
 def _t_etoile() -> float:
     """Instant du maximum du rayon t* = (4πK)⁻¹(M/(C₀ e^{3/2}))^{2/3}."""
-    return (1.0 / (4.0 * math.pi * DIFFUSIVITE)) * (MASSE / (SEUIL * math.e**1.5)) ** (
-        2.0 / 3.0
-    )
+    return (1.0 / (4.0 * math.pi * DIFFUSIVITE)) * (MASSE / (SEUIL * math.e**1.5)) ** (2.0 / 3.0)
 
 
 def _concentration(ecart: float, t: float) -> float:
@@ -189,14 +187,10 @@ def test_le_theoreme_gz1_egalise_navigation_et_front() -> None:
         v = (position(t + pas) - position(t - pas)) / (2.0 * pas)
         np.testing.assert_allclose(v, VENT + chapeau * _vitesse(t), atol=1.0e-6)
         # Then — la commande reste dans la borne : |dX/dt - u| = c(t).
-        assert float(np.linalg.norm(v - VENT)) == pytest.approx(
-            _vitesse(t), rel=1e-6
-        )
+        assert float(np.linalg.norm(v - VENT)) == pytest.approx(_vitesse(t), rel=1e-6)
     # Then — même égalité pour une cible sur l'axe du vent.
     t_axe = _temps_front(CIBLE_SUR_AXE)
-    assert _concentration(_ecart(CIBLE_SUR_AXE, t_axe), t_axe) == pytest.approx(
-        SEUIL, rel=1e-12
-    )
+    assert _concentration(_ecart(CIBLE_SUR_AXE, t_axe), t_axe) == pytest.approx(SEUIL, rel=1e-12)
 
 
 def test_la_commande_radiale_remplit_exactement_la_boule() -> None:
@@ -267,8 +261,7 @@ def test_la_jauge_sous_critique_est_une_randers() -> None:
     deplacement_axe = np.array([10.0, 0.0, 0.0])
     produit = float(VENT @ deplacement_axe)
     jauge_axe = (
-        math.sqrt(produit**2 + aire * float(deplacement_axe @ deplacement_axe))
-        - produit
+        math.sqrt(produit**2 + aire * float(deplacement_axe @ deplacement_axe)) - produit
     ) / aire
     assert jauge_axe == pytest.approx(10.0 / (2.0 + c), rel=1e-12)
     # Then — la jauge est homogène de degré 1.
@@ -287,18 +280,17 @@ def test_le_regime_supercritique_definit_un_cone() -> None:
     c = 1.0
     demi_angle = math.asin(c / float(np.linalg.norm(VENT)))
     # Then — une direction intérieure au cône est atteignable en temps fini.
-    dedans = np.array(
-        [math.cos(0.9 * demi_angle), math.sin(0.9 * demi_angle), 0.0]
-    ) * 10.0
+    dedans = np.array([math.cos(0.9 * demi_angle), math.sin(0.9 * demi_angle), 0.0]) * 10.0
     assert _temps_navigation_cone(dedans, c) is not None
     # Then — la frontière exacte du cône sépare le fini de l'infini.
-    sur_la_frontiere = np.array(
-        [math.cos(demi_angle), math.sin(demi_angle), 0.0]
-    ) * 10.0
+    sur_la_frontiere = np.array([math.cos(demi_angle), math.sin(demi_angle), 0.0]) * 10.0
     assert _temps_navigation_cone(sur_la_frontiere, c) is not None
-    juste_dehors = np.array(
-        [math.cos(demi_angle * (1.0 + 1.0e-9)), math.sin(demi_angle * (1.0 + 1.0e-9)), 0.0]
-    ) * 10.0
+    juste_dehors = (
+        np.array(
+            [math.cos(demi_angle * (1.0 + 1.0e-9)), math.sin(demi_angle * (1.0 + 1.0e-9)), 0.0]
+        )
+        * 10.0
+    )
     assert _temps_navigation_cone(juste_dehors, c) is None
     # Then — sur l'axe aval, le temps vaut |dx|/(|u| + c).
     axe = np.array([10.0, 0.0, 0.0])
@@ -341,10 +333,7 @@ def test_le_front_satisfait_l_equation_hamilton_jacobi() -> None:
     for x in points:
         # When — les dérivées de φ sont prises par différences finies centrées.
         grad = np.array(
-            [
-                (phi(x + pas * e, t) - phi(x - pas * e, t)) / (2.0 * pas)
-                for e in directions
-            ]
+            [(phi(x + pas * e, t) - phi(x - pas * e, t)) / (2.0 * pas) for e in directions]
         )
         phi_t = (phi(x, t + pas) - phi(x, t - pas)) / (2.0 * pas)
         residu = phi_t + float(VENT @ grad) + _vitesse(t) * float(np.linalg.norm(grad))
@@ -367,10 +356,14 @@ def test_l_eikonale_stationnaire_en_champ_uniforme() -> None:
     pas = 1.0e-6
     for coordonnees in ((4.0, 1.0), (10.0, -3.0), (-2.0, 5.0), (7.0, 7.0)):
         # When — le gradient de la forme fermée est pris par différences finies.
-        gx = (temps_minimal(np.array([coordonnees[0] + pas, coordonnees[1], 0.0]))
-              - temps_minimal(np.array([coordonnees[0] - pas, coordonnees[1], 0.0]))) / (2.0 * pas)
-        gy = (temps_minimal(np.array([coordonnees[0], coordonnees[1] + pas, 0.0]))
-              - temps_minimal(np.array([coordonnees[0], coordonnees[1] - pas, 0.0]))) / (2.0 * pas)
+        gx = (
+            temps_minimal(np.array([coordonnees[0] + pas, coordonnees[1], 0.0]))
+            - temps_minimal(np.array([coordonnees[0] - pas, coordonnees[1], 0.0]))
+        ) / (2.0 * pas)
+        gy = (
+            temps_minimal(np.array([coordonnees[0], coordonnees[1] + pas, 0.0]))
+            - temps_minimal(np.array([coordonnees[0], coordonnees[1] - pas, 0.0]))
+        ) / (2.0 * pas)
         residu = VENT[0] * gx + VENT[1] * gy + c * math.hypot(gx, gy) - 1.0
         # Then — le résidu de l'eikonale stationnaire est nul à la précision du schéma.
         assert abs(residu) < 1.0e-6
