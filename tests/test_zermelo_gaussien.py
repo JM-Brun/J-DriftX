@@ -229,6 +229,7 @@ def test_residu_hj_sur_les_regions_lisses(modele: ModeleGZ1) -> None:
     assert modele.valeur_hj(tuple(point_interieur), t + pas_t) == 0.0
     assert modele.valeur_hj(tuple(point_interieur), t - pas_t) == 0.0
 
+
 def test_vitesse_singuliere_est_integrable_et_redonne_le_rayon(modele: ModeleGZ1) -> None:
     """La transformation t=T s² intègre la singularité initiale sans l'évaluer."""
     temps_final = 0.4 * modele.t_etoile
