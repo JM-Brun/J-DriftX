@@ -131,7 +131,7 @@ def test_commande_radiale_respecte_la_borne_et_atteint_la_cible(modele: ModeleGZ
 
 def test_randers_est_restreint_au_regime_sous_critique(modele: ModeleGZ1) -> None:
     """L'identité de la jauge est vérifiée seulement si c(t)>||u||."""
-    temps = 0.1 * modele.t_etoile
+    temps = 1.0e-3 * modele.t_etoile
     vitesse = np.array([3.0, 1.0, -0.5])
     jauge = modele.jauge_randers(tuple(vitesse), temps)
     vent = np.asarray(modele.vent)
