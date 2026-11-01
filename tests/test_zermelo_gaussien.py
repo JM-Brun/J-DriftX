@@ -226,7 +226,6 @@ def test_residu_hj_sur_les_regions_lisses(modele: ModeleGZ1) -> None:
     assert modele.valeur_hj(tuple(point_interieur), t - pas_t) == 0.0
 
 
-
 def test_vitesse_singuliere_est_integrable_et_redonne_le_rayon(modele: ModeleGZ1) -> None:
     """La transformation t=T s² intègre la singularité initiale sans l'évaluer."""
     temps_final = 0.4 * modele.t_etoile
@@ -234,10 +233,7 @@ def test_vitesse_singuliere_est_integrable_et_redonne_le_rayon(modele: ModeleGZ1
     variable = 0.5 * (noeuds + 1.0)
     poids_unitaires = 0.5 * poids
     integrande = np.array(
-        [
-            modele.vitesse_expansion(temps_final * s**2) * 2.0 * temps_final * s
-            for s in variable
-        ]
+        [modele.vitesse_expansion(temps_final * s**2) * 2.0 * temps_final * s for s in variable]
     )
     integral = float(np.dot(poids_unitaires, integrande))
     assert integral == pytest.approx(modele.rayon(temps_final), rel=5e-7)
