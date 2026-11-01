@@ -32,8 +32,7 @@ Les démonstrations concernent le modèle mathématique explicite ci-dessous. El
 Considérons l'équation d'advection–diffusion sur \(\mathbb R^3\), sans frontière, avec vent uniforme constant \(u\in\mathbb R^3\), diffusivité isotrope constante \(K>0\), et émission impulsionnelle de masse totale \(M>0\) au point \(x_0\) à l'instant initial :
 
 \[
-\partial_t C+u\cdot
-abla C=K\Delta C,\qquad C(\cdot,0)=M\,\delta_{x_0}.
+\partial_t C+u\cdot\nabla C=K\Delta C,\qquad C(\cdot,0)=M\,\delta_{x_0}.
 \]
 
 Le centre advecté est \(x_c(t)=x_0+ut\). Pour \(t>0\), le noyau fondamental est :
@@ -149,8 +148,7 @@ Ainsi,
 
 On a utilisé \(R(0+)=0\).
 
-**Inclusion réciproque.** Soit \(z\in\mathbb R^3\) tel que \(\lVert z\rVert\leq R(t)\). Pour \(z
-e0\), choisissons
+**Inclusion réciproque.** Soit \(z\in\mathbb R^3\) tel que \(\lVert z\rVert\leq R(t)\). Pour \(z\ne0\), choisissons
 
 \[
 s(\tau)=\frac{z}{R(t)}R'(\tau),\qquad 0<\tau\leq t.
@@ -220,10 +218,8 @@ H(x,t,p)=\sup_{\lVert s\rVert\leq c(x,t)}
 Pour un départ ponctuel en \(x_0\), on peut prendre la donnée initiale \(\phi(x,0)=\lVert x-x_0\rVert\), dont le sous-niveau zéro est le singleton \(\{x_0\}\). En représentant ensuite le front de la région atteignable par un niveau zéro \(\phi(x,t)=0\), avec la région atteignable du côté \(\phi\leq0\), l'équation de niveau correspondante est
 
 \[
-\boxed{\phi_t+u(x,t)\cdot
-abla\phi
-+c(x,t)\lVert
-abla\phi\rVert=0.}
+\boxed{\phi_t+u(x,t)\cdot\nabla\phi
++c(x,t)\lVert\nabla\phi\rVert=0.}
 \]
 
 Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.\n\n**Traitement exact de la singularité GZ-1.** Le coefficient \(c(t)=R'(t)\) n'est pas borné au voisinage de \(t=0\), mais il est positif et intégrable sur la phase d'expansion. Cette singularité peut être éliminée par un changement de référentiel et une reparamétrisation du temps :
@@ -240,49 +236,34 @@ Cette équation décrit le **front de contrôlabilité** du problème de contrô
    \widetilde\psi(y,0)=\lVert y-x_0\rVert.
    \]
 
-La solution de viscosité de cette eikonale standard est unique par le principe de comparaison usuel pour une donnée initiale lipschitzienne ; elle vaut \(\widetilde\psi(y,\rho)=\lVert y-x_0\rVert-\rho\). En revenant aux variables physiques, on retrouve
+La solution de viscosité de cette eikonale standard est unique par le principe de comparaison usuel pour une donnée initiale lipschitzienne. Pour la donnée \(\widetilde\psi(y,0)=\lVert y-x_0\rVert\), elle vaut
 
 \[
-\phi(x,t)=\lVert x-x_0-ut\rVert-R(t).
+\widetilde\psi(y,\rho)=\max\left(\lVert y-x_0\rVert-\rho,0\right).
 \]
 
-Cette transformation donne donc, pour le cas GZ-1 uniforme, une justification de l'unicité au départ \(t=0\) sans supposer \(c\) borné. À \(t=t_*\), la solution se prolonge par continuité jusqu'au rayon maximal. Ce raisonnement dépend du vent uniforme constant et du fait que \(c(t)\) ne dépend que du temps ; il ne s'étend pas automatiquement au cas \(u(x,t)\), \(c(x,t)\).
+En revenant aux variables physiques, on obtient la solution de viscosité
 
+\[
+\phi(x,t)=\max\left(\lVert x-x_0-ut\rVert-R(t),0\right).
+\]
+
+Son ensemble nul est la boule atteignable fermée ; le front géométrique est la sphère frontière de cette boule. Le plateau nul n'altère donc pas l'ensemble atteignable, mais il interdit d'identifier sans précaution le front à tout le niveau zéro. Cette transformation donne, pour GZ-1 uniforme, une justification de l'unicité au départ \(t=0\) sans supposer \(c\) borné.
 ### 5.1 Vérification dans le cas GZ-1
 
-Dans le cas uniforme, posons
+Dans le cas uniforme, la solution de viscosité est
 
 \[
-\phi(x,t)=\lVert x-x_0-ut\rVert-R(t).
+\phi(x,t)=\max\left(\lVert x-x_0-ut\rVert-R(t),0\right).
 \]
 
-Partout où le gradient est défini,
-
-\[
-
-abla\phi=\frac{x-x_0-ut}{\lVert x-x_0-ut\rVert},
-\qquad
-\phi_t=-u\cdot
-abla\phi-R'(t).
-\]
-
-Avec \(c(t)=R'(t)\), on obtient
-
-\[
-\phi_t+u\cdot
-abla\phi+c(t)\lVert
-abla\phi\rVert=0.
-\]
-
-Cette vérification retrouve le front sphérique de la preuve GZ-1. Au centre de la boule, la norme n'est pas différentiable ; la formulation doit alors être comprise au sens de viscosité.
+À l'extérieur de la boule atteignable, \(\phi=\lVert x-x_0-ut\rVert-R(t)\), et le calcul classique donne \(\phi_t+u\cdot\nabla\phi+c(t)\lVert\nabla\phi\rVert=0\). À l'intérieur, \(\phi=0\) et l'équation est également satisfaite. À la frontière, la fonction présente un coin ; c'est précisément là que l'interprétation de viscosité est nécessaire. L'ensemble nul est la boule fermée, et sa frontière est le front sphérique de GZ-1.
 
 ### 5.3 Ne pas confondre trois objets
 
 - L'équation ci-dessus est une équation de front de **contrôlabilité**, issue de l'ensemble des vitesses admissibles.
 - Une équation d'advection–diffusion gouverne une concentration et sa masse ; elle contient un opérateur diffusif et des conditions aux limites propres.
-- Une eikonale stationnaire de temps minimal, telle que \(u\cdot
-abla T+c\lVert
-abla T\rVert=1\), correspond à un problème de coût de navigation dans un cadre stationnaire approprié. Elle ne remplace pas directement l'équation instationnaire du front.
+- Une eikonale stationnaire de temps minimal, telle que \(u\cdot\nabla T+c\lVert\nabla T\rVert=1\), correspond à un problème de coût de navigation dans un cadre stationnaire approprié. Elle ne remplace pas directement l'équation instationnaire du front.
 
 Une équation de niveau de contrôlabilité ne prouve donc pas qu'un niveau d'isoconcentration d'une EDP d'advection–diffusion générale satisfait la même équation.
 
@@ -321,8 +302,7 @@ Le facteur \(\mu^2\) au dénominateur de \(a_{ij}\) est essentiel. La condition 
 R''(t)=2K\left(\frac{-3}{2tR(t)}-\frac{(\Lambda(t)-3/2)R'(t)}{R(t)^2}\right)<0.
 \]
 
-Si \(u
-e0\), il existe donc un unique \(t_Z\in(0,t_*)\) tel que \(R'(t_Z)=\lVert u\rVert\). La géométrie de Randers n'est régulière que pour \(0<t<t_Z\), où \(R'(t)>\lVert u\rVert\). À \(t=t_Z\), elle dégénère ; pour \(t_Z<t\leq t_*\), le vent domine la vitesse de contrôle et la boule des vitesses admissibles ne contient plus l'origine. Cela ne rend pas le système de contrôle ni son Hamiltonien HJ invalides : cela signifie seulement qu'une métrique de Randers régulière ne décrit plus toutes les directions de navigation. Si \(u=0\), la condition vaut pour tout \(0<t<t_*\), mais échoue à \(t=t_*\) où \(c=0\).
+Si \(u\ne0\), il existe donc un unique \(t_Z\in(0,t_*)\) tel que \(R'(t_Z)=\lVert u\rVert\). La géométrie de Randers n'est régulière que pour \(0<t<t_Z\), où \(R'(t)>\lVert u\rVert\). À \(t=t_Z\), elle dégénère ; pour \(t_Z<t\leq t_*\), le vent domine la vitesse de contrôle et la boule des vitesses admissibles ne contient plus l'origine. Cela ne rend pas le système de contrôle ni son Hamiltonien HJ invalides : cela signifie seulement qu'une métrique de Randers régulière ne décrit plus toutes les directions de navigation. Si \(u=0\), la condition vaut pour tout \(0<t<t_*\), mais échoue à \(t=t_*\) où \(c=0\).
 
 Lorsque \(c\) dépend du temps, cette expression décrit une géométrie de navigation **instantanée** ; elle ne transforme pas à elle seule le problème instationnaire en une métrique de Finsler stationnaire globale.
 
@@ -354,7 +334,7 @@ Le cas GZ-1 fournit un oracle analytique compact. Une future implémentation dev
 | Conservation de masse | \(\int_{\mathbb R^3}C\,dx=M\) | Intégration ou quadrature cohérente sur une fenêtre suffisamment grande, avec erreur de troncature mesurée | Conservation dans un domaine borné ou avec dépôt |
 | Premier contact, \(u=0\) | Formule Lambert \(W_{-1}\) de la section 3 | Résolution de la branche d'expansion et sélection du premier contact | Cas de vent variable |
 | Premier contact, \(u\ne0\) | Premier zéro de \(g_B(t)\) sur \((0,t_*]\) | Exactitude d'un solveur scalaire de contact | Temps passif \(T_{\mathrm{arr}}\) |
-| Résidu HJ | \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) | Résidu nul aux points où \(\phi\) est différentiable | Condition de viscosité au centre ou aux singularités |
+| Résidu HJ | \(\phi(x,t)=\max(\lVert x-x_0-ut\rVert-R(t),0)\) | Résidu classique nul dans les régions intérieure et extérieure où \(\phi\) est différentiable | Traitement de viscosité du coin sur la frontière |
 | Jauge de Randers | Égalité entre la jauge de Zermelo et \(\sqrt{a_{ij}v^iv^j}+b_iv^i\) pour \(\lVert u\rVert<c\) | Cohérence algébrique de la forme de Randers dans son domaine régulier | Existence d'une métrique régulière dans le régime supercritique |
 
 Les tests numériques doivent être étiquetés **tests de cohérence ou de convergence**, jamais « preuve du théorème ». La preuve de l'ensemble atteignable est analytique et ne dépend pas d'un échantillonnage de trajectoires.
@@ -371,7 +351,7 @@ Pour le premier pas \([0,\Delta t]\), l'incrément exact du rayon est
 
 et non \(c(0)\Delta t\). Une méthode de référence peut donc initialiser directement le front à \(t=\Delta t\) par la boule \(\overline B(x_0+u\Delta t,R(\Delta t))\), ou employer une intégration qui respecte exactement cette première contribution. Si le calcul commence à un \(\varepsilon>0\), l'état initial doit être la boule de centre \(x_0+u\varepsilon\) et de rayon \(R(\varepsilon)\), et non un point artificiellement replacé au centre.
 
-Pour une méthode de niveau, il faut vérifier la convergence en raffinant séparément \(\Delta t\) et \(\Delta x\), sous une condition CFL appropriée, et comparer les fronts calculés à la boule analytique par une distance de Hausdorff ainsi que les temps de premier contact. Le traitement du centre, où la norme n'est pas différentiable, relève de la solution de viscosité et non d'un résidu classique ponctuel.
+Pour une méthode de niveau, il faut vérifier la convergence en raffinant séparément \(\Delta t\) et \(\Delta x\), sous une condition CFL appropriée, et comparer les fronts calculés à la boule analytique par une distance de Hausdorff ainsi que les temps de premier contact. Le coin de la fonction de distance sur la frontière du front relève de la solution de viscosité et non d'un résidu classique ponctuel.
 
 Enfin, imposer une borne globale \(\lVert s\rVert\leq S_{\max}\) change la classe de contrôles : ce n'est pas une simple stabilisation numérique de GZ-1, mais un autre problème dont l'ensemble atteignable doit être redémontré.
 
