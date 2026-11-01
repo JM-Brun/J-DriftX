@@ -414,10 +414,16 @@ En notant `θ` l'angle entre `u` et `ω`, le critère est donc
 Les directions accessibles forment un **cône aval** d'axe `u` et de demi-angle
 `arcsin(c/‖u‖)`. La condition sur le sinus ne suffit pas à elle seule : elle
 inclurait aussi le cône symétrique autour de `−u`, qui est amont et inaccessible.
-Pour `c < ‖u‖`, la frontière `sin θ = c/‖u‖` est incluse : le rayon issu de
-l'origine est tangent à la boule mobile en un point strictement positif.
+
+Cette géométrie se lit directement sur la boule mobile. La projection du centre
+`ut` sur la droite dirigée par `ω` est positive exactement lorsque `u·ω > 0`.
+La distance perpendiculaire du centre à cette droite vaut
+`t‖u‖ sin θ`. Elle doit être inférieure ou égale au rayon `ct`, ce qui redonne
+`sin θ ≤ c/‖u‖`. Pour `c < ‖u‖`, l'égalité décrit une tangence à un point situé
+strictement en aval de l'origine : la frontière du cône est donc incluse.
 Au cas critique `c = ‖u‖`, le demi-angle limite vaut `π/2`, mais les directions
-exactement transverses ont `u·ω=0` et ne sont pas atteignables en temps fini.
+exactement transverses ont `u·ω=0` : la tangence se réduit à l'origine, et aucun
+point non nul de ces directions n'est atteignable en temps fini.
 
 La plus grande racine positive
 
