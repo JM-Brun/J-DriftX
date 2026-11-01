@@ -4,7 +4,7 @@ title: "Navigation de Zermelo, fronts et Hamilton–Jacobi"
 
 # Navigation de Zermelo, fronts et Hamilton–Jacobi
 
-Cette page publie un résultat analytique conditionnel : pour un puff gaussien tridimensionnel en espace libre, un vent uniforme constant et une vitesse de contrôle égale à la vitesse d'expansion du rayon d'isoconcentration, le temps minimal de navigation coïncide avec le premier contact du front avec une cible fixe. Elle dérive aussi la formulation Hamilton–Jacobi instationnaire.
+Cette page publie le résultat analytique conditionnel **GZ-1** (*Gaussian Zermelo, résultat 1*) : pour le noyau fondamental gaussien tridimensionnel de l'équation d'advection–diffusion à coefficients constants, avec vent uniforme constant et vitesse de contrôle égale à la vitesse d'expansion du rayon d'isoconcentration, le temps minimal de navigation coïncide avec le premier contact du front avec une cible fixe. Elle dérive aussi la formulation Hamilton–Jacobi instationnaire.\n\n**Attention au nommage du projet :** GZ-1 n'est pas le « cas S0 uniforme » des notes 48–54, qui désigne un jeu de référence distinct fondé sur les paramétrisations de dispersion du package. GZ-1 est un résultat théorique idéal, pas une validation de l'implémentation `concentration_puff`.
 
 **Ce résultat ne redéfinit pas le temps de première arrivée passif** \(T_{\mathrm{arr}}\) de la page [Métrique travel-time](metrique-travel-time.qmd). Il introduit un problème de contrôle distinct, noté \(T_{\mathrm{nav}}\), et le compare au temps de première intersection du front, noté \(T_{\mathrm{front}}\).
 
@@ -14,16 +14,16 @@ Cette page publie un résultat analytique conditionnel : pour un puff gaussien t
 |---|---|
 | Rayon et vitesse d'expansion d'une isoconcentration gaussienne | Dérivation exacte dans le modèle posé ci-dessous |
 | Ensemble atteignable sous le contrôle isotrope prescrit | Démonstration analytique exacte pour les contrôles mesurables spécifiés |
-| Égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) | Théorème conditionnel démontré sous les hypothèses S0 |
+| Égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) | Théorème conditionnel démontré sous les hypothèses GZ-1 |
 | Équation HJ du front de contrôlabilité | Hamiltonien dérivé du problème de contrôle ; solution de viscosité sous les hypothèses usuelles |
 | Équivalence avec un front d'advection–diffusion général | **Non démontrée** |
 | Validité physique de la borne de contrôle \(c(t)\) | Hypothèse de modélisation, non conséquence de la solution gaussienne |
 
-Les démonstrations concernent le modèle mathématique explicite ci-dessous. Elles ne constituent ni une validation expérimentale ni une validation d'un modèle atmosphérique général.
+Les démonstrations concernent le modèle mathématique explicite ci-dessous. Elles ne constituent ni une validation expérimentale ni une validation d'un modèle atmosphérique général. Le modèle GZ-1 exclut notamment les frontières, le sol, le dépôt, les réactions, les sources continues, les variations spatiales ou temporelles de \(u\) et \(K\), ainsi que les écarts à l'isotropie.
 
 ## 2. Puff gaussien et cinématique du front
 
-Considérons un puff gaussien tridimensionnel en espace libre, de masse \(M>0\), de diffusivité isotrope constante \(K>0\), advecté par un vent uniforme constant \(u\in\mathbb R^3\). Son centre est \(x_c(t)=x_0+ut\), où \(x_0\) est sa position initiale :
+Considérons l'équation d'advection–diffusion sur \(\mathbb R^3\), sans frontière, avec vent uniforme constant \(u\in\mathbb R^3\), diffusivité isotrope constante \(K>0\), et émission impulsionnelle de masse totale \(M>0\) au point \(x_0\) à l'instant initial :\n\n\[\n\partial_t C+u\cdot\nabla C=K\Delta C,\qquad C(\cdot,0)=M\,\delta_{x_0}.\n\]\n\nLe centre advecté est \(x_c(t)=x_0+ut\). Pour \(t>0\), le noyau fondamental est :
 
 \[
 C(x,t)=\frac{M}{(4\pi Kt)^{3/2}}
@@ -40,14 +40,18 @@ Pour un seuil \(C_0>0\), le niveau \(C(x,t)=C_0\) est une sphère de rayon \(R(t
 Alors
 
 \[
-R(t)^2=4Kt\,\Lambda(t).
+R(t)^2=4Kt\,\Lambda(t)
+=6Kt\left(1+\ln\frac{t_*}{t}\right).
 \]
 
-Le rayon est réel si et seulement si \(\Lambda(t)\geq0\). Sa dérivée est
+Cette seconde écriture est obtenue en utilisant \(\Lambda(t_*)=3/2\). Elle rend immédiatement lisible la fenêtre où le rayon est réel : \(0<t\leq e\,t_*\), avec un rayon strictement positif pour \(0<t<e\,t_*\) et un rayon nul aux limites \(t\to0+\) et \(t=e\,t_*\). Le maximum vaut \(R_{\max}=\sqrt{6Kt_*}\).
+
+Le rayon est réel si et seulement si \(\Lambda(t)\geq0\). Le temps d'extinction du niveau est donc \(t_{\mathrm{ext}}=e\,t_*\) : à cet instant, la concentration maximale au centre atteint le seuil \(C_0\), et le niveau se réduit au centre. Sa dérivée est
 
 \[
 c(t):=R'(t)=\frac{2K}{R(t)}
-\left(\Lambda(t)-\frac32\right),
+\left(\Lambda(t)-\frac32\right)
+=\frac{3K}{R(t)}\ln\frac{t_*}{t},
 \qquad R(t)>0.
 \]
 
@@ -64,15 +68,15 @@ Alors \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), puis
 
 ## 3. Problème de navigation S0
 
-Une trajectoire contrôlée, exprimée dans le référentiel fixe, vérifie
+Une trajectoire contrôlée, exprimée dans le référentiel fixe, est une fonction absolument continue \(X:[0,t]\to\mathbb R^3\) qui vérifie
 
 \[
-\dot X(t)=u+s(t),\qquad
-\lVert s(t)\rVert\leq R'(t)
+\dot X(\tau)=u+s(\tau)\quad\text{p.p.},\qquad
+\lVert s(\tau)\rVert\leq R'(\tau)
 \quad\text{p.p. sur }(0,t_*).
 \]
 
-Le départ est au centre du puff à l'âge zéro, au sens de \(X(0+)=x_0\). La cible \(x_B\ne x_0\) est fixe. On définit
+Le contrôle \(s\) est mesurable. Comme \(R'\in L^1(0,t_*)\) sur tout intervalle \((0,t]\), la borne implique \(s\in L^1(0,t)\) et l'intégrale définissant la trajectoire existe. Le départ est au centre du puff à l'âge zéro, avec \(X(0)=x_0\). La cible \(x_B\ne x_0\) est fixe. On définit
 
 \[
 T_{\mathrm{nav}}=\inf\{t\in(0,t_*]:
@@ -130,7 +134,7 @@ Pour \(z=0\), prendre \(s=0\). Toute position de la boule est donc atteignable. 
 
 ### 3.2 Égalité des temps
 
-**Théorème S0.** Sous les hypothèses de la section 3, pour toute cible fixe \(x_B\ne x_0\),
+**Théorème GZ-1.** Sous les hypothèses de la section 3, pour toute cible fixe \(x_B\ne x_0\),
 
 \[
 \boxed{T_{\mathrm{nav}}=T_{\mathrm{front}}.}
@@ -150,7 +154,7 @@ Les ensembles d'instants admissibles dans les définitions de \(T_{\mathrm{nav}}
 \int_0^tR'(\tau)\,d\tau=R(t)<\infty.
 \]
 
-Le contrôle construit dans la preuve peut donc être non borné au voisinage de zéro tout en étant intégrable et admissible presque partout. Le théorème est établi pour cette classe de contrôles mesurables avec borne ponctuelle \(R'(t)\), pas pour une classe imposant en plus \(s\in L^\infty(0,t_*)\). Sous cette dernière restriction, l'égalité exacte de l'ensemble atteignable n'est pas démontrée ici.
+Plus précisément, lorsque \(t\to0+\), \(R(t)\sim\sqrt{6Kt\ln(t_*/t)}\) et \(R'(t)\sim\sqrt{\frac{3K}{2t}\ln(t_*/t)}\). La vitesse admissible diverge comme une singularité en \(t^{-1/2}\) corrigée logarithmiquement, mais reste intégrable puisque son intégrale vaut exactement \(R(t)\). Le contrôle construit dans la preuve peut donc être non borné au voisinage de zéro tout en étant intégrable et admissible presque partout. Le théorème est établi pour cette classe de contrôles mesurables avec borne ponctuelle \(R'(t)\), pas pour une classe imposant en plus \(s\in L^\infty(0,t_*)\). Sous cette dernière restriction, l'égalité exacte de l'ensemble atteignable n'est pas démontrée ici.
 
 ## 4. Limites et extensions non démontrées
 
@@ -160,7 +164,7 @@ Le contrôle construit dans la preuve peut donc être non borné au voisinage de
 - **Diffusion physique générale.** Un front de concentration issu d'une équation d'advection–diffusion n'est pas, en général, un front de contrôlabilité. Leur coïncidence doit être démontrée pour un modèle et des hypothèses précis.
 - **Phase de contraction.** \(R'(t)<0\) après \(t_*\) ; cette dérivée ne peut pas être utilisée comme borne positive de vitesse de contrôle.
 
-Ces cas sont des extensions ouvertes, et non des corollaires implicites du théorème S0.
+Ces cas sont des extensions ouvertes, et non des corollaires implicites du théorème GZ-1.
 
 ## 5. Hamiltonien et équation de Hamilton–Jacobi instationnaire
 
@@ -186,9 +190,9 @@ En représentant le front de la région atteignable par un niveau zéro \(\phi(x
 +c(x,t)\lVert\nabla\phi\rVert=0.}
 \]
 
-Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié. Lorsque le front développe des coins ou des changements de topologie, une solution classique peut ne plus exister ; la formulation pertinente est alors celle des solutions de viscosité, sous les hypothèses usuelles de continuité et de contrôle appropriées.
+Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.
 
-### 5.1 Vérification dans le cas S0
+### 5.1 Vérification dans le cas GZ-1
 
 Dans le cas uniforme, posons
 
@@ -249,7 +253,13 @@ a_{ij}=\frac{c^2\mu\delta_{ij}+u_i u_j}{c^4\mu^2},
 \qquad b_i=-\frac{u_i}{c^2\mu}.
 \]
 
-Le facteur \(\mu^2\) au dénominateur de \(a_{ij}\) est essentiel. La condition sous-critique \(\lVert u\rVert<c\) garantit \(A>0\). Lorsque \(c\) dépend du temps, cette expression décrit une géométrie de navigation **instantanée** ; elle ne transforme pas à elle seule le problème instationnaire en une métrique de Finsler stationnaire globale.
+Le facteur \(\mu^2\) au dénominateur de \(a_{ij}\) est essentiel. La condition sous-critique \(\lVert u\rVert<c\) garantit \(A>0\) et la régularité de Randers. Dans GZ-1, \(c(t)=R'(t)\) décroît strictement de \(+\infty\) à \(0\) sur \((0,t_*)\), car
+
+\[
+R''(t)=2K\left(\frac{-3}{2tR(t)}-\frac{(\Lambda(t)-3/2)R'(t)}{R(t)^2}\right)<0.
+\]
+
+Si \(u\ne0\), il existe donc un unique \(t_Z\in(0,t_*)\) tel que \(R'(t_Z)=\lVert u\rVert\). La géométrie de Randers n'est régulière que pour \(0<t<t_Z\), où \(R'(t)>\lVert u\rVert\). À \(t=t_Z\), elle dégénère ; pour \(t_Z<t\leq t_*\), le vent domine la vitesse de contrôle et la boule des vitesses admissibles ne contient plus l'origine. Cela ne rend pas le système de contrôle ni son Hamiltonien HJ invalides : cela signifie seulement qu'une métrique de Randers régulière ne décrit plus toutes les directions de navigation. Si \(u=0\), la condition vaut pour tout \(0<t<t_*\), mais échoue à \(t=t_*\) où \(c=0\).\n\nLorsque \(c\) dépend du temps, cette expression décrit une géométrie de navigation **instantanée** ; elle ne transforme pas à elle seule le problème instationnaire en une métrique de Finsler stationnaire globale.
 
 Cette construction concerne la navigation contrôlée de Zermelo. Elle ne requalifie pas la construction historique projetée \(T_{\mathrm{proj}}\) en métrique de Finsler. Pour le statut des objets historiques et leurs axiomes, voir [Métrique travel-time](metrique-travel-time.qmd) et [Métriques non riemanniennes](metriques-non-riemanniennes.qmd).
 
@@ -266,7 +276,7 @@ Avant de revendiquer un solveur de type Fast Marching ou une méthode eikonale, 
 5. le traitement des fronts non réguliers, des changements topologiques et des conditions aux limites ;
 6. la convergence vers la solution de viscosité pertinente.
 
-Pour le cas S0 uniforme, la solution analytique \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
+Pour le cas GZ-1 uniforme, la solution analytique \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
 
 ## 8. Conclusions et prochaines extensions
 
