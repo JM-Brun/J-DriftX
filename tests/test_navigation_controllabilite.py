@@ -235,9 +235,7 @@ def test_la_commande_radiale_remplit_exactement_la_boule() -> None:
         return direction_amont * _rayon(tau)
 
     for tau in (1.0, 10.0, 25.0, t):
-        assert float(np.linalg.norm(commande_amont(tau))) == pytest.approx(
-            _vitesse(tau)
-        )
+        assert float(np.linalg.norm(commande_amont(tau))) == pytest.approx(_vitesse(tau))
         derivee = (primitive_amont(tau + pas) - primitive_amont(tau - pas)) / (2.0 * pas)
         np.testing.assert_allclose(derivee, commande_amont(tau), atol=1e-6)
     np.testing.assert_allclose(primitive_amont(t), deplacement_amont, atol=1e-12)
