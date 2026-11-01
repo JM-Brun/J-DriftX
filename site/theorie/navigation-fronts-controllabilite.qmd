@@ -21,7 +21,7 @@ Cette page publie le résultat analytique conditionnel **GZ-1** (*Gaussian Zerme
 | Rayon et vitesse d'expansion d'une isoconcentration gaussienne | Dérivation exacte dans le modèle posé ci-dessous |
 | Ensemble atteignable sous le contrôle isotrope prescrit | Démonstration analytique exacte pour les contrôles mesurables spécifiés |
 | Égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) | Théorème conditionnel démontré sous les hypothèses GZ-1 |
-| Équation HJ du front de contrôlabilité | Hamiltonien dérivé ; solution explicite GZ-1 vérifiée pour (t>0) ; unicité au départ singulier non démontrée ici |
+| Équation HJ du front de contrôlabilité | Hamiltonien dérivé ; pour GZ-1, changement de référentiel puis reparamétrisation \(\rho=R(t)\) ramènent le problème à une eikonale standard et traitent la singularité intégrable à l'origine |
 | Équivalence avec un front d'advection–diffusion général | **Non démontrée** |
 | Validité physique de la borne de contrôle \(c(t)\) | Hypothèse de modélisation, non conséquence de la solution gaussienne |
 
@@ -222,7 +222,9 @@ Pour un départ ponctuel en \(x_0\), on peut prendre la donnée initiale \(\phi(
 +c(x,t)\lVert\nabla\phi\rVert=0.}
 \]
 
-Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.\n\n**Traitement exact de la singularité GZ-1.** Le coefficient \(c(t)=R'(t)\) n'est pas borné au voisinage de \(t=0\), mais il est positif et intégrable sur la phase d'expansion. Cette singularité peut être éliminée par un changement de référentiel et une reparamétrisation du temps :
+Cette équation décrit le **front de contrôlabilité** du problème de contrôle spécifié, et non une concentration. Un ensemble suffisant d'hypothèses pour le problème de Cauchy consiste à prendre \(u\) et \(c\) continus en temps, uniformément bornés et uniformément lipschitziens en espace, avec \(c\geq0\), et une donnée initiale continue lipschitzienne \(\phi_0\). Sous les hypothèses de comparaison correspondantes, l'équation admet une solution de viscosité unique. Lorsque le front développe des coins ou des changements de topologie, la formulation classique peut échouer ; la solution de viscosité conserve le sens de la propagation. Ces hypothèses sont des conditions suffisantes de cadrage, pas une caractérisation minimale.
+
+**Traitement exact de la singularité GZ-1.** Le coefficient \(c(t)=R'(t)\) n'est pas borné au voisinage de \(t=0\), mais il est positif et intégrable sur la phase d'expansion. Cette singularité peut être éliminée par un changement de référentiel et une reparamétrisation du temps :
 
 1. Dans le référentiel mobile \(y=x-ut\), posons \(\psi(y,t)=\phi(y+ut,t)\). L'équation devient
    \[
@@ -249,7 +251,7 @@ En revenant aux variables physiques, on obtient la solution de viscosité
 \]
 
 Son ensemble nul est la boule atteignable fermée ; le front géométrique est la sphère frontière de cette boule. Le plateau nul n'altère donc pas l'ensemble atteignable, mais il interdit d'identifier sans précaution le front à tout le niveau zéro. Cette transformation donne, pour GZ-1 uniforme, une justification de l'unicité au départ \(t=0\) sans supposer \(c\) borné.
-### 5.1 Vérification dans le cas GZ-1
+### 5.2 Vérification dans le cas GZ-1
 
 Dans le cas uniforme, la solution de viscosité est
 
@@ -321,7 +323,7 @@ Avant de revendiquer un solveur de type Fast Marching ou une méthode eikonale, 
 5. le traitement des fronts non réguliers, des changements topologiques et des conditions aux limites ;
 6. la convergence vers la solution de viscosité pertinente.
 
-Pour le cas GZ-1 uniforme, la solution analytique \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
+Pour le cas GZ-1 uniforme, la solution analytique \(\phi(x,t)=\max(\lVert x-x_0-ut\rVert-R(t),0)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
 
 ### 7.1 Protocole de vérification pour une future implémentation
 
