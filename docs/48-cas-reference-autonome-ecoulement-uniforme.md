@@ -4,6 +4,8 @@
 
 **Date :** 29 octobre 2026. **Suivi :** [issue #232](https://github.com/JM-Brun/J-DriftX/issues/232) (étapes 3 puis 4) ; squelette de benchmarks S0 : [note 39](39-squelette-benchmarks-s0.md).
 
+**Attention au nommage :** le « cas S0 uniforme » défini dans cette note est le cas de référence du dépôt (source continue, paramétrisation de dispersion et grille figée). Il ne doit pas être confondu avec le théorème **GZ-1** de [navigation de Zermelo et front gaussien](../site/theorie/navigation-fronts-controllabilite.qmd), qui concerne un noyau fondamental 3D isotrope à diffusivité constante et un problème de contrôle distinct.
+
 ## 1. Ce que « autonome » exige
 
 Le cas de référence est autonome au sens suivant : un lecteur disposant du dépôt et de cette note peut (a) reconstruire la géométrie et les paramètres sans renvoi implicite, (b) vérifier les unités de chaque terme, (c) reproduire la solution de référence et (d) savoir précisément ce que le cas établit et ne établit pas. Il sert de socle aux étapes 4 (reconstruction implémentée et testée) et 5 (comparaison à référence indépendante) de l’ordre #232.
