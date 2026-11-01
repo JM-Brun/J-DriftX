@@ -94,6 +94,25 @@ La transformation appliquée aux EA est néanmoins vérifiable : sur les 196 lig
 
 Enfin, le champ `helium_concentration_decision_threshold` décrit le seuil absolu de décision (1,05 × concentration de fond), tandis que `helium_concentration_sampling_bg_corrected` est déjà décrit comme corrigé du fond. Le flag de significativité ne doit donc pas être recalculé en comparant naïvement ces deux colonnes : le seuil s'applique à la concentration mesurée avant soustraction du fond, conformément à la section 2.3.3 de l'article. La transformation exacte entre mesure, concentration excédentaire et correction de passage doit être documentée avant toute réimplémentation.
 
+#### Contrôle numérique des extrema ATC publiés
+
+L'article définit l'ATC comme le rapport entre la concentration de panache et le débit massique de rejet (§2.3.4). Il définit la concentration de panache des sacs comme la concentration significative après soustraction du fond et correction par le rapport durée d'échantillonnage / durée de rejet (§2.3.3). Le champ correspondant dans le dépôt est `helium_concentration_sampling_bg_passage_corrected` ; le dénominateur est `helium_release_flow`. Le calcul EA est donc :
+
+\\[
+ATC_{EA} = \\frac{\\texttt{helium\\_concentration\\_sampling\\_bg\\_passage\\_corrected}}{\\texttt{helium\\_release\\_flow}} \\quad [\\mathrm{s\\,m^{-3}}]
+\\]
+
+Sur les 153 lignes EA significatives des 15 événements rapprochés, les deux extrema calculés reproduisent ceux de l'article à l'arrondi près :
+
+| Extrême | Événement article / CSV | Échantillon | ATC calculé | Article |
+|---|---|---|---:|---:|
+| Minimum | 1-4 / `#1_6` | `B14` | 2,0227×10⁻⁵ s m⁻³ | 2,0×10⁻⁵ s m⁻³ |
+| Maximum | 2-4 / `#2_4` | `A7_D7` | 1,5084×10⁻³ s m⁻³ | 1,5×10⁻³ s m⁻³ |
+
+Les deux erreurs relatives sont inférieures à 1,2 %, compatibles avec les valeurs publiées à deux chiffres significatifs. C'est un contrôle fort de la chaîne de calcul et du rapprochement événementiel, mais pas une validation ligne par ligne : les 153 flags `significant` du CSV ne reproduisent pas les 148 résultats significatifs de l'article. Sur les 196 EA significatifs des 19 événements du dépôt, le maximum est 2,2953×10⁻³ s m⁻³ pour `#1_1`, l'un des quatre rejets absents de l'article ; il ne faut donc pas comparer les extrema de l'ensemble du dépôt aux extrema publiés pour les 15 événements.
+
+Ce contrôle est limité aux EA significatifs pour lesquels la correction de passage est renseignée. Il ne justifie aucune imputation pour VEGA, ne valide pas encore les coordonnées projetées x/y ni les covariables météorologiques, et ne démontre pas la généralisation du modèle hors des conditions observées. Le script `scripts/audit_diflu.py` expose désormais ce calcul et son contrôle de référence sous `atc_candidate_check`.
+
 **Conséquence provisoire :** le rapprochement confirme la présence des 15 rejets étudiés dans l'article et identifie quatre rejets supplémentaires, mais il ne reproduit pas encore le décompte publié des prélèvements ni des résultats significatifs. L'ATC ne peut pas être construit comme une cible homogène sur les 387 lignes en divisant simplement une colonne de concentration par `helium_release_flow`. Il faut d'abord définir le sous-ensemble, la méthode de prélèvement, la correction de concentration, l'instant ou l'intervalle d'observation et l'unité de validation.
 
 
