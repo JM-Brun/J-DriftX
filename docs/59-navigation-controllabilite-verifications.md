@@ -302,7 +302,7 @@ Hors du cône aval, $T=+\infty$ par convention. Cette dérivation est exacte pou
 |---|---|---|---|
 | Seuil gaussien atteint sur $R(t)$ | test_le_front_d_isoconcentration_est_exact | Cohérence du rayon avec le noyau | Pas de validation physique |
 | $c(t)=R'(t)$ | test_la_vitesse_d_expansion_est_la_derivee_du_rayon | Dérivée numérique hors singularité | Pas de validation du contrôle |
-| $t_*$ maximise $R$, $R(et_*)=0$ | test_t_etoile_maximise_le_rayon | Cas limites de la formule | Pas une preuve analytique |
+| $t_*$ maximise $R$, $R(et_*)=0$ | test_t_etoile_maximise_le_rayon | Cas limites et décroissance échantillonnée de R' | Pas une preuve analytique |
 | $R'$ diverge mais est intégrable | test_la_singularite_initiale_est_integrable | Quadrature sur intervalle tronqué | L'intégrabilité exacte vient de $R(t)-R(0)$ |
 | $T_{\rm nav}=T_{\rm front}$ | test_le_theoreme_gz1_egalise_navigation_et_front | Une trajectoire constructive et sa borne | La preuve générale est la double inclusion §3 |
 | Commande radiale et ensemble atteignable | test_la_commande_radiale_remplit_exactement_la_boule | Dérivée de la primitive et respect de la borne | Test de cohérence, pas preuve générale |
