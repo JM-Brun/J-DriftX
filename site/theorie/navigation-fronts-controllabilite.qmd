@@ -18,6 +18,7 @@ Cette page publie un résultat analytique conditionnel : pour un puff gaussien t
 | Équation HJ du front de contrôlabilité | Hamiltonien dérivé du problème de contrôle ; solution de viscosité sous les hypothèses usuelles |
 | Équivalence avec un front d'advection–diffusion général | **Non démontrée** |
 | Validité physique de la borne de contrôle \(c(t)\) | Hypothèse de modélisation, non conséquence de la solution gaussienne |
+| Cône d'accessibilité supercritique (\(c\leq\lVert u\rVert\)) | Dérivation exacte pour la borne isotrope constante ; vérification numérique dans le dépôt |
 
 Les démonstrations concernent le modèle mathématique explicite ci-dessous. Elles ne constituent ni une validation expérimentale ni une validation d'un modèle atmosphérique général.
 
@@ -253,6 +254,27 @@ Le facteur \(\mu^2\) au dénominateur de \(a_{ij}\) est essentiel. La condition 
 
 Cette construction concerne la navigation contrôlée de Zermelo. Elle ne requalifie pas la construction historique projetée \(T_{\mathrm{proj}}\) en métrique de Finsler. Pour le statut des objets historiques et leurs axiomes, voir [Métrique travel-time](metrique-travel-time.qmd) et [Métriques non riemanniennes](metriques-non-riemanniennes.qmd).
 
+### 6.1 Régime supercritique et cône d'accessibilité
+
+La forme de Randers ci-dessus suppose \(c>\lVert u\rVert\), c'est-à-dire \(A>0\) : toutes les directions sont atteignables et la jauge est strictement convexe. Le régime complémentaire \(c\leq\lVert u\rVert\) — le régime usuel de la dispersion atmosphérique, où l'advection domine la propagation relative — doit être traité séparément : la jauge n'est plus définie pour toutes les directions.
+
+Considérons une borne isotrope **constante** \(c\) et un vent uniforme \(u\), avec \(\lVert u\rVert\geq c\). Un déplacement de direction unitaire \(\omega\) est atteignable si et seulement si le rayon \(\{\lambda\omega:\lambda>0\}\) rencontre une boule \(B(ut,ct)\) pour un temps \(t>0\). La distance de \(u\) à ce rayon vaut \(\lVert u\rVert\sin\theta\), où \(\theta\) est l'angle entre \(\omega\) et \(u\). La condition d'atteignabilité est donc exactement
+
+\[
+\sin\theta\leq\frac{c}{\lVert u\rVert}.
+\]
+
+Les directions atteignables forment un **cône d'accessibilité** d'axe \(u\) et de demi-angle \(\arcsin(c/\lVert u\rVert)\). Pour une direction intérieure au cône, le temps minimal de navigation admet la forme fermée
+
+\[
+T(\mathrm{d}x)=\frac{\lVert\mathrm{d}x\rVert}
+{\omega\cdot u+\sqrt{(\omega\cdot u)^2+c^2-\lVert u\rVert^2}},
+\]
+
+lorsque le dénominateur est strictement positif ; hors du cône, \(T=+\infty\) par convention. Sur l'axe aval, la formule redonne \(T=\lVert\mathrm{d}x\rVert/(\lVert u\rVert+c)\).
+
+Cette frontière donne une lecture géométrique de la non-atteignabilité amont : remonter le vent est impossible dès que \(c\leq\lVert u\rVert\). La convention \(T=+\infty\) hors du cône est la contrepartie ensembliste de la non-symétrie amont \(\tau(B,A)=+\infty\) testée pour la métrique travel-time. **Statut** : dérivation exacte pour la borne isotrope constante ; le cas instationnaire \(c(t)\) supercritique reste ouvert, au même titre que les extensions de la section 4.
+
 ## 7. Conséquences pour les méthodes numériques
 
 L'équation HJ instationnaire fournit un cadre de calcul pour le front de contrôlabilité, mais ne justifie pas à elle seule le choix d'un algorithme.
@@ -268,12 +290,14 @@ Avant de revendiquer un solveur de type Fast Marching ou une méthode eikonale, 
 
 Pour le cas S0 uniforme, la solution analytique \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
 
+À ce jour, le cas analytique S0, l'égalité \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) par trajectoire à cap constant, l'identité des deux formes de la jauge sous-critique, la frontière du cône supercritique et les résidus des équations de Hamilton–Jacobi et eikonale sont vérifiés numériquement par les tests unitaires du dépôt (`tests/test_navigation_controllabilite.py`, note `docs/59`).
+
 ## 8. Conclusions et prochaines extensions
 
 **Démontré ici :** dans le problème S0, l'ensemble atteignable à l'instant \(t\) est la boule fermée de centre \(x_0+ut\) et de rayon \(R(t)\), et \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) pour une cible fixe distincte du centre initial.
 
-**Dérivé ici :** le Hamiltonien \(H=u\cdot p+c\lVert p\rVert\), l'équation HJ instationnaire correspondante et la forme de Randers du problème de navigation sous-critique instantané.
+**Dérivé ici :** le Hamiltonien \(H=u\cdot p+c\lVert p\rVert\), l'équation HJ instationnaire correspondante, la forme de Randers du problème de navigation sous-critique instantané et le cône d'accessibilité supercritique à borne isotrope constante.
 
-**Non établi :** l'équivalence pour un départ à âge positif, une cible mobile, un vent variable, une classe de contrôles globalement bornés ou un front issu d'une équation d'advection–diffusion générale.
+**Non établi :** l'équivalence pour un départ à âge positif, une cible mobile, un vent variable, une classe de contrôles globalement bornés, le régime supercritique instationnaire ou un front issu d'une équation d'advection–diffusion générale.
 
 La suite scientifique doit traiter ces extensions une par une, en conservant pour chacune un énoncé, des hypothèses, une preuve ou un contre-exemple, puis seulement un test numérique. Le registre de preuve du projet reflète ces statuts sans convertir une démonstration conditionnelle en validation physique.
