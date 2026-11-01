@@ -323,6 +323,39 @@ Avant de revendiquer un solveur de type Fast Marching ou une méthode eikonale, 
 
 Pour le cas GZ-1 uniforme, la solution analytique \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) constitue un cas de référence utile pour vérifier un schéma. Elle ne valide pas le solveur sur des vents variables, des sources multiples ou une EDP d'advection–diffusion générale.
 
+### 7.1 Protocole de vérification pour une future implémentation
+
+Le cas GZ-1 fournit un oracle analytique compact. Une future implémentation devrait être vérifiée par étapes, en séparant les identités algébriques, la résolution du premier contact et la convergence du solveur :
+
+| Vérification | Référence exacte | Ce que le test peut établir | Ce qu'il ne prouve pas |
+|---|---|---|---|
+| Rayon | \(R^2=4Kt\Lambda=6Kt[1+\ln(t_*/t)]\) | Cohérence de deux formes algébriques et des unités | Validité physique du noyau gaussien |
+| Vitesse du front | \(R'=3K\ln(t_*/t)/R\), comparée à une différence finie hors des singularités | Implémentation correcte de la dérivée | Admissibilité physique de cette vitesse comme commande |
+| Conservation de masse | \(\int_{\mathbb R^3}C\,dx=M\) | Intégration ou quadrature cohérente sur une fenêtre suffisamment grande, avec erreur de troncature mesurée | Conservation dans un domaine borné ou avec dépôt |
+| Premier contact, \(u=0\) | Formule Lambert \(W_{-1}\) de la section 3 | Résolution de la branche d'expansion et sélection du premier contact | Cas de vent variable |
+| Premier contact, \(u\ne0\) | Premier zéro de \(g_B(t)\) sur \((0,t_*]\) | Exactitude d'un solveur scalaire de contact | Temps passif \(T_{\mathrm{arr}}\) |
+| Résidu HJ | \(\phi(x,t)=\lVert x-x_0-ut\rVert-R(t)\) | Résidu nul aux points où \(\phi\) est différentiable | Condition de viscosité au centre ou aux singularités |
+| Jauge de Randers | Égalité entre la jauge de Zermelo et \(\sqrt{a_{ij}v^iv^j}+b_iv^i\) pour \(\lVert u\rVert<c\) | Cohérence algébrique de la forme de Randers dans son domaine régulier | Existence d'une métrique régulière dans le régime supercritique |
+
+Les tests numériques doivent être étiquetés **tests de cohérence ou de convergence**, jamais « preuve du théorème ». La preuve de l'ensemble atteignable est analytique et ne dépend pas d'un échantillonnage de trajectoires.
+
+### 7.2 Singularité initiale et discrétisation temporelle
+
+Le point \(t=0\) est singulier pour la vitesse \(c(t)=R'(t)\), même si son intégrale est finie. Un schéma qui évalue naïvement \(c(0)\), ou qui le remplace par un plafond arbitraire, ne discrétise pas le problème GZ-1 tel qu'il est défini.
+
+Pour le premier pas \([0,\Delta t]\), l'incrément exact du rayon est
+
+\[
+\int_0^{\Delta t}c(\tau)\,d\tau=R(\Delta t),
+\]
+
+et non \(c(0)\Delta t\). Une méthode de référence peut donc initialiser directement le front à \(t=\Delta t\) par la boule \(\overline B(x_0+u\Delta t,R(\Delta t))\), ou employer une intégration qui respecte exactement cette première contribution. Si le calcul commence à un \(\varepsilon>0\), l'état initial doit être la boule de centre \(x_0+u\varepsilon\) et de rayon \(R(\varepsilon)\), et non un point artificiellement replacé au centre.
+
+Pour une méthode de niveau, il faut vérifier la convergence en raffinant séparément \(\Delta t\) et \(\Delta x\), sous une condition CFL appropriée, et comparer les fronts calculés à la boule analytique par une distance de Hausdorff ainsi que les temps de premier contact. Le traitement du centre, où la norme n'est pas différentiable, relève de la solution de viscosité et non d'un résidu classique ponctuel.
+
+Enfin, imposer une borne globale \(\lVert s\rVert\leq S_{\max}\) change la classe de contrôles : ce n'est pas une simple stabilisation numérique de GZ-1, mais un autre problème dont l'ensemble atteignable doit être redémontré.
+
+
 ## 8. Relation avec les expériences puff déjà présentes dans J-DriftX
 
 Le mot « puff » désigne ici plusieurs objets qu'il faut garder distincts :
