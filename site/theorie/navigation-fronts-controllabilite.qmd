@@ -240,7 +240,14 @@ Cette équation décrit le **front de contrôlabilité** du problème de contrô
    \widetilde\psi(y,0)=\lVert y-x_0\rVert.
    \]
 
-La solution de viscosité de cette eikonale standard est unique par le principe de comparaison usuel pour une donnée initiale lipschitzienne. Pour la donnée \(\widetilde\psi(y,0)=\lVert y-x_0\rVert\), elle vaut
+La solution de viscosité de cette eikonale standard est unique par le principe de comparaison usuel pour une donnée initiale lipschitzienne. La formule de Hopf–Lax donne ici
+
+\[
+\widetilde\psi(y,\rho)=\inf_{\lVert y-z\rVert\leq\rho}\lVert z-x_0\rVert
+=\max\left(\lVert y-x_0\rVert-\rho,0\right).
+\]
+
+Pour la donnée \(\widetilde\psi(y,0)=\lVert y-x_0\rVert\), elle vaut
 
 \[
 \widetilde\psi(y,\rho)=\max\left(\lVert y-x_0\rVert-\rho,0\right).
