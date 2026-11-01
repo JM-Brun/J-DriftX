@@ -338,6 +338,27 @@ a_{ij}=\frac{A\delta_{ij}+u_i u_j}{A^2},
 \qquad b_i=-\frac{u_i}{A}.
 \]
 
+On vérifie la régularité de Randers sans se contenter de l'affirmer. Pour tout vecteur non nul \(\xi\),
+
+\[
+\xi^i a_{ij}\xi^j
+=\frac{A\lVert\xi\rVert^2+(u\cdot\xi)^2}{A^2}>0,
+\]
+
+car \(A>0\) : la partie quadratique est définie positive. Son inverse est
+
+\[
+a^{ij}=A\delta_{ij}-\frac{A}{c^2}u_i u_j,
+\]
+
+d'où
+
+\[
+b_i a^{ij}b_j=\frac{\lVert u\rVert^2}{c^2}<1.
+\]
+
+C'est exactement la condition de régularité d'une métrique de Randers : la norme duale de la partie linéaire \(b\), calculée avec \(a\), doit être strictement inférieure à un.
+
 Si \(\mu=1-\lVert u\rVert^2/c^2\), alors \(A=c^2\mu\) et
 
 \[
