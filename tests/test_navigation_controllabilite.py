@@ -242,6 +242,12 @@ def test_la_jauge_sous_critique_est_une_randers() -> None:
     c = 3.0
     aire = c * c - float(VENT @ VENT)
     assert aire > 0.0
+    a = (aire * np.eye(3) + np.outer(VENT, VENT)) / aire**2
+    b = -VENT / aire
+    a_inverse = aire * np.eye(3) - (aire / c**2) * np.outer(VENT, VENT)
+    norme_duale_b = float(b @ a_inverse @ b)
+    assert norme_duale_b == pytest.approx(float(VENT @ VENT) / c**2, rel=1e-12)
+    assert norme_duale_b < 1.0
     # When — la jauge fermée et la forme de Randers sont confrontées.
     for coordonnees in (
         (1.0, 0.0, 0.0),
