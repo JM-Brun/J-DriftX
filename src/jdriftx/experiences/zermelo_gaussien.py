@@ -25,9 +25,12 @@ __all__ = ["ModeleGZ1"]
 
 def _scalaire_positif(valeur: float, nom: str) -> float:
     """Valide un scalaire réel, fini et strictement positif."""
-    if isinstance(valeur, bool) or not isinstance(valeur, Real):
+    if isinstance(valeur, (bool, np.bool_)) or not isinstance(valeur, Real):
         raise ValueError(f"{nom} doit être un réel strictement positif.")
-    resultat = float(valeur)
+    try:
+        resultat = float(valeur)
+    except (OverflowError, TypeError, ValueError) as err:
+        raise ValueError(f"{nom} doit être représentable en float64.") from err
     if not isfinite(resultat) or resultat <= 0.0:
         raise ValueError(f"{nom} doit être fini et strictement positif.")
     return resultat
@@ -38,7 +41,17 @@ def _vecteur3(
 ) -> tuple[float, float, float]:
     """Convertit une coordonnée 3D en tuple réel fini et immuable."""
     brut = np.asarray(valeur)
-    if brut.shape != (3,) or brut.dtype.kind not in "iuf" or not np.all(np.isfinite(brut)):
+    elements = np.asarray(valeur, dtype=object)
+    contient_non_reel = any(
+        isinstance(element, (bool, np.bool_, complex, np.complexfloating))
+        for element in elements.flat
+    )
+    if (
+        brut.shape != (3,)
+        or brut.dtype.kind not in "iuf"
+        or contient_non_reel
+        or not np.all(np.isfinite(brut))
+    ):
         raise ValueError(f"{nom} doit être un vecteur réel fini de dimension 3.")
     return (float(brut[0]), float(brut[1]), float(brut[2]))
 
