@@ -6,7 +6,9 @@ title: "Pseudo-distances, coûts orientés et géométries non riemanniennes"
 
 Le travel-time de Drift-X est un **objet de coût orienté construit à partir d'un champ de vitesse**. Il est lié à plusieurs familles géométriques, mais ne doit pas être classé comme métrique de Finsler ou quasi-métrique avant que ses axiomes soient vérifiés. Cette page situe les analogies utiles — distances-temps géographiques, géométrie de Finsler et métriques d'adaptation de maillage — sans supposer qu'elles sont équivalentes. La grille d'axiomes par objet — statut démontré sous hypothèses, réfuté par contre-exemple, testé dans un domaine donné, ou non établi — est établie sur la page [Métrique travel-time](metrique-travel-time.qmd) ; la présente page classe les familles voisines.
 
-La géométrie de Randers issue de la **navigation de Zermelo** est un problème différent de la pseudo-distance historique projetée : elle découle d'un ensemble de vitesses contrôlées \\(v=u+s\\), avec \\(\\lVert s\\rVert\\leq c\\), et requiert la condition sous-critique \\(\\lVert u\\rVert<c\\). La formule et ses hypothèses, ainsi que la distinction avec le front instationnaire, sont données dans [Navigation de Zermelo, fronts et Hamilton–Jacobi](navigation-fronts-controllabilite.qmd).\n\n## Place dans le raisonnement et contrat de lecture
+La géométrie de Randers issue de la **navigation de Zermelo** est un problème différent de la pseudo-distance historique projetée : elle découle d'un ensemble de vitesses contrôlées \(v=u+s\), avec \(\lVert s\rVert\leq c\), et requiert la condition sous-critique \(\lVert u\rVert<c\). La formule et ses hypothèses, ainsi que la distinction avec le front instationnaire, sont données dans [Navigation de Zermelo, fronts et Hamilton–Jacobi](navigation-fronts-controllabilite.qmd).
+
+## Place dans le raisonnement et contrat de lecture
 
 Cette page intervient **après la définition du travel-time** : elle classe les objets voisins et compare leurs axiomes, sans conclure qu'ils sont équivalents parce qu'ils partagent une intuition de coût orienté.
 
