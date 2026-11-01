@@ -311,7 +311,7 @@ F(v)=
 \frac{\sqrt{(u\cdot v)^2+A\lVert v\rVert^2}-u\cdot v}{A}.
 \]
 
-La jauge \(F(v)\) est le temps nécessaire pour réaliser le déplacement \(v\) à vitesse moyenne constante : pendant ce temps, la vitesse relative au vent doit avoir la norme \(c\), soit \(\lVert v/F-u\rVert=c\). En élevant au carré,
+La jauge \(F(v)\) est le temps minimal nécessaire pour réaliser le déplacement \(v\) à vitesse moyenne constante. Au minimum, la contrainte est saturée : si la vitesse relative était strictement inférieure à \(c\), on pourrait réduire légèrement le temps tout en restant admissible. On impose donc \(\lVert v/F-u\rVert=c\). Pour \(c>\lVert u\rVert\), le membre de gauche tend vers \(\lVert u\rVert<c\) lorsque \(F\to+\infty\), et vers \(+\infty\) lorsque \(F\to0^+\) ; l'équation sélectionne ainsi l'unique temps minimal positif. En élevant au carré,
 
 \[
 \lVert v\rVert^2-2F(u\cdot v)+F^2\lVert u\rVert^2=c^2F^2,
@@ -397,7 +397,7 @@ divisant par `t`, cette condition devient
 q^2-2q(u\cdot\omega)+\|u\|^2-c^2\leq0.
 \]
 
-Cette quadratique admet une racine strictement positive si et seulement si
+Notons \(k=u\cdot\omega\) et \(\Delta=k^2+c^2-\|u\|^2\). Les racines sont \(q_\pm=k\pm\sqrt\Delta\). Dans le régime \(c\leq\|u\|\), on a \(\sqrt\Delta\leq|k|\) dès que \(\Delta\geq0\). Si \(k\leq0\), alors \(q_+\leq0\) : aucune racine strictement positive n'existe. Si \(k>0\), alors \(q_+>0\). Le critère exact est donc
 
 \[
 u\cdot\omega>0,
