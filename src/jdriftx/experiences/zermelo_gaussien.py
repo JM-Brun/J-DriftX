@@ -76,9 +76,7 @@ class ModeleGZ1:
     @property
     def t_etoile(self) -> float:
         """Temps du rayon maximal t* (s)."""
-        return (self.masse / (self.seuil * exp(1.5))) ** (2.0 / 3.0) / (
-            4.0 * pi * self.diffusivite
-        )
+        return (self.masse / (self.seuil * exp(1.5))) ** (2.0 / 3.0) / (4.0 * pi * self.diffusivite)
 
     @property
     def t_extinction(self) -> float:
