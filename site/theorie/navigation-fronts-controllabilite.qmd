@@ -247,12 +247,6 @@ La solution de viscosité de cette eikonale standard est unique par le principe 
 =\max\left(\lVert y-x_0\rVert-\rho,0\right).
 \]
 
-Pour la donnée \(\widetilde\psi(y,0)=\lVert y-x_0\rVert\), elle vaut
-
-\[
-\widetilde\psi(y,\rho)=\max\left(\lVert y-x_0\rVert-\rho,0\right).
-\]
-
 En revenant aux variables physiques, on obtient la solution de viscosité
 
 \[
