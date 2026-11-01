@@ -310,6 +310,15 @@ T(d\omega)=\frac{d}{u\cdot\omega+\sqrt{(u\cdot\omega)^2+c^2-\|u\|^2}}.
 $$
 Hors du cône aval, $T=+\infty$ par convention. Cette dérivation est exacte pour $u,c$ constants ; elle **ne résout pas** le cas instationnaire supercritique $c(t)=R'(t)$.
 
+### Pourquoi il ne faut pas substituer simplement $c(t)$ dans le cône
+
+Dans GZ-1, $c(t)=R'(t)$ décroît : elle est d'abord supérieure à $\|u\|$, puis inférieure après le seuil instantané $t_Z$. Cela change la boule des vitesses admissibles à chaque instant, mais la position atteignable à l'instant $t$ dépend de l'intégrale de toutes les commandes antérieures :
+$
+\|X(t)-(x_0+ut)\|
+\leq\int_0^t c(\tau)\,d\tau=R(t).
+$
+Les commandes utilisées tôt, lorsque $c(\tau)>\|u\|$, laissent donc un déplacement relatif qui subsiste après $t_Z$. Le théorème GZ-1 conserve une boule atteignable pour chaque $t\leq t_*$ ; le cône aval à borne constante ne peut pas être transposé en remplaçant $c$ par sa valeur instantanée $c(t)$. Le seuil $t_Z$ marque uniquement la perte de régularité de la métrique de Randers instantanée, pas une perte soudaine de portée du système instationnaire.
+
 ## 7. Matrice de traçabilité : affirmations et tests
 
 | Affirmation | Test | Ce que le test contrôle | Limite |
