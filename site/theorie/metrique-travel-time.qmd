@@ -6,7 +6,9 @@ title: "Métrique travel-time"
 
 Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les solutions de similitude qui supposent un vent **uniforme** (métrique cartésienne) sont envisagées dans une coordonnée naturelle liée au **temps de transport** pour traiter des champs non uniformes. La validité et la portée de cette généralisation doivent être établies à partir des hypothèses et dérivations des sources primaires.
 
-Une construction distincte est désormais étudiée pour la **navigation contrôlée de Zermelo** : le mobile peut choisir une vitesse relative au vent dans une boule admissible. Le problème conduit à un temps minimal de navigation \\(T_{\\mathrm{nav}}\\), différent du temps passif \\(T_{\\mathrm{arr}}\\) défini plus bas. Dans un cas gaussien très particulier, une preuve établit \\(T_{\\mathrm{nav}}=T_{\\mathrm{front}}\\) ; voir [Navigation de Zermelo, fronts et Hamilton–Jacobi](navigation-fronts-controllabilite.qmd). Ce résultat conditionnel ne modifie pas les définitions historiques présentées ici.\n\n## Place dans le raisonnement et contrat de lecture
+Une construction distincte est désormais étudiée pour la **navigation contrôlée de Zermelo** : le mobile peut choisir une vitesse relative au vent dans une boule admissible. Le problème conduit à un temps minimal de navigation \(T_{\mathrm{nav}}\), différent du temps passif \(T_{\mathrm{arr}}\) défini plus bas. Dans un cas gaussien très particulier, une preuve établit \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) ; voir [Navigation de Zermelo, fronts et Hamilton–Jacobi](navigation-fronts-controllabilite.qmd). Ce résultat conditionnel ne modifie pas les définitions historiques présentées ici.
+
+## Place dans le raisonnement et contrat de lecture
 
 Cette page formalise le **temps de transport** utilisé dans l'hypothèse de généralisation des solutions de similitude. Elle ne démontre pas que la substitution d'une coordonnée uniforme $x/U$ par un temps $\tau$ dans un champ variable conserve l'équation de dispersion ni ses propriétés.
 
