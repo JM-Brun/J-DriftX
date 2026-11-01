@@ -56,9 +56,7 @@ def test_t_etoile_et_extinction_sont_coherents(modele: ModeleGZ1) -> None:
 def test_deux_formes_du_rayon_et_derivee(modele: ModeleGZ1) -> None:
     """La forme explicite de R et R' coïncide avec les expressions dérivées."""
     t = 0.37 * modele.t_etoile
-    lam = np.log(
-        modele.masse / (modele.seuil * (4.0 * pi * modele.diffusivite * t) ** 1.5)
-    )
+    lam = np.log(modele.masse / (modele.seuil * (4.0 * pi * modele.diffusivite * t) ** 1.5))
     rayon_direct = sqrt(4.0 * modele.diffusivite * t * float(lam))
     assert modele.rayon(t) == pytest.approx(rayon_direct, rel=1e-13)
     pas = 1e-5 * t
@@ -96,18 +94,14 @@ def test_front_et_fonction_de_valeur_hj_ont_le_plateau_nul(modele: ModeleGZ1) ->
     centre = np.asarray(modele.origine) + np.asarray(modele.vent) * t
     rayon = modele.rayon(t)
     assert modele.valeur_hj(tuple(centre), t) == 0.0
-    assert modele.valeur_hj(
-        tuple(centre + 0.5 * rayon * np.array([1.0, 0.0, 0.0])), t
-    ) == 0.0
+    assert modele.valeur_hj(tuple(centre + 0.5 * rayon * np.array([1.0, 0.0, 0.0])), t) == 0.0
     assert modele.valeur_hj(
         tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t
     ) == pytest.approx(0.0)
     assert modele.valeur_hj(
         tuple(centre + 2.0 * rayon * np.array([1.0, 0.0, 0.0])), t
     ) == pytest.approx(rayon)
-    assert modele.ensemble_atteignable(
-        tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t
-    )
+    assert modele.ensemble_atteignable(tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t)
     assert not modele.ensemble_atteignable(
         tuple(centre + 1.01 * rayon * np.array([1.0, 0.0, 0.0])), t
     )
@@ -175,9 +169,7 @@ def test_premier_contact_sans_vent_et_cas_limites() -> None:
 
 def test_premier_contact_vent_non_nul_selectionne_la_premiere_racine() -> None:
     """La convexité de g_B permet de distinguer les deux contacts possibles."""
-    modele = ModeleGZ1(
-        masse=1.0e6, seuil=1.0, diffusivite=0.5, vent=(10.0, 0.0, 0.0)
-    )
+    modele = ModeleGZ1(masse=1.0e6, seuil=1.0, diffusivite=0.5, vent=(10.0, 0.0, 0.0))
     temps_intermediaire = 0.8 * modele.t_etoile
     cible = (10.0 * temps_intermediaire, 0.0, 0.0)
     assert modele.fonction_contact(cible, temps_intermediaire) < 0.0
@@ -210,8 +202,7 @@ def test_residu_hj_sur_les_regions_lisses(modele: ModeleGZ1) -> None:
     pas_t = 1e-5 * t
     pas_x = 1e-5 * rayon
     derivee_t = (
-        modele.valeur_hj(tuple(point), t + pas_t)
-        - modele.valeur_hj(tuple(point), t - pas_t)
+        modele.valeur_hj(tuple(point), t + pas_t) - modele.valeur_hj(tuple(point), t - pas_t)
     ) / (2.0 * pas_t)
     gradient = np.empty(3)
     for axe in range(3):
@@ -221,8 +212,10 @@ def test_residu_hj_sur_les_regions_lisses(modele: ModeleGZ1) -> None:
             modele.valeur_hj(tuple(point + decalage), t)
             - modele.valeur_hj(tuple(point - decalage), t)
         ) / (2.0 * pas_x)
-    residu = derivee_t + float(vent @ gradient) + modele.vitesse_expansion(t) * float(
-        np.linalg.norm(gradient)
+    residu = (
+        derivee_t
+        + float(vent @ gradient)
+        + modele.vitesse_expansion(t) * float(np.linalg.norm(gradient))
     )
     assert residu == pytest.approx(0.0, abs=2e-7)
 
