@@ -160,3 +160,13 @@ def test_versioned_diflu_fixture_has_reproducible_audit_summary() -> None:
     assert report["passage_correction_check"]["max_relative_error"] < 0.01
     assert report["passage_correction_check"]["vega_significant_rows"] == 127
     assert report["passage_correction_check"]["vega_rows_with_passage_correction"] == 0
+    atc = report["atc_candidate_check"]
+    assert atc["eligible_ea_significant_rows"] == 196
+    assert atc["rows_with_atc"] == 196
+    assert atc["article_mapped_events"]["count"] == 153
+    assert atc["article_reference_extrema_check"]["status"] == "passed"
+    assert atc["article_mapped_events"]["minimum"]["experiment_id"] == "#1_6"
+    assert atc["article_mapped_events"]["minimum"]["sampling_id"] == "B14"
+    assert atc["article_mapped_events"]["maximum"]["experiment_id"] == "#2_4"
+    assert atc["article_mapped_events"]["maximum"]["sampling_id"] == "A7_D7"
+    assert atc["all_dataset_events"]["maximum"]["experiment_id"] == "#1_1"
