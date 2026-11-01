@@ -200,25 +200,34 @@ def test_le_theoreme_gz1_egalise_navigation_et_front() -> None:
 
 
 def test_la_commande_radiale_remplit_exactement_la_boule() -> None:
-    """La commande radiale atteint tout rayon relatif entre 0 et R(t)."""
+    """La commande radiale atteint chaque déplacement relatif de norme ≤ R(t)."""
     # Given — un instant d'expansion et une direction unitaire fixe.
     t = 50.0
     direction = np.array([0.6, 0.8, 0.0])
     rayon = _rayon(t)
-    # When — on utilise une fraction du budget de déplacement radial.
+    pas = 1.0e-6
+    # When — on construit la commande associée à plusieurs points de la boule.
     for fraction in (0.0, 0.5, 1.0):
-        if fraction == 0.0:
-            commande = lambda tau: np.zeros(3)
-        else:
-            commande = lambda tau: fraction * direction * _vitesse(tau)
-        # Then — la borne est respectée aux instants testés.
+        z = fraction * rayon * direction
+
+        def commande(tau: float) -> np.ndarray:
+            if fraction == 0.0:
+                return np.zeros(3)
+            return (z / rayon) * _vitesse(tau)
+
+        def primitive(tau: float) -> np.ndarray:
+            return (z / rayon) * _rayon(tau)
+
+        # Then — la commande respecte la borne et dérive bien de la primitive.
         for tau in (1.0, 10.0, 25.0, t):
             assert float(np.linalg.norm(commande(tau))) <= _vitesse(tau) + 1e-12
-        # Then — l'intégrale exacte donne le point intérieur ou de frontière.
-        deplacement = fraction * rayon * direction
-        assert float(np.linalg.norm(deplacement)) == pytest.approx(fraction * rayon)
-    # Then — une demande extérieure excède nécessairement le budget disponible.
-    assert 1.1 * rayon > rayon
+            derivee = (primitive(tau + pas) - primitive(tau - pas)) / (2.0 * pas)
+            np.testing.assert_allclose(derivee, commande(tau), atol=1e-6)
+        # Then — la primitive passe de zéro à z sur [0, t].
+        np.testing.assert_allclose(primitive(t), z, atol=1e-12)
+    # Then — un point extérieur demanderait une commande au-delà de la borne.
+    z_exterieur = 1.1 * rayon * direction
+    assert float(np.linalg.norm((z_exterieur / rayon) * _vitesse(10.0))) > _vitesse(10.0)
 
 
 def test_une_cible_hors_de_portee_n_est_jamais_atteinte() -> None:
