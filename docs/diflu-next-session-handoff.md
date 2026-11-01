@@ -90,7 +90,7 @@ Au dernier inventaire, les branches distantes sont :
 | `fix/vectorized-core-bool-boundaries-2026-10-30` | Supersédée par les contrats plus stricts et tests de `main` | Supprimer |
 | `rebase/edp-overflow-on-current-bool-2026-10-30` | Doublon exact de `fix/complex-inputs-concentration-edp-2026-10-30` | Supprimer |
 
-**Conclusion de l'audit : aucune branche de travail listée ne justifie une PR supplémentaire à conserver.** Les quatre PR de code #441–#444 ont été ouvertes en brouillon pour contrôler leur delta, puis fermées après vérification que `main` contenait déjà une version plus complète. La PR documentaire #445 a été fermée pour la même raison. Il n'y a donc actuellement aucune PR ouverte.
+**Conclusion de l'audit : aucune branche de travail listée ne justifie une PR supplémentaire à conserver.** Les quatre PR de code #441–#444 ont été ouvertes en brouillon pour contrôler leur delta, puis fermées après vérification que `main` contenait déjà une version plus complète. La PR documentaire #445 a été fermée pour la même raison. La seule PR ouverte après cet audit est la présente PR documentaire [#446](https://github.com/JM-Brun/J-DriftX/pull/446).
 
 ### Nettoyage Git restant
 
