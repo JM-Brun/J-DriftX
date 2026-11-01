@@ -28,15 +28,15 @@ def modele() -> ModeleGZ1:
 
 def test_parametres_et_domaines_sont_valides() -> None:
     """Les scalaires non positifs et coordonnées non réelles sont refusés."""
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Masse"):
         ModeleGZ1(masse=0.0, seuil=1.0, diffusivite=1.0)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Seuil"):
         ModeleGZ1(masse=1.0, seuil=float("nan"), diffusivite=1.0)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="vent"):
         ModeleGZ1(masse=1.0, seuil=1.0, diffusivite=1.0, vent=(1.0, 2.0, float("inf")))
-    with pytest.raises(ValueError):
-        modele = ModeleGZ1(masse=1.0, seuil=1.0, diffusivite=1.0)
-        modele.rayon(0.0)
+    modele_invalide = ModeleGZ1(masse=1.0, seuil=1.0, diffusivite=1.0)
+    with pytest.raises(ValueError, match="Temps"):
+        modele_invalide.rayon(0.0)
 
 
 def test_t_etoile_et_extinction_sont_coherents(modele: ModeleGZ1) -> None:
@@ -47,9 +47,9 @@ def test_t_etoile_et_extinction_sont_coherents(modele: ModeleGZ1) -> None:
     assert modele.rayon(modele.t_extinction) == pytest.approx(0.0, abs=1e-12)
     assert modele.rayon(0.9 * t_star) < modele.rayon_maximal
     assert modele.rayon(1.1 * t_star) < modele.rayon_maximal
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="expansion"):
         modele.vitesse_expansion(1.01 * t_star)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="atteignable"):
         modele.ensemble_atteignable((0.0, 0.0, 0.0), 1.01 * t_star)
 
 
@@ -96,14 +96,18 @@ def test_front_et_fonction_de_valeur_hj_ont_le_plateau_nul(modele: ModeleGZ1) ->
     centre = np.asarray(modele.origine) + np.asarray(modele.vent) * t
     rayon = modele.rayon(t)
     assert modele.valeur_hj(tuple(centre), t) == 0.0
-    assert modele.valeur_hj(tuple(centre + 0.5 * rayon * np.array([1.0, 0.0, 0.0])), t) == 0.0
+    assert modele.valeur_hj(
+        tuple(centre + 0.5 * rayon * np.array([1.0, 0.0, 0.0])), t
+    ) == 0.0
     assert modele.valeur_hj(
         tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t
     ) == pytest.approx(0.0)
     assert modele.valeur_hj(
         tuple(centre + 2.0 * rayon * np.array([1.0, 0.0, 0.0])), t
     ) == pytest.approx(rayon)
-    assert modele.ensemble_atteignable(tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t)
+    assert modele.ensemble_atteignable(
+        tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t
+    )
     assert not modele.ensemble_atteignable(
         tuple(centre + 1.01 * rayon * np.array([1.0, 0.0, 0.0])), t
     )
@@ -116,14 +120,13 @@ def test_commande_radiale_respecte_la_borne_et_atteint_la_cible(modele: ModeleGZ
     for temps in (0.1 * temps_final, 0.5 * temps_final, temps_final):
         commande = np.asarray(modele.commande_radiale(tuple(z), temps_final, temps))
         assert np.linalg.norm(commande) <= modele.vitesse_expansion(temps) + 1e-12
-        primitive = z / modele.rayon(temps_final) * modele.rayon(temps)
         pas = 1e-6 * temps
         primitive_plus = z / modele.rayon(temps_final) * modele.rayon(temps + pas)
         primitive_moins = z / modele.rayon(temps_final) * modele.rayon(temps - pas)
         derivee = (primitive_plus - primitive_moins) / (2.0 * pas)
         np.testing.assert_allclose(commande, derivee, rtol=2e-8, atol=1e-9)
     assert np.linalg.norm(z / modele.rayon(temps_final) * modele.rayon(temps_final) - z) < 1e-12
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="hors de la boule"):
         modele.commande_radiale(
             (2.0 * modele.rayon(temps_final), 0.0, 0.0), temps_final, temps_final
         )
@@ -148,9 +151,9 @@ def test_randers_est_restreint_au_regime_sous_critique(modele: ModeleGZ1) -> Non
                 haut = milieu
         t_z = 0.5 * (bas + haut)
     assert t_z is not None
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Randers régulier"):
         modele.jauge_randers(tuple(vitesse), t_z * (1.0 + 1e-8))
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Randers"):
         modele.jauge_randers(tuple(vitesse), 0.9 * modele.t_etoile)
 
 
@@ -187,11 +190,11 @@ def test_premier_contact_vent_non_nul_selectionne_la_premiere_racine() -> None:
 
 def test_validation_expresse_des_domaines_randers_et_contact(modele: ModeleGZ1) -> None:
     """Les domaines hors hypothèses ne sont pas silencieusement extrapolés."""
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Temps"):
         modele.jauge_randers((1.0, 0.0, 0.0), 0.0)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="contact"):
         modele.fonction_contact((1.0, 0.0, 0.0), modele.t_etoile * 1.01)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="valeur HJ"):
         modele.valeur_hj((1.0, 0.0, 0.0), modele.t_etoile * 1.01)
 
 
