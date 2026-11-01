@@ -67,6 +67,10 @@ website:
                 text: "Métrique travel-time"
               - href: theorie/metriques-non-riemanniennes.qmd
                 text: "Métriques non riemanniennes"
+          - section: "Navigation et fronts de contrôlabilité"
+            contents:
+              - href: theorie/navigation-fronts-controllabilite.qmd
+                text: "Zermelo, fronts et Hamilton–Jacobi"
           - section: "Calibration et perspectives"
             contents:
               - href: theorie/assimilation-identification.qmd
