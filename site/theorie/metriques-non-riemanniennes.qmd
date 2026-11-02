@@ -19,6 +19,19 @@ Cette page intervient **après la définition du travel-time** : elle classe les
 
 Pour les définitions et le contre-exemple de cisaillement, revenir à [Métrique travel-time](metrique-travel-time.qmd). Pour les preuves et contre-exemples complets, consulter [l’investigation G0-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) et, pour l’état d’implémentation (cas analytiques couverts, fonctions concernées, limites des tests), la [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md). **Étape suivante :** pour les hypothèses exactes des résultats conditionnels — conservation, théorème de la divergence — et la comparaison détaillée aux formulations voisines, poursuivre vers la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd).
 
+## Repère rapide : quatre objets à ne pas confondre
+
+| Objet | Ce qui est mesuré | Direction / contrôle | Statut dans J-DriftX |
+|---|---|---|---|
+| $T_\\gamma$ | Coût intégré le long d'une courbe prescrite | Courbe fixée ; le vent ne choisit pas la trajectoire | Intégrale définie sur la courbe |
+| $T_{\\mathrm{arr}}$ | Premier instant où une trajectoire passive atteint la cible | Trajectoire imposée par le champ ; pas de contrôle latéral | Cas 1D constant traité ; généralisation conditionnelle |
+| $T_{\\mathrm{proj}}$ | Temps jusqu'à la projection de la cible sur une caractéristique | Décalage transversal non pénalisé | Construction historique ; séparation et triangle peuvent échouer |
+| $T_{\\mathrm{nav}}$ | Temps minimal d'un mobile contrôlé | Le mobile choisit une commande admissible | Navigation de Zermelo ; Randers régulière seulement si $\\lVert u\\rVert<c$ |
+
+**À retenir.** Une boule unité décentrée illustre une géométrie directionnelle, mais ne suffit pas à classer $T_{\\mathrm{proj}}$ comme quasi-métrique ou Finsler. La construction projetée doit être jugée sur ses propres axiomes ; la géométrie de Randers appartient au problème distinct de navigation contrôlée.
+
+Le schéma de projection et son contre-exemple triangulaire, déjà présent sur la page [Métrique travel-time](metrique-travel-time.qmd), est le visuel de référence pour comprendre $T_{\\mathrm{proj}}$. Le schéma des boules ci-dessous sert uniquement à comparer des formes géométriques abstraites.
+
 ## Riemannien, non riemannien : de quoi parle-t-on ?
 
 Une métrique **riemannienne** mesure les longueurs à l'aide d'un produit scalaire $g(\mathbf{x})$ qui varie doucement d'un point à l'autre : $ds^2 = g_{ij}\, dx^i dx^j$. La distance euclidienne du plan en est le cas particulier le plus simple. Elle est **symétrique et réversible** : la longueur d'un chemin ne dépend pas du sens dans lequel on le parcourt.
@@ -33,9 +46,14 @@ Les familles ci-dessous ne sont pas interchangeables. En particulier, une pseudo
 | Distance-temps réseau | Le coût est défini sur un réseau (routes, rails) | Isochrones d'un réseau de transport |
 | Métrique de maillage | La longueur est pondérée par un tenseur anisotrope $M(\mathbf{x})$ | Adaptation de maillage [@borouchaki1997delaunay] |
 
-![Trois boules unités : euclidienne (cercle), riemannienne (ellipse symétrique), non riemannienne (ovale décentré).](../images/boules-unites-metriques.svg)
+![Comparaison illustrative d'une boule euclidienne, d'une boule riemannienne anisotrope et d'une boule de Randers non réversible. Cette figure ne classe pas la construction projetée historique de Drift-X.](../images/boules-unites-metriques.svg)
 
 ## L'ancrage géographique : les distances-temps de Muller (1979)
+
+::: {.callout-note collapse="true"}
+**Approfondissement — analogie géographique et construction historique**
+
+
 
 L'idée que les postulats de la géométrie euclidienne sont souvent inapplicables en géographie humaine est ancienne. Jean-Claude Muller la formalise pour la cartographie : les distances et localisations géographiques **ne sont pas uniques** et varient suivant le type d'espace envisagé — économique, social, culturel ou mental ; parfois même, la métrique de ces espaces est **inconnue ou incomplète** [@muller1979persee]. Sa réponse : cartographier une métrique non euclidienne, la **distance-temps** — le temps de parcours du réseau de transport plutôt que les mètres au sol — et en accepter les déformations (isochrones, anamorphoses).
 
@@ -49,18 +67,34 @@ La construction historique a donc une dégénérescence transversale assumée : 
 
 ![Quasi-distance de Drift-X : τ(source→A) fini sur la ligne de courant, τ(A→source) = ∞ ; d(B,A) = ∞ si A est en amont de B.](../images/metrique-non-symetrique.svg)
 
+:::
+
 ## Le lien mathématique : navigation de Zermelo et métriques de Finsler
+
+::: {.callout-note collapse="true"}
+**Approfondissement — navigation contrôlée et géométrie de Randers**
+
+
 
 Le problème de **Zermelo** (1931) demande le chemin le plus rapide d'un point à un autre pour un mobile de vitesse propre fixe naviguant dans un **courant**. Sous les hypothèses usuelles de vitesse propre et de courant, sa formulation conduit à une géométrie de **Randers**, cas particulier des métriques de Finsler : la longueur effective dépend de la direction et naviguer avec le courant peut coûter moins cher que contre lui. Cela décrit un navigateur contrôlable, pas directement un traceur passif.
 
 Un traceur passif en advection pure suit le champ de vitesse; il ne choisit pas librement une direction comme le navigateur de Zermelo. Pour des points non situés sur la même trajectoire orientée, le temps advectif peut être non défini; le poser égal à $+\infty$ est une convention de coût étendu qui doit être explicitée. Cette formulation n'est donc pas automatiquement une métrique de Randers, ni une métrique finie. La non-symétrie découle ici de l'accessibilité orientée, pas simplement de la non-uniformité du champ.
 
+:::
+
 ## Analogies utiles et hypothèse d'apport
+
+::: {.callout-note collapse="true"}
+**Approfondissement — analogies et hypothèses de contribution**
+
+
 
 - **Analogie géographique** [@muller1979persee] : la distance pertinente peut être le temps de parcours plutôt que les mètres au sol ; la carte se déforme pour représenter cette mesure (isochrones, anamorphoses). Ce rapprochement n'établit pas de filiation historique directe avec Drift-X.
 - **Analogie numérique** [@borouchaki1997delaunay] : dans les deux domaines, une structure géométrique adaptée au problème peut guider le calcul. Cette analogie ne constitue ni une technologie transférée ni une filiation historique démontrée.
 - **Hypothèse d'apport Drift-X à établir** : une représentation de temps de transport reconstruite à partir d'un champ de vent, avec des propriétés de conservation et une évaluation ponctuelle à formaliser. Ces propriétés ne découlent pas du seul vocabulaire de métrique; elles demandent une dérivation, des hypothèses explicites et des cas de vérification.
 
 La définition exacte, les propriétés à vérifier et la comparaison aux formulations voisines sont discutées dans la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd). Voir aussi la page [Métrique travel-time](metrique-travel-time.qmd).
+
+:::
 
 **Traçabilité de l'implémentation.** Les propriétés de la définition historique ne doivent pas être attribuées automatiquement au prototype Python. La [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) précise les cas analytiques couverts, les fonctions concernées et les limites des tests.

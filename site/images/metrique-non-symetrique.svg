@@ -8,8 +8,8 @@
     </marker>
   </defs>
   <rect width="900" height="430" fill="#ffffff"/>
-  <text x="30" y="34" font-size="20" font-weight="bold" fill="#202124">Quasi-distance de Drift-X — la métrique a un sens</text>
-  <text x="30" y="56" font-size="13" fill="#5f6368">On ne remonte pas le vent : τ(A→B) est fini sur la ligne de courant, τ(B→A) = ∞ en amont.</text>
+  <text x="30" y="34" font-size="20" font-weight="bold" fill="#202124">Pseudo-distance projetée — le coût dépend du sens du transport</text>
+  <text x="30" y="56" font-size="13" fill="#5f6368">Le transport passif suit le vent : le coût aval peut être fini, le retour amont inaccessible.</text>
   <g stroke="#4285f4" stroke-width="2">
     <line x1="42" y1="110" x2="90" y2="110" marker-end="url(#fleche-v)"/>
     <line x1="42" y1="150" x2="104" y2="150" marker-end="url(#fleche-v)"/>
