@@ -62,53 +62,6 @@ Cette version est une revue structurée, mais la méthode n'est pas encore enti�
 - Les travaux sur les jumeaux numériques urbains (feu/fumée, 2025) et la session SICC/CBRNe 2026 documentent des applications ou propositions associant simulation, données et aide à la décision dans des contextes particuliers. Ils ne suffisent pas à établir un consensus général ni une exigence EU AI Act uniforme pour toutes ces applications. Pour J-DriftX, l'auditabilité d'un modèle contraint par la physique est un avantage potentiel à démontrer, pas un résultat acquis.
 - Des chaînes combinant prévisions ECMWF et dispersion CBRN sont documentées, par exemple CbrnAlert dans l'European Weather Cloud, qui utilise FLEXPART et des prévisions ECMWF récentes. Cela établit la faisabilité d'une intégration de ce type, pas que « données météo ouvertes → modèle rapide → tableau de bord » serait universellement le meilleur format ([présentation du cas CbrnAlert](https://www.europeanweather.cloud/use-cases/cbrnalert-web-application-near-real-time-dispersion-modelling-cbrn-releases)).
 
-## Synthèse : positionnement de J-DriftX en 2026
-
-| Dimension | État de l'art 2026 | Apport de J-DriftX |
-|---|---|---|
-| Réduction | Familles hétérogènes : ROM, surrogates, modèles analytiques et apprentissage | Hypothèse de réduction a priori par similitude, à formaliser et comparer |
-| Coût | Coûts variables selon méthode, préparation, calibration et inférence | Coût complet et précision de J-DriftX non mesurés |
-| Far-field dérive | L'EPA documente des limites dans des scénarios précis ; AGDISP est en cours de modernisation | Hypothèse de traitement du terrain et du transport dirigé à tester |
-| Calibration | Assimilation/ML matures | Assimilation de données partielles (déjà dans Drift-X) à moderniser (bayésien) |
-| STE | Plusieurs familles de méthodes inverses existent ; le choix dépend du problème | Applicabilité et calcul d'un adjoint pour J-DriftX à démontrer |
-| SIG | Plugins QGIS gaussiens multiples | Cœur Python + plugin QGIS, standard attendu |
-
-**Conclusion provisoire : les résultats de cette revue ciblée justifient de poursuivre l'investigation, mais la nouveauté, la robustesse et la valeur prédictive de J-DriftX restent à démontrer par des benchmarks reproductibles.** Dans les sources examinées, cette passe n'a pas établi si l'idée exacte a été reprise ou réfutée ; l'absence de résultat identifié ne prouve ni l'une ni l'autre. Les domaines applicatifs et l'écosystème méthodologique (assimilation, STE, benchmarks) offrent des pistes de validation, mais ne garantissent ni la nouveauté ni l'utilité du modèle.
-
-## Notes de sources
-
-| Source | Type de source / limite de lecture | Année de publication ou version |
-|---|---|---|
-| [Federal Register — Appendix W / AERMOD (US EPA)](https://www.federalregister.gov/documents/2024/11/29/2024-27636/guideline-on-air-quality-models-enhancements-to-the-aermod-dispersion-modeling-system) | Texte réglementaire officiel ; source primaire pour la règle publiée | 2024 |
-| [US EPA — Alternative Models (statut CALPUFF)](https://www.epa.gov/scram/air-quality-dispersion-modeling-alternative-models) | Page institutionnelle officielle ; vérifier la version/date en cas de citation de statut historique | — |
-| [US EPA — Guidance AGDISP-Gaussian Extension](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension) | Guidance institutionnelle primaire de 2010 ; conclusions bornées aux scénarios indiqués | 2010 (page mise à jour 2026) |
-| [AgAir Update — modernisation AGDISP / AMP](https://agairupdate.com/2026/03/09/bayer-crop-science-joins-ag-industry-efforts-to-modernize-spray-drift-model-used-by-pesticide-regulators/) | Presse professionnelle / annonce de projet ; recouper les résultats techniques avec les livrables AMP | 2026 |
-| [Sci. Total Environ. — validation AGDISPpro drones](https://www.sciencedirect.com/science/article/pii/S0048969725003596) | Article scientifique éditeur ; conclusions limitées au protocole étudié | 2025 |
-| [NCASI TB808 — historique AGDISP/AgDRIFT](https://ncasi.org/wp-content/uploads/2011/11/tb808.pdf) | Rapport technique secondaire ; contrôler les affirmations historiques contre les sources citées | 2007 |
-| [HAL — ROM POD-GPR dispersion micro-échelle](https://hal.science/hal-04310899/document) | Dépôt institutionnel annoncé ; texte et nombre de snapshots non contrôlés dans cette passe | 2024 |
-| [CMAME — ROM physique pollution urbaine](https://www.sciencedirect.com/science/article/abs/pii/S0045782523005406) | Notice éditeur ; contenu méthodologique à vérifier dans le texte intégral | 2024 |
-| [ResearchGate — ROM Arnoldi built environment](https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment) | Copie/notice secondaire ; les métadonnées sont recoupées avec DOI et source institutionnelle | 2015 |
-| [SERRA — surrogate FNO panache radioactif](https://link.springer.com/article/10.1007/s00477-024-02738-8) | Article évalué par les pairs ; chiffres de performance bornés au protocole et aux simulations WSPEEDI | 2024 |
-| [CEA/HAL — MCxM 3D deep learning dispersion](https://cea.hal.science/cea-04810109/document) | Dépôt institutionnel ; statut éditorial et détails à vérifier dans le document | 2024 |
-| [SERRA — surrogate accidents Seveso](https://link.springer.com/article/10.1007/s00477-022-02288-x) | Article éditeur ; publication en ligne et année du volume distinguées | 2023 (en ligne 2022) |
-| [Information Fusion — revue STE](https://www.sciencedirect.com/science/article/pii/S156625351630152X) | Article de revue évalué par les pairs ; revue de littérature, non preuve indépendante de chaque méthode citée | 2017 |
-| [JAMES — renormalisation / STE](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014MS000385) | Article évalué par les pairs ; référence bibliographique corrigée en 2014 | 2014 |
-| [NARAC / LLNL — STE opérationnel](https://narac.llnl.gov/research-and-development/source-term-estimation) | Page institutionnelle ; description de capacité opérationnelle, pas comparaison indépendante | — |
-| [Shafiyev et al. — Source Term Estimation for Atmospheric Pollutant Releases](https://zenodo.org/records/22914336) | Ressource Zenodo ; évaluation par les pairs non établie ici, à corroborer par les sources primaires | 2026-09-22 |
-| [Appl. Sci. — modèle QGIS gaussien 2026](https://www.mdpi.com/2076-3417/16/4/1833) | Article éditeur ; conclusions limitées à l'étude décrite | 2026 |
-| [GitHub — plugin QGIS éducatif gaussien](https://github.com/Sebapac90/qgis-educational-gaussian-plume) | Dépôt logiciel communautaire ; utile comme preuve d'existence d'un outil, pas comme validation scientifique | 2025 |
-| [Teggi et al. — modèle CAREA pour sources complexes](https://doi.org/10.1016/j.scitotenv.2017.07.196) | Article évalué par les pairs ; modèle CAREA pour sources complexes | 2018 |
-| [Costanzini et al. — exposition aux pesticides avec CAREA](https://doi.org/10.3390/atmos9020038) | Article évalué par les pairs ; étude applicative distincte de la description du modèle CAREA | 2018 |
-| [PMC — digital twin urbain feu/fumée](https://pmc.ncbi.nlm.nih.gov/articles/PMC12513986/) | Article accessible via PMC ; statut éditorial et portée de l'exemple à vérifier au texte | 2025 |
-| [SICC 2026 — session IA/Digital Twins CBRNe](https://www.sicc-series.com/technical-and-poster-sessions/session-3-artificial-intelligence-digital-twins-decision-support-in-cbrne-risk-management/) | Programme de conférence ; preuve d'une session, pas d'un consensus scientifique | 2026 |
-| [European Weather Cloud — CbrnAlert (FLEXPART + prévisions ECMWF)](https://www.europeanweather.cloud/use-cases/cbrnalert-web-application-near-real-time-dispersion-modelling-cbrn-releases) | Cas d'usage institutionnel ; atteste une architecture déployée, pas sa supériorité générale | — |
-| [EM-Consulte — CR Mécanique 334 (Mohammadi & Brun)](https://www.em-consulte.com/article/69927) | Notice éditeur de l'article primaire de 2006 | 2006 |
-| [HAL — Drift-X / GIS-based model](https://hal.science/hal-00468863) | Manuscrit auteur en archive ouverte ; version et article de revue à distinguer | 2009 (version JESA 2010) |
-| [Springer — chapitre Brun & Mohammadi 2008](https://link.springer.com/chapter/10.1007/978-1-4020-8758-5_14) | Notice éditeur confirmée ; seuls résumé et extrait p. 245–246 consultés dans cette passe | 2008 |
-
-**Conflits et réserves** : les évaluations de CALPUFF vs AERMOD divergent selon les études (meilleure corrélation CALPUFF sur les tracer studies, mais facteurs 2 d'écart résiduels) ; les sources presse spécialisée (AgAir Update) sont à reconfirmer par les publications de l'AMP ; la ressource Zenodo publiée en 2026 n'est pas présentée ici comme revue évaluée par les pairs.
-
-
 ### 7. Modèles lagrangiens, turbulence et baselines complémentaires
 
 La comparaison des modèles doit distinguer les **formulations physiques**, les **logiciels**, les **wrappers** et les **cadres génériques**. Les références ajoutées dans cette passe complètent les entrées FLEXPART v11, OpenDrift v1.0, PyAERMOD et la documentation EPA AERMOD déjà présentes dans la branche.
@@ -159,6 +112,53 @@ Les notices, DOI, descriptions de contenu et limites d'accès sont consignés da
 5. JU2003 et GRAL uniquement si le périmètre J-DriftX s'étend aux obstacles et aux écoulements urbains.
 
 Avant tout classement, fixer les observables, unités, métriques, stratification des régimes, règles d'exclusion, indépendance calibration/validation et coûts de préparation/calcul. Cette séquence est un plan d'investigation, pas un résultat de validation.
+
+## Synthèse : positionnement de J-DriftX en 2026
+
+| Dimension | État de l'art 2026 | Apport de J-DriftX |
+|---|---|---|
+| Réduction | Familles hétérogènes : ROM, surrogates, modèles analytiques et apprentissage | Hypothèse de réduction a priori par similitude, à formaliser et comparer |
+| Coût | Coûts variables selon méthode, préparation, calibration et inférence | Coût complet et précision de J-DriftX non mesurés |
+| Far-field dérive | L'EPA documente des limites dans des scénarios précis ; AGDISP est en cours de modernisation | Hypothèse de traitement du terrain et du transport dirigé à tester |
+| Calibration | Assimilation/ML matures | Assimilation de données partielles (déjà dans Drift-X) à moderniser (bayésien) |
+| STE | Plusieurs familles de méthodes inverses existent ; le choix dépend du problème | Applicabilité et calcul d'un adjoint pour J-DriftX à démontrer |
+| SIG | Plugins QGIS gaussiens multiples | Cœur Python + plugin QGIS, standard attendu |
+
+**Conclusion provisoire : les résultats de cette revue ciblée justifient de poursuivre l'investigation, mais la nouveauté, la robustesse et la valeur prédictive de J-DriftX restent à démontrer par des benchmarks reproductibles.** Dans les sources examinées, cette passe n'a pas établi si l'idée exacte a été reprise ou réfutée ; l'absence de résultat identifié ne prouve ni l'une ni l'autre. Les domaines applicatifs et l'écosystème méthodologique (assimilation, STE, benchmarks) offrent des pistes de validation, mais ne garantissent ni la nouveauté ni l'utilité du modèle.
+
+## Notes de sources
+
+| Source | Type de source / limite de lecture | Année de publication ou version |
+|---|---|---|
+| [Federal Register — Appendix W / AERMOD (US EPA)](https://www.federalregister.gov/documents/2024/11/29/2024-27636/guideline-on-air-quality-models-enhancements-to-the-aermod-dispersion-modeling-system) | Texte réglementaire officiel ; source primaire pour la règle publiée | 2024 |
+| [US EPA — Alternative Models (statut CALPUFF)](https://www.epa.gov/scram/air-quality-dispersion-modeling-alternative-models) | Page institutionnelle officielle ; vérifier la version/date en cas de citation de statut historique | — |
+| [US EPA — Guidance AGDISP-Gaussian Extension](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension) | Guidance institutionnelle primaire de 2010 ; conclusions bornées aux scénarios indiqués | 2010 (page mise à jour 2026) |
+| [AgAir Update — modernisation AGDISP / AMP](https://agairupdate.com/2026/03/09/bayer-crop-science-joins-ag-industry-efforts-to-modernize-spray-drift-model-used-by-pesticide-regulators/) | Presse professionnelle / annonce de projet ; recouper les résultats techniques avec les livrables AMP | 2026 |
+| [Sci. Total Environ. — validation AGDISPpro drones](https://www.sciencedirect.com/science/article/pii/S0048969725003596) | Article scientifique éditeur ; conclusions limitées au protocole étudié | 2025 |
+| [NCASI TB808 — historique AGDISP/AgDRIFT](https://ncasi.org/wp-content/uploads/2011/11/tb808.pdf) | Rapport technique secondaire ; contrôler les affirmations historiques contre les sources citées | 2007 |
+| [HAL — ROM POD-GPR dispersion micro-échelle](https://hal.science/hal-04310899/document) | Dépôt institutionnel annoncé ; texte et nombre de snapshots non contrôlés dans cette passe | 2024 |
+| [CMAME — ROM physique pollution urbaine](https://www.sciencedirect.com/science/article/abs/pii/S0045782523005406) | Notice éditeur ; contenu méthodologique à vérifier dans le texte intégral | 2024 |
+| [ResearchGate — ROM Arnoldi built environment](https://www.researchgate.net/publication/277338242_Stable_reduced-order_models_for_pollutant_dispersion_in_the_built_environment) | Copie/notice secondaire ; les métadonnées sont recoupées avec DOI et source institutionnelle | 2015 |
+| [SERRA — surrogate FNO panache radioactif](https://link.springer.com/article/10.1007/s00477-024-02738-8) | Article évalué par les pairs ; chiffres de performance bornés au protocole et aux simulations WSPEEDI | 2024 |
+| [CEA/HAL — MCxM 3D deep learning dispersion](https://cea.hal.science/cea-04810109/document) | Dépôt institutionnel ; statut éditorial et détails à vérifier dans le document | 2024 |
+| [SERRA — surrogate accidents Seveso](https://link.springer.com/article/10.1007/s00477-022-02288-x) | Article éditeur ; publication en ligne et année du volume distinguées | 2023 (en ligne 2022) |
+| [Information Fusion — revue STE](https://www.sciencedirect.com/science/article/pii/S156625351630152X) | Article de revue évalué par les pairs ; revue de littérature, non preuve indépendante de chaque méthode citée | 2017 |
+| [JAMES — renormalisation / STE](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014MS000385) | Article évalué par les pairs ; référence bibliographique corrigée en 2014 | 2014 |
+| [NARAC / LLNL — STE opérationnel](https://narac.llnl.gov/research-and-development/source-term-estimation) | Page institutionnelle ; description de capacité opérationnelle, pas comparaison indépendante | — |
+| [Shafiyev et al. — Source Term Estimation for Atmospheric Pollutant Releases](https://zenodo.org/records/22914336) | Ressource Zenodo ; évaluation par les pairs non établie ici, à corroborer par les sources primaires | 2026-09-22 |
+| [Appl. Sci. — modèle QGIS gaussien 2026](https://www.mdpi.com/2076-3417/16/4/1833) | Article éditeur ; conclusions limitées à l'étude décrite | 2026 |
+| [GitHub — plugin QGIS éducatif gaussien](https://github.com/Sebapac90/qgis-educational-gaussian-plume) | Dépôt logiciel communautaire ; utile comme preuve d'existence d'un outil, pas comme validation scientifique | 2025 |
+| [Teggi et al. — modèle CAREA pour sources complexes](https://doi.org/10.1016/j.scitotenv.2017.07.196) | Article évalué par les pairs ; modèle CAREA pour sources complexes | 2018 |
+| [Costanzini et al. — exposition aux pesticides avec CAREA](https://doi.org/10.3390/atmos9020038) | Article évalué par les pairs ; étude applicative distincte de la description du modèle CAREA | 2018 |
+| [PMC — digital twin urbain feu/fumée](https://pmc.ncbi.nlm.nih.gov/articles/PMC12513986/) | Article accessible via PMC ; statut éditorial et portée de l'exemple à vérifier au texte | 2025 |
+| [SICC 2026 — session IA/Digital Twins CBRNe](https://www.sicc-series.com/technical-and-poster-sessions/session-3-artificial-intelligence-digital-twins-decision-support-in-cbrne-risk-management/) | Programme de conférence ; preuve d'une session, pas d'un consensus scientifique | 2026 |
+| [European Weather Cloud — CbrnAlert (FLEXPART + prévisions ECMWF)](https://www.europeanweather.cloud/use-cases/cbrnalert-web-application-near-real-time-dispersion-modelling-cbrn-releases) | Cas d'usage institutionnel ; atteste une architecture déployée, pas sa supériorité générale | — |
+| [EM-Consulte — CR Mécanique 334 (Mohammadi & Brun)](https://www.em-consulte.com/article/69927) | Notice éditeur de l'article primaire de 2006 | 2006 |
+| [HAL — Drift-X / GIS-based model](https://hal.science/hal-00468863) | Manuscrit auteur en archive ouverte ; version et article de revue à distinguer | 2009 (version JESA 2010) |
+| [Springer — chapitre Brun & Mohammadi 2008](https://link.springer.com/chapter/10.1007/978-1-4020-8758-5_14) | Notice éditeur confirmée ; seuls résumé et extrait p. 245–246 consultés dans cette passe | 2008 |
+
+**Conflits et réserves** : les évaluations de CALPUFF vs AERMOD divergent selon les études (meilleure corrélation CALPUFF sur les tracer studies, mais facteurs 2 d'écart résiduels) ; les sources presse spécialisée (AgAir Update) sont à reconfirmer par les publications de l'AMP ; la ressource Zenodo publiée en 2026 n'est pas présentée ici comme revue évaluée par les pairs.
+
 
 ## Questions ouvertes
 
