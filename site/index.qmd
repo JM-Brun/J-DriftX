@@ -67,11 +67,8 @@ Une définition mathématique, une démonstration sous hypothèses, un test logi
 
 Pour examiner précisément les hypothèses, la portée des tests et les limites de conclusion, consulter le [registre des preuves](projet/registre-preuves.qmd), le [guide de lecture des statuts de preuve](projet/carte-articulation.qmd#statut-affirmation), les [limites du modèle](hypotheses/limites.qmd) et le [positionnement dans l'état de l'art](etat-art/positionnement.qmd).
 
-## Explorer par sujet
+## Explorer la documentation
 
-- **Le projet et son héritage** — [Drift-X (2006–2009)](projet/heritage.qmd), [objectifs](projet/objectifs.qmd), [utilité scientifique](projet/utilite-scientifique.qmd).
-- **Le modèle et les mathématiques** — [niveaux de modélisation](projet/niveaux-modelisation.qmd), [solutions de similitude](theorie/similitude.qmd), [réduction a priori](theorie/reduction-a-priori.qmd), [métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd).
-- **Les preuves et les limites** — [registre des preuves](projet/registre-preuves.qmd), [qualité et tests](projet/qualite.qmd), [validation scientifique](projet/validation-scientifique.qmd), [hypothèses](hypotheses/catalogue.qmd), [limites](hypotheses/limites.qmd).
-- **Les ressources** — [panorama de l'état de l'art](etat-art/panorama.qmd), [carte des connaissances](projet/carte-connaissances.qmd), [laboratoire numérique](projet/laboratoire-interactif.qmd), [catalogue de données](projet/catalogue-donnees.qmd), [glossaire](glossaire.qmd), [références](references.qmd).
+Pour accéder directement à une question, un thème ou une ressource sans suivre le parcours de lecture, utiliser l'[index thématique et le répertoire des ressources de la carte d'articulation](projet/carte-articulation.qmd).
 
 Les questions ouvertes, investigations et tâches de validation sont suivies dans les [issues publiques du dépôt](https://github.com/JM-Brun/J-DriftX/issues). Le [README GitHub](https://github.com/JM-Brun/J-DriftX) décrit l'état de l'implémentation logicielle.
