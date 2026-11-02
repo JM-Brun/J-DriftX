@@ -30,6 +30,13 @@ Les fichiers PDF sont conservés comme documents de synthèse. Les fiches ci-des
 | Modèles lagrangiens, turbulence et validation | [Modèles lagrangiens et benchmarks](bibliographie/modeles-lagrangiens-et-benchmarks.md) | Baselines particulaires/puffs, cohérence stochastique, traceurs contrôlés et domaines de validité |
 | Métriques et analogies transverses | [Métriques et analogies](bibliographie/metriques-et-analogies.md) | Intuition mathématique transférable, sans équivalence présumée |
 
+### Complément — modèles de trajectoires et implémentations logicielles
+
+- **FLEXPART** : baseline lagrangienne particulaire (Bakels et al., 2024), directement pertinente pour comparer le transport et la dispersion sur champs météorologiques.
+- **OpenDrift** : framework générique de trajectoires (Dagestad et al., 2018), utile pour l'architecture et les trajectoires, mais pas automatiquement équivalent à un modèle de concentration atmosphérique.
+- **PyAERMOD** : wrapper Python / distribution logicielle d'AERMOD (Capps, 2026), utile pour l'interopérabilité et les essais programmatiques, sans ajouter une formulation physique indépendante.
+- **AERMOD / EPA SCRAM** : référence réglementaire, à distinguer du wrapper et de la version du code. Les pages SCRAM sont évolutives ; enregistrer la date de consultation et la version exacte utilisée.
+
 ## Champs à compléter pour chaque source
 
 1. Référence bibliographique vérifiée et DOI/URL pérenne.
