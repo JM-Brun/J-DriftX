@@ -735,12 +735,12 @@ graph LR
 | [JRC — archives de données ETEX](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
 | [Clawson et al. 2005 — JU2003](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
 
-## Hypothèses et objets conditionnés
+## Hypothèses et objets conditionnés {#hypotheses-et-objets-conditionnes}
 
 Projection du registre sur H1-H8, les concepts associés et les niveaux N0-N6. Les liens montrent des dépendances documentées, pas des implications logiques suffisantes.
 
 ```{mermaid}
-flowchart LR
+flowchart TB
   subgraph vue_concept["Concept"]
     c_transport["Équation de transport (advection-diffusion)"]::concept
     c_champ["Champ de vent stationnaire"]::concept
@@ -817,7 +817,10 @@ flowchart LR
   classDef hypothese fill:#bfe0ff,stroke:#495057,color:#212529;
 ```
 
-**Nœuds et destinations**
+<details>
+<summary>Afficher les nœuds et leurs destinations documentaires</summary>
+
+
 
 | Nœud | Type | Où approfondir |
 |---|---|---|
@@ -852,12 +855,14 @@ flowchart LR
 | H7 — données d'assimilation représentatives | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
 | H8 — superposition des sources | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
 
-## Concepts et dépendances mathématiques
+</details>
+
+## Concepts et dépendances mathématiques {#concepts-et-dependances-mathematiques}
 
 Sous-graphe des concepts : dépendances définitionnelles, constructions et usages. Les chaînes advection-diffusion et trajectoires-temps de transport restent distinctes lorsque le registre les distingue.
 
 ```{mermaid}
-flowchart LR
+flowchart TB
   subgraph vue_concept["Concept"]
     c_transport["Équation de transport (advection-diffusion)"]::concept
     c_champ["Champ de vent stationnaire"]::concept
@@ -887,7 +892,10 @@ flowchart LR
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
 ```
 
-**Nœuds et destinations**
+<details>
+<summary>Afficher les nœuds et leurs destinations documentaires</summary>
+
+
 
 | Nœud | Type | Où approfondir |
 |---|---|---|
@@ -907,12 +915,14 @@ flowchart LR
 | Maillage gouverné par métrique | Concept | [theorie/edp-et-maillage.qmd](../theorie/edp-et-maillage.qmd) |
 | Équation de Burgers | Concept | [theorie/burgers-et-jdriftx.qmd](../theorie/burgers-et-jdriftx.qmd) |
 
-## Propriétés, tests et implémentations associées
+</details>
+
+## Propriétés, tests et implémentations associées {#proprietes-tests-et-implementations-associees}
 
 Voisinage des propriétés dans le registre : modules et tests directement reliés. Un test établit uniquement le comportement couvert par son protocole, jamais une validité physique générale.
 
 ```{mermaid}
-flowchart LR
+flowchart TB
   subgraph vue_propriete["Propriété (visée ou testée)"]
     p_positivite["Positivité (famille gaussienne)"]::propriete
     p_superposition["Superposition et linéarité en débit"]::propriete
@@ -1022,7 +1032,10 @@ flowchart LR
   classDef test fill:#e9ecef,stroke:#495057,color:#212529;
 ```
 
-**Nœuds et destinations**
+<details>
+<summary>Afficher les nœuds et leurs destinations documentaires</summary>
+
+
 
 | Nœud | Type | Où approfondir |
 |---|---|---|
@@ -1062,3 +1075,6 @@ flowchart LR
 | test_reference_independante.py | Test (CI) | [test_reference_independante.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reference_independante.py) |
 | test_evaluation_puff.py | Test (CI) | [test_evaluation_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_evaluation_puff.py) |
 | test_transitoire_puff.py | Test (CI) | [test_transitoire_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_transitoire_puff.py) |
+
+
+</details>
