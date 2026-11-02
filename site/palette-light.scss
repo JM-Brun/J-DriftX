@@ -1,5 +1,32 @@
 /*-- scss:defaults --*/
-// J-DriftX brand palette — light theme.
-// Dominant grey-green chosen by the owner (2026-11-02): deep grey-green
-// #4F6B62. Contrast 5.8:1 on white (WCAG AA for normal text).
-$primary: #4F6B62;
+// J-DriftX design tokens — light theme.
+// One dominant hue (deep grey-green, owner's choice 2026-11-02) + semantic
+// accents muted to the same saturation level + neutrals tinted with the same
+// undertone. Contrast ratios computed per WCAG 2.1 against the body
+// background (#FCFDFB); text-bearing colors meet AA (>= 4.5:1).
+
+// Dominant grey-green
+$primary: #4F6B62;            // 5.7:1 (AA) — links, navigation, callout titles
+$secondary: #6E7C74;           // muted grey-green companion
+
+// Semantic accents — harmonized with the dominant hue
+$info: #46687D;                // muted blue-teal, 5.8:1
+$success: #5E7D5A;             // muted green, 4.5:1
+$warning: #8A6D3B;             // muted ochre, 4.8:1
+$danger: #9C5A57;              // muted brick, 5.1:1
+
+// Neutrals carrying the grey-green undertone
+$body-bg: #FCFDFB;             // near-white with a green undertone
+$border-color: #D9DFD9;
+$tertiary-bg: #EFF2EE;         // panels, blockquote background
+
+// Links follow the dominant hue
+$link-color: $primary;         // 5.7:1 (AA)
+$link-hover-color: #3E544C;    // 8.0:1 (AA)
+
+// Callouts — Quarto derives borders, header tints and icons from these hues
+$callout-color-note: $info;
+$callout-color-tip: $success;
+$callout-color-warning: $warning;
+$callout-color-important: #7A5C68;  // muted plum, 5.8:1 — distinct from caution
+$callout-color-caution: $danger;

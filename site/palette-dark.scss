@@ -1,5 +1,33 @@
 /*-- scss:defaults --*/
-// J-DriftX brand palette — dark theme.
-// Lighter grey-green adapted to dark backgrounds: #7C9082.
-// Contrast 5.2:1 on the dark body background (WCAG AA for normal text).
-$primary: #7C9082;
+// J-DriftX design tokens — dark theme.
+// Same palette as the light theme, systematically lifted in lightness for
+// dark surfaces; hue relationships are preserved. $body-bg is intentionally
+// NOT overridden: Quarto's dark-mode sentinel and the automatic callout
+// header shading derive from it (cf. quarto-cli #14084).
+// Contrast ratios computed per WCAG 2.1 against #222222; text-bearing
+// colors meet AA (>= 4.5:1).
+
+// Dominant grey-green, lifted for dark surfaces
+$primary: #7C9082;             // 4.7:1 (AA)
+$secondary: #9AA7A0;            // 6.4:1
+
+// Semantic accents — lightened, same muted saturation
+$info: #8FB0C2;                // 6.9:1
+$success: #93B58C;              // 7.0:1
+$warning: #C9A868;             // 7.0:1
+$danger: #D08F8B;              // 6.0:1
+
+// Neutrals carrying the grey-green undertone
+$border-color: #465049;
+$tertiary-bg: #242B26;         // tinted panels
+
+// Links follow the dominant hue
+$link-color: $primary;         // 4.7:1 (AA)
+$link-hover-color: #93A99B;    // 6.4:1 (AA)
+
+// Callouts — same semantic hues, adapted to dark surfaces
+$callout-color-note: $info;
+$callout-color-tip: $success;
+$callout-color-warning: $warning;
+$callout-color-important: #B58CA4;  // muted plum, 5.5:1
+$callout-color-caution: $danger;
