@@ -110,9 +110,7 @@ class ModeleGZ1:
     @property
     def rayon_maximal(self) -> float:
         """Rayon maximal R(t*) (m)."""
-        logarithme = 0.5 * (
-            log(6.0) + log(self.diffusivite) + log(self.t_etoile)
-        )
+        logarithme = 0.5 * (log(6.0) + log(self.diffusivite) + log(self.t_etoile))
         try:
             return exp(logarithme)
         except OverflowError as err:
@@ -136,9 +134,7 @@ class ModeleGZ1:
         facteur = 1.0 + log(self.t_etoile) - log(t)
         if facteur <= 0.0:
             return 0.0
-        logarithme_rayon = 0.5 * (
-            log(6.0) + log(self.diffusivite) + log(t) + log(facteur)
-        )
+        logarithme_rayon = 0.5 * (log(6.0) + log(self.diffusivite) + log(t) + log(facteur))
         try:
             return exp(logarithme_rayon)
         except OverflowError as err:
