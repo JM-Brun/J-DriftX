@@ -2470,3 +2470,34 @@ noeuds = [
   titre = "Niveaux visés"
   noeuds = ["n5", "n6"]
 
+
+[[graphes]]
+id = "concepts"
+titre = "Architecture conceptuelle des notions"
+description = "Vue de synthèse organisée par familles de notions : transport et dispersion, cinématique et géométrie dirigée, réduction et calcul, calibration. Les groupes structurent la lecture ; ils ne constituent pas une hiérarchie de dépendances. Seules les flèches déjà documentées dans le registre sont tracées."
+sens = "LR"
+noeuds = [
+  "c-transport", "c-champ", "c-panache", "c-stabilite", "c-burgers",
+  "c-courant", "c-fcourant", "c-tau", "c-polyligne", "c-tpa", "c-pdist",
+  "c-reduction", "c-maillage", "c-multiniveaux", "c-assimilation",
+]
+
+  [[graphes.groupes]]
+  id = "phys"
+  titre = "Transport physique et dispersion"
+  noeuds = ["c-transport", "c-champ", "c-panache", "c-stabilite", "c-burgers"]
+
+  [[graphes.groupes]]
+  id = "geom"
+  titre = "Cinématique et géométrie dirigée"
+  noeuds = ["c-courant", "c-fcourant", "c-tau", "c-polyligne", "c-tpa", "c-pdist"]
+
+  [[graphes.groupes]]
+  id = "reduc"
+  titre = "Réduction et architectures de calcul"
+  noeuds = ["c-reduction", "c-maillage", "c-multiniveaux"]
+
+  [[graphes.groupes]]
+  id = "calib"
+  titre = "Paramètres et identification"
+  noeuds = ["c-assimilation"]
