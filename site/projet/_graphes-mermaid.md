@@ -689,52 +689,6 @@ graph LR
 | N5 — expériences et données de terrain | Niveau de modélisation | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
 | N6 — calibration et aide à la décision | Niveau de modélisation | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
 
-## Où chaque référence est citée
-
-| Référence | Citée dans les pages du site |
-|---|---|
-| [Mohammadi et Brun 2006 — C. R. Mécanique](../references.qmd) | [Glossaire](../glossaire.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) |
-| [Mohammadi, Brun et Pironneau — reduced order modelling (référence non confirmée)](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
-| [Brun et Mohammadi 2008 — chapitre Springer](../references.qmd) | [Glossaire](../glossaire.qmd) · [Limites et domaines de validité](../hypotheses/limites.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) · [Modèle direct](../theorie/modele-direct.qmd) · [Réduction a priori](../theorie/reduction-a-priori.qmd) · [Solutions de similitude](../theorie/similitude.qmd) |
-| [Bozon, Mohammadi et Sinfort 2008 — e-sta](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
-| [Bozon, Sinfort et Mohammadi 2009 — Drift-X (HAL)](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
-| [Bozon et Mohammadi 2009 — Applied Geomatics](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
-| [Brun 2006 — thèse de doctorat (métadonnées à confirmer)](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) |
-| [Muller 1979 — cartographie des distances-temps](../references.qmd) | [Glossaire](../glossaire.qmd) · [Pseudo-distances, coûts orientés et géométries non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) |
-| [Mohammadi et Pironneau 2001 — Applied Shape Optimization](../references.qmd) | [Réduction a priori](../theorie/reduction-a-priori.qmd) |
-| [Borouchaki et al. 1997 — maillage de Delaunay](../references.qmd) | [EDP & maillage](../theorie/edp-et-maillage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) · [Pseudo-distances, coûts orientés et géométries non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) |
-| [Raupach et Thom 1981 — turbulence de canopée](../references.qmd) | [Solutions de similitude](../theorie/similitude.qmd) |
-| [Simpson 1997 — courants de gravité](../references.qmd) | [Solutions de similitude](../theorie/similitude.qmd) |
-| [Hutchinson et al. 2017 — estimation de terme source](../references.qmd) | [Limites et domaines de validité](../hypotheses/limites.qmd) · [Assimilation & identification](../theorie/assimilation-identification.qmd) |
-| [Turbelin et al. 2014 — renormalisation en champ moyen](../references.qmd) | [Assimilation & identification](../theorie/assimilation-identification.qmd) |
-| [Vervecken et al. 2015 — ROM de panache urbain](../references.qmd) | [liste manuelle](../references.qmd) |
-| [Ayoub et al. 2024 — plume FNO (WSPEEDI)](../references.qmd) | [liste manuelle](../references.qmd) |
-| [Trindade da Silva et al. 2021 — dispersion urbaine](../references.qmd) | [liste manuelle](../references.qmd) |
-| [Mahmud et al. 2026 — dispersion urbaine par ML](../references.qmd) | [liste manuelle](../references.qmd) |
-| [EPA 2024 — Appendix W (AERMOD)](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Bonicelli et al. 2012 — dérive des pesticides](../references.qmd) | [liste manuelle](../references.qmd) |
-| [Defra 2011 — PS2024 (exposition des riverains)](../references.qmd) | [liste manuelle](../references.qmd) |
-| [Garbaczewski et al. 1997 — équation de Burgers](../references.qmd) | [Équation de Burgers : lien avec J-DriftX](../theorie/burgers-et-jdriftx.qmd) |
-| [Scire et al. 2000 — guide CALPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
-| [Sykes et al. 1998 — documentation SCIPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
-| [Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
-| [Bakels et al. 2024 — FLEXPART version 11](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Capps 2026 — PyAERMOD 2.2.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Dagestad et al. 2018 — OpenDrift v1.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [EPA 2026 — AERMOD Modeling System](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Stein et al. 2015 — HYSPLIT](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Carruthers et al. 1994 — UK-ADMS](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Thomson 1987 — modèles stochastiques lagrangiens](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Luhar et Britter 1989 — turbulence convective inhomogène](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Andrews et al. 2013 — comparaison HYSPLIT/STILT/FLEXPART](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Rood 2014 — Winter Validation Tracer Study](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Holmes et Morawska 2006 — revue des modèles](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Öttl 2015 — validation GRAL](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [ADMLC — catalogue de jeux de dispersion](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Prairie Grass 1956 — données de terrain](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [JRC — archives de données ETEX](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-| [Clawson et al. 2005 — JU2003](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
-
 ## Hypothèses et objets conditionnés {#hypotheses-et-objets-conditionnes}
 
 Projection du registre sur H1-H8, les concepts associés et les niveaux N0-N6. Les liens montrent des dépendances documentées, pas des implications logiques suffisantes.
@@ -1065,3 +1019,49 @@ flowchart TB
 | test_evaluation_puff.py | Test (CI) | [test_evaluation_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_evaluation_puff.py) |
 | test_transitoire_puff.py | Test (CI) | [test_transitoire_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_transitoire_puff.py) |
 :::
+
+## Où chaque référence est citée
+
+| Référence | Citée dans les pages du site |
+|---|---|
+| [Mohammadi et Brun 2006 — C. R. Mécanique](../references.qmd) | [Glossaire](../glossaire.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) |
+| [Mohammadi, Brun et Pironneau — reduced order modelling (référence non confirmée)](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
+| [Brun et Mohammadi 2008 — chapitre Springer](../references.qmd) | [Glossaire](../glossaire.qmd) · [Limites et domaines de validité](../hypotheses/limites.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) · [Modèle direct](../theorie/modele-direct.qmd) · [Réduction a priori](../theorie/reduction-a-priori.qmd) · [Solutions de similitude](../theorie/similitude.qmd) |
+| [Bozon, Mohammadi et Sinfort 2008 — e-sta](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
+| [Bozon, Sinfort et Mohammadi 2009 — Drift-X (HAL)](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
+| [Bozon et Mohammadi 2009 — Applied Geomatics](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
+| [Brun 2006 — thèse de doctorat (métadonnées à confirmer)](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) |
+| [Muller 1979 — cartographie des distances-temps](../references.qmd) | [Glossaire](../glossaire.qmd) · [Pseudo-distances, coûts orientés et géométries non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) |
+| [Mohammadi et Pironneau 2001 — Applied Shape Optimization](../references.qmd) | [Réduction a priori](../theorie/reduction-a-priori.qmd) |
+| [Borouchaki et al. 1997 — maillage de Delaunay](../references.qmd) | [EDP & maillage](../theorie/edp-et-maillage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) · [Pseudo-distances, coûts orientés et géométries non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) |
+| [Raupach et Thom 1981 — turbulence de canopée](../references.qmd) | [Solutions de similitude](../theorie/similitude.qmd) |
+| [Simpson 1997 — courants de gravité](../references.qmd) | [Solutions de similitude](../theorie/similitude.qmd) |
+| [Hutchinson et al. 2017 — estimation de terme source](../references.qmd) | [Limites et domaines de validité](../hypotheses/limites.qmd) · [Assimilation & identification](../theorie/assimilation-identification.qmd) |
+| [Turbelin et al. 2014 — renormalisation en champ moyen](../references.qmd) | [Assimilation & identification](../theorie/assimilation-identification.qmd) |
+| [Vervecken et al. 2015 — ROM de panache urbain](../references.qmd) | [liste manuelle](../references.qmd) |
+| [Ayoub et al. 2024 — plume FNO (WSPEEDI)](../references.qmd) | [liste manuelle](../references.qmd) |
+| [Trindade da Silva et al. 2021 — dispersion urbaine](../references.qmd) | [liste manuelle](../references.qmd) |
+| [Mahmud et al. 2026 — dispersion urbaine par ML](../references.qmd) | [liste manuelle](../references.qmd) |
+| [EPA 2024 — Appendix W (AERMOD)](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Bonicelli et al. 2012 — dérive des pesticides](../references.qmd) | [liste manuelle](../references.qmd) |
+| [Defra 2011 — PS2024 (exposition des riverains)](../references.qmd) | [liste manuelle](../references.qmd) |
+| [Garbaczewski et al. 1997 — équation de Burgers](../references.qmd) | [Équation de Burgers : lien avec J-DriftX](../theorie/burgers-et-jdriftx.qmd) |
+| [Scire et al. 2000 — guide CALPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
+| [Sykes et al. 1998 — documentation SCIPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
+| [Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
+| [Bakels et al. 2024 — FLEXPART version 11](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Capps 2026 — PyAERMOD 2.2.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Dagestad et al. 2018 — OpenDrift v1.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [EPA 2026 — AERMOD Modeling System](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Stein et al. 2015 — HYSPLIT](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Carruthers et al. 1994 — UK-ADMS](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Thomson 1987 — modèles stochastiques lagrangiens](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Luhar et Britter 1989 — turbulence convective inhomogène](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Andrews et al. 2013 — comparaison HYSPLIT/STILT/FLEXPART](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Rood 2014 — Winter Validation Tracer Study](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Holmes et Morawska 2006 — revue des modèles](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Öttl 2015 — validation GRAL](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [ADMLC — catalogue de jeux de dispersion](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Prairie Grass 1956 — données de terrain](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [JRC — archives de données ETEX](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Clawson et al. 2005 — JU2003](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
