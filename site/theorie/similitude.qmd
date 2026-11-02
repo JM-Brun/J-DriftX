@@ -115,20 +115,20 @@ Prenons volontairement un cas simple, qui respecte exactement les hypothèses de
 
 Le temps associé au changement de variable est
 
-$
+$$
 t'=\frac{x}{U}=\frac{100\;\mathrm m}{5\;\mathrm{m\,s^{-1}}}=20\;\mathrm s.
-$
+$$
 
 Les variances, puis les écarts-types, valent alors
 
-$
+$$
 \begin{aligned}
 \sigma_y^2 &=2K_y t'=2\times2\times20=80\;\mathrm{m^2},
 &\sigma_y&=\sqrt{80}\simeq8{,}94\;\mathrm m,\\
 \sigma_z^2 &=2K_z t'=2\times1\times20=40\;\mathrm{m^2},
 &\sigma_z&=\sqrt{40}\simeq6{,}32\;\mathrm m.
 \end{aligned}
-$
+$$
 
 | Grandeur | Valeur | Contrôle d'unité |
 |---|---:|---|
