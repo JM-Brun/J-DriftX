@@ -17,6 +17,14 @@ title: "J-DriftX — dispersion atmosphérique à complexité réduite"
 
 Hypothèse étudiée : représenter certains panaches, puffs ou cas de dérive de pulvérisation **sans résoudre directement une EDP ni construire un maillage**, au moyen d'une **évaluation ponctuelle** fondée sur des solutions de similitude et une représentation non symétrique par temps de transport [@mohammadi2006crmeca; @brun2008]. La validité de cette généralisation, son coût total, sa calibration et son avantage prédictif restent à établir ; il ne s'agit pas encore d'une capacité validée.
 
+### Comparer les stratégies de calcul
+
+La figure suivante met côte à côte deux stratégies de représentation. Elle est **conceptuelle** : elle ne constitue ni un benchmark, ni une comparaison à conditions physiques identiques, ni une preuve de supériorité de J-DriftX.
+
+![Comparaison conceptuelle entre une approche CFD sur maillage et l'hypothèse de réduction étudiée par J-DriftX. Les trajectoires et champs sont schématiques ; le temps de transport et la famille de profils doivent être définis et validés pour chaque domaine d'application.](images/comparaison-cfd-jdriftx.svg)
+
+*Lecture :* la CFD résout numériquement un modèle discrétisé selon les équations, fermetures et conditions choisies. J-DriftX étudie une autre représentation candidate, fondée notamment sur un temps de transport dirigé et des profils de similitude. Le calcul de ce temps, les paramètres de source et de dispersion, le coût total et l'erreur prédictive doivent être comparés à des baselines explicites. Voir [EDP et maillage](theorie/edp-et-maillage.qmd), [comparaison des complexités](theorie/comparaison-complexites.qmd) et [métrique travel-time](theorie/metrique-travel-time.qmd).
+
 Les notations de cette page ($C(x,y,z)$, $\tau$, $Q$, $h$…) et les notions employées — scalaire passif, panache gaussien généralisé, solutions de similitude, far-field, Finsler/Zermelo, ROM, assimilation… — sont définies, avec leur origine, dans le [glossaire](glossaire.qmd).
 
 ## Quatre propriétés fondatrices (objectifs de conception)
