@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Deux stratégies de modélisation de la dispersion atmosphérique : CFD et hypothèse J-DriftX</title>
+<desc id="desc">Comparaison conceptuelle entre la résolution numérique d'un modèle sur un maillage et une approche de recherche fondée sur le temps de transport et une famille de profils de similitude. La validité et le coût total de cette dernière restent à mesurer.</desc>
+<defs>
+ <linearGradient id="blue" x1="0" x2="1"><stop stop-color="#dceeff"/><stop offset="1" stop-color="#f5faff"/></linearGradient>
+ <linearGradient id="green" x1="0" x2="1"><stop stop-color="#e2f3e8"/><stop offset="1" stop-color="#f7fcf8"/></linearGradient>
+ <linearGradient id="plume" x1="0" x2="1"><stop stop-color="#f05a28"/><stop offset=".35" stop-color="#f7c948"/><stop offset=".7" stop-color="#4ba9d8"/><stop offset="1" stop-color="#dceeff"/></linearGradient>
+ <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6Z" fill="#52677d"/></marker>
+ <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#6d9fc5" stroke-width="1"/></pattern>
+</defs>
+<rect width="1600" height="900" fill="#f7f9fc"/>
+<text x="800" y="58" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#172b43">Deux stratégies numériques pour étudier la dispersion</text>
+<text x="800" y="91" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#52677d">Comparaison de principe — les deux représentations ne sont pas équivalentes en général</text>
+<!-- left panel -->
+<rect x="35" y="125" width="650" height="625" rx="22" fill="url(#blue)" stroke="#2c75ad" stroke-width="3"/>
+<path d="M57 125H663a22 22 0 0 1 22 22v72H35v-72a22 22 0 0 1 22-22Z" fill="#155b91"/>
+<text x="360" y="174" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="white">CFD classique</text>
+<text x="360" y="204" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#eaf5ff">Résoudre un modèle sur un domaine discrétisé</text>
+<text x="75" y="260" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#173653">1 · Domaine et maillage</text>
+<!-- grid domain -->
+<rect x="82" y="290" width="530" height="210" rx="5" fill="url(#grid)" stroke="#4e83a9" stroke-width="2"/>
+<path d="M102 430 C185 385 220 370 290 385 S440 410 590 345 L590 475 C460 500 310 465 220 480 S130 470 102 460Z" fill="url(#plume)" opacity=".9"/>
+<path d="M100 438 C190 397 235 388 305 402 S465 418 590 362" fill="none" stroke="#c64b24" stroke-width="4" opacity=".8"/>
+<path d="M100 448 C210 410 250 410 330 422 S480 434 590 390" fill="none" stroke="#2585bd" stroke-width="2" opacity=".8"/>
+<path d="M105 470V495 M105 495H600" stroke="#36566f" stroke-width="4"/>
+<rect x="95" y="412" width="14" height="58" fill="#566b7d"/><path d="M92 412H112L108 397H96Z" fill="#c6533c"/>
+<text x="120" y="525" font-family="Arial,sans-serif" font-size="16" fill="#36566f">Cellules de calcul · champs discrétisés</text>
+<text x="75" y="570" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#173653">2 · Calcul numérique</text>
+<g font-family="Arial,sans-serif" font-size="18" fill="#24445f">
+ <text x="95" y="608">• Résolution des équations choisies</text>
+ <text x="95" y="640">• Évolution des champs sur le maillage</text>
+ <text x="95" y="672">• Coût dépendant du modèle, du maillage</text>
+ <text x="112" y="698">et du schéma numérique</text>
+</g>
+<rect x="75" y="710" width="570" height="25" rx="12" fill="#c9e1f5"/>
+<text x="360" y="729" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#174d78">CADRE NUMÉRIQUE ÉTABLI · CONFIGURATION À SPÉCIFIER</text>
+<!-- center -->
+<rect x="710" y="250" width="180" height="370" rx="18" fill="#edf1f5" stroke="#cbd5df" stroke-width="2"/>
+<text x="800" y="292" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#263c52">Changement</text>
+<text x="800" y="319" text-anchor="middle" font-family="Arial,sans-serif" font-size="21" font-weight="700" fill="#263c52">de stratégie</text>
+<path d="M735 370H865" stroke="#8395a6" stroke-width="2" marker-end="url(#arr)"/>
+<text x="800" y="405" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#263c52">Domaine maillé</text>
+<text x="800" y="431" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#263c52">vs</text>
+<text x="800" y="457" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#263c52">coordonnée τ</text>
+<path d="M735 485H865" stroke="#8395a6" stroke-width="2" marker-end="url(#arr)"/>
+<text x="800" y="526" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#263c52">Résolution</text>
+<text x="800" y="551" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#263c52">vs</text>
+<text x="800" y="577" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" fill="#263c52">évaluation réduite</text>
+<path d="M685 435H710 M890 435H915" stroke="#52677d" stroke-width="4" marker-end="url(#arr)"/>
+<!-- right panel -->
+<rect x="915" y="125" width="650" height="625" rx="22" fill="url(#green)" stroke="#36845a" stroke-width="3"/>
+<path d="M937 125H1543a22 22 0 0 1 22 22v72H915v-72a22 22 0 0 1 22-22Z" fill="#216b43"/>
+<text x="1240" y="174" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="white">J-DriftX · hypothèse étudiée</text>
+<text x="1240" y="204" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#e9f7ed">Exploiter une structure de transport et des profils candidats</text>
+<text x="955" y="260" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#174d35">1 · Champ de vent et chemins dirigés</text>
+<g stroke="#2b8ac1" stroke-width="3" fill="none">
+ <path d="M970 310h500 M970 350h500 M970 390h500" stroke-dasharray="14 12" marker-end="url(#arr)"/>
+</g>
+<g fill="none" stroke-width="4">
+ <path d="M970 430 C1080 420 1090 305 1210 300 S1390 300 1490 285" stroke="#319b6d"/>
+ <path d="M970 430 C1080 430 1120 340 1220 340 S1390 345 1490 330" stroke="#63b85d"/>
+ <path d="M970 430 C1080 440 1120 390 1220 390 S1390 390 1490 375" stroke="#e2a52d"/>
+</g>
+<rect x="962" y="405" width="14" height="40" fill="#566b7d"/><path d="M959 405H979L975 392H963Z" fill="#c6533c"/>
+<text x="1000" y="465" font-family="Arial,sans-serif" font-size="16" fill="#36566f">Trajectoires illustratives dans un champ de vent</text>
+<text x="955" y="515" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#174d35">2 · Temps de transport et profil candidat</text>
+<rect x="955" y="535" width="570" height="70" rx="12" fill="#fff7d8" stroke="#d9bd57"/>
+<text x="1240" y="565" text-anchor="middle" font-family="Georgia,serif" font-size="27" font-style="italic" fill="#493f20">τ(x) : temps de transport dirigé</text>
+<text x="1240" y="590" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#665b32">Coordonnée candidate calculée à partir du champ de vent</text>
+<text x="955" y="645" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#174d35">3 · Évaluation de C(x) via une famille de profils</text>
+<text x="955" y="678" font-family="Arial,sans-serif" font-size="17" fill="#244f39">Paramètres de source et de dispersion à expliciter</text>
+<rect x="955" y="710" width="570" height="25" rx="12" fill="#d3ead9"/>
+<text x="1240" y="729" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#205b3c">HYPOTHÈSE DE RECHERCHE · VALIDITÉ NON ÉTABLIE</text>
+<!-- bottom -->
+<rect x="120" y="785" width="1360" height="82" rx="18" fill="#fff0df" stroke="#e28b36" stroke-width="2"/>
+<text x="800" y="821" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#8a4615">Coût total et validité prédictive : à mesurer</text>
+<text x="800" y="849" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#704c2d">Le calcul de τ, la calibration, les paramètres, les erreurs et les domaines d'échec doivent être évalués face à des baselines.</text>
+</svg>
