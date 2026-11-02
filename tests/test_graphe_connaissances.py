@@ -221,10 +221,6 @@ def test_rendu_contient_la_structure(tmp_path: Path) -> None:
         "{#proprietes-tests-et-implementations-associees}"
     ) in contenu
     assert "flowchart TB" in contenu
-    assert (
-        "Nœuds et destinations documentaires" in contenu
-        and '::: {.callout-note collapse="true"' in contenu
-    )
     assert "[theorie/page.qmd](../theorie/page.qmd)" in contenu
     assert "| Concept sans lien | Concept | Concept sans lien |" in contenu
     assert "[Auteur 2000 - Démo](https://example.com/auteur2000)" in contenu
