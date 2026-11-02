@@ -440,3 +440,20 @@ uv run mypy src/jdriftx/experiences/zermelo_gaussien.py
 Ces tests sont des contrôles de cohérence d'une implémentation float64.
 Ils ne remplacent pas les preuves des sections précédentes, ne valident
 pas un solveur HJ et ne démontrent aucune validité atmosphérique.
+
+
+### Complément de robustesse numérique — 02/11/2026
+
+La revue du premier oracle a identifié deux problèmes de conditionnement que les tests nominaux ne révélaient pas :
+
+1. **Tolérance de tangence dimensionnée.** Une tolérance proportionnelle à `max(1, longueur²)` introduisait implicitement une échelle plancher de 1 m². Pour un cas physiquement exprimé à une échelle submillimétrique, une cible légèrement hors portée pouvait alors être classée à tort comme tangente. La tolérance est désormais (64\,\epsilon_{64}\,L^2), où (L^2) est le maximum des échelles géométriques pertinentes : distance initiale au carré, déplacement du vent sur (t_*) au carré et (R_{\max}^2). Un test de changement d'échelle vérifie qu'une cible à 0,1 % au-delà de (R_{\max}) reste hors portée à une échelle nanométrique.
+
+2. **Soustraction catastrophique dans Randers.** Pour un déplacement aval, lorsque (c\downarrow\|u\|), la formule directe soustrait deux termes presque égaux. La branche aval utilise désormais la forme rationalisée
+   [
+   F(v)=\frac{\|v\|^2}{\sqrt{(u\cdot v)^2+(c^2-\|u\|^2)\|v\|^2}+u\cdot v},
+   \]
+   algébriquement équivalente mais mieux conditionnée. Un test approche le régime critique à (10^{-12}) en relatif et compare à la formule aval exacte (F(v)=\|v\|/(c+\|u\|)).
+
+Les calculs de (t_*), (R_{\max}) et (R(t)) ont aussi été réécrits dans le domaine logarithmique pour réduire les débordements intermédiaires. Cela ne supprime pas les limites de représentation float64 : les valeurs finales hors plage sont signalées explicitement pour (t_*) et les rayons.
+
+Ces ajouts améliorent la robustesse numérique de l'oracle ; ils ne changent ni le théorème GZ-1 ni son domaine physique.
