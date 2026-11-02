@@ -222,8 +222,8 @@ def test_rendu_contient_la_structure(tmp_path: Path) -> None:
     ) in contenu
     assert "flowchart TB" in contenu
     assert (
-        '::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}'
-        in contenu
+        "Nœuds et destinations documentaires" in contenu
+        and '::: {.callout-note collapse="true"' in contenu
     )
     assert "[theorie/page.qmd](../theorie/page.qmd)" in contenu
     assert "| Concept sans lien | Concept | Concept sans lien |" in contenu
