@@ -6,6 +6,16 @@ title: "Audit de l'héritage"
 
 > Version complète dans le dépôt : <code>docs/01-audit-heritage-driftx.md</code>. Cette page en donne la synthèse.
 
+## Rôle dans le parcours
+
+Cette page répond à une question historique : **quels éléments du projet Drift-X (2006–2009) méritent d'être repris, et quelles lacunes empêchent de transposer directement ses conclusions ?** Elle synthétise les forces, les limites et le contexte de l'héritage ; elle ne constitue ni une revue bibliographique exhaustive ni un audit de l'implémentation Python actuelle.
+
+- **À consulter après :** [Héritage Drift-X](heritage.qmd), qui décrit les sources et la méthode historique, et [Lectures des sources](lectures.qmd), qui précise le niveau d'accès et de vérification de chaque publication.
+- **À utiliser pour :** comprendre les raisons de la reprise et les questions restées ouvertes.
+- **À ne pas en déduire :** que les propriétés historiques sont implémentées, reproduites ou validées dans J-DriftX. Pour l'état actuel, consulter [Qualité & tests](qualite.qmd) et le [protocole de validation](validation-scientifique.qmd).
+- **Suite logique :** [Positionnement de J-DriftX](../etat-art/positionnement.qmd), qui transforme les lacunes historiques en hypothèses à confronter aux méthodes actuelles.
+
+
 ## Bilan forces / faiblesses
 
 | # | Forces | Faiblesses héritées |
