@@ -11,7 +11,7 @@ Le graphe n'est pas dessiné à la main. Il est généré depuis un registre typ
 ## Comment lire cette carte
 
 - **Couleurs** : une couleur par type de nœud (légende en tête de rendu). Les niveaux de preuve ne sont pas uniformes : une arête « fonde » ou « décrit » dit qu'un document traite d'un objet, pas qu'il le valide expérimentalement.
-- **Vues complémentaires plutôt qu'un graphe unique** : les vues initiales séparent théorie et hypothèses, code et preuves, références et corpus, jeux de données candidats. Trois projections supplémentaires isolent les dépendances entre hypothèses, concepts mathématiques et propriétés testées. Elles sont toutes dérivées du même registre ; les diagrammes donnent la structure, les panneaux repliables donnent accès aux destinations détaillées.
+- **Vues complémentaires plutôt qu'un graphe unique** : les vues initiales séparent théorie et hypothèses, code et preuves, références et corpus, jeux de données candidats. Trois projections supplémentaires isolent les dépendances entre hypothèses, concepts mathématiques et propriétés testées. Une quatrième vue, l’**architecture conceptuelle**, regroupe les notions par familles pour fournir un plan de lecture : transport et dispersion, cinématique et géométrie dirigée, réduction et calcul, identification. Elles sont toutes dérivées du même registre ; les diagrammes donnent la structure, les panneaux repliables donnent accès aux destinations détaillées.
 - **Liens cliquables** : chaque nœud renvoie vers la page, le fichier ou la référence qui le documente.
 - **Citations vérifiées** : la table finale indique où chaque référence est réellement citée dans le site ; une référence jamais citée est signalée plutôt que masquée.
 
@@ -20,6 +20,19 @@ Le graphe n'est pas dessiné à la main. Il est généré depuis un registre typ
 
 Une arête affirme un lien documenté (implémentation, test, citation), jamais une validité physique. Le niveau de preuve de chaque affirmation reste celui de la page de destination : catalogue des hypothèses, contraintes physiques, catalogue de données.
 :::
+
+## Parcours conceptuel : lire les notions par familles
+
+La [carte scientifique](carte-scientifique.qmd) donne le panorama des mécanismes. La nouvelle **architecture conceptuelle** propose ensuite un classement des notions par domaines, sans les présenter comme une succession linéaire ni comme une hiérarchie de dépendances. Les flèches conservent exclusivement les relations structurelles déjà documentées dans le registre : par exemple, la ligne de courant dépend du champ, tandis que le temps de transport dépend de la construction cinématique retenue.
+
+Cette vue fait apparaître quatre familles complémentaires :
+
+1. **Transport physique et dispersion** : équation d’advection-diffusion, champ de vent, panache gaussien, stabilité et équation de Burgers.
+2. **Cinématique et géométrie dirigée** : lignes de courant, fonction de courant, temps de transport et ses variantes opérationnelles.
+3. **Réduction et architectures de calcul** : modèle réduit, maillage et architecture multi-niveaux historique.
+4. **Paramètres et identification** : calibration et assimilation, qui relient les modèles aux observations sans se confondre avec la validation.
+
+Les notions d’une même famille ne sont pas nécessairement équivalentes ni interchangeables. En particulier, l’équation d’advection-diffusion et la géométrie trajectoire–temps de transport restent deux chaînes distinctes ; les variantes de temps de parcours (intégrale sur chemin, première arrivée, pseudo-distance projetée) doivent être lues dans leurs définitions respectives.
 
 ## Extraction automatique et registre sémantique
 
