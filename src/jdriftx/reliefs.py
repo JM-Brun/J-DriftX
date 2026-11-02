@@ -99,6 +99,36 @@ def _interpole_lineairement_stable(
     )
 
 
+def _lit_entete_ascii(jetons: list[str]) -> tuple[dict[str, float], int]:
+    """Lit les enregistrements reconnus de l'en-tête Esri ASCII raster."""
+    reconnues = {
+        "ncols",
+        "nrows",
+        "cellsize",
+        "nodata_value",
+        "xllcorner",
+        "yllcorner",
+        "xllcenter",
+        "yllcenter",
+    }
+    entete: dict[str, float] = {}
+    position = 0
+    while position + 1 < len(jetons):
+        cle = jetons[position].lower()
+        if cle not in reconnues:
+            break
+        if cle in entete:
+            msg = f"Cle d entete .asc dupliquee : {cle}."
+            raise ValueError(msg)
+        try:
+            entete[cle] = float(jetons[position + 1])
+        except ValueError as err:
+            msg = f"Valeur invalide pour {cle} : {jetons[position + 1]}."
+            raise ValueError(msg) from err
+        position += 2
+    return entete, position
+
+
 @dataclass(frozen=True)
 class ReliefPlat:
     """Terrain plat d altitude nulle, cas de reference des solutions gaussiennes."""
@@ -227,31 +257,7 @@ class ReliefMntAscii:
         les deux cles d un meme axe sont mutuellement exclusives.
         """
         jetons = texte.split()
-        reconnues = {
-            "ncols",
-            "nrows",
-            "cellsize",
-            "nodata_value",
-            "xllcorner",
-            "yllcorner",
-            "xllcenter",
-            "yllcenter",
-        }
-        entete: dict[str, float] = {}
-        position = 0
-        while position + 1 < len(jetons):
-            cle = jetons[position].lower()
-            if cle not in reconnues:
-                break
-            if cle in entete:
-                msg = f"Cle d entete .asc dupliquee : {cle}."
-                raise ValueError(msg)
-            try:
-                entete[cle] = float(jetons[position + 1])
-            except ValueError as err:
-                msg = f"Valeur invalide pour {cle} : {jetons[position + 1]}."
-                raise ValueError(msg) from err
-            position += 2
+        entete, position = _lit_entete_ascii(jetons)
         manquantes = {"ncols", "nrows", "cellsize"} - set(entete)
         for paire in (("xllcorner", "xllcenter"), ("yllcorner", "yllcenter")):
             presentes = [cle for cle in paire if cle in entete]
