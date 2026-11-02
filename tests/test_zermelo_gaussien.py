@@ -186,6 +186,31 @@ def test_premier_contact_vent_non_nul_selectionne_la_premiere_racine() -> None:
     assert modele.fonction_contact(cible, premier) == pytest.approx(0.0, abs=1e-8)
 
 
+def test_premier_contact_preserve_le_changement_d_echelle() -> None:
+    """Une tolérance dimensionnée ne transforme pas une cible lointaine en tangence."""
+    modele = ModeleGZ1(masse=1.0e-30, seuil=1.0, diffusivite=1.0)
+    cible = (1.001 * modele.rayon_maximal, 0.0, 0.0)
+    assert modele.rayon_maximal < 1.0e-8
+    assert modele.premier_contact(cible) is None
+
+
+def test_jauge_randers_est_stable_pres_du_regime_critique() -> None:
+    """La rationalisation conserve la précision pour un déplacement aval."""
+    modele_sans_vent = ModeleGZ1(masse=1.0e6, seuil=1.0, diffusivite=0.5)
+    temps = 0.4 * modele_sans_vent.t_etoile
+    c = modele_sans_vent.vitesse_expansion(temps)
+    modele = ModeleGZ1(
+        masse=1.0e6,
+        seuil=1.0,
+        diffusivite=0.5,
+        vent=(c * (1.0 - 1.0e-12), 0.0, 0.0),
+    )
+    deplacement = (1.0, 0.0, 0.0)
+    jauge = modele.jauge_randers(deplacement, temps)
+    attendu = 1.0 / (c + modele.vent[0])
+    assert jauge == pytest.approx(attendu, rel=2e-5)
+
+
 def test_validation_expresse_des_domaines_randers_et_contact(modele: ModeleGZ1) -> None:
     """Les domaines hors hypothèses ne sont pas silencieusement extrapolés."""
     with pytest.raises(ValueError, match="temps"):
