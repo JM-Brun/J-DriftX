@@ -6,6 +6,17 @@ title: "Catalogue de données ouvertes pour J-DriftX"
 
 Cette page recense des jeux de données publics pouvant aider à évaluer des modèles de transport et de dispersion. **La disponibilité d'un jeu ne démontre pas son adéquation physique** : un traceur gazeux, des gouttelettes, des particules routières et un polluant marin ne partagent pas nécessairement les mêmes équations ni les mêmes observables.
 
+## Rôle dans le parcours
+
+Cette page est un **inventaire de candidats expérimentaux**, pas un benchmark prêt à l'emploi et encore moins une validation de J-DriftX.
+
+- **Prérequis :** connaître le domaine physique visé et les limites du modèle, décrits dans le [catalogue des hypothèses](../hypotheses/catalogue.qmd) et les [domaines de validité](../hypotheses/limites.qmd).
+- **Question traitée :** quels corpus pourraient fournir des observations compatibles avec une question de transport ou de dispersion, et quelles vérifications d'accès, d'unités, de sources et d'indépendance restent nécessaires ?
+- **Résultat transmis :** une présélection à auditer avant toute utilisation ; l'adéquation doit être vérifiée expérience par expérience.
+- **Étape suivante :** appliquer le [protocole de validation scientifique](validation-scientifique.qmd) et séparer les données de calibration des données de validation indépendante.
+- **Limite :** les données analogues (transport fluvial, marin ou trajectoires de flotteurs) peuvent aider à tester des outils mathématiques, mais ne valident pas la physique atmosphérique.
+
+
 ## Candidats prioritaires
 
 | Jeu de données | Domaine / échelle | Utilité potentielle | Limite déterminante |
