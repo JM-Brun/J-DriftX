@@ -43,6 +43,20 @@ La règle de lecture est simple : **une preuve à un niveau ne vaut pas preuve a
 
 Pour le statut détaillé de chaque niveau, les limites de conclusion et l'ordre de travail recommandé, voir la [synthèse scientifique de référence](https://github.com/JM-Brun/J-DriftX/blob/main/docs/18-carte-articulation-scientifique.md). Pour les dépendances entre champ de vent, chemins, temps de transport, dispersion et concentration, consulter la [carte des niveaux de modélisation](niveaux-modelisation.qmd).
 
+## Interpréter le statut d'une affirmation {#statut-affirmation}
+
+Une équation, un test logiciel et une validation physique ne constituent pas le même type de preuve. Le statut affiché doit être lu avec les hypothèses, le domaine et le protocole qui l'accompagnent.
+
+| Statut | Ce que cela autorise à conclure | Ce que cela n'autorise pas à conclure |
+|---|---|---|
+| **Défini / formulé** | L'objet, les hypothèses et les conventions sont explicités. | Que la propriété est vraie ou que le code la respecte. |
+| **Dérivé / démontré** | Le résultat découle du raisonnement indiqué, sous ses hypothèses. | Qu'il reste valable hors de ce cadre. |
+| **Testé** | Un comportement précis a été vérifié sur les cas, données et tolérances annoncés. | Une preuve générale, ni une validation physique. |
+| **Comparé** | Un résultat a été confronté à une référence identifiée selon un protocole donné. | Une supériorité universelle ou un gain hors du protocole. |
+| **Validé indépendamment** | Une confrontation indépendante soutient l'usage défini et son domaine. | Une validité pour tout terrain, météo ou régime physique. |
+
+**Règle de lecture :** avant de reprendre une conclusion, retrouver (1) les hypothèses, (2) le domaine et les conditions aux limites, (3) la nature de la preuve, (4) les limites et contre-exemples connus. Si l'un de ces éléments manque, la conclusion est incomplète — il ne faut pas le supposer implicitement.
+
 ## Laboratoires : portée et limites
 
 Les applications Python servent à la vérification numérique de cas synthétiques ou analytiques ; elles ne constituent pas une validation météorologique ou applicative. Elles ne modélisent pas, à elles seules, la dynamique complète des gouttelettes, la turbulence atmosphérique, le dépôt ou l'effet du relief sur le vent.
