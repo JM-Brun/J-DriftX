@@ -1,4 +1,4 @@
-"""Check local links and fragments in a rendered Quarto site."""
+"""Check local links, fragments, and root escapes in a rendered Quarto site."""
 
 from __future__ import annotations
 
@@ -71,12 +71,12 @@ def _resolve_target(
     source: Path,
     root: Path,
     site_url: str,
-) -> tuple[Path | None, str]:
-    """Resolve a local URL to a rendered file and return its decoded fragment."""
+) -> tuple[Path | None, str, bool]:
+    """Resolve a local URL to a rendered file, its fragment, and an out-of-root flag."""
     fragment = unquote(urlsplit(raw_url).fragment)
     target_path = _local_url_path(raw_url, site_url)
     if target_path is None:
-        return None, fragment
+        return None, fragment, False
 
     if not target_path:
         target = source
@@ -89,7 +89,7 @@ def _resolve_target(
         target = target.resolve()
         target.relative_to(root.resolve())
     except ValueError:
-        return None, fragment
+        return None, fragment, True
 
     candidates = [target]
     if not target.suffix:
@@ -97,12 +97,12 @@ def _resolve_target(
     for candidate in candidates:
         resolved_candidate = candidate / "index.html" if candidate.is_dir() else candidate
         if resolved_candidate.is_file():
-            return resolved_candidate, fragment
-    return target, fragment
+            return resolved_candidate, fragment, False
+    return target, fragment, False
 
 
 def check_site_links(site_dir: Path, site_url: str) -> list[str]:
-    """Return diagnostics for broken local files and HTML fragments."""
+    """Return diagnostics for broken targets, fragments, and links escaping the root."""
     root = site_dir.resolve()
     html_pages = sorted(root.rglob("*.html"))
     parsed_pages = {page: _parse_page(page) for page in html_pages}
@@ -110,8 +110,13 @@ def check_site_links(site_dir: Path, site_url: str) -> list[str]:
 
     for source, page in parsed_pages.items():
         for attribute, raw_url in page.links:
-            target, fragment = _resolve_target(raw_url, source, root, site_url)
+            target, fragment, escapes_root = _resolve_target(raw_url, source, root, site_url)
             if target is None:
+                if escapes_root:
+                    diagnostics.append(
+                        f"{source.relative_to(root)}: {attribute} escapes the published "
+                        f"site root: {raw_url}"
+                    )
                 continue
             if not target.is_file():
                 diagnostics.append(

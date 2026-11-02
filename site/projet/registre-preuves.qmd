@@ -25,7 +25,7 @@ Ce registre est une revue documentaire manuelle. Les contrôles automatiques vé
 
 ## Résultat analytique GZ-1 — navigation et front gaussien
 
-Le théorème GZ-1 (*Gaussian Zermelo, résultat 1*) est une **preuve analytique conditionnelle**, et non un test logiciel ou une validation physique. Il ne doit pas être confondu avec le cas de référence uniforme « S0 » des notes 48–54. Son énoncé complet, ses hypothèses et sa démonstration sont publiés dans [Navigation de Zermelo, fronts et Hamilton–Jacobi](../theorie/navigation-fronts-controllabilite.qmd). La lecture pédagogique pas à pas et la correspondance avec les tests sont regroupées dans la [note 59 — GZ-1](../../docs/59-navigation-controllabilite-verifications.md).
+Le théorème GZ-1 (*Gaussian Zermelo, résultat 1*) est une **preuve analytique conditionnelle**, et non un test logiciel ou une validation physique. Il ne doit pas être confondu avec le cas de référence uniforme « S0 » des notes 48–54. Son énoncé complet, ses hypothèses et sa démonstration sont publiés dans [Navigation de Zermelo, fronts et Hamilton–Jacobi](../theorie/navigation-fronts-controllabilite.qmd). La lecture pédagogique pas à pas et la correspondance avec les tests sont regroupées dans la [note 59 — GZ-1](https://github.com/JM-Brun/J-DriftX/blob/main/docs/59-navigation-controllabilite-verifications.md).
 
 | Résultat | Hypothèses déterminantes | Démonstration publiée | Hors de portée / statut |
 |---|---|---|---|

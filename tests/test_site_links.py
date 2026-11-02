@@ -52,3 +52,22 @@ def test_check_site_links_reports_missing_file_and_fragment(tmp_path: Path) -> N
     assert len(diagnostics) == 2
     assert any("missing.html" in diagnostic for diagnostic in diagnostics)
     assert any("not-here" in diagnostic for diagnostic in diagnostics)
+
+
+def test_check_site_links_reports_links_escaping_the_site_root(tmp_path: Path) -> None:
+    """Links resolving above the published site root are reported as dead."""
+    root = tmp_path / "_site"
+    (root / "projet").mkdir(parents=True)
+    (root / "index.html").write_text(
+        '<a href="../docs/document.md">Link escaping above the published site root</a>',
+        encoding="utf-8",
+    )
+    (root / "projet" / "page.html").write_text(
+        '<a href="../../docs/document.md">Link escaping above the published site root</a>',
+        encoding="utf-8",
+    )
+
+    diagnostics = check_site_links(root, "https://jm-brun.github.io/J-DriftX/")
+
+    assert len(diagnostics) == 2
+    assert all("escapes the published site root" in diagnostic for diagnostic in diagnostics)
