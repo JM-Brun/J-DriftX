@@ -115,8 +115,8 @@ website:
 format:
   html:
     theme:
-      light: [cosmo, styles.scss]
-      dark: [dark, styles.scss]
+      light: [cosmo, styles.scss, palette-light.scss]
+      dark: [dark, styles.scss, palette-dark.scss]
     lang: fr
     toc: true
     toc-depth: 3
