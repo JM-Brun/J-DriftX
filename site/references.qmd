@@ -47,6 +47,15 @@ title: "Références"
 La bibliographie complète, catégorisée et datée (une trentaine d'entrées), est maintenue dans le dépôt : <code>docs/references.md</code>. Les citations du site sont gérées par <code>references.bib</code>. Les fiches de lecture détaillées par papier source : <code>docs/04-revues-papiers-sources.md</code>. Les sources primaires (PDF, extractions texte) sont archivées dans <code>raw/</code>.
 
 
+
+## Modèles et logiciels de référence
+
+31. Bakels, L. et al. (2024). [FLEXPART version 11: improved accuracy, efficiency, and flexibility](https://doi.org/10.5194/gmd-17-7595-2024). *Geoscientific Model Development* 17, 7595–7627. Documentation vivante : [manuel FLEXPART 11](https://flexpart.img.univie.ac.at/docs/). Modèle lagrangien de dispersion particulaire ; le papier décrit notamment les évolutions de transport, dépôt, chimie linéaire et parallélisation.
+32. Dagestad, K.-F., Röhrs, J., Breivik, Ø. & Ådlandsvik, B. (2018). [OpenDrift v1.0: a generic framework for trajectory modelling](https://doi.org/10.5194/gmd-11-1405-2018). *Geoscientific Model Development* 11, 1405–1420. Documentation : [OpenDrift](https://opendrift.github.io/). Cadre modulaire de simulation de trajectoires ; utile pour examiner la séparation entre noyau commun, processus physiques spécifiques, lecteurs de données et exemples.
+33. Capps, S. (2026). [PyAERMOD: Python wrapper for EPA's AERMOD air dispersion model, version 2.2.0](https://doi.org/10.5281/zenodo.23512927). Logiciel, archive Zenodo. Documentation : [PyAERMOD](https://atmmod.github.io/pyaermod/). Interface Python et chaîne de préparation/exécution/analyse autour d'AERMOD ; ce n'est pas un modèle physique indépendant d'AERMOD.
+34. U.S. Environmental Protection Agency (2026). [AERMOD Modeling System: Preferred and Recommended Models](https://www.epa.gov/scram/air-quality-dispersion-modeling-preferred-and-recommended-models). EPA SCRAM. Page documentaire évolutive regroupant code, guide utilisateur, document de formulation, guide d'implémentation et bulletins de changement ; noter la version du modèle consultée pour chaque comparaison.
+
+
 ## Parcours de lecture
 
 Cette page est le **répertoire bibliographique**, pas une synthèse critique des résultats. Pour connaître le contenu effectivement consulté, le niveau d’accès aux textes et les réserves d’interprétation, revenir aux [lectures critiques des sources](projet/lectures.qmd). Pour situer les familles de méthodes contemporaines par rapport à J-DriftX, consulter le [panorama de l’état de l’art](etat-art/panorama.qmd) et le [positionnement du projet](etat-art/positionnement.qmd).

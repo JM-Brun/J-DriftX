@@ -27,7 +27,15 @@ Les fichiers PDF sont conservés comme documents de synthèse. Les fiches ci-des
 | ROM, surrogates et apprentissage | [ROM et apprentissage](bibliographie/rom-et-apprentissage.md) | Baselines concurrentes ou approches complémentaires |
 | Identification de source et assimilation | [Source-term estimation et assimilation](bibliographie/identification-source-assimilation.md) | Méthodes complémentaires et alternatives pour le problème inverse |
 | SIG, exposition et applications | [SIG, exposition et applications](bibliographie/sig-exposition-applications.md) | Contexte d'usage, validations terrain et intégration logicielle |
+| Modèles lagrangiens, turbulence et validation | [Modèles lagrangiens et benchmarks](bibliographie/modeles-lagrangiens-et-benchmarks.md) | Baselines particulaires/puffs, cohérence stochastique, traceurs contrôlés et domaines de validité |
 | Métriques et analogies transverses | [Métriques et analogies](bibliographie/metriques-et-analogies.md) | Intuition mathématique transférable, sans équivalence présumée |
+
+### Complément — modèles de trajectoires et implémentations logicielles
+
+- **FLEXPART** : baseline lagrangienne particulaire (Bakels et al., 2024), directement pertinente pour comparer le transport et la dispersion sur champs météorologiques.
+- **OpenDrift** : framework générique de trajectoires (Dagestad et al., 2018), utile pour l'architecture et les trajectoires, mais pas automatiquement équivalent à un modèle de concentration atmosphérique.
+- **PyAERMOD** : wrapper Python / distribution logicielle d'AERMOD (Capps, 2026), utile pour l'interopérabilité et les essais programmatiques, sans ajouter une formulation physique indépendante.
+- **AERMOD / EPA SCRAM** : référence réglementaire, à distinguer du wrapper et de la version du code. Les pages SCRAM sont évolutives ; enregistrer la date de consultation et la version exacte utilisée.
 
 ## Champs à compléter pour chaque source
 

@@ -476,7 +476,7 @@ graph TD
 
 ## Références et corpus
 
-Les vingt-cinq entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique).
+Les quarante et une entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique).
 
 ```{mermaid}
 graph LR
@@ -508,6 +508,22 @@ graph LR
     scire2000calpuff["Scire et al. 2000 — guide CALPUFF"]::reference
     sykes1998scipuff["Sykes et al. 1998 — documentation SCIPUFF"]::reference
     thykier1987rimpuff["Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF"]::reference
+    bakels2024flexpart["Bakels et al. 2024 — FLEXPART version 11"]::reference
+    capps2026pyaermod["Capps 2026 — PyAERMOD 2.2.0"]::reference
+    dagestad2018opendrift["Dagestad et al. 2018 — OpenDrift v1.0"]::reference
+    epaAermod2026["EPA 2026 — AERMOD Modeling System"]::reference
+    hysplit2015["Stein et al. 2015 — HYSPLIT"]::reference
+    adms1994["Carruthers et al. 1994 — UK-ADMS"]::reference
+    thomson1987["Thomson 1987 — modèles stochastiques lagrangiens"]::reference
+    luhar1989["Luhar et Britter 1989 — turbulence convective inhomogène"]::reference
+    andrews2013["Andrews et al. 2013 — comparaison HYSPLIT/STILT/FLEXPART"]::reference
+    winter2014validation["Rood 2014 — Winter Validation Tracer Study"]::reference
+    holmes2006["Holmes et Morawska 2006 — revue des modèles"]::reference
+    oettl2015gral["Öttl 2015 — validation GRAL"]::reference
+    admlcDatasets["ADMLC — catalogue de jeux de dispersion"]::reference
+    prairiegrassData["Prairie Grass 1956 — données de terrain"]::reference
+    etexJRC["JRC — archives de données ETEX"]::reference
+    ju2003Clawson2005["Clawson et al. 2005 — JU2003"]::reference
   end
   subgraph obj["Objets décrits ou fondés"]
     c_pdist["Pseudo-distance dirigée (référence uniforme)"]::concept
@@ -585,6 +601,22 @@ graph LR
 | Scire et al. 2000 — guide CALPUFF | Référence bibliographique | [references.qmd](../references.qmd) |
 | Sykes et al. 1998 — documentation SCIPUFF | Référence bibliographique | [references.qmd](../references.qmd) |
 | Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF | Référence bibliographique | [references.qmd](../references.qmd) |
+| Bakels et al. 2024 — FLEXPART version 11 | Référence bibliographique | [references.qmd](../references.qmd) |
+| Capps 2026 — PyAERMOD 2.2.0 | Référence bibliographique | [references.qmd](../references.qmd) |
+| Dagestad et al. 2018 — OpenDrift v1.0 | Référence bibliographique | [references.qmd](../references.qmd) |
+| EPA 2026 — AERMOD Modeling System | Référence bibliographique | [references.qmd](../references.qmd) |
+| Stein et al. 2015 — HYSPLIT | Référence bibliographique | [references.qmd](../references.qmd) |
+| Carruthers et al. 1994 — UK-ADMS | Référence bibliographique | [references.qmd](../references.qmd) |
+| Thomson 1987 — modèles stochastiques lagrangiens | Référence bibliographique | [references.qmd](../references.qmd) |
+| Luhar et Britter 1989 — turbulence convective inhomogène | Référence bibliographique | [references.qmd](../references.qmd) |
+| Andrews et al. 2013 — comparaison HYSPLIT/STILT/FLEXPART | Référence bibliographique | [references.qmd](../references.qmd) |
+| Rood 2014 — Winter Validation Tracer Study | Référence bibliographique | [references.qmd](../references.qmd) |
+| Holmes et Morawska 2006 — revue des modèles | Référence bibliographique | [references.qmd](../references.qmd) |
+| Öttl 2015 — validation GRAL | Référence bibliographique | [references.qmd](../references.qmd) |
+| ADMLC — catalogue de jeux de dispersion | Référence bibliographique | [references.qmd](../references.qmd) |
+| Prairie Grass 1956 — données de terrain | Référence bibliographique | [references.qmd](../references.qmd) |
+| JRC — archives de données ETEX | Référence bibliographique | [references.qmd](../references.qmd) |
+| Clawson et al. 2005 — JU2003 | Référence bibliographique | [references.qmd](../references.qmd) |
 | Pseudo-distance dirigée (référence uniforme) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Temps de transport | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Champ multi-niveaux historique (non reconstruit) | Concept | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
@@ -679,10 +711,26 @@ graph LR
 | [Ayoub et al. 2024 — plume FNO (WSPEEDI)](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Trindade da Silva et al. 2021 — dispersion urbaine](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Mahmud et al. 2026 — dispersion urbaine par ML](../references.qmd) | [liste manuelle](../references.qmd) |
-| [EPA 2024 — Appendix W (AERMOD)](../references.qmd) | [liste manuelle](../references.qmd) |
+| [EPA 2024 — Appendix W (AERMOD)](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
 | [Bonicelli et al. 2012 — dérive des pesticides](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Defra 2011 — PS2024 (exposition des riverains)](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Garbaczewski et al. 1997 — équation de Burgers](../references.qmd) | [Équation de Burgers : lien avec J-DriftX](../theorie/burgers-et-jdriftx.qmd) |
 | [Scire et al. 2000 — guide CALPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
 | [Sykes et al. 1998 — documentation SCIPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
 | [Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
+| [Bakels et al. 2024 — FLEXPART version 11](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Capps 2026 — PyAERMOD 2.2.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Dagestad et al. 2018 — OpenDrift v1.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [EPA 2026 — AERMOD Modeling System](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Stein et al. 2015 — HYSPLIT](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Carruthers et al. 1994 — UK-ADMS](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Thomson 1987 — modèles stochastiques lagrangiens](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Luhar et Britter 1989 — turbulence convective inhomogène](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Andrews et al. 2013 — comparaison HYSPLIT/STILT/FLEXPART](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Rood 2014 — Winter Validation Tracer Study](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Holmes et Morawska 2006 — revue des modèles](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Öttl 2015 — validation GRAL](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [ADMLC — catalogue de jeux de dispersion](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Prairie Grass 1956 — données de terrain](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [JRC — archives de données ETEX](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Clawson et al. 2005 — JU2003](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |

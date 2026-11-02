@@ -20,6 +20,7 @@ Ce passage a été déplacé dans la [fiche source de la plateforme Drift-X 2009
 
 ## Synthèse transversale
 
+- [Modèles lagrangiens et benchmarks](bibliographie/modeles-lagrangiens-et-benchmarks.md) synthétise les baselines, fondements stochastiques, comparaisons sur traceurs et jeux de données candidats (2 novembre 2026) ; ce document est une synthèse transversale, pas une fiche de lecture intégrale pour chaque source.
 - [Découvertes bibliographiques et état historique des accès (octobre 2026)](bibliographie/synthese-acces-sources-historique-2026-10.md) conserve les anciens tableaux d'accès et les pistes de recherche ; ce n'est pas une liste de tâches actuelle.
 - [Audit adversarial des références et affirmations](15-audit-adversarial-hallucinations.md) est désormais un index vers les audits spécialisés.
 - [Bibliographie annotée](bibliographie-annotee-jdriftx.md) et les fichiers thématiques sous [`docs/bibliographie/`](bibliographie/) servent à la synthèse transversale ; ne pas recopier leurs résumés dans les fiches source.
