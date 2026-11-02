@@ -211,6 +211,11 @@ def test_rendu_contient_la_structure(tmp_path: Path) -> None:
     assert 'cle2000 -->|"contexte"| c_demo' in contenu
     assert "classDef module fill:#d7f0a1,stroke:#495057,color:#212529;" in contenu
     assert "| Nœud | Type | Où approfondir |" in contenu
+    assert "## Hypothèses et objets conditionnés {#hypotheses-et-objets-conditionnes}" in contenu
+    assert "## Concepts et dépendances mathématiques {#concepts-et-dependances-mathematiques}" in contenu
+    assert "## Propriétés, tests et implémentations associées {#proprietes-tests-et-implementations-associees}" in contenu
+    assert "flowchart TB" in contenu
+    assert "<details>" in contenu and "</details>" in contenu
     assert "[theorie/page.qmd](../theorie/page.qmd)" in contenu
     assert "| Concept sans lien | Concept | Concept sans lien |" in contenu
     assert "[Auteur 2000 - Démo](https://example.com/auteur2000)" in contenu
