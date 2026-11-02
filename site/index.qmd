@@ -55,6 +55,32 @@ L'analyse de l'héritage et le panorama de l'état de l'art sont présentés dan
 
 La [carte d'articulation scientifique](projet/carte-articulation.qmd) donne la vue d'ensemble : elle distingue les sources historiques, l'hypothèse mathématique, les vérifications du code, la comparaison différentielle et la validation indépendante. Choisir ensuite le parcours adapté à la question recherchée.
 
+### Choisir son niveau de lecture
+
+Cette documentation est conçue pour être lue à plusieurs profondeurs. Il n'est pas nécessaire de maîtriser les détails mathématiques pour comprendre la question scientifique ; en revanche, toute conclusion technique doit pouvoir être remontée jusqu'à ses hypothèses et ses preuves.
+
+::: {.callout-tip title="Trois façons d'entrer dans le sujet" collapse="false"}
+- **Vue d'ensemble — comprendre l'idée.** Lire l'accueil, la [carte d'articulation](projet/carte-articulation.qmd) et les résumés en tête des pages. Objectif : savoir quelle question J-DriftX étudie, ce qui est acquis et ce qui reste hypothétique.
+- **Parcours explicatif — comprendre le raisonnement.** Suivre les sections « intuition », « formulation » et « conséquences » des pages théoriques, puis les renvois vers les hypothèses. Objectif : comprendre pourquoi une équation ou une approximation est introduite et ce qu'elle change.
+- **Parcours de vérification — contrôler une affirmation.** Consulter les dérivations, les conditions aux limites, le [registre des preuves](projet/registre-preuves.qmd), les tests et les expériences reproductibles. Objectif : vérifier précisément la portée d'un résultat, ses tolérances et ses limites.
+
+Ces parcours ne correspondent pas à trois niveaux de vérité : ils donnent trois profondeurs de lecture d'un même raisonnement scientifique.
+:::
+
+### Lire le statut d'une affirmation
+
+Une équation, un test logiciel et une validation physique ne constituent pas le même type de preuve. Dans les pages du projet, il faut distinguer explicitement :
+
+| Statut | Ce que cela autorise à conclure | Ce que cela n'autorise pas à conclure |
+|---|---|---|
+| **Défini / formulé** | L'objet, les hypothèses et les conventions sont explicités. | Que la propriété est vraie ou que le code la respecte. |
+| **Dérivé / démontré** | Le résultat découle du raisonnement indiqué, sous ses hypothèses. | Qu'il reste valable hors de ce cadre. |
+| **Testé** | Un comportement précis a été vérifié sur les cas, données et tolérances annoncés. | Une preuve générale, ni une validation physique. |
+| **Comparé** | Un résultat a été confronté à une référence identifiée selon un protocole donné. | Une supériorité universelle ou un gain hors du protocole. |
+| **Validé indépendamment** | Une confrontation indépendante soutient l'usage défini et son domaine. | Une validité pour tout terrain, météo ou régime physique. |
+
+**Règle de lecture :** chercher systématiquement quatre éléments avant de reprendre une conclusion : (1) les hypothèses, (2) le domaine et les conditions aux limites, (3) la nature de la preuve, (4) les limites et contre-exemples connus. Si l'un manque, la conclusion doit être considérée comme incomplète, pas comme implicitement acquise.
+
 ### Découvrir le projet
 
 1. [Héritage Drift-X](projet/heritage.qmd) — comprendre l'origine historique et ce que les travaux antérieurs établissent.
