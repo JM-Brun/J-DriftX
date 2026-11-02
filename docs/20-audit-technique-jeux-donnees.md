@@ -12,6 +12,24 @@
 | [ETEX / JRC](https://remon.jrc.ec.europa.eu/past_activities/etex/site/datasets.htm) | Page de téléchargement active : **quatre archives** (météo × traceur, lâchers 1 et 2) | Pas de licence par fichier ; **notice générique open data JRC** (© Union européenne, décision 2011/833/EU, Creative Commons) à confirmer pour ces fichiers | Le lâcher (**n = 2 seulement**) | Oui — traceur perfluorocarboné au sol, échelle continentale | Unités, complétude, contenu des archives météo |
 | [ERIES](https://doi.org/10.4121/e7f87f46-1d17-43ed-be81-60bee65081bf) (4TU.ResearchData) | DOI actif (version 2, mars 2026) ; page d'accueil illisible pour les outils, métadonnées Datacite complètes | **CC BY 4.0 confirmée** (SPDX cc-by-4.0) — seule licence pleinement vérifiée aujourd'hui | La configuration (source S1/S2 × vent) : 2 essais ; la répétabilité quantifie l'incertitude | Oui — scalaire passif neutre, mais **échelle réduite** (soufflerie, 1:350) | Structure des fichiers (xlsx, txt, Matlab), unités, incertitudes chiffrées |
 
+
+## Corpus complémentaires à auditer — ajout du 2 novembre 2026
+
+La revue bibliographique ajoute des pistes de validation qui ne doivent pas être confondues avec des corpus déjà récupérés, inspectés ou autorisés à la réutilisation.
+
+| Corpus | Apport expérimental documenté | Usage potentiel | Vérifications préalables |
+|---|---|---|---|
+| Prairie Grass (1956) | 68 périodes de 10 min ; SO₂ émis près du sol ; arcs de mesure 50–800 m ; ressources numériques décrites par Aarhus/OML | Benchmark initial de champ proche, terrain relativement simple | Récupérer les fichiers depuis la ressource Aarhus, vérifier unités et métadonnées de chaque run ; préspécifier le traitement des vents très faibles et des 4 essais à hauteur 1,5 m |
+| CAPTEX / ANATEX | Traceurs contrôlés régionaux, répertoriés par NOAA DATEM ; comparaison HYSPLIT/STILT/FLEXPART publiée | Transport régional et sensibilité aux champs météorologiques | Vérifier les fichiers sources, versions et prétraitements ; distinguer expérience, campagne et fichiers dérivés |
+| ETEX (1994) | Deux rejets ; 168 stations ; archives JRC distinctes pour météo et traceur | Transport continental | Vérifier contenu des archives, unités, trous, horodatage et droits de réutilisation au niveau des fichiers |
+| Winter Validation Tracer Study | 12 essais de 11 h ; SF₆ ; 140 échantillonneurs à 8 et 16 km ; protocole de comparaison AERMOD/CALPUFF/ISC2/RATCHET publié | Comparaison stationnaire / puff | Récupérer les données et les champs météo ; identifier les données observées et les prédictions historiques ; reconstruire les critères de performance |
+| JU2003 | 10 périodes intensives ; 29 rejets continus et 40 rejets en bouffées ; environ 150 emplacements de mesure en contexte urbain | Extension urbaine, rues-canyons et stratification verticale | Inspecter rapport et archives, géolocalisation, hauteurs, métadonnées jour/nuit, fichiers de concentrations et licences |
+| Catalogue ADMLC / MDA | Index de jeux de données expérimentaux et informations d'accès | Découverte d'autres corpus candidats | Le catalogue n'est pas un dataset ; évaluer chaque jeu séparément |
+
+**Statut :** aucune de ces lignes ne signifie que les fichiers ont été téléchargés, contrôlés ou intégrés aux fixtures. Prairie Grass, CAPTEX/ANATEX et ETEX ont des ressources documentaires identifiées ; les décisions de sélection doivent rester subordonnées à l'audit effectif des fichiers. Le WVTS et JU2003 sont des candidats complémentaires, pas des remplacements du corpus DIFLU. La piste MUST reste hors sélection tant que sa source primaire, les fichiers et les conditions de réutilisation n'ont pas été contrôlés.
+
+Références et descriptions : [fiche modèles lagrangiens et benchmarks](bibliographie/modeles-lagrangiens-et-benchmarks.md), [DATEM NOAA](https://www.arl.noaa.gov/hysplit/datem-tracer-evaluation/), [ETEX JRC](https://remon.jrc.ec.europa.eu/Past-Activities/ETEX), [JU2003 NOAA](https://repository.library.noaa.gov/view/noaa/12573), [Prairie Grass / Aarhus](https://envs.au.dk/om-instituttet-1/faglige-omraader/luftforurening-udledninger-og-effekter/overvaagningsprogrammet/luftforureningsmodeller/baggrundsmateriale/oml), [ADMLC](https://admlc.com/datasets/).
+
 ## 0. Méthode et limites
 
 Consulté le 23 octobre 2026, en sources primaires uniquement :
