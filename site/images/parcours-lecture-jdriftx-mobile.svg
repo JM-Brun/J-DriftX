@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1600" role="img" aria-labelledby="title desc">
+<title id="title">J-DriftX — quatre portes d'entrée complémentaires</title>
+<desc id="desc">Quatre parcours indépendants et reliés : s'orienter et comprendre, explorer le modèle, construire la théorie, vérifier et reproduire. Ils ne forment ni une séquence obligatoire ni une échelle de preuve.</desc>
+<defs>
+  <linearGradient id="bgm" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#edf7ff"/><stop offset="1" stop-color="#f7fbf3"/></linearGradient>
+  <filter id="shadowm" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#163b59" flood-opacity=".12"/></filter>
+</defs>
+<rect width="600" height="1600" rx="20" fill="url(#bgm)"/>
+<g font-family="Inter,Segoe UI,Arial,sans-serif" fill="#153e5c">
+  <text x="34" y="55" font-size="29" font-weight="800">Choisir son point d'entrée</text>
+  <text x="35" y="88" font-size="20" fill="#45677f">Quatre parcours selon votre question</text>
+</g>
+<g filter="url(#shadowm)">
+  <rect x="35" y="115" width="530" height="190" rx="20" fill="#fff" stroke="#1475ad" stroke-width="3"/>
+  <rect x="35" y="375" width="530" height="190" rx="20" fill="#fff" stroke="#23845f" stroke-width="3"/>
+  <rect x="35" y="1035" width="530" height="190" rx="20" fill="#fff" stroke="#1475ad" stroke-width="3"/>
+  <rect x="35" y="1295" width="530" height="190" rx="20" fill="#fff" stroke="#5b9825" stroke-width="3"/>
+</g>
+<g font-family="Inter,Segoe UI,Arial,sans-serif">
+  <g fill="#0c659e"><circle cx="78" cy="160" r="25"/><text x="78" y="168" text-anchor="middle" font-size="25" font-weight="800" fill="#fff">1</text><text x="120" y="169" font-size="26" font-weight="750">S'orienter et comprendre</text></g>
+  <g fill="#1d805b"><circle cx="78" cy="420" r="25"/><text x="78" y="428" text-anchor="middle" font-size="25" font-weight="800" fill="#fff">2</text><text x="120" y="429" font-size="26" font-weight="750">Explorer le modèle</text></g>
+  <g fill="#0c659e"><circle cx="78" cy="1080" r="25"/><text x="78" y="1088" text-anchor="middle" font-size="25" font-weight="800" fill="#fff">3</text><text x="120" y="1089" font-size="26" font-weight="750">Construire la théorie</text></g>
+  <g fill="#568e21"><circle cx="78" cy="1340" r="25"/><text x="78" y="1348" text-anchor="middle" font-size="25" font-weight="800" fill="#fff">4</text><text x="120" y="1349" font-size="26" font-weight="750">Vérifier et reproduire</text></g>
+  <g fill="#244d69" font-size="22">
+    <text x="65" y="215" font-weight="700">Problème physique · question de recherche</text>
+    <text x="65" y="253">Origine du projet · statut des connaissances</text>
+    <text x="65" y="475" font-weight="700">Vent · transport · dispersion · concentration</text>
+    <text x="65" y="513">Chaîne N0–N6 · laboratoires interactifs</text>
+    <text x="65" y="1135" font-weight="700">Équations · hypothèses · dérivations</text>
+    <text x="65" y="1173">Similitude · réduction a priori · géométrie</text>
+    <text x="65" y="1395" font-weight="700">Propriétés démontrées ou testées</text>
+    <text x="65" y="1433">Références · benchmarks · limites · code</text>
+  </g>
+</g>
+<rect x="155" y="720" width="290" height="160" rx="22" fill="#173f5d"/>
+<g font-family="Inter,Segoe UI,Arial,sans-serif" fill="#fff" text-anchor="middle">
+  <text x="300" y="777" font-size="25" font-weight="750">Même projet</text>
+  <text x="300" y="815" font-size="21">questions différentes</text>
+  <text x="300" y="847" font-size="17">parcours reliés, non séquentiels</text>
+</g>
+<text x="300" y="1540" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="19" text-anchor="middle" fill="#45677f">Choisir une porte ne détermine pas le niveau de preuve.</text>
+</svg>
