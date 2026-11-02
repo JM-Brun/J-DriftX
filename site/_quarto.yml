@@ -111,7 +111,7 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme: [cosmo, styles.scss]
     lang: fr
     toc: true
     toc-depth: 3
