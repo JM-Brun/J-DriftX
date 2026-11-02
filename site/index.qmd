@@ -65,7 +65,7 @@ Une définition mathématique, une démonstration sous hypothèses, un test logi
 
 À ce stade, les expériences synthétiques et les tests ciblés vérifient des cas définis. Ils ne démontrent ni une validité météorologique générale, ni une utilité applicative, ni un gain de performance face à une baseline pertinente. Le cadrage documentaire est avancé ; les preuves différentielles et applicatives restent à construire.
 
-Pour examiner précisément les hypothèses, la portée des tests et les limites de conclusion, consulter le [registre des preuves](projet/registre-preuves.qmd), les [limites du modèle](hypotheses/limites.qmd) et le [positionnement dans l'état de l'art](etat-art/positionnement.qmd).
+Pour examiner précisément les hypothèses, la portée des tests et les limites de conclusion, consulter le [registre des preuves](projet/registre-preuves.qmd), le [guide de lecture des statuts de preuve](projet/carte-articulation.qmd#statut-affirmation), les [limites du modèle](hypotheses/limites.qmd) et le [positionnement dans l'état de l'art](etat-art/positionnement.qmd).
 
 ## Explorer par sujet
 
