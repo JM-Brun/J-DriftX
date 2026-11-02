@@ -517,8 +517,7 @@ def _section_vue_derivee(
     lignes.append(fence)
     lignes.extend([
         "",
-        "<details>",
-        "<summary>Afficher les nœuds et leurs destinations documentaires</summary>",
+        '::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}',
         "",
         "| Nœud | Type | Où approfondir |",
         "|---|---|---|",
@@ -526,6 +525,7 @@ def _section_vue_derivee(
     for noeud in registre.noeuds:
         if noeud.id in identifiants:
             lignes.append(_ligne_table(noeud, registre))
+    lignes.append(":::")
     return "\n".join(lignes)
 
 
