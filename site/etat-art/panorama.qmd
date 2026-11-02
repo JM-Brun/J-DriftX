@@ -48,6 +48,36 @@ Les quatre ressources ci-dessous sont utiles à J-DriftX, mais elles ne désigne
 **Garde scientifique :** ces ressources améliorent le choix des comparateurs et la qualité de la documentation ; elles ne démontrent ni que J-DriftX est équivalent à ces modèles, ni qu'il est plus rapide, plus précis ou plus utile. Les comparaisons doivent respecter les critères du [protocole de validation](../projet/validation-scientifique.qmd) et les limites de chaque famille.
 
 
+
+### Baselines lagrangiennes et modèles gaussiens avancés
+
+La famille lagrangienne doit être représentée par plusieurs objets distincts. **HYSPLIT** [@hysplit2015] et **FLEXPART** [@bakels2024flexpart] sont des modèles de dispersion particulaire ; **OpenDrift** [@dagestad2018opendrift] est un framework générique de trajectoires, dont les applications et observables ne sont pas automatiquement équivalents à une concentration atmosphérique. **PyAERMOD** [@capps2026pyaermod] est un wrapper Python autour d'AERMOD, pas une formulation physique indépendante ; la documentation EPA [@epaAermod2026; @epa2024appendixw] décrit le modèle et son cadre réglementaire.
+
+Deux comparateurs complémentaires précisent le panorama :
+- **UK-ADMS** [@adms1994] est un modèle gaussien avancé intégrant plusieurs processus de couche limite, dépôt, terrain et bâtiments. Il évite de réduire la famille gaussienne à la seule plume gaussienne élémentaire.
+- **GRAMM–GRAL** est pertinent pour le microscale et les obstacles ; l'étude de validation de GRAL par Öttl [@oettl2015gral] décrit le champ de vent RANS et sa confrontation à des données de soufflerie. Ce n'est pas une baseline directe si le champ de vent n'est pas calculé dans J-DriftX.
+
+La revue de Holmes & Morawska [@holmes2006] fournit une taxonomie des familles (boîte, gaussien, lagrangien/eulérien, CFD et dynamique des aérosols), mais ne remplace pas une évaluation contemporaine des versions logicielles.
+
+### Turbulence et cohérence des trajectoires stochastiques
+
+Thomson [@thomson1987] examine les critères de cohérence des modèles stochastiques de trajectoires dans les écoulements turbulents inhomogènes ou instationnaires, notamment la condition *well-mixed*. Luhar & Britter [@luhar1989] appliquent cette lignée à une couche limite convective inhomogène et dissymétrique. Ces travaux imposent de distinguer trajectoire moyenne, transport particulaire, dispersion turbulente et concentration d'ensemble. Ils sont des références de délimitation physique, pas une démonstration que la formulation par temps de transport de J-DriftX serait invalide ou équivalente à un modèle stochastique.
+
+### Benchmarks et expériences de traceurs
+
+Les comparaisons inter-modèles fournissent un avertissement méthodologique important. Andrews et al. [@andrews2013] comparent HYSPLIT, STILT et FLEXPART sur CAPTEX/ANATEX avec des entrées météorologiques communes ; ils rapportent des compétences comparables entre modèles sous champs modernes communs, et une sensibilité significative aux configurations météorologiques. Il faut donc contrôler les champs d'entrée avant d'attribuer un écart à la formulation de transport.
+
+Rood [@winter2014validation] compare AERMOD, CALPUFF, ISC2 et RATCHET sur le Winter Validation Tracer Study. Les modèles à puffs présentent globalement une variance plus faible et une corrélation plus élevée, tandis que les modèles stationnaires sous-estiment moins souvent les maxima. Ces résultats diffèrent selon l'objectif d'évaluation (conformité réglementaire ou reconstruction de dose) et ne permettent pas de classer universellement les familles.
+
+Les jeux de données candidats couvrent des régimes différents :
+- **Prairie Grass** [@prairiegrassData] : 68 périodes de dix minutes, émissions de SO₂ près du sol et mesures à 50–800 m ; candidat de champ proche sur terrain relativement simple. Les essais à vent très faible et les quatre essais à hauteur d'émission différente doivent être traités explicitement.
+- **CAPTEX/ANATEX** : campagnes de traceurs contrôlés répertoriées dans DATEM et utilisées par Andrews et al. [@andrews2013] ; candidat régional, sous réserve de vérifier les fichiers et prétraitements.
+- **ETEX** [@etexJRC] : deux rejets et 168 stations selon le JRC, avec archives météorologiques et de traceur séparées ; candidat continental, mais nombre limité de rejets.
+- **JU2003** [@ju2003Clawson2005] : dix périodes intensives, rejets continus et en bouffées de SF₆, environ 150 emplacements de mesure à Oklahoma City ; candidat urbain, à stratifier par hauteur, localisation, période jour/nuit et type de rejet.
+- **ADMLC** [@admlcDatasets] : catalogue de jeux de dispersion et modalités d'accès, non un jeu de données lui-même.
+
+Ces ressources ne sont pas toutes prêtes à l'emploi. Le catalogue ADMLC avertit que la qualité et l'adéquation de chaque jeu relèvent de l'utilisateur ; l'audit de fichiers, des unités, des licences, des métadonnées et de l'indépendance des essais reste requis. La piste MUST est maintenue comme question ouverte dans l'audit #207 : elle n'est pas promue au rang de benchmark sélectionné tant que la source primaire et les fichiers n'ont pas été vérifiés.
+
 ## Dérive de pulvérisation
 
 L'EPA documente des incertitudes et des limites de validation de l'extension gaussienne d'AGDISP pour certains usages far-field, notamment concernant les barrières physiques et la météorologie ([source EPA](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension)). Cela justifie d'examiner certains scénarios, mais pas d'affirmer que la métrique de J-DriftX les résout. Le caractère conservateur d'une estimation peut être intentionnel selon la décision réglementaire.
