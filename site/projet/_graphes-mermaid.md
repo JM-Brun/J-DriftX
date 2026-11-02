@@ -817,8 +817,7 @@ flowchart TB
   classDef hypothese fill:#bfe0ff,stroke:#495057,color:#212529;
 ```
 
-<details>
-<summary>Afficher les nœuds et leurs destinations documentaires</summary>
+::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}
 
 
 
@@ -855,7 +854,7 @@ flowchart TB
 | H7 — données d'assimilation représentatives | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
 | H8 — superposition des sources | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
 
-</details>
+:::
 
 ## Concepts et dépendances mathématiques {#concepts-et-dependances-mathematiques}
 
@@ -892,8 +891,7 @@ flowchart TB
   classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
 ```
 
-<details>
-<summary>Afficher les nœuds et leurs destinations documentaires</summary>
+::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}
 
 
 
@@ -915,7 +913,7 @@ flowchart TB
 | Maillage gouverné par métrique | Concept | [theorie/edp-et-maillage.qmd](../theorie/edp-et-maillage.qmd) |
 | Équation de Burgers | Concept | [theorie/burgers-et-jdriftx.qmd](../theorie/burgers-et-jdriftx.qmd) |
 
-</details>
+:::
 
 ## Propriétés, tests et implémentations associées {#proprietes-tests-et-implementations-associees}
 
@@ -1032,8 +1030,7 @@ flowchart TB
   classDef test fill:#e9ecef,stroke:#495057,color:#212529;
 ```
 
-<details>
-<summary>Afficher les nœuds et leurs destinations documentaires</summary>
+::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}
 
 
 
@@ -1077,4 +1074,4 @@ flowchart TB
 | test_transitoire_puff.py | Test (CI) | [test_transitoire_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_transitoire_puff.py) |
 
 
-</details>
+:::
