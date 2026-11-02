@@ -354,9 +354,21 @@ def test_architecture_conceptuelle_est_presente_dans_le_rendu() -> None:
     graphe = next(g for g in registre.graphes if g.id == "concepts")
 
     assert set(graphe.noeuds) == {
-        "c-transport", "c-champ", "c-panache", "c-stabilite", "c-burgers",
-        "c-courant", "c-fcourant", "c-tau", "c-polyligne", "c-tpa", "c-pdist",
-        "c-reduction", "c-maillage", "c-multiniveaux", "c-assimilation",
+        "c-transport",
+        "c-champ",
+        "c-panache",
+        "c-stabilite",
+        "c-burgers",
+        "c-courant",
+        "c-fcourant",
+        "c-tau",
+        "c-polyligne",
+        "c-tpa",
+        "c-pdist",
+        "c-reduction",
+        "c-maillage",
+        "c-multiniveaux",
+        "c-assimilation",
     }
     assert len(graphe.groupes) == 4
     contenu = generer_contenu(registre, {})
