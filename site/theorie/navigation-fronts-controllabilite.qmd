@@ -136,7 +136,8 @@ Le facteur \((4\pi Kt)^{-3/2}\) ne détruit donc pas de masse : il compense exac
 Il faut distinguer les deux constructions avant de lire la preuve :
 
 - **Front d'isoconcentration** : ensemble des points où la solution de l'équation d'advection–diffusion vérifie (C(x,t)=C_0). Il décrit un niveau de concentration physique dans le modèle gaussien.
-- **Front de contrôlabilité** : frontière des positions qu'un mobile peut atteindre en respectant la contrainte de commande (lVert s(t)Vertleq R'(t)). Il décrit un problème de contrôle défini par le modélisateur.
+- **Front de contrôlabilité** : frontière des positions qu'un mobile peut atteindre en respectant la contrainte de commande (lVert s(t)
+Vertleq R'(t)). Il décrit un problème de contrôle défini par le modélisateur.
 
 Dans GZ-1, ces deux frontières coïncident parce que la borne de commande a été choisie égale à la vitesse d'expansion (R'(t)), et parce que le vent est uniforme. **Cette coïncidence est le résultat démontré ; ce n'est pas une identité générale entre diffusion et contrôle.**
 :::
@@ -177,7 +178,6 @@ le premier contact est le premier zéro de \(g_B\) dans \((0,t_*]\), lorsque ce 
 T_{\mathrm{front}}
 =-t_*\,\frac{q}{W_{-1}(-q/e)}.
 \]
-
 La branche \(W_{-1}\) est indispensable : elle sélectionne \(0<T_{\mathrm{front}}\leq t_*\), donc le premier contact pendant l'expansion. Pour le voir, poser \(y=t/t_*\) transforme l'équation en \(q=y(1-\ln y)\) ; avec \(w=\ln y-1\), on obtient \(we^w=-q/e\), et la branche \(W_{-1}\) impose \(y\leq1\). La branche principale \(W_0\) donne la seconde intersection pendant la contraction, hors du domaine de contrôle GZ-1.
 
 La convention est \(+\infty\) si l'ensemble correspondant est vide. Pour une cible initialement extérieure, le premier instant où la boule contient la cible est un contact avec la frontière, par continuité.
@@ -257,6 +257,17 @@ Plus précisément, lorsque \(t\to0+\), \(R(t)\sim\sqrt{6Kt\ln(t_*/t)}\) et \(R'
 Ces cas sont des extensions ouvertes, et non des corollaires implicites du théorème GZ-1.
 
 ## 5. Hamiltonien et équation de Hamilton–Jacobi instationnaire
+
+::: {.callout-tip title="Lire l'équation avant de la dériver" collapse="false"}
+L'équation de Hamilton–Jacobi décrit ici **comment évolue la frontière des positions atteignables** :
+
+- (u\cdot\nabla\phi) transporte le front avec le vent ;
+- (c\lVert\nabla\phi\rVert) représente l'expansion permise par la commande isotrope ;
+- (phi=0) repère la frontière (avec un plateau nul à l'intérieur dans la solution issue d'un départ ponctuel).
+
+Ce n'est pas l'équation qui fait évoluer la concentration (C). Le champ (C) relève de l'advection–diffusion ; (phi) relève du problème de contrôle.
+:::
+
 
 Considérons le problème de contrôle général
 
@@ -357,7 +368,6 @@ F(v)=
 \]
 
 La jauge \(F(v)\) est le temps minimal nécessaire pour réaliser le déplacement \(v\) à vitesse moyenne constante. Au minimum, la contrainte est saturée : si la vitesse relative était strictement inférieure à \(c\), on pourrait réduire légèrement le temps tout en restant admissible. On impose donc \(\lVert v/F-u\rVert=c\). Pour \(c>\lVert u\rVert\), le membre de gauche tend vers \(\lVert u\rVert<c\) lorsque \(F\to+\infty\), et vers \(+\infty\) lorsque \(F\to0^+\) ; l'équation sélectionne ainsi l'unique temps minimal positif. En élevant au carré,
-
 \[
 \lVert v\rVert^2-2F(u\cdot v)+F^2\lVert u\rVert^2=c^2F^2,
 \]
@@ -536,7 +546,6 @@ Le cas GZ-1 fournit un oracle analytique compact. Une future implémentation dev
 Les tests numériques doivent être étiquetés **tests de cohérence ou de convergence**, jamais « preuve du théorème ». La preuve de l'ensemble atteignable est analytique et ne dépend pas d'un échantillonnage de trajectoires.
 
 ### 7.2 Singularité initiale et discrétisation temporelle
-
 Le point \(t=0\) est singulier pour la vitesse \(c(t)=R'(t)\), même si son intégrale est finie. Un schéma qui évalue naïvement \(c(0)\), ou qui le remplace par un plafond arbitraire, ne discrétise pas le problème GZ-1 tel qu'il est défini.
 
 Pour le premier pas \([0,\Delta t]\), l'incrément exact du rayon est
