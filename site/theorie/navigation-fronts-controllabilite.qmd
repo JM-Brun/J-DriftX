@@ -263,7 +263,7 @@ L'équation de Hamilton–Jacobi décrit ici **comment évolue la frontière des
 
 - \(u\cdot\nabla\phi\) transporte le front avec le vent ;
 - \(c\lVert\nabla\phi\rVert\) représente l'expansion permise par la commande isotrope ;
-- \(\phi=0\) repère la frontière (avec un plateau nul à l'intérieur dans la solution issue d'un départ ponctuel).
+- \(\phi=0\) contient toute la région atteignable ; le **front géométrique** est sa frontière topologique, car la solution présente un plateau nul à l'intérieur.
 
 Ce n'est pas l'équation qui fait évoluer la concentration \(C\). Le champ \(C\) relève de l'advection–diffusion ; \(\phi\) relève du problème de contrôle.
 :::
