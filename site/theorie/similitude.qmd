@@ -211,6 +211,17 @@ Le préfacteur $Q/(2\pi U\,\sigma_y\sigma_z)$ a donc pour unité $\mathrm{kg\,s^
 
 - **Source au sol ($h=0$).** Les deux images coalescent : $C(x,y,z)=\frac{Q}{\pi U\,\sigma_y\sigma_z}\exp\bigl(-y^2/2\sigma_y^2\bigr)\exp\bigl(-z^2/2\sigma_z^2\bigr)$ — le facteur $2$ de la réflexion, cohérent avec le dédoublement de la concentration au sol constaté à l’étape 6.
 - **Flux sur un rectangle tronqué.** Toujours pour $h=0$, le flux à travers $[-k\sigma_y,k\sigma_y]\times[0,k\sigma_z]$ vaut exactement $Q\,\mathrm{erf}^2(k/\sqrt2)$ : c’est la référence analytique qu’utilisent les tests de troncature et de discrétisation de `tests/test_similitude.py`. La dérivation tient en trois lignes : à $h=0$ la réflexion double la gaussienne verticale, donc $C=\frac{Q}{\pi U\sigma_y\sigma_z}e^{-y^2/2\sigma_y^2}e^{-z^2/2\sigma_z^2}$ ; chaque gaussienne tronquée s'intègre en $\int_{-k\sigma}^{k\sigma}e^{-u^2/2\sigma^2}\,\mathrm{d}u=\sqrt{2\pi}\,\sigma\,\mathrm{erf}(k/\sqrt2)$ (substitution $u=\sqrt2\,\sigma\,w$) ; le flux $U\int\!\!\int C\,\mathrm{d}y\,\mathrm{d}z$ vaut donc $\frac{Q}{\pi\sigma_y\sigma_z}\cdot\sqrt{2\pi}\sigma_y\,\mathrm{erf}(k/\sqrt2)\cdot\sqrt{2\pi}\sigma_z\,\mathrm{erf}(k/\sqrt2)=Q\,\mathrm{erf}^2(k/\sqrt2)$. Vérifié numériquement (quadrature directe vs formule fermée, $k=2$, écart $<10^{-5}$ rel.).
+
+**Lire $k$ sur des nombres — et pourquoi les tests prennent quatre écarts-types.** La fraction du flux captée vaut, selon l’étendue $k$ du rectangle :
+
+| $k$ | flux capté $\mathrm{erf}^2(k/\sqrt2)$ | fraction omise |
+|---|---|---|
+| 1 | 46,6 % | 53,4 % |
+| 2 | 91,1 % | 8,9 % |
+| 3 | 99,46 % | 0,54 % |
+| 4 | 99,987 % | 0,013 % |
+
+À $k=2$, presque 9 % du flux échappe encore au rectangle ; à $k=4$, la fraction omise ($\approx1{,}3\times10^{-4}$) passe nettement sous la tolérance de 0,1 % des tests de conservation. Le choix des grilles « adaptées à quatre écarts-types » ([Contraintes physiques](contraintes-physiques.qmd)) rend ainsi l’erreur de troncature négligeable devant la tolérance du bilan : c’est une décision de protocole de test, pas une propriété du panache. **Type : illustration numérique** de la formule exacte ci-dessus.
 - **Décroissance axiale.** Sur l’axe ($y=0$, $z=h$), la solution non réfléchie atteint son maximum $C=Q/(2\pi U\,\sigma_y\sigma_z)$ ; à diffusivités constantes, $\sigma_i\propto\sqrt{x}$, donc ce maximum décroît en $1/x$ — signature de la dérivation, à distinguer des lois puissance des largeurs empiriques (étape 7).
 
 **Domaine de validité de la construction.** $x>0$ et $z\geq0$ ; $U>0$ constant ; $K_y,K_z$ constants ; scalaire passif sans chimie ni dépôt (hypothèses H1 et H8 du [catalogue](../hypotheses/catalogue.qmd)) ; source ponctuelle continue. L’équation étant de premier ordre en $x$, la construction n’a pas d’extension en amont — cohérent avec le caractère unilatéral du transport. Hors de ce domaine, la formule devient une approximation candidate, dont l’erreur doit être mesurée ([Réduction a priori](reduction-a-priori.qmd)).
@@ -262,11 +273,23 @@ C'est ici que l'implicite devient explicite : la loi $\sigma^2=2Kt$ de l'étape 
 
 Les formules de Briggs interpolent ces deux régimes en fonction de la distance, via $t'=x/U$ : la forme $\sigma_y(x)=ax/\sqrt{1+d_yx}$ est linéaire en $x$ aux courtes distances et en $x^{1/2}$ aux longues — exactement les deux asymptotiques ci-dessus ; la forme $\sigma_z(x)=bx/(1+d_zx)$ des classes E–F tend vers le plateau $b/d_z$, un régime que la formule de Taylor à une particule ne contient pas : il encode d'autres physiques (plafond de la couche limite, stratification stable), une différence d'hypothèses à garder explicite.
 
+**Lire les formes de Briggs sur des nombres (classe D, site rural).** Avec les coefficients codés pour la classe D ($a=0{,}08$, $d_y=10^{-4}\,\mathrm{m^{-1}}$ ; $b=0{,}06$, $d_z=1{,}5\times10^{-3}\,\mathrm{m^{-1}}$) :
+
+| $x$ | $\sigma_y(x)$ | $\sigma_y$ linéaire $0{,}08x$ | $\sigma_z(x)$ | $\sigma_z$ linéaire $0{,}06x$ |
+|---|---|---|---|---|
+| 100 m | 8,0 m | 8,0 m | 5,6 m | 6,0 m |
+| 1 km | 76 m | 80 m | 38 m | 60 m |
+| 10 km | 566 m | 800 m | 150 m | 600 m |
+
+Les deux transitions ne se jouent pas à la même échelle : $1/d_y=10\,\mathrm{km}$, et $\sigma_y$ reste quasi linéaire à 1 km (76 contre 80 m) ; $1/d_z\approx670\,\mathrm m$, et $\sigma_z$ est déjà nettement en régime $\sqrt{x}$ à 1 km (38 contre 60 m). La largeur verticale « durcit » plus vite que la largeur horizontale — l’asymétrie des exposants de la classe D, lisible directement sur ces nombres. **Type : illustration numérique** des lois codées ; aucune mesure de site réel.
+
 #### Ce que la dérivation suppose — et ne suppose pas
 
 Hypothèses de la dérivation : turbulence **homogène** (la variance ne dépend pas du point de départ) et **stationnaire** (l'autocorrélation ne dépend que de l'écart) — des hypothèses de statistiques plus fortes que l'homogénéité par morceaux H5 du [catalogue](../hypotheses/catalogue.qmd) ; $R$ intégrable ; particule unique ; domaine illimité, sans sol ni frontière. Ce que la dérivation **n'établit pas** : la forme gaussienne du profil — la variance seule est calculée, la gaussienne vient de la route théorème central limite / équation de la chaleur des étapes 3–6, pas de Taylor ; la validité des tables de Briggs (elles interpolent, elles ne découlent pas) ; le comportement de $K(z)$ dans une couche limite réelle, où le temps de corrélation dépend de la hauteur et de la stabilité. Si $R$ n'est pas intégrable (corrélations à grande échelle), la croissance est sur-linéaire et la notion même de diffusivité effective disparaît — cas non traité ici.
 
 *Contrôles numériques (sandbox, float64, $R(\tau)=e^{-|\tau|}$)* : la forme factorisée de T4 coïncide avec la double intégrale directe ($\sim10^{-8}$ rel. à $T=0{,}5$, $3$, $10$) ; la forme fermée $\sigma^2=2v'^2[T-T_L(1-e^{-T/T_L})]$ pour ce choix de $R$ la reproduit à $10^{-10}$ ; les deux asymptotiques sont vérifiées ($\sigma^2/T^2\to v'^2$ en temps court, $\sigma^2/(2T)\to v'^2T_L$ en temps long). Ces contrôles valident l'algèbre, pas la physique de l'atmosphère.
+
+**Les deux régimes sur des nombres (illustration).** Prenons $v'=0{,}5\,\mathrm{m\,s^{-1}}$ et $R(\tau)=e^{-|\tau|/T_L}$ avec $T_L=100\,\mathrm{s}$, soit $K_{\mathrm{eff}}=v'^2T_L=25\,\mathrm{m^2\,s^{-1}}$. La forme fermée donne $\sigma(10\,\mathrm s)\approx4{,}9\,\mathrm m$, contre l’asymptotique courte $v'T=5\,\mathrm m$ (écart 2 %) ; et $\sigma(2000\,\mathrm s)\approx308\,\mathrm m$, contre l’asymptotique longue $\sqrt{2K_{\mathrm{eff}}T}=316\,\mathrm m$ (écart 2,5 %). La transition se joue autour de $T\sim T_L$ : le rapport $\sigma/T$ vaut ici $0{,}49$ à $10\,\mathrm s$, $0{,}43$ à $100\,\mathrm s$, $0{,}21$ à $1000\,\mathrm s$ — il cesse d’être constant exactement là où la corrélation s’épuise. Ces nombres fixent les ordres de grandeur des mots « court » et « long » ; ils ne valident aucune atmosphère réelle. **Type : illustration numérique** de la dérivation ci-dessus.
 
 ### Solution exacte et calibration empirique : deux affirmations, pas une {#solution-exacte-calibration-empirique}
 

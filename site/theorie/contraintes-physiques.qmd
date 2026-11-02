@@ -79,7 +79,9 @@ $$
 \tau(\mathbf{a},\mathbf{b},\mathbf{u}) = \lambda\cdot(\mathbf{b}-\mathbf{a}), \qquad \lambda = \frac{\mathbf{u}}{\|\mathbf{u}\|^2}.
 $$
 
-Le vecteur adjoint $\lambda$, constant dans un champ uniforme, mesure la sensibilité exacte : déplacer la cible de $\delta\mathbf{b}$ change le coût d’exactement $\lambda\cdot\delta\mathbf{b}$. Les gradients par rapport aux trois entrées sont fermés :
+Le vecteur adjoint $\lambda$, constant dans un champ uniforme, mesure la sensibilité exacte : déplacer la cible de $\delta\mathbf{b}$ change le coût d’exactement $\lambda\cdot\delta\mathbf{b}$.
+
+**Lire ces gradients sur des nombres.** Pour un vent $\mathbf{u}=(3,0)\,\mathrm{m\,s^{-1}}$ et un déplacement $\mathbf{b}-\mathbf{a}=(100,0)\,\mathrm m$ : $\tau=100/3\approx33{,}3\,\mathrm s$ ; $\lambda=(1/3,0)$, donc 1 m de plus vers l’aval allonge le coût d’environ $0{,}33\,\mathrm s$ (et le raccourcit d’autant vers l’amont, tant que la cible reste en aval) ; $\nabla_{\mathbf u}\tau\approx(-11{,}1,0)$, donc gagner 1 m/s de vent raccourcit le coût d’environ 11 s en ce point. Ces sensibilités sont exactes sur le demi-plan aval ouvert (vérifiées par différences finies à $10^{-9}$ près sur cet exemple) ; elles ne portent sur aucune donnée réelle. **Type : illustration numérique** des formules fermées ci-dessus. Les gradients par rapport aux trois entrées sont fermés :
 
 $$
 \frac{\partial\tau}{\partial\mathbf{b}} = \lambda, \qquad \frac{\partial\tau}{\partial\mathbf{a}} = -\lambda, \qquad \nabla_{\mathbf{u}}\tau = \frac{\mathbf{d}}{\|\mathbf{u}\|^2} - 2\,\frac{(\mathbf{d}\cdot\mathbf{u})\,\mathbf{u}}{\|\mathbf{u}\|^4},

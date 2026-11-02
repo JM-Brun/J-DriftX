@@ -33,6 +33,8 @@ $$
 J_\lambda(\theta) = \| v(\theta) - y \|^2 + \lambda \| \theta - \theta_0 \|^2.
 $$
 
+**Ce que « mal posé » signifie ici.** Pas l’absence de solution, mais l’absence de **stabilité** : un même écart de mesure s’amortit sur les combinaisons de paramètres bien observées et s’amplifie sur les autres. Dans le cas linéaire ci-dessous, cette hiérarchie est quantifiée par les valeurs singulières de $\mathbf V$ — l’erreur d’observation portée par la direction $i$ est multipliée par $1/\sigma_i$ — et la régularisation de Tikhonov coupe précisément cette amplification, au prix d’un biais vers le prior. **Type : intuition** du cas linéaire qui suit.
+
 **Pourquoi $\lambda>0$ rend le problème bien posé (cas linéaire).** Si le modèle est linéaire en ses paramètres, $v(\theta)=\mathbf{V}\theta$ (par exemple des intensités de sources, voir la section suivante), alors $J_\lambda$ est strictement convexe — sa hessienne $\mathbf{V}^\top\mathbf{V}+\lambda\mathbf{I}$ est définie positive dès que $\lambda>0$ — et possède un unique minimiseur, solution des équations normales régularisées
 
 $
@@ -48,6 +50,8 @@ c_i=\frac{\sigma_i\,(\mathbf{u}_i\cdot\mathbf{y})+\lambda\,(\mathbf{w}_i\cdot\th
 $
 
 Lecture : chaque direction singulière est un compromis entre l'estimation portée par les données et la valeur a priori ; les directions peu contraintes par les capteurs ($\sigma_i^2\ll\lambda$) suivent le prior ($f_i\approx 0$), les directions bien contraintes suivent les données ($f_i\approx 1$). C'est la forme explicite de ce que « régulariser » signifie — et le pont vers la calibration bayésienne (jalon M3), dont le maximum a posteriori gaussien coïncide avec ce minimiseur, sous ses hypothèses de loi. **Vérifié numériquement** (équations normales vs formule en facteurs de filtre, écart $<10^{-12}$ sur un exemple mal conditionné).
+
+**Deux nombres pour lire les facteurs de filtre.** Prenons deux directions singulières $\sigma_1=10$ et $\sigma_2=0{,}1$, avec $\lambda=1$ : $f_1=100/101\approx0{,}99$ — la direction bien observée suit presque entièrement les données ; $f_2=0{,}01/1{,}01\approx0{,}0099$ — la direction mal observée suit le prior à 99 %. Un seul $\lambda$ sépare ainsi ce que les capteurs contraignent de ce qu’ils ne contraignent pas ; choisir $\lambda$ (par validation croisée ou courbe en L) est une décision de protocole, pas une constante universelle. **Type : illustration numérique** des formules ci-dessus.
 
 Cette extension permet de comparer le projet aux méthodes d'estimation de terme source (STE), notamment aux approches d'optimisation et bayésiennes décrites dans la littérature [@hutchinson2017ste]. La référence doit servir de point de comparaison méthodologique, pas de preuve que la calibration bayésienne soit déjà implémentée.
 
