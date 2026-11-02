@@ -476,7 +476,7 @@ graph TD
 
 ## Références et corpus
 
-Les vingt-cinq entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique).
+Les vingt-neuf entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique).
 
 ```{mermaid}
 graph LR
@@ -508,6 +508,10 @@ graph LR
     scire2000calpuff["Scire et al. 2000 — guide CALPUFF"]::reference
     sykes1998scipuff["Sykes et al. 1998 — documentation SCIPUFF"]::reference
     thykier1987rimpuff["Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF"]::reference
+    bakels2024flexpart["Bakels et al. 2024 — FLEXPART version 11"]::reference
+    capps2026pyaermod["Capps 2026 — PyAERMOD 2.2.0"]::reference
+    dagestad2018opendrift["Dagestad et al. 2018 — OpenDrift v1.0"]::reference
+    epaAermod2026["EPA 2026 — AERMOD Modeling System"]::reference
   end
   subgraph obj["Objets décrits ou fondés"]
     c_pdist["Pseudo-distance dirigée (référence uniforme)"]::concept
@@ -585,6 +589,10 @@ graph LR
 | Scire et al. 2000 — guide CALPUFF | Référence bibliographique | [references.qmd](../references.qmd) |
 | Sykes et al. 1998 — documentation SCIPUFF | Référence bibliographique | [references.qmd](../references.qmd) |
 | Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF | Référence bibliographique | [references.qmd](../references.qmd) |
+| Bakels et al. 2024 — FLEXPART version 11 | Référence bibliographique | [references.qmd](../references.qmd) |
+| Capps 2026 — PyAERMOD 2.2.0 | Référence bibliographique | [references.qmd](../references.qmd) |
+| Dagestad et al. 2018 — OpenDrift v1.0 | Référence bibliographique | [references.qmd](../references.qmd) |
+| EPA 2026 — AERMOD Modeling System | Référence bibliographique | [references.qmd](../references.qmd) |
 | Pseudo-distance dirigée (référence uniforme) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Temps de transport | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Champ multi-niveaux historique (non reconstruit) | Concept | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
@@ -686,3 +694,7 @@ graph LR
 | [Scire et al. 2000 — guide CALPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
 | [Sykes et al. 1998 — documentation SCIPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
 | [Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
+| [Bakels et al. 2024 — FLEXPART version 11](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Capps 2026 — PyAERMOD 2.2.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Dagestad et al. 2018 — OpenDrift v1.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [EPA 2026 — AERMOD Modeling System](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
