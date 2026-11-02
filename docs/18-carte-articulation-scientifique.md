@@ -64,6 +64,17 @@ Ces cas sont utiles pour détecter des erreurs de code et clarifier les méthode
 - Ne pas présenter une absence de référence trouvée comme une preuve d'absence de travaux concurrents.
 - Conserver les résultats négatifs et les critères d'arrêt ; l'objectif est de décider si la piste mérite d'être poursuivie, pas de confirmer à tout prix l'hypothèse initiale.
 
+## 7. Suivi des travaux — instantané au 29/10/2026
+
+> Contenu déplacé depuis la [carte d'articulation publique](../site/projet/carte-articulation.qmd) le 02/11/2026 pour garder cette page orientée lecture. Instantané daté : les statuts à jour font foi dans les [issues du dépôt](https://github.com/JM-Brun/J-DriftX/issues), pas ici.
+
+- [#41 — Investigation mathématique G0-S](https://github.com/JM-Brun/J-DriftX/issues/41) : **terminée** — définitions, cas 1D et contre-exemples consignés dans [docs/19](19-investigation-g0s-temps-de-parcours.md) ; issue fermée le 23/10/2026.
+- [#42 — Tests des propriétés visées](https://github.com/JM-Brun/J-DriftX/issues/42) : **en cours** — non-symétrie de la référence uniforme et divergence nulle des champs analytiques testées ; bilan de masse étendu (six classes de stabilité, source en hauteur, puff, superpositions, troncature et quadrature séparées) ; restent la conservation en champ variable, des tests de positivité plus variés et les propriétés du champ de vent multi-niveaux historique (non reconstruit à ce jour).
+- [#43 — Besoin applicatif G0-A](https://github.com/JM-Brun/J-DriftX/issues/43) : **ouvert** — utilisateur, décision, observable, baseline et seuils à établir indépendamment de la méthode.
+- [#44 — Ancrage documentaire M0](https://github.com/JM-Brun/J-DriftX/issues/44) : **terminé** — décision « aucun autodépôt HAL » consignée, la thèse sera ajoutée plus tard au corpus ; issue fermée le 23/10/2026.
+
+Les audits de corpus sont suivis dans les issues actives [#204](https://github.com/JM-Brun/J-DriftX/issues/204) (DIFLU), [#205](https://github.com/JM-Brun/J-DriftX/issues/205) (ETEX/DATEM), [#206](https://github.com/JM-Brun/J-DriftX/issues/206) (ERIES) et [#207](https://github.com/JM-Brun/J-DriftX/issues/207) (priorisation et stratégie d'évaluation). L'ancienne [issue #13](https://github.com/JM-Brun/J-DriftX/issues/13) est close comme remplacée, pas comme audit terminé. Le squelette de benchmark S0 de l'[issue #17](https://github.com/JM-Brun/J-DriftX/issues/17) a été livré par la [PR #223](https://github.com/JM-Brun/J-DriftX/pull/223) et l'issue est close ; tout benchmark applicatif futur exige les audits G1 et une décision G0-A ([#43](https://github.com/JM-Brun/J-DriftX/issues/43)), puis une issue dédiée.
+
 ## Sources de référence dans le dépôt
 
 - [Questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues)
