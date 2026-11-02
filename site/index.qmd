@@ -14,7 +14,12 @@ J-DriftX est un projet de recherche open source consacré à la modélisation à
 
 Cette documentation n'impose pas de lecture linéaire. Les quatre parcours ci-dessous correspondent à des besoins différents : ils peuvent être suivis séparément et se rejoindre lorsque cela devient utile.
 
-![Carte de quatre portes d'entrée complémentaires dans la documentation J-DriftX : comprendre le problème, explorer la chaîne de modélisation, construire la théorie, vérifier et reproduire. Les parcours sont reliés entre eux et ne constituent ni une progression obligatoire ni une échelle de preuve.](images/parcours-lecture-jdriftx.svg)
+<picture>
+  <source media="(max-width: 600px)" srcset="images/parcours-lecture-jdriftx-mobile.svg">
+  <img src="images/parcours-lecture-jdriftx.svg"
+       alt="Quatre portes d'entrée complémentaires dans la documentation J-DriftX : s'orienter et comprendre le problème, explorer la chaîne de modélisation, construire la théorie, vérifier et reproduire. Les parcours sont reliés entre eux, sans ordre obligatoire ni correspondance avec les niveaux de preuve."
+       style="width: 100%; height: auto;">
+</picture>
 
 ::: {.columns}
 ::: {.column width="50%"}
