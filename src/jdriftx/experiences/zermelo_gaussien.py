@@ -177,7 +177,10 @@ class ModeleGZ1:
             raise ValueError("L'ensemble atteignable GZ-1 est limité à t <= t*.")
         x = np.asarray(_vecteur3(position, "La position"), dtype=float)
         centre = self._origine_array + self._vent_array * t
-        return bool(np.linalg.norm(x - centre) <= self.rayon(t))
+        distance = float(np.linalg.norm(x - centre))
+        rayon = self.rayon(t)
+        tolerance = 16.0 * np.finfo(float).eps * max(distance, rayon)
+        return bool(distance <= rayon + tolerance)
 
     def fonction_contact(
         self, cible: tuple[float, float, float] | NDArray[np.float64], temps: float
