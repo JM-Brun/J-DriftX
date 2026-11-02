@@ -428,17 +428,15 @@ def generer_contenu(
     return "\n\n".join(parties) + "\n"
 
 
-
 def _vues_scientifiques_croisees(registre: Registre) -> str:
     """Produit des vues scientifiques filtrées depuis les mêmes nœuds et arêtes."""
     types = {noeud.id: noeud.type for noeud in registre.noeuds}
     hypotheses = {
-        identifiant for identifiant, type_noeud in types.items()
+        identifiant
+        for identifiant, type_noeud in types.items()
         if type_noeud in {"hypothese", "concept", "niveau"}
     }
-    concepts = {
-        identifiant for identifiant, type_noeud in types.items() if type_noeud == "concept"
-    }
+    concepts = {identifiant for identifiant, type_noeud in types.items() if type_noeud == "concept"}
     proprietes = {
         identifiant for identifiant, type_noeud in types.items() if type_noeud == "propriete"
     }
@@ -513,9 +511,7 @@ def _section_vue_derivee(
         if noeud.id in identifiants:
             groupes.setdefault(noeud.type, []).append(noeud.id)
     for type_noeud, membres in groupes.items():
-        lignes.append(
-            f'  subgraph vue_{type_noeud}["{registre.types[type_noeud].libelle}"]'
-        )
+        lignes.append(f'  subgraph vue_{type_noeud}["{registre.types[type_noeud].libelle}"]')
         for identifiant in membres:
             lignes.append(_ligne_noeud(registre.index[identifiant]))
         lignes.append("  end")
@@ -527,17 +523,17 @@ def _section_vue_derivee(
             )
     for type_noeud in groupes:
         couleur = registre.types[type_noeud].couleur
-        lignes.append(
-            f"  classDef {type_noeud} fill:{couleur},stroke:#495057,color:#212529;"
-        )
+        lignes.append(f"  classDef {type_noeud} fill:{couleur},stroke:#495057,color:#212529;")
     lignes.append(fence)
-    lignes.extend([
-        "",
-        '::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}',
-        "",
-        "| Nœud | Type | Où approfondir |",
-        "|---|---|---|",
-    ])
+    lignes.extend(
+        [
+            "",
+            '::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}',
+            "",
+            "| Nœud | Type | Où approfondir |",
+            "|---|---|---|",
+        ]
+    )
     for noeud in registre.noeuds:
         if noeud.id in identifiants:
             lignes.append(_ligne_table(noeud, registre))
