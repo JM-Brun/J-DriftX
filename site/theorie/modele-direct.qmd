@@ -56,11 +56,23 @@ $$
 = \mathbf{u}\cdot\nabla C + C\,\nabla\cdot\mathbf{u}
 = \mathbf{u}\cdot\nabla C
 $$
-donne la forme usuelle
+donne la forme usuelle :
+
+<div class="equation-card">
+<div class="equation-title">
+<span>Équation maîtresse · Conservation et advection–diffusion</span>
+<span class="badge-status badge-demontre">Forme conservative (ρ const., ∇·u=0)</span>
+</div>
+
 $$
 \frac{\partial C}{\partial t}+\mathbf{u}\cdot\nabla C
 =\nabla\cdot(D_m\nabla C)+S.
 $$
+
+<div class="equation-notes">
+$C$ : concentration volumique $[\mathrm{kg\,m^{-3}}]$ · $\mathbf{u}$ : vitesse locale de l'air $[\mathrm{m\,s^{-1}}]$ · $D_m$ : diffusivité moléculaire $[\mathrm{m^2\,s^{-1}}]$ · $S$ : source volumique.
+</div>
+</div>
 
 **Advection** désigne le transport par le mouvement moyen local de l'air ; **diffusion** désigne le mélange représenté par un flux proportionnel à un gradient dans ce modèle. Ces mécanismes sont distincts. Dans une atmosphère turbulente, le transport turbulent n'est pas, à l'échelle instantanée, simplement une diffusion moléculaire : le terme de diffusion turbulente apparaît après moyennage et fermeture (section 3).
 
@@ -324,15 +336,26 @@ Un grand nombre de Péclet longitudinal ($\mathrm{Pe}_x\gg1$) justifie que cette
 
 :::
 
-Ce choix est l'approximation parabolique de panache. Il conduit, avec $D_y\simeq K_y$ et $D_z\simeq K_z$, à
+Ce choix est l'approximation parabolique de panache. Il conduit, avec $D_y\simeq K_y$ et $D_z\simeq K_z$, à :
+
+<div class="equation-card">
+<div class="equation-title">
+<span>Équation parabolique de panache (entrée de la similitude)</span>
+<span class="badge-status badge-demontre">Approximation asymptotique (Pex ≫ 1)</span>
+</div>
+
 $$
-\boxed{
 U\frac{\partial C}{\partial x}
 =K_y\frac{\partial^2 C}{\partial y^2}
 +K_z\frac{\partial^2 C}{\partial z^2}.
-}
 $$
-La boîte est **l'équation d'entrée** de la dérivation de similitude, pas l'équation générale d'advection–diffusion. Elle suppose aussi qu'il n'y a, dans cette version, ni réaction, ni dépôt, ni autre puits ou source distribuée dans la région aval.
+
+<div class="equation-notes">
+$U$ : vitesse advective constante alignée ($x>0$) · $K_y, K_z$ : diffusivités effectives transversales constantes.
+</div>
+</div>
+
+Cette équation encadrée est **l'équation d'entrée** de la dérivation de similitude, pas l'équation générale d'advection–diffusion. Elle suppose aussi qu'il n'y a, dans cette version, ni réaction, ni dépôt, ni autre puits ou source distribuée dans la région aval.
 
 **Type : approximation asymptotique — statut : critère d'échelle, pas une preuve uniforme.** C'est l'analogue, pour l'équation de concentration, de l'hypothèse H4 du [catalogue](../hypotheses/catalogue.qmd) pour la métrique (transport advectif dominant : la diffusion agit transversalement, pas longitudinalement) — deux énoncés cohérents, pas une même preuve. L'absence de réaction, de dépôt et de source distribuée dans la région aval renvoie à H1 (scalaire passif).
 

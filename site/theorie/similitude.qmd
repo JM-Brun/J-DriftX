@@ -189,7 +189,13 @@ $$
 
 La condition de flux nul est ainsi vérifiée exactement pour cette solution et ces hypothèses. À $z=0$, les deux contributions sont égales : la concentration au sol est le double de celle qu'aurait le terme de la source réelle seul. La source image est un artifice mathématique, pas une émission physique supplémentaire.
 
-**Vérification de la conservation sur le demi-espace.** Avec la normalisation de l'étape 4, le panache réfléchi s'écrit
+**Vérification de la conservation sur le demi-espace.** Avec la normalisation de l'étape 4, le panache réfléchi s'écrit :
+
+<div class="equation-card">
+<div class="equation-title">
+<span>Solution de similitude · Panache gaussien réfléchi au sol</span>
+<span class="badge-status badge-demontre">Solution analytique exacte (demi-espace z ≥ 0)</span>
+</div>
 
 $$
 C(x,y,z)=\frac{Q}{2\pi U\sigma_y\sigma_z}
@@ -199,6 +205,11 @@ e^{-(z-h)^2/(2\sigma_z^2)}
 +e^{-(z+h)^2/(2\sigma_z^2)}
 \right],\qquad z\geq0.
 $$
+
+<div class="equation-notes">
+$Q$ : débit massique $[\mathrm{kg\,s^{-1}}]$ · $U$ : vitesse du vent $[\mathrm{m\,s^{-1}}]$ · $h$ : hauteur de la source $[\mathrm{m}]$ · $\sigma_y, \sigma_z$ : écarts-types transversaux et verticaux $[\mathrm{m}]$.
+</div>
+</div>
 
 Les deux intégrales verticales se complètent :
 
