@@ -84,6 +84,14 @@ Cette page est la **liste bibliographique générale** du projet, organisée par
 
 - Bozon, N. et al. (2010). *Drift-X WPS: Pesticide atmospheric dispersion Web GIS*. FOSS4G 2010 conference paper. https://2010.foss4g.org/papers/3631.pdf — décrit le réemploi du code Fortran original Drift-X dans une architecture WPS/ZOO, avec client Web GIS et publication cartographique. Source de contexte sur l’histoire logicielle et le déploiement ; elle ne démontre pas l’équivalence mathématique de cette implémentation historique avec les primitives actuelles de J-DriftX. Sa bibliographie donne une référence secondaire incohérente pour l’article *Applied Geomatics* de 2009 : utiliser la notice éditeur Springer comme référence canonique.
 
+
+## Modèles lagrangiens et réglementaires déjà ajoutés à la branche
+
+- Bakels, L. et al. (2024). [FLEXPART version 11: improved accuracy, efficiency, and flexibility](https://doi.org/10.5194/gmd-17-7595-2024). *Geoscientific Model Development* 17, 7595–7627. Modèle lagrangien particulaire ; référence de version.
+- Dagestad, K.-F., Röhrs, J., Breivik, Ø. & Ådlandsvik, B. (2018). [OpenDrift v1.0: a generic framework for trajectory modelling](https://doi.org/10.5194/gmd-11-1405-2018). *Geoscientific Model Development* 11, 1405–1420. Framework de trajectoires générique, à distinguer d'un modèle de concentration atmosphérique spécialisé.
+- Capps, S. (2026). [PyAERMOD 2.2.0](https://doi.org/10.5281/zenodo.23512927). Logiciel archivé sur Zenodo. Wrapper Python autour d'AERMOD ; ne constitue pas une formulation de dispersion indépendante. Le statut de l'article scientifique associé n'est pas établi ici.
+- U.S. Environmental Protection Agency. [AERMOD Modeling System: Preferred and Recommended Models](https://www.epa.gov/scram/air-quality-dispersion-modeling-preferred-and-recommended-models). Documentation institutionnelle SCRAM, page évolutive consultée le 2 novembre 2026 ; distinguer la page courante, les versions du code et les documents de formulation.
+
 ## Modèles lagrangiens, turbulence et validation
 
 - Stein, A. F., Draxler, R. R., Rolph, G. D., Stunder, B. J. B., Cohen, M. D. & Ngan, F. (2015). [NOAA's HYSPLIT Atmospheric Transport and Dispersion Modeling System](https://doi.org/10.1175/BAMS-D-14-00110.1). *Bulletin of the American Meteorological Society* 96(12), 2059–2077. Modèle lagrangien de trajectoires, dispersion particulaire et puffs.
