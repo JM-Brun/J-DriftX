@@ -14,14 +14,13 @@ Ce fichier est l'**index canonique des fiches de lecture source par source** ; c
 | Bozon, Sinfort & Mohammadi (2009), plateforme Drift-X / HAL | [Fiche plateforme 2009](bibliographie/sources/bozon-sinfort-mohammadi-2009-driftx.md) | Extraction technique détaillée, architecture Fortran/QGIS et sens des niveaux spatiaux. |
 | Bozon & Mohammadi (2009), *Applied Geomatics* | [Fiche Applied Geomatics](bibliographie/sources/bozon-mohammadi-2009-applied-geomatics.md) | Résumé accessible, texte intégral et portée limitée des extraits. |
 
-| Modèles lagrangiens, turbulence et jeux de validation (2026) | [Fiche modèles et benchmarks](bibliographie/modeles-lagrangiens-et-benchmarks.md) | HYSPLIT, ADMS, GRAL, critères stochastiques, comparaisons de traceurs et corpus candidats ; statuts d'accès et limites explicités. |
-
 ## Complément d'analyse — deux sens distincts de « multi-niveaux »
 
 Ce passage a été déplacé dans la [fiche source de la plateforme Drift-X 2009](bibliographie/sources/bozon-sinfort-mohammadi-2009-driftx.md#complement-danalyse--deux-sens-distincts-de-multi-niveaux). Ce titre est conservé ici comme point d'entrée pour les liens historiques qui pointaient vers l'ancien document monolithique.
 
 ## Synthèse transversale
 
+- [Modèles lagrangiens et benchmarks](bibliographie/modeles-lagrangiens-et-benchmarks.md) synthétise les baselines, fondements stochastiques, comparaisons sur traceurs et jeux de données candidats (2 novembre 2026) ; ce document est une synthèse transversale, pas une fiche de lecture intégrale pour chaque source.
 - [Découvertes bibliographiques et état historique des accès (octobre 2026)](bibliographie/synthese-acces-sources-historique-2026-10.md) conserve les anciens tableaux d'accès et les pistes de recherche ; ce n'est pas une liste de tâches actuelle.
 - [Audit adversarial des références et affirmations](15-audit-adversarial-hallucinations.md) est désormais un index vers les audits spécialisés.
 - [Bibliographie annotée](bibliographie-annotee-jdriftx.md) et les fichiers thématiques sous [`docs/bibliographie/`](bibliographie/) servent à la synthèse transversale ; ne pas recopier leurs résumés dans les fiches source.
