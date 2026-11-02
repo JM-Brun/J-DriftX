@@ -881,4 +881,3 @@ def test_vent_et_adaptateur_conservent_les_coordonnees_signees() -> None:
 
     adaptateur = AdaptateurTrajectoire2D(vent=VentConstant(), hauteur=10.0)  # type: ignore[arg-type]
     assert adaptateur(-5.0, -1.0, -2.0) == (2.0, -1.0)
-
