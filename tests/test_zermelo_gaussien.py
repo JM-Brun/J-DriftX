@@ -161,6 +161,7 @@ def test_premier_contact_sans_vent_et_cas_limites() -> None:
     """La formule de contact sélectionne la racine d'expansion et son tangentiel."""
     modele = ModeleGZ1(masse=1.0e6, seuil=1.0, diffusivite=0.5)
     t_star = modele.t_etoile
+    assert modele.premier_contact(modele.origine) == 0.0
     distance = 0.5 * modele.rayon_maximal
     cible = (distance, 0.0, 0.0)
     contact = modele.premier_contact(cible)
