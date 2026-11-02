@@ -515,7 +515,14 @@ def _section_vue_derivee(
             f"  classDef {type_noeud} fill:{couleur},stroke:#495057,color:#212529;"
         )
     lignes.append(fence)
-    lignes.extend(["", "**Nœuds et destinations**", "", "| Nœud | Type | Où approfondir |", "|---|---|---|"])
+    lignes.extend([
+        "",
+        "<details>",
+        "<summary>Afficher les nœuds et leurs destinations documentaires</summary>",
+        "",
+        "| Nœud | Type | Où approfondir |",
+        "|---|---|---|",
+    ])
     for noeud in registre.noeuds:
         if noeud.id in identifiants:
             lignes.append(_ligne_table(noeud, registre))
