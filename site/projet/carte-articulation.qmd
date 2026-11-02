@@ -14,6 +14,20 @@ Une source historique établit ce qu'un article a publié ; un test vérifie un 
 
 Cette carte distingue les **niveaux de preuve**. Pour distinguer les **niveaux de modélisation** — champ de vent, chemins, temps de transport, dispersion et concentration — et leurs dépendances, consulter la [carte des niveaux de modélisation](niveaux-modelisation.qmd).
 
+## Trois repères indépendants pour se situer
+
+Le lecteur rencontre trois classifications dans le projet. Elles répondent à des questions différentes et ne doivent pas être fusionnées en une seule échelle :
+
+| Repère | Question à laquelle il répond | Valeurs / organisation | Où l'utiliser |
+|---|---|---|---|
+| **Profondeur de lecture** | Jusqu'où souhaite-t-on entrer dans le raisonnement ? | Découvrir ; suivre l'explication ; vérifier une affirmation | Choisir un parcours dans l'[accueil](../index.qmd) ; changer de profondeur à tout moment |
+| **Niveau de modélisation** | Quel objet physique ou mathématique est étudié ? | N0 à N6 : contexte, vent, chemins, temps de transport, dispersion, concentration, calibration/décision | Situer une hypothèse ou une implémentation dans la [carte des niveaux](niveaux-modelisation.qmd) |
+| **Statut de preuve** | Quel type de justification soutient l'affirmation ? | Formulé ; dérivé/démontré ; testé ; comparé ; validé indépendamment | Examiner les hypothèses, le domaine, le protocole et les limites dans le [registre des preuves](registre-preuves.qmd) et les pages associées |
+
+Ces repères sont **orthogonaux**, pas des correspondances terme à terme. Une même page peut être lue à plusieurs profondeurs ; elle peut traiter plusieurs niveaux de modélisation ; et chacune de ses affirmations peut avoir un statut de preuve différent. Par exemple, une solution gaussienne peut être démontrée pour un problème simplifié (statut de preuve), concerner la dispersion (N4) et être présentée dans un parcours de découverte ou de vérification (profondeur de lecture). Aucun de ces trois qualificatifs ne détermine les deux autres.
+
+**Règle pratique :** ne pas déduire qu'un niveau N0–N6 est un niveau de maturité, ni qu'une page avancée contient nécessairement des résultats mieux validés. Le niveau N décrit l'objet étudié ; le statut décrit la preuve disponible ; le parcours décrit l'effort de lecture.
+
 ## Deux architectures historiques multi-niveaux à distinguer
 
 Les sources Drift-X emploient « multi-niveaux » dans deux sens complémentaires mais non interchangeables : le couplage physique **champ proche → transport à longue distance** décrit par Brun & Mohammadi (2008), et le raffinement spatial du vent/relief par domaines emboîtés `Ω = ω₀, ωᵢ` décrit par Bozon, Sinfort & Mohammadi (2009). La carte conceptuelle N0–N6 — détaillée dans la [carte des niveaux de modélisation](niveaux-modelisation.qmd) — ne remplace aucune de ces deux architectures historiques. Voir la [revue des sources](https://github.com/JM-Brun/J-DriftX/blob/main/docs/04-revues-papiers-sources.md), la [fiche du chapitre Springer 2008](https://github.com/JM-Brun/J-DriftX/blob/main/raw/fiches/2008-brun-mohammadi-springer-chap14.md) et la [fiche de la plateforme Drift-X 2009](https://github.com/JM-Brun/J-DriftX/blob/main/raw/fiches/2009-bozon-sinfort-mohammadi-driftx-hal.md).
