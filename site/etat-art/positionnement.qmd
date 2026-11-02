@@ -22,7 +22,7 @@ Le projet ne revendique actuellement ni nouveauté, ni supériorité prédictive
 ## Hypothèses différenciantes à tester
 
 1. **Temps de transport dirigé :** formaliser exactement l'objet mathématique et établir les propriétés qu'il satisfait. La revue existante ne prouve pas l'absence de travaux concurrents.
-2. **Réduction a priori :** comparer à une baseline physique et à une ROM/surrogate pertinente sur le même problème, sans présumer que ces familles sont toujours entraînées ou évaluées de la même manière.
+2. **Réduction a priori :** comparer à une baseline physique et à une ROM/surrogate pertinente sur le même problème — y compris les modèles opérationnels à puffs sur trajectoire (CALPUFF, SCIPUFF, RIMPUFF), qui occupent déjà le créneau « formules fermées + champ de vent non uniforme » — sans présumer que ces familles sont toujours entraînées ou évaluées de la même manière.
 3. **Généralisation :** vérifier si des contraintes physiques précises améliorent réellement l'erreur hors domaine. L'interprétabilité, la conservation ou la positivité ne garantissent pas automatiquement une meilleure prédiction.
 
 ## Conditions de poursuite
