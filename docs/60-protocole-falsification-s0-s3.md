@@ -159,3 +159,12 @@ GZ-1 reste un résultat mathématique conditionnel de navigation/contrôlabilit�
 - [#43 — critères d'évaluation et seuils préenregistrés](https://github.com/JM-Brun/J-DriftX/issues/43)
 
 Les issues S1, S2 et S3 doivent être des sous-tâches expérimentales distinctes, avec dépendances explicites. La comparaison aux logiciels externes et l'étude d'admissibilité d'une application pesticide restent séparées du benchmark synthétique.
+
+
+### Issues dédiées créées le 2 novembre 2026
+
+- [#466 — triage de la revue adversariale](https://github.com/JM-Brun/J-DriftX/issues/466)
+- [#467 — S1, cisaillement vertical](https://github.com/JM-Brun/J-DriftX/issues/467)
+- [#468 — S2, diffusivité variable](https://github.com/JM-Brun/J-DriftX/issues/468)
+- [#469 — S3, champ 2D non uniforme](https://github.com/JM-Brun/J-DriftX/issues/469)
+- [#470 — audit du puff et baselines externes](https://github.com/JM-Brun/J-DriftX/issues/470)
