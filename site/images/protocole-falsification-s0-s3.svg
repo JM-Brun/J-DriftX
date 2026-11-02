@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Protocole de falsification S0 à S3 — J-DriftX</title>
+<desc id="desc">Schéma conceptuel des quatre scénarios de champ, des formulations comparées, des observables et des critères d'évaluation. Aucun résultat expérimental n'est représenté.</desc>
+<defs>
+ <linearGradient id="navy" x2="1" y2="1"><stop stop-color="#12345b"/><stop offset="1" stop-color="#1767a5"/></linearGradient>
+ <linearGradient id="pale" x2="0" y2="1"><stop stop-color="#edf6ff"/><stop offset="1" stop-color="#dceafa"/></linearGradient>
+ <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L9 3L0 6Z" fill="#2378c5"/></marker>
+ <style>
+ text{font-family:Arial,Helvetica,sans-serif;fill:#102b4c}.head{font-size:34px;font-weight:700;fill:#fff}.sub{font-size:18px;fill:#eaf4ff}.panel{fill:url(#pale);stroke:#6ba6df;stroke-width:2}.bar{fill:url(#navy)}.h{font-size:22px;font-weight:700;fill:#fff}.sh{font-size:21px;font-weight:700}.body{font-size:17px}.small{font-size:14px;fill:#35516e}.math{font-size:22px;font-style:italic}.arrow{stroke:#2378c5;stroke-width:4;fill:none;marker-end:url(#arr)}.axis{stroke:#173c61;stroke-width:2.5;fill:none}
+ </style>
+</defs>
+<rect width="1600" height="900" fill="#f7faff"/>
+<rect width="1600" height="112" fill="url(#navy)"/>
+<text x="42" y="48" class="head">J-DriftX</text><text x="42" y="79" class="sub">PROTOCOLE DE FALSIFICATION · S₀ À S₃</text>
+<text x="600" y="48" class="head">Du cas analytique au champ non uniforme</text><text x="600" y="80" class="sub">Schéma de conception — aucun résultat numérique ou validation terrain</text>
+<!-- top scenarios -->
+<g transform="translate(24 135)">
+ <rect class="panel" width="375" height="235" rx="14"/><text x="18" y="35" class="sh">S₀ · Vent uniforme</text><text x="18" y="66" class="math">U(z) = U₀ &gt; 0</text>
+ <path class="axis" d="M45 188V94M45 188H335"/>
+ <path class="arrow" d="M70 112H300M70 135H300M70 158H300"/>
+ <text x="18" y="218" class="small">Contrôle positif · cas uniforme</text>
+</g>
+<g transform="translate(414 135)">
+ <rect class="panel" width="375" height="235" rx="14"/><text x="18" y="35" class="sh">S₁ · Cisaillement vertical</text><text x="18" y="66" class="math">U(z) = U₀ + γ(z − z₀)</text>
+ <path class="axis" d="M45 188V94M45 188H335"/>
+ <path class="arrow" d="M70 170H155M70 148H205M70 126H255M70 104H305"/>
+ <text x="18" y="218" class="small">Isoler l'effet du cisaillement</text>
+</g>
+<g transform="translate(804 135)">
+ <rect class="panel" width="375" height="235" rx="14"/><text x="18" y="35" class="sh">S₂ · Diffusion variable</text><text x="18" y="66" class="math">Kz = K₀ f(z) &gt; 0</text>
+ <path class="axis" d="M45 188V94M45 188H335"/>
+ <g fill="#3b8ed0"><circle cx="110" cy="111" r="4"/><circle cx="145" cy="111" r="4"/><circle cx="180" cy="111" r="4"/><circle cx="215" cy="111" r="4"/><circle cx="250" cy="111" r="4"/><circle cx="110" cy="137" r="5"/><circle cx="145" cy="137" r="5"/><circle cx="180" cy="137" r="5"/><circle cx="215" cy="137" r="5"/><circle cx="250" cy="137" r="5"/><circle cx="110" cy="164" r="7"/><circle cx="145" cy="164" r="7"/><circle cx="180" cy="164" r="7"/><circle cx="215" cy="164" r="7"/><circle cx="250" cy="164" r="7"/></g>
+ <text x="18" y="218" class="small">Isoler l'effet de K(z), puis interaction S₂b</text>
+</g>
+<g transform="translate(1194 135)">
+ <rect class="panel" width="382" height="235" rx="14"/><text x="18" y="35" class="sh">S₃ · Champ 2D non uniforme</text><text x="18" y="66" class="math">u(x,z), K(x,z)</text>
+ <path class="axis" d="M45 188V94M45 188H345"/>
+ <path d="M70 163C120 110 170 120 205 145S285 172 325 112M70 177C120 140 165 145 210 165S280 185 330 145M70 120C120 80 165 90 210 118S280 130 330 90" stroke="#2b82c7" stroke-width="3" fill="none"/>
+ <text x="18" y="218" class="small">Courbure, tubes de courant, stagnation</text>
+</g>
+<!-- methods -->
+<rect x="24" y="394" width="470" height="270" rx="14" class="panel"/>
+<rect x="24" y="394" width="470" height="46" rx="14" class="bar"/><text x="44" y="425" class="h">Méthodes comparées</text>
+<g class="body">
+ <rect x="48" y="460" width="420" height="46" rx="8" fill="#fff" stroke="#6ba6df"/><text x="66" y="489" font-weight="700">Tproj</text><text x="165" y="489">projection historique</text>
+ <rect x="48" y="516" width="420" height="46" rx="8" fill="#fff" stroke="#6ba6df"/><text x="66" y="545" font-weight="700">Tarr</text><text x="165" y="545">caractéristique + événement</text>
+ <rect x="48" y="572" width="420" height="46" rx="8" fill="#fff" stroke="#6ba6df"/><text x="66" y="601" font-weight="700">EDP-FV</text><text x="165" y="601">référence conservative indépendante</text>
+ <text x="48" y="646" class="small">+ puff Briggs existant · puff trajectoriel à spécifier séparément</text>
+</g>
+<path class="arrow" d="M500 526H542"/>
+<!-- observables -->
+<rect x="550" y="394" width="470" height="270" rx="14" class="panel"/>
+<rect x="550" y="394" width="470" height="46" rx="14" class="bar"/><text x="570" y="425" class="h">Observables</text>
+<g class="body">
+ <text x="580" y="482" font-weight="700">Champ c(x,t)</text><text x="760" y="482">concentration spatio-temporelle</text>
+ <text x="580" y="530" font-weight="700">Masse</text><text x="760" y="530">intégrale + flux frontières</text>
+ <text x="580" y="578" font-weight="700">Moments</text><text x="760" y="578">centre de masse, covariance</text>
+ <text x="580" y="626" font-weight="700">Coût</text><text x="760" y="626">préparation, requête, total, mémoire</text>
+</g>
+<path class="arrow" d="M1025 526H1067"/>
+<!-- criteria -->
+<rect x="1075" y="394" width="501" height="270" rx="14" class="panel"/>
+<rect x="1075" y="394" width="501" height="46" rx="14" class="bar"/><text x="1095" y="425" class="h">Critères de décision</text>
+<g class="body">
+ <text x="1100" y="482">Erreur L¹ / L² / L∞ + erreur de pic</text>
+ <text x="1100" y="530">Conservation de masse et flux de bord</text>
+ <text x="1100" y="578">Convergence maillage / pas de temps</text>
+ <text x="1100" y="626">Coût total à précision comparable</text>
+</g>
+<!-- footer -->
+<rect x="24" y="690" width="1552" height="178" rx="14" fill="#e7f1fc" stroke="#6ba6df" stroke-width="2"/>
+<text x="48" y="729" class="sh">Règles de falsification</text>
+<g class="body">
+ <text x="48" y="765">1. Définir PDE, source, unités, domaine et conditions aux limites avant le calcul.</text>
+ <text x="48" y="800">2. Vérifier indépendamment le solveur FV ; pré-enregistrer métriques, seuils et charge de requêtes.</text>
+ <text x="48" y="835">3. Récepteur hors caractéristique : Tarr seul ne donne pas la concentration diffusée.</text>
+ <text x="830" y="765">CONSERVER : critères atteints et avantage mesuré.</text>
+ <text x="830" y="800">RESTREINDRE : validité limitée à un sous-domaine explicite.</text>
+ <text x="830" y="835">REMPLACER : absence de valeur ajoutée ou erreur rédhibitoire.</text>
+</g>
+</svg>
