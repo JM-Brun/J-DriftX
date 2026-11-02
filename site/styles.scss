@@ -230,3 +230,54 @@ hr {
     transition-duration: .01ms !important;
   }
 }
+
+// Dark mode (second tranche of #461). Quarto applies the `quarto-dark`
+// class to <body> when the reader toggles the theme. Site figures are SVG
+// designed for a light background: give them a light card rather than
+// rewriting them.
+body.quarto-dark figure img {
+  background-color: #f8f9fa;
+  border-radius: $border-radius;
+  padding: .4rem;
+}
+
+// The wind-field explorer panels embed hardcoded light colors
+// (cf. wind_field_explorer.py); re-theme the surrounding chrome so text
+// stays readable in dark mode.
+body.quarto-dark .wind-field-scenario {
+  border-color: var(--bs-border-color);
+}
+
+body.quarto-dark .wind-field-scenario > summary {
+  background: var(--bs-tertiary-bg);
+  color: var(--bs-body-color);
+}
+
+body.quarto-dark .wind-field-scenario > summary span {
+  color: var(--bs-secondary-color);
+}
+
+body.quarto-dark .field-readout > div {
+  background: var(--bs-tertiary-bg);
+  border-color: var(--bs-border-color);
+}
+
+body.quarto-dark .field-readout strong {
+  color: var(--bs-body-color);
+}
+
+// Back-to-top navigation: smooth scrolling only when the reader has not
+// asked for reduced motion.
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+// KaTeX display equations: same overflow strategy as tables and code blocks.
+.katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: .25rem;
+}
