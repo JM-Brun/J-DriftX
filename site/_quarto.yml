@@ -25,27 +25,32 @@ website:
       - href: index.qmd
         text: "Accueil"
 
-      - section: "Commencer"
+      - section: "S'orienter"
         contents:
           - href: projet/carte-articulation.qmd
-            text: "Parcours de lecture & preuves"
-          - href: projet/heritage.qmd
-            text: "Héritage Drift-X (2006–2009)"
+            text: "Parcours de lecture & articulation des preuves"
+          - href: glossaire.qmd
+            text: "Glossaire des notions"
+
+      - section: "Le projet"
+        contents:
           - href: projet/objectifs.qmd
-            text: "Question et objectifs"
+            text: "Question de recherche & objectifs"
           - href: projet/utilite-scientifique.qmd
             text: "Valeur scientifique à démontrer"
+          - href: projet/heritage.qmd
+            text: "Héritage Drift-X (2006–2009)"
 
-      - section: "Comprendre le modèle"
+      - section: "Comprendre & explorer"
         contents:
           - href: projet/niveaux-modelisation.qmd
-            text: "Chaîne de modélisation (N0–N6)"
+            text: "Chaîne physique et mathématique (N0–N6)"
           - href: projet/laboratoire-interactif.qmd
-            text: "Expériences : catalogue & limites"
+            text: "Laboratoires : catalogue & limites"
           - href: projet/experiences-interactives.qmd
-            text: "Explorer les champs de vent 2D"
+            text: "Explorateur de champs de vent 2D"
 
-      - section: "Théorie & modélisation"
+      - section: "Construire la théorie"
         contents:
           - section: "Modèle direct et réduction"
             contents:
@@ -76,44 +81,43 @@ website:
               - href: theorie/burgers-et-jdriftx.qmd
                 text: "Équation de Burgers et J-DriftX"
 
-      - section: "Vérifier & délimiter"
+      - section: "Vérifier & évaluer"
         contents:
           - href: hypotheses/catalogue.qmd
-            text: "Hypothèses & domaine d'application"
+            text: "Hypothèses du modèle"
           - href: hypotheses/limites.qmd
-            text: "Limites et domaines de validité"
+            text: "Limites & domaines de validité"
           - href: projet/registre-preuves.qmd
-            text: "Registre des preuves"
+            text: "Registre de traçabilité des preuves"
           - href: projet/validation-scientifique.qmd
-            text: "Protocole de validation"
+            text: "Validation scientifique & benchmarks"
           - href: projet/qualite.qmd
             text: "Tests logiciels & portée des vérifications"
 
-      - section: "État de l'art"
+      - section: "Comparer & approfondir"
         contents:
-          - href: etat-art/panorama.qmd
-            text: "Panorama des méthodes"
-          - href: etat-art/positionnement.qmd
-            text: "Positionnement de J-DriftX"
-          - href: etat-art/revue-mathematique.qmd
-            text: "Revue mathématique ciblée"
-
-      - section: "Sources & ressources"
-        contents:
-          - href: projet/lectures.qmd
-            text: "Lectures critiques des sources"
-          - href: projet/audit.qmd
-            text: "Audit de l'héritage"
-          - href: projet/catalogue-donnees.qmd
-            text: "Catalogue des données"
-          - href: projet/carte-connaissances.qmd
-            text: "Graphe des connaissances traçables"
-          - href: projet/modele-jouet.qmd
-            text: "Modèle jouet : repli théorique"
-          - href: glossaire.qmd
-            text: "Glossaire"
-          - href: references.qmd
-            text: "Références bibliographiques"
+          - section: "État de l'art"
+            contents:
+              - href: etat-art/panorama.qmd
+                text: "Panorama des méthodes"
+              - href: etat-art/positionnement.qmd
+                text: "Positionnement de J-DriftX"
+              - href: etat-art/revue-mathematique.qmd
+                text: "Revue mathématique ciblée"
+          - section: "Sources, données et traçabilité"
+            contents:
+              - href: projet/lectures.qmd
+                text: "Lectures critiques des sources"
+              - href: projet/audit.qmd
+                text: "Audit de l'héritage"
+              - href: projet/catalogue-donnees.qmd
+                text: "Catalogue des données"
+              - href: projet/carte-connaissances.qmd
+                text: "Graphe des connaissances traçables"
+              - href: projet/modele-jouet.qmd
+                text: "Modèle jouet : repli théorique"
+              - href: references.qmd
+                text: "Références bibliographiques"
 
 format:
   html:
