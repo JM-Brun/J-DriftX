@@ -132,6 +132,15 @@ Ainsi, \(R\) croît sur \(0<t<t_*\), atteint son maximum avec \(R'(t_*)=0\), pui
 Le facteur \((4\pi Kt)^{-3/2}\) ne détruit donc pas de masse : il compense exactement l'augmentation du volume occupé par la gaussienne. La concentration centrale décroît, mais la masse totale reste constante.
 ## 3. Problème de navigation GZ-1
 
+::: {.callout-note title="Deux objets différents, une même frontière dans GZ-1" collapse="false"}
+Il faut distinguer les deux constructions avant de lire la preuve :
+
+- **Front d'isoconcentration** : ensemble des points où la solution de l'équation d'advection–diffusion vérifie \(C(x,t)=C_0\). Il décrit un niveau de concentration dans le modèle gaussien.
+- **Front de contrôlabilité** : frontière des positions qu'un mobile peut atteindre en respectant la contrainte \(\lVert s(t)\rVert\leq R'(t)\). Il décrit un problème de contrôle défini par le modélisateur.
+
+Dans GZ-1, ces deux frontières coïncident parce que la borne de commande a été choisie égale à la vitesse d'expansion \(R'(t)\), et parce que le vent est uniforme. **Cette coïncidence est le résultat démontré ; ce n'est pas une identité générale entre diffusion et contrôle.**
+:::
+
 Une trajectoire contrôlée, exprimée dans le référentiel fixe, est une fonction absolument continue \(X:[0,t]\to\mathbb R^3\) qui vérifie
 
 \[
@@ -248,6 +257,16 @@ Plus précisément, lorsque \(t\to0+\), \(R(t)\sim\sqrt{6Kt\ln(t_*/t)}\) et \(R'
 Ces cas sont des extensions ouvertes, et non des corollaires implicites du théorème GZ-1.
 
 ## 5. Hamiltonien et équation de Hamilton–Jacobi instationnaire
+
+::: {.callout-tip title="Lire l'équation avant de la dériver" collapse="false"}
+L'équation de Hamilton–Jacobi décrit ici **comment évolue la frontière des positions atteignables** :
+
+- \(u\cdot\nabla\phi\) transporte le front avec le vent ;
+- \(c\lVert\nabla\phi\rVert\) représente l'expansion permise par la commande isotrope ;
+- \(\phi=0\) contient toute la région atteignable ; le **front géométrique** est sa frontière topologique, car la solution présente un plateau nul à l'intérieur.
+
+Ce n'est pas l'équation qui fait évoluer la concentration \(C\). Le champ \(C\) relève de l'advection–diffusion ; \(\phi\) relève du problème de contrôle.
+:::
 
 Considérons le problème de contrôle général
 
