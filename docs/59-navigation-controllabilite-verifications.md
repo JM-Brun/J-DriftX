@@ -346,3 +346,120 @@ Les onze tests sont des tests de cohérence déterministes en float64. Ils ne re
 **Non établi :** vent spatialement variable, cible mobile, départ à âge positif, classe de contrôles globalement bornés, régime supercritique instationnaire, front d'une EDP d'advection–diffusion générale, validité physique de $c(t)$, solveur HJ convergent.
 
 La suite rationnelle est de stabiliser cet oracle analytique avant de développer un solveur HJ. Toute extension doit recevoir son propre énoncé, ses hypothèses, une preuve ou un contre-exemple, puis des tests numériques séparés.
+
+
+## 9. Oracle analytique exécutable
+
+L'oracle est implémenté dans
+`src/jdriftx/experiences/zermelo_gaussien.py`, sous la classe
+`ModeleGZ1`, réexportée par `jdriftx.experiences`. Cette localisation
+est volontaire : il s'agit d'une expérience théorique isolée, pas d'une
+nouvelle fonction du modèle applicatif de dispersion.
+
+Exemple minimal :
+
+```python
+from jdriftx.experiences import ModeleGZ1
+
+modele = ModeleGZ1(masse=1.0e6, seuil=1.0, diffusivite=0.5, vent=(2.0, 0.0, 0.0))
+t = 0.4 * modele.t_etoile
+rayon = modele.rayon(t)
+c = modele.vitesse_expansion(t)
+```
+
+### 9.1 API et domaines
+
+| Méthode / propriété | Résultat | Domaine |
+|---|---|---|
+| `t_etoile`, `t_extinction`, `rayon_maximal` | Temps caractéristiques (s), rayon maximal (m) | Paramètres positifs |
+| `concentration(x,t)` | Noyau fondamental 3D (kg m⁻³) | t>0 |
+| `rayon(t)` | Rayon du niveau C=C₀ (m) | 0<t≤e·t* |
+| `vitesse_expansion(t)` | R'(t) (m s⁻¹) | 0<t≤t* |
+| `ensemble_atteignable(x,t)` | Appartenance à B̄(x₀+ut,R(t)) | 0<t≤t* |
+| `fonction_contact(x_B,t)` | g_B(t) (m²) | 0<t≤t* |
+| `premier_contact(x_B)` | Premier contact, ou `None` | Cible fixe, 0<t≤t* |
+| `valeur_hj(x,t)` | Fonction Hopf–Lax avec plateau nul (m) | 0<t≤t* |
+| `commande_radiale(z,T,τ)` | Vecteur de commande (m s⁻¹) | 0<τ≤T≤t*, ||z||≤R(T) |
+| `jauge_randers(v,t)` | Norme F(v) (s), v déplacement tangent (m) | R'(t)>||u|| |
+
+Les vecteurs d'entrée sont des triplets réels finis en mètres ou mètres
+par seconde selon leur rôle. Les paramètres M, C₀ et K sont strictement
+positifs. Les entrées invalides et les extrapolations hors domaine lèvent
+`ValueError`. La classe ne modifie ni n'importe
+`jdriftx.similitude.concentration_puff` : ce dernier garde ses lois de
+Briggs et son isotropie longitudinale approchée.
+
+### 9.2 Pourquoi le premier contact est calculé sans balayage temporel
+
+La fonction de contact peut avoir deux zéros sur la phase d'expansion.
+Un balayage discret peut manquer une fenêtre étroite ou un contact tangent.
+Pour le vent constant, sa dérivée est
+
+$$
+g'_B(t)=-2u\cdot(x_B-x_0-ut)-6K\ln(t_*/t),
+$$
+
+et sa dérivée seconde vaut
+
+$$
+g''_B(t)=2\|u\|^2+\frac{6K}{t}>0.
+$$
+
+La stricte convexité donne un unique minimum. L'implémentation localise
+d'abord ce minimum par dichotomie sur g'_B ; si g_B y est positif, il n'y
+a aucun contact. Sinon, une seconde dichotomie sur la branche décroissante
+retourne le premier zéro. Le cas tangent g_B(t*)=0 est ainsi traité sans
+dépendre d'un pas temporel de balayage. Le test numérique du minimum
+emploie une tolérance relative de 1e-12 sur l'échelle géométrique pour
+classer un résidu positif quasi nul comme tangence float64 ; si le minimum
+est négatif, même de faible amplitude, la dichotomie du premier zéro est
+conservée. Cette propriété repose sur u constant et K constant ; elle ne
+se transpose pas telle quelle à des coefficients variables.
+
+### 9.3 Tests et reproduction
+
+Le nouveau fichier `tests/test_zermelo_gaussien.py` couvre les domaines,
+les deux formes du rayon, R', le noyau et une quadrature 3D de masse sur
+un cube tronqué. La masse attendue sur ce cube est calculée analytiquement
+par le produit des fonctions erf ; l'écart à M est donc attribué
+explicitement à la troncature, et non à une perte physique de masse.
+
+Les tests couvrent également le plateau nul Hopf–Lax, le résidu HJ dans
+une région extérieure lisse, la commande radiale, l'identité de Randers
+sous-critique, le rejet du seuil instantané et le premier contact (sans
+vent, tangent, hors de portée et avec deux racines candidates).
+
+Commandes de reproduction :
+
+```bash
+uv run pytest -q tests/test_zermelo_gaussien.py
+uv run ruff check src/jdriftx/experiences/zermelo_gaussien.py tests/test_zermelo_gaussien.py
+uv run mypy src/jdriftx/experiences/zermelo_gaussien.py
+```
+
+Ces tests sont des contrôles de cohérence d'une implémentation float64.
+Ils ne remplacent pas les preuves des sections précédentes, ne valident
+pas un solveur HJ et ne démontrent aucune validité atmosphérique.
+
+
+### Complément de robustesse numérique — 02/11/2026
+
+La revue du premier oracle a identifié deux problèmes de conditionnement que les tests nominaux ne révélaient pas :
+
+1. **Tolérance de tangence dimensionnée.** Une tolérance proportionnelle à `max(1, longueur²)` introduisait implicitement une échelle plancher de 1 m². Pour un cas physiquement exprimé à une échelle submillimétrique, une cible légèrement hors portée pouvait alors être classée à tort comme tangente. La tolérance est désormais (64\,\epsilon_{64}\,L^2), où (L^2) est le maximum des échelles géométriques pertinentes : distance initiale au carré, déplacement du vent sur (t_*) au carré et (R_{\max}^2). Un test de changement d'échelle vérifie qu'une cible à 0,1 % au-delà de (R_{\max}) reste hors portée à une échelle nanométrique.
+
+2. **Soustraction catastrophique dans Randers.** Pour un déplacement aval, lorsque (c\downarrow\|u\|), la formule directe soustrait deux termes presque égaux. La branche aval utilise désormais la forme rationalisée
+   [
+   F(v)=\frac{\|v\|^2}{\sqrt{(u\cdot v)^2+(c^2-\|u\|^2)\|v\|^2}+u\cdot v},
+   \]
+   algébriquement équivalente mais mieux conditionnée. Un test approche le régime critique à (10^{-12}) en relatif et compare à la formule aval exacte (F(v)=\|v\|/(c+\|u\|)).
+
+Les calculs de (t_*), (R_{\max}) et (R(t)) ont aussi été réécrits dans le domaine logarithmique pour réduire les débordements intermédiaires. Cela ne supprime pas les limites de représentation float64 : les valeurs finales hors plage sont signalées explicitement pour (t_*) et les rayons.
+
+Ces ajouts améliorent la robustesse numérique de l'oracle ; ils ne changent ni le théorème GZ-1 ni son domaine physique.
+
+
+**Convention du premier contact à l'origine.** Si la cible fixe coïncide avec (x_0), `premier_contact` retourne (0) : la cible est atteinte à l'instant initial. Ce cas est distingué du calcul des zéros de (g_B), défini pour (t>0), et possède un test dédié.
+
+
+**Appartenance numérique à la frontière.** La comparaison stricte (\|x-(x_0+ut)\|\leq R(t)) pouvait rejeter un point construit exactement sur la frontière à cause de l'arrondi des opérations (x_{centre}+R), puis (x-x_{centre}). Le prédicat d'appartenance applique désormais une tolérance relative de (16\,\epsilon_{64}\max(d,R)). Un test vérifie simultanément l'inclusion du point de frontière reconstruit et le rejet d'un point extérieur de (10^{-12}) en relatif. Cette tolérance ne modifie pas l'ensemble mathématique ; elle borne l'incertitude de classification au voisinage immédiat de sa frontière en float64.

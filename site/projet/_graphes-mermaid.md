@@ -133,6 +133,7 @@ graph TD
     champ_analytique["champ_analytique.py"]::module
     experiences_uniforme["experiences/uniforme.py"]::module
     experiences_baseline_uniforme["experiences/baseline_uniforme.py"]::module
+    experiences_zermelo_gaussien["experiences/zermelo_gaussien.py"]::module
     experiences_reconstruction_vent["experiences/reconstruction_vent.py"]::module
     experiences_cas_synthetiques["experiences/cas_synthetiques.py"]::module
     experiences_superposition_sources["experiences/superposition_sources.py"]::module
@@ -380,6 +381,7 @@ graph TD
 | champ_analytique.py | Module de code | [champ_analytique.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/champ_analytique.py) |
 | experiences/uniforme.py | Module de code | [uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/uniforme.py) |
 | experiences/baseline_uniforme.py | Module de code | [baseline_uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/baseline_uniforme.py) |
+| experiences/zermelo_gaussien.py | Module de code | [zermelo_gaussien.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/zermelo_gaussien.py) |
 | experiences/reconstruction_vent.py | Module de code | [reconstruction_vent.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reconstruction_vent.py) |
 | experiences/cas_synthetiques.py | Module de code | [cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/cas_synthetiques.py) |
 | experiences/superposition_sources.py | Module de code | [superposition_sources.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/superposition_sources.py) |
