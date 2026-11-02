@@ -4,6 +4,49 @@ title: "J-DriftX — dispersion atmosphérique à complexité réduite"
 
 # J-DriftX
 
+> **En bref —** J-DriftX étudie des représentations approchées de la dispersion atmosphérique afin de réduire, à terme, le coût de calcul de certains scénarios. La piste scientifique — notamment l'emploi de temps de transport et de solutions de similitude — reste une **hypothèse en cours d'évaluation**, et non une méthode prédictive validée.
+
+![Parcours de lecture J-DriftX en quatre niveaux : comprendre le problème physique, comprendre le modèle et ses hypothèses, comprendre les fondements théoriques, puis vérifier et reproduire les résultats.](images/parcours-lecture-jdriftx.svg)
+
+## Choisir son parcours
+
+Cette documentation propose quatre profondeurs de lecture. Elles sont complémentaires : vous pouvez passer directement au niveau correspondant à votre question.
+
+::: {.columns}
+::: {.column width="50%"}
+**1 · Comprendre**
+
+Le problème physique, les enjeux et la vue d'ensemble.
+
+[Commencer par la carte d'articulation](projet/carte-articulation.qmd)
+:::
+::: {.column width="50%"}
+**2 · Comprendre le modèle**
+
+Les grandeurs, le transport, les hypothèses et le domaine de validité.
+
+[Explorer les niveaux de modélisation](projet/niveaux-modelisation.qmd)
+:::
+::: {.column width="50%"}
+**3 · Comprendre la théorie**
+
+Les équations, les solutions de similitude et les constructions géométriques.
+
+[Accéder au modèle direct](theorie/modele-direct.qmd)
+:::
+::: {.column width="50%"}
+**4 · Vérifier et reproduire**
+
+Les preuves, les expériences, les tests et les limites de chaque résultat.
+
+[Consulter le registre des preuves](projet/registre-preuves.qmd)
+:::
+:::
+
+**Repère scientifique :** une définition, une démonstration mathématique, un test logiciel et une validation sur données indépendantes n'ont pas la même portée. Les pages distinguent ces statuts ; aucun résultat de calcul isolé ne démontre une validité générale.
+
+## Présentation détaillée
+
 **J-DriftX** est un projet de recherche open source qui étudie des représentations approchées de la **dispersion atmosphérique de scalaires passifs**, avec l'objectif de réduire le coût de calcul. Il est la reprise et la modernisation du projet **Drift-X** développé entre 2006 et 2009 par J.-M. Brun et B. Mohammadi (Cemagref/ITAP et I3M, Montpellier) [@bozon2009driftx; @mohammadi2009gis].
 
 ![Illustration conceptuelle de l'hypothèse étudiée : panache gaussien évalué à partir d'une coordonnée candidate de temps de transport τ, sans que cette généralisation soit encore validée.](images/panache-travel-time.svg)

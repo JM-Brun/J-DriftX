@@ -20,7 +20,7 @@ Le lecteur rencontre trois classifications dans le projet. Elles répondent à d
 
 | Repère | Question à laquelle il répond | Valeurs / organisation | Où l'utiliser |
 |---|---|---|---|
-| **Profondeur de lecture** | Jusqu'où souhaite-t-on entrer dans le raisonnement ? | Découvrir ; suivre l'explication ; vérifier une affirmation | Choisir un parcours dans l'[accueil](../index.qmd) ; changer de profondeur à tout moment |
+| **Profondeur de lecture** | Jusqu'où souhaite-t-on entrer dans le raisonnement ? | 1 Comprendre ; 2 Comprendre le modèle ; 3 Comprendre la théorie ; 4 Vérifier et reproduire | Choisir un parcours dans l'[accueil](../index.qmd) ; changer de profondeur à tout moment |
 | **Niveau de modélisation** | Quel objet physique ou mathématique est étudié ? | N0 à N6 : contexte, vent, chemins, temps de transport, dispersion, concentration, calibration/décision | Situer une hypothèse ou une implémentation dans la [carte des niveaux](niveaux-modelisation.qmd) |
 | **Statut de preuve** | Quel type de justification soutient l'affirmation ? | Formulé ; dérivé/démontré ; testé ; comparé ; validé indépendamment | Examiner les hypothèses, le domaine, le protocole et les limites dans le [registre des preuves](registre-preuves.qmd) et les pages associées |
 
