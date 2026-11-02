@@ -423,8 +423,91 @@ def generer_contenu(
     parties = [ENTETE, _legende(registre)]
     for graphe in registre.graphes:
         parties.append(_section_vue(graphe, registre))
+    parties.append(_vues_scientifiques_croisees(registre))
     parties.append(_section_citations(registre, pages))
     return "\n\n".join(parties) + "\n"
+
+
+
+def _vues_scientifiques_croisees(registre: Registre) -> str:
+    """Produit des vues scientifiques filtrées depuis les mêmes nœuds et arêtes."""
+    types = {noeud.id: noeud.type for noeud in registre.noeuds}
+    hypotheses = {
+        identifiant for identifiant, type_noeud in types.items()
+        if type_noeud in {"hypothese", "concept", "niveau"}
+    }
+    concepts = {
+        identifiant for identifiant, type_noeud in types.items() if type_noeud == "concept"
+    }
+    proprietes = {
+        identifiant for identifiant, type_noeud in types.items() if type_noeud == "propriete"
+    }
+    preuves = set(proprietes)
+    for arete in registre.aretes:
+        if arete.de in proprietes and types.get(arete.vers) in {"test", "module"}:
+            preuves.add(arete.vers)
+        if arete.vers in proprietes and types.get(arete.de) in {"test", "module"}:
+            preuves.add(arete.de)
+    for arete in registre.aretes:
+        if arete.de in preuves and types.get(arete.vers) in {"test", "module"}:
+            preuves.add(arete.vers)
+        if arete.vers in preuves and types.get(arete.de) in {"test", "module"}:
+            preuves.add(arete.de)
+    vues = [
+        (
+            "Hypothèses et objets conditionnés",
+            "Projection du registre sur H1-H8, les concepts associés et les niveaux N0-N6. Les liens montrent des dépendances documentées, pas des implications logiques suffisantes.",
+            hypotheses,
+        ),
+        (
+            "Concepts et dépendances mathématiques",
+            "Sous-graphe des concepts : dépendances définitionnelles, constructions et usages. Les chaînes advection-diffusion et trajectoires-temps de transport restent distinctes lorsque le registre les distingue.",
+            concepts,
+        ),
+        (
+            "Propriétés, tests et implémentations associées",
+            "Voisinage des propriétés dans le registre : modules et tests directement reliés. Un test établit uniquement le comportement couvert par son protocole, jamais une validité physique générale.",
+            preuves,
+        ),
+    ]
+    return "\n\n".join(
+        _section_vue_derivee(titre, description, identifiants, registre)
+        for titre, description, identifiants in vues
+    )
+
+
+def _section_vue_derivee(
+    titre: str, description: str, identifiants: set[str], registre: Registre
+) -> str:
+    """Rend une projection du graphe sans redéfinir ses nœuds ni ses arêtes."""
+    fence = chr(96) * 3
+    lignes = [f"## {titre}", "", description, "", fence + "{mermaid}", "flowchart LR"]
+    groupes: dict[str, list[str]] = {}
+    for noeud in registre.noeuds:
+        if noeud.id in identifiants:
+            groupes.setdefault(noeud.type, []).append(noeud.id)
+    for type_noeud, membres in groupes.items():
+        lignes.append(f'  subgraph vue_{type_noeud}["{registre.types[type_noeud].libelle}"]')
+        for identifiant in membres:
+            lignes.append(_ligne_noeud(registre.index[identifiant]))
+        lignes.append("  end")
+    for arete in registre.aretes:
+        if arete.de in identifiants and arete.vers in identifiants:
+            libelle = registre.relations[arete.relation].libelle
+            lignes.append(
+                f'  {_identifiant(arete.de)} -->|"{_texte(libelle)}"| {_identifiant(arete.vers)}'
+            )
+    for type_noeud in groupes:
+        couleur = registre.types[type_noeud].couleur
+        lignes.append(
+            f"  classDef {type_noeud} fill:{couleur},stroke:#495057,color:#212529;"
+        )
+    lignes.append(fence)
+    lignes.extend(["", "**Nœuds et destinations**", "", "| Nœud | Type | Où approfondir |", "|---|---|---|"])
+    for noeud in registre.noeuds:
+        if noeud.id in identifiants:
+            lignes.append(_ligne_table(noeud, registre))
+    return "\n".join(lignes)
 
 
 def _legende(registre: Registre) -> str:
