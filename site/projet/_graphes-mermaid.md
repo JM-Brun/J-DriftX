@@ -476,7 +476,7 @@ graph TD
 
 ## Références et corpus
 
-Les vingt-neuf entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique).
+Les quarante et une entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique).
 
 ```{mermaid}
 graph LR
@@ -512,6 +512,18 @@ graph LR
     capps2026pyaermod["Capps 2026 — PyAERMOD 2.2.0"]::reference
     dagestad2018opendrift["Dagestad et al. 2018 — OpenDrift v1.0"]::reference
     epaAermod2026["EPA 2026 — AERMOD Modeling System"]::reference
+    hysplit2015["Stein et al. 2015 — HYSPLIT"]::reference
+    adms1994["Carruthers et al. 1994 — UK-ADMS"]::reference
+    thomson1987["Thomson 1987 — modèles stochastiques lagrangiens"]::reference
+    luhar1989["Luhar et Britter 1989 — turbulence convective inhomogène"]::reference
+    andrews2013["Andrews et al. 2013 — comparaison HYSPLIT/STILT/FLEXPART"]::reference
+    winter2014validation["Rood 2014 — Winter Validation Tracer Study"]::reference
+    holmes2006["Holmes et Morawska 2006 — revue des modèles"]::reference
+    oettl2015gral["Öttl 2015 — validation GRAL"]::reference
+    admlcDatasets["ADMLC — catalogue de jeux de dispersion"]::reference
+    prairiegrassData["Prairie Grass 1956 — données de terrain"]::reference
+    etexJRC["JRC — archives de données ETEX"]::reference
+    ju2003Clawson2005["Clawson et al. 2005 — JU2003"]::reference
   end
   subgraph obj["Objets décrits ou fondés"]
     c_pdist["Pseudo-distance dirigée (référence uniforme)"]::concept
@@ -593,6 +605,18 @@ graph LR
 | Capps 2026 — PyAERMOD 2.2.0 | Référence bibliographique | [references.qmd](../references.qmd) |
 | Dagestad et al. 2018 — OpenDrift v1.0 | Référence bibliographique | [references.qmd](../references.qmd) |
 | EPA 2026 — AERMOD Modeling System | Référence bibliographique | [references.qmd](../references.qmd) |
+| Stein et al. 2015 — HYSPLIT | Référence bibliographique | [references.qmd](../references.qmd) |
+| Carruthers et al. 1994 — UK-ADMS | Référence bibliographique | [references.qmd](../references.qmd) |
+| Thomson 1987 — modèles stochastiques lagrangiens | Référence bibliographique | [references.qmd](../references.qmd) |
+| Luhar et Britter 1989 — turbulence convective inhomogène | Référence bibliographique | [references.qmd](../references.qmd) |
+| Andrews et al. 2013 — comparaison HYSPLIT/STILT/FLEXPART | Référence bibliographique | [references.qmd](../references.qmd) |
+| Rood 2014 — Winter Validation Tracer Study | Référence bibliographique | [references.qmd](../references.qmd) |
+| Holmes et Morawska 2006 — revue des modèles | Référence bibliographique | [references.qmd](../references.qmd) |
+| Öttl 2015 — validation GRAL | Référence bibliographique | [references.qmd](../references.qmd) |
+| ADMLC — catalogue de jeux de dispersion | Référence bibliographique | [references.qmd](../references.qmd) |
+| Prairie Grass 1956 — données de terrain | Référence bibliographique | [references.qmd](../references.qmd) |
+| JRC — archives de données ETEX | Référence bibliographique | [references.qmd](../references.qmd) |
+| Clawson et al. 2005 — JU2003 | Référence bibliographique | [references.qmd](../references.qmd) |
 | Pseudo-distance dirigée (référence uniforme) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Temps de transport | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Champ multi-niveaux historique (non reconstruit) | Concept | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
