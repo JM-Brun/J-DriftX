@@ -80,9 +80,9 @@ $$
 =\overline{\mathbf{u}}\,\overline C
 +\overline{\mathbf{u}'C'}.
 $$
-En moyennant l'équation **Pourquoi cette identité : les quatre termes du produit.** Le produit s'écrit $\mathbf{u}\,C=(\overline{\mathbf{u}}+\mathbf{u}')\,(\overline C+C')=\overline{\mathbf{u}}\,\overline C+\overline{\mathbf{u}}\,C'+\mathbf{u}'\,\overline C+\mathbf{u}'C'$. En appliquant la moyenne à chaque terme : le premier est composé de quantités déjà moyennées et reste tel quel ; les deux termes croisés s'annulent parce que la moyenne est linéaire, commute avec la multiplication par une quantité déjà moyennée, et que les fluctuations sont de moyenne nulle — $\overline{\overline{\mathbf{u}}\,C'}=\overline{\mathbf{u}}\,\overline{C'}=0$ et $\overline{\mathbf{u}'\,\overline C}=\overline C\,\overline{\mathbf{u}'}=0$. Il reste exactement l'identité affichée. **Type : identité mathématique** sous les seules règles de moyennage admises en 3.1 (linéarité, $\overline{\phi'}=0$) ; aucune physique de turbulence n'y intervient encore — tout l'enjeu de la fermeture est dans le terme $\overline{\mathbf{u}'C'}$ qui subsiste.
+**Pourquoi cette identité : les quatre termes du produit.** Le produit s'écrit $\mathbf{u}\,C=(\overline{\mathbf{u}}+\mathbf{u}')\,(\overline C+C')=\overline{\mathbf{u}}\,\overline C+\overline{\mathbf{u}}\,C'+\mathbf{u}'\,\overline C+\mathbf{u}'C'$. En appliquant la moyenne à chaque terme : le premier est composé de quantités déjà moyennées et reste tel quel ; les deux termes croisés s'annulent parce que la moyenne est linéaire, commute avec la multiplication par une quantité déjà moyennée, et que les fluctuations sont de moyenne nulle — $\overline{\overline{\mathbf{u}}\,C'}=\overline{\mathbf{u}}\,\overline{C'}=0$ et $\overline{\mathbf{u}'\,\overline C}=\overline C\,\overline{\mathbf{u}'}=0$. Il reste exactement l'identité affichée. **Type : identité mathématique** sous les seules règles de moyennage admises en 3.1 (linéarité, $\overline{\phi'}=0$) ; aucune physique de turbulence n'y intervient encore — tout l'enjeu de la fermeture est dans le terme $\overline{\mathbf{u}'C'}$ qui subsiste.
 
-conservative et en utilisant cette identité, on obtient
+En moyennant l’équation conservative et en utilisant cette identité, on obtient
 $$
 \frac{\partial\overline C}{\partial t}
 +\nabla\cdot(\overline{\mathbf{u}}\,\overline C)
@@ -105,6 +105,8 @@ $$
 \boxed{\mathbf F_t=-\mathbf K\nabla\overline C.}
 $$
 Le signe moins signifie que, dans cette approximation, le flux turbulent est dirigé à l'opposé du gradient moyen de concentration. Cette relation est une hypothèse de fermeture, non une conséquence exacte du moyennage de Reynolds. Elle peut être inadéquate en présence de non-localité, de mémoire, de forte hétérogénéité ou de flux dirigés contre le gradient local.
+
+**Lire cette fermeture : l’analogie de Fick et son critère d’échelle.** L’hypothèse $\mathbf F_t=-\mathbf K\nabla\overline C$ est l’analogue turbulent de la loi de Fick pour la diffusion moléculaire : tout se passe comme si la turbulence mélangeait la concentration à la manière dont les collisions moléculaires mélangent un soluté. Cette analogie a un critère d’échelle : elle est plausible quand les tourbillons qui mélangent sont petits devant l’échelle à laquelle le gradient moyen varie — ils voient alors un gradient localement uniforme, comme une particule de Fick voit un milieu homogène à sa propre échelle. Elle devient douteuse quand des tourbillons plus grands que l’échelle d’observation transportent la matière sur des distances non locales : le flux en un point dépend alors de la concentration ailleurs et dans le passé, et des flux dirigés contre le gradient deviennent possibles. **Type : intuition d’échelle** — ce critère guide le domaine d’usage de la fermeture ; il n’est ni une preuve de validité ni un test implémenté, et les cas limites restent ceux listés ci-dessus.
 
 Le tenseur $\mathbf K(\mathbf x,t)$ est une matrice de diffusivité turbulente, de dimension $\mathrm{m^2\,s^{-1}}$. En trois dimensions :
 $$
@@ -302,6 +304,8 @@ $
 \qquad \mathrm{Pe}_x:=\frac{U L_x}{D_x}.
 $
 Un grand nombre de Péclet longitudinal ($\mathrm{Pe}_x\gg1$) justifie que cette diffusion soit petite devant l'advection. Pour la négliger dans une équation qui conserve explicitement la diffusion transversale, il faut aussi vérifier que le terme longitudinal est petit devant les termes transversaux pertinents à l'échelle considérée, par exemple en comparant $D_x/L_x^2$ à $K_y/L_y^2$ et $K_z/L_z^2$. Ces comparaisons sont des critères d'ordre de grandeur, pas une preuve uniforme de validité près de la source, aux frontières ou là où les gradients changent d'échelle.
+
+**Un ordre de grandeur concret (illustration).** Pour $U=5\,\mathrm{m\,s^{-1}}$, $K_x=10\,\mathrm{m^2\,s^{-1}}$ et une échelle longitudinale $L_x=1\,\mathrm{km}$, on obtient $\mathrm{Pe}_x=UL_x/K_x=500$ : à cette échelle, la diffusion longitudinale vaut un cinq-centième de l’advection. La marge est large, mais elle se réduit près de la source (faibles vitesses, petites échelles) ou dans les zones tourbillonnaires — c’est le sens exact de « critère d’échelle, pas une preuve uniforme ». **Type : illustration numérique** ; aucune valeur normative pour un site réel.
 
 Ce choix est l'approximation parabolique de panache. Il conduit, avec $D_y\simeq K_y$ et $D_z\simeq K_z$, à
 $$
