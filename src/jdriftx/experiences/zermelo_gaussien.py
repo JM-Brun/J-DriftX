@@ -261,7 +261,11 @@ class ModeleGZ1:
     def premier_contact(
         self, cible: tuple[float, float, float] | NDArray[np.float64]
     ) -> float | None:
-        """Premier zéro de g_B sur (0,t*], ou None si la cible est hors portée.
+        """Premier contact sur [0,t*], ou None si la cible est hors portée.
+
+        Retourne 0 si la cible coïncide avec la position initiale : le contact
+        est alors déjà réalisé à l'instant initial, même si g_B(0) n'est pas
+        défini par la formule ouverte en t>0.
 
         Pour un vent constant, g_B''(t)=2|u|²+6K/t>0 : g_B est strictement
         convexe. Son minimum unique est trouvé par dichotomie sur g'_B,
