@@ -476,7 +476,7 @@ graph TD
 
 ## Références et corpus
 
-Les vingt-deux entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique).
+Les vingt-cinq entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique).
 
 ```{mermaid}
 graph LR
@@ -505,6 +505,9 @@ graph LR
     bonicelli2012cigr["Bonicelli et al. 2012 — dérive des pesticides"]::reference
     defra2011ps2024["Defra 2011 — PS2024 (exposition des riverains)"]::reference
     garbaczewski1997burgers["Garbaczewski et al. 1997 — équation de Burgers"]::reference
+    scire2000calpuff["Scire et al. 2000 — guide CALPUFF"]::reference
+    sykes1998scipuff["Sykes et al. 1998 — documentation SCIPUFF"]::reference
+    thykier1987rimpuff["Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF"]::reference
   end
   subgraph obj["Objets décrits ou fondés"]
     c_pdist["Pseudo-distance dirigée (référence uniforme)"]::concept
@@ -579,6 +582,9 @@ graph LR
 | Bonicelli et al. 2012 — dérive des pesticides | Référence bibliographique | [references.qmd](../references.qmd) |
 | Defra 2011 — PS2024 (exposition des riverains) | Référence bibliographique | [references.qmd](../references.qmd) |
 | Garbaczewski et al. 1997 — équation de Burgers | Référence bibliographique | [references.qmd](../references.qmd) |
+| Scire et al. 2000 — guide CALPUFF | Référence bibliographique | [references.qmd](../references.qmd) |
+| Sykes et al. 1998 — documentation SCIPUFF | Référence bibliographique | [references.qmd](../references.qmd) |
+| Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF | Référence bibliographique | [references.qmd](../references.qmd) |
 | Pseudo-distance dirigée (référence uniforme) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Temps de transport | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
 | Champ multi-niveaux historique (non reconstruit) | Concept | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
@@ -677,3 +683,6 @@ graph LR
 | [Bonicelli et al. 2012 — dérive des pesticides](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Defra 2011 — PS2024 (exposition des riverains)](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Garbaczewski et al. 1997 — équation de Burgers](../references.qmd) | [Équation de Burgers : lien avec J-DriftX](../theorie/burgers-et-jdriftx.qmd) |
+| [Scire et al. 2000 — guide CALPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
+| [Sykes et al. 1998 — documentation SCIPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
+| [Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |

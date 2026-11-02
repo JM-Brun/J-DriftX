@@ -16,6 +16,8 @@ Voir l'[audit adversarial](https://github.com/JM-Brun/J-DriftX/blob/main/docs/15
 
 Les modèles et les usages réglementaires varient selon le polluant, le régime physique et la décision. Le fait qu'un modèle soit gaussien, qu'une comparaison révèle des écarts ou qu'une incertitude subsiste ne démontre pas à lui seul un besoin auquel J-DriftX répondrait mieux. Toute comparaison doit porter sur un même observable, un régime comparable et une baseline pertinente.
 
+Parmi les modèles opérationnels non stationnaires, la famille des puffs sur trajectoire — CALPUFF [@scire2000calpuff], SCIPUFF [@sykes1998scipuff], RIMPUFF [@thykier1987rimpuff] — évalue des puffs gaussiens transportés dans un champ de vent hétérogène : c'est la généralisation opérationnelle la plus directe du panache gaussien, et une baseline naturelle pour le créneau visé par J-DriftX. L'EPA classe CALPUFF parmi les modèles « alternatifs » et les évaluations comparées divergent selon les études ([revue docs/02](https://github.com/JM-Brun/J-DriftX/blob/main/docs/02-revue-etat-art-2026.md)) ; inclure ou exclure cette famille d'un benchmark doit donc être explicité.
+
 ## Dérive de pulvérisation
 
 L'EPA documente des incertitudes et des limites de validation de l'extension gaussienne d'AGDISP pour certains usages far-field, notamment concernant les barrières physiques et la météorologie ([source EPA](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/guidance-use-linked-agdisp-gaussian-extension)). Cela justifie d'examiner certains scénarios, mais pas d'affirmer que la métrique de J-DriftX les résout. Le caractère conservateur d'une estimation peut être intentionnel selon la décision réglementaire.
