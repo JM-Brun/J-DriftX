@@ -45,3 +45,8 @@ title: "Références"
 
 
 La bibliographie complète, catégorisée et datée (une trentaine d'entrées), est maintenue dans le dépôt : <code>docs/references.md</code>. Les citations du site sont gérées par <code>references.bib</code>. Les fiches de lecture détaillées par papier source : <code>docs/04-revues-papiers-sources.md</code>. Les sources primaires (PDF, extractions texte) sont archivées dans <code>raw/</code>.
+
+
+## Parcours de lecture
+
+Cette page est le **répertoire bibliographique**, pas une synthèse critique des résultats. Pour connaître le contenu effectivement consulté, le niveau d’accès aux textes et les réserves d’interprétation, revenir aux [lectures critiques des sources](projet/lectures.qmd). Pour situer les familles de méthodes contemporaines par rapport à J-DriftX, consulter le [panorama de l’état de l’art](etat-art/panorama.qmd) et le [positionnement du projet](etat-art/positionnement.qmd).

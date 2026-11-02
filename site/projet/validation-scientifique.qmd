@@ -6,6 +6,17 @@ title: "Validation scientifique et protocole de preuve"
 
 Cette page traduit la revue de l’état de l’art en critères de validation pour J-DriftX. Elle distingue le positionnement proposé des résultats qui restent à démontrer.
 
+## Place dans le parcours
+
+Cette page est le **point de décision expérimental** : elle précise quelles observations et comparaisons seraient nécessaires pour soutenir ou réfuter les hypothèses du projet. Elle ne rapporte pas, à elle seule, des résultats de validation.
+
+- **Avant de définir un benchmark :** expliciter les [hypothèses](../hypotheses/catalogue.qmd), les [domaines de validité et limites](../hypotheses/limites.qmd) et le [positionnement dans l’état de l’art](../etat-art/positionnement.qmd).
+- **Pour vérifier ce qui est déjà acquis :** confronter chaque affirmation au [registre des preuves](registre-preuves.qmd) et à la portée réelle des [tests logiciels](qualite.qmd).
+- **Pour sélectionner des observations :** consulter le [catalogue de données candidates](catalogue-donnees.qmd) ; la présence d’un jeu de données ne vaut ni adéquation physique ni validation indépendante.
+- **Pour revenir au modèle :** la [carte des niveaux de modélisation](niveaux-modelisation.qmd) situe les objets N0–N6 concernés par chaque scénario.
+
+Le parcours est donc bidirectionnel : les hypothèses et le modèle déterminent les tests pertinents ; les résultats des tests doivent ensuite conduire à réviser le domaine de validité ou le statut des affirmations, et non à élargir automatiquement les conclusions.
+
 ## Statut de la revue
 
 La revue publiée dans le dépôt est une **revue structurée de l’état de l’art**. Elle ne doit être qualifiée de revue systématique reproductible qu’après publication des bases interrogées, requêtes exactes, dates, critères de sélection, nombres de références examinées et méthode d’évaluation de la qualité des sources.
