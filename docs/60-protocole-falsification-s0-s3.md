@@ -18,9 +18,9 @@ Le protocole doit pouvoir conclure **conserver**, **restreindre** ou **remplacer
 
 | Symbole | Définition opérationnelle | Précaution |
 |---|---|---|
-| $T_{\\mathrm{proj}}$ | Construction historique projetée, avec règle de projection explicitée | Ne pas lui attribuer par défaut l'équation eikonale ou la propriété de temps d'arrivée |
-| $T_{\\mathrm{arr}}$ | Temps d'arrivée le long d'une caractéristique issue de la source, calculé par intégration d'EDO et événement | Défini uniquement sur les points atteints par cette caractéristique ; ne résout pas à lui seul la diffusion transverse |
-| $T_{\\mathrm{path}}$ | Intégrale $\\int_\\gamma ds/\\lVert u\\rVert$ sur une courbe prescrite | La courbe est une entrée ; ce n'est ni une projection ni une optimisation |
+| $T_{\mathrm{proj}}$ | Construction historique projetée, avec règle de projection explicitée | Ne pas lui attribuer par défaut l'équation eikonale ou la propriété de temps d'arrivée |
+| $T_{\mathrm{arr}}$ | Temps d'arrivée le long d'une caractéristique issue de la source, calculé par intégration d'EDO et événement | Défini uniquement sur les points atteints par cette caractéristique ; ne résout pas à lui seul la diffusion transverse |
+| $T_{\mathrm{path}}$ | Intégrale $\int_\gamma ds/\lVert u\rVert$ sur une courbe prescrite | La courbe est une entrée ; ce n'est ni une projection ni une optimisation |
 | EDP-FV | Référence indépendante de l'équation conservative d'advection-diffusion, résolue par volumes finis | Le schéma, les flux, les frontières et la convergence doivent être vérifiés séparément |
 | Puff | Modèle impulsionnel gaussien advecté et élargi selon une loi explicitée | Le puff Briggs actuellement présent dans le package n'est pas automatiquement un puff lagrangien sur vent variable |
 
@@ -31,20 +31,20 @@ Ne pas confondre le résultat idéal GZ-1, le puff Briggs existant, le cas S0 et
 Pour le traceur passif, partir de la forme conservative :
 
 $$
-\\partial_t c + \\nabla\\cdot(\\mathbf u c)
-= \\nabla\\cdot(\\mathbf K\\nabla c)+S,
+\partial_t c + \nabla\cdot(\mathbf u c)
+= \nabla\cdot(\mathbf K\nabla c)+S,
 $$
 
-où $c$ est en kg m$^{-3}$, $\\mathbf u$ en m s$^{-1}$, $\\mathbf K$ en m$^2$ s$^{-1}$ et $S$ en kg m$^{-3}$ s$^{-1}$. Les pertes, dépôts et réactions sont exclus du premier protocole et ne doivent pas être introduits implicitement.
+où $c$ est en kg m$^{-3}$, $\mathbf u$ en m s$^{-1}$, $\mathbf K$ en m$^2$ s$^{-1}$ et $S$ en kg m$^{-3}$ s$^{-1}$. Les pertes, dépôts et réactions sont exclus du premier protocole et ne doivent pas être introduits implicitement.
 
-Pour une source impulsionnelle de masse $M$, définir explicitement la condition initiale $c(\\mathbf x,0)=M\\delta(\\mathbf x-\\mathbf x_0)$, ou une régularisation volumique documentée et convergée. La source continue constitue une expérience séparée.
+Pour une source impulsionnelle de masse $M$, définir explicitement la condition initiale $c(\mathbf x,0)=M\delta(\mathbf x-\mathbf x_0)$, ou une régularisation volumique documentée et convergée. La source continue constitue une expérience séparée.
 
-Le bilan attendu sur un domaine $\\Omega$ est :
+Le bilan attendu sur un domaine $\Omega$ est :
 
 $$
-\\frac{d}{dt}\\int_\\Omega c\\,dV
-= -\\int_{\\partial\\Omega}(\\mathbf u c-\\mathbf K\\nabla c)\\cdot\\mathbf n\\,dA
-+\\int_\\Omega S\\,dV.
+\frac{d}{dt}\int_\Omega c\,dV
+= -\int_{\partial\Omega}(\mathbf u c-\mathbf K\nabla c)\cdot\mathbf n\,dA
++\int_\Omega S\,dV.
 $$
 
 En domaine fermé sans flux, la masse doit rester constante. En domaine tronqué ouvert, le flux sortant doit être comptabilisé ; une masse qui quitte le domaine n'est pas une perte numérique.
@@ -53,18 +53,18 @@ En domaine fermé sans flux, la masse doit rester constante. En domaine tronqué
 
 | Scénario | Champ de vitesse | Diffusion | Rôle |
 |---|---|---|---|
-| S0 | $\\mathbf u=(U_0,0,0)$, $U_0>0$ | constante ou loi analytique figée dans le contrat S0 | Contrôle positif ; poursuivre #244, ne pas dupliquer |
-| S1 | cisaillement $u_x(z)=U_0+\\gamma(z-z_0)$, positif sur tout le domaine ; autres composantes nulles | tenseur constant, éventuellement anisotrope mais fixé | Isoler l'effet du cisaillement |
+| S0 | $\mathbf u=(U_0,0,0)$, $U_0>0$ | constante ou loi analytique figée dans le contrat S0 | Contrôle positif ; poursuivre #244, ne pas dupliquer |
+| S1 | cisaillement $u_x(z)=U_0+\gamma(z-z_0)$, positif sur tout le domaine ; autres composantes nulles | tenseur constant, éventuellement anisotrope mais fixé | Isoler l'effet du cisaillement |
 | S2 | vent uniforme strictement positif | $K_z(z)>0$ lisse, borné et explicitement paramétré ; autres composantes fixées | Isoler l'effet d'une diffusivité variable |
 | S2b | cisaillement S1 | $K_z(z)$ variable | Interaction cisaillement–diffusion, après validation séparée S1 et S2 |
 | S3 | champ 2D/3D non uniforme, divergence nulle pour le premier cas, puis cas avec divergence contrôlée si pertinent | tenseur positif défini, d'abord constant | Tester courbure des trajectoires, convergence/divergence des tubes, zones stagnantes et ambiguïtés de projection |
 
-Les paramètres doivent être sans dimension autant que possible (par exemple rapport de cisaillement $\\gamma H/U_0$ et nombre de Péclet). Éviter les champs dont la vitesse s'annule avant d'avoir défini le traitement de $1/\\lVert u\\rVert$.
+Les paramètres doivent être sans dimension autant que possible (par exemple rapport de cisaillement $\gamma H/U_0$ et nombre de Péclet). Éviter les champs dont la vitesse s'annule avant d'avoir défini le traitement de $1/\lVert u\rVert$.
 
 ## 5. Protocole numérique de référence
 
 1. Définir domaine, géométrie, unités SI, source, conditions initiales et aux limites.
-2. Définir un champ $\\mathbf u$ et un tenseur $\\mathbf K$ analytiques, échantillonnables sans ambiguïté.
+2. Définir un champ $\mathbf u$ et un tenseur $\mathbf K$ analytiques, échantillonnables sans ambiguïté.
 3. Implémenter un schéma volumes finis conservatif ; publier les flux numériques et le traitement des frontières.
 4. Vérifier le solveur sur des solutions analytiques indépendantes (advection uniforme, diffusion pure, advection-diffusion uniforme) avant S1.
 5. Effectuer une étude de convergence en espace et en temps ; comparer au moins trois résolutions et documenter l'ordre observé lorsque celui-ci est théoriquement attendu.
@@ -74,11 +74,11 @@ Les paramètres doivent être sans dimension autant que possible (par exemple ra
 
 Le schéma FV n'est pas une vérité exacte par définition. La référence est une solution numérique vérifiée, avec une incertitude de discrétisation rapportée.
 
-## 6. Traitement de $T_{\\mathrm{arr}}$ et des récepteurs hors caractéristique
+## 6. Traitement de $T_{\mathrm{arr}}$ et des récepteurs hors caractéristique
 
 Un récepteur hors de la caractéristique déterministe issue de la source n'a pas de temps d'arrivée advectif défini par cette caractéristique. La diffusion peut néanmoins lui apporter une concentration non nulle.
 
-Il est donc interdit de remplacer mécaniquement $T_{\\mathrm{proj}}$ par $T_{\\mathrm{arr}}$ pour tous les récepteurs. Le protocole doit séparer :
+Il est donc interdit de remplacer mécaniquement $T_{\mathrm{proj}}$ par $T_{\mathrm{arr}}$ pour tous les récepteurs. Le protocole doit séparer :
 
 - le temps d'arrivée sur la caractéristique ;
 - la distance/dispersion transverse ;
@@ -101,11 +101,11 @@ Le code actuel `jdriftx.similitude.concentration_puff` utilise les paramétrisat
 
 ## 8. Observables et métriques
 
-Observable principale du premier benchmark : concentration aérienne $c(\\mathbf x,t)$ sur une grille spatio-temporelle fixée. Pour une source impulsionnelle, rapporter aussi la masse intégrée et les moments spatiaux (centre de masse, covariance) lorsque le domaine et les frontières rendent ces quantités interprétables.
+Observable principale du premier benchmark : concentration aérienne $c(\mathbf x,t)$ sur une grille spatio-temporelle fixée. Pour une source impulsionnelle, rapporter aussi la masse intégrée et les moments spatiaux (centre de masse, covariance) lorsque le domaine et les frontières rendent ces quantités interprétables.
 
 Rapporter au minimum :
 
-- erreurs relatives et absolues $L^1$, $L^2$ et $L^\\infty$ sur une grille commune ;
+- erreurs relatives et absolues $L^1$, $L^2$ et $L^\infty$ sur une grille commune ;
 - erreur sur les pics (amplitude, position et temps) ;
 - erreur sur le centre de masse et la covariance du panache ;
 - bilan de masse et flux aux frontières ;
