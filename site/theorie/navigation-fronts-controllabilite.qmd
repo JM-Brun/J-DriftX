@@ -29,6 +29,20 @@ Les démonstrations concernent le modèle mathématique explicite ci-dessous. El
 
 Pour une lecture progressive des intuitions, des démonstrations détaillées (ensemble atteignable, Hopf–Lax, Randers et cône aval) et de la correspondance avec les tests, voir la [note 59 — GZ-1](https://github.com/JM-Brun/J-DriftX/blob/main/docs/59-navigation-controllabilite-verifications.md).
 
+### Lecture rapide
+
+Cette page contient un **résultat théorique conditionnel**, pas une validation générale de la dispersion atmosphérique.
+
+| Question | Réponse dans GZ-1 |
+|---|---|
+| Quel système ? | Noyau gaussien 3D idéal, diffusivité isotrope constante, vent uniforme constant, espace sans frontières. |
+| Quel contrôle ? | Un mobile peut ajouter une commande $s$ telle que $\\lVert s(t)\\rVert\\leq R'(t)$ pendant l'expansion du front. |
+| Quel résultat ? | Pour une cible fixe, $T_{\\mathrm{nav}}=T_{\\mathrm{front}}$ sur $0<t\\leq t_*$. |
+| Quelle équation ? | Le Hamiltonien conduit à une équation de Hamilton–Jacobi instationnaire pour le front de contrôlabilité. |
+| Qu'est-ce qui n'est pas démontré ? | L'équivalence avec un front d'isoconcentration général, un vent variable, une diffusivité variable ou un solveur numérique validé. |
+
+**Parcours conseillé :** lire d'abord les sections 1, 3 et 4 pour connaître l'énoncé, la preuve de l'ensemble atteignable et ses limites ; revenir ensuite à la section 2 pour la dérivation du noyau gaussien ; consulter les sections 5 à 7 pour Hamilton–Jacobi, Randers et les conséquences numériques. Les démonstrations restent dans cette page ; la [note 59](https://github.com/JM-Brun/J-DriftX/blob/main/docs/59-navigation-controllabilite-verifications.md) donne le parcours de vérification associé.
+
 ## 2. Puff gaussien et cinématique du front
 
 Considérons l'équation d'advection–diffusion sur \(\mathbb R^3\), sans frontière, avec vent uniforme constant \(u\in\mathbb R^3\), diffusivité isotrope constante \(K>0\), et émission impulsionnelle de masse totale \(M>0\) au point \(x_0\) à l'instant initial :
@@ -553,7 +567,7 @@ La relation entre ces trois objets est donc une **parenté de famille (source im
 La suite scientifique doit traiter ces extensions une par une, en conservant pour chacune un énoncé, des hypothèses, une preuve ou un contre-exemple, puis seulement un test numérique. La première tâche d'implémentation est suivie dans l'[issue #448 — oracle analytique exécutable et tests de cohérence GZ-1](https://github.com/JM-Brun/J-DriftX/issues/448) ; le développement d'un solveur HJ viendra seulement après validation de cet oracle. Le registre de preuve du projet reflète ces statuts sans convertir une démonstration conditionnelle en validation physique.
 
 
-## 9. Oracle analytique exécutable
+## 10. Oracle analytique exécutable
 
 Une implémentation de référence, isolée du puff Briggs, est disponible dans
 `jdriftx.experiences.zermelo_gaussien.ModeleGZ1`. Elle expose le noyau
