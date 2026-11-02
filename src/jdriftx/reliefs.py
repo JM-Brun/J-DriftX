@@ -99,6 +99,36 @@ def _interpole_lineairement_stable(
     )
 
 
+def _lit_entete_ascii(jetons: list[str]) -> tuple[dict[str, float], int]:
+    """Lit les enregistrements reconnus de l'en-tête Esri ASCII raster."""
+    reconnues = {
+        "ncols",
+        "nrows",
+        "cellsize",
+        "nodata_value",
+        "xllcorner",
+        "yllcorner",
+        "xllcenter",
+        "yllcenter",
+    }
+    entete: dict[str, float] = {}
+    position = 0
+    while position + 1 < len(jetons):
+        cle = jetons[position].lower()
+        if cle not in reconnues:
+            break
+        if cle in entete:
+            msg = f"Cle d entete .asc dupliquee : {cle}."
+            raise ValueError(msg)
+        try:
+            entete[cle] = float(jetons[position + 1])
+        except ValueError as err:
+            msg = f"Valeur invalide pour {cle} : {jetons[position + 1]}."
+            raise ValueError(msg) from err
+        position += 2
+    return entete, position
+
+
 @dataclass(frozen=True)
 class ReliefPlat:
     """Terrain plat d altitude nulle, cas de reference des solutions gaussiennes."""
@@ -167,10 +197,13 @@ class ReliefMntAscii:
     """Relief lu d un MNT au format ESRI ASCII Grid (.asc), standard d echange.
 
     Le format .asc (QGIS, GDAL, exports altimetriques) decrit une grille
-    reguliere : entetes ncols, nrows, xllcorner, yllcorner, cellsize et
-    nodata_value optionnel, puis les altitudes ligne par ligne depuis la
-    ligne la plus au nord. Les valeurs decrivent des cellules ; x0 et y0
-    designent le centre de la cellule sud-ouest.
+    reguliere : entetes ncols, nrows, cellsize et nodata_value optionnel,
+    puis les altitudes ligne par ligne depuis la ligne la plus au nord.
+    Chaque axe d origine admet les deux enregistrements du format Esri :
+    xllcorner/yllcorner (angle de la cellule sud-ouest) ou
+    xllcenter/yllcenter (centre de cette cellule), mutuellement exclusifs
+    par axe. Les valeurs decrivent des cellules ; x0 et y0 designent
+    toujours le centre de la cellule sud-ouest.
 
     Attributes:
         altitudes: grille (nrows, ncols), finie, ligne 0 au nord.
@@ -216,25 +249,23 @@ class ReliefMntAscii:
 
     @classmethod
     def depuis_texte(cls, texte: str) -> Self:
-        """Construit le relief depuis le texte d un fichier .asc standard."""
+        """Construit le relief depuis le texte d un fichier .asc standard.
+
+        Le format Esri ASCII raster documente deux enregistrements par axe :
+        xllcorner (angle de la cellule sud-ouest) ou xllcenter (centre de
+        cette cellule). Chaque axe declare independemment son enregistrement ;
+        les deux cles d un meme axe sont mutuellement exclusives.
+        """
         jetons = texte.split()
-        attendus = {"ncols", "nrows", "xllcorner", "yllcorner", "cellsize"}
-        entete: dict[str, float] = {}
-        position = 0
-        while position + 1 < len(jetons):
-            cle = jetons[position].lower()
-            if cle not in attendus and cle != "nodata_value":
-                break
-            if cle in entete:
-                msg = f"Cle d entete .asc dupliquee : {cle}."
+        entete, position = _lit_entete_ascii(jetons)
+        manquantes = {"ncols", "nrows", "cellsize"} - set(entete)
+        for paire in (("xllcorner", "xllcenter"), ("yllcorner", "yllcenter")):
+            presentes = [cle for cle in paire if cle in entete]
+            if len(presentes) == 2:
+                msg = f"Entete .asc incoherente : {' et '.join(paire)} sont exclusifs."
                 raise ValueError(msg)
-            try:
-                entete[cle] = float(jetons[position + 1])
-            except ValueError as err:
-                msg = f"Valeur invalide pour {cle} : {jetons[position + 1]}."
-                raise ValueError(msg) from err
-            position += 2
-        manquantes = attendus - set(entete)
+            if not presentes:
+                manquantes.add("/".join(paire))
         if manquantes:
             msg = f"Entete .asc incomplete : {', '.join(sorted(manquantes))}."
             raise ValueError(msg)
@@ -259,10 +290,16 @@ class ReliefMntAscii:
             msg = "La grille ne contient pas ncols x nrows valeurs."
             raise ValueError(msg)
         altitudes = valeurs.reshape(int(nrows), int(ncols))
+        origine_x = (
+            entete["xllcenter"] if "xllcenter" in entete else entete["xllcorner"] + 0.5 * pas
+        )
+        origine_y = (
+            entete["yllcenter"] if "yllcenter" in entete else entete["yllcorner"] + 0.5 * pas
+        )
         return cls(
             altitudes=altitudes,
-            x0=entete["xllcorner"] + 0.5 * pas,
-            y0=entete["yllcorner"] + 0.5 * pas,
+            x0=origine_x,
+            y0=origine_y,
             pas=pas,
             sans_donnee=entete.get("nodata_value"),
         )
@@ -274,6 +311,13 @@ class ReliefMntAscii:
 
     def altitude(self, x: ArrayLike, y: ArrayLike) -> NDArray[np.float64]:
         """Interpole lineairement l altitude (m) aux points (x, y).
+
+        Le domaine d interpolation est l enveloppe des centres des cellules,
+        de (x0, y0) a (x0 + (ncols - 1) * pas, y0 + (nrows - 1) * pas) :
+        la demi-cellule exterieure du raster est refusee, aucune
+        extrapolation au-dela du dernier centre n est faite (decision de
+        domaine explicite ; l acceptation des enregistrements coin ou
+        centre du format ne l etend pas).
 
         Raises:
             ValueError: formes differentes, point hors emprise ou cellule
