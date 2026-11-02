@@ -481,7 +481,19 @@ def _section_vue_derivee(
 ) -> str:
     """Rend une projection du graphe sans redéfinir ses nœuds ni ses arêtes."""
     fence = chr(96) * 3
-    lignes = [f"## {titre}", "", description, "", fence + "{mermaid}", "flowchart LR"]
+    ancres = {
+        "Hypothèses et objets conditionnés": "hypotheses-et-objets-conditionnes",
+        "Concepts et dépendances mathématiques": "concepts-et-dependances-mathematiques",
+        "Propriétés, tests et implémentations associées": "proprietes-tests-et-implementations-associees",
+    }
+    lignes = [
+        f"## {titre} {{#{ancres[titre]}}}",
+        "",
+        description,
+        "",
+        fence + "{mermaid}",
+        "flowchart TB",
+    ]
     groupes: dict[str, list[str]] = {}
     for noeud in registre.noeuds:
         if noeud.id in identifiants:
