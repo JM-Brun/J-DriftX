@@ -108,6 +108,58 @@ Cette version est une revue structurée, mais la méthode n'est pas encore enti�
 
 **Conflits et réserves** : les évaluations de CALPUFF vs AERMOD divergent selon les études (meilleure corrélation CALPUFF sur les tracer studies, mais facteurs 2 d'écart résiduels) ; les sources presse spécialisée (AgAir Update) sont à reconfirmer par les publications de l'AMP ; la ressource Zenodo publiée en 2026 n'est pas présentée ici comme revue évaluée par les pairs.
 
+
+### 7. Modèles lagrangiens, turbulence et baselines complémentaires
+
+La comparaison des modèles doit distinguer les **formulations physiques**, les **logiciels**, les **wrappers** et les **cadres génériques**. Les références ajoutées dans cette passe complètent les entrées FLEXPART v11, OpenDrift v1.0, PyAERMOD et la documentation EPA AERMOD déjà présentes dans la branche.
+
+#### Modèles et familles
+
+- **HYSPLIT** (Stein et al., 2015, [DOI 10.1175/BAMS-D-14-00110.1](https://doi.org/10.1175/BAMS-D-14-00110.1)) est une baseline lagrangienne majeure : trajectoires avant/arrière, dispersion particulaire 3D et puffs, transport, mélange, transformation et dépôt. Il complète FLEXPART pour la comparaison de formulations lagrangiennes sur des champs météorologiques communs.
+- **UK-ADMS** (Carruthers et al., 1994, [DOI 10.1016/0167-6105(94)90044-2](https://doi.org/10.1016/0167-6105(94)90044-2)) est une baseline gaussienne avancée intégrant notamment couche limite, dépôt, terrain vallonné, zones côtières et bâtiments. Sa présence empêche d'assimiler « modèle gaussien » à une formulation simpliste.
+- **GRAMM–GRAL** est une référence de microscale : GRAL couple un champ d'écoulement microscopique (RANS k–ε dans l'étude examinée) à un transport lagrangien particulaire. Öttl (2015), [DOI 10.1016/j.jweia.2015.03.014](https://doi.org/10.1016/j.jweia.2015.03.014), documente une validation du champ de vent par soufflerie. C'est un comparateur de domaine urbain/obstacles, pas une baseline immédiate si le champ de vent J-DriftX est imposé.
+- **PyAERMOD** est un wrapper Python d'AERMOD, non une nouvelle formulation physique ; **OpenDrift** est un framework générique de trajectoires, pas nécessairement un modèle de concentration atmosphérique directement comparable ; **FLEXPART** est un modèle lagrangien particulaire. Il faut éviter de compter ces quatre objets comme quatre familles indépendantes.
+
+La revue de Holmes & Morawska (2006), [DOI 10.1016/j.atmosenv.2006.06.003](https://doi.org/10.1016/j.atmosenv.2006.06.003), fournit une taxonomie historique des modèles boîte, gaussiens, lagrangiens/eulériens, CFD et modèles de dynamique des aérosols. Elle sert au cadrage, pas à classer les versions actuelles des logiciels.
+
+#### Cohérence physique des modèles stochastiques
+
+Thomson (1987), [DOI 10.1017/S0022112087001940](https://doi.org/10.1017/S0022112087001940), formalise des critères de cohérence pour les modèles stochastiques de trajectoires en turbulence inhomogène ou instationnaire, dont la condition *well-mixed*. Luhar & Britter (1989), [DOI 10.1016/0004-6981(89)90516-7](https://doi.org/10.1016/0004-6981(89)90516-7), construisent un modèle de marche aléatoire adapté à une couche limite convective inhomogène et dissymétrique.
+
+Ces références sont centrales pour ne pas confondre :
+1. une trajectoire moyenne ou une caractéristique déterministe ;
+2. un transport de particules ;
+3. une dispersion turbulente stochastique ;
+4. une concentration moyenne résultant d'un ensemble de trajectoires.
+
+Elles ne réfutent pas une formulation par temps de transport, mais imposent de décrire explicitement ce que cette formulation approxime et les effets qu'elle ne représente pas.
+
+#### Comparaisons sur traceurs contrôlés
+
+- Andrews et al. (2013), [DOI 10.1175/JAMC-D-13-0125.1](https://doi.org/10.1175/JAMC-D-13-0125.1), comparent HYSPLIT, STILT et FLEXPART sur CAPTEX et ANATEX avec des entrées météorologiques communes (NARR et configurations WRF). Les auteurs rapportent des performances comparables lorsque les champs météorologiques modernes sont identiques et une sensibilité importante aux configurations de ces champs. **Conséquence :** une comparaison de formulations doit contrôler les entrées météo avant d'interpréter les écarts.
+- Rood (2014), [DOI 10.1016/j.atmosenv.2014.02.054](https://doi.org/10.1016/j.atmosenv.2014.02.054), évalue AERMOD, CALPUFF, ISC2 et RATCHET sur le Winter Validation Tracer Study : 12 essais de 11 h, SF₆, 140 échantillonneurs en couronnes à 8 et 16 km. Les puffs ont globalement une variance plus faible et une corrélation plus élevée ; les modèles stationnaires sous-estiment moins souvent les maxima. Les performances dépendent de l'objectif (conformité réglementaire ou reconstruction de dose), donc ce résultat n'établit aucun classement universel.
+
+#### Jeux expérimentaux candidats
+
+- **Prairie Grass (1956)** : 68 périodes de dix minutes, émissions de SO₂ proches du sol, mesures à 50, 100, 200, 400 et 800 m. La hauteur d'émission est de 0,46 m pour la plupart des essais ; les quatre derniers utilisent 1,5 m. Source et données associées : [Aarhus University / OML](https://envs.au.dk/om-instituttet-1/faglige-omraader/luftforurening-udledninger-og-effekter/overvaagningsprogrammet/luftforureningsmodeller/baggrundsmateriale/oml). Candidat prioritaire pour le champ proche ; les exclusions de périodes à vent très faible doivent être préspécifiées.
+- **CAPTEX / ANATEX** : campagnes de traceurs contrôlés utilisées pour évaluer HYSPLIT, STILT et FLEXPART. L'archive NOAA DATEM donne les expériences et périodes ; elle doit être rapprochée des fichiers réellement récupérés et des prétraitements. Candidat pour le transport régional.
+- **ETEX (1994)** : deux rejets et 168 stations selon le JRC ; les archives météo et traceur sont proposées séparément pour chaque rejet. Candidat pour le transport continental, mais le faible nombre de rejets et la complétude des fichiers limitent les conclusions statistiques.
+- **JU2003** : rapport NOAA décrivant dix périodes intensives, 29 rejets continus et 40 rejets en bouffées de SF₆, environ 150 emplacements de mesure à Oklahoma City (rue, toiture, tunnels et arcs à 1, 2 et 4 km). Candidat pour une extension urbaine, non pour la première baseline sur terrain plat.
+- **ADMLC** : catalogue de jeux expérimentaux et modalités d'accès, incluant le Modellers' Data Archive. Ce catalogue n'est pas lui-même un jeu de données et n'atteste pas la qualité ou l'adéquation de chaque corpus.
+- **MUST** : piste non intégrée à la sélection validée de cette PR. La source primaire précise, les fichiers et les conditions de réutilisation restent à vérifier dans le cadre de l'audit #207.
+
+Les notices, DOI, descriptions de contenu et limites d'accès sont consignés dans la [fiche détaillée modèles lagrangiens et benchmarks](bibliographie/modeles-lagrangiens-et-benchmarks.md). L'audit des données existant reste la source de vérité sur les fichiers effectivement inspectés, licences et unités d'indépendance ; l'ajout d'une référence ne signifie pas que les données sont téléchargées ou prêtes à servir de benchmark.
+
+#### Séquence de comparaison proposée
+
+1. Prairie Grass comme premier cas de champ proche et de complexité contrôlée.
+2. AERMOD comme baseline gaussienne et HYSPLIT ou FLEXPART comme baseline lagrangienne, avec entrées météorologiques communes.
+3. CAPTEX/ANATEX pour examiner la sensibilité météorologique et le transport régional.
+4. WVTS pour comparer plume stationnaire et puff, après récupération et audit des fichiers.
+5. JU2003 et GRAL uniquement si le périmètre J-DriftX s'étend aux obstacles et aux écoulements urbains.
+
+Avant tout classement, fixer les observables, unités, métriques, stratification des régimes, règles d'exclusion, indépendance calibration/validation et coûts de préparation/calcul. Cette séquence est un plan d'investigation, pas un résultat de validation.
+
 ## Questions ouvertes
 
 1. La métrique travel-time a-t-elle déjà été formalisée de façon autonome (thèse citée comme 2007 par l'article primaire ; année officielle à confirmer) ? Le document original doit être numérisé/déposé sur HAL pour servir de référence — action M0 de la roadmap.
