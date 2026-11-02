@@ -722,3 +722,15 @@ graph LR
 | [Capps 2026 — PyAERMOD 2.2.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
 | [Dagestad et al. 2018 — OpenDrift v1.0](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
 | [EPA 2026 — AERMOD Modeling System](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Stein et al. 2015 — HYSPLIT](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Carruthers et al. 1994 — UK-ADMS](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Thomson 1987 — modèles stochastiques lagrangiens](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Luhar et Britter 1989 — turbulence convective inhomogène](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Andrews et al. 2013 — comparaison HYSPLIT/STILT/FLEXPART](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Rood 2014 — Winter Validation Tracer Study](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Holmes et Morawska 2006 — revue des modèles](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Öttl 2015 — validation GRAL](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [ADMLC — catalogue de jeux de dispersion](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Prairie Grass 1956 — données de terrain](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [JRC — archives de données ETEX](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+| [Clawson et al. 2005 — JU2003](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
