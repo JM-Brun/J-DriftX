@@ -10,12 +10,6 @@
   <text x="34" y="55" font-size="29" font-weight="800">Choisir son point d'entrée</text>
   <text x="35" y="88" font-size="20" fill="#45677f">Quatre parcours selon votre question</text>
 </g>
-<g fill="none" stroke="#547d98" stroke-width="4" stroke-dasharray="9 8" opacity=".9">
-  <path d="M300 720C210 640 100 590 300 285"/>
-  <path d="M300 720C390 640 500 590 300 545"/>
-  <path d="M300 880C210 960 100 1010 300 1055"/>
-  <path d="M300 880C390 960 500 1010 300 1315"/>
-</g>
 <g filter="url(#shadowm)">
   <rect x="35" y="115" width="530" height="190" rx="20" fill="#fff" stroke="#1475ad" stroke-width="3"/>
   <rect x="35" y="375" width="530" height="190" rx="20" fill="#fff" stroke="#23845f" stroke-width="3"/>
