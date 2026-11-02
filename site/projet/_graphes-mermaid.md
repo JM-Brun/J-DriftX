@@ -711,7 +711,7 @@ graph LR
 | [Ayoub et al. 2024 — plume FNO (WSPEEDI)](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Trindade da Silva et al. 2021 — dispersion urbaine](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Mahmud et al. 2026 — dispersion urbaine par ML](../references.qmd) | [liste manuelle](../references.qmd) |
-| [EPA 2024 — Appendix W (AERMOD)](../references.qmd) | [liste manuelle](../references.qmd) |
+| [EPA 2024 — Appendix W (AERMOD)](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
 | [Bonicelli et al. 2012 — dérive des pesticides](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Defra 2011 — PS2024 (exposition des riverains)](../references.qmd) | [liste manuelle](../references.qmd) |
 | [Garbaczewski et al. 1997 — équation de Burgers](../references.qmd) | [Équation de Burgers : lien avec J-DriftX](../theorie/burgers-et-jdriftx.qmd) |
