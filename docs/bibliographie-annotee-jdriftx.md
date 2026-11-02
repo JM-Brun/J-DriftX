@@ -27,6 +27,7 @@ Les fichiers PDF sont conservés comme documents de synthèse. Les fiches ci-des
 | ROM, surrogates et apprentissage | [ROM et apprentissage](bibliographie/rom-et-apprentissage.md) | Baselines concurrentes ou approches complémentaires |
 | Identification de source et assimilation | [Source-term estimation et assimilation](bibliographie/identification-source-assimilation.md) | Méthodes complémentaires et alternatives pour le problème inverse |
 | SIG, exposition et applications | [SIG, exposition et applications](bibliographie/sig-exposition-applications.md) | Contexte d'usage, validations terrain et intégration logicielle |
+| Modèles lagrangiens, turbulence et validation | [Modèles lagrangiens et benchmarks](bibliographie/modeles-lagrangiens-et-benchmarks.md) | Baselines particulaires/puffs, cohérence stochastique, traceurs contrôlés et domaines de validité |
 | Métriques et analogies transverses | [Métriques et analogies](bibliographie/metriques-et-analogies.md) | Intuition mathématique transférable, sans équivalence présumée |
 
 ## Champs à compléter pour chaque source
