@@ -689,6 +689,67 @@ graph LR
 | N5 — expériences et données de terrain | Niveau de modélisation | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
 | N6 — calibration et aide à la décision | Niveau de modélisation | [projet/niveaux-modelisation.qmd](niveaux-modelisation.qmd) |
 
+## Architecture conceptuelle des notions
+
+Vue de synthèse organisée par familles de notions : transport et dispersion, cinématique et géométrie dirigée, réduction et calcul, calibration. Les groupes structurent la lecture ; ils ne constituent pas une hiérarchie de dépendances. Seules les flèches déjà documentées dans le registre sont tracées.
+
+```{mermaid}
+graph LR
+  subgraph phys["Transport physique et dispersion"]
+    c_transport["Équation de transport (advection-diffusion)"]::concept
+    c_champ["Champ de vent stationnaire"]::concept
+    c_panache["Panache gaussien (similitude)"]::concept
+    c_stabilite["Classes de Pasquill et lois de Briggs"]::concept
+    c_burgers["Équation de Burgers"]::concept
+  end
+  subgraph geom["Cinématique et géométrie dirigée"]
+    c_courant["Ligne de courant et caractéristique"]::concept
+    c_fcourant["Fonction de courant"]::concept
+    c_tau["Temps de transport"]::concept
+    c_polyligne["Coût dirigé sur polyligne"]::concept
+    c_tpa["Temps de première arrivée (cas 1D exact)"]::concept
+    c_pdist["Pseudo-distance dirigée (référence uniforme)"]::concept
+  end
+  subgraph reduc["Réduction et architectures de calcul"]
+    c_reduction["Modèle approché v(p) (réduction a priori)"]::concept
+    c_maillage["Maillage gouverné par métrique"]::concept
+    c_multiniveaux["Champ multi-niveaux historique (non reconstruit)"]::concept
+  end
+  subgraph calib["Paramètres et identification"]
+    c_assimilation["Assimilation et calibration"]::concept
+  end
+  c_fcourant -->|"construit"| c_champ
+  c_courant -->|"dépend de"| c_champ
+  c_tau -->|"dépend de"| c_courant
+  c_transport -->|"dépend de"| c_champ
+  c_panache -->|"dépend de"| c_transport
+  c_panache -->|"dépend de"| c_stabilite
+  c_assimilation -->|"utilise"| c_reduction
+  c_multiniveaux -->|"construit"| c_champ
+  c_burgers -->|"contexte"| c_tau
+  classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
+```
+
+**Nœuds et destinations**
+
+| Nœud | Type | Où approfondir |
+|---|---|---|
+| Équation de transport (advection-diffusion) | Concept | [theorie/modele-direct.qmd](../theorie/modele-direct.qmd) |
+| Champ de vent stationnaire | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Panache gaussien (similitude) | Concept | [theorie/similitude.qmd](../theorie/similitude.qmd) |
+| Classes de Pasquill et lois de Briggs | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Équation de Burgers | Concept | [theorie/burgers-et-jdriftx.qmd](../theorie/burgers-et-jdriftx.qmd) |
+| Ligne de courant et caractéristique | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Fonction de courant | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Temps de transport | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Coût dirigé sur polyligne | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Temps de première arrivée (cas 1D exact) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Pseudo-distance dirigée (référence uniforme) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Modèle approché v(p) (réduction a priori) | Concept | [theorie/reduction-a-priori.qmd](../theorie/reduction-a-priori.qmd) |
+| Maillage gouverné par métrique | Concept | [theorie/edp-et-maillage.qmd](../theorie/edp-et-maillage.qmd) |
+| Champ multi-niveaux historique (non reconstruit) | Concept | [projet/niveaux-modelisation.qmd](../projet/niveaux-modelisation.qmd) |
+| Assimilation et calibration | Concept | [theorie/assimilation-identification.qmd](../theorie/assimilation-identification.qmd) |
+
 ## Hypothèses et objets conditionnés {#hypotheses-et-objets-conditionnes}
 
 Projection du registre sur H1-H8, les concepts associés et les niveaux N0-N6. Les liens montrent des dépendances documentées, pas des implications logiques suffisantes.
@@ -1020,66 +1081,6 @@ flowchart TB
 | test_transitoire_puff.py | Test (CI) | [test_transitoire_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_transitoire_puff.py) |
 :::
 
-## Architecture conceptuelle des notions
-
-Vue de synthèse organisée par familles de notions : transport et dispersion, cinématique et géométrie dirigée, réduction et calcul, calibration. Les groupes structurent la lecture ; ils ne constituent pas une hiérarchie de dépendances. Seules les flèches déjà documentées dans le registre sont tracées.
-
-```{mermaid}
-graph LR
-  subgraph phys["Transport physique et dispersion"]
-    c_transport["Équation de transport (advection-diffusion)"]::concept
-    c_champ["Champ de vent stationnaire"]::concept
-    c_panache["Panache gaussien (similitude)"]::concept
-    c_stabilite["Classes de Pasquill et lois de Briggs"]::concept
-    c_burgers["Équation de Burgers"]::concept
-  end
-  subgraph geom["Cinématique et géométrie dirigée"]
-    c_courant["Ligne de courant et caractéristique"]::concept
-    c_fcourant["Fonction de courant"]::concept
-    c_tau["Temps de transport"]::concept
-    c_polyligne["Coût dirigé sur polyligne"]::concept
-    c_tpa["Temps de première arrivée (cas 1D exact)"]::concept
-    c_pdist["Pseudo-distance dirigée (référence uniforme)"]::concept
-  end
-  subgraph reduc["Réduction et architectures de calcul"]
-    c_reduction["Modèle approché v(p) (réduction a priori)"]::concept
-    c_maillage["Maillage gouverné par métrique"]::concept
-    c_multiniveaux["Champ multi-niveaux historique (non reconstruit)"]::concept
-  end
-  subgraph calib["Paramètres et identification"]
-    c_assimilation["Assimilation et calibration"]::concept
-  end
-  c_fcourant -->|"construit"| c_champ
-  c_courant -->|"dépend de"| c_champ
-  c_tau -->|"dépend de"| c_courant
-  c_transport -->|"dépend de"| c_champ
-  c_panache -->|"dépend de"| c_transport
-  c_panache -->|"dépend de"| c_stabilite
-  c_assimilation -->|"utilise"| c_reduction
-  c_multiniveaux -->|"construit"| c_champ
-  c_burgers -->|"contexte"| c_tau
-  classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
-```
-
-**Nœuds et destinations**
-
-| Nœud | Type | Où approfondir |
-|---|---|---|
-| Équation de transport (advection-diffusion) | Concept | [theorie/modele-direct.qmd](../theorie/modele-direct.qmd) |
-| Champ de vent stationnaire | Concept | [glossaire.qmd](../glossaire.qmd) |
-| Panache gaussien (similitude) | Concept | [theorie/similitude.qmd](../theorie/similitude.qmd) |
-| Classes de Pasquill et lois de Briggs | Concept | [glossaire.qmd](../glossaire.qmd) |
-| Équation de Burgers | Concept | [theorie/burgers-et-jdriftx.qmd](../theorie/burgers-et-jdriftx.qmd) |
-| Ligne de courant et caractéristique | Concept | [glossaire.qmd](../glossaire.qmd) |
-| Fonction de courant | Concept | [glossaire.qmd](../glossaire.qmd) |
-| Temps de transport | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
-| Coût dirigé sur polyligne | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
-| Temps de première arrivée (cas 1D exact) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
-| Pseudo-distance dirigée (référence uniforme) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
-| Modèle approché v(p) (réduction a priori) | Concept | [theorie/reduction-a-priori.qmd](../theorie/reduction-a-priori.qmd) |
-| Maillage gouverné par métrique | Concept | [theorie/edp-et-maillage.qmd](../theorie/edp-et-maillage.qmd) |
-| Champ multi-niveaux historique (non reconstruit) | Concept | [projet/niveaux-modelisation.qmd](../projet/niveaux-modelisation.qmd) |
-| Assimilation et calibration | Concept | [theorie/assimilation-identification.qmd](../theorie/assimilation-identification.qmd) |
 
 ## Où chaque référence est citée
 
