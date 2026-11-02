@@ -6,6 +6,15 @@ title: "Assimilation & identification"
 
 Le modèle réduit a des paramètres libres $\theta$ (coefficients de la similitude, fractions d'émission inter-niveaux, calibration du champ de vent). Dans la formulation historique, l'identification de $\theta$ se fait par **assimilation de données partielles** plutôt que par apprentissage d'un surrogate. Une extension hybride n'est pas exclue ; son intérêt et son coût devraient alors être comparés explicitement.
 
+## Place dans le parcours et contrat de lecture
+
+Cette page traite du **problème inverse** : estimer des paramètres ou des intensités de source à partir d'observations, et déterminer si ces quantités sont identifiables avec les données disponibles. Elle ne décrit pas une fonctionnalité d'assimilation déjà disponible dans le noyau actuel.
+
+- **Prérequis :** le modèle direct et ses paramètres ([Modèle direct](modele-direct.qmd)), la famille candidate ([Solutions de similitude](similitude.qmd)) et les hypothèses qui conditionnent la linéarité ([Catalogue des hypothèses](../hypotheses/catalogue.qmd)).
+- **Objet défini ici :** fonction objectif, régularisation, sensibilité, identifiabilité et identification de source ; les problèmes d'intensité et de position de source doivent rester distingués.
+- **Résultat transmis :** les exigences de données, de régularisation et d'incertitude qui devront être intégrées au [protocole de validation scientifique](../projet/validation-scientifique.qmd).
+- **Limite actuelle :** les formulations présentées sont des cadres mathématiques ou des pistes de recherche ; elles ne démontrent pas une chaîne inverse opérationnelle. Les tests de gradient de la référence uniforme ne valident pas la sensibilité du modèle de dispersion généralisé.
+
 ## Calibration aux moindres carrés
 
 Étant donné des observations $y_i$ aux points $\mathbf{x}_i$ (capteurs, campagnes, mesures de déposition) :
