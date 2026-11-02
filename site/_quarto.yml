@@ -21,35 +21,25 @@ website:
     contents:
       - href: index.qmd
         text: "Accueil"
-      - section: "Découvrir le projet"
+
+      - section: "Découvrir"
         contents:
           - href: projet/carte-articulation.qmd
-            text: "Carte d'articulation"
-          - href: projet/carte-connaissances.qmd
-            text: "Carte des connaissances"
+            text: "Vue d'ensemble et parcours"
           - href: projet/heritage.qmd
             text: "Héritage Drift-X (2006–2009)"
           - href: projet/objectifs.qmd
-            text: "Objectifs de J-DriftX"
+            text: "Question et objectifs"
           - href: projet/utilite-scientifique.qmd
             text: "Utilité scientifique"
           - href: projet/niveaux-modelisation.qmd
-            text: "Niveaux de modélisation"
-          - section: "Vérification et validation"
-            contents:
-              - href: projet/validation-scientifique.qmd
-                text: "Validation scientifique"
-              - href: projet/qualite.qmd
-                text: "Qualité & tests"
-              - href: projet/registre-preuves.qmd
-                text: "Registre des preuves"
-              - href: projet/laboratoire-interactif.qmd
-                text: "Catalogue du laboratoire"
-              - href: projet/experiences-interactives.qmd
-                text: "Explorer les champs de vent 2D"
-              - href: projet/catalogue-donnees.qmd
-                text: "Catalogue de données"
-      - section: "Théorie"
+            text: "Chaîne de modélisation"
+          - href: projet/laboratoire-interactif.qmd
+            text: "Laboratoire numérique"
+          - href: projet/experiences-interactives.qmd
+            text: "Explorer les champs de vent 2D"
+
+      - section: "Théorie & modélisation"
         contents:
           - section: "Modèle direct et réduction"
             contents:
@@ -59,20 +49,18 @@ website:
                 text: "Solutions de similitude"
               - href: theorie/reduction-a-priori.qmd
                 text: "Réduction a priori"
-              - href: theorie/contraintes-physiques.qmd
-                text: "Contraintes physiques"
-          - section: "La métrique des temps de transport"
+          - section: "Transport et géométrie"
             contents:
               - href: theorie/metrique-travel-time.qmd
-                text: "Métrique travel-time"
+                text: "Temps de transport dirigé"
               - href: theorie/metriques-non-riemanniennes.qmd
                 text: "Métriques non riemanniennes"
-          - section: "Navigation et fronts de contrôlabilité"
-            contents:
               - href: theorie/navigation-fronts-controllabilite.qmd
                 text: "Zermelo, fronts et Hamilton–Jacobi"
-          - section: "Calibration et perspectives"
+          - section: "Contraintes et modèles de référence"
             contents:
+              - href: theorie/contraintes-physiques.qmd
+                text: "Contraintes physiques"
               - href: theorie/assimilation-identification.qmd
                 text: "Assimilation & identification"
               - href: theorie/edp-et-maillage.qmd
@@ -81,32 +69,45 @@ website:
                 text: "Comparaison des complexités"
               - href: theorie/burgers-et-jdriftx.qmd
                 text: "Équation de Burgers et J-DriftX"
-      - section: "Hypothèses & limites"
+
+      - section: "Preuves & validation"
         contents:
           - href: hypotheses/catalogue.qmd
-            text: "Catalogue des hypothèses"
+            text: "Hypothèses du modèle"
+          - href: projet/registre-preuves.qmd
+            text: "Registre des preuves"
+          - href: projet/qualite.qmd
+            text: "Qualité & tests logiciels"
+          - href: projet/validation-scientifique.qmd
+            text: "Validation scientifique"
+
+      - section: "Limites & état de l'art"
+        contents:
           - href: hypotheses/limites.qmd
             text: "Limites et domaines de validité"
-      - section: "État de l'art"
-        contents:
           - href: etat-art/panorama.qmd
-            text: "Panorama 2026"
+            text: "Panorama de l'état de l'art"
           - href: etat-art/positionnement.qmd
             text: "Positionnement de J-DriftX"
           - href: etat-art/revue-mathematique.qmd
             text: "Revue mathématique ciblée"
-      - section: "Annexes"
+
+      - section: "Ressources"
         contents:
+          - href: projet/carte-connaissances.qmd
+            text: "Carte des connaissances"
+          - href: projet/catalogue-donnees.qmd
+            text: "Catalogue de données"
           - href: projet/lectures.qmd
             text: "Lectures des sources"
           - href: projet/audit.qmd
             text: "Audit de l'héritage"
           - href: projet/modele-jouet.qmd
             text: "Modèle jouet"
-      - href: glossaire.qmd
-        text: "Glossaire"
-      - href: references.qmd
-        text: "Références"
+          - href: glossaire.qmd
+            text: "Glossaire"
+          - href: references.qmd
+            text: "Références"
 
 format:
   html:
