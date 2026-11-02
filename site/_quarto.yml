@@ -14,6 +14,19 @@ website:
   back-to-top-navigation: true
   reader-mode: true
   navbar:
+    left:
+      - href: index.qmd
+        text: "Accueil"
+      - href: projet/carte-articulation.qmd
+        text: "S'orienter"
+      - href: theorie/modele-direct.qmd
+        text: "Théorie & modélisation"
+      - href: projet/registre-preuves.qmd
+        text: "Preuves & validation"
+      - href: etat-art/panorama.qmd
+        text: "État de l'art"
+      - href: glossaire.qmd
+        text: "Ressources"
     tools:
       - icon: github
         url: "https://github.com/JM-Brun/J-DriftX"
@@ -92,7 +105,7 @@ website:
           - href: projet/registre-preuves.qmd
             text: "Registre de traçabilité des preuves"
           - href: projet/validation-scientifique.qmd
-            text: "Validation scientifique & benchmarks"
+            text: "Protocole de validation"
           - href: projet/qualite.qmd
             text: "Tests logiciels & portée des vérifications"
 

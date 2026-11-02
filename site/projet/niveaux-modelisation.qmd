@@ -12,29 +12,22 @@ Cette page est la carte des objets physiques, mathématiques et numériques du p
 
 ## 1. La chaîne conceptuelle
 
-```text
-Atmosphère et terrain
-        │ hypothèses physiques + données
-        ▼
-Champ de vent u(x,t) ────────────────┐
-        │                            │
-        │ dynamique du transport      │ propriétés du champ
-        ▼                            │
-Chemins / caractéristiques           │
-        │                            │
-        ▼                            │
-Temps de transport τ                 │
-        │                            │
-        ├──────────────┐             │
-        ▼              ▼             │
-Géométrie du panache   Paramètres de dispersion
-        │              │
-        └───────┬──────┘
-                ▼
-       Concentration C(x,t)
-                ▲
-                │
-   Source, débit, hauteur, conditions
+```{mermaid}
+flowchart TD
+    N0["<b>N0 · Contexte physique</b><br>Atmosphère, relief, rugosité, stabilité"] -->|hypothèses + données| N1["<b>N1 · Champ de vent u(x,t)</b><br>Vitesse locale, incompressibilité"]
+    N1 -->|dynamique du transport dX/dt = u| N2["<b>N2 · Dynamique & Chemins</b><br>Trajectoires / caractéristiques"]
+    N2 -->|intégration du coût orienté| N3["<b>N3 · Temps de transport τ</b><br>Coordonnée travel-time dirigée"]
+    N3 --> N4a["<b>N4 · Géométrie du panache</b><br>Axe central et profils transversaux"]
+    N3 --> N4b["<b>N4 · Paramètres de dispersion</b><br>Largeurs σy(τ), σz(τ), classes Pasquill"]
+    N1 -.->|propriétés du champ| N4b
+    N4a --> N5["<b>N5 · Concentration C(x,t)</b><br>Évaluation ponctuelle du scalaire passif"]
+    N4b --> N5
+    SRC["<b>Source d'émission</b><br>Débit Q, hauteur h, type continu/puff"] --> N5
+    N5 --> N6["<b>N6 · Calibration & Décision</b><br>Assimilation, inversion, bénéfice applicatif"]
+
+    classDef default fill:#f8f9fa,stroke:#cbd5e1,stroke-width:1px;
+    classDef highlight fill:#eef3f0,stroke:#4F6B62,stroke-width:2px;
+    class N3,N5 highlight;
 ```
 
 Ce diagramme montre les dépendances conceptuelles principales, pas un graphe d'appels logiciels existant. En particulier, le temps de transport et la dispersion ne sont pas deux noms pour le même phénomène : le premier décrit un aspect du déplacement advectif ; la seconde décrit l'étalement du scalaire.

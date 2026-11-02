@@ -21,34 +21,45 @@ Cette documentation n'impose pas de lecture linéaire. Les quatre parcours ci-de
        style="width: 100%; height: auto;">
 </picture>
 
-::: {.columns}
-::: {.column width="50%"}
-**1 · S'orienter et comprendre**
-
+::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+::: {.reader-track-card}
+<span class="track-num">Piste 1 · S'orienter</span>
+### S'orienter et comprendre
 Le problème étudié, l'origine du projet, la question de recherche et ce qui est — ou non — acquis.
 
-[Vue d'ensemble et articulation scientifique](projet/carte-articulation.qmd) · [Glossaire](glossaire.qmd)
+[Vue d'ensemble et articulation scientifique →](projet/carte-articulation.qmd){.track-link} · [Glossaire](glossaire.qmd)
 :::
-::: {.column width="50%"}
-**2 · Comprendre et explorer le modèle**
+:::
 
+::: {.g-col-12 .g-col-md-6}
+::: {.reader-track-card}
+<span class="track-num">Piste 2 · Modèle</span>
+### Comprendre et explorer le modèle
 Les grandeurs physiques et leur enchaînement : vent, transport, dispersion, concentration.
 
-[Carte des niveaux de modélisation](projet/niveaux-modelisation.qmd) · [Explorer les champs de vent 2D](projet/experiences-interactives.qmd)
+[Carte des niveaux de modélisation →](projet/niveaux-modelisation.qmd){.track-link} · [Explorer les champs 2D](projet/experiences-interactives.qmd)
 :::
-::: {.column width="50%"}
-**3 · Construire la théorie**
+:::
 
+::: {.g-col-12 .g-col-md-6}
+::: {.reader-track-card}
+<span class="track-num">Piste 3 · Théorie</span>
+### Construire la théorie
 Les équations, les hypothèses de réduction, les solutions de similitude et la géométrie du transport.
 
-[Commencer par le modèle direct](theorie/modele-direct.qmd)
+[Commencer par le modèle direct →](theorie/modele-direct.qmd){.track-link} · [Solutions de similitude](theorie/similitude.qmd)
 :::
-::: {.column width="50%"}
-**4 · Vérifier et reproduire**
+:::
 
-Les propriétés démontrées ou testées, les expériences, les comparaisons et leurs limites.
+::: {.g-col-12 .g-col-md-6}
+::: {.reader-track-card}
+<span class="track-num">Piste 4 · Rigueur</span>
+### Vérifier et reproduire
+Les propriétés démontrées ou testées, les expériences, les comparaisons, les contre-exemples et leurs limites.
 
-[Registre des preuves](projet/registre-preuves.qmd) · [Protocole de validation](projet/validation-scientifique.qmd)
+[Registre des preuves →](projet/registre-preuves.qmd){.track-link} · [Protocole de validation](projet/validation-scientifique.qmd)
+:::
 :::
 :::
 

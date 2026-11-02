@@ -60,10 +60,13 @@ h3 {
 a {
   text-underline-offset: .16em;
   text-decoration-thickness: .07em;
+  text-decoration-color: rgba(79, 107, 98, 0.45);
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
 }
 
 a:hover {
   text-decoration-thickness: .12em;
+  text-decoration-color: currentColor;
 }
 
 a:focus-visible,
@@ -280,4 +283,234 @@ body.quarto-dark .field-readout strong {
   overflow-x: auto;
   overflow-y: hidden;
   padding-block: .25rem;
+}
+
+// -------------------------------------------------------------
+// J-DriftX Smart Documentation Tokens & Components
+// -------------------------------------------------------------
+
+// 1. Epistemic status badges (Démontré, Testé, Hypothèse, Limite, Validé)
+.badge-status {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.35rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin-inline: 0.15rem;
+  border: 1px solid transparent;
+}
+
+.badge-demontre {
+  background-color: rgba(30, 64, 175, 0.08);
+  color: #1e40af;
+  border-color: rgba(30, 64, 175, 0.22);
+}
+
+.badge-teste {
+  background-color: rgba(15, 118, 110, 0.09);
+  color: #0f766e;
+  border-color: rgba(15, 118, 110, 0.22);
+}
+
+.badge-hypothese {
+  background-color: rgba(180, 83, 9, 0.09);
+  color: #b45309;
+  border-color: rgba(180, 83, 9, 0.22);
+}
+
+.badge-limite {
+  background-color: rgba(100, 116, 139, 0.1);
+  color: #475569;
+  border-color: rgba(100, 116, 139, 0.22);
+}
+
+.badge-valide {
+  background-color: rgba(22, 101, 52, 0.09);
+  color: #166534;
+  border-color: rgba(22, 101, 52, 0.22);
+}
+
+body.quarto-dark {
+  .badge-demontre {
+    background-color: rgba(147, 197, 253, 0.12);
+    color: #93c5fd;
+    border-color: rgba(147, 197, 253, 0.28);
+  }
+  .badge-teste {
+    background-color: rgba(94, 234, 212, 0.12);
+    color: #5eead4;
+    border-color: rgba(94, 234, 212, 0.28);
+  }
+  .badge-hypothese {
+    background-color: rgba(253, 230, 138, 0.12);
+    color: #fde68a;
+    border-color: rgba(253, 230, 138, 0.28);
+  }
+  .badge-limite {
+    background-color: rgba(148, 163, 184, 0.12);
+    color: #cbd5e1;
+    border-color: rgba(148, 163, 184, 0.28);
+  }
+  .badge-valide {
+    background-color: rgba(134, 239, 172, 0.12);
+    color: #86efac;
+    border-color: rgba(134, 239, 172, 0.28);
+  }
+}
+
+// 2. Landmark Equation Card
+.equation-card {
+  margin-block: 1.6rem;
+  padding: 1.25rem 1.4rem;
+  background: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-left: 4px solid var(--bs-primary);
+  border-radius: $border-radius;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+
+  .equation-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--bs-primary);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .equation-notes {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color);
+    line-height: 1.5;
+  }
+}
+
+// 3. Structured Hypothesis & Specification Cards
+.spec-card {
+  margin-block: 1.5rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: $border-radius;
+  background: var(--bs-body-bg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+
+  .spec-header {
+    background: var(--bs-tertiary-bg);
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid var(--bs-border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    h3, h4 {
+      margin: 0;
+      font-size: 1.15rem;
+      border: none;
+      padding: 0;
+    }
+  }
+
+  .spec-body {
+    padding: 1.15rem 1.25rem;
+
+    .spec-statement {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      color: var(--bs-body-color);
+      font-weight: 500;
+    }
+  }
+
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.85rem;
+    margin-top: 0.85rem;
+  }
+
+  .spec-item {
+    background: var(--bs-tertiary-bg);
+    padding: 0.75rem 0.95rem;
+    border-radius: 0.35rem;
+    border-left: 3px solid var(--bs-primary);
+
+    strong.spec-label {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--bs-primary);
+      margin-bottom: 0.3rem;
+    }
+    p, span {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0;
+    }
+  }
+}
+
+// 4. Reader Track Cards (Homepage & Articulation)
+.reader-track-card {
+  height: 100%;
+  padding: 1.25rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: $border-radius;
+  background: var(--bs-body-bg);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:hover {
+    border-color: var(--bs-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  }
+
+  .track-num {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.15rem 0.55rem;
+    border-radius: 1rem;
+    background: var(--bs-tertiary-bg);
+    color: var(--bs-primary);
+    margin-bottom: 0.6rem;
+    width: fit-content;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    border: none;
+    padding: 0;
+  }
+
+  p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--bs-secondary-color);
+    margin-bottom: 0.8rem;
+  }
+
+  .track-link {
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-top: auto;
+  }
 }
