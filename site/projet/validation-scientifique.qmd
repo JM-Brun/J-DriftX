@@ -19,6 +19,14 @@ Les conclusions de positionnement — notamment l’absence de concurrents utili
 3. **M3 — Terrain :** utiliser des campagnes publiées avec un jeu de validation indépendant et analyser les incertitudes.
 4. **Publication scientifique (hors numérotation M0–M3) :** envisager une synthèse seulement après que les critères de validation applicables sont satisfaits ; présenter les limites, incertitudes et résultats négatifs. Cette étape de diffusion n'est pas définie ici comme un jalon M4, car la feuille de route documentée dans le glossaire ne formalise que M0–M3.
 
+## Protocole de falsification S0–S3
+
+Le schéma suivant présente les scénarios synthétiques à instruire, les méthodes comparées, les observables et les critères de décision. Il s’agit d’un **protocole proposé**, pas d’un résultat expérimental. Les cas S0 uniformes restent suivis par [#232](https://github.com/JM-Brun/J-DriftX/issues/232) et [#244](https://github.com/JM-Brun/J-DriftX/issues/244) ; les extensions S1–S3 sont soumises à des contrats et expériences distincts.
+
+![Schéma conceptuel du protocole de falsification S0 à S3 : vent uniforme, cisaillement vertical, diffusion variable et champ bidimensionnel non uniforme ; méthodes, observables et critères d’évaluation. Aucun résultat expérimental n’est représenté.](../images/protocole-falsification-s0-s3.svg){#fig-protocole-falsification-s0-s3 fig-cap="Protocole expérimental proposé pour confronter les formulations de J-DriftX à une référence indépendante et aux modèles de puffs."}
+
+Le protocole détaillé, incluant l’équation conservative, les conditions de référence, les limites de $T_{\\mathrm{arr}}$, les métriques, le pré-enregistrement et les règles de décision, est décrit dans [la note 60](../../docs/60-protocole-falsification-s0-s3.md).
+
 ## Critères minimaux d’un benchmark
 
 - Données, hypothèses, unités, paramètres et provenance explicites.
