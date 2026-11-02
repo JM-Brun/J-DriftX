@@ -12,6 +12,7 @@ website:
   repo-actions: [edit, issue]
   page-navigation: true
   back-to-top-navigation: true
+  reader-mode: true
   navbar:
     tools:
       - icon: github
@@ -19,6 +20,7 @@ website:
   sidebar:
     style: docked
     search: true
+    collapse-level: 1
     contents:
       - href: index.qmd
         text: "Accueil"
@@ -118,6 +120,7 @@ format:
     lang: fr
     toc: true
     toc-depth: 3
+    toc-expand: false
     html-math-method: katex
     link-external-newwindow: true
     grid:
