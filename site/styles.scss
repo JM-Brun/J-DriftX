@@ -1,0 +1,230 @@
+/*-- scss:defaults --*/
+// J-DriftX — editorial design tokens.
+// Keep the base Quarto/Cosmo components; improve reading comfort without
+// changing the scientific content or adding a client-side dependency.
+$font-family-sans-serif: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+$font-family-monospace: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+$font-size-root: 17px;
+$line-height-base: 1.65;
+$headings-font-weight: 650;
+$headings-line-height: 1.22;
+$paragraph-margin-bottom: 1rem;
+$link-decoration: underline;
+$link-hover-decoration: underline;
+$border-radius: .45rem;
+
+/*-- scss:rules --*/
+// Reading measure: keep prose readable while allowing wide tables and figures
+// to retain their own horizontal scrolling when necessary.
+main.content {
+  max-width: 84ch;
+  margin-inline: auto;
+  padding-bottom: 3rem;
+}
+
+body {
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+p, li, dd {
+  line-height: 1.68;
+}
+
+p {
+  max-width: 78ch;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.018em;
+  scroll-margin-top: 5rem;
+  text-wrap: balance;
+}
+
+h1 {
+  margin-bottom: 1.25rem;
+  line-height: 1.15;
+}
+
+h2 {
+  margin-top: 2.6rem;
+  padding-bottom: .35rem;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+h3 {
+  margin-top: 1.8rem;
+}
+
+a {
+  text-underline-offset: .16em;
+  text-decoration-thickness: .07em;
+}
+
+a:hover {
+  text-decoration-thickness: .12em;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--bs-primary);
+  outline-offset: 3px;
+  border-radius: .2rem;
+}
+
+// Keep navigation compact but legible on long documentation trees.
+#quarto-sidebar {
+  font-size: .94rem;
+  line-height: 1.45;
+}
+
+#quarto-sidebar .sidebar-item {
+  padding-block: .12rem;
+}
+
+#TOC {
+  font-size: .9rem;
+  line-height: 1.45;
+}
+
+// Tables should remain readable and horizontally navigable on narrow screens.
+.quarto-table-container {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-block: 1.25rem 1.6rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: $border-radius;
+}
+
+table {
+  font-size: .94rem;
+  margin-bottom: 0;
+}
+
+table th {
+  font-weight: 650;
+  white-space: normal;
+}
+
+table td, table th {
+  padding: .62rem .75rem;
+  vertical-align: top;
+}
+
+// Equations and source code may be wider than the prose column.
+.math.display,
+.cell-output,
+pre,
+.sourceCode {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.math.display {
+  padding-block: .35rem;
+}
+
+pre {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: $border-radius;
+  line-height: 1.5;
+  font-size: .88em;
+}
+
+code {
+  font-size: .88em;
+}
+
+p code, li code, td code {
+  padding: .12em .32em;
+  border-radius: .25rem;
+  overflow-wrap: anywhere;
+}
+
+// Figures: captions should explain the visual without competing with it.
+figure {
+  margin-block: 1.5rem 1.8rem;
+}
+
+figcaption,
+.figure-caption,
+.quarto-float-caption {
+  max-width: 78ch;
+  margin-top: .55rem;
+  color: var(--bs-secondary-color);
+  font-size: .9rem;
+  line-height: 1.5;
+}
+
+// Callouts remain semantic and restrained: the border carries the distinction,
+// not a large saturated panel that interrupts the reading flow.
+.callout {
+  margin-block: 1.35rem;
+  border-radius: $border-radius;
+  box-shadow: none;
+}
+
+.callout .callout-body {
+  line-height: 1.62;
+}
+
+blockquote {
+  padding: .65rem 1rem;
+  border-left: .22rem solid var(--bs-primary);
+  color: var(--bs-secondary-color);
+  background: var(--bs-tertiary-bg);
+}
+
+hr {
+  margin-block: 2rem;
+  opacity: .35;
+}
+
+@media (max-width: 767.98px) {
+  $font-size-root: 16px;
+
+  main.content {
+    max-width: none;
+    padding-inline: .25rem;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 7vw, 2.35rem);
+  }
+
+  h2 {
+    margin-top: 2.1rem;
+  }
+
+  .quarto-table-container {
+    margin-inline: 0;
+  }
+
+  table {
+    font-size: .88rem;
+  }
+
+  pre {
+    padding: .8rem;
+    font-size: .82em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
