@@ -25,20 +25,23 @@ website:
       - href: index.qmd
         text: "Accueil"
 
-      - section: "Découvrir"
+      - section: "Commencer"
         contents:
           - href: projet/carte-articulation.qmd
-            text: "Vue d'ensemble et parcours"
+            text: "Parcours de lecture & preuves"
           - href: projet/heritage.qmd
             text: "Héritage Drift-X (2006–2009)"
           - href: projet/objectifs.qmd
             text: "Question et objectifs"
           - href: projet/utilite-scientifique.qmd
-            text: "Utilité scientifique"
+            text: "Valeur scientifique à démontrer"
+
+      - section: "Comprendre le modèle"
+        contents:
           - href: projet/niveaux-modelisation.qmd
-            text: "Chaîne de modélisation"
+            text: "Chaîne de modélisation (N0–N6)"
           - href: projet/laboratoire-interactif.qmd
-            text: "Laboratoire numérique"
+            text: "Expériences : catalogue & limites"
           - href: projet/experiences-interactives.qmd
             text: "Explorer les champs de vent 2D"
 
@@ -69,48 +72,48 @@ website:
               - href: theorie/edp-et-maillage.qmd
                 text: "EDP & maillage"
               - href: theorie/comparaison-complexites.qmd
-                text: "Comparaison des complexités"
+                text: "Comparer les complexités"
               - href: theorie/burgers-et-jdriftx.qmd
                 text: "Équation de Burgers et J-DriftX"
 
-      - section: "Preuves & validation"
+      - section: "Vérifier & délimiter"
         contents:
           - href: hypotheses/catalogue.qmd
-            text: "Hypothèses du modèle"
-          - href: projet/registre-preuves.qmd
-            text: "Registre des preuves"
-          - href: projet/qualite.qmd
-            text: "Qualité & tests logiciels"
-          - href: projet/validation-scientifique.qmd
-            text: "Validation scientifique"
-
-      - section: "Limites & état de l'art"
-        contents:
+            text: "Hypothèses & domaine d'application"
           - href: hypotheses/limites.qmd
             text: "Limites et domaines de validité"
+          - href: projet/registre-preuves.qmd
+            text: "Registre des preuves"
+          - href: projet/validation-scientifique.qmd
+            text: "Protocole de validation"
+          - href: projet/qualite.qmd
+            text: "Tests logiciels & portée des vérifications"
+
+      - section: "État de l'art"
+        contents:
           - href: etat-art/panorama.qmd
-            text: "Panorama de l'état de l'art"
+            text: "Panorama des méthodes"
           - href: etat-art/positionnement.qmd
             text: "Positionnement de J-DriftX"
           - href: etat-art/revue-mathematique.qmd
             text: "Revue mathématique ciblée"
 
-      - section: "Ressources"
+      - section: "Sources & ressources"
         contents:
-          - href: projet/carte-connaissances.qmd
-            text: "Carte des connaissances"
-          - href: projet/catalogue-donnees.qmd
-            text: "Catalogue de données"
           - href: projet/lectures.qmd
-            text: "Lectures des sources"
+            text: "Lectures critiques des sources"
           - href: projet/audit.qmd
             text: "Audit de l'héritage"
+          - href: projet/catalogue-donnees.qmd
+            text: "Catalogue des données"
+          - href: projet/carte-connaissances.qmd
+            text: "Graphe des connaissances traçables"
           - href: projet/modele-jouet.qmd
-            text: "Modèle jouet"
+            text: "Modèle jouet : repli théorique"
           - href: glossaire.qmd
             text: "Glossaire"
           - href: references.qmd
-            text: "Références"
+            text: "Références bibliographiques"
 
 format:
   html:
