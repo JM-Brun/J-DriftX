@@ -11,7 +11,7 @@ Le graphe n'est pas dessiné à la main. Il est généré depuis un registre typ
 ## Comment lire cette carte
 
 - **Couleurs** : une couleur par type de nœud (légende en tête de rendu). Les niveaux de preuve ne sont pas uniformes : une arête « fonde » ou « décrit » dit qu'un document traite d'un objet, pas qu'il le valide expérimentalement.
-- **Quatre vues plutôt qu'une** : théorie et hypothèses, code et preuves, références et corpus, jeux de données candidats. Un graphe unique serait illisible ; les tables « Nœuds et destinations » sous chaque vue servent de filtre.
+- **Vues complémentaires plutôt qu'un graphe unique** : les vues initiales séparent théorie et hypothèses, code et preuves, références et corpus, jeux de données candidats. Trois projections supplémentaires isolent les dépendances entre hypothèses, concepts mathématiques et propriétés testées. Elles sont toutes dérivées du même registre ; les diagrammes donnent la structure, les panneaux repliables donnent accès aux destinations détaillées.
 - **Liens cliquables** : chaque nœud renvoie vers la page, le fichier ou la référence qui le documente.
 - **Citations vérifiées** : la table finale indique où chaque référence est réellement citée dans le site ; une référence jamais citée est signalée plutôt que masquée.
 
