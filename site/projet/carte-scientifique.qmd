@@ -107,7 +107,7 @@ flowchart LR
   class OBS,CAL,DEC evaluation
 ```
 
-**Précaution de lecture :** le graphe rassemble volontairement deux chaînes qui ne sont pas équivalentes. La chaîne advection–diffusion décrit le transport du scalaire ; la chaîne trajectoires–temps de transport décrit un aspect advectif du déplacement. La diffusion élargit le panache, elle ne se confond pas avec le temps de transport. La flèche pointillée vers la généralisation par \\(\\tau\\) indique précisément une construction à établir, et non une équivalence acquise.
+**Précaution de lecture :** le graphe rassemble volontairement deux chaînes qui ne sont pas équivalentes. La chaîne advection–diffusion décrit le transport du scalaire ; la chaîne trajectoires–temps de transport décrit un aspect advectif du déplacement. La diffusion élargit le panache, elle ne se confond pas avec le temps de transport. La flèche pointillée vers la généralisation par \(\tau\) indique précisément une construction à établir, et non une équivalence acquise.
 
 ## 2. Les hypothèses : ce qu'elles conditionnent
 
@@ -116,20 +116,74 @@ Les couleurs des hypothèses sont indépendantes de celles des objets auxquels e
 | Famille | Hypothèses | Objets ou relations concernés | Conséquence et limite principale |
 |---|---|---|---|
 | <span style="color:#1d4ed8">**Physique du scalaire**</span> | [H1 — Scalaire passif](../hypotheses/catalogue.qmd#h1-scalaire-passif) | Équation de transport, champ de vent, source | Pas de rétroaction du scalaire sur l'écoulement ; chimie et dépôt négligés dans le cadre retenu. |
-| <span style="color:#7c3aed">**Régime et fermeture de dispersion**</span> | [H2 — Régime auto-similaire établi](../hypotheses/catalogue.qmd) | Solutions de similitude, profils gaussiens, \\(\\sigma_y,\\sigma_z\\) | Famille exacte seulement pour le problème simplifié dérivé ; généralisation à des champs complexes non acquise. |
-| <span style="color:#1d4ed8">**Dynamique atmosphérique**</span> | [H3 — Quasi-stationnarité du vent](../hypotheses/catalogue.qmd#h3-quasi-stationnarite-du-vent) | Champ \\(\\mathbf u(\\mathbf x)\\), trajectoires, temps de transport | Le champ est supposé constant pendant le trajet ; fronts et évolutions rapides sortent de ce cadre. |
-| <span style="color:#7c3aed">**Approximation géométrique**</span> | [H4 — Transport advectif dominant dans la métrique](../hypotheses/catalogue.qmd#h4-transport-advectif-dominant-dans-la-metrique) | Définition de \\(\\tau\\), chemins et géométrie dirigée | La diffusion n'entre pas dans cette coordonnée advective ; l'approximation doit être confrontée aux régimes où elle devient importante. |
+| <span style="color:#7c3aed">**Régime et fermeture de dispersion**</span> | [H2 — Régime auto-similaire établi](../hypotheses/catalogue.qmd) | Solutions de similitude, profils gaussiens, \(\sigma_y,\sigma_z\) | Famille exacte seulement pour le problème simplifié dérivé ; généralisation à des champs complexes non acquise. |
+| <span style="color:#1d4ed8">**Dynamique atmosphérique**</span> | [H3 — Quasi-stationnarité du vent](../hypotheses/catalogue.qmd#h3-quasi-stationnarite-du-vent) | Champ \(\mathbf u(\mathbf x)\), trajectoires, temps de transport | Le champ est supposé constant pendant le trajet ; fronts et évolutions rapides sortent de ce cadre. |
+| <span style="color:#7c3aed">**Approximation géométrique**</span> | [H4 — Transport advectif dominant dans la métrique](../hypotheses/catalogue.qmd#h4-transport-advectif-dominant-dans-la-metrique) | Définition de \(\tau\), chemins et géométrie dirigée | La diffusion n'entre pas dans cette coordonnée advective ; l'approximation doit être confrontée aux régimes où elle devient importante. |
 | <span style="color:#a16207">**Hétérogénéité et assemblage**</span> | [H5 — Homogénéité horizontale par morceaux](../hypotheses/catalogue.qmd#h5-homogeneite-horizontale-par-morceaux) | Terrain, paramètres locaux, assemblage de segments | Les transitions brusques sont simplifiées ; les effets de mémoire et d'interaction entre segments ne sont pas automatiquement capturés. |
 | <span style="color:#a16207">**Domaine de validité**</span> | [H6 — Domaine de validité local du modèle réduit](../hypotheses/catalogue.qmd) | Réduction a priori, transitions de régime | Une approximation locale ne devient pas universelle par assemblage ; les critères de sortie du domaine doivent être explicités. |
 | <span style="color:#6b7280">**Représentativité des données**</span> | [H7 — Données d'assimilation représentatives](../hypotheses/catalogue.qmd) | Observations, calibration, identification | La représentativité, l'indépendance et l'identifiabilité doivent être vérifiées pour chaque protocole. |
 | <span style="color:#7c3aed">**Linéarité et superposition**</span> | [H8 — Superposition des sources](../hypotheses/catalogue.qmd) | Équation linéaire, sources multiples, concentration totale | La superposition découle de la linéarité du problème retenu ; elle échoue si les mécanismes négligés introduisent des interactions non linéaires. |
 
+### Carte des dépendances entre hypothèses
+
+Ce second schéma isole les hypothèses pour éviter qu'elles soient noyées dans les objets physiques. Les flèches indiquent l'objet ou l'étape qu'une hypothèse conditionne ; elles ne représentent pas des implications logiques suffisantes à elles seules.
+
+```{mermaid}
+flowchart LR
+  subgraph PHYS["Hypothèses physiques"]
+    H1["H1 · Scalaire passif"]
+    H3["H3 · Vent quasi-stationnaire"]
+  end
+  subgraph RED["Hypothèses de réduction et de géométrie"]
+    H2["H2 · Régime auto-similaire établi"]
+    H4["H4 · Dominance advective dans τ"]
+    H5["H5 · Homogénéité par morceaux"]
+    H6["H6 · Validité locale du modèle réduit"]
+    H8["H8 · Superposition des sources"]
+  end
+  subgraph DATA["Hypothèse sur les données"]
+    H7["H7 · Données représentatives"]
+  end
+  subgraph OBJ["Objets conditionnés"]
+    LIN["Linéarité en C"]
+    WIND["Champ u(x), trajectoires"]
+    TAU["Temps de transport τ"]
+    GAUSS["Famille gaussienne"]
+    SEG["Assemblage de segments"]
+    ROM["Réduction a priori"]
+    SUM["Somme des contributions"]
+    CAL["Calibration / identification"]
+  end
+  H1 --> LIN
+  H1 --> SUM
+  H3 --> WIND
+  WIND --> TAU
+  H4 --> TAU
+  H2 --> GAUSS
+  H5 --> SEG
+  H6 --> ROM
+  H7 --> CAL
+  H8 --> SUM
+  LIN --> SUM
+  TAU -.->|"généralisation à établir"| ROM
+  GAUSS -.->|"famille candidate"| ROM
+
+  classDef physical fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef reduction fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+  classDef data fill:#e5e7eb,stroke:#6b7280,color:#111827
+  classDef object fill:#d1fae5,stroke:#059669,color:#064e3b
+  class H1,H3 physical
+  class H2,H4,H5,H6,H8 reduction
+  class H7 data
+  class LIN,WIND,TAU,GAUSS,SEG,ROM,SUM,CAL object
+```
+
 ### Dépendances à ne pas simplifier
 
 - **H1 → linéarité en concentration**, sous les termes et conditions du modèle retenu ; H8 exploite cette linéarité pour additionner les contributions des sources. H1 et H8 sont liées, mais ne sont pas synonymes.
 - **H3 → trajectoires stationnaires et temps de transport calculable sur un champ fixé.** Sans stationnarité, il faut traiter une dynamique dépendant du temps ; on ne peut pas réutiliser sans justification la géométrie stationnaire.
-- **H4 → séparation advection / étalement.** Le temps \\(\\tau\\) ne remplace pas le modèle de dispersion ; la diffusion doit rester représentée par une loi distincte.
-- **H2 → famille gaussienne dans un régime établi et simplifié.** Le passage de \\(x/U\\) à un temps \\(\\tau\\) dans un champ non uniforme est une nouvelle hypothèse de construction, pas une conséquence de la solution gaussienne classique.
+- **H4 → séparation advection / étalement.** Le temps \(\tau\) ne remplace pas le modèle de dispersion ; la diffusion doit rester représentée par une loi distincte.
+- **H2 → famille gaussienne dans un régime établi et simplifié.** Le passage de \(x/U\) à un temps \(\tau\) dans un champ non uniforme est une nouvelle hypothèse de construction, pas une conséquence de la solution gaussienne classique.
 - **H5 et H6 → assemblage local et contrôle de validité.** La somme de contributions par morceaux ne prouve pas que les interfaces, les transitions ou les effets du relief sont correctement décrits.
 - **H7 → calibration interprétable.** Une optimisation numérique ne rend pas des données représentatives et ne garantit pas l'identifiabilité des paramètres.
 
@@ -142,7 +196,7 @@ Ces propriétés ne sont pas des hypothèses supplémentaires. Elles sont des co
 | **Conservation de masse** | Forme conservative, source, flux aux frontières, conditions au sol et troncature | Bilan intégré et flux entrant/sortant ; distinguer conservation continue et erreur numérique. |
 | **Positivité** | Opérateur, données initiales et source non négatives ; schéma numérique compatible | Absence de concentrations négatives non physiques, sans confondre propriété analytique et stabilité d'un schéma. |
 | **Linéarité / superposition** | Opérateur linéaire et paramètres indépendants de la concentration | Somme des solutions comparée à la solution de la source agrégée. |
-| **Divergence nulle du champ** | Champ et domaine pour lesquels \\(\\nabla\\cdot\\mathbf u=0\\) est imposée | Vérification analytique ou numérique ; ne pas la déduire du seul usage d'un champ de vent. |
+| **Divergence nulle du champ** | Champ et domaine pour lesquels \(\nabla\cdot\mathbf u=0\) est imposée | Vérification analytique ou numérique ; ne pas la déduire du seul usage d'un champ de vent. |
 | **Non-symétrie du temps de parcours** | Dynamique orientée et convention de coût/accessibilité | Comparer les deux sens d'un trajet ; ne pas appeler automatiquement cet objet une distance métrique. |
 | **Exactitude d'un adjoint** | Fonctionnelle, modèle direct, conditions aux limites et différentiabilité définis | Comparaison du gradient adjoint à une référence indépendante, dans le seul cas couvert. |
 
@@ -153,7 +207,7 @@ Le registre des preuves détaille les propriétés et leurs tests : [contraintes
 Le terme « multi-niveaux » désigne aussi deux constructions historiques qui ne doivent pas être fusionnées avec la chaîne N0–N6 :
 
 1. **Couplage des régimes physiques** : champ proche → transport à longue distance, décrit par Brun & Mohammadi (2008). Il s'agit d'un passage entre sous-modèles physiques.
-2. **Raffinement spatial** : domaines emboîtés \\(\\Omega=\\omega_0\\) et \\(\\omega_i\\), avec restriction du vent et corrections topographiques, décrit par Bozon, Sinfort & Mohammadi (2009). Il s'agit d'une architecture spatiale coarse-to-fine.
+2. **Raffinement spatial** : domaines emboîtés \(\Omega=\omega_0\) et \(\omega_i\), avec restriction du vent et corrections topographiques, décrit par Bozon, Sinfort & Mohammadi (2009). Il s'agit d'une architecture spatiale coarse-to-fine.
 
 Ces constructions sont documentées dans [Niveaux de modélisation, section 3](niveaux-modelisation.qmd#lanalyse-multi-niveaux-historique-une-autre-carte). Leur présence dans l'héritage documentaire ne signifie pas qu'elles ont été reconstruites dans le code actuel.
 
