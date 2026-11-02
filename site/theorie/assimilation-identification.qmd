@@ -15,7 +15,15 @@ $$
 J(\theta) = \sum_{i} \left[ v(\mathbf{x}_i; \theta) - y_i \right]^2,
 $$
 
-où $v$ est le modèle approché. Les publications historiques visent un coût d'évaluation faible, mais le coût total de calibration dépend du nombre d'évaluations, de la dimension des paramètres, de la préparation des champs, de l'optimiseur et du critère d'arrêt. Une évaluation ponctuelle peu coûteuse ne rend pas automatiquement la minimisation triviale.
+où $v$ est le modèle approché.
+
+**Le gradient de $J$, pas à pas.** Si chaque $v(\mathbf{x}_i;\theta)$ est différentiable en $\theta$, son développement au premier ordre $v(\mathbf{x}_i;\theta+\delta\theta)=v_i+\nabla_\theta v_i\cdot\delta\theta+o(\|\delta\theta\|)$ se substitue dans $J$ :
+
+$
+J(\theta+\delta\theta)=J(\theta)+2\sum_i\bigl[v(\mathbf{x}_i;\theta)-y_i\bigr]\,\nabla_\theta v(\mathbf{x}_i;\theta)\cdot\delta\theta+o(\|\delta\theta\|),
+$
+
+d'où le gradient exact $\nabla J(\theta)=2\sum_i\bigl[v(\mathbf{x}_i;\theta)-y_i\bigr]\,\nabla_\theta v(\mathbf{x}_i;\theta)$. **Type : identité mathématique** sous la différentiabilité de $v$ ; le coût d'évaluation de ce gradient (nombre de capteurs $\times$ nombre de paramètres) et la disponibilité effective de $\nabla_\theta v$ sont des questions distinctes — pour ce qui est établi aujourd'hui, voir [Contraintes physiques](contraintes-physiques.qmd). Les publications historiques visent un coût d'évaluation faible, mais le coût total de calibration dépend du nombre d'évaluations, de la dimension des paramètres, de la préparation des champs, de l'optimiseur et du critère d'arrêt. Une évaluation ponctuelle peu coûteuse ne rend pas automatiquement la minimisation triviale.
 
 ## Régularisation (extension v2)
 
@@ -25,6 +33,22 @@ $$
 J_\lambda(\theta) = \| v(\theta) - y \|^2 + \lambda \| \theta - \theta_0 \|^2.
 $$
 
+**Pourquoi $\lambda>0$ rend le problème bien posé (cas linéaire).** Si le modèle est linéaire en ses paramètres, $v(\theta)=\mathbf{V}\theta$ (par exemple des intensités de sources, voir la section suivante), alors $J_\lambda$ est strictement convexe — sa hessienne $\mathbf{V}^\top\mathbf{V}+\lambda\mathbf{I}$ est définie positive dès que $\lambda>0$ — et possède un unique minimiseur, solution des équations normales régularisées
+
+$
+(\mathbf{V}^\top\mathbf{V}+\lambda\mathbf{I})\,\hat\theta=\mathbf{V}^\top\mathbf{y}+\lambda\,\theta_0 .
+$
+
+La décomposition en valeurs singulières $\mathbf{V}=\mathbf{U}\,\mathrm{diag}(\sigma_i)\,\mathbf{W}^\top$ découple chaque composante $\hat\theta=\sum_i c_i\,\mathbf{w}_i$ :
+
+$
+c_i=\frac{\sigma_i\,(\mathbf{u}_i\cdot\mathbf{y})+\lambda\,(\mathbf{w}_i\cdot\theta_0)}{\sigma_i^2+\lambda}
+=f_i\,\frac{\mathbf{u}_i\cdot\mathbf{y}}{\sigma_i}+(1-f_i)\,(\mathbf{w}_i\cdot\theta_0),
+\qquad f_i=\frac{\sigma_i^2}{\sigma_i^2+\lambda}\in(0,1).
+$
+
+Lecture : chaque direction singulière est un compromis entre l'estimation portée par les données et la valeur a priori ; les directions peu contraintes par les capteurs ($\sigma_i^2\ll\lambda$) suivent le prior ($f_i\approx 0$), les directions bien contraintes suivent les données ($f_i\approx 1$). C'est la forme explicite de ce que « régulariser » signifie — et le pont vers la calibration bayésienne (jalon M3), dont le maximum a posteriori gaussien coïncide avec ce minimiseur, sous ses hypothèses de loi. **Vérifié numériquement** (équations normales vs formule en facteurs de filtre, écart $<10^{-12}$ sur un exemple mal conditionné).
+
 Cette extension permet de comparer le projet aux méthodes d'estimation de terme source (STE), notamment aux approches d'optimisation et bayésiennes décrites dans la littérature [@hutchinson2017ste]. La référence doit servir de point de comparaison méthodologique, pas de preuve que la calibration bayésienne soit déjà implémentée.
 
 ## Analyse de sensibilité : le double usage
@@ -33,7 +57,9 @@ Si la formule retenue est différentiable et ses dérivées sont disponibles, on
 
 **Analyse de risque.** Propager les incertitudes (vent, émission, stabilité) par Monte Carlo. Une évaluation ponctuelle peu coûteuse peut rendre cette stratégie envisageable, mais ne suffit pas à l'établir : il faut préciser les distributions et dépendances, le nombre de tirages, les calculs de référence et le coût total. Voir la définition et les limites dans [Modèle direct](modele-direct.qmd).
 
-**Identification de source.** Inverser la question : une pollution est observée aux capteurs ; de quelle source provient-elle ? La sensibilité $\partial C(\mathbf{x}_i) / \partial Q_j$ à chaque source candidate $j$ forme le système inverse. La disponibilité d'un gradient ou d'un adjoint pour la formulation travel-time actuelle n'est pas démontrée par le seul fait que certaines composantes soient analytiques. Il faut dériver l'objet exact, vérifier les points non réguliers et comparer le coût total à des méthodes numériques.
+**Identification de source.** Inverser la question : une pollution est observée aux capteurs ; de quelle source provient-elle ? La sensibilité $\partial C(\mathbf{x}_i) / \partial Q_j$ à chaque source candidate $j$ forme le système inverse.
+
+**Ce que la linéarité (H1) rend explicite.** L'équation de transport étant linéaire en l'émission (scalaire passif, H1 du [catalogue](../hypotheses/catalogue.qmd)), la concentration de $n$ sources s'écrit exactement $C=\sum_j Q_j\,C_j^{(1)}$, où $C_j^{(1)}$ est la concentration qu'engendrerait la source $j$ seule avec un débit unité. Par conséquent $\partial C(\mathbf{x}_i)/\partial Q_j=C_j^{(1)}(\mathbf{x}_i)$ : **la matrice de sensibilité est le champ des concentrations unité**, évaluable par le modèle approché sans aucune perturbation numérique. L'identification des intensités est alors un moindres carrés **linéaire** $\min_\theta\|\mathbf{G}\theta-\mathbf{y}\|^2$, avec $G_{ij}=C_j^{(1)}(\mathbf{x}_i)$ et $\theta=(Q_1,\dots,Q_n)$ ; ses conditions normales $\mathbf{G}^\top\mathbf{G}\,\theta=\mathbf{G}^\top\mathbf{y}$ ont une solution unique si et seulement si $\mathbf{G}^\top\mathbf{G}$ est inversible — c'est-à-dire si les capteurs séparent les sources : la mal-position du problème inverse se lit directement sur la matrice $\mathbf{G}$, et la régularisation ci-dessus s'y applique telle quelle. Ce raisonnement vaut pour les intensités ; l'identification de **positions** de sources est non linéaire (la position entre non linéairement dans $v$) et n'est pas couverte. Statut : formulation — rien de ceci n'est implémenté, et la sensibilité du modèle implémenté n'est établie que pour la référence uniforme ([Contraintes physiques](contraintes-physiques.qmd)). La disponibilité d'un gradient ou d'un adjoint pour la formulation travel-time actuelle n'est pas démontrée par le seul fait que certaines composantes soient analytiques. Il faut dériver l'objet exact, vérifier les points non réguliers et comparer le coût total à des méthodes numériques.
 
 ## Ce que la reprise ajoute
 

@@ -183,7 +183,7 @@ La méthode des images conserve donc le débit massique sur le demi-espace : le 
 
 La construction des étapes 3 à 6 produit une formule ; encore faut-il vérifier qu’elle résout le problème posé. Les contrôles ci-dessous sont analytiques : ils valent pour le problème parabolique à coefficients constants et ne portent pas sur l’implémentation, dont les largeurs sont empiriques (paragraphe « Contrôle logiciel distinct » de l’étape 5).
 
-**Substitution dans l’équation.** Chaque facteur de la fonction de Green est un noyau de la chaleur monodimensionnel : pour $g(t',y)=\bigl(4\pi K_y t'\bigr)^{-1/2}\exp\bigl(-y^2/(4K_y t')\bigr)$, la dérivation directe donne
+**Substitution dans l’équation.** Chaque facteur de la fonction de Green est un noyau de la chaleur monodimensionnel : pour $g(t',y)=\bigl(4\pi K_y t'\bigr)^{-1/2}\exp\bigl(-y^2/(4K_y t')\bigr)$, la dérivation de chaque facteur se fait terme à terme : dériver le préfacteur et l'exponentielle donne $\partial_{t'}g=g\bigl(\tfrac{y^2}{4K_y t'^2}-\tfrac{1}{2t'}\bigr)$, et dériver deux fois en $y$ donne $\partial_{yy}g=g\bigl(\tfrac{y^2}{4K_y^2t'^2}-\tfrac{1}{2K_y t'}\bigr)$ ; les deux expressions coïncident après multiplication par $K_y$ :
 
 $$
 \frac{\partial g}{\partial t'}=K_y\frac{\partial^2 g}{\partial y^2}
@@ -210,7 +210,7 @@ Le préfacteur $Q/(2\pi U\,\sigma_y\sigma_z)$ a donc pour unité $\mathrm{kg\,s^
 **Cas analytiques.**
 
 - **Source au sol ($h=0$).** Les deux images coalescent : $C(x,y,z)=\frac{Q}{\pi U\,\sigma_y\sigma_z}\exp\bigl(-y^2/2\sigma_y^2\bigr)\exp\bigl(-z^2/2\sigma_z^2\bigr)$ — le facteur $2$ de la réflexion, cohérent avec le dédoublement de la concentration au sol constaté à l’étape 6.
-- **Flux sur un rectangle tronqué.** Toujours pour $h=0$, le flux à travers $[-k\sigma_y,k\sigma_y]\times[0,k\sigma_z]$ vaut exactement $Q\,\mathrm{erf}^2(k/\sqrt2)$ : c’est la référence analytique qu’utilisent les tests de troncature et de discrétisation de `tests/test_similitude.py`.
+- **Flux sur un rectangle tronqué.** Toujours pour $h=0$, le flux à travers $[-k\sigma_y,k\sigma_y]\times[0,k\sigma_z]$ vaut exactement $Q\,\mathrm{erf}^2(k/\sqrt2)$ : c’est la référence analytique qu’utilisent les tests de troncature et de discrétisation de `tests/test_similitude.py`. La dérivation tient en trois lignes : à $h=0$ la réflexion double la gaussienne verticale, donc $C=\frac{Q}{\pi U\sigma_y\sigma_z}e^{-y^2/2\sigma_y^2}e^{-z^2/2\sigma_z^2}$ ; chaque gaussienne tronquée s'intègre en $\int_{-k\sigma}^{k\sigma}e^{-u^2/2\sigma^2}\,\mathrm{d}u=\sqrt{2\pi}\,\sigma\,\mathrm{erf}(k/\sqrt2)$ (substitution $u=\sqrt2\,\sigma\,w$) ; le flux $U\int\!\!\int C\,\mathrm{d}y\,\mathrm{d}z$ vaut donc $\frac{Q}{\pi\sigma_y\sigma_z}\cdot\sqrt{2\pi}\sigma_y\,\mathrm{erf}(k/\sqrt2)\cdot\sqrt{2\pi}\sigma_z\,\mathrm{erf}(k/\sqrt2)=Q\,\mathrm{erf}^2(k/\sqrt2)$. Vérifié numériquement (quadrature directe vs formule fermée, $k=2$, écart $<10^{-5}$ rel.).
 - **Décroissance axiale.** Sur l’axe ($y=0$, $z=h$), la solution non réfléchie atteint son maximum $C=Q/(2\pi U\,\sigma_y\sigma_z)$ ; à diffusivités constantes, $\sigma_i\propto\sqrt{x}$, donc ce maximum décroît en $1/x$ — signature de la dérivation, à distinguer des lois puissance des largeurs empiriques (étape 7).
 
 **Domaine de validité de la construction.** $x>0$ et $z\geq0$ ; $U>0$ constant ; $K_y,K_z$ constants ; scalaire passif sans chimie ni dépôt (hypothèses H1 et H8 du [catalogue](../hypotheses/catalogue.qmd)) ; source ponctuelle continue. L’équation étant de premier ordre en $x$, la construction n’a pas d’extension en amont — cohérent avec le caractère unilatéral du transport. Hors de ce domaine, la formule devient une approximation candidate, dont l’erreur doit être mesurée ([Réduction a priori](reduction-a-priori.qmd)).
@@ -222,6 +222,51 @@ $$
 $$
 
 où $R$ est la corrélation des vitesses lagrangiennes : croissance de $\sigma$ **linéaire** aux courts temps de parcours, **en racine carrée** aux longs. Les formules de Briggs interpolent ces deux régimes.
+
+#### Dérivation pas à pas de la formule de Taylor (1921)
+
+Cette formule n'est pas une loi empirique supplémentaire : elle se déduit, en quatre étapes, de la définition du déplacement d'une particule comme intégrale de sa vitesse. Le cadre est **lagrangien** : on suit une particule de traceur et on note $v'(s)$ la fluctuation de la composante transversale de sa vitesse à l'instant $s$, de moyenne nulle et de variance $v'^2$.
+
+**Étape T1 — le déplacement est une intégrale.** Le déplacement transversal entre l'instant $0$ et l'instant $T$ vaut $Y(T)=\int_0^T v'(s)\,\mathrm{d}s$ — c'est la définition de la vitesse, pas une hypothèse.
+
+**Étape T2 — la variance est une double intégrale.** En développant le carré de l'intégrale et en échangeant l'espérance avec les intégrales (linéarité de l'espérance ; l'échange suppose $R$ intégrable, voir T4) :
+
+$
+\sigma^2(T)=\mathbb{E}\!\left[\left(\int_0^T v'(s)\,\mathrm{d}s\right)^{\!2}\right]
+=\int_0^T\!\!\int_0^T \mathbb{E}\!\left[v'(s)\,v'(s')\right]\mathrm{d}s\,\mathrm{d}s' .
+$
+
+**Étape T3 — la stationnarité fait apparaître l'autocorrélation.** Si la turbulence est stationnaire au sens des statistiques, $\mathbb{E}[v'(s)\,v'(s')]$ ne dépend que de l'écart $s'-s$ ; on définit l'autocorrélation lagrangienne $R$ par $\mathbb{E}[v'(s)\,v'(s+\tau)]=v'^2\,R(\tau)$, avec $R(0)=1$. La covariance étant symétrique, $R$ est paire : $R(-\tau)=R(\tau)$.
+
+**Étape T4 — le changement de variable $\tau=s-s'$ factorise la double intégrale.** À écart $\tau$ fixé, les couples $(s,s')$ tels que $s-s'=\tau$ parcourent un segment de mesure $T-|\tau|$ ; la double intégrale se réécrit donc
+
+$
+\sigma^2(T)=v'^2\int_{-T}^{T}(T-|\tau|)\,R(\tau)\,\mathrm{d}\tau
+=2\,v'^2\int_0^T (T-\tau)\,R(\tau)\,\mathrm{d}\tau,
+$
+
+la seconde égalité venant de la parité de $R$. C'est exactement la formule affichée plus haut (la variable d'intégration y est notée $s$ au lieu de $\tau$). **Type : identité mathématique** sous les hypothèses de statistiques de T3 et l'intégrabilité de $R$.
+
+#### Les deux régimes asymptotiques et le pont vers $K$
+
+Posons $T_L=\int_0^\infty R(\tau)\,\mathrm{d}\tau$ (temps intégral de corrélation), supposé fini.
+
+- **Court temps ($T\ll T_L$)** : $R(\tau)\approx 1$ sur $[0,T]$, donc $\sigma^2(T)\approx v'^2T^2$, soit $\sigma(T)\approx v'\,T$ — croissance **linéaire** : la particule conserve à peu près sa vitesse initiale.
+- **Long temps ($T\gg T_L$)** : $\sigma^2(T)=2v'^2\bigl[T\int_0^\infty R-\int_0^\infty \tau R\bigr]+o(T)$, donc $\sigma^2(T)\sim 2K_{\mathrm{eff}}T$ avec
+
+$
+K_{\mathrm{eff}}=v'^2\int_0^\infty R(\tau)\,\mathrm{d}\tau .
+$
+
+C'est ici que l'implicite devient explicite : la loi $\sigma^2=2Kt$ de l'étape 3 — posée là comme conséquence d'une diffusivité constante — apparaît comme l'asymptotique long-temps des statistiques lagrangiennes, et la « diffusivité » comme le produit variance $\times$ temps de corrélation. La fermeture à $K$ constant ([Modèle direct](modele-direct.qmd), section 4) et la statistique de Taylor expriment la même propriété dans deux langages, dans ce seul régime.
+
+Les formules de Briggs interpolent ces deux régimes en fonction de la distance, via $t'=x/U$ : la forme $\sigma_y(x)=ax/\sqrt{1+d_yx}$ est linéaire en $x$ aux courtes distances et en $x^{1/2}$ aux longues — exactement les deux asymptotiques ci-dessus ; la forme $\sigma_z(x)=bx/(1+d_zx)$ des classes E–F tend vers le plateau $b/d_z$, un régime que la formule de Taylor à une particule ne contient pas : il encode d'autres physiques (plafond de la couche limite, stratification stable), une différence d'hypothèses à garder explicite.
+
+#### Ce que la dérivation suppose — et ne suppose pas
+
+Hypothèses de la dérivation : turbulence **homogène** (la variance ne dépend pas du point de départ) et **stationnaire** (l'autocorrélation ne dépend que de l'écart) — des hypothèses de statistiques plus fortes que l'homogénéité par morceaux H5 du [catalogue](../hypotheses/catalogue.qmd) ; $R$ intégrable ; particule unique ; domaine illimité, sans sol ni frontière. Ce que la dérivation **n'établit pas** : la forme gaussienne du profil — la variance seule est calculée, la gaussienne vient de la route théorème central limite / équation de la chaleur des étapes 3–6, pas de Taylor ; la validité des tables de Briggs (elles interpolent, elles ne découlent pas) ; le comportement de $K(z)$ dans une couche limite réelle, où le temps de corrélation dépend de la hauteur et de la stabilité. Si $R$ n'est pas intégrable (corrélations à grande échelle), la croissance est sur-linéaire et la notion même de diffusivité effective disparaît — cas non traité ici.
+
+*Contrôles numériques (sandbox, float64, $R(\tau)=e^{-|\tau|}$)* : la forme factorisée de T4 coïncide avec la double intégrale directe ($\sim10^{-8}$ rel. à $T=0{,}5$, $3$, $10$) ; la forme fermée $\sigma^2=2v'^2[T-T_L(1-e^{-T/T_L})]$ pour ce choix de $R$ la reproduit à $10^{-10}$ ; les deux asymptotiques sont vérifiées ($\sigma^2/T^2\to v'^2$ en temps court, $\sigma^2/(2T)\to v'^2T_L$ en temps long). Ces contrôles valident l'algèbre, pas la physique de l'atmosphère.
 
 ### Solution exacte et calibration empirique : deux affirmations, pas une {#solution-exacte-calibration-empirique}
 
