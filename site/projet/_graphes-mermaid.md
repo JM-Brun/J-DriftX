@@ -734,3 +734,331 @@ graph LR
 | [Prairie Grass 1956 — données de terrain](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
 | [JRC — archives de données ETEX](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
 | [Clawson et al. 2005 — JU2003](../references.qmd) | [Panorama de l'état de l'art (2008 → 2026)](../etat-art/panorama.qmd) |
+
+## Hypothèses et objets conditionnés
+
+Projection du registre sur H1-H8, les concepts associés et les niveaux N0-N6. Les liens montrent des dépendances documentées, pas des implications logiques suffisantes.
+
+```{mermaid}
+flowchart LR
+  subgraph vue_concept["Concept"]
+    c_transport["Équation de transport (advection-diffusion)"]::concept
+    c_champ["Champ de vent stationnaire"]::concept
+    c_courant["Ligne de courant et caractéristique"]::concept
+    c_fcourant["Fonction de courant"]::concept
+    c_tau["Temps de transport"]::concept
+    c_polyligne["Coût dirigé sur polyligne"]::concept
+    c_tpa["Temps de première arrivée (cas 1D exact)"]::concept
+    c_pdist["Pseudo-distance dirigée (référence uniforme)"]::concept
+    c_panache["Panache gaussien (similitude)"]::concept
+    c_stabilite["Classes de Pasquill et lois de Briggs"]::concept
+    c_multiniveaux["Champ multi-niveaux historique (non reconstruit)"]::concept
+    c_reduction["Modèle approché v(p) (réduction a priori)"]::concept
+    c_assimilation["Assimilation et calibration"]::concept
+    c_maillage["Maillage gouverné par métrique"]::concept
+    c_burgers["Équation de Burgers"]::concept
+  end
+  subgraph vue_niveau["Niveau de modélisation"]
+    n0["N0 — contexte physique"]::niveau
+    n1["N1 — équations aux dérivées partielles"]::niveau
+    n2["N2 — discrétisation et maillage"]::niveau
+    n3["N3 — solveurs et schémas numériques"]::niveau
+    n4["N4 — modèles réduits"]::niveau
+    n5["N5 — expériences et données de terrain"]::niveau
+    n6["N6 — calibration et aide à la décision"]::niveau
+  end
+  subgraph vue_hypothese["Hypothèse"]
+    h1["H1 — scalaire passif"]::hypothese
+    h2["H2 — régime auto-similaire établi"]::hypothese
+    h3["H3 — quasi-stationnarité du vent"]::hypothese
+    h4["H4 — transport advectif dominant dans la métrique"]::hypothese
+    h5["H5 — homogénéité horizontale par morceaux"]::hypothese
+    h6["H6 — domaine de validité local du modèle réduit"]::hypothese
+    h7["H7 — données d'assimilation représentatives"]::hypothese
+    h8["H8 — superposition des sources"]::hypothese
+  end
+  n0 -->|"alimente"| n1
+  n1 -->|"alimente"| n2
+  n2 -->|"alimente"| n3
+  n3 -->|"alimente"| n4
+  n4 -->|"alimente"| n5
+  n5 -->|"alimente"| n6
+  h1 -->|"s'applique à"| n4
+  h1 -->|"s'applique à"| n5
+  h2 -->|"s'applique à"| n4
+  h3 -->|"s'applique à"| n1
+  h3 -->|"s'applique à"| n3
+  h4 -->|"s'applique à"| n3
+  h5 -->|"s'applique à"| n0
+  h5 -->|"s'applique à"| n3
+  h6 -->|"s'applique à"| n4
+  h7 -->|"s'applique à"| n6
+  h8 -->|"s'applique à"| n5
+  h1 -->|"traduite en"| c_transport
+  h2 -->|"traduite en"| c_panache
+  h3 -->|"traduite en"| c_champ
+  h4 -->|"traduite en"| c_tau
+  h5 -->|"traduite en"| c_polyligne
+  h6 -->|"traduite en"| c_reduction
+  h7 -->|"traduite en"| c_assimilation
+  h8 -->|"traduite en"| c_panache
+  h1 -->|"fonde"| h8
+  c_fcourant -->|"construit"| c_champ
+  c_courant -->|"dépend de"| c_champ
+  c_tau -->|"dépend de"| c_courant
+  c_transport -->|"dépend de"| c_champ
+  c_panache -->|"dépend de"| c_transport
+  c_panache -->|"dépend de"| c_stabilite
+  c_assimilation -->|"utilise"| c_reduction
+  c_multiniveaux -->|"construit"| c_champ
+  c_burgers -->|"contexte"| c_tau
+  classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
+  classDef niveau fill:#ddd0f0,stroke:#495057,color:#212529;
+  classDef hypothese fill:#bfe0ff,stroke:#495057,color:#212529;
+```
+
+**Nœuds et destinations**
+
+| Nœud | Type | Où approfondir |
+|---|---|---|
+| Équation de transport (advection-diffusion) | Concept | [theorie/modele-direct.qmd](../theorie/modele-direct.qmd) |
+| Champ de vent stationnaire | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Ligne de courant et caractéristique | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Fonction de courant | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Temps de transport | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Coût dirigé sur polyligne | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Temps de première arrivée (cas 1D exact) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Pseudo-distance dirigée (référence uniforme) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Panache gaussien (similitude) | Concept | [theorie/similitude.qmd](../theorie/similitude.qmd) |
+| Classes de Pasquill et lois de Briggs | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Champ multi-niveaux historique (non reconstruit) | Concept | [projet/niveaux-modelisation.qmd](../niveaux-modelisation.qmd) |
+| Modèle approché v(p) (réduction a priori) | Concept | [theorie/reduction-a-priori.qmd](../theorie/reduction-a-priori.qmd) |
+| Assimilation et calibration | Concept | [theorie/assimilation-identification.qmd](../theorie/assimilation-identification.qmd) |
+| Maillage gouverné par métrique | Concept | [theorie/edp-et-maillage.qmd](../theorie/edp-et-maillage.qmd) |
+| Équation de Burgers | Concept | [theorie/burgers-et-jdriftx.qmd](../theorie/burgers-et-jdriftx.qmd) |
+| N0 — contexte physique | Niveau de modélisation | [projet/niveaux-modelisation.qmd](../niveaux-modelisation.qmd) |
+| N1 — équations aux dérivées partielles | Niveau de modélisation | [projet/niveaux-modelisation.qmd](../niveaux-modelisation.qmd) |
+| N2 — discrétisation et maillage | Niveau de modélisation | [projet/niveaux-modelisation.qmd](../niveaux-modelisation.qmd) |
+| N3 — solveurs et schémas numériques | Niveau de modélisation | [projet/niveaux-modelisation.qmd](../niveaux-modelisation.qmd) |
+| N4 — modèles réduits | Niveau de modélisation | [projet/niveaux-modelisation.qmd](../niveaux-modelisation.qmd) |
+| N5 — expériences et données de terrain | Niveau de modélisation | [projet/niveaux-modelisation.qmd](../niveaux-modelisation.qmd) |
+| N6 — calibration et aide à la décision | Niveau de modélisation | [projet/niveaux-modelisation.qmd](../niveaux-modelisation.qmd) |
+| H1 — scalaire passif | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
+| H2 — régime auto-similaire établi | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
+| H3 — quasi-stationnarité du vent | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
+| H4 — transport advectif dominant dans la métrique | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
+| H5 — homogénéité horizontale par morceaux | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
+| H6 — domaine de validité local du modèle réduit | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
+| H7 — données d'assimilation représentatives | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
+| H8 — superposition des sources | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
+
+## Concepts et dépendances mathématiques
+
+Sous-graphe des concepts : dépendances définitionnelles, constructions et usages. Les chaînes advection-diffusion et trajectoires-temps de transport restent distinctes lorsque le registre les distingue.
+
+```{mermaid}
+flowchart LR
+  subgraph vue_concept["Concept"]
+    c_transport["Équation de transport (advection-diffusion)"]::concept
+    c_champ["Champ de vent stationnaire"]::concept
+    c_courant["Ligne de courant et caractéristique"]::concept
+    c_fcourant["Fonction de courant"]::concept
+    c_tau["Temps de transport"]::concept
+    c_polyligne["Coût dirigé sur polyligne"]::concept
+    c_tpa["Temps de première arrivée (cas 1D exact)"]::concept
+    c_pdist["Pseudo-distance dirigée (référence uniforme)"]::concept
+    c_panache["Panache gaussien (similitude)"]::concept
+    c_stabilite["Classes de Pasquill et lois de Briggs"]::concept
+    c_multiniveaux["Champ multi-niveaux historique (non reconstruit)"]::concept
+    c_reduction["Modèle approché v(p) (réduction a priori)"]::concept
+    c_assimilation["Assimilation et calibration"]::concept
+    c_maillage["Maillage gouverné par métrique"]::concept
+    c_burgers["Équation de Burgers"]::concept
+  end
+  c_fcourant -->|"construit"| c_champ
+  c_courant -->|"dépend de"| c_champ
+  c_tau -->|"dépend de"| c_courant
+  c_transport -->|"dépend de"| c_champ
+  c_panache -->|"dépend de"| c_transport
+  c_panache -->|"dépend de"| c_stabilite
+  c_assimilation -->|"utilise"| c_reduction
+  c_multiniveaux -->|"construit"| c_champ
+  c_burgers -->|"contexte"| c_tau
+  classDef concept fill:#c9ecd9,stroke:#495057,color:#212529;
+```
+
+**Nœuds et destinations**
+
+| Nœud | Type | Où approfondir |
+|---|---|---|
+| Équation de transport (advection-diffusion) | Concept | [theorie/modele-direct.qmd](../theorie/modele-direct.qmd) |
+| Champ de vent stationnaire | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Ligne de courant et caractéristique | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Fonction de courant | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Temps de transport | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Coût dirigé sur polyligne | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Temps de première arrivée (cas 1D exact) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Pseudo-distance dirigée (référence uniforme) | Concept | [theorie/metrique-travel-time.qmd](../theorie/metrique-travel-time.qmd) |
+| Panache gaussien (similitude) | Concept | [theorie/similitude.qmd](../theorie/similitude.qmd) |
+| Classes de Pasquill et lois de Briggs | Concept | [glossaire.qmd](../glossaire.qmd) |
+| Champ multi-niveaux historique (non reconstruit) | Concept | [projet/niveaux-modelisation.qmd](../niveaux-modelisation.qmd) |
+| Modèle approché v(p) (réduction a priori) | Concept | [theorie/reduction-a-priori.qmd](../theorie/reduction-a-priori.qmd) |
+| Assimilation et calibration | Concept | [theorie/assimilation-identification.qmd](../theorie/assimilation-identification.qmd) |
+| Maillage gouverné par métrique | Concept | [theorie/edp-et-maillage.qmd](../theorie/edp-et-maillage.qmd) |
+| Équation de Burgers | Concept | [theorie/burgers-et-jdriftx.qmd](../theorie/burgers-et-jdriftx.qmd) |
+
+## Propriétés, tests et implémentations associées
+
+Voisinage des propriétés dans le registre : modules et tests directement reliés. Un test établit uniquement le comportement couvert par son protocole, jamais une validité physique générale.
+
+```{mermaid}
+flowchart LR
+  subgraph vue_propriete["Propriété (visée ou testée)"]
+    p_positivite["Positivité (famille gaussienne)"]::propriete
+    p_superposition["Superposition et linéarité en débit"]::propriete
+    p_conservation["Bilan de masse (famille gaussienne)"]::propriete
+    p_divergence["Divergence nulle (champs analytiques)"]::propriete
+    p_nonsym["Non-symétrie (métrique dirigée)"]::propriete
+    p_adjoint["Adjoint : gradient exact (référence uniforme et cas 1D)"]::propriete
+  end
+  subgraph vue_module["Module de code"]
+    metric["metric.py"]::module
+    champ_analytique["champ_analytique.py"]::module
+    experiences_reconstruction_vent["experiences/reconstruction_vent.py"]::module
+    experiences_cas_synthetiques["experiences/cas_synthetiques.py"]::module
+    experiences_baseline_uniforme["experiences/baseline_uniforme.py"]::module
+    similitude["similitude.py"]::module
+    experiences_reference_independante["experiences/reference_independante.py"]::module
+    experiences_evaluation_puff["experiences/evaluation_puff.py"]::module
+    experiences_transitoire_puff_comparaison["experiences/transitoire_puff/comparaison.py"]::module
+    experiences_transitoire_puff_marginale["experiences/transitoire_puff/marginale.py"]::module
+    experiences_transitoire_puff_routes["experiences/transitoire_puff/routes.py"]::module
+    experiences_transitoire_puff_solveur["experiences/transitoire_puff/solveur.py"]::module
+    stabilite["stabilite.py"]::module
+    source["source.py"]::module
+    vents["vents.py"]::module
+    concentrations["concentrations.py"]::module
+    constraints["constraints.py"]::module
+    benchmarks_reference["benchmarks/reference.py"]::module
+    benchmarks_cas["benchmarks/cas.py"]::module
+    benchmarks_metriques["benchmarks/metriques.py"]::module
+  end
+  subgraph vue_test["Test (CI)"]
+    t_metric["test_metric.py"]::test
+    t_similitude["test_similitude.py"]::test
+    t_constraints["test_constraints.py"]::test
+    t_champ["test_champ_analytique.py"]::test
+    t_recon["test_reconstruction_vent.py"]::test
+    t_benchmarks["test_benchmarks_reference.py"]::test
+    t_baseline_uniforme["test_baseline_uniforme.py"]::test
+    t_reference_independante["test_reference_independante.py"]::test
+    t_evaluation_puff["test_evaluation_puff.py"]::test
+    t_transitoire_puff["test_transitoire_puff.py"]::test
+  end
+  similitude -->|"utilise"| stabilite
+  constraints -->|"teste"| p_positivite
+  constraints -->|"teste"| p_superposition
+  p_positivite -->|"testée par"| t_similitude
+  p_positivite -->|"testée par"| t_constraints
+  p_superposition -->|"testée par"| t_constraints
+  p_superposition -->|"testée par"| t_similitude
+  p_conservation -->|"testée par"| t_similitude
+  p_divergence -->|"testée par"| t_champ
+  p_divergence -->|"testée par"| t_recon
+  p_nonsym -->|"testée par"| t_metric
+  p_adjoint -->|"testée par"| t_metric
+  t_metric -->|"couvre"| metric
+  t_similitude -->|"couvre"| similitude
+  t_constraints -->|"couvre"| constraints
+  t_champ -->|"couvre"| champ_analytique
+  t_recon -->|"couvre"| experiences_reconstruction_vent
+  benchmarks_cas -->|"utilise"| similitude
+  t_benchmarks -->|"couvre"| benchmarks_reference
+  t_benchmarks -->|"couvre"| benchmarks_cas
+  t_benchmarks -->|"couvre"| benchmarks_metriques
+  benchmarks_reference -->|"utilise"| benchmarks_cas
+  benchmarks_reference -->|"utilise"| benchmarks_metriques
+  source -->|"utilise"| stabilite
+  benchmarks_cas -->|"utilise"| source
+  experiences_cas_synthetiques -->|"utilise"| source
+  vents -->|"utilise"| champ_analytique
+  concentrations -->|"utilise"| source
+  concentrations -->|"utilise"| similitude
+  experiences_baseline_uniforme -->|"utilise"| benchmarks_cas
+  experiences_baseline_uniforme -->|"utilise"| source
+  experiences_baseline_uniforme -->|"utilise"| concentrations
+  t_baseline_uniforme -->|"couvre"| experiences_baseline_uniforme
+  experiences_reference_independante -->|"utilise"| benchmarks_cas
+  experiences_reference_independante -->|"utilise"| benchmarks_metriques
+  experiences_reference_independante -->|"utilise"| similitude
+  experiences_reference_independante -->|"utilise"| stabilite
+  experiences_reference_independante -->|"utilise"| concentrations
+  t_reference_independante -->|"couvre"| experiences_reference_independante
+  experiences_evaluation_puff -->|"utilise"| benchmarks_cas
+  experiences_evaluation_puff -->|"utilise"| similitude
+  experiences_evaluation_puff -->|"utilise"| metric
+  t_evaluation_puff -->|"couvre"| experiences_evaluation_puff
+  experiences_transitoire_puff_comparaison -->|"utilise"| benchmarks_cas
+  experiences_transitoire_puff_comparaison -->|"utilise"| benchmarks_metriques
+  experiences_transitoire_puff_comparaison -->|"utilise"| experiences_evaluation_puff
+  experiences_transitoire_puff_comparaison -->|"utilise"| experiences_reference_independante
+  experiences_transitoire_puff_marginale -->|"utilise"| experiences_evaluation_puff
+  experiences_transitoire_puff_marginale -->|"utilise"| experiences_reference_independante
+  experiences_transitoire_puff_marginale -->|"utilise"| similitude
+  experiences_transitoire_puff_routes -->|"utilise"| benchmarks_cas
+  experiences_transitoire_puff_routes -->|"utilise"| experiences_evaluation_puff
+  experiences_transitoire_puff_routes -->|"utilise"| experiences_reference_independante
+  experiences_transitoire_puff_routes -->|"utilise"| similitude
+  experiences_transitoire_puff_solveur -->|"utilise"| benchmarks_cas
+  experiences_transitoire_puff_solveur -->|"utilise"| experiences_evaluation_puff
+  experiences_transitoire_puff_solveur -->|"utilise"| experiences_reference_independante
+  experiences_transitoire_puff_solveur -->|"utilise"| similitude
+  t_transitoire_puff -->|"couvre"| experiences_transitoire_puff_comparaison
+  t_transitoire_puff -->|"couvre"| experiences_transitoire_puff_marginale
+  t_transitoire_puff -->|"couvre"| experiences_transitoire_puff_routes
+  t_transitoire_puff -->|"couvre"| experiences_transitoire_puff_solveur
+  classDef propriete fill:#ffd9b3,stroke:#495057,color:#212529;
+  classDef module fill:#d7f0a1,stroke:#495057,color:#212529;
+  classDef test fill:#e9ecef,stroke:#495057,color:#212529;
+```
+
+**Nœuds et destinations**
+
+| Nœud | Type | Où approfondir |
+|---|---|---|
+| Positivité (famille gaussienne) | Propriété (visée ou testée) | [theorie/contraintes-physiques.qmd](../theorie/contraintes-physiques.qmd) |
+| Superposition et linéarité en débit | Propriété (visée ou testée) | [theorie/contraintes-physiques.qmd](../theorie/contraintes-physiques.qmd) |
+| Bilan de masse (famille gaussienne) | Propriété (visée ou testée) | [theorie/contraintes-physiques.qmd](../theorie/contraintes-physiques.qmd) |
+| Divergence nulle (champs analytiques) | Propriété (visée ou testée) | [theorie/contraintes-physiques.qmd](../theorie/contraintes-physiques.qmd) |
+| Non-symétrie (métrique dirigée) | Propriété (visée ou testée) | [theorie/contraintes-physiques.qmd](../theorie/contraintes-physiques.qmd) |
+| Adjoint : gradient exact (référence uniforme et cas 1D) | Propriété (visée ou testée) | [theorie/contraintes-physiques.qmd](../theorie/contraintes-physiques.qmd) |
+| metric.py | Module de code | [metric.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/metric.py) |
+| champ_analytique.py | Module de code | [champ_analytique.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/champ_analytique.py) |
+| experiences/reconstruction_vent.py | Module de code | [reconstruction_vent.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reconstruction_vent.py) |
+| experiences/cas_synthetiques.py | Module de code | [cas_synthetiques.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/cas_synthetiques.py) |
+| experiences/baseline_uniforme.py | Module de code | [baseline_uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/baseline_uniforme.py) |
+| similitude.py | Module de code | [similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/similitude.py) |
+| experiences/reference_independante.py | Module de code | [reference_independante.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/reference_independante.py) |
+| experiences/evaluation_puff.py | Module de code | [evaluation_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/evaluation_puff.py) |
+| experiences/transitoire_puff/comparaison.py | Module de code | [comparaison.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/comparaison.py) |
+| experiences/transitoire_puff/marginale.py | Module de code | [marginale.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/marginale.py) |
+| experiences/transitoire_puff/routes.py | Module de code | [routes.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/routes.py) |
+| experiences/transitoire_puff/solveur.py | Module de code | [solveur.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/experiences/transitoire_puff/solveur.py) |
+| stabilite.py | Module de code | [stabilite.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/stabilite.py) |
+| source.py | Module de code | [source.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/source.py) |
+| vents.py | Module de code | [vents.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/vents.py) |
+| concentrations.py | Module de code | [concentrations.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/concentrations.py) |
+| constraints.py | Module de code | [constraints.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/constraints.py) |
+| benchmarks/reference.py | Module de code | [reference.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/reference.py) |
+| benchmarks/cas.py | Module de code | [cas.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/cas.py) |
+| benchmarks/metriques.py | Module de code | [metriques.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/metriques.py) |
+| test_metric.py | Test (CI) | [test_metric.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_metric.py) |
+| test_similitude.py | Test (CI) | [test_similitude.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_similitude.py) |
+| test_constraints.py | Test (CI) | [test_constraints.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_constraints.py) |
+| test_champ_analytique.py | Test (CI) | [test_champ_analytique.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_champ_analytique.py) |
+| test_reconstruction_vent.py | Test (CI) | [test_reconstruction_vent.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reconstruction_vent.py) |
+| test_benchmarks_reference.py | Test (CI) | [test_benchmarks_reference.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_benchmarks_reference.py) |
+| test_baseline_uniforme.py | Test (CI) | [test_baseline_uniforme.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_baseline_uniforme.py) |
+| test_reference_independante.py | Test (CI) | [test_reference_independante.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reference_independante.py) |
+| test_evaluation_puff.py | Test (CI) | [test_evaluation_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_evaluation_puff.py) |
+| test_transitoire_puff.py | Test (CI) | [test_transitoire_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_transitoire_puff.py) |
