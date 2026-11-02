@@ -187,7 +187,9 @@ hr {
 }
 
 @media (max-width: 767.98px) {
-  $font-size-root: 16px;
+  html {
+    font-size: 16px;
+  }
 
   main.content {
     max-width: none;
