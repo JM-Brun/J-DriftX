@@ -346,3 +346,19 @@ def test_main_verifier_retourne_zero() -> None:
     """Étant donné le dépôt réel synchronisé, quand on appelle main avec
     --verifier, alors le code de sortie est 0."""
     assert main(["--verifier"]) == 0
+
+
+def test_architecture_conceptuelle_est_presente_dans_le_rendu() -> None:
+    """La vue conceptuelle est issue du registre et expose ses quatre familles."""
+    registre = charger(CHEMIN_REGISTRE)
+    graphe = next(g for g in registre.graphes if g.id == "concepts")
+
+    assert set(graphe.noeuds) == {
+        "c-transport", "c-champ", "c-panache", "c-stabilite", "c-burgers",
+        "c-courant", "c-fcourant", "c-tau", "c-polyligne", "c-tpa", "c-pdist",
+        "c-reduction", "c-maillage", "c-multiniveaux", "c-assimilation",
+    }
+    assert len(graphe.groupes) == 4
+    contenu = generer_contenu(registre, {})
+    assert "## Architecture conceptuelle des notions" in contenu
+    assert "Cinématique et géométrie dirigée" in contenu
