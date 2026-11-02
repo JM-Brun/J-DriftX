@@ -996,6 +996,30 @@ type = "reference"
 libelle = "Thykier-Nielsen et Mikkelsen 1987 — guide RIMPUFF"
 lien = "site/references.qmd"
 
+
+[[noeuds]]
+id = "bakels2024flexpart"
+type = "reference"
+libelle = "Bakels et al. 2024 — FLEXPART version 11"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "capps2026pyaermod"
+type = "reference"
+libelle = "Capps 2026 — PyAERMOD 2.2.0"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "dagestad2018opendrift"
+type = "reference"
+libelle = "Dagestad et al. 2018 — OpenDrift v1.0"
+lien = "site/references.qmd"
+
+[[noeuds]]
+id = "epaAermod2026"
+type = "reference"
+libelle = "EPA 2026 — AERMOD Modeling System"
+lien = "site/references.qmd"
 # ---------- Nœuds : jeux de données candidats ----------
 
 [[noeuds]]
@@ -2285,7 +2309,7 @@ noeuds = [
 [[graphes]]
 id = "references"
 titre = "Références et corpus"
-description = "Les vingt-cinq entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique)."
+description = "Les vingt-neuf entrées de references.bib, regroupées par rôle, et les objets qu'elles décrivent ou fondent. La table en fin de page indique, pour chaque référence, les pages du site qui la citent réellement (extraction automatique)."
 sens = "LR"
 noeuds = [
   "mohammadi2006crmeca", "mohammadi2006pironneau", "brun2008",
@@ -2296,6 +2320,7 @@ noeuds = [
   "trindade2021urban", "mahmud2026symmetry", "epa2024appendixw",
   "bonicelli2012cigr", "defra2011ps2024", "garbaczewski1997burgers",
   "scire2000calpuff", "sykes1998scipuff", "thykier1987rimpuff",
+  "bakels2024flexpart", "capps2026pyaermod", "dagestad2018opendrift", "epaAermod2026",
   "c-pdist", "c-tau", "c-multiniveaux", "c-panache", "c-reduction",
   "c-assimilation", "c-maillage", "c-burgers", "c-champ", "c-transport",
   "p-nonsym",
@@ -2319,6 +2344,7 @@ noeuds = [
     "trindade2021urban", "mahmud2026symmetry", "epa2024appendixw",
     "bonicelli2012cigr", "defra2011ps2024", "garbaczewski1997burgers",
     "scire2000calpuff", "sykes1998scipuff", "thykier1987rimpuff",
+    "bakels2024flexpart", "capps2026pyaermod", "dagestad2018opendrift", "epaAermod2026",
   ]
 
   [[graphes.groupes]]
