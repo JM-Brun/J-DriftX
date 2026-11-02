@@ -6,6 +6,8 @@ Cette page ne décrète rien : elle montre les liens. Concepts, hypothèses, niv
 
 Le graphe n'est pas dessiné à la main. Il est généré depuis un registre typé (`site/data/graphe-connaissances.toml`) par `uv run python -m jdriftx.graphe_connaissances`, et la CI vérifie sa cohérence avec le dépôt : chaque nœud apparaît dans au moins une vue, chaque arête est rendue, chaque lien pointe vers un fichier réel, chaque clé de `references.bib` et chaque module de `src/jdriftx` a son nœud. Un graphe joli mais faux casserait donc les tests, pas la confiance.
 
+**Pour comprendre les mécanismes et les dépendances scientifiques avant de parcourir les relations documentaires, commencer par la [carte scientifique des interactions](carte-scientifique.qmd).** Elle relie les champs physiques, les processus, les hypothèses et les constructions mathématiques sans remplacer le graphe de traçabilité ci-dessous.
+
 ## Comment lire cette carte
 
 - **Couleurs** : une couleur par type de nœud (légende en tête de rendu). Les niveaux de preuve ne sont pas uniformes : une arête « fonde » ou « décrit » dit qu'un document traite d'un objet, pas qu'il le valide expérimentalement.

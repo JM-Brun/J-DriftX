@@ -8,6 +8,8 @@ Cette page est la carte des objets physiques, mathématiques et numériques du p
 
 **Statut général :** J-DriftX est un projet de recherche. La chaîne complète décrite ci-dessous est la cible conceptuelle, pas une chaîne déjà implémentée et validée de bout en bout. Le [README du dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/README.md) et la [correspondance entre théorie et code](../theorie/metrique-travel-time.qmd#correspondance-avec-le-code-actuel) décrivent l'état effectif du code.
 
+**Vue transversale :** la [carte scientifique des interactions](carte-scientifique.qmd) relie ces niveaux aux champs physiques, aux mécanismes d'advection et de diffusion, aux hypothèses H1–H8 et aux constructions mathématiques candidates.
+
 ## 1. La chaîne conceptuelle
 
 ```text
