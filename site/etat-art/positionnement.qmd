@@ -25,6 +25,20 @@ Le projet ne revendique actuellement ni nouveauté, ni supériorité prédictive
 2. **Réduction a priori :** comparer à une baseline physique et à une ROM/surrogate pertinente sur le même problème — y compris les modèles opérationnels à puffs sur trajectoire (CALPUFF, SCIPUFF, RIMPUFF), qui occupent déjà le créneau « formules fermées + champ de vent non uniforme » — sans présumer que ces familles sont toujours entraînées ou évaluées de la même manière.
 3. **Généralisation :** vérifier si des contraintes physiques précises améliorent réellement l'erreur hors domaine. L'interprétabilité, la conservation ou la positivité ne garantissent pas automatiquement une meilleure prédiction.
 
+
+## Références comparatives et usage dans le programme de recherche
+
+Les références ne sont pas des concurrents interchangeables. Elles couvrent trois catégories distinctes :
+
+- **Modèles physiques de dispersion/transport :** FLEXPART (lagrangien particulaire) et AERMOD (modèle réglementaire). Ils peuvent servir de comparateurs sur des cas soigneusement appariés, mais leurs hypothèses, observables et régimes de validité diffèrent.
+- **Cadre de simulation :** OpenDrift fournit un exemple de modularité et de documentation des processus. Il peut inspirer la structuration des expériences ; une comparaison de concentration nécessite une définition explicite de l'estimateur reliant particules et champ scalaire.
+- **Outillage autour d'une baseline :** PyAERMOD facilite la construction, l'exécution et l'analyse des cas AERMOD. Il améliore potentiellement la reproductibilité du protocole, mais ne constitue pas une méthode physique indépendante.
+
+L'usage prioritaire est donc le suivant : (i) choisir une baseline selon l'observable et le régime visés, en lien avec les critères de [l'issue G0-A](https://github.com/JM-Brun/J-DriftX/issues/43) ; (ii) figer les versions et configurations selon le [protocole de validation](../projet/validation-scientifique.qmd) ; (iii) construire des scripts reproductibles et des figures comparatives seulement lorsque les cas et données ont été audités, en cohérence avec [la sélection des corpus](https://github.com/JM-Brun/J-DriftX/issues/207).
+
+La comparaison détaillée et les enseignements documentaires sont présentés dans le [panorama de l'état de l'art](panorama.qmd). Les références bibliographiques et les réserves d'accès sont regroupées dans [Références](../references.qmd).
+
+
 ## Conditions de poursuite
 
 - Un besoin concret et un utilisateur/décision identifiés avant le choix de la méthode.
