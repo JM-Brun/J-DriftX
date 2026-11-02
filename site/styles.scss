@@ -119,6 +119,45 @@ table td, table th {
   vertical-align: top;
 }
 
+
+// Mermaid graphs are intentionally allowed to exceed the prose measure.
+// Keep them inside their own scroll region instead of widening the whole page.
+.mermaid {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-block: 1.25rem 1.6rem;
+  padding: .5rem 0;
+  overscroll-behavior-inline: contain;
+}
+
+.mermaid svg {
+  display: block;
+  max-width: none;
+  height: auto;
+}
+
+.mermaid:focus-visible {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 3px;
+}
+
+details {
+  margin-block: .8rem 1.5rem;
+}
+
+details > summary {
+  cursor: pointer;
+  color: var(--bs-link-color);
+  text-decoration: underline;
+  text-underline-offset: .16em;
+  padding-block: .35rem;
+}
+
+details[open] > summary {
+  margin-bottom: .6rem;
+}
+
 // Equations and source code may be wider than the prose column.
 .math.display,
 .cell-output,

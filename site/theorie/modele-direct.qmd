@@ -101,6 +101,7 @@ $$
 =\overline{\mathbf{u}}\,\overline C
 +\overline{\mathbf{u}'C'}.
 $$
+
 ::: {.callout-note collapse="true" title="Démonstration algébrique — développement des quatre termes"}
 
 **Pourquoi cette identité : les quatre termes du produit.** Le produit s'écrit $\mathbf{u}\,C=(\overline{\mathbf{u}}+\mathbf{u}')\,(\overline C+C')=\overline{\mathbf{u}}\,\overline C+\overline{\mathbf{u}}\,C'+\mathbf{u}'\,\overline C+\mathbf{u}'C'$. En appliquant la moyenne à chaque terme : le premier est composé de quantités déjà moyennées et reste tel quel ; les deux termes croisés s'annulent parce que la moyenne est linéaire, commute avec la multiplication par une quantité déjà moyennée, et que les fluctuations sont de moyenne nulle — $\overline{\overline{\mathbf{u}}\,C'}=\overline{\mathbf{u}}\,\overline{C'}=0$ et $\overline{\mathbf{u}'\,\overline C}=\overline C\,\overline{\mathbf{u}'}=0$. Il reste exactement l'identité affichée. **Type : identité mathématique** sous les seules règles de moyennage admises en 3.1 (linéarité, $\overline{\phi'}=0$) ; aucune physique de turbulence n'y intervient encore — tout l'enjeu de la fermeture est dans le terme $\overline{\mathbf{u}'C'}$ qui subsiste.

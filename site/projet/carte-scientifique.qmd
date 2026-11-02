@@ -225,7 +225,17 @@ Ces constructions sont documentées dans [Niveaux de modélisation, section 3](n
 - assimiler une expérience synthétique à une validation météorologique ;
 - conclure à un gain de coût, de précision ou d'utilité applicative.
 
-## 6. Cartes complémentaires
+## 6. Explorer les mêmes relations sous plusieurs angles
+
+Les diagrammes détaillés ci-dessus donnent une lecture éditoriale du système physique et des hypothèses. Pour éviter de maintenir ces relations à plusieurs endroits, le [graphe des connaissances](carte-connaissances.qmd) fournit aussi trois projections générées automatiquement depuis son registre TOML unique :
+
+- [Hypothèses et objets conditionnés](carte-connaissances.qmd#hypotheses-et-objets-conditionnes) : H1–H8, concepts et niveaux N0–N6.
+- [Concepts et dépendances mathématiques](carte-connaissances.qmd#concepts-et-dependances-mathematiques) : dépendances entre objets théoriques.
+- [Propriétés, tests et implémentations associées](carte-connaissances.qmd#proprietes-tests-et-implementations-associees) : traçabilité vers les tests et modules concernés.
+
+Ces vues réutilisent les mêmes identifiants, types, arêtes et libellés que les cartes de traçabilité. Elles ne créent aucune relation supplémentaire. Elles sont complémentaires : le registre ne contient pas encore tous les objets du diagramme physique (par exemple les champs de turbulence et les conditions météorologiques détaillées), qui ne doivent donc pas être artificiellement déduits de ces projections.
+
+## 7. Cartes complémentaires
 
 | Besoin | Représentation adaptée |
 |---|---|
