@@ -4,207 +4,71 @@ title: "J-DriftX — dispersion atmosphérique à complexité réduite"
 
 # J-DriftX
 
-> **En bref —** J-DriftX étudie des représentations approchées de la dispersion atmosphérique afin de réduire, à terme, le coût de calcul de certains scénarios. La piste scientifique — notamment l'emploi de temps de transport et de solutions de similitude — reste une **hypothèse en cours d'évaluation**, et non une méthode prédictive validée.
+**Modéliser la dispersion atmosphérique autrement — et vérifier si cela apporte réellement quelque chose.**
+
+J-DriftX est un projet de recherche open source consacré à la modélisation à complexité réduite de la dispersion atmosphérique de scalaires passifs. Il reprend et modernise le projet historique Drift-X (2006–2009).
+
+> **Où en est-on ?** Le projet étudie l'hypothèse qu'une représentation fondée sur des solutions de similitude et des temps de transport dirigés puisse réduire le coût de certaines évaluations. Sa validité en vent non uniforme, son coût total et son intérêt prédictif ou applicatif **ne sont pas encore établis**. Il s'agit d'une hypothèse de recherche, pas d'un modèle opérationnel validé.
+
+## Le projet en quatre étapes
+
+Cette documentation permet de passer de l'intuition physique aux preuves, sans imposer une lecture linéaire. Choisissez le niveau utile à votre question.
 
 ![Parcours de lecture J-DriftX en quatre niveaux : comprendre le problème physique, comprendre le modèle et ses hypothèses, comprendre les fondements théoriques, puis vérifier et reproduire les résultats.](images/parcours-lecture-jdriftx.svg)
-
-## Choisir son parcours
-
-Cette documentation propose quatre profondeurs de lecture. Elles sont complémentaires : vous pouvez passer directement au niveau correspondant à votre question.
 
 ::: {.columns}
 ::: {.column width="50%"}
 **1 · Comprendre**
 
-Le problème physique, les enjeux et la vue d'ensemble.
+Le problème étudié, l'origine du projet et ce qui est — ou non — acquis.
 
-[Commencer par la carte d'articulation](projet/carte-articulation.qmd)
+[Vue d'ensemble et question de recherche](projet/carte-articulation.qmd)
 :::
 ::: {.column width="50%"}
 **2 · Comprendre le modèle**
 
-Les grandeurs, le transport, les hypothèses et le domaine de validité.
+Les grandeurs physiques et leur enchaînement : vent, transport, dispersion, concentration.
 
-[Explorer les niveaux de modélisation](projet/niveaux-modelisation.qmd)
+[Carte des niveaux de modélisation](projet/niveaux-modelisation.qmd)
 :::
 ::: {.column width="50%"}
 **3 · Comprendre la théorie**
 
-Les équations, les solutions de similitude et les constructions géométriques.
+Les équations, les hypothèses de réduction, les solutions de similitude et la géométrie du transport.
 
-[Accéder au modèle direct](theorie/modele-direct.qmd)
+[Commencer par le modèle direct](theorie/modele-direct.qmd)
 :::
 ::: {.column width="50%"}
 **4 · Vérifier et reproduire**
 
-Les preuves, les expériences, les tests et les limites de chaque résultat.
+Les propriétés démontrées ou testées, les expériences, les comparaisons et leurs limites.
 
-[Consulter le registre des preuves](projet/registre-preuves.qmd)
+[Registre des preuves](projet/registre-preuves.qmd)
 :::
 :::
 
-**Repère scientifique :** une définition, une démonstration mathématique, un test logiciel et une validation sur données indépendantes n'ont pas la même portée. Les pages distinguent ces statuts ; aucun résultat de calcul isolé ne démontre une validité générale.
+## Ce que J-DriftX cherche à comprendre
 
-## Présentation détaillée
+La question centrale est de savoir si certains problèmes de dispersion peuvent être représentés par une famille de solutions guidée par la physique, puis évalués ponctuellement, sans résoudre à chaque requête une EDP sur un maillage complet.
 
-**J-DriftX** est un projet de recherche open source qui étudie des représentations approchées de la **dispersion atmosphérique de scalaires passifs**, avec l'objectif de réduire le coût de calcul. Il est la reprise et la modernisation du projet **Drift-X** développé entre 2006 et 2009 par J.-M. Brun et B. Mohammadi (Cemagref/ITAP et I3M, Montpellier) [@bozon2009driftx; @mohammadi2009gis].
+Trois sujets sont liés, mais doivent rester distincts :
 
-![Illustration conceptuelle de l'hypothèse étudiée : panache gaussien évalué à partir d'une coordonnée candidate de temps de transport τ, sans que cette généralisation soit encore validée.](images/panache-travel-time.svg)
+- **La physique de la dispersion** : quelles hypothèses relient le champ de vent, le transport, l'étalement du scalaire et la concentration ? [Voir la chaîne de modélisation](projet/niveaux-modelisation.qmd).
+- **La représentation mathématique** : comment passer d'une solution de similitude en vent uniforme à une construction utilisant un temps de transport dirigé ? Cette généralisation est une construction à justifier, pas une conséquence automatique du cas uniforme. [Explorer le temps de transport](theorie/metrique-travel-time.qmd).
+- **La valeur scientifique et pratique** : les propriétés physiques, l'erreur, le coût de préparation et d'évaluation, et l'intérêt face à des méthodes de référence doivent être mesurés. [Voir le protocole de validation](projet/validation-scientifique.qmd).
 
-> **Statut scientifique :** hypothèse de recherche en phase de cadrage et de validation. Les propriétés présentées ci-dessous sont des **objectifs de conception**, pas des capacités validées ; le README du dépôt consigne l'état réel de l'implémentation. Voir le [positionnement](etat-art/positionnement.qmd) et la [carte d'articulation](projet/carte-articulation.qmd).
+Le projet examine notamment la réduction *a priori*, les temps de transport non symétriques, les contraintes physiques (positivité, conservation, superposition) et les possibilités de calibration par données. Ce sont des axes de recherche, pas quatre capacités déjà acquises. Leur formulation et leurs limites sont détaillées dans les pages [Objectifs](projet/objectifs.qmd) et [Contraintes physiques](theorie/contraintes-physiques.qmd).
 
-**Avant de lire les propriétés visées, consulter les garde-fous :** [limites météorologiques et de terrain](hypotheses/limites.qmd) · [panorama de l'état de l'art](etat-art/panorama.qmd) · [où se paie le coût](theorie/comparaison-complexites.qmd) · [positionnement et critères de comparaison](etat-art/positionnement.qmd).
+## Ce que les résultats permettent de conclure
 
+Une définition mathématique, une démonstration sous hypothèses, un test logiciel, une comparaison à une référence et une validation indépendante n'ont pas la même portée.
 
-## L'idée en une phrase
+À ce stade, les expériences synthétiques et les tests ciblés vérifient des cas définis. Ils ne démontrent ni une validité météorologique générale, ni une utilité applicative, ni un gain de performance face à une baseline pertinente. Le cadrage documentaire est avancé ; les preuves différentielles et applicatives restent à construire.
 
-Hypothèse étudiée : représenter certains panaches, puffs ou cas de dérive de pulvérisation **sans résoudre directement une EDP ni construire un maillage**, au moyen d'une **évaluation ponctuelle** fondée sur des solutions de similitude et une représentation non symétrique par temps de transport [@mohammadi2006crmeca; @brun2008]. La validité de cette généralisation, son coût total, sa calibration et son avantage prédictif restent à établir ; il ne s'agit pas encore d'une capacité validée.
+Pour examiner précisément les hypothèses, la portée des tests et les limites de conclusion, consulter le [registre des preuves](projet/registre-preuves.qmd), le [guide de lecture des statuts de preuve](projet/carte-articulation.qmd#statut-affirmation), les [limites du modèle](hypotheses/limites.qmd) et le [positionnement dans l'état de l'art](etat-art/positionnement.qmd).
 
-### Comparer les stratégies de calcul
+## Explorer la documentation
 
-La figure suivante met côte à côte deux stratégies de représentation. Elle est **conceptuelle** : elle ne constitue ni un benchmark, ni une comparaison à conditions physiques identiques, ni une preuve de supériorité de J-DriftX.
+Pour accéder directement à une question, un thème ou une ressource sans suivre le parcours de lecture, utiliser l'[index thématique et le répertoire des ressources de la carte d'articulation](projet/carte-articulation.qmd).
 
-![Comparaison conceptuelle entre une approche CFD sur maillage et l'hypothèse de réduction étudiée par J-DriftX. Les trajectoires et champs sont schématiques ; le temps de transport et la famille de profils doivent être définis et validés pour chaque domaine d'application.](images/comparaison-cfd-jdriftx.svg)
-
-*Lecture :* la CFD résout numériquement un modèle discrétisé selon les équations, fermetures et conditions choisies. J-DriftX étudie une autre représentation candidate, fondée notamment sur un temps de transport dirigé et des profils de similitude. Le calcul de ce temps, les paramètres de source et de dispersion, le coût total et l'erreur prédictive doivent être comparés à des baselines explicites. Voir [EDP et maillage](theorie/edp-et-maillage.qmd), [comparaison des complexités](theorie/comparaison-complexites.qmd) et [métrique travel-time](theorie/metrique-travel-time.qmd).
-
-Les notations de cette page ($C(x,y,z)$, $\tau$, $Q$, $h$…) et les notions employées — scalaire passif, panache gaussien généralisé, solutions de similitude, far-field, Finsler/Zermelo, ROM, assimilation… — sont définies, avec leur origine, dans le [glossaire](glossaire.qmd).
-
-## Quatre propriétés fondatrices (objectifs de conception)
-
-::: {.panel-tabset}
-
-### Réduction *a priori*
-
-L'espace de recherche visé est construit à partir de connaissances physiques (similitude des panaches), plutôt qu'à partir de *snapshots* d'un modèle CFD. L'objectif est une évaluation ponctuelle peu coûteuse ; le coût total, notamment celui du calcul de $\tau$, sa dépendance au domaine et son avantage face à une baseline restent à mesurer.
-
-### Métrique des temps de transport
-
-La coordonnée candidate n'est pas seulement la distance euclidienne : c'est un temps de transport dirigé $\tau$, défini à partir du champ de vent selon une construction qui doit être explicitée. La non-symétrie, le traitement des vents non uniformes et la prise en compte du relief dépendent de la définition retenue et restent à établir pour la généralisation étudiée ([Métrique travel-time](theorie/metrique-travel-time.qmd), [revue mathématique](etat-art/revue-mathematique.qmd)).
-
-### Contraintes physiques imposées
-
-Conservation, positivité, superposition et compatibilité avec un champ de vent incompressible sont des contraintes à préciser pour chaque formulation et domaine de validité. Elles ne signifient pas que le modèle réduit est une solution exacte du modèle direct ; leur statut (formulée, testée, démontrée) est suivi sur la page [Contraintes physiques](theorie/contraintes-physiques.qmd).
-
-### Calibration par données
-
-L'assimilation de données partielles peut identifier des paramètres ; l'analyse de sensibilité peut contribuer à l'identification de source et à l'étude des incertitudes. Des gradients analytiques sont envisageables pour certaines formulations, mais leur disponibilité, leur coût et leur validité dépendent du modèle et ne sont pas encore établis pour le cas général.
-
-:::
-
-![Schéma de l'architecture applicative historique visée : du champ proche au champ lointain, avec hypothèses de couplage multi-niveaux et chaîne de traitement SIG à reconstruire et valider.](images/projet-jdriftx.svg)
-
-## Pourquoi maintenant ?
-
-- L'**AGDISP Modernization Project** (2023–2026) réécrit le modèle de dérive en open source en portant l'effort sur le near-field et le 3D ; le **far-field réaliste** — la cible historique de Drift-X — n'est pas l'objet annoncé ([panorama](etat-art/panorama.qmd)).
-- De nombreuses ROM classiques et approches *data-driven* s'appuient sur des *snapshots* ou des données d'entraînement, mais ce n'est pas une propriété universelle de toutes les ROM ni de tous les surrogates ML. L'hypothèse d'une réduction *a priori* doit être comparée à des méthodes de référence définies et à coût total équitable ([panorama](etat-art/panorama.qmd)).
-- Les données qui manquaient en 2008 (**ERA5/Copernicus, MNT ouverts, capteurs low-cost**) existent désormais.
-
-L'analyse de l'héritage et le panorama de l'état de l'art sont présentés dans les pages scientifiques dédiées. Les notes de pilotage et de décision ne font pas partie du parcours documentaire public.
-
-## Parcours de lecture
-
-La [carte d'articulation scientifique](projet/carte-articulation.qmd) donne la vue d'ensemble : elle distingue les sources historiques, l'hypothèse mathématique, les vérifications du code, la comparaison différentielle et la validation indépendante. Choisir ensuite le parcours adapté à la question recherchée.
-
-### Choisir sa profondeur de lecture
-
-Les quatre niveaux ci-dessous sont des **portes d'entrée vers un même raisonnement**, pas quatre modèles différents ni quatre degrés de validation. Chaque niveau renvoie au suivant sans recopier son contenu ; il est possible d'entrer directement au niveau adapté à sa question.
-
-| Parcours | Question à laquelle il répond | Première lecture | Pour poursuivre |
-|---|---|---|---|
-| **1 — Comprendre** | Quel problème physique J-DriftX cherche-t-il à traiter, et qu'est-ce qui est réellement acquis ? | [Carte d'articulation](projet/carte-articulation.qmd) et [objectifs](projet/objectifs.qmd) | [Héritage Drift-X](projet/heritage.qmd), [utilité scientifique](projet/utilite-scientifique.qmd), [limites](hypotheses/limites.qmd) |
-| **2 — Comprendre le modèle** | Quelles grandeurs décrivent le transport et la dispersion, et comment s'enchaînent-elles ? | [Niveaux de modélisation](projet/niveaux-modelisation.qmd) | [Modèle direct](theorie/modele-direct.qmd), [solutions de similitude](theorie/similitude.qmd), [glossaire](glossaire.qmd) |
-| **3 — Comprendre la théorie** | Sous quelles hypothèses les équations, réductions et objets géométriques sont-ils construits ? | [Réduction a priori](theorie/reduction-a-priori.qmd) | [Métrique travel-time](theorie/metrique-travel-time.qmd), [métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd), [contraintes physiques](theorie/contraintes-physiques.qmd) |
-| **4 — Vérifier et reproduire** | Qu'est-ce qui est démontré, testé ou comparé, et comment reproduire le résultat ? | [Registre des preuves](projet/registre-preuves.qmd) et [validation scientifique](projet/validation-scientifique.qmd) | [Qualité & tests](projet/qualite.qmd), [laboratoire numérique](projet/laboratoire-interactif.qmd), [tests du dépôt](https://github.com/JM-Brun/J-DriftX/tree/main/tests) |
-
-::: {.callout-tip title="Comment utiliser ces quatre niveaux" collapse="false"}
-- **Comprendre** donne le contexte, la question de recherche et les limites principales, sans exiger de prérequis mathématique.
-- **Comprendre le modèle** identifie les variables physiques, leurs unités et les dépendances entre champ de vent, transport, dispersion et concentration.
-- **Comprendre la théorie** explicite les hypothèses, les formulations et les dérivations. Une intuition ou un schéma ne remplace jamais une démonstration.
-- **Vérifier et reproduire** remonte aux références, preuves, tests, données, protocoles et détails d'implémentation. Il faut distinguer ce qui est reproductible de ce qui a été validé indépendamment.
-
-Ces parcours ne sont pas obligatoirement séquentiels : un lecteur expert peut commencer par une preuve ; un lecteur débutant peut s'arrêter après le premier niveau. Les liens assurent la continuité entre les profondeurs.
-:::
-
-**Ne pas confondre les quatre niveaux de lecture avec N0–N6.** Les niveaux de lecture organisent l'accès à la documentation ; N0–N6 décrivent les objets de la chaîne physique et mathématique. Le statut d'une affirmation (formulé, démontré, testé, comparé ou validé indépendamment) constitue encore un axe distinct.
-
-### Lire le statut d'une affirmation
-
-Une équation, un test logiciel et une validation physique ne constituent pas le même type de preuve. Dans les pages du projet, il faut distinguer explicitement :
-
-| Statut | Ce que cela autorise à conclure | Ce que cela n'autorise pas à conclure |
-|---|---|---|
-| **Défini / formulé** | L'objet, les hypothèses et les conventions sont explicités. | Que la propriété est vraie ou que le code la respecte. |
-| **Dérivé / démontré** | Le résultat découle du raisonnement indiqué, sous ses hypothèses. | Qu'il reste valable hors de ce cadre. |
-| **Testé** | Un comportement précis a été vérifié sur les cas, données et tolérances annoncés. | Une preuve générale, ni une validation physique. |
-| **Comparé** | Un résultat a été confronté à une référence identifiée selon un protocole donné. | Une supériorité universelle ou un gain hors du protocole. |
-| **Validé indépendamment** | Une confrontation indépendante soutient l'usage défini et son domaine. | Une validité pour tout terrain, météo ou régime physique. |
-
-**Règle de lecture :** chercher systématiquement quatre éléments avant de reprendre une conclusion : (1) les hypothèses, (2) le domaine et les conditions aux limites, (3) la nature de la preuve, (4) les limites et contre-exemples connus. Si l'un manque, la conclusion doit être considérée comme incomplète, pas comme implicitement acquise.
-
-### Découvrir le projet
-
-1. [Héritage Drift-X](projet/heritage.qmd) — comprendre l'origine historique et ce que les travaux antérieurs établissent.
-2. [Objectifs de J-DriftX](projet/objectifs.qmd) — identifier l'hypothèse étudiée, sans la confondre avec une capacité validée.
-3. [Utilité scientifique](projet/utilite-scientifique.qmd) — comprendre les conditions nécessaires pour justifier un cas d'usage.
-
-### Suivre la dérivation physique et mathématique
-
-1. [Modèle direct](theorie/modele-direct.qmd) — partir de l'équation générale de conservation et suivre les hypothèses qui conduisent à l'équation parabolique.
-2. [Solutions de similitude](theorie/similitude.qmd) — dériver la solution gaussienne pour le problème simplifié et ses conditions aux limites.
-3. [Réduction a priori](theorie/reduction-a-priori.qmd) — examiner comment cette famille devient une représentation candidate d'un problème plus large, et ce qu'il reste à mesurer.
-
-Cette chaîne ne démontre pas que la famille candidate reste valide pour un vent non uniforme.
-
-### Comprendre le temps de transport
-
-1. [Métrique travel-time](theorie/metrique-travel-time.qmd) — distinguer le coût le long d'un chemin imposé, le temps de première arrivée et la construction historique par projection.
-2. [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) — comparer les objets mathématiques voisins sans présumer leur équivalence.
-3. [Revue mathématique](etat-art/revue-mathematique.qmd) — situer les résultats établis, les contre-exemples et les questions ouvertes.
-
-Cette chaîne est liée au modèle physique, mais ne découle pas automatiquement de la dérivation à vent uniforme.
-
-### Reproduire et évaluer les résultats
-
-1. [Catalogue du laboratoire numérique](projet/laboratoire-interactif.qmd) — choisir une expérience synthétique et retrouver ses hypothèses, sa solution de référence et la commande pour la lancer localement.
-2. [Qualité & tests](projet/qualite.qmd) — identifier les propriétés effectivement testées, les tolérances et les limites de chaque oracle ; la CI vérifie le code et le rendu, pas la validité physique générale.
-3. [Tests du dépôt](https://github.com/JM-Brun/J-DriftX/tree/main/tests) — examiner les cas automatisés qui soutiennent les affirmations sur le comportement du code.
-4. [Instrument de coût](https://github.com/JM-Brun/J-DriftX/blob/main/benchmarks/README.md) — reproduire les mesures de coût disponibles en gardant à l'esprit que le squelette actuel ne démontre pas de gain face à un solveur EDP/CFD.
-5. [Validation scientifique](projet/validation-scientifique.qmd) et [catalogue de données candidates](projet/catalogue-donnees.qmd) — retrouver les conditions nécessaires à une comparaison sur référence indépendante.
-
-**Portée actuelle :** les expériences synthétiques et les tests ciblés vérifient des cas définis. Ils ne constituent pas une validation météorologique ou applicative. Le cadrage documentaire G0 est franchi, mais l'utilité applicative (G0-A), la valeur différentielle et un gain de performance restent non démontrés. Les questions scientifiques ouvertes sont suivies dans les [issues publiques du dépôt](https://github.com/JM-Brun/J-DriftX/issues).
-
-## De l'idée au détail
-
-Chaque affirmation de haut niveau a sa page de détail — dérivation, justification, limites :
-
-| Question de haut niveau | Où descendre |
-|---|---|
-| Que disent réellement les sources historiques ? | [Héritage](projet/heritage.qmd) · [Lectures des sources](projet/lectures.qmd) · [Audit de l'héritage](projet/audit.qmd) |
-| Pourquoi une métrique de temps de transport, et quels objets mathématiques voisins ? | [Métrique travel-time](theorie/metrique-travel-time.qmd) · [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) · [Revue mathématique](etat-art/revue-mathematique.qmd) |
-| Comment les solutions de similitude sont-elles dérivées ? | [Solutions de similitude](theorie/similitude.qmd) |
-| Comment les niveaux physiques, mathématiques et numériques s'articulent-ils ? | [Niveaux de modélisation](projet/niveaux-modelisation.qmd) · [Carte d'articulation](projet/carte-articulation.qmd) · [Carte des connaissances](projet/carte-connaissances.qmd) |
-| Que fait exactement le code aujourd'hui — objets, contrats, et pourquoi ? | [Correspondance avec le code](theorie/metrique-travel-time.qmd#correspondance-avec-le-code-actuel) · [Glossaire](glossaire.qmd) · [Qualité & tests](projet/qualite.qmd) |
-| Que garantit le modèle, et avec quelles preuves ? | [Contraintes physiques](theorie/contraintes-physiques.qmd) · [Catalogue des hypothèses](hypotheses/catalogue.qmd) · [Limites](hypotheses/limites.qmd) |
-| Que coûterait une modélisation complète ? | [EDP & maillage](theorie/edp-et-maillage.qmd) · [Comparaison des complexités](theorie/comparaison-complexites.qmd) |
-| Comment les données calibrent-elles le modèle ? | [Assimilation & identification](theorie/assimilation-identification.qmd) |
-| Qu'est-ce qui reste à faire et à valider ? | [Limites et domaines de validité](hypotheses/limites.qmd) · [issues du dépôt](https://github.com/JM-Brun/J-DriftX/issues) |
-
-## Explorer
-
-| Entrée | Contenu |
-|---|---|
-| [Carte d'articulation](projet/carte-articulation.qmd) | Parcours de lecture, niveaux de preuve, état des portes et limites des laboratoires |
-| [Carte des connaissances](projet/carte-connaissances.qmd) | Vue relationnelle générée depuis un registre typé : concepts, hypothèses, niveaux, code, tests, références et jeux de données, avec liens cliquables |
-| [Niveaux de modélisation](projet/niveaux-modelisation.qmd) | Champ de vent, chemins, temps de transport, dispersion, concentration ; dépendances, hypothèses et état d'implémentation |
-| [Le projet](projet/heritage.qmd) | Héritage Drift-X (2006–2009), [objectifs](projet/objectifs.qmd) et [utilité scientifique](projet/utilite-scientifique.qmd) |
-| [Fondements théoriques](theorie/modele-direct.qmd) | Modèle direct, réduction a priori, similitude, métrique, contraintes, assimilation — avec les théories mathématiques |
-| [EDP & maillage](theorie/edp-et-maillage.qmd) | Ce que serait une modélisation complète du problème : EDP, fermeture de la turbulence, CFD, maillage, schémas numériques, coût |
-| [Comparaison des complexités](theorie/comparaison-complexites.qmd) | Où se paie le coût : gaussien, Lagrangien, CFD, ROM a posteriori, ML, réduction a priori — côte à côte |
-| [Métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd) | Distances-temps, quasi-métriques, Finsler/Zermelo : les objets mathématiques voisins de la métrique τ |
-| [Qualité & tests](projet/qualite.qmd) | Ce que les tests vérifient réellement — et ce qu'ils ne prouvent pas |
-| [Expériences interactives](projet/experiences-interactives.qmd) | Catalogue des expériences, traçabilité propriétés-tests, convergence et exécution locale des outils Streamlit |
-| [Hypothèses](hypotheses/catalogue.qmd) | Le catalogue des hypothèses du modèle et leurs limites de validité |
-| [État de l'art](etat-art/panorama.qmd) | Ce qui a changé entre 2008 et 2026, et le [positionnement](etat-art/positionnement.qmd) de J-DriftX |
-| [Glossaire](glossaire.qmd) | Notations ($C$, $\tau$, $Q$, $h$…) et notions clés (similitude, ROM, assimilation…) expliquées en français simple, avec leur origine |
-| [Références](references.qmd) | Bibliographie complète, du corpus historique aux travaux récents |
+Les questions ouvertes, investigations et tâches de validation sont suivies dans les [issues publiques du dépôt](https://github.com/JM-Brun/J-DriftX/issues). Le [README GitHub](https://github.com/JM-Brun/J-DriftX) décrit l'état de l'implémentation logicielle.

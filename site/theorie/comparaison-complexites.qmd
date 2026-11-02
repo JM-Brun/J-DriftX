@@ -6,6 +6,9 @@ title: "Comparaison des complexités"
 
 > Comparaison **structurelle** : cette page décrit où chaque famille paie son coût (préparation, évaluation, calibration), pas une performance mesurée. La démonstration d'un coût total inférieur **à précision comparable** est un jalon de validation — voir [Positionnement](../etat-art/positionnement.qmd).
 
+![Comparaison conceptuelle entre une approche CFD sur maillage et l'hypothèse de réduction étudiée par J-DriftX. Les champs et trajectoires sont schématiques ; cette figure n'est ni un benchmark, ni une comparaison à conditions physiques identiques, ni une preuve de supériorité.](../images/comparaison-cfd-jdriftx.svg){fig-cap="Deux stratégies de représentation à comparer à précision, conditions et coût total comparables."}
+
+
 ## Trois moments de coût
 
 1. **Préparation (hors-ligne)** : tout ce qu'il faut payer avant la première prédiction — maillage, *snapshots*, entraînement, calibration.

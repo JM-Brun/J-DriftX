@@ -661,12 +661,12 @@ graph LR
 
 | Référence | Citée dans les pages du site |
 |---|---|
-| [Mohammadi et Brun 2006 — C. R. Mécanique](../references.qmd) | [Glossaire](../glossaire.qmd) · [J-DriftX — dispersion atmosphérique à complexité réduite](../index.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) |
+| [Mohammadi et Brun 2006 — C. R. Mécanique](../references.qmd) | [Glossaire](../glossaire.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) |
 | [Mohammadi, Brun et Pironneau — reduced order modelling (référence non confirmée)](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
-| [Brun et Mohammadi 2008 — chapitre Springer](../references.qmd) | [Glossaire](../glossaire.qmd) · [Limites et domaines de validité](../hypotheses/limites.qmd) · [J-DriftX — dispersion atmosphérique à complexité réduite](../index.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) · [Modèle direct](../theorie/modele-direct.qmd) · [Réduction a priori](../theorie/reduction-a-priori.qmd) · [Solutions de similitude](../theorie/similitude.qmd) |
+| [Brun et Mohammadi 2008 — chapitre Springer](../references.qmd) | [Glossaire](../glossaire.qmd) · [Limites et domaines de validité](../hypotheses/limites.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) · [Modèle direct](../theorie/modele-direct.qmd) · [Réduction a priori](../theorie/reduction-a-priori.qmd) · [Solutions de similitude](../theorie/similitude.qmd) |
 | [Bozon, Mohammadi et Sinfort 2008 — e-sta](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
-| [Bozon, Sinfort et Mohammadi 2009 — Drift-X (HAL)](../references.qmd) | [J-DriftX — dispersion atmosphérique à complexité réduite](../index.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) |
-| [Bozon et Mohammadi 2009 — Applied Geomatics](../references.qmd) | [J-DriftX — dispersion atmosphérique à complexité réduite](../index.qmd) · [Héritage Drift-X (2006–2009)](heritage.qmd) |
+| [Bozon, Sinfort et Mohammadi 2009 — Drift-X (HAL)](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
+| [Bozon et Mohammadi 2009 — Applied Geomatics](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) |
 | [Brun 2006 — thèse de doctorat (métadonnées à confirmer)](../references.qmd) | [Héritage Drift-X (2006–2009)](heritage.qmd) · [Métrique travel-time](../theorie/metrique-travel-time.qmd) |
 | [Muller 1979 — cartographie des distances-temps](../references.qmd) | [Glossaire](../glossaire.qmd) · [Pseudo-distances, coûts orientés et géométries non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) |
 | [Mohammadi et Pironneau 2001 — Applied Shape Optimization](../references.qmd) | [Réduction a priori](../theorie/reduction-a-priori.qmd) |

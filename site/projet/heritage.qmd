@@ -6,6 +6,9 @@ title: "Héritage Drift-X (2006–2009)"
 
 Le projet **Drift-X** est né à Montpellier entre 2006 et 2009, dans la collaboration entre le Cemagref (unité ITAP, technologies et systèmes d'information pour les agrosystèmes) et le laboratoire I3M (Université Montpellier II, avec B. Mohammadi et O. Pironneau). Son objectif : modéliser la **dispersion atmosphérique des pesticides** pendant la pulvérisation en viticulture, de la parcelle au bassin versant, à un coût de calcul compatible avec l'analyse de risque statistique.
 
+![Schéma de l'architecture applicative historique visée : articulation du champ proche et du champ lointain, avec raffinement multi-niveaux du vent et du relief et chaîne de traitement SIG.](../images/projet-jdriftx.svg){fig-cap="Architecture historique de Drift-X (2008–2009), à distinguer de l'état d'implémentation de la reprise J-DriftX."}
+
+
 ## Chronologie
 
 | Année | Étape | Support |

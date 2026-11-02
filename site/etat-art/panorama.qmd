@@ -12,6 +12,16 @@ Les requêtes exactes, dates de recherche, critères de sélection, décomptes e
 
 Voir l'[audit adversarial](https://github.com/JM-Brun/J-DriftX/blob/main/docs/15-audit-adversarial-hallucinations.md) et le [protocole de validation scientifique](../projet/validation-scientifique.qmd).
 
+## Pourquoi réexaminer cette question aujourd'hui ?
+
+Le contexte scientifique et les ressources disponibles ont évolué depuis les travaux Drift-X de 2006–2009. Cela motive une nouvelle évaluation, mais ne constitue pas en soi une preuve de nouveauté ni un avantage de la méthode.
+
+- **Modernisation d'AGDISP.** L'AGDISP Modernization Project (2023–2026) annonce une modernisation open source, avec un effort notamment porté sur le near-field et le 3D. Le far-field réaliste, cible historique de Drift-X, doit être examiné précisément dans le périmètre annoncé et livré ; voir la [source du projet](https://www.agaviation.org/wp-content/uploads/2026/03/AGDISP-Modernization-Project-Summary-20260304f.pdf).
+- **Baselines et réduction.** Les ROM et approches *data-driven* sont hétérogènes : certaines s'appuient sur des snapshots ou des données d'entraînement, d'autres non. Une réduction *a priori* doit être comparée à des méthodes précises, sur un même problème, en comptabilisant préparation, calibration et évaluation.
+- **Données ouvertes.** Des ressources désormais accessibles — réanalyses météorologiques ERA5/Copernicus, modèles numériques de terrain ouverts et capteurs à faible coût — peuvent faciliter la constitution de protocoles reproductibles. Leur disponibilité ne garantit ni leur représentativité locale, ni leur adéquation à chaque validation.
+
+
+
 ## Modèles opérationnels et réglementaires
 
 Les modèles et les usages réglementaires varient selon le polluant, le régime physique et la décision. Le fait qu'un modèle soit gaussien, qu'une comparaison révèle des écarts ou qu'une incertitude subsiste ne démontre pas à lui seul un besoin auquel J-DriftX répondrait mieux. Toute comparaison doit porter sur un même observable, un régime comparable et une baseline pertinente.

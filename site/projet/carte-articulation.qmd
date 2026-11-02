@@ -43,6 +43,20 @@ La règle de lecture est simple : **une preuve à un niveau ne vaut pas preuve a
 
 Pour le statut détaillé de chaque niveau, les limites de conclusion et l'ordre de travail recommandé, voir la [synthèse scientifique de référence](https://github.com/JM-Brun/J-DriftX/blob/main/docs/18-carte-articulation-scientifique.md). Pour les dépendances entre champ de vent, chemins, temps de transport, dispersion et concentration, consulter la [carte des niveaux de modélisation](niveaux-modelisation.qmd).
 
+## Interpréter le statut d'une affirmation {#statut-affirmation}
+
+Une équation, un test logiciel et une validation physique ne constituent pas le même type de preuve. Le statut affiché doit être lu avec les hypothèses, le domaine et le protocole qui l'accompagnent.
+
+| Statut | Ce que cela autorise à conclure | Ce que cela n'autorise pas à conclure |
+|---|---|---|
+| **Défini / formulé** | L'objet, les hypothèses et les conventions sont explicités. | Que la propriété est vraie ou que le code la respecte. |
+| **Dérivé / démontré** | Le résultat découle du raisonnement indiqué, sous ses hypothèses. | Qu'il reste valable hors de ce cadre. |
+| **Testé** | Un comportement précis a été vérifié sur les cas, données et tolérances annoncés. | Une preuve générale, ni une validation physique. |
+| **Comparé** | Un résultat a été confronté à une référence identifiée selon un protocole donné. | Une supériorité universelle ou un gain hors du protocole. |
+| **Validé indépendamment** | Une confrontation indépendante soutient l'usage défini et son domaine. | Une validité pour tout terrain, météo ou régime physique. |
+
+**Règle de lecture :** avant de reprendre une conclusion, retrouver (1) les hypothèses, (2) le domaine et les conditions aux limites, (3) la nature de la preuve, (4) les limites et contre-exemples connus. Si l'un de ces éléments manque, la conclusion est incomplète — il ne faut pas le supposer implicitement.
+
 ## Laboratoires : portée et limites
 
 Les applications Python servent à la vérification numérique de cas synthétiques ou analytiques ; elles ne constituent pas une validation météorologique ou applicative. Elles ne modélisent pas, à elles seules, la dynamique complète des gouttelettes, la turbulence atmosphérique, le dépôt ou l'effet du relief sur le vent.
@@ -96,6 +110,40 @@ Ce parcours vérifie ce que l'implémentation fait dans des cas contrôlés ; il
 ### Vérification et décision
 
 Après les contrôles reproductibles, consulter les [questions ouvertes du projet](https://github.com/JM-Brun/J-DriftX/issues) et les issues ciblées sur le [besoin applicatif G0-A](https://github.com/JM-Brun/J-DriftX/issues/43) et les [benchmarks de référence](https://github.com/JM-Brun/J-DriftX/issues/17). La décision de poursuivre doit dépendre des preuves disponibles, pas de la seule faisabilité technique.
+
+## Index thématique : de l'idée au détail
+
+Cette table conserve les raccourcis thématiques de l'ancienne page d'accueil. Elle complète les parcours de lecture ci-dessus : on peut partir d'une question précise sans suivre toute la chaîne.
+
+| Question | Pages de référence |
+|---|---|
+| Que disent réellement les sources historiques ? | [Héritage](heritage.qmd) · [Lectures des sources](lectures.qmd) · [Audit de l'héritage](audit.qmd) |
+| Pourquoi une métrique de temps de transport, et quels objets mathématiques voisins ? | [Métrique travel-time](../theorie/metrique-travel-time.qmd) · [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) · [Revue mathématique](../etat-art/revue-mathematique.qmd) |
+| Comment les solutions de similitude sont-elles dérivées ? | [Solutions de similitude](../theorie/similitude.qmd) |
+| Comment les niveaux physiques, mathématiques et numériques s'articulent-ils ? | [Niveaux de modélisation](niveaux-modelisation.qmd) · [Carte des connaissances](carte-connaissances.qmd) |
+| Que fait exactement le code aujourd'hui — objets, contrats et raisons des choix ? | [Correspondance avec le code](../theorie/metrique-travel-time.qmd#correspondance-avec-le-code-actuel) · [Glossaire](../glossaire.qmd) · [Qualité & tests](qualite.qmd) |
+| Que garantit le modèle, et avec quelles preuves ? | [Contraintes physiques](../theorie/contraintes-physiques.qmd) · [Catalogue des hypothèses](../hypotheses/catalogue.qmd) · [Limites](../hypotheses/limites.qmd) |
+| Que coûterait une modélisation complète ? | [EDP & maillage](../theorie/edp-et-maillage.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
+| Comment les données calibrent-elles le modèle ? | [Assimilation & identification](../theorie/assimilation-identification.qmd) |
+| Qu'est-ce qui reste à faire et à valider ? | [Limites et domaines de validité](../hypotheses/limites.qmd) · [Issues du dépôt](https://github.com/JM-Brun/J-DriftX/issues) |
+
+## Répertoire des ressources
+
+| Entrée | Contenu |
+|---|---|
+| [Carte des connaissances](carte-connaissances.qmd) | Vue relationnelle générée depuis un registre typé : concepts, hypothèses, niveaux, code, tests, références et jeux de données, avec liens cliquables |
+| [Niveaux de modélisation](niveaux-modelisation.qmd) | Champ de vent, chemins, temps de transport, dispersion et concentration ; dépendances, hypothèses et état d'implémentation |
+| [Héritage et projet](heritage.qmd) | Drift-X (2006–2009), [objectifs](objectifs.qmd) et [utilité scientifique](utilite-scientifique.qmd) |
+| [Fondements théoriques](../theorie/modele-direct.qmd) | Modèle direct, réduction a priori, similitude, métrique, contraintes et assimilation |
+| [EDP & maillage](../theorie/edp-et-maillage.qmd) | EDP, fermeture de la turbulence, CFD, maillage, schémas numériques et coûts |
+| [Comparaison des complexités](../theorie/comparaison-complexites.qmd) | Coût des approches gaussiennes, lagrangiennes, CFD, ROM a posteriori, ML et réduction a priori |
+| [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) | Distances-temps, quasi-métriques, Finsler/Zermelo et objets voisins de la coordonnée candidate \(\tau\) |
+| [Qualité & tests](qualite.qmd) | Ce que les tests vérifient réellement — et ce qu'ils ne prouvent pas |
+| [Expériences interactives](experiences-interactives.qmd) | Catalogue des expériences, traçabilité propriétés-tests, convergence et exécution locale des outils Streamlit |
+| [Hypothèses](../hypotheses/catalogue.qmd) | Catalogue des hypothèses du modèle et limites de validité |
+| [État de l'art](../etat-art/panorama.qmd) | Évolution du contexte 2008–2026 et [positionnement](../etat-art/positionnement.qmd) de J-DriftX |
+| [Glossaire](../glossaire.qmd) | Notations et notions clés expliquées en français, avec leur origine |
+| [Références](../references.qmd) | Bibliographie du corpus historique aux travaux récents |
 
 ## Suivi des travaux
 
