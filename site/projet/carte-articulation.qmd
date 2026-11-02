@@ -28,6 +28,18 @@ Ces repères sont **orthogonaux**, pas des correspondances terme à terme. Une m
 
 **Règle pratique :** ne pas déduire qu'un niveau N0–N6 est un niveau de maturité, ni qu'une page avancée contient nécessairement des résultats mieux validés. Le niveau N décrit l'objet étudié ; le statut décrit la preuve disponible ; le parcours décrit l'effort de lecture.
 
+## Trois cartes complémentaires, trois questions différentes
+
+Les cartes du site ne sont pas trois représentations concurrentes du même objet. Elles répondent à des questions différentes :
+
+| Carte | Question du lecteur | Ce qu'elle organise | Ce qu'elle ne remplace pas |
+|---|---|---|---|
+| **Cette carte d'articulation** | Où commencer et comment relier les explications aux preuves ? | Les parcours de lecture, les niveaux de preuve, les portes de décision et les chemins vers les pages détaillées. | La description complète de la chaîne physique ou l'inventaire des relations documentaires. |
+| [Carte des niveaux de modélisation](niveaux-modelisation.qmd) | Quels objets physiques et mathématiques interviennent, et dans quel ordre ? | La chaîne N0–N6, ses dépendances et la distinction entre objets conceptuels et capacités effectivement implémentées. | Un parcours pédagogique ou une évaluation du niveau de preuve. |
+| [Carte des connaissances](carte-connaissances.qmd) | Où sont documentés les liens entre concepts, hypothèses, code, tests, références et données ? | Un graphe typé généré depuis un registre et contrôlé automatiquement ; ses arêtes décrivent des relations documentaires explicites. | Une preuve scientifique : un lien « implémenté par » ou « testé par » ne démontre pas une propriété physique. |
+
+**Pour choisir rapidement :** utilisez cette page pour vous orienter, la carte N0–N6 pour comprendre la structure du modèle, et le graphe pour remonter d'un concept vers ses artefacts documentaires. Pour juger une affirmation, revenez toujours à ses hypothèses et à son statut dans le [registre des preuves](registre-preuves.qmd).
+
 ## Deux architectures historiques multi-niveaux à distinguer
 
 Les sources Drift-X emploient « multi-niveaux » dans deux sens complémentaires mais non interchangeables : le couplage physique **champ proche → transport à longue distance** décrit par Brun & Mohammadi (2008), et le raffinement spatial du vent/relief par domaines emboîtés `Ω = ω₀, ωᵢ` décrit par Bozon, Sinfort & Mohammadi (2009). La carte conceptuelle N0–N6 — détaillée dans la [carte des niveaux de modélisation](niveaux-modelisation.qmd) — ne remplace aucune de ces deux architectures historiques. Voir la [revue des sources](https://github.com/JM-Brun/J-DriftX/blob/main/docs/04-revues-papiers-sources.md), la [fiche du chapitre Springer 2008](https://github.com/JM-Brun/J-DriftX/blob/main/raw/fiches/2008-brun-mohammadi-springer-chap14.md) et la [fiche de la plateforme Drift-X 2009](https://github.com/JM-Brun/J-DriftX/blob/main/raw/fiches/2009-bozon-sinfort-mohammadi-driftx-hal.md).
