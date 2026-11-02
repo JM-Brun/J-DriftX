@@ -19,6 +19,15 @@ Cette page est le **premier maillon de la chaîne physique** : elle pose le prob
 
 Le parcours de lecture est donc : **modèle direct → similitude → réduction a priori** pour la chaîne physique ; la chaîne géométrique se lit séparément. L'articulation complète — qui définit quoi, et selon quel contrat — fait l'objet de la section « Articulation avec les autres pages » en fin de page.
 
+::: {.callout-note title="Lecture rapide — résultat, hypothèses et portée"}
+- **Résultat dérivé :** sous les hypothèses de la section 10, le transport moyen se réduit à une équation parabolique de diffusion transverse, donnée dans l'équation encadrée ci-dessous.
+- **Hypothèses déterminantes :** régime stationnaire, vent uniforme et aligné ($U>0$), tenseur diffusif diagonal constant, diffusion longitudinale négligeable à l'échelle considérée, absence de réaction et de dépôt dans la région aval.
+- **Statut :** dérivation mathématique conditionnelle à ces hypothèses ; ce n'est ni une équation générale de dispersion atmosphérique, ni une preuve de validité en vent non uniforme.
+- **Implémentation :** le dépôt ne résout pas le modèle direct général $V(p)$. La famille gaussienne et les largeurs empiriques effectivement codées ont des statuts distincts.
+
+Pour le détail des transitions et de leurs types (identité, hypothèse, fermeture, approximation), poursuivre à la section 10 ; pour la solution construite à partir de l'équation parabolique, passer à [Solutions de similitude](similitude.qmd).
+:::
+
 ### Notation : le modèle direct $p\mapsto V(p)$ {#notation-modele-direct}
 
 Partout dans la documentation, le **modèle direct** désigne la correspondance $p\mapsto V(p)$ : aux paramètres $p$ du problème de référence — source, champ de vitesse, tenseur $\mathbf K$, conditions aux limites — il associe l’état complet $V(p)$, la concentration résolue de l’équation de transport de la section 2, sans réduction de l’espace des solutions. Cette notation est celle de la page [Réduction a priori](reduction-a-priori.qmd), qui confronte $V(p)$ au modèle approché $v(p)$ construit dans [Solutions de similitude](similitude.qmd#famille-candidate-v). **Statut : conceptuel.** Aucune implémentation de $V(p)$ n’existe dans le dépôt : cette page définit le problème de référence, elle ne l’implémente pas.
@@ -80,7 +89,11 @@ $$
 =\overline{\mathbf{u}}\,\overline C
 +\overline{\mathbf{u}'C'}.
 $$
+::: {.callout-note collapse="true" title="Démonstration algébrique — développement des quatre termes"}
+
 **Pourquoi cette identité : les quatre termes du produit.** Le produit s'écrit $\mathbf{u}\,C=(\overline{\mathbf{u}}+\mathbf{u}')\,(\overline C+C')=\overline{\mathbf{u}}\,\overline C+\overline{\mathbf{u}}\,C'+\mathbf{u}'\,\overline C+\mathbf{u}'C'$. En appliquant la moyenne à chaque terme : le premier est composé de quantités déjà moyennées et reste tel quel ; les deux termes croisés s'annulent parce que la moyenne est linéaire, commute avec la multiplication par une quantité déjà moyennée, et que les fluctuations sont de moyenne nulle — $\overline{\overline{\mathbf{u}}\,C'}=\overline{\mathbf{u}}\,\overline{C'}=0$ et $\overline{\mathbf{u}'\,\overline C}=\overline C\,\overline{\mathbf{u}'}=0$. Il reste exactement l'identité affichée. **Type : identité mathématique** sous les seules règles de moyennage admises en 3.1 (linéarité, $\overline{\phi'}=0$) ; aucune physique de turbulence n'y intervient encore — tout l'enjeu de la fermeture est dans le terme $\overline{\mathbf{u}'C'}$ qui subsiste.
+
+:::
 
 En moyennant l’équation conservative et en utilisant cette identité, on obtient
 $$
@@ -305,7 +318,11 @@ $
 $
 Un grand nombre de Péclet longitudinal ($\mathrm{Pe}_x\gg1$) justifie que cette diffusion soit petite devant l'advection. Pour la négliger dans une équation qui conserve explicitement la diffusion transversale, il faut aussi vérifier que le terme longitudinal est petit devant les termes transversaux pertinents à l'échelle considérée, par exemple en comparant $D_x/L_x^2$ à $K_y/L_y^2$ et $K_z/L_z^2$. Ces comparaisons sont des critères d'ordre de grandeur, pas une preuve uniforme de validité près de la source, aux frontières ou là où les gradients changent d'échelle.
 
+::: {.callout-note collapse="true" title="Exemple numérique — ordre de grandeur du nombre de Péclet"}
+
 **Un ordre de grandeur concret (illustration).** Pour $U=5\,\mathrm{m\,s^{-1}}$, $K_x=10\,\mathrm{m^2\,s^{-1}}$ et une échelle longitudinale $L_x=1\,\mathrm{km}$, on obtient $\mathrm{Pe}_x=UL_x/K_x=500$ : à cette échelle, la diffusion longitudinale vaut un cinq-centième de l’advection. La marge est large, mais elle se réduit près de la source (faibles vitesses, petites échelles) ou dans les zones tourbillonnaires — c’est le sens exact de « critère d’échelle, pas une preuve uniforme ». **Type : illustration numérique** ; aucune valeur normative pour un site réel.
+
+:::
 
 Ce choix est l'approximation parabolique de panache. Il conduit, avec $D_y\simeq K_y$ et $D_z\simeq K_z$, à
 $$
