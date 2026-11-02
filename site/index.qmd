@@ -63,17 +63,27 @@ L'analyse de l'héritage et le panorama de l'état de l'art sont présentés dan
 
 La [carte d'articulation scientifique](projet/carte-articulation.qmd) donne la vue d'ensemble : elle distingue les sources historiques, l'hypothèse mathématique, les vérifications du code, la comparaison différentielle et la validation indépendante. Choisir ensuite le parcours adapté à la question recherchée.
 
-### Choisir son niveau de lecture
+### Choisir sa profondeur de lecture
 
-Cette documentation est conçue pour être lue à plusieurs profondeurs. Il n'est pas nécessaire de maîtriser les détails mathématiques pour comprendre la question scientifique ; en revanche, toute conclusion technique doit pouvoir être remontée jusqu'à ses hypothèses et ses preuves.
+Les quatre niveaux ci-dessous sont des **portes d'entrée vers un même raisonnement**, pas quatre modèles différents ni quatre degrés de validation. Chaque niveau renvoie au suivant sans recopier son contenu ; il est possible d'entrer directement au niveau adapté à sa question.
 
-::: {.callout-tip title="Trois façons d'entrer dans le sujet" collapse="false"}
-- **Vue d'ensemble — comprendre l'idée.** Lire l'accueil, la [carte d'articulation](projet/carte-articulation.qmd) et les résumés en tête des pages. Objectif : savoir quelle question J-DriftX étudie, ce qui est acquis et ce qui reste hypothétique.
-- **Parcours explicatif — comprendre le raisonnement.** Suivre les sections « intuition », « formulation » et « conséquences » des pages théoriques, puis les renvois vers les hypothèses. Objectif : comprendre pourquoi une équation ou une approximation est introduite et ce qu'elle change.
-- **Parcours de vérification — contrôler une affirmation.** Consulter les dérivations, les conditions aux limites, le [registre des preuves](projet/registre-preuves.qmd), les tests et les expériences reproductibles. Objectif : vérifier précisément la portée d'un résultat, ses tolérances et ses limites.
+| Parcours | Question à laquelle il répond | Première lecture | Pour poursuivre |
+|---|---|---|---|
+| **1 — Comprendre** | Quel problème physique J-DriftX cherche-t-il à traiter, et qu'est-ce qui est réellement acquis ? | [Carte d'articulation](projet/carte-articulation.qmd) et [objectifs](projet/objectifs.qmd) | [Héritage Drift-X](projet/heritage.qmd), [utilité scientifique](projet/utilite-scientifique.qmd), [limites](hypotheses/limites.qmd) |
+| **2 — Comprendre le modèle** | Quelles grandeurs décrivent le transport et la dispersion, et comment s'enchaînent-elles ? | [Niveaux de modélisation](projet/niveaux-modelisation.qmd) | [Modèle direct](theorie/modele-direct.qmd), [solutions de similitude](theorie/similitude.qmd), [glossaire](glossaire.qmd) |
+| **3 — Comprendre la théorie** | Sous quelles hypothèses les équations, réductions et objets géométriques sont-ils construits ? | [Réduction a priori](theorie/reduction-a-priori.qmd) | [Métrique travel-time](theorie/metrique-travel-time.qmd), [métriques non riemanniennes](theorie/metriques-non-riemanniennes.qmd), [contraintes physiques](theorie/contraintes-physiques.qmd) |
+| **4 — Vérifier et reproduire** | Qu'est-ce qui est démontré, testé ou comparé, et comment reproduire le résultat ? | [Registre des preuves](projet/registre-preuves.qmd) et [validation scientifique](projet/validation-scientifique.qmd) | [Qualité & tests](projet/qualite.qmd), [laboratoire numérique](projet/laboratoire-interactif.qmd), [tests du dépôt](https://github.com/JM-Brun/J-DriftX/tree/main/tests) |
 
-Ces parcours ne correspondent pas à trois niveaux de vérité : ils donnent trois profondeurs de lecture d'un même raisonnement scientifique.
+::: {.callout-tip title="Comment utiliser ces quatre niveaux" collapse="false"}
+- **Comprendre** donne le contexte, la question de recherche et les limites principales, sans exiger de prérequis mathématique.
+- **Comprendre le modèle** identifie les variables physiques, leurs unités et les dépendances entre champ de vent, transport, dispersion et concentration.
+- **Comprendre la théorie** explicite les hypothèses, les formulations et les dérivations. Une intuition ou un schéma ne remplace jamais une démonstration.
+- **Vérifier et reproduire** remonte aux références, preuves, tests, données, protocoles et détails d'implémentation. Il faut distinguer ce qui est reproductible de ce qui a été validé indépendamment.
+
+Ces parcours ne sont pas obligatoirement séquentiels : un lecteur expert peut commencer par une preuve ; un lecteur débutant peut s'arrêter après le premier niveau. Les liens assurent la continuité entre les profondeurs.
 :::
+
+**Ne pas confondre les quatre niveaux de lecture avec N0–N6.** Les niveaux de lecture organisent l'accès à la documentation ; N0–N6 décrivent les objets de la chaîne physique et mathématique. Le statut d'une affirmation (formulé, démontré, testé, comparé ou validé indépendamment) constitue encore un axe distinct.
 
 ### Lire le statut d'une affirmation
 
