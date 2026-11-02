@@ -460,3 +460,6 @@ Ces ajouts améliorent la robustesse numérique de l'oracle ; ils ne changent ni
 
 
 **Convention du premier contact à l'origine.** Si la cible fixe coïncide avec (x_0), `premier_contact` retourne (0) : la cible est atteinte à l'instant initial. Ce cas est distingué du calcul des zéros de (g_B), défini pour (t>0), et possède un test dédié.
+
+
+**Appartenance numérique à la frontière.** La comparaison stricte (\|x-(x_0+ut)\|\leq R(t)) pouvait rejeter un point construit exactement sur la frontière à cause de l'arrondi des opérations (x_{centre}+R), puis (x-x_{centre}). Le prédicat d'appartenance applique désormais une tolérance relative de (16\,\epsilon_{64}\max(d,R)). Un test vérifie simultanément l'inclusion du point de frontière reconstruit et le rejet d'un point extérieur de (10^{-12}) en relatif. Cette tolérance ne modifie pas l'ensemble mathématique ; elle borne l'incertitude de classification au voisinage immédiat de sa frontière en float64.
