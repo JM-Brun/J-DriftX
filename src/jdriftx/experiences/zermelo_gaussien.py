@@ -89,9 +89,18 @@ class ModeleGZ1:
     @property
     def t_etoile(self) -> float:
         """Temps du rayon maximal t* (s)."""
-        return float(
-            (self.masse / (self.seuil * exp(1.5))) ** (2.0 / 3.0) / (4.0 * pi * self.diffusivite)
+        logarithme = (
+            (2.0 / 3.0) * (log(self.masse) - log(self.seuil) - 1.5)
+            - log(4.0 * pi)
+            - log(self.diffusivite)
         )
+        try:
+            resultat = exp(logarithme)
+        except OverflowError as err:
+            raise ValueError("Le temps caractéristique t* dépasse la plage float64.") from err
+        if resultat == 0.0:
+            raise ValueError("Le temps caractéristique t* est inférieur à la plage float64.")
+        return resultat
 
     @property
     def t_extinction(self) -> float:
@@ -101,7 +110,13 @@ class ModeleGZ1:
     @property
     def rayon_maximal(self) -> float:
         """Rayon maximal R(t*) (m)."""
-        return sqrt(6.0 * self.diffusivite * self.t_etoile)
+        logarithme = 0.5 * (
+            log(6.0) + log(self.diffusivite) + log(self.t_etoile)
+        )
+        try:
+            return exp(logarithme)
+        except OverflowError as err:
+            raise ValueError("Le rayon maximal dépasse la plage float64.") from err
 
     @property
     def _vent_array(self) -> NDArray[np.float64]:
@@ -118,9 +133,16 @@ class ModeleGZ1:
         t = _scalaire_positif(temps, "Le temps")
         if t > self.t_extinction:
             raise ValueError("Le rayon réel du seuil n'existe plus après e·t*.")
-        facteur = 1.0 + log(self.t_etoile / t)
-        carre = 6.0 * self.diffusivite * t * facteur
-        return sqrt(max(0.0, carre))
+        facteur = 1.0 + log(self.t_etoile) - log(t)
+        if facteur <= 0.0:
+            return 0.0
+        logarithme_rayon = 0.5 * (
+            log(6.0) + log(self.diffusivite) + log(t) + log(facteur)
+        )
+        try:
+            return exp(logarithme_rayon)
+        except OverflowError as err:
+            raise ValueError("Le rayon dépasse la plage float64.") from err
 
     def vitesse_expansion(self, temps: float) -> float:
         """Dérivée R'(t) (m s⁻¹) sur 0 < t <= t*.
@@ -226,7 +248,15 @@ class ModeleGZ1:
         v = np.asarray(_vecteur3(deplacement, "Le déplacement"), dtype=float)
         a = c * c - norme_vent * norme_vent
         produit = float(u @ v)
-        return (sqrt(produit * produit + a * float(v @ v)) - produit) / a
+        norme_carre = float(v @ v)
+        if norme_carre == 0.0:
+            return 0.0
+        racine = sqrt(produit * produit + a * norme_carre)
+        # Rationalisation en aval : évite la soustraction de deux termes
+        # presque égaux lorsque u·v>0 et c approche ||u||.
+        if produit >= 0.0:
+            return norme_carre / (racine + produit)
+        return (racine - produit) / a
 
     def premier_contact(
         self, cible: tuple[float, float, float] | NDArray[np.float64]
@@ -237,9 +267,10 @@ class ModeleGZ1:
         convexe. Son minimum unique est trouvé par dichotomie sur g'_B,
         puis le premier zéro par dichotomie sur l'intervalle croissant.
         Cette méthode détecte aussi le contact tangent sans balayage discret.
-        Un résidu positif inférieur à 1e-12 de l'échelle géométrique est
-        classé comme tangence à la précision float64 ; un minimum négatif,
-        même très proche de zéro, conserve la dichotomie du premier zéro.
+        Un résidu positif inférieur à 64 eps_machine fois l'échelle
+        géométrique au carré est classé comme tangence à la précision
+        float64 ; un minimum négatif, même très proche de zéro, conserve
+        la dichotomie du premier zéro.
         """
         b = np.asarray(_vecteur3(cible, "La cible"), dtype=float)
         delta = b - self._origine_array
@@ -265,7 +296,12 @@ class ModeleGZ1:
             t_min = 0.5 * (bas + haut)
 
         g_min = self.fonction_contact(b, t_min)
-        tolerance = 1e-12 * max(1.0, float(delta @ delta), self.rayon_maximal**2)
+        echelle_carre = max(
+            float(delta @ delta),
+            float((u * t_max) @ (u * t_max)),
+            self.rayon_maximal**2,
+        )
+        tolerance = 64.0 * np.finfo(float).eps * echelle_carre
         if g_min > tolerance:
             return None
         if g_min >= 0.0:
