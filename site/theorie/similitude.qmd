@@ -104,6 +104,47 @@ $$
 $$
 Les variances croissent **linéairement avec le temps de transport** lorsque les diffusivités sont constantes.
 
+### Exemple numérique contrôlable — cas uniforme idéal
+
+Prenons volontairement un cas simple, qui respecte exactement les hypothèses de l'équation de la chaleur transversale :
+
+- vitesse longitudinale constante : $U=5\;\mathrm{m\,s^{-1}}$ ;
+- distance aval : $x=100\;\mathrm m$ ;
+- diffusivité transversale : $K_y=2\;\mathrm{m^2\,s^{-1}}$ ;
+- diffusivité verticale : $K_z=1\;\mathrm{m^2\,s^{-1}}$.
+
+Le temps associé au changement de variable est
+
+$
+t'=\frac{x}{U}=\frac{100\;\mathrm m}{5\;\mathrm{m\,s^{-1}}}=20\;\mathrm s.
+$
+
+Les variances, puis les écarts-types, valent alors
+
+$
+\begin{aligned}
+\sigma_y^2 &=2K_y t'=2\times2\times20=80\;\mathrm{m^2},
+&\sigma_y&=\sqrt{80}\simeq8{,}94\;\mathrm m,\\
+\sigma_z^2 &=2K_z t'=2\times1\times20=40\;\mathrm{m^2},
+&\sigma_z&=\sqrt{40}\simeq6{,}32\;\mathrm m.
+\end{aligned}
+$
+
+| Grandeur | Valeur | Contrôle d'unité |
+|---|---:|---|
+| $t'$ | $20\;\mathrm s$ | m / (m·s⁻¹) = s |
+| $\sigma_y^2$ | $80\;\mathrm{m^2}$ | (m²·s⁻¹) × s = m² |
+| $\sigma_z^2$ | $40\;\mathrm{m^2}$ | (m²·s⁻¹) × s = m² |
+| $\sigma_y$ | $8{,}94\;\mathrm m$ | racine d'une variance |
+| $\sigma_z$ | $6{,}32\;\mathrm m$ | racine d'une variance |
+
+**Interprétation.** À cette distance, le profil idéal est plus étalé latéralement que verticalement parce que $K_y>K_z$. Si l'on double la distance aval en conservant $U$, $K_y$ et $K_z$, le temps $t'$ et les variances doublent ; les écarts-types sont multipliés par $\sqrt 2$, et non par deux.
+
+::: {.callout-warning title="Portée de cet exemple" collapse="false"}
+Les valeurs de $U$, $K_y$ et $K_z$ sont choisies pour illustrer le calcul ; elles ne proviennent ni d'une campagne de mesure ni d'une calibration J-DriftX. Cet exemple vérifie les unités et les ordres de grandeur dans le cas uniforme à diffusivités constantes. Il ne valide pas les lois empiriques de Briggs/Pasquill, un champ de vent variable, la généralisation par $\tau$ ni une prédiction de concentration sur un site réel.
+:::
+
+
 **Étape 4 — Représenter correctement la source continue.** Le débit massique de la source est $Q$ ($\mathrm{kg\,s^{-1}}$). Dans le modèle parabolique, la coordonnée $x$ joue le rôle du temps $t'=x/U$ ; la condition d'entrée à $x=0^+$ doit donc représenter un flux massique $Q$. En intégrant l'équation parabolique sur le plan transversal, sans flux aux limites latérales, on obtient la conservation de $U\int C\,\mathrm dy\,\mathrm dz$. La condition d'entrée cohérente est ainsi, au sens des distributions,
 
 $$
