@@ -11,6 +11,7 @@ website:
   repo-url: "https://github.com/JM-Brun/J-DriftX"
   repo-actions: [edit, issue]
   page-navigation: true
+  back-to-top-navigation: true
   navbar:
     tools:
       - icon: github
@@ -111,10 +112,14 @@ website:
 
 format:
   html:
-    theme: [cosmo, styles.scss]
+    theme:
+      light: [cosmo, styles.scss]
+      dark: [dark, styles.scss]
     lang: fr
     toc: true
     toc-depth: 3
+    html-math-method: katex
+    link-external-newwindow: true
     grid:
       sidebar-width: 280px
     bibliography: references.bib
