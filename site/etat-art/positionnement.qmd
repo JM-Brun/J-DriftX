@@ -30,9 +30,13 @@ Le projet ne revendique actuellement ni nouveauté, ni supériorité prédictive
 
 Les références ne sont pas des concurrents interchangeables. Elles couvrent trois catégories distinctes :
 
-- **Modèles physiques de dispersion/transport :** FLEXPART (lagrangien particulaire) et AERMOD (modèle réglementaire). Ils peuvent servir de comparateurs sur des cas soigneusement appariés, mais leurs hypothèses, observables et régimes de validité diffèrent.
+- **Modèles physiques lagrangiens :** FLEXPART et HYSPLIT représentent le transport/dispersion particulaire ; CALPUFF, SCIPUFF et RIMPUFF représentent des puffs sur trajectoire. Ils sont des comparateurs de transport non stationnaire, sous réserve d'apparier les champs météorologiques et les observables.
+- **Modèles gaussiens réglementaires ou avancés :** AERMOD et UK-ADMS couvrent des régimes et processus qui doivent servir de baselines lorsque leurs hypothèses sont compatibles avec le cas étudié. Les modèles gaussiens ne se réduisent pas à la plume élémentaire.
+- **Microscale et obstacles :** GRAMM–GRAL fournit un comparateur de champ de vent microscopique et de dispersion lagrangienne autour d'obstacles ; il ne constitue pas une baseline directe lorsque J-DriftX reçoit un champ de vent imposé et ne calcule pas l'écoulement.
 - **Cadre de simulation :** OpenDrift fournit un exemple de modularité et de documentation des processus. Il peut inspirer la structuration des expériences ; une comparaison de concentration nécessite une définition explicite de l'estimateur reliant particules et champ scalaire.
 - **Outillage autour d'une baseline :** PyAERMOD facilite la construction, l'exécution et l'analyse des cas AERMOD. Il améliore potentiellement la reproductibilité du protocole, mais ne constitue pas une méthode physique indépendante.
+- **Fondements et preuves :** Thomson (1987) et Luhar & Britter (1989) aident à délimiter les modèles stochastiques de turbulence ; Andrews et al. (2013) et Rood (2014) montrent pourquoi les champs météorologiques, les observables et l'objectif d'évaluation doivent être contrôlés.
+- **Corpus expérimentaux :** Prairie Grass est le candidat prioritaire pour le champ proche ; CAPTEX/ANATEX et ETEX pour le transport régional/continental ; WVTS pour stationnaire vs puff ; JU2003 pour une extension urbaine. Leur statut de candidat ne signifie pas que les fichiers sont déjà audités ou intégrés.
 
 L'usage prioritaire est donc le suivant : (i) choisir une baseline selon l'observable et le régime visés, en lien avec les critères de [l'issue G0-A](https://github.com/JM-Brun/J-DriftX/issues/43) ; (ii) figer les versions et configurations selon le [protocole de validation](../projet/validation-scientifique.qmd) ; (iii) construire des scripts reproductibles et des figures comparatives seulement lorsque les cas et données ont été audités, en cohérence avec [la sélection des corpus](https://github.com/JM-Brun/J-DriftX/issues/207).
 
