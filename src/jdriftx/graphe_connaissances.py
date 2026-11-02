@@ -456,17 +456,29 @@ def _vues_scientifiques_croisees(registre: Registre) -> str:
     vues = [
         (
             "Hypothèses et objets conditionnés",
-            "Projection du registre sur H1-H8, les concepts associés et les niveaux N0-N6. Les liens montrent des dépendances documentées, pas des implications logiques suffisantes.",
+            (
+                "Projection du registre sur H1-H8, les concepts associés et les niveaux "
+                "N0-N6. Les liens montrent des dépendances documentées, pas des implications "
+                "logiques suffisantes."
+            ),
             hypotheses,
         ),
         (
             "Concepts et dépendances mathématiques",
-            "Sous-graphe des concepts : dépendances définitionnelles, constructions et usages. Les chaînes advection-diffusion et trajectoires-temps de transport restent distinctes lorsque le registre les distingue.",
+            (
+                "Sous-graphe des concepts : dépendances définitionnelles, constructions et "
+                "usages. Les chaînes advection-diffusion et trajectoires-temps de transport "
+                "restent distinctes lorsque le registre les distingue."
+            ),
             concepts,
         ),
         (
             "Propriétés, tests et implémentations associées",
-            "Voisinage des propriétés dans le registre : modules et tests directement reliés. Un test établit uniquement le comportement couvert par son protocole, jamais une validité physique générale.",
+            (
+                "Voisinage des propriétés dans le registre : modules et tests directement "
+                "reliés. Un test établit uniquement le comportement couvert par son protocole, "
+                "jamais une validité physique générale."
+            ),
             preuves,
         ),
     ]
@@ -499,7 +511,9 @@ def _section_vue_derivee(
         if noeud.id in identifiants:
             groupes.setdefault(noeud.type, []).append(noeud.id)
     for type_noeud, membres in groupes.items():
-        lignes.append(f'  subgraph vue_{type_noeud}["{registre.types[type_noeud].libelle}"]')
+        lignes.append(
+            f'  subgraph vue_{type_noeud}["{registre.types[type_noeud].libelle}"]'
+        )
         for identifiant in membres:
             lignes.append(_ligne_noeud(registre.index[identifiant]))
         lignes.append("  end")
