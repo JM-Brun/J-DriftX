@@ -8,6 +8,16 @@ Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les
 
 Une construction distincte est désormais étudiée pour la **navigation contrôlée de Zermelo** : le mobile peut choisir une vitesse relative au vent dans une boule admissible. Le problème conduit à un temps minimal de navigation \(T_{\mathrm{nav}}\), différent du temps passif \(T_{\mathrm{arr}}\) défini plus bas. Dans le théorème conditionnel GZ-1 (noyau gaussien 3D idéal), une preuve établit \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) ; voir [Navigation de Zermelo, fronts et Hamilton–Jacobi](navigation-fronts-controllabilite.qmd). Ce résultat conditionnel ne modifie pas les définitions historiques présentées ici.
 
+## Repère rapide : quel temps décrit quelle question ?
+
+| Objet | Question à laquelle il répond | Construction | Statut dans J-DriftX |
+|---|---|---|---|
+| Temps sur une courbe prescrite \(T_\gamma\) | Combien de temps faut-il pour parcourir un tracé déjà fourni ? | Intégrale de \(ds/|\mathbf u|\) le long de la courbe. | Implémenté sur polyligne ; le tracé est imposé et le coût ignore le sens du vent. |
+| Temps de première arrivée \(T_{\mathrm{arr}}\) | Quand la particule issue de \(A\) atteint-elle \(B\) sous la dynamique du fluide ? | Premier instant où la solution de \(\dot X=\mathbf u(X)\) atteint la cible. | Cas 1D à vitesse constante implémenté ; propriétés générales démontrées sous les hypothèses précisées plus bas. |
+| Construction projetée historique \(T_{\mathrm{proj}}\) | Quel temps associer à \(B\) après sa projection sur la caractéristique issue de \(A\) ? | Projection de la cible, puis intégration du temps jusqu'au point projeté. | Référence analytique en champ uniforme 2D implémentée ; construction générale sur caractéristique courbe non implémentée. Peut échouer à séparer les points et à satisfaire l'inégalité triangulaire. |
+
+**À ne pas confondre avec** le temps minimal de navigation \(T_{\mathrm{nav}}\) : celui-ci autorise un contrôle de la vitesse relative au vent et relève du problème de Zermelo, traité séparément dans [Navigation de Zermelo, fronts et Hamilton–Jacobi](navigation-fronts-controllabilite.qmd). Un temps calculé sur une polyligne, un temps de trajectoire passive et un coût projeté ne répondent donc pas à la même question.
+
 ## Place dans le raisonnement et contrat de lecture
 
 Cette page formalise le **temps de transport** utilisé dans l'hypothèse de généralisation des solutions de similitude. Elle ne démontre pas que la substitution d'une coordonnée uniforme $x/U$ par un temps $\tau$ dans un champ variable conserve l'équation de dispersion ni ses propriétés.
