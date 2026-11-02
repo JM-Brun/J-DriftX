@@ -43,6 +43,8 @@ website:
 
       - section: "Comprendre & explorer"
         contents:
+          - href: projet/carte-scientifique.qmd
+            text: "Carte scientifique des interactions"
           - href: projet/niveaux-modelisation.qmd
             text: "Chaîne physique et mathématique (N0–N6)"
           - href: projet/laboratoire-interactif.qmd
