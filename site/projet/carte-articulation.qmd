@@ -137,7 +137,7 @@ Cette table conserve les raccourcis thématiques de l'ancienne page d'accueil. E
 | [Fondements théoriques](../theorie/modele-direct.qmd) | Modèle direct, réduction a priori, similitude, métrique, contraintes et assimilation |
 | [EDP & maillage](../theorie/edp-et-maillage.qmd) | EDP, fermeture de la turbulence, CFD, maillage, schémas numériques et coûts |
 | [Comparaison des complexités](../theorie/comparaison-complexites.qmd) | Coût des approches gaussiennes, lagrangiennes, CFD, ROM a posteriori, ML et réduction a priori |
-| [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) | Distances-temps, quasi-métriques, Finsler/Zermelo et objets voisins de la coordonnée candidate \\(\\tau\\) |
+| [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) | Distances-temps, quasi-métriques, Finsler/Zermelo et objets voisins de la coordonnée candidate \(\tau\) |
 | [Qualité & tests](qualite.qmd) | Ce que les tests vérifient réellement — et ce qu'ils ne prouvent pas |
 | [Expériences interactives](experiences-interactives.qmd) | Catalogue des expériences, traçabilité propriétés-tests, convergence et exécution locale des outils Streamlit |
 | [Hypothèses](../hypotheses/catalogue.qmd) | Catalogue des hypothèses du modèle et limites de validité |
