@@ -6,6 +6,9 @@ title: "Métrique travel-time"
 
 Dans la formulation historique de Drift-X [@mohammadi2006crmeca; @brun2008], les solutions de similitude qui supposent un vent **uniforme** (métrique cartésienne) sont envisagées dans une coordonnée naturelle liée au **temps de transport** pour traiter des champs non uniformes. La validité et la portée de cette généralisation doivent être établies à partir des hypothèses et dérivations des sources primaires.
 
+![Illustration conceptuelle de l'hypothèse étudiée : un profil de panache gaussien est évalué à partir d'une coordonnée candidate de temps de transport \\(\\tau\\). La généralisation au champ non uniforme reste à justifier et à valider.](../images/panache-travel-time.svg){fig-cap="Une coordonnée de transport dirigée comme variable candidate de la représentation de la dispersion — hypothèse de recherche, non résultat validé."}
+
+
 Une construction distincte est désormais étudiée pour la **navigation contrôlée de Zermelo** : le mobile peut choisir une vitesse relative au vent dans une boule admissible. Le problème conduit à un temps minimal de navigation \(T_{\mathrm{nav}}\), différent du temps passif \(T_{\mathrm{arr}}\) défini plus bas. Dans le théorème conditionnel GZ-1 (noyau gaussien 3D idéal), une preuve établit \(T_{\mathrm{nav}}=T_{\mathrm{front}}\) ; voir [Navigation de Zermelo, fronts et Hamilton–Jacobi](navigation-fronts-controllabilite.qmd). Ce résultat conditionnel ne modifie pas les définitions historiques présentées ici.
 
 ## Repère rapide : quel temps décrit quelle question ?
