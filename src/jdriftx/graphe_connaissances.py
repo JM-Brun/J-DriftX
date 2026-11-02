@@ -496,7 +496,9 @@ def _section_vue_derivee(
     ancres = {
         "Hypothèses et objets conditionnés": "hypotheses-et-objets-conditionnes",
         "Concepts et dépendances mathématiques": "concepts-et-dependances-mathematiques",
-        "Propriétés, tests et implémentations associées": "proprietes-tests-et-implementations-associees",
+        "Propriétés, tests et implémentations associées": (
+            "proprietes-tests-et-implementations-associees"
+        ),
     }
     lignes = [
         f"## {titre} {{#{ancres[titre]}}}",
