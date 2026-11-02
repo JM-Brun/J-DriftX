@@ -276,6 +276,8 @@ $$
 où $R$ est la corrélation des vitesses lagrangiennes : croissance de $\sigma$ **linéaire** aux courts temps de parcours, **en racine carrée** aux longs. Les formules de Briggs interpolent ces deux régimes.
 
 #### Dérivation pas à pas de la formule de Taylor (1921)
+::: {.callout-note collapse="true" title="Afficher la démonstration complète (T1 à T4)"}
+
 
 Cette formule n'est pas une loi empirique supplémentaire : elle se déduit, en quatre étapes, de la définition du déplacement d'une particule comme intégrale de sa vitesse. Le cadre est **lagrangien** : on suit une particule de traceur et on note $v'(s)$ la fluctuation de la composante transversale de sa vitesse à l'instant $s$, de moyenne nulle et de variance $v'^2$.
 
@@ -299,7 +301,11 @@ $
 
 la seconde égalité venant de la parité de $R$. C'est exactement la formule affichée plus haut (la variable d'intégration y est notée $s$ au lieu de $\tau$). **Type : identité mathématique** sous les hypothèses de statistiques de T3 et l'intégrabilité de $R$.
 
+:::
+
 #### Les deux régimes asymptotiques et le pont vers $K$
+::: {.callout-note collapse="true" title="Afficher les développements asymptotiques et les exemples numériques"}
+
 
 Posons $T_L=\int_0^\infty R(\tau)\,\mathrm{d}\tau$ (temps intégral de corrélation), supposé fini.
 
@@ -323,6 +329,8 @@ Les formules de Briggs interpolent ces deux régimes en fonction de la distance,
 | 10 km | 566 m | 800 m | 150 m | 600 m |
 
 Les deux transitions ne se jouent pas à la même échelle : $1/d_y=10\,\mathrm{km}$, et $\sigma_y$ reste quasi linéaire à 1 km (76 contre 80 m) ; $1/d_z\approx670\,\mathrm m$, et $\sigma_z$ est déjà nettement en régime $\sqrt{x}$ à 1 km (38 contre 60 m). La largeur verticale « durcit » plus vite que la largeur horizontale — l’asymétrie des exposants de la classe D, lisible directement sur ces nombres. **Type : illustration numérique** des lois codées ; aucune mesure de site réel.
+
+:::
 
 #### Ce que la dérivation suppose — et ne suppose pas
 
