@@ -25,7 +25,7 @@ Le schéma suivant présente les scénarios synthétiques à instruire, les mét
 
 ![Schéma conceptuel du protocole de falsification S0 à S3 : vent uniforme, cisaillement vertical, diffusion variable et champ bidimensionnel non uniforme ; méthodes, observables et critères d’évaluation. Aucun résultat expérimental n’est représenté.](../images/protocole-falsification-s0-s3.svg){#fig-protocole-falsification-s0-s3 fig-cap="Protocole expérimental proposé pour confronter les formulations de J-DriftX à une référence indépendante et aux modèles de puffs."}
 
-Le protocole détaillé, incluant l’équation conservative, les conditions de référence, les limites de $T_{\\mathrm{arr}}$, les métriques, le pré-enregistrement et les règles de décision, est décrit dans [la note 60](../../docs/60-protocole-falsification-s0-s3.md).
+Le protocole détaillé, incluant l’équation conservative, les conditions de référence, les limites de $T_{\\mathrm{arr}}$, les métriques, le pré-enregistrement et les règles de décision, est décrit dans [la note 60](https://github.com/JM-Brun/J-DriftX/blob/main/docs/60-protocole-falsification-s0-s3.md).
 
 ## Critères minimaux d’un benchmark
 

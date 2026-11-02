@@ -464,11 +464,11 @@ graph TD
 | test_evaluation_puff.py | Test (CI) | [test_evaluation_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_evaluation_puff.py) |
 | test_transitoire_puff.py | Test (CI) | [test_transitoire_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_transitoire_puff.py) |
 | graphe_connaissances.py | Module de code | [graphe_connaissances.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/graphe_connaissances.py) |
-| extraction_graphe.py | Module de code | [src/jdriftx/extraction_graphe.py](../../src/jdriftx/extraction_graphe.py) |
-| diagnostic_graphe.py | Module de code | [src/jdriftx/diagnostic_graphe.py](../../src/jdriftx/diagnostic_graphe.py) |
+| extraction_graphe.py | Module de code | [src/jdriftx/extraction_graphe.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/extraction_graphe.py) |
+| diagnostic_graphe.py | Module de code | [src/jdriftx/diagnostic_graphe.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/diagnostic_graphe.py) |
 | test_graphe_connaissances.py | Test (CI) | [test_graphe_connaissances.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_graphe_connaissances.py) |
-| test_extraction_graphe.py | Test (CI) | [tests/test_extraction_graphe.py](../../tests/test_extraction_graphe.py) |
-| test_diagnostic_graphe.py | Test (CI) | [tests/test_diagnostic_graphe.py](../../tests/test_diagnostic_graphe.py) |
+| test_extraction_graphe.py | Test (CI) | [tests/test_extraction_graphe.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_extraction_graphe.py) |
+| test_diagnostic_graphe.py | Test (CI) | [tests/test_diagnostic_graphe.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_diagnostic_graphe.py) |
 | benchmarks/cas.py | Module de code | [cas.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/cas.py) |
 | benchmarks/metriques.py | Module de code | [metriques.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/metriques.py) |
 | benchmarks/reference.py | Module de code | [reference.py](https://github.com/JM-Brun/J-DriftX/blob/main/src/jdriftx/benchmarks/reference.py) |

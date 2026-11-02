@@ -523,10 +523,18 @@ def _texte_lien(lien: str) -> str:
 
 
 def _lien(lien: str) -> str:
-    """URL cible : liens absolus inchangés, chemins relatifs au partiel."""
+    """URL cible : liens absolus inchangés, chemins du site relatifs au partiel.
+
+    Les cibles du dépôt hors ``site/`` (code, tests, docs) sont rendues comme
+    URLs GitHub absolues : le partiel est inclus dans le site déployé, où tout
+    chemin relatif qui s'échappe de la racine publiée est un lien mort.
+    """
     if lien.startswith("http"):
         return lien
-    return os.path.relpath(RACINE / lien, CHEMIN_PARTIEL.parent)
+    cible = RACINE / lien
+    if cible.is_relative_to(RACINE / "site"):
+        return os.path.relpath(cible, CHEMIN_PARTIEL.parent)
+    return f"https://github.com/JM-Brun/J-DriftX/blob/main/{lien}"
 
 
 def _lien_page(chemin: str) -> str:
