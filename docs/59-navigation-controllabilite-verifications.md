@@ -457,3 +457,6 @@ La revue du premier oracle a identifié deux problèmes de conditionnement que l
 Les calculs de (t_*), (R_{\max}) et (R(t)) ont aussi été réécrits dans le domaine logarithmique pour réduire les débordements intermédiaires. Cela ne supprime pas les limites de représentation float64 : les valeurs finales hors plage sont signalées explicitement pour (t_*) et les rayons.
 
 Ces ajouts améliorent la robustesse numérique de l'oracle ; ils ne changent ni le théorème GZ-1 ni son domaine physique.
+
+
+**Convention du premier contact à l'origine.** Si la cible fixe coïncide avec (x_0), `premier_contact` retourne (0) : la cible est atteinte à l'instant initial. Ce cas est distingué du calcul des zéros de (g_B), défini pour (t>0), et possède un test dédié.
