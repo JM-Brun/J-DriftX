@@ -4,7 +4,9 @@ title: "Carte d'articulation du projet"
 
 # Comprendre J-DriftX sans confondre ses niveaux de preuve
 
-Cette page relie l'héritage scientifique, l'hypothèse de recherche, le code actuel, les laboratoires de vérification et les preuves encore nécessaires. Elle sert de **parcours de lecture public**, volontairement synthétique et orienté lecteur. Pour la carte technique détaillée des niveaux de preuve, des portes et des laboratoires, voir [`docs/18-carte-articulation-scientifique.md`](https://github.com/JM-Brun/J-DriftX/blob/main/docs/18-carte-articulation-scientifique.md). Les recouvrements sur l'état général et les portes sont intentionnels ; les détails techniques restent dans la note, tandis que cette page conserve le parcours public. Les issues du dépôt suivent les tâches ouvertes.
+::: {.callout-note}
+**Rôle de cette page.** Elle relie l'héritage scientifique, l'hypothèse de recherche, le code actuel, les laboratoires de vérification et les preuves encore nécessaires. C'est un **parcours de lecture public**, volontairement synthétique et orienté lecteur, qui répond à trois questions : **par où commencer** (sections « Se repérer » et « Parcours de lecture conseillé »), **que prouve chaque élément** (sections « Niveaux de preuve et portes », « Statut », « Laboratoires ») et **où approfondir** (« Index thématique », « Où suivre les travaux »). La carte technique détaillée des niveaux de preuve, des portes et des laboratoires est la [synthèse scientifique de référence](https://github.com/JM-Brun/J-DriftX/blob/main/docs/18-carte-articulation-scientifique.md) ; les recouvrements entre les deux sont intentionnels — cette page conserve le parcours, la note conserve les détails.
+:::
 
 ## En bref
 
@@ -14,9 +16,13 @@ Une source historique établit ce qu'un article a publié ; un test vérifie un 
 
 Cette carte distingue les **niveaux de preuve**. Pour distinguer les **niveaux de modélisation** — champ de vent, chemins, temps de transport, dispersion et concentration — et leurs dépendances, consulter la [carte des niveaux de modélisation](niveaux-modelisation.qmd). Pour voir les interactions transversales entre champs physiques, processus, hypothèses et constructions mathématiques, consulter la [carte scientifique des interactions](carte-scientifique.qmd).
 
-## Trois repères indépendants pour se situer
+## Se repérer : trois axes de lecture, quatre cartes
 
-Le lecteur rencontre trois classifications dans le projet. Elles répondent à des questions différentes et ne doivent pas être fusionnées en une seule échelle :
+Deux mises au point préalables évitent les confusions les plus fréquentes : les **axes** qui décrivent comment lire une page donnée, puis les **cartes** du site qui indiquent où aller. Aucun de ces repères ne doit être fusionné en une échelle unique.
+
+### Trois axes indépendants pour se situer
+
+Le lecteur rencontre trois classifications dans le projet. Elles répondent à des questions différentes :
 
 | Repère | Question à laquelle il répond | Valeurs / organisation | Où l'utiliser |
 |---|---|---|---|
@@ -28,19 +34,20 @@ Ces repères sont **orthogonaux**, pas des correspondances terme à terme. Une m
 
 **Règle pratique :** ne pas déduire qu'un niveau N0–N6 est un niveau de maturité, ni qu'une page avancée contient nécessairement des résultats mieux validés. Le niveau N décrit l'objet étudié ; le statut décrit la preuve disponible ; le parcours décrit l'effort de lecture.
 
-## Trois cartes complémentaires, trois questions différentes
+### Quatre cartes complémentaires, quatre questions différentes
 
-Les cartes du site ne sont pas trois représentations concurrentes du même objet. Elles répondent à des questions différentes :
+Les cartes du site ne sont pas des représentations concurrentes du même objet. Elles répondent à des questions différentes :
 
 | Carte | Question du lecteur | Ce qu'elle organise | Ce qu'elle ne remplace pas |
 |---|---|---|---|
 | **Cette carte d'articulation** | Où commencer et comment relier les explications aux preuves ? | Les parcours de lecture, les niveaux de preuve, les portes de décision et les chemins vers les pages détaillées. | La description complète de la chaîne physique ou l'inventaire des relations documentaires. |
 | [Carte des niveaux de modélisation](niveaux-modelisation.qmd) | Quels objets physiques et mathématiques interviennent, et dans quel ordre ? | La chaîne N0–N6, ses dépendances et la distinction entre objets conceptuels et capacités effectivement implémentées. | Un parcours pédagogique ou une évaluation du niveau de preuve. |
+| [Carte scientifique](carte-scientifique.qmd) | Comment les phénomènes physiques, les hypothèses et les constructions mathématiques interagissent-ils ? | Les interactions entre environnement, transport, hypothèses H1–H8 et objectifs de recherche, sous forme de diagrammes conceptuels documentés. | Une chaîne logicielle exécutée : les flèches ne signifient pas que les couplages sont implémentés ou validés. |
 | [Carte des connaissances](carte-connaissances.qmd) | Où sont documentés les liens entre concepts, hypothèses, code, tests, références et données ? | Un graphe typé généré depuis un registre et contrôlé automatiquement ; ses arêtes décrivent des relations documentaires explicites. | Une preuve scientifique : un lien « implémenté par » ou « testé par » ne démontre pas une propriété physique. |
 
-**Pour choisir rapidement :** utilisez cette page pour vous orienter, la carte N0–N6 pour comprendre la structure du modèle, et le graphe pour remonter d'un concept vers ses artefacts documentaires. Pour juger une affirmation, revenez toujours à ses hypothèses et à son statut dans le [registre des preuves](registre-preuves.qmd).
+**Pour choisir rapidement :** cette page pour s'orienter, la carte N0–N6 pour comprendre la structure du modèle, la carte scientifique pour les interactions, le graphe pour remonter d'un concept vers ses artefacts documentaires. Pour juger une affirmation, revenir toujours à ses hypothèses et à son statut dans le [registre des preuves](registre-preuves.qmd).
 
-## Deux architectures historiques multi-niveaux à distinguer
+### Deux architectures historiques « multi-niveaux » à distinguer
 
 Les sources Drift-X emploient « multi-niveaux » dans deux sens complémentaires mais non interchangeables : le couplage physique **champ proche → transport à longue distance** décrit par Brun & Mohammadi (2008), et le raffinement spatial du vent/relief par domaines emboîtés `Ω = ω₀, ωᵢ` décrit par Bozon, Sinfort & Mohammadi (2009). La carte conceptuelle N0–N6 — détaillée dans la [carte des niveaux de modélisation](niveaux-modelisation.qmd) — ne remplace aucune de ces deux architectures historiques. Voir la [revue des sources](https://github.com/JM-Brun/J-DriftX/blob/main/docs/04-revues-papiers-sources.md), la [fiche du chapitre Springer 2008](https://github.com/JM-Brun/J-DriftX/blob/main/raw/fiches/2008-brun-mohammadi-springer-chap14.md) et la [fiche de la plateforme Drift-X 2009](https://github.com/JM-Brun/J-DriftX/blob/main/raw/fiches/2009-bozon-sinfort-mohammadi-driftx-hal.md).
 
@@ -88,12 +95,12 @@ Puis suivre l'une des trois chaînes ci-dessous. Les deux chaînes théoriques s
 
 ### Chaîne physique — du problème générique à la famille candidate
 
-Le chemin comporte plusieurs niveaux ; il faut conserver leur ordre, car chaque flèche ajoute une hypothèse ou change le statut du résultat.
+Le chemin comporte plusieurs niveaux ; il faut conserver leur ordre, car chaque étape ajoute une hypothèse ou change le statut du résultat.
 
 1. [**Modèle direct — problème générique**](../theorie/modele-direct.qmd#equation-conservation-advection-diffusion) : conservation du scalaire et équation d'advection–diffusion, avec source, domaine et conditions aux limites à préciser.
 2. [**Moyennage de Reynolds**](../theorie/modele-direct.qmd#moyennage-reynolds-flux-turbulent) puis [**fermeture gradient**](../theorie/modele-direct.qmd#fermeture-gradient-tenseur-diffusif) : le moyennage introduit un flux turbulent inconnu ; la fermeture le modélise par un tenseur diffusif effectif. Cette loi constitutive n'est pas une identité exacte de la turbulence.
-3. [**Hypothèses de réduction vers le panache**](../theorie/modele-direct.qmd#derive-equation-parabolique-panache) : la section 10 applique successivement stationnarité, vent uniforme aligné $\overline{\mathbf u}=(U,0,0)$, tenseur diffusif diagonal constant, puis négligence de la diffusion longitudinale. On obtient l'équation parabolique ; chaque hypothèse restreint le problème générique.
-4. [**Solutions de similitude**](../theorie/similitude.qmd#derivation-du-panache-gaussien-regime-etabli) : à partir de cette équation, on transforme $x$ en $t'=x/U$, construit la solution de diffusion transversale, superpose les contributions de la source continue, puis traite la normalisation et le sol par réflexion. La solution exacte obtenue est exacte pour ce problème simplifié et ses conditions, pas pour le problème générique.
+3. [**Hypothèses de réduction vers le panache**](../theorie/modele-direct.qmd#derive-equation-parabolique-panache) : la dérivation de l'équation parabolique du panache applique successivement stationnarité, vent uniforme aligné $\overline{\mathbf u}=(U,0,0)$, tenseur diffusif diagonal constant, puis négligence de la diffusion longitudinale. Chaque hypothèse restreint le problème générique.
+4. [**Solutions de similitude**](../theorie/similitude.qmd#derivation-du-panache-gaussien-regime-etabli) : le changement de variable $t'=x/U$ donne la solution de diffusion transversale ; la superposition des contributions de la source continue, la normalisation et le traitement du sol par réflexion complètent la dérivation. La solution obtenue est exacte pour ce problème simplifié et ses conditions, pas pour le problème générique.
 5. [**Réduction a priori**](../theorie/reduction-a-priori.qmd) : la famille issue de la similitude devient un espace de recherche candidat pour un problème plus large. Son erreur, son domaine de validité et son coût total doivent être évalués ; elle n'est pas présumée contenir la solution exacte.
 
 **Frontière entre les chaînes :** remplacer $x/U$ par un temps ou une pseudo-distance $\tau$ dans un champ non uniforme est une nouvelle construction. Elle doit être dérivée et évaluée séparément dans [Métrique travel-time](../theorie/metrique-travel-time.qmd).
@@ -125,50 +132,33 @@ Après les contrôles reproductibles, consulter les [questions ouvertes du proje
 
 ## Index thématique : de l'idée au détail
 
-Cette table conserve les raccourcis thématiques de l'ancienne page d'accueil. Elle complète les parcours de lecture ci-dessus : on peut partir d'une question précise sans suivre toute la chaîne.
+Cette table conserve les raccourcis thématiques de l'ancienne page d'accueil et absorbe l'ancien répertoire des ressources : on peut partir d'une question précise sans suivre toute la chaîne.
 
 | Question | Pages de référence |
 |---|---|
 | Que disent réellement les sources historiques ? | [Héritage](heritage.qmd) · [Lectures des sources](lectures.qmd) · [Audit de l'héritage](audit.qmd) |
-| Pourquoi une métrique de temps de transport, et quels objets mathématiques voisins ? | [Métrique travel-time](../theorie/metrique-travel-time.qmd) · [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) · [Revue mathématique](../etat-art/revue-mathematique.qmd) |
-| Comment les solutions de similitude sont-elles dérivées ? | [Solutions de similitude](../theorie/similitude.qmd) |
-| Comment les niveaux physiques, mathématiques et numériques s'articulent-ils ? | [Niveaux de modélisation](niveaux-modelisation.qmd) · [Carte des connaissances](carte-connaissances.qmd) |
-| Que fait exactement le code aujourd'hui — objets, contrats et raisons des choix ? | [Correspondance avec le code](../theorie/metrique-travel-time.qmd#correspondance-avec-le-code-actuel) · [Glossaire](../glossaire.qmd) · [Qualité & tests](qualite.qmd) |
+| Quels sont les objectifs de J-DriftX, et à quelles conditions seraient-ils utiles ? | [Objectifs](objectifs.qmd) · [Utilité scientifique](utilite-scientifique.qmd) |
+| Pourquoi une métrique de temps de transport, et quels objets voisins (distances-temps, quasi-métriques, Finsler/Zermelo) ? | [Métrique travel-time](../theorie/metrique-travel-time.qmd) · [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) · [Revue mathématique](../etat-art/revue-mathematique.qmd) |
+| Comment l'équation de transport et les solutions de similitude sont-elles dérivées ? | [Modèle direct](../theorie/modele-direct.qmd) · [Solutions de similitude](../theorie/similitude.qmd) |
+| D'où vient la famille candidate, et que faut-il encore évaluer ? | [Réduction a priori](../theorie/reduction-a-priori.qmd) |
+| Comment les niveaux physiques, mathématiques et numériques s'articulent-ils ? | [Niveaux de modélisation](niveaux-modelisation.qmd) · [Carte scientifique](carte-scientifique.qmd) · [Carte des connaissances](carte-connaissances.qmd) |
+| Que fait exactement le code aujourd'hui, et que vérifient réellement les tests ? | [Correspondance avec le code](../theorie/metrique-travel-time.qmd#correspondance-avec-le-code-actuel) · [Qualité & tests](qualite.qmd) |
 | Que garantit le modèle, et avec quelles preuves ? | [Contraintes physiques](../theorie/contraintes-physiques.qmd) · [Catalogue des hypothèses](../hypotheses/catalogue.qmd) · [Limites](../hypotheses/limites.qmd) |
-| Que coûterait une modélisation complète ? | [EDP & maillage](../theorie/edp-et-maillage.qmd) · [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
+| Que coûterait une modélisation complète (EDP, fermeture de la turbulence, CFD, maillage, schémas numériques) ? | [EDP & maillage](../theorie/edp-et-maillage.qmd) |
+| Que coûtent les alternatives — gaussiennes, lagrangiennes, CFD, ROM a posteriori, ML, réduction a priori ? | [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |
 | Comment les données calibrent-elles le modèle ? | [Assimilation & identification](../theorie/assimilation-identification.qmd) |
+| Que peut-on explorer soi-même — dans le navigateur ou en local ? | [Expériences interactives](experiences-interactives.qmd) · [Laboratoire interactif](laboratoire-interactif.qmd) |
+| Comment le contexte a-t-il évolué depuis 2008, et comment J-DriftX se positionne-t-il ? | [Panorama](../etat-art/panorama.qmd) · [Positionnement](../etat-art/positionnement.qmd) |
+| Où trouver les notations, les notions clés et la bibliographie ? | [Glossaire](../glossaire.qmd) · [Références](../references.qmd) |
 | Qu'est-ce qui reste à faire et à valider ? | [Limites et domaines de validité](../hypotheses/limites.qmd) · [Issues du dépôt](https://github.com/JM-Brun/J-DriftX/issues) |
 
-## Répertoire des ressources
+## Où suivre les travaux
 
-| Entrée | Contenu |
-|---|---|
-| [Carte des connaissances](carte-connaissances.qmd) | Vue relationnelle générée depuis un registre typé : concepts, hypothèses, niveaux, code, tests, références et jeux de données, avec liens cliquables |
-| [Niveaux de modélisation](niveaux-modelisation.qmd) | Champ de vent, chemins, temps de transport, dispersion et concentration ; dépendances, hypothèses et état d'implémentation |
-| [Héritage et projet](heritage.qmd) | Drift-X (2006–2009), [objectifs](objectifs.qmd) et [utilité scientifique](utilite-scientifique.qmd) |
-| [Fondements théoriques](../theorie/modele-direct.qmd) | Modèle direct, réduction a priori, similitude, métrique, contraintes et assimilation |
-| [EDP & maillage](../theorie/edp-et-maillage.qmd) | EDP, fermeture de la turbulence, CFD, maillage, schémas numériques et coûts |
-| [Comparaison des complexités](../theorie/comparaison-complexites.qmd) | Coût des approches gaussiennes, lagrangiennes, CFD, ROM a posteriori, ML et réduction a priori |
-| [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) | Distances-temps, quasi-métriques, Finsler/Zermelo et objets voisins de la coordonnée candidate \(\tau\) |
-| [Qualité & tests](qualite.qmd) | Ce que les tests vérifient réellement — et ce qu'ils ne prouvent pas |
-| [Expériences interactives](experiences-interactives.qmd) | Catalogue des expériences, traçabilité propriétés-tests, convergence et exécution locale des outils Streamlit |
-| [Hypothèses](../hypotheses/catalogue.qmd) | Catalogue des hypothèses du modèle et limites de validité |
-| [État de l'art](../etat-art/panorama.qmd) | Évolution du contexte 2008–2026 et [positionnement](../etat-art/positionnement.qmd) de J-DriftX |
-| [Glossaire](../glossaire.qmd) | Notations et notions clés expliquées en français, avec leur origine |
-| [Références](../references.qmd) | Bibliographie du corpus historique aux travaux récents |
+Les tâches à accomplir, les investigations en cours et les validations requises sont suivies dans les [issues du dépôt](https://github.com/JM-Brun/J-DriftX/issues) — la source opérationnelle à jour, pas cette page. Trois points de repère :
 
-## Suivi des travaux
-
-Les tâches à accomplir, les investigations à faire et les validations requises sont suivies dans les issues du dépôt :
-
-- [#41](https://github.com/JM-Brun/J-DriftX/issues/41) — Investigation mathématique G0-S : **terminée** — définitions, cas 1D et contre-exemples consignés dans [docs/19](https://github.com/JM-Brun/J-DriftX/blob/main/docs/19-investigation-g0s-temps-de-parcours.md) ; issue fermée le 23/10/2026.
-- [#42](https://github.com/JM-Brun/J-DriftX/issues/42) — Tests des propriétés visées : **en cours** — non-symétrie de la référence uniforme et divergence nulle des champs analytiques testées ; bilan de masse étendu (six classes de stabilité, source en hauteur, puff, superpositions, troncature et quadrature séparées) ; restent la conservation en champ variable, des tests de positivité plus variés et les propriétés du champ de vent multi-niveaux historique (non reconstruit à ce jour).
-- [#43](https://github.com/JM-Brun/J-DriftX/issues/43) — Besoin applicatif G0-A : **ouvert** — utilisateur, décision, observable, baseline et seuils à établir indépendamment de la méthode.
-- [#44](https://github.com/JM-Brun/J-DriftX/issues/44) — Ancrage documentaire M0 : **terminé** — décision « aucun autodépôt HAL » consignée, la thèse sera ajoutée plus tard au corpus ; issue fermée le 23/10/2026.
-
-Les audits de corpus sont suivis dans les issues actives [#204](https://github.com/JM-Brun/J-DriftX/issues/204) (DIFLU), [#205](https://github.com/JM-Brun/J-DriftX/issues/205) (ETEX/DATEM), [#206](https://github.com/JM-Brun/J-DriftX/issues/206) (ERIES) et [#207](https://github.com/JM-Brun/J-DriftX/issues/207) (priorisation et stratégie d'évaluation). L'ancienne [issue #13](https://github.com/JM-Brun/J-DriftX/issues/13) est close comme remplacée, pas comme audit terminé. Le squelette de benchmark S0 de l'[issue #17](https://github.com/JM-Brun/J-DriftX/issues/17) a été livré par la PR #223 et l'issue est close ; tout benchmark applicatif futur exige les audits G1 et une décision G0-A (#43), puis une issue dédiée.
-
-*État vérifié le 29/10/2026.*
+- Le [besoin applicatif G0-A (#43)](https://github.com/JM-Brun/J-DriftX/issues/43) — utilisateur, décision, observable, baseline et seuils — reste à établir indépendamment de la méthode ; c'est lui qui conditionne tout benchmark applicatif.
+- Tout benchmark applicatif futur exige d'abord les audits G1 et une décision G0-A, puis une issue dédiée.
+- L'état détaillé des portes de décision et l'ordre de travail recommandé figurent dans la [synthèse scientifique de référence](https://github.com/JM-Brun/J-DriftX/blob/main/docs/18-carte-articulation-scientifique.md), qui conserve aussi un instantané des travaux au 29/10/2026.
 
 ## Références et traçabilité
 
