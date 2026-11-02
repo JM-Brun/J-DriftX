@@ -1081,7 +1081,6 @@ flowchart TB
 | test_transitoire_puff.py | Test (CI) | [test_transitoire_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_transitoire_puff.py) |
 :::
 
-
 ## Où chaque référence est citée
 
 | Référence | Citée dans les pages du site |
