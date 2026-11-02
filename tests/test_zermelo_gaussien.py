@@ -109,6 +109,9 @@ def test_front_et_fonction_de_valeur_hj_ont_le_plateau_nul(modele: ModeleGZ1) ->
     ) == pytest.approx(rayon)
     assert modele.ensemble_atteignable(tuple(centre + rayon * np.array([1.0, 0.0, 0.0])), t)
     assert not modele.ensemble_atteignable(
+        tuple(centre + (1.0 + 1e-12) * rayon * np.array([1.0, 0.0, 0.0])), t
+    )
+    assert not modele.ensemble_atteignable(
         tuple(centre + 1.01 * rayon * np.array([1.0, 0.0, 0.0])), t
     )
 
