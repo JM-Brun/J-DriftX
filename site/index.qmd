@@ -10,29 +10,29 @@ J-DriftX est un projet de recherche open source consacré à la modélisation à
 
 > **Où en est-on ?** Le projet étudie l'hypothèse qu'une représentation fondée sur des solutions de similitude et des temps de transport dirigés puisse réduire le coût de certaines évaluations. Sa validité en vent non uniforme, son coût total et son intérêt prédictif ou applicatif **ne sont pas encore établis**. Il s'agit d'une hypothèse de recherche, pas d'un modèle opérationnel validé.
 
-## Le projet en quatre étapes
+## Quatre portes d'entrée, selon votre question
 
-Cette documentation permet de passer de l'intuition physique aux preuves, sans imposer une lecture linéaire. Choisissez le niveau utile à votre question.
+Cette documentation n'impose pas de lecture linéaire. Les quatre parcours ci-dessous correspondent à des besoins différents : ils peuvent être suivis séparément et se rejoindre lorsque cela devient utile.
 
-![Parcours de lecture J-DriftX en quatre niveaux : comprendre le problème physique, comprendre le modèle et ses hypothèses, comprendre les fondements théoriques, puis vérifier et reproduire les résultats.](images/parcours-lecture-jdriftx.svg)
+![Carte de quatre portes d'entrée complémentaires dans la documentation J-DriftX : comprendre le problème, explorer la chaîne de modélisation, construire la théorie, vérifier et reproduire. Les parcours sont reliés entre eux et ne constituent ni une progression obligatoire ni une échelle de preuve.](images/parcours-lecture-jdriftx.svg)
 
 ::: {.columns}
 ::: {.column width="50%"}
-**1 · Comprendre**
+**1 · S'orienter et comprendre**
 
-Le problème étudié, l'origine du projet et ce qui est — ou non — acquis.
+Le problème étudié, l'origine du projet, la question de recherche et ce qui est — ou non — acquis.
 
-[Vue d'ensemble et question de recherche](projet/carte-articulation.qmd)
+[Vue d'ensemble et articulation scientifique](projet/carte-articulation.qmd) · [Glossaire](glossaire.qmd)
 :::
 ::: {.column width="50%"}
-**2 · Comprendre le modèle**
+**2 · Comprendre et explorer le modèle**
 
 Les grandeurs physiques et leur enchaînement : vent, transport, dispersion, concentration.
 
-[Carte des niveaux de modélisation](projet/niveaux-modelisation.qmd)
+[Carte des niveaux de modélisation](projet/niveaux-modelisation.qmd) · [Explorer les champs de vent 2D](projet/experiences-interactives.qmd)
 :::
 ::: {.column width="50%"}
-**3 · Comprendre la théorie**
+**3 · Construire la théorie**
 
 Les équations, les hypothèses de réduction, les solutions de similitude et la géométrie du transport.
 
@@ -43,8 +43,30 @@ Les équations, les hypothèses de réduction, les solutions de similitude et la
 
 Les propriétés démontrées ou testées, les expériences, les comparaisons et leurs limites.
 
-[Registre des preuves](projet/registre-preuves.qmd)
+[Registre des preuves](projet/registre-preuves.qmd) · [Protocole de validation](projet/validation-scientifique.qmd)
 :::
+:::
+
+## Trois cartes complémentaires pour ne pas confondre les questions
+
+Les cartes du projet ne décrivent pas la même chose et ne forment pas une séquence à parcourir dans un ordre imposé.
+
+::: {.callout-tip}
+**Où lire et comment interpréter les affirmations ?**
+
+La [carte d'articulation](projet/carte-articulation.qmd) organise les parcours de lecture, les ressources et les niveaux de preuve.
+:::
+
+::: {.callout-tip}
+**Quels objets physiques et mathématiques interviennent ?**
+
+La [carte des niveaux de modélisation](projet/niveaux-modelisation.qmd) décrit la chaîne N0–N6, de ses entrées physiques aux quantités calculées. Ces niveaux ne représentent ni des niveaux pédagogiques ni des degrés de validation.
+:::
+
+::: {.callout-tip}
+**Comment remonter d'une connaissance à sa justification ?**
+
+La [carte des connaissances](projet/carte-connaissances.qmd) relie les concepts aux références, preuves, tests et éléments d'implémentation.
 :::
 
 ## Ce que J-DriftX cherche à comprendre
@@ -69,6 +91,6 @@ Pour examiner précisément les hypothèses, la portée des tests et les limites
 
 ## Explorer la documentation
 
-Pour accéder directement à une question, un thème ou une ressource sans suivre le parcours de lecture, utiliser l'[index thématique et le répertoire des ressources de la carte d'articulation](projet/carte-articulation.qmd).
+Pour accéder directement à une question, un thème ou une ressource sans suivre un parcours de lecture, utiliser l'[index thématique et le répertoire des ressources de la carte d'articulation](projet/carte-articulation.qmd).
 
 Les questions ouvertes, investigations et tâches de validation sont suivies dans les [issues publiques du dépôt](https://github.com/JM-Brun/J-DriftX/issues). Le [README GitHub](https://github.com/JM-Brun/J-DriftX) décrit l'état de l'implémentation logicielle.
