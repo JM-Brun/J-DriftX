@@ -819,8 +819,6 @@ flowchart TB
 
 ::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}
 
-
-
 | Nœud | Type | Où approfondir |
 |---|---|---|
 | Équation de transport (advection-diffusion) | Concept | [theorie/modele-direct.qmd](../theorie/modele-direct.qmd) |
@@ -853,7 +851,6 @@ flowchart TB
 | H6 — domaine de validité local du modèle réduit | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
 | H7 — données d'assimilation représentatives | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
 | H8 — superposition des sources | Hypothèse | [hypotheses/catalogue.qmd](../hypotheses/catalogue.qmd) |
-
 :::
 
 ## Concepts et dépendances mathématiques {#concepts-et-dependances-mathematiques}
@@ -893,8 +890,6 @@ flowchart TB
 
 ::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}
 
-
-
 | Nœud | Type | Où approfondir |
 |---|---|---|
 | Équation de transport (advection-diffusion) | Concept | [theorie/modele-direct.qmd](../theorie/modele-direct.qmd) |
@@ -912,7 +907,6 @@ flowchart TB
 | Assimilation et calibration | Concept | [theorie/assimilation-identification.qmd](../theorie/assimilation-identification.qmd) |
 | Maillage gouverné par métrique | Concept | [theorie/edp-et-maillage.qmd](../theorie/edp-et-maillage.qmd) |
 | Équation de Burgers | Concept | [theorie/burgers-et-jdriftx.qmd](../theorie/burgers-et-jdriftx.qmd) |
-
 :::
 
 ## Propriétés, tests et implémentations associées {#proprietes-tests-et-implementations-associees}
@@ -1032,8 +1026,6 @@ flowchart TB
 
 ::: {.callout-note collapse="true" title="Nœuds et destinations documentaires"}
 
-
-
 | Nœud | Type | Où approfondir |
 |---|---|---|
 | Positivité (famille gaussienne) | Propriété (visée ou testée) | [theorie/contraintes-physiques.qmd](../theorie/contraintes-physiques.qmd) |
@@ -1072,6 +1064,4 @@ flowchart TB
 | test_reference_independante.py | Test (CI) | [test_reference_independante.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_reference_independante.py) |
 | test_evaluation_puff.py | Test (CI) | [test_evaluation_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_evaluation_puff.py) |
 | test_transitoire_puff.py | Test (CI) | [test_transitoire_puff.py](https://github.com/JM-Brun/J-DriftX/blob/main/tests/test_transitoire_puff.py) |
-
-
 :::
