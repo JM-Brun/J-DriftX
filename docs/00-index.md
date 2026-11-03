@@ -5,11 +5,11 @@ Index de navigation de `docs/`, établi le 27 octobre 2026 et maintenu pour orie
 ## Règle de numérotation
 
 Avant de créer une note `docs/NN-…`, **lister le dossier `docs/` et prendre le
-plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21, 33, 47 et 51 existent en double
+plus petit numéro libre**. Les numéros 14, 15, 16, 17, 21, 33, 47, 51 et 60 existent en double
 (tableau ci-dessous) et de nombreux fichiers référencent d'autres notes par
 numéro ; la collision a déjà exigé une renumérotation (la matrice de
 traçabilité MVP-S, initialement numérotée 22, est devenue la note 27).
-Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-uniforme.md` (oracle indépendant et protocole de coûts S0 uniforme) et le numéro 51 à `51-reference-independante-cas-s0.md` (comparaison à référence indépendante EDP du cas S0 ; partagé avec `51-niveaux-preuve-mesures-benchmark.md`) et le numéro 53 à `53-evaluation-puff-source-impulsionnelle.md` (évaluation dirigée d'une source impulsionnelle) et le numéro 54 à `54-transitoire-puff-edp-transitoire-marginale.md` (EDP transitoire du puff : marche en temps de la marginale transverse). Le numéro 56 est attribué à `56-cartographie-architecturale-bounded-contexts.md` (cartographie des dépendances, contexts délimités et règles de dépendances du chantier qualité #303) et le numéro 57 à `57-evaluations-cohesion-modules-volumineux.md` (évaluations de cohésion P2 des modules > 15 ko de l’annexe A de la note 56, gabarit transitoire_puff). Le numéro 59 est attribué à `59-navigation-controllabilite-verifications.md` (lecture pas à pas des preuves GZ-1, solution HJ de Hopf–Lax, dérivation Randers, cône aval, oracle analytique exécutable et matrice tests ↔ affirmations). Prochain numéro disponible après cette attribution : 60. Les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques.
+Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-uniforme.md` (oracle indépendant et protocole de coûts S0 uniforme) et le numéro 51 à `51-reference-independante-cas-s0.md` (comparaison à référence indépendante EDP du cas S0 ; partagé avec `51-niveaux-preuve-mesures-benchmark.md`) et le numéro 53 à `53-evaluation-puff-source-impulsionnelle.md` (évaluation dirigée d'une source impulsionnelle) et le numéro 54 à `54-transitoire-puff-edp-transitoire-marginale.md` (EDP transitoire du puff : marche en temps de la marginale transverse). Le numéro 56 est attribué à `56-cartographie-architecturale-bounded-contexts.md` (cartographie des dépendances, contexts délimités et règles de dépendances du chantier qualité #303) et le numéro 57 à `57-evaluations-cohesion-modules-volumineux.md` (évaluations de cohésion P2 des modules > 15 ko de l’annexe A de la note 56, gabarit transitoire_puff). Le numéro 59 est attribué à `59-navigation-controllabilite-verifications.md` (lecture pas à pas des preuves GZ-1, solution HJ de Hopf–Lax, dérivation Randers, cône aval, oracle analytique exécutable et matrice tests ↔ affirmations). Le numéro 60 est aujourd'hui attribué à deux notes distinctes (tableau ci-dessous ; collision signalée dans l'issue #233) ; le renommage éventuel de l'une d'elles appartient au propriétaire. Prochain numéro disponible : 61. Les notes 43 à 49 couvrent l’audit de la thèse, la stratégie de reprise, l’audit de l’article de 2006, le registre des anomalies, le contrat minimal de la baseline, le cas de référence autonome à écoulement uniforme et la matrice initiale des revendications historiques.
 
 ## Numéros en double
 
@@ -31,6 +31,8 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | 47 | `47-synthese-preuves-conservation-g0s.md` | Synthèse des preuves — conservation G0-S et temps de transport |
 | 51 | `51-reference-independante-cas-s0.md` | Comparaison EDP/solution fermée du cas S0, convergence, métriques et limites |
 | 51 | `51-niveaux-preuve-mesures-benchmark.md` | Niveaux de preuve des mesures de coût et artefacts de benchmark |
+| 60 | `60-audit-parcours-lecteur-navigation-2026-11-02.md` | Audit du parcours lecteur et proposition de navigation du site (02/11/2026) |
+| 60 | `60-protocole-falsification-s0-s3.md` | Protocole de falsification S0–S3 : contrat expérimental, nomenclature, scénarios et critères de décision |
 
 ## Notes et ressources de référence
 
@@ -52,6 +54,8 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `19-investigation-g0s-temps-de-parcours.md` | Investigation G0-S : temps de parcours dirigé ($T_{\mathrm{arr}}$/$T_{\mathrm{proj}}$) |
 | `../site/theorie/navigation-fronts-controllabilite.qmd` | Théorème GZ-1 : navigation de Zermelo, front gaussien, Hamilton–Jacobi instationnaire et limites de validité |
 | `59-navigation-controllabilite-verifications.md` | Explications pas à pas de GZ-1 : noyau gaussien, preuve de l'ensemble atteignable, Hopf–Lax, Randers, cône aval et tests de cohérence |
+| `60-audit-parcours-lecteur-navigation-2026-11-02.md` | Audit du parcours lecteur et de la navigation du site : cinq entrées de premier niveau, parcours recommandés, statuts de preuve non confondus |
+| `60-protocole-falsification-s0-s3.md` | Protocole de falsification S0–S3 : hypothèse falsifiable, nomenclature des temps comparés, scénarios S0–S3, métriques et pré-enregistrement des seuils |
 | `20-audit-technique-jeux-donnees.md` | Audit technique des jeux de données (ERIES, DIFLU, DATEM, ETEX) |
 | `diflu-observable-evaluation-protocol.md` | Observable candidat ATC, corrections expérimentales, unité d'observation et garde-fous d'évaluation DIFLU ; protocole non validé tant que l'audit sémantique n'est pas clos |
 | `diflu-reproducible-audit.md` | Procédure de récupération des originaux, vérification d'intégrité, staging du corpus compact et audit hors ligne DIFLU |
@@ -91,7 +95,6 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `53-evaluation-puff-source-impulsionnelle.md` | Évaluation dirigée d'une source impulsionnelle (puff) : temps dirigé t = τ, maximum temporel C(t), écart quantifié |
 | `54-transitoire-puff-edp-transitoire-marginale.md` | EDP transitoire du puff : marche en temps de la marginale transverse, structure longitudinale analytique, écarts calibrés |
 | `55-releve-equations-manuscrit-2009-comparaison-jesa.md` | Relevé vérifiable du manuscrit auteur HAL 2009 et protocole de comparaison différentielle avec l'article JESA 2010 ; comparaison éditeur encore non terminée |
-| `58-audit-frontieres-numeriques-p0-2026-10-30.md` | Audit P0 des frontières numériques publiques : types, finitude, représentabilité, exceptions et contrats inter-modules |
 | `56-cartographie-architecturale-bounded-contexts.md` | Cartographie des dépendances et contextes délimités, règles de dépendances proposées, état P0/P1 du chantier qualité #303 et inventaire des modules volumineux |
 | `57-evaluations-cohesion-modules-volumineux.md` | Évaluations de cohésion P2 des modules volumineux de l’annexe A de la note 56 : verdicts par module, grille EDP partagée, duplications transverses |
 | `58-audit-frontieres-numeriques-p0-2026-10-30.md` | Audit des contrats numériques des fonctions publiques autonomes : coercition booléenne, frontières coordonnées, adaptateurs et plan de correction sans validation redondante |
