@@ -274,6 +274,27 @@ class TestMetriques:
         vrais = np.array([1.0, 1.0])
         assert nmse(vrais, 2.0 * vrais) == 1.0
 
+    @pytest.mark.parametrize("echelle", [1e-200, 1e200, np.nextafter(0.0, 1.0)])
+    def test_nmse_double_aux_echelles_extremes(self, echelle: float) -> None:
+        """Given une échelle extrême, When prédiction double, Then NMSE vaut 1."""
+        assert nmse([echelle], [2.0 * echelle]) == pytest.approx(1.0)
+
+    def test_nmse_ecart_intermediaire_non_representable(self) -> None:
+        """Given un écart débordant, When NMSE, Then le rapport reste correct."""
+        assert nmse([1e308, 1e308], [-1e308, 1e308]) == pytest.approx(2.0)
+
+    def test_nmse_conserve_un_petit_ecart_relatif(self) -> None:
+        """Given des valeurs proches, When NMSE, Then le petit écart est conservé."""
+        vrai = 1e308
+        predit = np.nextafter(vrai, np.inf)
+        attendu = ((predit - vrai) / vrai) ** 2
+        assert nmse([vrai], [predit]) == pytest.approx(attendu, rel=1e-12, abs=0.0)
+
+    def test_nmse_refuse_un_resultat_non_representable(self) -> None:
+        """Given une erreur trop grande pour float64, When NMSE, Then échec explicite."""
+        with pytest.raises(ValueError, match=r"NMSE.*representable"):
+            nmse([1e-200], [1e200])
+
     def test_refuse_verite_non_positive(self) -> None:
         """Given une verite avec un zero, When metriques, Then refus."""
         vrais = np.array([1.0, 0.0])

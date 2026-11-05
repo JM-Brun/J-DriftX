@@ -17,6 +17,8 @@ avec la définition historique devra être décidée séparément avant le jalon
 
 from __future__ import annotations
 
+from decimal import Decimal, localcontext
+from fractions import Fraction
 from math import isfinite
 
 import numpy as np
@@ -45,6 +47,48 @@ def _temps_float64(valeur: np.longdouble, contexte: str) -> float:
     if valeur > 0.0 and resultat == 0.0:
         raise ValueError(f"{contexte} n'est pas representable en float64.")
     return resultat
+
+
+def _temps_precision(valeur: Decimal | Fraction, contexte: str) -> float:
+    """Convertit un résultat positif de précision étendue sans perte de domaine."""
+    try:
+        resultat = float(valeur)
+    except OverflowError as exc:
+        raise ValueError(f"{contexte} n'est pas representable en float64.") from exc
+    if not isfinite(resultat) or (valeur > 0 and resultat == 0.0):
+        raise ValueError(f"{contexte} n'est pas representable en float64.")
+    return resultat
+
+
+def _projection_precision(deplacement: np.ndarray, vitesse: np.ndarray) -> float:
+    """Calcule exactement la projection des entrées float64 lorsque nécessaire."""
+    d = [Fraction.from_float(float(x)) for x in deplacement]
+    u = [Fraction.from_float(float(x)) for x in vitesse]
+    norme_carre = sum(x * x for x in u)
+    if norme_carre == 0:
+        raise ValueError("Le champ uniforme doit avoir une vitesse non nulle.")
+    avance = sum(x * y for x, y in zip(d, u, strict=True))
+    if avance < 0:
+        return float("inf")
+    return _temps_precision(avance / norme_carre, "Le cout longitudinal")
+
+
+def _transport_precision(segments: np.ndarray, vent: np.ndarray, umin: float) -> float:
+    """Évalue les normes extrêmes en décimal, puis arrondit la somme en float64."""
+    with localcontext() as contexte:
+        contexte.prec = 80
+        cout_total = Decimal(0)
+        seuil = Decimal.from_float(float(umin))
+        for segment, vitesse in zip(segments, vent, strict=True):
+            dx, dy = (Decimal.from_float(float(x)) for x in segment)
+            ux, uy = (Decimal.from_float(float(x)) for x in vitesse)
+            longueur = (dx * dx + dy * dy).sqrt()
+            norme = (ux * ux + uy * uy).sqrt()
+            if norme < seuil:
+                msg = f"Vent plus faible que umin ({umin} m/s) : temps de transport non defini."
+                raise ValueError(msg)
+            cout_total += longueur / norme
+        return _temps_precision(cout_total, "Le cout total")
 
 
 def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
@@ -82,7 +126,10 @@ def temps_premiere_arrivee_1d(a: float, b: float, vitesse: float) -> float:
         return 0.0
     if vitesse == 0.0 or ((deplacement > 0.0) != (vitesse > 0.0)):
         return float("inf")
-    temps = abs(np.longdouble(deplacement) / np.longdouble(vitesse))
+    with np.errstate(over="ignore", under="ignore"):
+        temps = abs(np.longdouble(deplacement) / np.longdouble(vitesse))
+    if temps == 0.0:
+        raise ValueError("Le temps de premiere arrivee n'est pas representable en float64.")
     return _temps_float64(temps, "Le temps de premiere arrivee")
 
 
@@ -142,13 +189,24 @@ def temps_transport(
 
     segments_etendus = np.asarray(segments, dtype=np.longdouble)
     vent_etendu = np.asarray(u_seg, dtype=np.longdouble)
-    longueurs = np.hypot(segments_etendus[:, 0], segments_etendus[:, 1])
-    vitesses = np.hypot(vent_etendu[:, 0], vent_etendu[:, 1])
+    with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+        longueurs = np.hypot(segments_etendus[:, 0], segments_etendus[:, 1])
+        vitesses = np.hypot(vent_etendu[:, 0], vent_etendu[:, 1])
+        couts = longueurs / vitesses
+        cout_total = np.sum(couts, dtype=np.longdouble)
+    # Selon la plateforme, longdouble n'a pas toujours une plage plus large.
+    # Recalculer aussi les coûts sous-normaux avant leur somme : plusieurs
+    # contributions arrondies à zéro peuvent former un résultat représentable.
+    if (
+        not np.all(np.isfinite(longueurs))
+        or not np.all(np.isfinite(vitesses))
+        or not np.isfinite(cout_total)
+        or np.any((longueurs > 0) & (couts < np.finfo(np.longdouble).tiny))
+    ):
+        return _transport_precision(segments, u_seg, umin)
     if np.any(vitesses < np.longdouble(umin)):
         msg = f"Vent plus faible que umin ({umin} m/s) : temps de transport non defini."
         raise ValueError(msg)
-    couts = longueurs / vitesses
-    cout_total = np.sum(couts, dtype=np.longdouble)
     return _temps_float64(cout_total, "Le cout total")
 
 
@@ -206,19 +264,31 @@ def pseudo_distance_uniforme(
         msg = "Le deplacement b - a doit rester fini."
         raise ValueError(msg)
 
-    # Le quotient (d . u) / (u . u) peut rester representable alors que
-    # chacun des produits scalaires deborde en float64. L'intermediaire etendu
-    # preserve ce rapport sans changer la formule analytique.
+    if not np.any(vitesse):
+        raise ValueError("Le champ uniforme doit avoir une vitesse non nulle.")
     deplacement_etendu = np.asarray(deplacement, dtype=np.longdouble)
     vitesse_etendue = np.asarray(vitesse, dtype=np.longdouble)
-    avance = np.sum(deplacement_etendu * vitesse_etendue, dtype=np.longdouble)
-    norme_carre = np.sum(vitesse_etendue * vitesse_etendue, dtype=np.longdouble)
-    if norme_carre == 0.0:
-        msg = "Le champ uniforme doit avoir une vitesse non nulle."
-        raise ValueError(msg)
+    with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+        produits = deplacement_etendu * vitesse_etendue
+        carres = vitesse_etendue * vitesse_etendue
+        avance = np.sum(produits, dtype=np.longdouble)
+        norme_carre = np.sum(carres, dtype=np.longdouble)
+        cout = avance / norme_carre
+    # Les produits extrêmes et les annulations peuvent perdre leur signe ou
+    # leur amplitude ; les fractions exploitent exactement les entrées float64.
+    petit = np.finfo(np.longdouble).tiny
+    if (
+        not np.isfinite(avance)
+        or not np.isfinite(norme_carre)
+        or norme_carre == 0.0
+        or np.any((vitesse_etendue != 0) & (carres < petit))
+        or np.any((deplacement_etendu != 0) & (vitesse_etendue != 0) & (np.abs(produits) < petit))
+        or (np.any(produits > 0) and np.any(produits < 0))
+        or (avance > 0 and (not np.isfinite(cout) or cout == 0.0))
+    ):
+        return _projection_precision(deplacement, vitesse)
     if avance < 0.0:
         return float("inf")
     if avance == 0.0:
         return 0.0
-    cout = avance / norme_carre
     return _temps_float64(cout, "Le cout longitudinal")

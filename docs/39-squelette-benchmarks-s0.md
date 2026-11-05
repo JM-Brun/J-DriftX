@@ -33,6 +33,8 @@ Métriques **préenregistrées par [#43](https://github.com/JM-Brun/J-DriftX/iss
 - **NMSE** : Σ(prediction − vérité)² / Σ(vérité)². **Convention explicite** : d'autres usages prennent Σ(vérité × prediction) au dénominateur ; le choix est documenté dans les docstrings pour lever toute ambiguïté avant tout benchmark.
 - Évaluation **par essai/scénario indépendant** (jamais par point isolé), conformément à #43.
 
+Le calcul de la NMSE met les valeurs à l'échelle avant de former les normes, pour éviter les débordements et sous-débordements intermédiaires. Si le résultat dépasse la plage finie de float64, il est refusé explicitement ; une valeur trop petite peut être arrondie à zéro. Cette précaution numérique ne change ni la définition ni les seuils du benchmark et ne valide pas le modèle physique.
+
 Mesures de coût (issue #17 : préparation et inférence) : la fonction mesurer_cout_inference mesure le temps d'un appel d'inférence ; la mesure est **non déterministe** et n'entre dans aucune assertion. Les seuils de succès G2 (au moins 60 % des essais indépendants ; coût total au moins 10× inférieur pour erreur comparable) restent ceux de #43.
 
 ## 4. Commande reproductible

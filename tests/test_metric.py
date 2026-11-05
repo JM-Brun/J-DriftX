@@ -547,3 +547,29 @@ def test_polyline_cost_rejects_unrepresentable_positive_time() -> None:
     vent = np.array([[1.0e-308, 0.0]])
     with pytest.raises(ValueError, match=r"cout total.*representable"):
         temps_transport(ligne, vent, umin=1.0e-309)
+
+
+def test_uniform_pseudodistance_tiny_wind_remains_nonzero() -> None:
+    """Given de petites valeurs égales, When projection, Then coût unité."""
+    assert pseudo_distance_uniforme([0.0, 0.0], [1e-200, 0.0], [1e-200, 0.0]) == pytest.approx(1.0)
+
+
+def test_uniform_pseudodistance_overflowing_projection_preserves_direction() -> None:
+    """Given une projection négative débordante, When calcul, Then amont infini."""
+    assert pseudo_distance_uniforme([0.0, 0.0], [-1e308, -1e308], [1e308, 1e308]) == np.inf
+
+
+def test_uniform_pseudodistance_cancellation_of_overflowing_products() -> None:
+    """Given deux produits débordants opposés, When projection, Then écart conservé."""
+    grand = 1e308
+    voisin = np.nextafter(grand, 0.0)
+    attendu = ((grand - voisin) / grand) / 2.0
+    obtenu = pseudo_distance_uniforme([0.0, 0.0], [grand, -voisin], [grand, grand])
+    assert obtenu == pytest.approx(attendu, rel=1e-15, abs=0.0)
+
+
+def test_polyline_cost_underflowing_segment_times_accumulate() -> None:
+    """Given deux coûts sous la précision float64, When somme, Then résultat non nul."""
+    petit = np.nextafter(0.0, 1.0)
+    ligne = [[0.0, 0.0], [petit, 0.0], [0.0, 0.0]]
+    assert temps_transport(ligne, [[3.0, 0.0], [3.0, 0.0]]) == petit

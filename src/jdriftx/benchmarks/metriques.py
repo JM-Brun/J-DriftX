@@ -95,10 +95,29 @@ def nmse(verite: ArrayLike, prediction: ArrayLike) -> float:
 
     Convention explicite : d autres usages prennent somme(verite x
     prediction) au denominateur ; ce choix est documente pour eviter
-    toute ambiguite. La verite doit etre strictement positive.
+    toute ambiguite. La verite doit etre strictement positive. Un resultat
+    trop grand pour float64 est refuse ; un resultat trop petit peut etre arrondi a zero.
     """
     vrais, predits = _vecteurs_verifies(verite, prediction, "NMSE")
-    return float(np.sum((predits - vrais) ** 2) / np.sum(vrais**2))
+    echelle = max(float(np.max(vrais)), float(np.max(np.abs(predits))))
+    with np.errstate(over="ignore", under="ignore", divide="ignore", invalid="ignore"):
+        ecarts = predits - vrais
+        # Soustraire avant normalisation conserve les petits ecarts ; si la
+        # soustraction deborde, normaliser ses deux termes separement.
+        ecarts_normalises = ecarts / echelle
+        debordements = ~np.isfinite(ecarts)
+        if np.any(debordements):
+            ecarts_normalises[debordements] = (
+                predits[debordements] / echelle - vrais[debordements] / echelle
+            )
+        norme_erreur = np.hypot.reduce(ecarts_normalises)
+        norme_verite = np.hypot.reduce(vrais / echelle)
+        rapport = norme_erreur / norme_verite
+        resultat = rapport * rapport
+    if not np.isfinite(resultat):
+        msg = "NMSE : resultat non representable en float64."
+        raise ValueError(msg)
+    return float(resultat)
 
 
 @dataclass(frozen=True)
