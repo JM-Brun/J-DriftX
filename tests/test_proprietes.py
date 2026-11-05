@@ -402,7 +402,13 @@ def test_temps_premiere_arrivee_symetrique_par_inversion(a, b, vitesse) -> None:
     """
     # Given — un trajet a -> b et la même dynamique inversée.
     # When — on évalue les deux sens de parcours.
-    direct = temps_premiere_arrivee_1d(a, b, vitesse)
+    try:
+        direct = temps_premiere_arrivee_1d(a, b, vitesse)
+    except ValueError:
+        # Un temps positif non représentable doit être refusé dans les deux sens.
+        with pytest.raises(ValueError, match="representable"):
+            temps_premiere_arrivee_1d(b, a, -vitesse)
+        return
     inverse = temps_premiere_arrivee_1d(b, a, -vitesse)
     # Then — les deux temps coïncident (l'infini compris).
     assert direct == pytest.approx(inverse)
