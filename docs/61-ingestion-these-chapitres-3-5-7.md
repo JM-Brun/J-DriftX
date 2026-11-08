@@ -56,31 +56,31 @@ Le modèle local ne se réduit donc pas à un profil gaussien : il représente l
 \[
 F_{Dveg}=\frac12\rho\,a_{LAD}\,u^2 C_{Dveg}.
 \]
-La thèse indique pour $C_{Dveg}$ une plage bibliographique de 0,1 à 0,5 et souligne que sa détermination est expérimentale. Elle définit $a_{LAD}$ comme densité foliaire, de dimension $L^{-1}$.
+La thèse indique pour \(C_{Dveg}\) une plage bibliographique de 0,1 à 0,5 et souligne que sa détermination est expérimentale. Elle définit \(a_{LAD}\) comme densité foliaire, de dimension \(L^{-1}\).
 
-**Incohérence dimensionnelle relevée sur le fac-similé :** l'équation (4.1) imprime l'unité $[N]$. Avec $[\rho]=\mathrm{kg\,m^{-3}}$, $[a_{LAD}]=\mathrm{m^{-1}}$, $[u]=\mathrm{m\,s^{-1}}$ et $C_{Dveg}$ sans dimension, le membre droit est en $\mathrm{kg\,m^{-2}\,s^{-2}}=\mathrm{N\,m^{-3}}$, soit une force par unité de volume. L'étiquette $[N]$ ne correspond donc pas à ces définitions. Le sens de $F_{Dveg}$ doit être clarifié : force volumique, ou force intégrée sur un volume de contrôle. L'anomalie est consignée sous **DRX-ERR-021** dans le registre [docs/46](46-registre-erreurs-incoherences-documentaires.md) ; aucune correction de l'équation source n'est imposée. Le fac-similé a été contrôlé visuellement (PDF p. 72, pagination imprimée p. 63).
+**Incohérence dimensionnelle relevée sur le fac-similé :** l'équation (4.1) imprime l'unité \([N]\). Avec \([\rho]=\mathrm{kg\,m^{-3}}\), \([a_{LAD}]=\mathrm{m^{-1}}\), \([u]=\mathrm{m\,s^{-1}}\) et \(C_{Dveg}\) sans dimension, le membre droit est en \(\mathrm{kg\,m^{-2}\,s^{-2}}=\mathrm{N\,m^{-3}}\), soit une force par unité de volume. L'étiquette \([N]\) ne correspond donc pas à ces définitions. Le sens de \(F_{Dveg}\) doit être clarifié : force volumique, ou force intégrée sur un volume de contrôle. L'anomalie est consignée sous **DRX-ERR-021** dans le registre [docs/46](46-registre-erreurs-incoherences-documentaires.md) ; aucune correction de l'équation source n'est imposée. Le fac-similé a été contrôlé visuellement (PDF p. 72, pagination imprimée p. 63).
 
-Le chapitre réduit ensuite l'écoulement dans le rang à une variable de pénétration $r$. L'équation (4.9), p. 67, décrit le transport scalaire :
+Le chapitre réduit ensuite l'écoulement dans le rang à une variable de pénétration \(r\). L'équation (4.9), p. 67, décrit le transport scalaire :
 \[
 \frac{\partial c}{\partial t}
 +u(r,t)\frac{\partial c}{\partial r}
 -D\frac{\partial^2c}{\partial r^2}
 =F_c(u,c,r,t),
 \]
-avec (c(r,0)=c_0$r$=c_0) et $c(r_0,t)=c_l(t)=c_l$. Le texte interprète $F_c$ comme le terme puits représentant l'effet de perte de masse dû à la canopée. L'équation d'état de vitesse (4.8) est couplée à ce modèle, mais sa transcription détaillée et son contrôle dimensionnel restent à effectuer.
+avec \(c(r,0)=c_0(r)=c_0\) et \(c(r_0,t)=c_l(t)=c_l\). Le texte interprète \(F_c\) comme le terme puits représentant l'effet de perte de masse dû à la canopée. L'équation d'état de vitesse (4.8) est couplée à ce modèle, mais sa transcription détaillée et son contrôle dimensionnel restent à effectuer.
 
-Le problème inverse cherche le terme de contrôle/puits $F$ qui rapproche l'état $u_F$ d'un profil cible. Les équations (4.14) et (4.16), p. imprimée 68, présentent deux critères :
+Le problème inverse cherche le terme de contrôle/puits \(F\) qui rapproche l'état \(u_F\) d'un profil cible. Les équations (4.14) et (4.16), p. imprimée 68, présentent deux critères :
 \[
-J_{LC}$F$=\sum_{i=1}^{n}\alpha^{(i)}
+J_{LC}(F)=\sum_{i=1}^{n}\alpha^{(i)}
 \left\|u_F-u_{tar}^{(i)}\right\|_{L_2},
 \qquad
-J_{WCE}$F$=\max_i\left\{
+J_{WCE}(F)=\max_i\left\{
 \alpha^{(i)}\left\|u_F-u_{tar}^{(i)}\right\|_{L_2}
 \right\}.
 \]
 Le premier minimise une somme pondérée des erreurs (coût moyen) ; le second minimise la pire erreur pondérée (minimax). Le texte les présente comme formulations multi-critères complémentaires pour la robustesse, mais précise que l'application simple de paramétrage qui suit n'emploie pas encore l'approche multi-critères.
 
-Le profil cible (4.17)–(4.18), p. 68, est exponentiel entre les vitesses d'entrée et de sortie du rang, avec $u_r^{(i)}=\beta_{veg}u_l^{(i)}$ et $\beta_{veg}\in[0,1]$. Le contrôle est ensuite discrétisé par morceaux sur $m$ sous-intervalles, équations (4.20)–(4.24), sous la forme de valeurs constantes du produit $a_{LAD}C_{Dveg}$ (dimension $m^{-1}$). La figure 4.2 compare les profils cibles et optimisés ; la figure 4.3 rapporte les paramètres optimaux correspondants. Il s'agit d'une identification de paramétrisation à partir de profils cibles, pas d'une estimation indépendante de $a_{LAD}$ et $C_{Dveg}$ séparément.
+Le profil cible (4.17)–(4.18), p. 68, est exponentiel entre les vitesses d'entrée et de sortie du rang, avec \(u_r^{(i)}=\beta_{veg}u_l^{(i)}\) et \(\beta_{veg}\in[0,1]\). Le contrôle est ensuite discrétisé par morceaux sur \(m\) sous-intervalles, équations (4.20)–(4.24), sous la forme de valeurs constantes du produit \(a_{LAD}C_{Dveg}\), de dimension \(m^{-1}\). La figure 4.2 compare les profils cibles et optimisés ; la figure 4.3 rapporte les paramètres optimaux correspondants. Il s'agit d'une identification de paramétrisation à partir de profils cibles, pas d'une estimation indépendante de \(a_{LAD}\) et \(C_{Dveg}\) séparément.
 
 ### 3.2 Chapitre 5 — jets turbulents et application viticole
 
@@ -90,7 +90,7 @@ Le chapitre 5 utilise un jet turbulent rond axisymétrique comme modèle simplif
 
 Les équations (5.32)–(5.40), pp. imprimées 94–95, partent de l'équation de transport moyennée du scalaire dans un jet axisymétrique turbulent. La diffusion moléculaire est négligée à grand nombre de Reynolds. Le profil de concentration est posé sous forme auto-similaire, avec une échelle de concentration axiale, une échelle de fluctuation turbulente et une coordonnée radiale réduite. La conservation du flux de concentration (5.37) impose que l'échelle radiale de concentration soit prise égale à celle du jet ; elle implique aussi que le produit de la concentration d'axe par la largeur du jet soit constant. Les relations (5.38)–(5.40) relient ensuite le profil moyen et le flux turbulent.
 
-La thèse discute explicitement la non-universalité possible du jet : l'hypothèse (u_L^x=U_{turb}) conduirait à une vitesse d'étalement universelle, mais cette hypothèse est contestée dans la littérature citée. Les conditions initiales de la buse peuvent donc affecter les paramètres de similitude. Il ne faut pas transformer la famille de profils en loi universelle indépendante de la buse.
+La thèse discute explicitement la non-universalité possible du jet : l'hypothèse \(u_L^x=U_{turb}\) conduirait à une vitesse d'étalement universelle, mais cette hypothèse est contestée dans la littérature citée. Les conditions initiales de la buse peuvent donc affecter les paramètres de similitude. Il ne faut pas transformer la famille de profils en loi universelle indépendante de la buse.
 
 Les équations (5.44)–(5.45), p. imprimée 100, donnent la concentration tridimensionnelle d'un jet :
 \[
@@ -99,20 +99,20 @@ c_{jet}(x,r,\theta)=c_{centerline}(x)f_{rad}\!\left(\frac{r}{x}\right),
 f_{rad}\!\left(\frac{r}{x}\right)
 =\exp\!\left[-\alpha_{Jet}\left(\frac{r}{x}\right)^2\right].
 \]
-Le profil radial est gaussien, tandis que le comportement axial est modifié dans la canopée. La thèse suppose que la canopée modifie le profil axial mais pas le profil radial, à l'intérieur comme à l'extérieur du rang ; elle qualifie explicitement cette hypothèse de forte et demande une vérification expérimentale. La figure 5.8 montre une sensibilité du profil axial à (a_{LAD}).
+Le profil radial est gaussien, tandis que le comportement axial est modifié dans la canopée. La thèse suppose que la canopée modifie le profil axial mais pas le profil radial, à l'intérieur comme à l'extérieur du rang ; elle qualifie explicitement cette hypothèse de forte et demande une vérification expérimentale. La figure 5.8 montre une sensibilité du profil axial à \(a_{LAD}\).
 
 ### 3.2.2 Du champ local à la masse candidate au transport lointain
 
-Les équations (5.50)–(5.55), p. imprimée 102, normalisent la forme spatiale du flux de concentration de chaque buse par son intégrale volumique, puis la multiplient par le débit massique de la buse (Q_0^i). Le coefficient de calibration (coef\,f^i) a l'unité (s^{-1}). La concentration locale cumulée est mise à jour par (5.56)–(5.60) en sommant, sur les buses, les contributions de taux (c_{\Delta t^j}^i) multipliées par le pas de temps. La concentration (c_{loc}) est en (kg\,m^{-3}), tandis que le taux de contribution est en (kg\,m^{-3}\,s^{-1}).
+Les équations (5.50)–(5.55), p. imprimée 102, normalisent la forme spatiale du flux de concentration de chaque buse par son intégrale volumique, puis la multiplient par le débit massique de la buse \(Q_0^i\). Le coefficient de calibration \(coef\,f^i\) a l'unité \(s^{-1}\). La concentration locale cumulée est mise à jour par (5.56)–(5.60) en sommant, sur les buses, les contributions de taux \(c_{\Delta t^j}^i\) multipliées par le pas de temps. La concentration \(c_{loc}\) est en \(\mathrm{kg\,m^{-3}}\), tandis que le taux de contribution est en \(\mathrm{kg\,m^{-3}\,s^{-1}}\).
 
-Les équations (5.61)–(5.63), p. 102, calculent les pertes par intégration de (c_{loc}) au-dessus de la hauteur (z_0), puis sur l'espace et à la fin du traitement (T_{spray}). La thèse identifie explicitement cette masse comme le terme source du niveau 3 de DriftX, c'est-à-dire du modèle de dispersion atmosphérique à méso-échelle.
+Les équations (5.61)–(5.63), p. 102, calculent les pertes par intégration de \(c_{loc}\) au-dessus de la hauteur \(z_0\), puis sur l'espace et à la fin du traitement \(T_{spray}\). La thèse identifie explicitement cette masse comme le terme source du niveau 3 de DriftX, c'est-à-dire du modèle de dispersion atmosphérique à méso-échelle.
 
-Les équations (5.64)–(5.67), p. 103, présentent une formulation par flux vertical à travers le plan horizontal (x-y) juste au-dessus de (z_0) :
+Les équations (5.64)–(5.67), p. 103, présentent une formulation par flux vertical à travers le plan horizontal \(x-y\) juste au-dessus de \(z_0\) :
 \[
 M_{loss}(\Delta t^j)
 =\int_{\Delta t^j}\!\int_S(wc_{loc})\,dS\,dt.
 \]
-Sous l'hypothèse que le pulvérisateur et l'écoulement sont stationnaires pendant l'intervalle considéré, (5.65)–(5.67) relient ce flux à l'intégrale volumique des contributions des buses. La dernière relation (5.67) est imprimée avec le signe approximatif (\approx), et doit rester une relation approchée, non une identité générale. Les hypothèses invoquées sont la stationnarité sur (\Delta t^j), la localisation spatiale de la source et la représentation par le champ (c_{loc}).
+Sous l'hypothèse que le pulvérisateur et l'écoulement sont stationnaires pendant l'intervalle considéré, (5.65)–(5.67) relient ce flux à l'intégrale volumique des contributions des buses. La dernière relation (5.67) est imprimée avec le signe approximatif \(\approx\), et doit rester une relation approchée, non une identité générale. Les hypothèses invoquées sont la stationnarité sur \(\Delta t^j\), la localisation spatiale de la source et la représentation par le champ \(c_{loc}\).
 
 L'implémentation historique décrite en 5.6.3 est en FORTRAN77 ; chaque buse produit un jet turbulent indépendant selon (5.44), sans interaction entre jets, et le domaine est discrétisé sur une grille uniforme prescrite par l'utilisateur. Cette hypothèse d'indépendance est une limite explicite du modèle.
 
