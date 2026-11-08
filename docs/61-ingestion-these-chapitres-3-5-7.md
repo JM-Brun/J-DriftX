@@ -92,7 +92,7 @@ Les équations (5.32)–(5.40), pp. imprimées 94–95, partent de l'équation d
 
 La thèse discute explicitement la non-universalité possible du jet : l'hypothèse \(u_L^x=U_{turb}\) conduirait à une vitesse d'étalement universelle, mais cette hypothèse est contestée dans la littérature citée. Les conditions initiales de la buse peuvent donc affecter les paramètres de similitude. Il ne faut pas transformer la famille de profils en loi universelle indépendante de la buse.
 
-Les équations (5.44)–(5.45), p. imprimée 100, donnent la concentration tridimensionnelle d'un jet :
+Les équations (5.44)–(5.45), p. imprimée 101 (PDF p. 110), donnent la concentration tridimensionnelle d'un jet :
 \[
 c_{jet}(x,r,\theta)=c_{centerline}(x)f_{rad}\!\left(\frac{r}{x}\right),
 \qquad
