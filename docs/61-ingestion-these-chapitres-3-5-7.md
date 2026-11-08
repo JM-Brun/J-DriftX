@@ -201,9 +201,9 @@ La comparaison de la fig. 7.5 est un résultat de cas numérique, pas une preuve
 
 ## 7. Travail restant pour achever l'ingestion
 
-1. **Chapitre 4 :** relever le modèle de canopée, variables d'état, équations réduites, conditions aux limites, paramètres et couplage au chapitre 3 ; confronter au code historique sans présumer une correspondance.
-2. **Chapitre 5 :** relever systématiquement les équations du jet et hypothèses de similitude (notamment autour de (5.16), (5.33)–(5.42)), puis les confronter aux unités et aux données expérimentales 5.6–5.8.
-3. **Chapitre 7 :** poursuivre après (7.19), notamment évaluation du temps de migration, construction effective de la géométrie, assimilation/calibration et exemples ; contrôler les symboles ambigus sur le fac-similé.
+1. **Chapitre 4 :** confronter au code historique les équations (4.1), (4.8)–(4.9) et l'annexe C ; identifier la condition au bord \(r_1\), la branche de viscosité effectivement résolue et la correspondance entre le contrôle \(F\) et le produit \(a_{LAD}C_{Dveg}\). Ne pas présumer une correspondance entre formulation et implémentation.
+2. **Chapitre 5 :** contrôler visuellement et transcrire les équations (5.16), (5.33)–(5.42) et (5.43) ; vérifier les coefficients et dimensions des profils de jet, puis confronter les hypothèses (5.50)–(5.67) aux données expérimentales 5.6–5.8.
+3. **Chapitre 7 :** poursuivre après (7.19), notamment l'évaluation du temps de migration, la construction effective de la géométrie, l'assimilation/calibration et les exemples ; contrôler les symboles ambigus sur le fac-similé.
 4. **Annexes E et F :** qualifier les conditions météorologiques de l'exemple et la formulation Finsler/métrique de vent ; distinguer cette annexe de la construction réellement utilisée au chapitre 7.
 5. **Provenance :** consulter la fiche existante du PDF versionné et consigner le contrôle d'identité binaire avec la copie HAL déjà obtenue, sans réacquisition. Vérifier les droits séparément.
 
