@@ -88,7 +88,8 @@ La lecture distingue (a) la quantité locale candidate au transport lointain (c^
 
 Les équations (7.14)–(7.15), pp. 129–130, donnent pour un écoulement plan uniforme :
 \[
-c_{glob}(x,y,z)=c_{axis}(x)f_{rad}(r,\delta(x)),\qquad r=\sqrt{y^2+z^2}\n\]
+c_{glob}(x,y,z)=c_{axis}(x)f_{rad}(r,\delta(x)),\qquad r=\sqrt{y^2+z^2}
+\]
 avec décroissance axiale exponentielle et profil radial exponentiel. $\delta(x)$ caractérise l'épaisseur du panache ; le texte indique une évolution parabolique pour un jet laminaire et linéaire dans les cas turbulents considérés. $a(U)$ est positif et monotone décroissant ; $b(U,\delta)$ est positif, croissant en $U$ et décroissant en $\delta$.
 
 La généralisation proposée remplace la distance cartésienne par une géométrie non symétrique fondée sur les temps de migration. Les équations (7.6)–(7.7), p. 127, définissent le temps le long d'une caractéristique issue de A jusqu'à la projection (B^\perp) de B. La caractéristique est supposée unique ; sources et points d'attraction sont écartés. Si la projection n'est pas unique, le texte propose un choix satisfaisant au mieux une contrainte de transport au point B.
