@@ -205,7 +205,7 @@ La comparaison de la fig. 7.5 est un résultat de cas numérique, pas une preuve
 2. **Chapitre 5 :** contrôler visuellement et transcrire les équations (5.16), (5.33)–(5.42) et (5.43) ; vérifier les coefficients et dimensions des profils de jet, puis confronter les hypothèses (5.50)–(5.67) aux données expérimentales 5.6–5.8.
 3. **Chapitre 7 :** poursuivre après (7.19), notamment l'évaluation du temps de migration, la construction effective de la géométrie, l'assimilation/calibration et les exemples ; contrôler les symboles ambigus sur le fac-similé.
 4. **Annexes E et F :** qualifier les conditions météorologiques de l'exemple et la formulation Finsler/métrique de vent ; distinguer cette annexe de la construction réellement utilisée au chapitre 7.
-5. **Provenance :** consulter la fiche existante du PDF versionné et consigner le contrôle d'identité binaire avec la copie HAL déjà obtenue, sans réacquisition. Vérifier les droits séparément.
+5. **Provenance :** identité binaire entre le PDF joint et le PDF versionné confirmée (204 pages, 27 141 548 octets, SHA-256 consigné dans la fiche de provenance). La comparaison indépendante avec une copie HAL conservée séparément n'est pas établie ; ne pas relancer l'acquisition. Vérifier les droits de redistribution séparément.
 
 ### Critère de clôture
 
