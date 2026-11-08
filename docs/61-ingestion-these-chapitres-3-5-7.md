@@ -204,6 +204,33 @@ La généralisation proposée remplace la distance cartésienne par une géomét
 
 La construction des caractéristiques est ensuite approchée par des polynômes satisfaisant des conditions aux extrémités et sur les dérivées, équations (7.16)–(7.19), p. 130. Le passage retrouvé indique que l'ordre polynomial est augmenté lorsque la dérivée de la courbe candidate ne correspond pas au champ local. Cette prescription est un algorithme approché ; elle ne démontre ni existence, ni unicité, ni convergence de la caractéristique.
 
+### 4.5 Généralisation du panache et problème inverse
+
+L'équation (7.20), p. imprimée 131 (PDF p. 140), étend le profil de similitude au champ non symétrique :
+\[
+c_{glob}(B)=c_{axis}\!\left(d_{wind}(A,B)\right)
+f_{rad}\!\left(d_E^\perp,\delta\!\left(d_{wind}(A,B)\right)\right).
+\]
+La concentration au point B est ainsi construite à partir d'une coordonnée axiale issue du transport dirigé entre la source A et B, et d'une distance euclidienne transverse à la caractéristique. C'est une évaluation ponctuelle de modèle réduit, pas la résolution du champ complet par une EDP. Le passage suppose que les objets géométriques construits en 7.2 sont suffisamment réguliers et définis pour calculer ces deux arguments.
+
+**Approximation géométrique et facteur correctif, p. imprimée 131 (PDF p. 140) :** le texte pose ensuite \(B^\perp=B\), c'est-à-dire suppose que la caractéristique issue de A passe exactement par B, tout en reconnaissant que cela est peu probable. En vent uniforme, cela revient à supposer petit l'angle entre l'axe central et AB. Un facteur correctif est alors imprimé sous la forme \(2/3=0.636\) et appliqué aux temps calculés. L'égalité arithmétique est fausse : \(2/3\simeq0.6667\). La valeur 0.636 évoque \(2/\pi\simeq0.63662\), mais l'interprétation probabiliste n'est pas déterminée par le texte : pour un angle uniforme sur \([0,\pi]\), la moyenne signée de \(\cos\theta\) vaut 0, tandis que la moyenne de \(|\cos\theta|\) vaut \(2/\pi\). Le manuscrit ne précise ni la valeur absolue ni la loi de l'angle. L'anomalie arithmétique est suivie sous **DRX-ERR-010** ; la justification du facteur et son usage dans le temps de migration restent à établir. Aucune correction n'est injectée dans la transcription historique.
+
+Le texte définit ensuite \(d_E^\perp\) comme la distance euclidienne dans la direction normale locale à la caractéristique en \(B^\perp\), puis l'approche par la projection de B sur le vecteur vitesse moyen \(\bar u_{char}\) le long de la caractéristique polynomiale. Cette approximation remplace donc la géométrie locale exacte par une projection sur une direction moyenne ; sa précision est seulement qualifiée de satisfaisante pour les champs atmosphériques lisses visés.
+
+### 4.6 Identification des paramètres et fonctionnelle
+
+Les équations (7.21)–(7.22), p. imprimée 131 (PDF p. 140), définissent l'identification de paramètres par
+\[
+\min_{p\in O}J(p),\qquad
+J(p,u_{obs},c_{obs})
+=\|u(p)-u_{obs}\|+\|c(p,u(p))-c_{obs}\|.
+\]
+Le texte précise que les normes sont des normes discrètes \(L_2\) sur les points de mesure. Le vecteur p rassemble notamment la description du domaine de simulation, la topographie et les détails de la source d'injection. Le champ \(u(p)\) est présenté comme le complément divergence nulle des mesures de vent partielles ; le modèle de concentration est ensuite évalué à partir de ce champ.
+
+**Réserve dimensionnelle (DRX-ERR-027) :** sous les unités physiques usuelles, le premier résidu porte l'unité d'une vitesse (m·s⁻¹) et le second celle d'une concentration massique (kg·m⁻³). Leur somme n'est pas homogène dimensionnellement sans normalisation, pondération ou changement explicite d'échelle. Aucun poids ni facteur de normalisation n'apparaît dans (7.22) ou dans le commentaire immédiat consulté. Il peut exister une normalisation implicite dans le code ou dans la paramétrisation de l'annexe E ; cela reste à vérifier avant de qualifier l'objectif d'invalide ou de le reproduire. Le texte disponible ne suffit pas non plus à déterminer les espaces, les poids relatifs et les critères d'arrêt de la minimisation.
+
+Le chapitre distingue ce problème d'identification des paramètres d'un second problème d'identification de sources, où le paramètre est la localisation des cultures/sources candidates. Ne pas confondre ces deux inversions.
+
 ### 4.5 Propriétés annoncées et statut
 
 Le chapitre 7 énonce que les solutions doivent satisfaire la divergence nulle du vent, la conservation, la positivité et la linéarité. Ce sont des objectifs/contraintes de construction déclarés par l'auteur. Pour la conservation, docs/43 et #123 montrent qu'une preuve exige de préciser la grandeur, la transformation, le jacobien, les sources/puits et les frontières ; elle ne découle pas de la seule condition $\nabla\cdot\vec u=0$.
@@ -235,7 +262,7 @@ La comparaison de la fig. 7.5 est un résultat de cas numérique, pas une preuve
 
 1. **Chapitre 4 :** confronter au code historique les équations (4.1), (4.8)–(4.9) et l'annexe C ; identifier la condition au bord \(r_1\), la branche de viscosité effectivement résolue et la correspondance entre le contrôle \(F\) et le produit \(a_{LAD}C_{Dveg}\). Ne pas présumer une correspondance entre formulation et implémentation.
 2. **Chapitre 5 :** les équations (5.16)–(5.43) ont été contrôlées visuellement (PDF pp. 102–108, pagination imprimée 93–99) et intégrées ci-dessus. Re-dériver les équations (5.33) et (5.38) en coordonnées cylindriques (DRX-ERR-024), clarifier les définitions de \(C_{turb}\) et \(K_{cjet}\) (DRX-ERR-025/026), puis confronter les hypothèses (5.50)–(5.67) aux données expérimentales 5.6–5.8.
-3. **Chapitre 7 :** poursuivre après (7.19), notamment l'évaluation du temps de migration, la construction effective de la géométrie, l'assimilation/calibration et les exemples ; contrôler les symboles ambigus sur le fac-similé.
+3. **Chapitre 7 :** les équations (7.20)–(7.22) et le facteur correctif imprimé « 2/3 = 0.636 » ont été contrôlés visuellement (p. imprimée 131 / PDF p. 140) et intégrés ci-dessus. Reste à reconstituer l'annexe E (paramétrisation/calibration), préciser la loi probabiliste justifiant le facteur de temps, et vérifier la normalisation/pondération de la fonctionnelle d'identification (DRX-ERR-027).
 4. **Annexes E et F :** qualifier les conditions météorologiques de l'exemple et la formulation Finsler/métrique de vent ; distinguer cette annexe de la construction réellement utilisée au chapitre 7.
 5. **Provenance :** identité binaire entre le PDF joint et le PDF versionné confirmée (204 pages, 27 141 548 octets, SHA-256 consigné dans la fiche de provenance). La comparaison indépendante avec une copie HAL conservée séparément n'est pas établie ; ne pas relancer l'acquisition. Vérifier les droits de redistribution séparément.
 
