@@ -250,6 +250,8 @@ def concentration_puff(
     u: float,
     classe: str | ClasseStabilite,
     x0: float = 0.0,
+    hauteur: float = 0.0,
+    reflexion_sol: bool = False,
 ) -> np.ndarray:
     """Concentration (kg m^-3) d'un puff gaussien au point (x, y, z) et a l'instant t.
 
@@ -270,17 +272,24 @@ def concentration_puff(
         u: vitesse du vent (m s^-1), strictement positive.
         classe: classe de stabilite de Pasquill (A a F), lettre ou ClasseStabilite.
         x0: position sous le vent de l'emission (m).
+        hauteur: hauteur de la source (m), positive ou nulle.
+        reflexion_sol: si True, ajoute la source image de meme signe pour
+            imposer un flux vertical nul au sol z = 0. Le domaine physique
+            est alors le demi-espace z >= 0 et la masse est normalisee sur
+            ce demi-espace. Par defaut, le puff reste en espace libre.
 
     Returns:
         Concentration du puff, avec isotropie longitudinale approchee
-        (sigma_x de l'ordre de sigma_y a distance egale du parcours).
+        (sigma_x de l'ordre de sigma_y a distance egale du parcours) ; la
+        reflexion au sol est optionnelle et desactivee par defaut.
 
     Raises:
         ValueError: si la classe de stabilite est inconnue, si un parametre
-            scalaire n'est pas fini, si une coordonnee du point n'est pas
-            finie, si la distance parcourue u*t n'est pas representable, ou
-            si la concentration theorique n'est pas representable en float64
-            (singularite pres de la source).
+            scalaire n'est pas fini, si la hauteur est negative, si
+            reflexion_sol n'est pas un booleen, si une coordonnee du point
+            n'est pas finie, si la distance parcourue u*t n'est pas
+            representable, ou si la concentration theorique n'est pas
+            representable en float64 (singularite pres de la source).
         FloatingPointError: si un ecart-type positif n'est pas representable en float64.
     """
     classe_stable = _valide_classe(classe)
@@ -288,6 +297,12 @@ def concentration_puff(
     masse = _reel_fini(masse, "La masse emise")
     u = _reel_fini(u, "La vitesse du vent")
     x0 = _reel_fini(x0, "La position initiale")
+    hauteur = _reel_fini(hauteur, "La hauteur de source")
+    if not isinstance(reflexion_sol, (bool, np.bool_)):
+        raise ValueError("reflexion_sol doit etre un booleen.")
+    reflexion_sol = bool(reflexion_sol)
+    if hauteur < 0.0:
+        raise ValueError("La hauteur de source doit etre positive ou nulle.")
     if t <= 0.0:
         raise ValueError("Le temps doit etre strictement positif.")
     if masse < 0.0:
@@ -310,9 +325,14 @@ def concentration_puff(
     centre_x = np.asarray(x0, dtype=np.longdouble) + np.longdouble(distance)
     rx = _rapport_difference(x_arr, centre_x, sx)
     ry = _rapport_difference(y_arr, 0.0, sy)
-    rz = _rapport_difference(z_arr, 0.0, sz)
+    rz_source = _rapport_difference(z_arr, hauteur, sz)
     with np.errstate(over="ignore", invalid="ignore"):
-        exposant = -0.5 * (np.square(rx) + np.square(ry) + np.square(rz))
+        exposant_vertical = -0.5 * np.square(rz_source)
+        if reflexion_sol:
+            rz_image = _rapport_difference(z_arr, -hauteur, sz)
+            exposant_image = -0.5 * np.square(rz_image)
+            exposant_vertical = np.logaddexp(exposant_vertical, exposant_image)
+        exposant = -0.5 * (np.square(rx) + np.square(ry)) + exposant_vertical
         log_normalisation = 1.5 * np.log(2.0 * np.pi)
         log_amplitude = np.log(masse) - log_normalisation - np.log(sx) - np.log(sy) - np.log(sz)
         log_concentration = log_amplitude + exposant
