@@ -50,11 +50,87 @@ Le chapitre 4 est intitulé *DriftX Module 1: Canopy Flow Model*. Il décrit un 
 
 Le modèle local ne se réduit donc pas à un profil gaussien : il représente l'interaction entre écoulement, structure végétale et transport/dépôt dans la parcelle.
 
+### 3.1.1 Équations réduites et problème inverse
+
+À l'échelle du rang, l'équation (4.1), p. imprimée 63, représente la traînée végétale :
+\[
+F_{Dveg}=\frac12\rho\,a_{LAD}\,u^2 C_{Dveg}.
+\]
+La thèse indique pour \(C_{Dveg}\) une plage bibliographique de 0,1 à 0,5 et souligne que sa détermination est expérimentale. Elle définit \(a_{LAD}\) comme densité foliaire, de dimension \(L^{-1}\).
+
+**Incohérence dimensionnelle relevée sur le fac-similé :** l'équation (4.1) imprime l'unité \([N]\). Avec \([\rho]=\mathrm{kg\,m^{-3}}\), \([a_{LAD}]=\mathrm{m^{-1}}\), \([u]=\mathrm{m\,s^{-1}}\) et \(C_{Dveg}\) sans dimension, le membre droit est en \(\mathrm{kg\,m^{-2}\,s^{-2}}=\mathrm{N\,m^{-3}}\), soit une force par unité de volume. L'étiquette \([N]\) ne correspond donc pas à ces définitions. Le chapitre 3, équation (3.4), p. 51 (PDF p. 60), définit explicitement \(F_D\) comme la force totale de traînée par unité de volume et imprime \(N\,m^{-3}\). La cohérence dimensionnelle et cette définition antérieure indiquent donc que \(F_{Dveg}\) est également une force volumique ; l'étiquette \([N]\) de (4.1) est très probablement une coquille d'unité, et non une force totale à intégrer. L'anomalie est consignée sous **DRX-ERR-021** dans le registre [docs/46](46-registre-erreurs-incoherences-documentaires.md) ; aucune correction de l'équation source n'est imposée. Le fac-similé a été contrôlé visuellement (PDF p. 72, pagination imprimée p. 63).
+
+Le chapitre réduit ensuite l'écoulement dans le rang à une variable de pénétration \(r\). L'équation de vitesse (4.8), p. imprimée 66, est une équation de Burgers visqueuse forcée :
+\[
+\frac{\partial u}{\partial t}
++\frac12\frac{\partial (u^2)}{\partial r}
+-\nu\frac{\partial^2u}{\partial r^2}
+=F_u(u,r,t),
+\qquad (r,t)\in [r_0,r_1]\times[0,T].
+\]
+Les conditions imprimées sont \(u(r,0)=u_0(r)=0\) sur \([r_0,r_1]\) et \(u(r_0,t)=u_l(t)=u_l\) sur \([0,T]\). Le texte identifie \(F_u\) comme le terme puits de quantité de mouvement dû à la traînée de la canopée.
+
+L'équation scalaire (4.9), p. 67, est :
+\[
+\frac{\partial c}{\partial t}
++u(r,t)\frac{\partial c}{\partial r}
+-D\frac{\partial^2c}{\partial r^2}
+=F_c(u,c,r,t),
+\]
+avec \(c(r,0)=c_0(r)=c_0\) et \(c(r_0,t)=c_l(t)=c_l\). Le texte interprète \(F_c\) comme le terme puits représentant l'effet de perte de masse dû à la canopée.
+
+**Condition aux limites incomplète dans la spécification imprimée :** pour les équations (4.8) et (4.9), le domaine est borné en \(r\) et les termes \(\nu u_{rr}\) et \(D c_{rr}\) sont d'ordre deux, mais seule la condition au bord \(r_0\) est donnée ; aucune condition en \(r_1\) n'est indiquée à ces équations. La valeur cible \(u_{tar}(r_1)\) de (4.18) décrit un profil cible et ne suffit pas, à elle seule, à établir une condition de bord pour l'état. L'annexe C, équation (C.3), répète l'unique condition à \(r_0\) sans ajouter de condition à \(r_1\). La spécification est donc sous-déterminée telle qu'imprimée pour un problème parabolique sur \([r_0,r_1]\) ; une condition naturelle ou une convention d'outflow peut avoir été implicite, mais elle n'est pas documentée dans ces passages. Voir **DRX-ERR-022** dans docs/46.
+
+L'annexe C apporte une seconde réserve de reproductibilité : (C.1)–(C.4), p. imprimée 159 (PDF p. 168), présentent successivement l'équation visqueuse, une forme conservative sans terme visqueux et une forme non conservative sans ce terme ; le schéma explicite (C.9), p. 159, réintroduit \(\nu\), alors que le schéma JST (C.20), p. 160 (PDF p. 169), utilise une viscosité numérique \(\mu_j^{n,p}\) définie en (C.22), sans expliquer si elle remplace ou complète \(\nu\). Cette ambiguïté est enregistrée sous **DRX-ERR-023** dans docs/46. Ces formulations ne doivent pas être assimilées sans reconstituer précisément la branche numérique effectivement utilisée.
+
+Le problème inverse cherche le terme de contrôle/puits \(F\) qui rapproche l'état \(u_F\) d'un profil cible. Les équations (4.14) et (4.16), p. imprimée 68, présentent deux critères :
+\[
+J_{LC}(F)=\sum_{i=1}^{n}\alpha^{(i)}
+\left\|u_F-u_{tar}^{(i)}\right\|_{L_2},
+\qquad
+J_{WCE}(F)=\max_i\left\{
+\alpha^{(i)}\left\|u_F-u_{tar}^{(i)}\right\|_{L_2}
+\right\}.
+\]
+Le premier minimise une somme pondérée des erreurs (coût moyen) ; le second minimise la pire erreur pondérée (minimax). Le texte les présente comme formulations multi-critères complémentaires pour la robustesse, mais précise que l'application simple de paramétrage qui suit n'emploie pas encore l'approche multi-critères.
+
+Le profil cible (4.17)–(4.18), p. 68, est exponentiel entre les vitesses d'entrée et de sortie du rang, avec \(u_r^{(i)}=\beta_{veg}u_l^{(i)}\) et \(\beta_{veg}\in[0,1]\). Le contrôle est ensuite discrétisé par morceaux sur \(m\) sous-intervalles, équations (4.20)–(4.24), sous la forme de valeurs constantes du produit \(a_{LAD}C_{Dveg}\), de dimension \(m^{-1}\). La figure 4.2 compare les profils cibles et optimisés ; la figure 4.3 rapporte les paramètres optimaux correspondants. Il s'agit d'une identification de paramétrisation à partir de profils cibles, pas d'une estimation indépendante de \(a_{LAD}\) et \(C_{Dveg}\) séparément.
+
 ### 3.2 Chapitre 5 — jets turbulents et application viticole
 
 Le chapitre 5 utilise un jet turbulent rond axisymétrique comme modèle simplifié de l'émission par une buse, puis l'applique au pulvérisateur dans une rangée de vigne assimilée à un milieu poreux homogène. Les paramètres cités comprennent notamment $a_{LAD}$, $C_D$ et les paramètres de perte/efficacité du filet de canopée.
 
-La section 5.6.1 (p. 97) applique l'équation du jet à une buse et ajoute le comportement dans le rang de vigne. La section 5.6.3 (pp. 101–102) attribue à la concentration locale $c_{loc}$ l'unité kg·m⁻³ et au coefficient de calibration associé l'unité s⁻¹. Ces unités sont déjà mobilisées dans [docs/43](43-audit-these-brun-conservation-g0s.md) pour l'audit de (7.12).
+### 3.2.1 Similitude du jet et profil de concentration
+
+Les équations (5.32)–(5.40), pp. imprimées 94–95, partent de l'équation de transport moyennée du scalaire dans un jet axisymétrique turbulent. La diffusion moléculaire est négligée à grand nombre de Reynolds. Le profil de concentration est posé sous forme auto-similaire, avec une échelle de concentration axiale, une échelle de fluctuation turbulente et une coordonnée radiale réduite. La conservation du flux de concentration (5.37) impose que l'échelle radiale de concentration soit prise égale à celle du jet ; elle implique aussi que le produit de la concentration d'axe par la largeur du jet soit constant. Les relations (5.38)–(5.40) relient ensuite le profil moyen et le flux turbulent.
+
+La thèse discute explicitement la non-universalité possible du jet : l'hypothèse \(u_L^x=U_{turb}\) conduirait à une vitesse d'étalement universelle, mais cette hypothèse est contestée dans la littérature citée. Les conditions initiales de la buse peuvent donc affecter les paramètres de similitude. Il ne faut pas transformer la famille de profils en loi universelle indépendante de la buse.
+
+Les équations (5.44)–(5.45), p. imprimée 101 (PDF p. 110), donnent la concentration tridimensionnelle d'un jet :
+\[
+c_{jet}(x,r,\theta)=c_{centerline}(x)f_{rad}\!\left(\frac{r}{x}\right),
+\qquad
+f_{rad}\!\left(\frac{r}{x}\right)
+=\exp\!\left[-\alpha_{Jet}\left(\frac{r}{x}\right)^2\right].
+\]
+Le profil radial est gaussien, tandis que le comportement axial est modifié dans la canopée. La thèse suppose que la canopée modifie le profil axial mais pas le profil radial, à l'intérieur comme à l'extérieur du rang ; elle qualifie explicitement cette hypothèse de forte et demande une vérification expérimentale. La figure 5.8 montre une sensibilité du profil axial à \(a_{LAD}\).
+
+### 3.2.2 Du champ local à la masse candidate au transport lointain
+
+Les équations (5.50)–(5.55), p. imprimée 102, normalisent la forme spatiale du flux de concentration de chaque buse par son intégrale volumique, puis la multiplient par le débit massique de la buse \(Q_0^i\). Le coefficient de calibration \(coef\,f^i\) a l'unité \(s^{-1}\). La concentration locale cumulée est mise à jour par (5.56)–(5.60) en sommant, sur les buses, les contributions de taux \(c_{\Delta t^j}^i\) multipliées par le pas de temps. La concentration \(c_{loc}\) est en \(\mathrm{kg\,m^{-3}}\), tandis que le taux de contribution est en \(\mathrm{kg\,m^{-3}\,s^{-1}}\).
+
+Les équations (5.61)–(5.63), p. 102, calculent les pertes par intégration de \(c_{loc}\) au-dessus de la hauteur \(z_0\), puis sur l'espace et à la fin du traitement \(T_{spray}\). La thèse identifie explicitement cette masse comme le terme source du niveau 3 de DriftX, c'est-à-dire du modèle de dispersion atmosphérique à méso-échelle.
+
+Les équations (5.64)–(5.67), p. 103, présentent une formulation par flux vertical à travers le plan horizontal \(x-y\) juste au-dessus de \(z_0\) :
+\[
+M_{loss}(\Delta t^j)
+=\int_{\Delta t^j}\!\int_S(wc_{loc})\,dS\,dt.
+\]
+Sous l'hypothèse que le pulvérisateur et l'écoulement sont stationnaires pendant l'intervalle considéré, (5.65)–(5.67) relient ce flux à l'intégrale volumique des contributions des buses. La dernière relation (5.67) est imprimée avec le signe approximatif \(\approx\), et doit rester une relation approchée, non une identité générale. Les hypothèses invoquées sont la stationnarité sur \(\Delta t^j\), la localisation spatiale de la source et la représentation par le champ \(c_{loc}\).
+
+L'implémentation historique décrite en 5.6.3 est en FORTRAN77 ; chaque buse produit un jet turbulent indépendant selon (5.44), sans interaction entre jets, et le domaine est discrétisé sur une grille uniforme prescrite par l'utilisateur. Cette hypothèse d'indépendance est une limite explicite du modèle.
+
+La section 5.6.1 (p. 97) applique l'équation du jet à une buse et ajoute le comportement dans le rang de vigne. Les équations (5.54)–(5.55) de la section 5.6.2, p. imprimée 102, attribuent à la concentration locale $c_{loc}$ l'unité kg·m⁻³ et au coefficient de calibration associé l'unité s⁻¹. Ces unités sont déjà mobilisées dans [docs/43](43-audit-these-brun-conservation-g0s.md) pour l'audit de (7.12). La section 5.6.3 commence p. 103 et décrit l'implémentation numérique.
 
 Les sections expérimentales 5.7.1–5.7.2 (pp. 104–105) décrivent les conditions microclimatiques et l'estimation du flux de pulvérisation par des lignes collectrices installées dans un plan horizontal à 2,5 m du sol. Le liquide contient un traceur fluorescent BSF ; le volume capturé est estimé par fluorométrie, puis converti en flux spécifique et en quantité traversant le plan.
 
@@ -125,11 +201,11 @@ La comparaison de la fig. 7.5 est un résultat de cas numérique, pas une preuve
 
 ## 7. Travail restant pour achever l'ingestion
 
-1. **Chapitre 4 :** relever le modèle de canopée, variables d'état, équations réduites, conditions aux limites, paramètres et couplage au chapitre 3 ; confronter au code historique sans présumer une correspondance.
-2. **Chapitre 5 :** relever systématiquement les équations du jet et hypothèses de similitude (notamment autour de (5.16), (5.33)–(5.42)), puis les confronter aux unités et aux données expérimentales 5.6–5.8.
-3. **Chapitre 7 :** poursuivre après (7.19), notamment évaluation du temps de migration, construction effective de la géométrie, assimilation/calibration et exemples ; contrôler les symboles ambigus sur le fac-similé.
+1. **Chapitre 4 :** confronter au code historique les équations (4.1), (4.8)–(4.9) et l'annexe C ; identifier la condition au bord \(r_1\), la branche de viscosité effectivement résolue et la correspondance entre le contrôle \(F\) et le produit \(a_{LAD}C_{Dveg}\). Ne pas présumer une correspondance entre formulation et implémentation.
+2. **Chapitre 5 :** contrôler visuellement et transcrire les équations (5.16), (5.33)–(5.42) et (5.43) ; vérifier les coefficients et dimensions des profils de jet, puis confronter les hypothèses (5.50)–(5.67) aux données expérimentales 5.6–5.8.
+3. **Chapitre 7 :** poursuivre après (7.19), notamment l'évaluation du temps de migration, la construction effective de la géométrie, l'assimilation/calibration et les exemples ; contrôler les symboles ambigus sur le fac-similé.
 4. **Annexes E et F :** qualifier les conditions météorologiques de l'exemple et la formulation Finsler/métrique de vent ; distinguer cette annexe de la construction réellement utilisée au chapitre 7.
-5. **Provenance :** consulter la fiche existante du PDF versionné et consigner le contrôle d'identité binaire avec la copie HAL déjà obtenue, sans réacquisition. Vérifier les droits séparément.
+5. **Provenance :** identité binaire entre le PDF joint et le PDF versionné confirmée (204 pages, 27 141 548 octets, SHA-256 consigné dans la fiche de provenance). La comparaison indépendante avec une copie HAL conservée séparément n'est pas établie ; ne pas relancer l'acquisition. Vérifier les droits de redistribution séparément.
 
 ### Critère de clôture
 
