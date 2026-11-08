@@ -102,9 +102,41 @@ Le chapitre 5 utilise un jet turbulent rond axisymétrique comme modèle simplif
 
 ### 3.2.1 Similitude du jet et profil de concentration
 
-Les équations (5.32)–(5.40), pp. imprimées 94–95, partent de l'équation de transport moyennée du scalaire dans un jet axisymétrique turbulent. La diffusion moléculaire est négligée à grand nombre de Reynolds. Le profil de concentration est posé sous forme auto-similaire, avec une échelle de concentration axiale, une échelle de fluctuation turbulente et une coordonnée radiale réduite. La conservation du flux de concentration (5.37) impose que l'échelle radiale de concentration soit prise égale à celle du jet ; elle implique aussi que le produit de la concentration d'axe par la largeur du jet soit constant. Les relations (5.38)–(5.40) relient ensuite le profil moyen et le flux turbulent.
+Les équations (5.16)–(5.31), pp. imprimées 93–94 (PDF pp. 102–103), posent la similitude du champ de vitesse et du flux turbulent de quantité de mouvement :
+\[
+\bar u(r,x)=u_{Lx}(x)f(\eta),\qquad
+-\overline{u'v'}=U_{turb}^2(x)g(\eta),\qquad
+\eta=\frac{r}{l_r(x)}.
+\]
+La fonction de courant (5.21) est écrite \(\psi=u_{Lx}l_r^2F(\eta)\), avec \(f(\eta)=F'(\eta)/\eta\) ; elle conduit aux composantes moyennes (5.23)–(5.24). La normalisation \(f(0)=1\) identifie \(u_{Lx}\) à la vitesse moyenne sur l'axe. Le flux axial de quantité de mouvement (5.25)–(5.26),
+\[
+I=2\pi\int_0^\infty \bar u^2r\,dr
+=2\pi u_{Lx}^2l_r^2\int_0^\infty \eta f^2(\eta)\,d\eta=I_0,
+\]
+implique \(u_{Lx}l_r=\mathrm{constante}\). La réduction de l'équation de quantité de mouvement conduit à (5.28), \((u_{Lx}^2/U_{turb}^2)(dl_r/dx)=\mathrm{constante}\). La loi linéaire (5.30), \(l_r=\alpha(x-x_0)\), et la décroissance (5.31) de la vitesse d'axe suivent sous les hypothèses de similitude retenues. L'auteur souligne toutefois que l'hypothèse \(u_{Lx}=U_{turb}\), nécessaire à l'universalité du taux d'étalement dans l'argument présenté, est contestée ; il ne faut donc pas présenter \(\alpha\) comme universel ou indépendant de la buse.
 
-La thèse discute explicitement la non-universalité possible du jet : l'hypothèse \(u_L^x=U_{turb}\) conduirait à une vitesse d'étalement universelle, mais cette hypothèse est contestée dans la littérature citée. Les conditions initiales de la buse peuvent donc affecter les paramètres de similitude. Il ne faut pas transformer la famille de profils en loi universelle indépendante de la buse.
+Les équations (5.32)–(5.40), pp. imprimées 95–96 (PDF pp. 104–105), portent sur le transport turbulent du scalaire. L'équation conservative (5.32) est écrite en coordonnées cylindriques axisymétriques ; la diffusion moléculaire est négligée à grand nombre de Reynolds. La forme de similitude (5.34)–(5.36) utilise \(\bar c(r,x)=c_{Lx}(x)h(\eta)\), \(\overline{v'c'}=U_{turb}(x)C_{turb}(x)k(\eta)\), et \(\eta=r/l_{rc}(x)\). Le flux axial conservé (5.37) est
+\[
+\int_0^\infty \bar c\,\bar u\,r\,dr=\frac{Q_0}{2\pi}.
+\]
+La thèse en déduit \(l_{rc}(x)\simeq l_r(x)\), puis choisit \(l_{rc}\equiv l_r\), et obtient \(c_{Lx}l_r=\mathrm{constante}\). Les relations (5.38)–(5.40) lient ensuite le profil moyen au flux turbulent.
+
+**Anomalie de géométrie à contrôler (DRX-ERR-024) :** sur le fac-similé, (5.32) contient bien le facteur cylindrique \(r^{-1}\partial_r(r\,\overline{v'c'})\), tandis que la forme simplifiée imprimée en (5.33) écrit \(-\partial_r(r\,\overline{v'c'})\), sans le facteur \(1/r\). Or la continuité axisymétrique permet de simplifier le membre moyen, mais ne supprime pas le facteur géométrique du flux turbulent. Sous les unités conventionnelles \([c]=\mathrm{kg\,m^{-3}}\), \([u]=\mathrm{m\,s^{-1}}\), le membre gauche de (5.33) est en \(\mathrm{kg\,m^{-3}\,s^{-1}}\), alors que le membre droit imprimé sans \(1/r\) n'a pas cette dimension. La forme cylindrique cohérente issue de (5.32) conserve \(-r^{-1}\partial_r(r\,\overline{v'c'})\). La même omission semble se propager à la réduction (5.38), qui ne fait pas apparaître le facteur \(1/\eta\) attendu ; ce point est à re-dériver avant d'utiliser (5.38)–(5.40) comme spécification. Le constat porte sur la transcription imprimée, pas sur le code ni sur l'intention de l'auteur.
+
+**Anomalie de définition (DRX-ERR-025) :** l'équation (5.35) et la dimension du flux turbulent \(\overline{v'c'}\) imposent \([C_{turb}]=[c]=\mathrm{kg\,m^{-3}}\), puisque \([U_{turb}]=\mathrm{m\,s^{-1}}\). Pourtant, le texte descriptif de la p. 95 appelle \(C_{turb}(x)\) une « length scale ». Il s'agit d'une contradiction entre la définition dimensionnelle donnée par l'équation et cette phrase ; la reconstruction doit traiter \(C_{turb}\) comme une échelle de concentration, sans réécrire la phrase source.
+
+La thèse discute explicitement la non-universalité possible du jet : l'hypothèse \(u_{Lx}=U_{turb}\) conduirait à un taux d'étalement universel, mais cette hypothèse est contestée dans la littérature citée. Les conditions initiales de la buse peuvent donc affecter les paramètres de similitude. Il ne faut pas transformer la famille de profils en loi universelle indépendante de la buse.
+
+Les équations (5.41)–(5.43), pp. imprimées 96–99 (PDF pp. 105–108), complètent ce modèle. L'équation (5.41) donne la décroissance de la concentration d'axe :
+\[
+\frac{c_0}{c_{centerline}(x)}
+=\frac{1}{K_{decjet}}\frac{x-x_0}{d_{jet}},
+\qquad
+c_{centerline}(x)=c_0\frac{K_{decjet}d_{jet}}{x-x_0}.
+\]
+Le coefficient \(K_{decjet}\) est sans dimension dans cette écriture, et \(d_{jet}\) est le diamètre de buse. L'équation (5.42) sépare ensuite le profil radial : \(c_{jet}/c_{centerline}=f_{rad}(r/x)\). Pour l'application, la relation (5.43) conserve ce profil radial et définit par morceaux la concentration d'axe : dans la canopée, \(c_{canopy}(x)=c_{row}\exp[-d(x)A_{LAD}C_D]\) ; hors canopée, \(c_{free}(x)=c_0K_{cjet}/(x-x_0)\). La continuité à l'entrée de la canopée \(x_e\) est imposée par \(d(x_e)=0\) et \(c_{row}=c_{free}(x_e)=c_{canopy}(x_e)\). Le produit \(dA_{LAD}C_D\) est sans dimension si \([d]=L\), \([A_{LAD}]=L^{-1}\) et \(C_D\) sans dimension.
+
+**Point dimensionnel non résolu (DRX-ERR-026) :** dans (5.43), \(K_{cjet}\) doit avoir la dimension d'une longueur pour que \(c_0K_{cjet}/(x-x_0)\) soit une concentration. La relation (5.41) suggère le produit \(K_{decjet}d_{jet}\), mais le manuscrit change de notation et ne déclare pas explicitement l'identité ni l'unité de \(K_{cjet}\). Ne pas les assimiler sans confirmation dans le code ou une autre définition de la thèse.
 
 Les équations (5.44)–(5.45), p. imprimée 101 (PDF p. 110), donnent la concentration tridimensionnelle d'un jet :
 \[
@@ -202,7 +234,7 @@ La comparaison de la fig. 7.5 est un résultat de cas numérique, pas une preuve
 ## 7. Travail restant pour achever l'ingestion
 
 1. **Chapitre 4 :** confronter au code historique les équations (4.1), (4.8)–(4.9) et l'annexe C ; identifier la condition au bord \(r_1\), la branche de viscosité effectivement résolue et la correspondance entre le contrôle \(F\) et le produit \(a_{LAD}C_{Dveg}\). Ne pas présumer une correspondance entre formulation et implémentation.
-2. **Chapitre 5 :** contrôler visuellement et transcrire les équations (5.16), (5.33)–(5.42) et (5.43) ; vérifier les coefficients et dimensions des profils de jet, puis confronter les hypothèses (5.50)–(5.67) aux données expérimentales 5.6–5.8.
+2. **Chapitre 5 :** les équations (5.16)–(5.43) ont été contrôlées visuellement (PDF pp. 102–108, pagination imprimée 93–99) et intégrées ci-dessus. Re-dériver les équations (5.33) et (5.38) en coordonnées cylindriques (DRX-ERR-024), clarifier les définitions de \(C_{turb}\) et \(K_{cjet}\) (DRX-ERR-025/026), puis confronter les hypothèses (5.50)–(5.67) aux données expérimentales 5.6–5.8.
 3. **Chapitre 7 :** poursuivre après (7.19), notamment l'évaluation du temps de migration, la construction effective de la géométrie, l'assimilation/calibration et les exemples ; contrôler les symboles ambigus sur le fac-similé.
 4. **Annexes E et F :** qualifier les conditions météorologiques de l'exemple et la formulation Finsler/métrique de vent ; distinguer cette annexe de la construction réellement utilisée au chapitre 7.
 5. **Provenance :** identité binaire entre le PDF joint et le PDF versionné confirmée (204 pages, 27 141 548 octets, SHA-256 consigné dans la fiche de provenance). La comparaison indépendante avec une copie HAL conservée séparément n'est pas établie ; ne pas relancer l'acquisition. Vérifier les droits de redistribution séparément.
