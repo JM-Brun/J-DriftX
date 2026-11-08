@@ -130,7 +130,7 @@ Sous l'hypothèse que le pulvérisateur et l'écoulement sont stationnaires pend
 
 L'implémentation historique décrite en 5.6.3 est en FORTRAN77 ; chaque buse produit un jet turbulent indépendant selon (5.44), sans interaction entre jets, et le domaine est discrétisé sur une grille uniforme prescrite par l'utilisateur. Cette hypothèse d'indépendance est une limite explicite du modèle.
 
-La section 5.6.1 (p. 97) applique l'équation du jet à une buse et ajoute le comportement dans le rang de vigne. La section 5.6.3 (pp. 101–102) attribue à la concentration locale $c_{loc}$ l'unité kg·m⁻³ et au coefficient de calibration associé l'unité s⁻¹. Ces unités sont déjà mobilisées dans [docs/43](43-audit-these-brun-conservation-g0s.md) pour l'audit de (7.12).
+La section 5.6.1 (p. 97) applique l'équation du jet à une buse et ajoute le comportement dans le rang de vigne. Les équations (5.54)–(5.55) de la section 5.6.2, p. imprimée 102, attribuent à la concentration locale $c_{loc}$ l'unité kg·m⁻³ et au coefficient de calibration associé l'unité s⁻¹. Ces unités sont déjà mobilisées dans [docs/43](43-audit-these-brun-conservation-g0s.md) pour l'audit de (7.12). La section 5.6.3 commence p. 103 et décrit l'implémentation numérique.
 
 Les sections expérimentales 5.7.1–5.7.2 (pp. 104–105) décrivent les conditions microclimatiques et l'estimation du flux de pulvérisation par des lignes collectrices installées dans un plan horizontal à 2,5 m du sol. Le liquide contient un traceur fluorescent BSF ; le volume capturé est estimé par fluorométrie, puis converti en flux spécifique et en quantité traversant le plan.
 
