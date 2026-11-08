@@ -1,6 +1,7 @@
 # Note de recherche — équation de Burgers et J-DriftX
 
-**Statut :** connexion mathématique indirecte ; aucune équivalence physique démontrée.  
+**Statut :** lien historique direct au modèle de vitesse 1D dans la canopée de la thèse ; aucune équivalence avec le modèle de dispersion lointaine ou validation physique générale démontrée.
+
 **Date de la note :** 2026-10-22.
 
 **Rôle éditorial :** note de recherche courte, centrée sur le verdict de pertinence et les limites de la piste Burgers. Pour l'explication développée destinée au lecteur du site, voir la [page Quarto « Équation de Burgers : lien avec J-DriftX »](../site/theorie/burgers-et-jdriftx.qmd). La page du site expose les notions et exemples ; cette note conserve le cadrage et les décisions conditionnelles.
@@ -11,7 +12,7 @@ L'équation de Burgers est-elle pertinente pour la modélisation de la dispersio
 
 ## Résultat synthétique
 
-Burgers est un modèle canonique d'advection non linéaire et de diffusion. Elle est pertinente comme analogie de PDE et pourrait servir de cas-test distinct pour des méthodes numériques générales. Elle ne constitue pas, en l'état, une équation de concentration atmosphérique ou de dérive de gouttelettes pour J-DriftX.
+La thèse de Brun utilise explicitement une équation de Burgers visqueuse forcée pour modéliser une vitesse le long d'une ligne pénétrant la canopée, et une équation distincte pour le scalaire transporté (chapitre 4, équations 4.8–4.9, pp. 66–67 ; [fiche de lecture](bibliographie/sources/these-brun.md)). C'est un lien direct avec l'héritage, absent du cadrage initial de cette note. Il ne démontre ni que Burgers décrit la concentration atmosphérique ou la dérive de gouttelettes, ni que le modèle canopée est validé ou implémenté dans J-DriftX.
 
 Équation scalaire visqueuse :
 
@@ -33,9 +34,12 @@ Transport de concentration, sous une forme usuelle sans source ni puits :
 
 La distinction fondamentale est que Burgers fait transporter l'inconnue par elle-même, tandis que le vent transporte généralement une concentration passive.
 
+Pour le modèle historique local, un cas analytique distinct de la résolution visqueuse est dérivé dans la [fiche de thèse](bibliographie/sources/these-brun.md) : en régime stationnaire, sans viscosité, pour une vitesse positive et une traînée constante $k=C_Da_{LAD}$, la vitesse décroît comme $e^{-kr/2}$. Cette référence conditionnelle aide à vérifier les conventions et les futurs solveurs ; elle ne reproduit pas les résultats inverses historiques.
+
 ## Classement du lien
 
-- **Analogie mathématique :** oui.
+- **Modèle historique de vitesse locale :** oui, explicitement au chapitre 4 de la thèse ; application idéalisée et conditions à préciser.
+- **Analogie mathématique avec le transport de concentration :** oui, avec inconnues et bilan distincts.
 - **Benchmark numérique complémentaire :** envisageable, mais non encore construit.
 - **Dérivation de la formulation travel-time :** non établie.
 - **Remplacement du modèle physique de dispersion :** non justifié.
@@ -50,7 +54,7 @@ Si un test numérique général est nécessaire, documenter séparément :
 2. Burgers visqueuse avec une solution de référence ;
 3. modèle réduit J-DriftX dans son domaine défini.
 
-Comparer uniquement les propriétés réellement communes, en spécifiant inconnues, unités, conditions initiales et aux limites, flux conservés, erreurs et limites d'interprétation. Ne pas assimiler le champ de Burgers à la concentration ou au vent de J-DriftX.
+Comparer uniquement les propriétés réellement communes, en spécifiant inconnues, unités, conditions initiales et aux limites, flux conservés, erreurs et limites d'interprétation. Ne pas assimiler la vitesse locale 1D historique à la concentration ou au champ de vent atmosphérique général de J-DriftX.
 
 ## Références
 
@@ -58,6 +62,7 @@ Comparer uniquement les propriétés réellement communes, en spécifiant inconn
 - Documentation Firedrake, “Burgers equation”: https://www.firedrakeproject.org/firedrake/demos/burgers.py.html
 - Brun, J.-M. et Mohammadi, B. (2008). “Reduced-Order Modelling of Dispersion.” https://doi.org/10.1007/978-1-4020-8758-5_14
 - Mohammadi, B. et Brun, J.-M. (2006). “Similitude généralisée et modélisation géométrique à complexité réduite.” https://doi.org/10.1016/j.crme.2006.06.007
+- Brun, J.-M. (2007), thèse, chapitre 4 et annexe C ; [fiche de source](bibliographie/sources/these-brun.md).
 
 ## Limites de la revue
 

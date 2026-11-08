@@ -261,7 +261,7 @@ Conformément à la règle de dépendance de la feuille de route (« aucun test 
 | approximation \(B^\perp \approx B\) et facteur \(2/\pi\) (chapitre 2008) | non couverts ici ; relèvent de la reproduction de l'algorithme publié (revue ciblée § 2.1) |
 | généralisation du lemme 5.4 hors cisaillement | ouverte : caractériser les classes de champs où la triangulation dirigée de $T_{\mathrm{proj}}$ tient |
 | dimension 3 | non traitée ; aucune raison d'attendre de meilleurs axiomes (les contre-exemples 2D s'étendent) |
-| thèse (2006/2007) | non consultée ; examen différé jusqu'au dépôt (issue #44) |
+| thèse (2007) | À l'époque de l'investigation, non consultée ; depuis, PDF versionné et passages ciblés examinés : voir la [fiche de lecture](bibliographie/sources/these-brun.md). |
 
 ## Annexe A — Contrôles numériques
 

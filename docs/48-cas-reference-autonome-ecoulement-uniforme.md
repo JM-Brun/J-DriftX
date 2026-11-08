@@ -62,9 +62,11 @@ avec σ_y(x) = a·x/√(1+d·x) et σ_z(x) selon la forme de la classe (linéair
 
 ### 2.6 Transport dirigé dans le cas uniforme (deuxième volet du sous-ensemble figé)
 
-- **Temps de transport dirigé** : pour B à l’aval de A, T(A→B) = (x_B − x_A)/U ; coût +∞ en amont et pour les composantes latérales strictes. Implémenté et testé (pseudo_distance_uniforme ; [note 19](19-investigation-g0s-temps-de-parcours.md)).
+- **Temps projeté uniforme 2D** : pour $u=(U,0)$ et $\Delta x=x_B-x_A$, la convention locale de `pseudo_distance_uniforme` donne $T_{\rm proj}=\Delta x/U$ si $\Delta x>0$, zéro si $\Delta x=0$ et $+\infty$ si $\Delta x<0$, quel que soit le décalage transversal. Le zéro pour deux points transverses distincts est une extension dégénérée du code, pas une convention historique établie ; voir [note 19](19-investigation-g0s-temps-de-parcours.md) et [matrice 27](27-matrice-tracabilite-mvp-s.md).
 - **Cas exact 1D à vitesse constante** : temps de première arrivée en forme fermée, implémenté et testé (temps_premiere_arrivee_1d ; reproductibilité documentée dans le [bilan MVP-S](21-bilan-mvp-s-1d.md)).
-- **Carte travel-time explicite** : χ(τ, η₁, η₂) = (Uτ, η₁, η₂), difféomorphisme C∞ de jacobien U, u·∇τ = 1 exact, théorème conditionnel d’égalité des flux ([note 37](37-transformation-tau-eta-cas-uniforme.md)) : le cas uniforme est le seul champ où tous les objets (temps d’arrivée, temps projeté, coût dirigé) coïncident.
+- **Carte travel-time explicite** : χ(τ, η₁, η₂) = (Uτ, η₁, η₂), difféomorphisme C∞ de jacobien U, u·∇τ = 1 exact, théorème conditionnel d’égalité des flux ([note 37](37-transformation-tau-eta-cas-uniforme.md)). Pour une particule advectée sans diffusion depuis A, le temps de première arrivée à B coïncide avec le temps projeté seulement lorsque B est sur la demi-ligne de courant issue de A ; hors de cette ligne, B est inaccessible par cette dynamique alors que le temps projeté peut être fini.
+
+Par exemple, pour $A=(0,0)$ m, $B=(6,2)$ m et $u=(3,0)$ m/s, la référence projetée donne 2 s tandis que la particule $X(t)=(3t,0)$ n'atteint jamais B : son temps de première arrivée y est $+\infty$. La diffusion d'une concentration en B est un phénomène distinct de cette trajectoire déterministe.
 
 ## 3. Observable et métriques
 
@@ -88,7 +90,7 @@ Le contre-exemple de cisaillement reste **distinct** du cas de référence, conf
 Rôles du contre-exemple :
 
 1. **garde-fou de régression** : le coût projeté ne doit jamais être traité comme une coordonnée travel-time régulière en champ cisaillé ;
-2. **rappel de périmètre** : le cas uniforme est le seul où projection et temps d’arrivée coïncident ; toute extension en champ variable (S0-b en loi de puissance, [note 39](39-squelette-benchmarks-s0.md) §6) devra être définie comme cas distinct, avec sa propre vérité et ses propres tests.
+2. **rappel de périmètre** : la coïncidence des temps uniforme est limitée aux cibles atteignables sur la ligne de courant ; elle n'établit pas une exclusivité du champ uniforme. Toute extension en champ variable (S0-b en loi de puissance, [note 39](39-squelette-benchmarks-s0.md) §6) devra être définie comme cas distinct, avec sa propre vérité et ses propres tests.
 
 Aucune fusion du contre-exemple dans le cas de référence ; les statuts figés ([contrat](47-contrat-minimal-baseline.md) §3.2) ne sont pas modifiés.
 

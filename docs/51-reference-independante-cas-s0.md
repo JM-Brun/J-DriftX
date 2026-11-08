@@ -20,6 +20,8 @@ Dans le cas uniforme, l’EDP de transport-diffusion se réduit à une diffusion
 
 avec K_y = (U/2)·dσ_y²/dx et K_z = (U/2)·dσ_z²/dx dans l’équation de transport U·∂C/∂x = K_y·∂²C/∂y² + K_z·∂²C/∂z² ; après division par U, les coefficients de l’équation marchée en x sont donc (1/2)·dσ²/dx, sans facteur 1/U supplémentaire. Contrôle dimensionnel : dσ²/dx est en mètres et ∂²C/∂y² en kg·m⁻⁵, donc le membre droit est en kg·m⁻⁴, comme ∂C/∂x. La paramétrisation vient de Briggs ([note 24](24-classes-stabilite-pasquill-objet.md), source unique de vérité). La forme fermée du panache gaussien ([note 48](48-cas-reference-autonome-ecoulement-uniforme.md) §2.5) est la solution exacte de cette équation : les deux routes partagent la paramétrisation, et la comparaison contrôle la route de diffusion — pas la physique ni l’entrée.
 
+**Lien avec la thèse.** L'annexe B.2, pp. 154–156 (PDF 163–165), décrit une marche en $x$ de diffusion à une seule coordonnée transverse et, sous ses propres hypothèses, imprime la relation $K=(U/2)\,d\sigma^2/dx$ en (B.54). Le cas S0 présent ajoute deux directions transverses, un sol réfléchissant et ses lois de dispersion propres : il ne reproduit donc pas littéralement cet exemple. Les incohérences des formules (B.61)–(B.62) sont analysées dans la [fiche de thèse](bibliographie/sources/these-brun.md) ; elles ne constituent pas une validation ou une invalidation automatique du calcul S0.
+
 Choix numériques, tous étiquetés « reconstruction » :
 
 - **Schéma** : FTCS explicite en longitude (forward en x, centré en y et z), coefficient de diffusion évalué au milieu du pas ; nombre de Fourier borné à 1/3 (somme des deux directions), évalué au dernier arc là où σ² croît le plus ; pas longitudinal 100/2^k, k choisi minimal pour la stabilité.

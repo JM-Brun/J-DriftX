@@ -6,7 +6,7 @@ Ce fichier est l'**index canonique des fiches de lecture source par source** ; c
 
 | Source | Fiche | Usage principal |
 |---|---|---|
-| Brun, *Modélisation à complexité réduite de la dérive* (thèse citée en 2006 comme 2007) | [Fiche thèse](bibliographie/sources/these-brun.md) | Citation primaire, titre et année de soutenance à distinguer. |
+| Brun, *Modèles à complexité réduite de transport pour applications environnementales* (thèse, 2007) | [Fiche thèse](bibliographie/sources/these-brun.md) | Page de titre vérifiée ; titre différent dans une citation historique. |
 | Mohammadi & Brun (2006), *C. R. Mécanique* | [Fiche article 2006](bibliographie/sources/mohammadi-brun-2006-cr-mecanique.md) | Méthode et équations historiques, limites d'extraction/OCR. |
 | Mohammadi, Brun & Pironneau (2006), chapitre attribué | [Fiche référence non retrouvée](bibliographie/sources/mohammadi-brun-pironneau-2006.md) | Statut éditorial et métadonnées non résolus. |
 | Brun & Mohammadi (2008), chapitre Springer | [Fiche chapitre 2008](bibliographie/sources/brun-mohammadi-2008-chapitre.md) | Extrait consulté, modèle multi-niveaux et architecture décrite par la source. |

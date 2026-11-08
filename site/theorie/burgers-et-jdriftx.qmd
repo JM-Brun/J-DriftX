@@ -6,9 +6,9 @@ title: "Équation de Burgers : lien avec J-DriftX"
 
 ## Conclusion en bref
 
-**Il existe un lien mathématique indirect, mais aucune équivalence physique avec le modèle de dispersion de J-DriftX n'est établie à ce stade.**
+**La thèse utilise directement Burgers pour une vitesse locale dans la canopée ; aucune équivalence avec le modèle de dispersion lointaine de J-DriftX n'est établie.**
 
-L'équation de Burgers est un modèle canonique d'advection non linéaire régularisée par diffusion. Elle peut aider à étudier des propriétés générales des équations de transport et à construire des tests numériques. En revanche, elle ne constitue pas, sans dérivation supplémentaire, une équation de dispersion atmosphérique de gouttelettes ou de concentration.
+L'équation de Burgers est un modèle canonique d'advection non linéaire régularisée par diffusion. La thèse de Brun l'emploie pour une vitesse 1D forcée dans un couvert végétal (équation 4.8), accompagnée d'une équation distincte pour le scalaire (4.9). Les applications de ce chapitre sont idéalisées. Elle ne constitue pas, sans dérivation supplémentaire, une équation de concentration ou une validation du transport lointain. Voir la [fiche source](https://github.com/JM-Brun/J-DriftX/blob/main/docs/bibliographie/sources/these-brun.md).
 
 Cette page est l'explication développée pour les lecteurs du site. Le cadrage court de la piste et ses limites de décision sont conservés dans la [note de recherche technique](https://github.com/JM-Brun/J-DriftX/blob/main/docs/16-note-burgers-jdriftx.md) ; les deux documents ont des fonctions complémentaires, pas deux versions équivalentes d'un même texte.
 
@@ -16,7 +16,7 @@ Cette page distingue trois niveaux qu'il ne faut pas confondre :
 
 1. **Analogie mathématique** : transport, flux, diffusion et conservation sont des notions communes.
 2. **Outil de test** : Burgers peut fournir un cas d'étude supplémentaire pour un solveur ou une méthode numérique.
-3. **Modèle physique** : utiliser Burgers pour décrire effectivement la dérive demanderait une justification des variables, des termes et des hypothèses. Cette justification n'est pas disponible ici.
+3. **Modèle historique local** : une vitesse dans la canopée est modélisée par Burgers forcée ; l'extension à la dispersion lointaine demanderait une justification et une validation distinctes.
 
 ## 1. L'équation de Burgers
 
@@ -71,6 +71,7 @@ J-DriftX explore une réduction de complexité pour la dispersion atmosphérique
 
 ### Lien raisonnablement établi
 
+- La thèse utilise explicitement Burgers forcée pour la vitesse 1D dans le couvert ; son annexe C décrit un schéma numérique dont une formule imprimée comporte une incohérence ([audit de l'annexe](https://github.com/JM-Brun/J-DriftX/blob/main/docs/bibliographie/sources/these-brun.md)).
 - Les deux sujets appartiennent au paysage plus large des équations aux dérivées partielles de transport.
 - La forme conservative de Burgers illustre comment un flux peut être explicité et comment une formulation différentielle peut être reliée à un bilan intégral, sous des conditions aux limites adaptées.
 - Burgers peut constituer un **cas numérique complémentaire** pour éprouver un code général d'advection-diffusion face à la non-linéarité et aux gradients raides.
@@ -82,7 +83,7 @@ J-DriftX explore une réduction de complexité pour la dispersion atmosphérique
 - Elle ne prouve ni la validité d'une solution de similitude généralisée, ni la conservation de la masse de gouttelettes sur les surfaces iso-temps.
 - Une barrière végétale ou topographique n'introduit pas automatiquement un flux de Burgers. Son effet doit être représenté par un champ de vent, une paramétrisation, des conditions aux limites ou un modèle physique approprié.
 
-En particulier, le champ $u$ de Burgers ne doit pas être confondu avec la concentration $C$, le vent atmosphérique, ni le débit d'émission $Q$ de J-DriftX.
+En particulier, la vitesse locale $u$ de Burgers dans la thèse ne doit pas être confondue avec la concentration $C$, le champ de vent atmosphérique général ou le débit d'émission $Q$ de J-DriftX.
 
 ## 4. Une connexion dans la littérature : Burgers et diffusion passive
 

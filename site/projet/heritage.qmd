@@ -13,7 +13,7 @@ Le projet **Drift-X** est né à Montpellier entre 2006 et 2009, dans la collabo
 
 | Année | Étape | Support |
 |---|---|---|
-| 2006–2007 | Thèse (J.-M. Brun) — titre selon la notice HAL/INRAE : *Modèles à complexité réduite de transport pour applications environnementales* ; l'article de 2006 cite la thèse sous un autre titre | Université Montpellier II — soutenance 2007 (registre theses.fr, NNT 2007MON20248 ; page de titre du PDF versionné à confirmer) [@brun2006these] |
+| 2007 | Thèse (J.-M. Brun) — *Modèles à complexité réduite de transport pour applications environnementales* ; l'article de 2006 cite un autre titre | Université Montpellier II — soutenance le 21 septembre 2007, vérifiée sur la page de titre du PDF versionné [@brun2006these] |
 | 2006 | Première formulation publique : similitude généralisée dans une métrique non symétrique de temps de transport | C. R. Mécanique 334 [@mohammadi2006crmeca] |
 | 2006 | Version étendue avec O. Pironneau | Attestée par une bibliographie secondaire, non retrouvée à ce jour [@mohammadi2006pironneau] |
 | 2008 | Version longue de référence : multi-niveaux, contraintes physiques, multi-sources, sensibilité | Springer, CSM vol. 16 [@brun2008] |

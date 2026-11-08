@@ -4,7 +4,9 @@
 
 > Le registre d'entrée est [`docs/15-audit-adversarial-hallucinations.md`](../15-audit-adversarial-hallucinations.md). Les constats sur la portée scientifique sont dans [l'audit des affirmations](15b-audit-portee-scientifique.md), et les incohérences de méthode/statut documentaire dans [l'audit méthodologique](15c-audit-methodologie-et-coherence.md).
 
-### A-01 — Thèse de J.-M. Brun : année et titre non résolus
+### A-01 — Thèse de J.-M. Brun : année et titre
+
+> **Mise à jour du 8 novembre 2026 :** le titre et la date du 21 septembre 2007 sont vérifiés sur la page de titre du PDF versionné ; le bandeau indique un dépôt en 2020. Voir la [fiche source](../bibliographie/sources/these-brun.md). Les éléments ci-dessous conservent le constat historique ; l'identité binaire avec HAL reste distincte.
 
 - **Statut :** incohérence bibliographique confirmée ; identité exacte à résoudre.
 - **Emplacement :** `README.md`, `docs/04-revues-papiers-sources.md`, `raw/fiches/*`, `raw/README.md`.
