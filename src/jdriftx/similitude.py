@@ -285,10 +285,11 @@ def concentration_puff(
 
     Raises:
         ValueError: si la classe de stabilite est inconnue, si un parametre
-            scalaire n'est pas fini, si une coordonnee du point n'est pas
-            finie, si la distance parcourue u*t n'est pas representable, ou
-            si la concentration theorique n'est pas representable en float64
-            (singularite pres de la source).
+            scalaire n'est pas fini, si la hauteur est negative, si
+            reflexion_sol n'est pas un booleen, si une coordonnee du point
+            n'est pas finie, si la distance parcourue u*t n'est pas
+            representable, ou si la concentration theorique n'est pas
+            representable en float64 (singularite pres de la source).
         FloatingPointError: si un ecart-type positif n'est pas representable en float64.
     """
     classe_stable = _valide_classe(classe)
