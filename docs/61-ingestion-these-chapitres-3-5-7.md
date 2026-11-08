@@ -27,8 +27,8 @@ Le chapitre distingue plusieurs approches qui ne doivent pas être amalgamées :
 
 ### 2.2 Équations et unités relevées
 
-- Éq. (3.1)–(3.3), p. 50 : force de traînée et coefficient (C_D), avec unités explicites de force, masse volumique et surface de référence.
-- Éq. (3.11), p. 52 : densité surfacique foliaire (a_{LAD}(x,y,z)), de dimension (L^{-1}). Le texte avertit que la substitution par l'indice surfacique (a_{LAI}), sans dimension, peut rendre les unités incohérentes dans les lois de traînée.
+- Éq. (3.1)–(3.3), p. 50 : force de traînée et coefficient $C_D$, avec unités explicites de force, masse volumique et surface de référence.
+- Éq. (3.11), p. 52 : densité surfacique foliaire (a_{LAD}(x,y,z)), de dimension (L^{-1}). Le texte avertit que la substitution par l'indice surfacique $a_{LAI}$, sans dimension, peut rendre les unités incohérentes dans les lois de traînée.
 - Éq. (3.12), p. 52 : fermeture diffusive locale (Q_S=-\rho K_S\,\partial s/\partial z). La thèse rappelle que les hypothèses de cette approche sont contestées.
 - Éq. (3.16)–(3.19), pp. 54–55 : formulation poreuse, perte de pression et traînée volumique. La relation (3.19) est donnée pour des nombres de Reynolds élevés, lorsque le terme inertiel quadratique domine.
 - Éq. (3.20), p. 55 : équation de Navier–Stokes servant de point de départ à la moyennisation.
@@ -52,9 +52,9 @@ Le modèle local ne se réduit donc pas à un profil gaussien : il représente l
 
 ### 3.2 Chapitre 5 — jets turbulents et application viticole
 
-Le chapitre 5 utilise un jet turbulent rond axisymétrique comme modèle simplifié de l'émission par une buse, puis l'applique au pulvérisateur dans une rangée de vigne assimilée à un milieu poreux homogène. Les paramètres cités comprennent notamment (a_{LAD}), (C_D) et les paramètres de perte/efficacité du filet de canopée.
+Le chapitre 5 utilise un jet turbulent rond axisymétrique comme modèle simplifié de l'émission par une buse, puis l'applique au pulvérisateur dans une rangée de vigne assimilée à un milieu poreux homogène. Les paramètres cités comprennent notamment $a_{LAD}$, $C_D$ et les paramètres de perte/efficacité du filet de canopée.
 
-La section 5.6.1 (p. 97) applique l'équation du jet à une buse et ajoute le comportement dans le rang de vigne. La section 5.6.3 (pp. 101–102) attribue à la concentration locale (c_{loc}) l'unité kg·m⁻³ et au coefficient de calibration associé l'unité s⁻¹. Ces unités sont déjà mobilisées dans [docs/43](43-audit-these-brun-conservation-g0s.md) pour l'audit de (7.12).
+La section 5.6.1 (p. 97) applique l'équation du jet à une buse et ajoute le comportement dans le rang de vigne. La section 5.6.3 (pp. 101–102) attribue à la concentration locale $c_{loc}$ l'unité kg·m⁻³ et au coefficient de calibration associé l'unité s⁻¹. Ces unités sont déjà mobilisées dans [docs/43](43-audit-these-brun-conservation-g0s.md) pour l'audit de (7.12).
 
 Les sections expérimentales 5.7.1–5.7.2 (pp. 104–105) décrivent les conditions microclimatiques et l'estimation du flux de pulvérisation par des lignes collectrices installées dans un plan horizontal à 2,5 m du sol. Le liquide contient un traceur fluorescent BSF ; le volume capturé est estimé par fluorométrie, puis converti en flux spécifique et en quantité traversant le plan.
 
@@ -72,9 +72,9 @@ La figure 7.2 précise que le champ local instantané sert à déterminer la par
 
 ### 4.2 Champ de vent et topographie
 
-- Éq. (7.8)–(7.9), p. 127 : construction du champ proche du sol à partir d'observations, sous forme de potentiel (ec u=\nabla\phi) et d'un problème de Poisson ajustant le potentiel aux vitesses observées ((n_{obs}) points).
+- Éq. (7.8)–(7.9), p. 127 : construction du champ proche du sol à partir d'observations, sous forme de potentiel ($\\vec{u}=\\nabla\\phi$) et d'un problème de Poisson ajustant le potentiel aux vitesses observées ((n_{obs}) points).
 - Éq. (7.10), p. 127 : complétion verticale par des fonctions de paroi généralisées ; la direction tangentielle au sol est définie à partir du champ horizontal. Le texte suppose une composante normale nulle au sol et déduit la troisième composante via la divergence nulle et sa valeur au sol.
-- Éq. (7.11), p. 128 : correction des temps de migration liée à la topographie, par une fonction positive monotone décroissante valant 1 pour une pente nulle ; la variable (phi_{topo}) dépend du gradient du terrain et du champ horizontal construit.
+- Éq. (7.11), p. 128 : correction des temps de migration liée à la topographie, par une fonction positive monotone décroissante valant 1 pour une pente nulle ; la variable $\\phi_{topo}$ dépend du gradient du terrain et du champ horizontal construit.
 
 La thèse reconnaît que les observations météo sont très clairsemées et que la complétion du champ/topographie est une approximation adaptée au niveau de précision visé, non une reconstruction CFD détaillée.
 
@@ -82,15 +82,13 @@ La thèse reconnaît que les observations météo sont très clairsemées et que
 
 Les équations (7.12)–(7.13), p. 129, sont le périmètre propriétaire de [docs/43](43-audit-these-brun-conservation-g0s.md) et de l'issue [#123](https://github.com/JM-Brun/J-DriftX). Cette note n'en duplique pas l'analyse dimensionnelle.
 
-La lecture distingue (a) la quantité locale candidate au transport lointain (c^+(x,y)), définie selon l'une des deux alternatives imprimées, et (b) l'inventaire (M_C=\int_{\mathbb R^2}c^+\,d\sigma), que la thèse indique devoir être conservé. La revendication est explicite mais sa démonstration ne l'est pas dans ce passage. L'ambiguïté dimensionnelle reste documentée dans docs/43. La reconstruction J-DriftX retient un inventaire de masse par intégration verticale, sans prétendre avoir établi l'intention historique.
+La lecture distingue (a) la quantité locale candidate au transport lointain (c^+(x,y)), définie selon l'une des deux alternatives imprimées, et (b) l'inventaire $M_C=\\int_{\\mathbb R^2}c^+\\,d\\sigma$, que la thèse indique devoir être conservé. La revendication est explicite mais sa démonstration ne l'est pas dans ce passage. L'ambiguïté dimensionnelle reste documentée dans docs/43. La reconstruction J-DriftX retient un inventaire de masse par intégration verticale, sans prétendre avoir établi l'intention historique.
 
 ### 4.4 Profil de similitude et géométrie dirigée
 
 Les équations (7.14)–(7.15), pp. 129–130, donnent pour un écoulement plan uniforme :
-[
-c_{glob}(x,y,z)=c_{axis}(x)f_{rad}(r,\delta(x)),\qquad r=\sqrt{y^2+z^2},
-]
-avec décroissance axiale exponentielle et profil radial exponentiel. (delta(x)) caractérise l'épaisseur du panache ; le texte indique une évolution parabolique pour un jet laminaire et linéaire dans les cas turbulents considérés. (a(U)) est positif et monotone décroissant ; (b(U,\delta)) est positif, croissant en (U) et décroissant en (delta).
+$\nc_{glob}(x,y,z)=c_{axis}(x)f_{rad}(r,\delta(x)),\qquad r=\sqrt{y^2+z^2}\n$
+avec décroissance axiale exponentielle et profil radial exponentiel. $\\delta(x)$ caractérise l'épaisseur du panache ; le texte indique une évolution parabolique pour un jet laminaire et linéaire dans les cas turbulents considérés. $a(U)$ est positif et monotone décroissant ; $b(U,\\delta)$ est positif, croissant en (U) et décroissant en (delta).
 
 La généralisation proposée remplace la distance cartésienne par une géométrie non symétrique fondée sur les temps de migration. Les équations (7.6)–(7.7), p. 127, définissent le temps le long d'une caractéristique issue de A jusqu'à la projection (B^\perp) de B. La caractéristique est supposée unique ; sources et points d'attraction sont écartés. Si la projection n'est pas unique, le texte propose un choix satisfaisant au mieux une contrainte de transport au point B.
 
@@ -98,8 +96,7 @@ La construction des caractéristiques est ensuite approchée par des polynômes 
 
 ### 4.5 Propriétés annoncées et statut
 
-Le chapitre 7 énonce que les solutions doivent satisfaire la divergence nulle du vent, la conservation, la positivité et la linéarité. Ce sont des objectifs/contraintes de construction déclarés par l'auteur. Pour la conservation, docs/43 et #123 montrent qu'une preuve exige de préciser la grandeur, la transformation, le jacobien, les sources/puits et les frontières ; elle ne découle pas de la seule condition (
-abla\cdot\vec u=0).
+Le chapitre 7 énonce que les solutions doivent satisfaire la divergence nulle du vent, la conservation, la positivité et la linéarité. Ce sont des objectifs/contraintes de construction déclarés par l'auteur. Pour la conservation, docs/43 et #123 montrent qu'une preuve exige de préciser la grandeur, la transformation, le jacobien, les sources/puits et les frontières ; elle ne découle pas de la seule condition $\\nabla\\cdot\\vec u=0$.
 
 ## 5. Résultats et figures du chapitre 7
 
