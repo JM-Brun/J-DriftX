@@ -124,7 +124,7 @@ Les variances, puis les écarts-types, valent alors
 $$
 \begin{aligned}
 \sigma_y^2 &=2K_y t'=2\times2\times20=80\;\mathrm{m^2},
-&\sigma_y&=\sqrt{80}\simeq8{,}94\;\mathrm m,\\
+&\sigma_y&=\sqrt{80}\simeq8{,}94\;\mathrm m,\
 \sigma_z^2 &=2K_z t'=2\times1\times20=40\;\mathrm{m^2},
 &\sigma_z&=\sqrt{40}\simeq6{,}32\;\mathrm m.
 \end{aligned}
@@ -380,7 +380,7 @@ $$
 - pour des diffusivités effectives constantes et diagonales, chaque variance suit $\sigma_i^2(t)=2D_i t$ pour $i\in\{x,y,z\}$ ;
 - une source en hauteur s'obtient par translation, et la réflexion au sol par images, comme à l'étape 6.
 
-**Contrat de l'implémentation J-DriftX.** `concentration_puff` reste en espace libre par défaut (`reflexion_sol=False)), ce qui préserve son contrat historique et sa normalisation sur tout \\(\\mathbb R^3\\). Pour représenter le demi-espace au-dessus d'un sol imperméable, l'appel doit fournir la hauteur de source et activer `reflexion_sol=True` ; le noyau image de même signe impose alors \\(\\partial_z C|_{z=0}=0\\) et la masse est normalisée sur \\(z\\geq0\\). Le panache opérationnel `concentration_panache`, lui, inclut déjà cette réflexion. Les deux fonctions ne doivent donc être comparées qu'après alignement explicite de leurs conditions aux limites.
+**Contrat de l'implémentation J-DriftX.** `concentration_puff` reste en espace libre par défaut (`reflexion_sol=False`), ce qui préserve son contrat historique et sa normalisation sur tout \(\mathbb R^3\). Pour représenter le demi-espace au-dessus d'un sol imperméable, l'appel doit fournir la hauteur de source et activer `reflexion_sol=True` ; le noyau image de même signe impose alors \(\partial_z C|_{z=0}=0\) et la masse est normalisée sur \(z\geq0\). Le panache opérationnel `concentration_panache`, lui, inclut déjà cette réflexion. Les deux fonctions ne doivent donc être comparées qu'après alignement explicite de leurs conditions aux limites.
 
 **Lien avec le panache établi : une distinction nécessaire.** La superposition des rejets instantanés est bien un principe de linéarité, mais elle ne suffit pas à conclure que toute intégration de puffs redonne la formule parabolique précédente. La formule de puff écrite ci-dessus inclut une diffusion longitudinale, avec $\sigma_x^2=2K_x t$ si $K_x$ est constant. En intégrant ces puffs sur les dates d'émission, on obtient la solution stationnaire associée à l'équation qui conserve cette diffusion longitudinale, soit, hors de la source et pour des coefficients constants,
 
