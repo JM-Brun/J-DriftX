@@ -56,31 +56,31 @@ Le modèle local ne se réduit donc pas à un profil gaussien : il représente l
 \[
 F_{Dveg}=\frac12\rho\,a_{LAD}\,u^2 C_{Dveg}.
 \]
-La thèse indique pour (C_{Dveg}) une plage bibliographique de 0,1 à 0,5 et souligne que sa détermination est expérimentale. Elle définit (a_{LAD}) comme densité foliaire, de dimension (L^{-1}).
+La thèse indique pour $C_{Dveg}$ une plage bibliographique de 0,1 à 0,5 et souligne que sa détermination est expérimentale. Elle définit $a_{LAD}$ comme densité foliaire, de dimension $L^{-1}$.
 
-**Incohérence dimensionnelle relevée sur le fac-similé :** l'équation (4.1) imprime l'unité ([N]). Avec ([\rho]=kg\,m^{-3}), ([a_{LAD}]=m^{-1}), ([u]=m\,s^{-1}) et (C_{Dveg}) sans dimension, le membre droit est en (kg\,m^{-2}\,s^{-2}=N\,m^{-3}), soit une force par unité de volume. L'étiquette ([N]) ne correspond donc pas à ces définitions. Le sens de (F_{Dveg}) doit être clarifié : force volumique, ou force intégrée sur un volume de contrôle. L'anomalie est consignée sous **DRX-ERR-021** dans le registre [docs/46](46-registre-erreurs-incoherences-documentaires.md) ; aucune correction de l'équation source n'est imposée. Le fac-similé a été contrôlé visuellement (PDF p. 72, pagination imprimée p. 63).
+**Incohérence dimensionnelle relevée sur le fac-similé :** l'équation (4.1) imprime l'unité $[N]$. Avec $[\rho]=\mathrm{kg\,m^{-3}}$, $[a_{LAD}]=\mathrm{m^{-1}}$, $[u]=\mathrm{m\,s^{-1}}$ et $C_{Dveg}$ sans dimension, le membre droit est en $\mathrm{kg\,m^{-2}\,s^{-2}}=\mathrm{N\,m^{-3}}$, soit une force par unité de volume. L'étiquette $[N]$ ne correspond donc pas à ces définitions. Le sens de $F_{Dveg}$ doit être clarifié : force volumique, ou force intégrée sur un volume de contrôle. L'anomalie est consignée sous **DRX-ERR-021** dans le registre [docs/46](46-registre-erreurs-incoherences-documentaires.md) ; aucune correction de l'équation source n'est imposée. Le fac-similé a été contrôlé visuellement (PDF p. 72, pagination imprimée p. 63).
 
-Le chapitre réduit ensuite l'écoulement dans le rang à une variable de pénétration (r). L'équation (4.9), p. 67, décrit le transport scalaire :
+Le chapitre réduit ensuite l'écoulement dans le rang à une variable de pénétration $r$. L'équation (4.9), p. 67, décrit le transport scalaire :
 \[
 \frac{\partial c}{\partial t}
 +u(r,t)\frac{\partial c}{\partial r}
 -D\frac{\partial^2c}{\partial r^2}
 =F_c(u,c,r,t),
 \]
-avec (c(r,0)=c_0(r)=c_0) et (c(r_0,t)=c_l(t)=c_l). Le texte interprète (F_c) comme le terme puits représentant l'effet de perte de masse dû à la canopée. L'équation d'état de vitesse (4.8) est couplée à ce modèle, mais sa transcription détaillée et son contrôle dimensionnel restent à effectuer.
+avec (c(r,0)=c_0$r$=c_0) et $c(r_0,t)=c_l(t)=c_l$. Le texte interprète $F_c$ comme le terme puits représentant l'effet de perte de masse dû à la canopée. L'équation d'état de vitesse (4.8) est couplée à ce modèle, mais sa transcription détaillée et son contrôle dimensionnel restent à effectuer.
 
-Le problème inverse cherche le terme de contrôle/puits (F) qui rapproche l'état (u_F) d'un profil cible. Les équations (4.14) et (4.16), p. imprimée 68, présentent deux critères :
+Le problème inverse cherche le terme de contrôle/puits $F$ qui rapproche l'état $u_F$ d'un profil cible. Les équations (4.14) et (4.16), p. imprimée 68, présentent deux critères :
 \[
-J_{LC}(F)=\sum_{i=1}^{n}\alpha^{(i)}
+J_{LC}$F$=\sum_{i=1}^{n}\alpha^{(i)}
 \left\|u_F-u_{tar}^{(i)}\right\|_{L_2},
 \qquad
-J_{WCE}(F)=\max_i\left\{
+J_{WCE}$F$=\max_i\left\{
 \alpha^{(i)}\left\|u_F-u_{tar}^{(i)}\right\|_{L_2}
 \right\}.
 \]
 Le premier minimise une somme pondérée des erreurs (coût moyen) ; le second minimise la pire erreur pondérée (minimax). Le texte les présente comme formulations multi-critères complémentaires pour la robustesse, mais précise que l'application simple de paramétrage qui suit n'emploie pas encore l'approche multi-critères.
 
-Le profil cible (4.17)–(4.18), p. 68, est exponentiel entre les vitesses d'entrée et de sortie du rang, avec (u_r^{(i)}=\beta_{veg}u_l^{(i)}) et (eta_{veg}\in[0,1]). Le contrôle est ensuite discrétisé par morceaux sur (m) sous-intervalles, équations (4.20)–(4.24), sous la forme de valeurs constantes du produit (a_{LAD}C_{Dveg}) (dimension (m^{-1})). La figure 4.2 compare les profils cibles et optimisés ; la figure 4.3 rapporte les paramètres optimaux correspondants. Il s'agit d'une identification de paramétrisation à partir de profils cibles, pas d'une estimation indépendante de (a_{LAD}) et (C_{Dveg}) séparément.
+Le profil cible (4.17)–(4.18), p. 68, est exponentiel entre les vitesses d'entrée et de sortie du rang, avec $u_r^{(i)}=\beta_{veg}u_l^{(i)}$ et $\beta_{veg}\in[0,1]$. Le contrôle est ensuite discrétisé par morceaux sur $m$ sous-intervalles, équations (4.20)–(4.24), sous la forme de valeurs constantes du produit $a_{LAD}C_{Dveg}$ (dimension $m^{-1}$). La figure 4.2 compare les profils cibles et optimisés ; la figure 4.3 rapporte les paramètres optimaux correspondants. Il s'agit d'une identification de paramétrisation à partir de profils cibles, pas d'une estimation indépendante de $a_{LAD}$ et $C_{Dveg}$ séparément.
 
 ### 3.2 Chapitre 5 — jets turbulents et application viticole
 
