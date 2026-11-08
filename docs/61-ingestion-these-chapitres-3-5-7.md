@@ -60,14 +60,28 @@ La thèse indique pour \(C_{Dveg}\) une plage bibliographique de 0,1 à 0,5 et s
 
 **Incohérence dimensionnelle relevée sur le fac-similé :** l'équation (4.1) imprime l'unité \([N]\). Avec \([\rho]=\mathrm{kg\,m^{-3}}\), \([a_{LAD}]=\mathrm{m^{-1}}\), \([u]=\mathrm{m\,s^{-1}}\) et \(C_{Dveg}\) sans dimension, le membre droit est en \(\mathrm{kg\,m^{-2}\,s^{-2}}=\mathrm{N\,m^{-3}}\), soit une force par unité de volume. L'étiquette \([N]\) ne correspond donc pas à ces définitions. Le sens de \(F_{Dveg}\) doit être clarifié : force volumique, ou force intégrée sur un volume de contrôle. L'anomalie est consignée sous **DRX-ERR-021** dans le registre [docs/46](46-registre-erreurs-incoherences-documentaires.md) ; aucune correction de l'équation source n'est imposée. Le fac-similé a été contrôlé visuellement (PDF p. 72, pagination imprimée p. 63).
 
-Le chapitre réduit ensuite l'écoulement dans le rang à une variable de pénétration \(r\). L'équation (4.9), p. 67, décrit le transport scalaire :
+Le chapitre réduit ensuite l'écoulement dans le rang à une variable de pénétration \(r\). L'équation de vitesse (4.8), p. imprimée 66, est une équation de Burgers visqueuse forcée :
+\[
+\frac{\partial u}{\partial t}
++\frac12\frac{\partial (u^2)}{\partial r}
+-\nu\frac{\partial^2u}{\partial r^2}
+=F_u(u,r,t),
+\qquad (r,t)\in [r_0,r_1]\times[0,T].
+\]
+Les conditions imprimées sont \(u(r,0)=u_0(r)=0\) sur \([r_0,r_1]\) et \(u(r_0,t)=u_l(t)=u_l\) sur \([0,T]\). Le texte identifie \(F_u\) comme le terme puits de quantité de mouvement dû à la traînée de la canopée.
+
+L'équation scalaire (4.9), p. 67, est :
 \[
 \frac{\partial c}{\partial t}
 +u(r,t)\frac{\partial c}{\partial r}
 -D\frac{\partial^2c}{\partial r^2}
 =F_c(u,c,r,t),
 \]
-avec \(c(r,0)=c_0(r)=c_0\) et \(c(r_0,t)=c_l(t)=c_l\). Le texte interprète \(F_c\) comme le terme puits représentant l'effet de perte de masse dû à la canopée. L'équation d'état de vitesse (4.8) est couplée à ce modèle, mais sa transcription détaillée et son contrôle dimensionnel restent à effectuer.
+avec \(c(r,0)=c_0(r)=c_0\) et \(c(r_0,t)=c_l(t)=c_l\). Le texte interprète \(F_c\) comme le terme puits représentant l'effet de perte de masse dû à la canopée.
+
+**Condition aux limites incomplète dans la spécification imprimée :** pour les équations (4.8) et (4.9), le domaine est borné en \(r\) et les termes \(\nu u_{rr}\) et \(D c_{rr}\) sont d'ordre deux, mais seule la condition au bord \(r_0\) est donnée ; aucune condition en \(r_1\) n'est indiquée à ces équations. La valeur cible \(u_{tar}(r_1)\) de (4.18) décrit un profil cible et ne suffit pas, à elle seule, à établir une condition de bord pour l'état. L'annexe C, équation (C.3), répète l'unique condition à \(r_0\) sans ajouter de condition à \(r_1\). La spécification est donc sous-déterminée telle qu'imprimée pour un problème parabolique sur \([r_0,r_1]\) ; une condition naturelle ou une convention d'outflow peut avoir été implicite, mais elle n'est pas documentée dans ces passages. Voir **DRX-ERR-022** dans docs/46.
+
+L'annexe C apporte une seconde réserve de reproductibilité : (C.1) inclut la viscosité physique \(\nu u_{rr}\), tandis que les formes (C.2) et (C.4) l'omettent ; le schéma explicite (C.9) réintroduit \(\nu\), alors que le schéma JST (C.20) utilise une viscosité numérique \(\mu_j^{n,p}\) définie en (C.22), sans expliquer si elle remplace ou complète \(\nu\). Ces formulations ne doivent pas être assimilées sans reconstituer précisément la branche numérique effectivement utilisée.
 
 Le problème inverse cherche le terme de contrôle/puits \(F\) qui rapproche l'état \(u_F\) d'un profil cible. Les équations (4.14) et (4.16), p. imprimée 68, présentent deux critères :
 \[
