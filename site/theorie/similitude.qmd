@@ -124,7 +124,7 @@ Les variances, puis les écarts-types, valent alors
 $$
 \begin{aligned}
 \sigma_y^2 &=2K_y t'=2\times2\times20=80\;\mathrm{m^2},
-&\sigma_y&=\sqrt{80}\simeq8{,}94\;\mathrm m,\
+&\sigma_y&=\sqrt{80}\simeq8{,}94\;\mathrm m,\\
 \sigma_z^2 &=2K_z t'=2\times1\times20=40\;\mathrm{m^2},
 &\sigma_z&=\sqrt{40}\simeq6{,}32\;\mathrm m.
 \end{aligned}
