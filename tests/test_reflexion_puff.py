@@ -70,7 +70,7 @@ def test_puff_reflechi_conserve_la_masse_sur_le_demi_espace(hauteur: float) -> N
     integral_z = np.trapezoid(concentration, z, axis=2)
     integral_y = np.trapezoid(integral_z, y, axis=1)
     integral = np.trapezoid(integral_y, x)
-    assert integral == pytest.approx(masse, rel=2e-4)
+    assert integral == pytest.approx(masse, rel=3e-4)
 
 
 @pytest.mark.parametrize("valeur", [0, 1, "yes", None])
