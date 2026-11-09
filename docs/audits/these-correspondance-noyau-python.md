@@ -52,6 +52,27 @@ assert abs(residual) < 1e-7
 
 Exécution observée : intégrale $0{,}166666666666667$ kg/m² pour $Q/(UH)=1/6$ kg/m² et résidu par différences finies $-1{,}34\times10^{-10}$ kg·m⁻³·s⁻¹ au point indiqué. L'intégration est limitée à $\pm12\sigma$ et le résidu dépend du pas et des arrondis : ces contrôles illustrent la correspondance, ils ne remplacent pas la dérivation ou un test de terrain. Les [tests du noyau](../../tests/test_advection_diffusion.py) vérifient notamment translation, intégrale sur un domaine couvrant les queues et évolution de variance ; ils ne testent pas explicitement toute l'interface source–transport historique.
 
+## Panache stationnaire avec réflexion au sol
+
+Le chapitre 1, p. imprimée 31 (PDF 40), définit sous l'approximation de panache mince un **débit massique** sur une section transverse. La fonction [`concentration_panache`](../../src/jdriftx/similitude.py) évalue une référence gaussienne stationnaire avec $x>0$, un vent uniforme $U>0$, un débit $Q\ge0$, une hauteur de source $h\ge0$, les largeurs $\sigma_y(x),\sigma_z(x)>0$ et une image de même signe sous le sol. Pour $z\ge0$, sa forme mathématique est
+
+$$
+c=\frac{Q}{2\pi U\sigma_y\sigma_z}e^{-y^2/(2\sigma_y^2)}
+\left[e^{-(z-h)^2/(2\sigma_z^2)}+e^{-(z+h)^2/(2\sigma_z^2)}\right].
+$$
+
+L'image impose $\partial_zc=0$ à $z=0$. Avec une diffusivité verticale finie et sans vitesse verticale au sol, le flux vertical y est nul : c'est une frontière réfléchissante, **pas un dépôt absorbant**. Pour les sections complètes et les hypothèses de la formule,
+
+$$
+\int_{-\infty}^{\infty}\!\int_0^\infty Uc\,dz\,dy=Q.
+$$
+
+Il s'agit d'un débit en kg/s et non d'une masse contenue dans le domaine. L'intégration de la formule prolongée à $z<0$ sur tout $\mathbb R^2$ donne $2Q$ : ce prolongement est l'artifice mathématique de l'image, pas une seconde émission physique. La fonction accepte des coordonnées verticales négatives finies ; l'utilisateur doit donc appliquer lui-même le domaine physique $z\ge0$ lorsqu'il interprète ce cas. Elle ne calcule pas non plus le jet ni les pertes traversant un plan dans le couvert.
+
+**Contrôle numérique ciblé.** Pour $Q=2$ kg/s, $U=4$ m/s, $h=30$ m, $x=1000$ m et la classe D, les fonctions Python renvoient $\sigma_y\simeq76{,}277$ m et $\sigma_z\simeq37{,}947$ m. Une quadrature trapézoïdale sur $y\in[-8\sigma_y,8\sigma_y]$ et $z\in[0,h+8\sigma_z]$, avec 801 points par axe, donne $1{,}999999999999995$ kg/s. Utiliser au contraire $z\in[-h-8\sigma_z,h+8\sigma_z]$ avec 1601 points donne $3{,}999999999999990$ kg/s. Ces fenêtres finies illustrent la normalisation ; elles ne valent pas preuve d'une conservation en présence de dépôt ou dans un champ variable.
+
+Le [test de section avec source en hauteur](../../tests/test_similitude.py) utilise une fenêtre et une tolérance finies ; [docs/51](../51-reference-independante-cas-s0.md) examine aussi une route EDP à coefficients transverses liés aux mêmes largeurs. Leur accord teste cette reconstruction et sa discrétisation : les deux routes partagent des paramètres et une entrée, et aucune ne constitue une mesure indépendante. Le code de panache accepte un débit nul alors que [`SourcePanache`](../../src/jdriftx/source.py) exige un débit strictement positif ; cette différence de contrat doit être prise en compte par l'appelant.
+
 ## Autres objets examinés
 
 | Passage historique | Noyau et contrôle associés | Écart et limite |
