@@ -46,7 +46,7 @@ et indique explicitement que cette quantité totale transportée « should be co
 
 Sous l'interprétation [c_loc] = M L⁻³, cette hypothèse est étayée par la thèse elle-même : au chapitre 5, §5.6.2 « Losses Calculation », pp. imprimées 101–103, les équations (5.54)–(5.55), p. 102 (PDF p. 111), donnent à la concentration liée au modèle local l'unité kg·m⁻³ et au coefficient de calibration l'unité s⁻¹. Les équations (5.61)–(5.63), p. 102, calculent les pertes par intégration volumique ; les équations (5.64)–(5.67), p. 103 (PDF p. 112), formulent le bilan alternatif par flux vertical intégré dans le temps. La section 5.6.3, p. 103, commence après ces équations et décrit l'implémentation numérique.
 
-**Précision sur le couplage local.** Les équations (5.56)–(5.57) donnent directement à $c_{loc}$ l'unité kg·m⁻³. Le taux volumique normalisé et le flux traversant le plan ont les mêmes unités intégrées mais ne sont pas identiques en général : les hypothèses de leur rapprochement en (5.67) sont analysées dans la [fiche de lecture](bibliographie/sources/these-brun.md) et suivies sous DRX-ERR-042. Cela ne modifie pas le contrôle dimensionnel de (7.12).
+**Précision sur le couplage local.** Les équations (5.56)–(5.57) donnent directement à $c_{loc}$ l'unité kg·m⁻³. Le taux volumique normalisé et le flux traversant le plan ont les mêmes unités intégrées mais ne sont pas identiques en général : le [tableau des grandeurs et bilans](audits/these-interface-source-transport.md) précise les hypothèses et donne un contre-exemple même stationnaire, suivi sous DRX-ERR-042. Cela ne modifie pas le contrôle dimensionnel de (7.12).
 
 En appliquant ces unités à $c_{loc}$ dans (7.12), avec $z$ une coordonnée de longueur et $d\sigma$ une mesure surfacique :
 

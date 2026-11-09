@@ -46,6 +46,7 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `audits/15b-audit-portee-scientifique.md` | Constats sur la portée scientifique, hypothèses et revendications |
 | `audits/15c-audit-methodologie-et-coherence.md` | Méthodologie de l'audit, niveau de preuve et cohérence documentaire |
 | `audits/these-travaux-restants.md` | Liste des travaux restants sur la thèse : priorités, dépendances, critères de clôture et carte de reprise par partie |
+| `audits/these-interface-source-transport.md` | Interface de la thèse entre injection, inventaire, flux au plan et mesure expérimentale |
 | `05-plan-validation-et-integration.md` | Protocole public de validation et d'intégration |
 | `06-choix-methode-revue-systematique.md` | Choix de la méthode de revue systématique |
 | `08-decision-utilite-et-preuve.md` | Cadre de décision et de preuve |
