@@ -38,6 +38,16 @@ Le PDF de thèse joint à la session a été comparé au binaire versionné dans
 
 **Limite de provenance :** cette comparaison ne constitue pas une comparaison indépendante avec les octets actuellement servis par HAL ; aucun SHA-256 de la copie HAL originale n'avait été archivé. Elle établit néanmoins que le fichier joint, déjà obtenu par la voie documentée, est exactement celui qui est versionné. Ne pas relancer l'acquisition HAL pour cette raison.
 
+## Vérification des copies locales — 9 novembre 2026
+
+Une recherche ciblée des fichiers portant `pub00023263` dans les répertoires locaux examinés a retrouvé deux copies supplémentaires de 27 141 548 octets. La première a le même SHA-256 `5594e31d9b220dbd25d21e93e54939d9c1dfdf3e7bb39c5544b1ad1d8d44ba2c` que le binaire versionné. La seconde a le SHA-256 `be5b10d926f9191ddf0e75b2682efe32e306fdda14f5df4b547a7fe56395a08e`.
+
+La comparaison octet par octet de ces deux copies révèle exactement **dix octets différents**, tous dans les champs PDF `CreationDate` et `ModDate` : la première indique `20261029101432+00'00'` et la seconde `20261029094401+00'00'`. Leurs autres octets sont identiques. Les métadonnées déclarent `Creator (Firefox)` et `Producer (Skia/PDF m149)` ; elles ne permettent pas d'identifier indépendamment les octets originaux de HAL. Les métadonnées locales d'URL d'origine n'ont pas pu être établies pour ces copies. Ce résultat caractérise les fichiers trouvés sans établir l'identité avec HAL ni une autorisation de redistribution ; aucune nouvelle acquisition n'a été entreprise.
+
+La [notice AGRIS fournie par l'INRAE](https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c) identifie la thèse et renvoie à HAL, sans fournir dans les éléments consultés de licence propre à ce PDF autorisant sa redistribution dans Git. Les droits restent **non établis** ; l'accès à la notice n'est pas une preuve d'autorisation pour chaque fichier ou contenu tiers inclus.
+
+La [documentation officielle de HAL sur les conditions de réutilisation](https://doc.hal.science/aspects-juridiques/conditions-de-reutilisation/) distingue les licences et les mentions de droits applicables aux fichiers. Cette règle générale n'identifie pas la condition attachée au fichier de cette thèse : la notice HAL et son API n'ont pas pu être consultées lors de ce contrôle. Il faut retrouver la condition propre au fichier ou une autorisation appropriée ; ne pas déduire une licence précise du seul fait de sa présence dans HAL.
+
 ## Contrôles requis
 
 - [x] Vérifier visuellement la page de titre du PDF joint, byte-identique au binaire versionné (PDF p. 2).

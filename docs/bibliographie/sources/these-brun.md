@@ -149,6 +149,8 @@ Ce bilan n'est pas automatiquement celui des interfaces artificielles entre nive
 
 **Périmètre.** Les équations (5.43)–(5.67), pp. 99–103 (PDF 108–112), ont été vérifiées visuellement sur le fichier versionné. Les diagnostics ci-dessous portent sur les expressions imprimées et leurs hypothèses, pas sur le comportement d'un code historique non examiné.
 
+La [dérivation cylindrique du transport scalaire et de la similitude](../../61-ingestion-these-chapitres-3-5-7.md) examine aussi (5.32)–(5.40), pp. 95–96 (PDF 104–105) : dérivée et facteur radial imprimés en (5.33), expression incomplète en (5.38), puis écart conditionnel de coefficient en (5.40). Le facteur $1/\eta$ peut se simplifier des deux côtés ; sa seule absence dans (5.38) ne prouve pas une omission.
+
 ### Continuité du profil axial à la sortie d'un rang
 
 La source annonce en (5.43) un profil continu : à l'intérieur du couvert, $c_{\rm row}\exp[-d(x)A_{LAD}C_D]$ ; ailleurs, $c_0K_{cjet}/(x-x_0)$. Elle fixe explicitement $c_{\rm row}=c_{\rm free}(x_e)$ à l'entrée $x_e$, où $d(x_e)=0$. Cela raccorde bien les deux branches **à l'entrée**.

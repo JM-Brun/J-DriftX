@@ -123,7 +123,27 @@ Les équations (5.32)–(5.40), pp. imprimées 95–96 (PDF pp. 104–105), port
 \]
 La thèse en déduit \(l_{rc}(x)\simeq l_r(x)\), puis choisit \(l_{rc}\equiv l_r\), et obtient \(c_{Lx}l_r=\mathrm{constante}\). Les relations (5.38)–(5.40) lient ensuite le profil moyen au flux turbulent.
 
-**Anomalie de géométrie à contrôler (DRX-ERR-024) :** sur le fac-similé, (5.32) contient bien le facteur cylindrique \(r^{-1}\partial_r(r\,\overline{v'c'})\), tandis que la forme simplifiée imprimée en (5.33) écrit \(-\partial_r(r\,\overline{v'c'})\), sans le facteur \(1/r\). Or la continuité axisymétrique permet de simplifier le membre moyen, mais ne supprime pas le facteur géométrique du flux turbulent. Sous les unités conventionnelles \([c]=\mathrm{kg\,m^{-3}}\), \([u]=\mathrm{m\,s^{-1}}\), le membre gauche de (5.33) est en \(\mathrm{kg\,m^{-3}\,s^{-1}}\), alors que le membre droit imprimé sans \(1/r\) n'a pas cette dimension. La forme cylindrique cohérente issue de (5.32) conserve \(-r^{-1}\partial_r(r\,\overline{v'c'})\). La même omission semble se propager à la réduction (5.38), qui ne fait pas apparaître le facteur \(1/\eta\) attendu ; ce point est à re-dériver avant d'utiliser (5.38)–(5.40) comme spécification. Le constat porte sur la transcription imprimée, pas sur le code ni sur l'intention de l'auteur.
+**Anomalie de géométrie (DRX-ERR-024) :** sur le fac-similé, (5.32) contient bien le facteur cylindrique \(r^{-1}\partial_r(r\,\overline{v'c'})\), tandis que (5.33) imprime \(-\partial_r(r\,\overline{v'c'})\), sans \(1/r\). La continuité axisymétrique ne supprime pas ce facteur. Le membre droit imprimé n'a pas l'unité d'une dérivée temporelle de concentration. La dérivation ci-dessous corrige également un constat antérieur trop rapide : le facteur \(1/\eta\) apparaît des **deux côtés** de la réduction cohérente et peut se simplifier ; sa seule absence de l'expression (5.38) ne prouve donc pas que cette expression omet un facteur.
+
+**Dérivée imprimée et équation incomplète (DRX-ERR-048).** La page 95 (PDF 104) imprime à gauche de (5.33) le terme \(\bar v\,\partial_r\bar v\), et non \(\bar v\,\partial_r\bar c\). À partir de la partie moyenne de (5.32) et de la continuité \(\partial_x\bar u+r^{-1}\partial_r(r\bar v)=0\), la règle du produit donne pour \(r>0\) :
+\[
+\partial_x(\bar u\bar c)+\frac1r\partial_r(r\bar v\bar c)
+=\bar u\,\partial_x\bar c+\bar v\,\partial_r\bar c.
+\]
+Avec les unités physiques usuelles, les deux termes imprimés à gauche de (5.33) ont eux-mêmes des unités différentes. De plus, (5.32) comporte un terme axial \(\partial_x\overline{u'c'}\) que la ligne suivante ne conserve pas : son abandon demande une hypothèse supplémentaire. Enfin (5.38) ne présente sur le fac-similé qu'une expression isolée, sans signe égal ni membre gauche ; sa transcription ne définit donc pas seule une équation. Ces constats concernent les lignes imprimées, pas leur implémentation effective.
+
+**Reconstruction conditionnelle de (5.38)–(5.40) (DRX-ERR-049).** Notons \(l=l_r=l_{rc}>0\), \(U=u_{Lx}\), \(C=c_{Lx}\), \(U_t=U_{turb}\), \(C_t=C_{turb}\), \(\eta=r/l\), avec \(f=F'/\eta\). Supposons \(Ul\) et \(Cl\) constants, les profils réguliers, le terme turbulent axial négligeable, et conservons le facteur cylindrique du flux radial. Les formes (5.23)–(5.24) et (5.34)–(5.35) donnent alors
+\[
+\bar u\partial_x\bar c+\bar v\partial_r\bar c
+=-\frac{UC\,l'}{l\eta}(Fh)',\qquad
+-\frac1r\partial_r(r\overline{v'c'})
+=-\frac{U_tC_t}{l\eta}(\eta k)'.
+\]
+Pour \(l'\ne0\), le facteur \(1/\eta\) se simplifie et il vient
+\[
+(Fh)'=\frac{U_tC_t}{UC\,l'}(\eta k)'.
+\]
+Si l'on ajoute la relation imprimée (5.29), \(l'=U_t^2/U^2\), et la définition imprimée (5.39), \(c_2=UC_t/(CU_t)\), le coefficient vaut \(c_2\). En intégrant et en supposant \(Fh\to0\) et \(\eta k\to0\) sur l'axe, on obtient \(Fh=c_2\eta k\). L'équation imprimée (5.40) donne au contraire \(Fh/(\eta k)=1/c_2\), là où le dénominateur n'est pas nul. Cette opposition est **conditionnelle aux hypothèses explicitées**, notamment à la relation (5.29) et au terme axial négligeable ; elle ne détermine ni la source exacte de l'écart ni les valeurs employées dans le code historique.
 
 **Anomalie de définition (DRX-ERR-025) :** l'équation (5.35) et la dimension du flux turbulent \(\overline{v'c'}\) imposent \([C_{turb}]=[c]=\mathrm{kg\,m^{-3}}\), puisque \([U_{turb}]=\mathrm{m\,s^{-1}}\). Pourtant, le texte descriptif de la p. 95 appelle \(C_{turb}(x)\) une « length scale ». Il s'agit d'une contradiction entre la définition dimensionnelle donnée par l'équation et cette phrase ; la reconstruction doit traiter \(C_{turb}\) comme une échelle de concentration, sans réécrire la phrase source.
 
@@ -263,10 +283,10 @@ La comparaison de la fig. 7.5 est un résultat de cas numérique, pas une preuve
 ## 7. Travail restant pour achever l'ingestion
 
 1. **Chapitre 4 :** confronter au code historique les équations (4.1), (4.8)–(4.9) et l'annexe C ; identifier la condition au bord \(r_1\), la branche de viscosité effectivement résolue et la correspondance entre le contrôle \(F\) et le produit \(a_{LAD}C_{Dveg}\). Ne pas présumer une correspondance entre formulation et implémentation.
-2. **Chapitre 5 :** les équations (5.16)–(5.43) ont été contrôlées visuellement (PDF pp. 102–108, pagination imprimée 93–99) et intégrées ci-dessus. Re-dériver les équations (5.33) et (5.38) en coordonnées cylindriques (DRX-ERR-024), clarifier les définitions de \(C_{turb}\) et \(K_{cjet}\) (DRX-ERR-025/026), puis confronter les hypothèses (5.50)–(5.67) aux données expérimentales 5.6–5.8.
+2. **Chapitre 5 :** les équations (5.16)–(5.43) ont été contrôlées visuellement et les étapes (5.33), (5.38)–(5.40) re-dérivées ci-dessus sous hypothèses explicites (DRX-ERR-024/048/049). Les ambiguïtés de \(C_{turb}\) et \(K_{cjet}\) demeurent (DRX-ERR-025/026) ; confronter le couplage (5.50)–(5.67) aux données individuelles si elles sont retrouvées.
 3. **Chapitre 7 :** les équations (7.20)–(7.22) et le facteur correctif imprimé « 2/3 = 0.636 » ont été contrôlés visuellement (p. imprimée 131 / PDF p. 140) et intégrés ci-dessus. Reste à reconstituer l'annexe E (paramétrisation/calibration), préciser la loi probabiliste justifiant le facteur de temps, et vérifier la normalisation/pondération de la fonctionnelle d'identification (DRX-ERR-027).
-4. **Annexes E et F :** qualifier les conditions météorologiques de l'exemple et la formulation Finsler/métrique de vent ; distinguer cette annexe de la construction réellement utilisée au chapitre 7.
-5. **Provenance :** identité binaire entre le PDF joint et le PDF versionné confirmée (204 pages, 27 141 548 octets, SHA-256 consigné dans la fiche de provenance). La comparaison indépendante avec une copie HAL conservée séparément n'est pas établie ; ne pas relancer l'acquisition. Vérifier les droits de redistribution séparément.
+4. **Annexes E et F :** les conditions et la portée du calage, ainsi que la positivité de (F.10) et sa distinction avec le temps projeté du chapitre 7, sont examinées dans la [fiche de thèse](bibliographie/sources/these-brun.md). Restent à retrouver les paramètres du calage et à formaliser le domaine et le sens physique d'une éventuelle restriction directionnelle.
+5. **Provenance et conservation :** les copies locales ont été comparées et la recherche ciblée dans les 204 pages est documentée dans [docs/43](43-audit-these-brun-conservation-g0s.md). L'identité indépendante avec les octets originaux HAL, les droits de redistribution et la preuve de conservation du modèle à champ variable restent distincts et non établis ; ne pas relancer l'acquisition.
 
 ### Critère de clôture
 

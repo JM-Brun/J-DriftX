@@ -9,9 +9,9 @@
 - Notice AGRIS/INRAE, titre *Modèles à complexité réduite de transport pour applications environnementales*, auteur J.-M. Brun, thèse, notice de 2007 : https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c
 - Notice et fichier HAL liés par AGRIS : https://hal.inrae.fr/tel-02589999/document et https://hal.inrae.fr/tel-02589999/file/pub00023263.pdf
 - Copie miroir consultée pour la lecture du texte : https://www.mcours.net/cours/pdf/yass2/yass2cllic260.pdf (PDF de 201 pages selon le lecteur web ; hébergeur tiers, non institutionnel).
-- Le dépôt J-DriftX contient un PDF sous le chemin raw/Modèles à complexité réduite de transport pour applications environnementales - pub00023263.pdf. Son titre, sa pagination et son identité exacte avec les deux URL ci-dessus restent à contrôler sur le binaire lui-même.
+- Le PDF présent dans `raw/` a été contrôlé : titre et soutenance en page PDF 2, 204 pages et empreinte consignés dans le [sidecar de provenance](../raw/provenance/Modèles%20à%20complexité%20réduite%20de%20transport%20pour%20applications%20environnementales%20-%20pub00023263.pdf.md). Son identité avec les octets servis par HAL n'est pas établie par la notice ou le bandeau HAL.
 
-La copie miroir présente le contenu de la thèse, mais l'extraction affichée commence aux remerciements, sans page de titre visible dans le texte récupéré. Le titre et l'année sont donc confirmés par la notice bibliographique, non par une inspection visuelle de la page de titre. Ne pas qualifier la copie miroir de « version HAL vérifiée ».
+La copie miroir a servi à une première lecture ; son extraction affichée commençait aux remerciements, sans page de titre visible. Depuis, la page de titre du **fichier versionné** a été inspectée visuellement. Ne pas qualifier pour autant la copie miroir ou le fichier versionné de « version HAL vérifiée » au sens d'une identité binaire indépendante.
 
 ## Passages déterminants
 
@@ -55,6 +55,8 @@ En appliquant ces unités à $c_{loc}$ dans (7.12), avec $z$ une coordonnée de 
 
 Les deux branches de (7.12) ne sont donc pas dimensionnellement équivalentes sous ces conventions. La deuxième ne représente pas une masse totale sans facteur ou normalisation supplémentaire. La section 1.2.4 mentionne par ailleurs une concentration sans dimension dans le cadre de la formulation de Fick, mais la partie applicative locale précise explicitement kg·m⁻³ pour $c_{loc}$ ; aucune relation ne redéfinit $c_{loc}$ comme une quantité sans dimension dans le chapitre 7.
 
+La définition imprimée de $u^+_{loc}$ comporte également $\lVert u_{loc}\rVert$ au dénominateur : elle n'est pas définie aux points où $u_{loc}=0$. Une convention de stagnation serait nécessaire pour évaluer cette branche en ces points ; cette difficulté est distincte du désaccord d'unités et ne détermine pas le comportement du code historique.
+
 ### 3.1 Comparaison avec le chapitre Springer de 2008 : formule présente dans les deux sources
 
 La copie consultée du chapitre 14, §2.2, p. imprimée 248, présente la même formule : $c^+(x,y)=\int_{z>H}c_l\,dz$ **ou** $c^+(x,y)=u_l^+c_l$, avec $u_l^+=\max(0,(u\cdot\hat z)/\|u\|)$, puis $C=\int_{\mathbb R^2}c^+\,d\sigma$ annoncé comme quantité à conserver. La thèse soutenue en 2007 imprime cette construction en équations (7.12)–(7.13), p. 129, avec les indices $loc$ et la quantité $M_C$. Le chapitre paraît en 2008, après la soutenance ; ces dates et la similitude des textes ne suffisent pas à établir le sens exact de filiation entre leurs versions de rédaction. La formule n'est pas une erreur d'OCR propre à la thèse.
@@ -62,13 +64,13 @@ La copie consultée du chapitre 14, §2.2, p. imprimée 248, présente la même 
 Le diagnostic le plus fort justifié par les sources est une **incohérence dimensionnelle de la spécification publiée**, répétée dans le chapitre et la thèse. Cela constitue une erreur de formulation conceptuelle au niveau du modèle tel qu'il est écrit si les deux branches sont censées être des définitions alternatives de la même quantité conservée. On ne peut toutefois pas établir si la cause historique est une coquille répétée, une variable insuffisamment définie, ou une confusion entre une concentration pondérée par une direction et une quantité intégrée : les sources consultées ne donnent ni facteur de longueur manquant, ni autre convention dimensionnelle explicite. Il faut donc corriger la reconstruction de J-DriftX en choisissant et justifiant une définition cohérente, mais **ne pas modifier silencieusement la transcription historique ni affirmer que l'intention exacte des auteurs est connue**.
 
 Une correction dimensionnellement possible dépend de la quantité physique visée :
-- pour un inventaire de masse traversant un plan horizontal, $\int c_{loc}\,dz$ fournit une masse par aire, puis son intégrale surfacique fournit une masse ;
+- pour l'inventaire de masse d'une colonne située au-dessus d'un plan horizontal, $\int c_{loc}\,dz$ fournit une masse par aire, puis son intégrale surfacique fournit une masse ; cet inventaire ne mesure pas à lui seul la masse ayant traversé le plan ;
 - pour un débit massique vertical, il faudrait un flux contenant la composante verticale dimensionnée $u_z$ (en m/s), puis une intégrale surfacique fournirait une masse par temps, à intégrer dans le temps pour obtenir une masse ;
 - remplacer le cosinus directionnel $u_l^+$ par $u_z$ ne rendrait pas les deux branches équivalentes : cela définirait une autre grandeur physique. Aucune de ces réparations n'est confirmée comme intention des auteurs.
 
 ### 3.2 Correction recommandée pour une reconstruction cohérente, avec impact minimal sur la thèse
 
-**Choix retenu pour J-DriftX : conserver un inventaire de masse, et non un flux massique.** C'est l'option qui demande le moins de changements conceptuels au passage historique : elle conserve la première branche de (7.12), la définition surfacique de (7.13), le symbole $M_C$ et l'objectif annoncé de conservation d'une quantité totale. Elle ne prouve pas que cette interprétation était l'intention des auteurs ; c'est une décision explicite de reconstruction.
+**Reconstruction proposée pour J-DriftX : retenir un inventaire de masse.** Cette option conserve la première branche de (7.12), la définition surfacique de (7.13), le symbole $M_C$ et l'objectif annoncé de conservation d'une quantité totale. Elle ne prouve pas que cette interprétation était l'intention des auteurs, ni qu'un choix a déjà été implémenté ou validé dans le noyau scientifique.
 
 Avec $[c_{loc}]=\mathrm{kg\,m^{-3}}$, définir
 \[
@@ -108,6 +110,38 @@ Ces propositions sont des corrections à apporter dans une édition corrigée ou
 | Le modèle historique définit une transformation globale régulière avec jacobien calculable | Non établi par les passages consultés |
 | L'affirmation de conservation est prouvée pour le modèle réduit général | Non : « should be conserved » est un objectif/propriété attendue, sans preuve dans ce passage |
 
+### 5. Contrôle croisé de conservation dans la thèse
+
+**Recherche effectuée le 9 novembre 2026.** L'extraction textuelle des 204 pages du fichier versionné a été parcourue par recherche des radicaux `conserv`, `jacob`, `coordonn`, `coordinate`, `projection`, `isochron` et `characteristic` ; toutes les pages produisent du texte. Cette recherche sert au repérage : l'extraction peut perdre des symboles, des caractères et des arguments placés dans les figures, donc l'absence de résultat pour un mot n'est pas une preuve d'absence. Les passages décisifs ci-dessous ont été rapprochés du fac-similé et des lectures ciblées déjà consignées.
+
+| Passage | Grandeur / construction trouvée | Portée pour G0-S |
+|---|---|---|
+| Chapitre 1, (1.56)–(1.57), p. 31 (PDF 40) | Approximation de panache mince puis flux $M_f=\int_{-\infty}^{\infty}\int_0^\infty \bar u\,\bar c\,dz\,dy$, en kg/s, sur une section $y,z$ normale au vent. | C'est un **débit massique de section** sous hypothèses de panache ; il n'est ni l'inventaire $M_C$ en kg, ni une démonstration sur des surfaces iso-temps en champ variable. La formule et l'approximation ont été contrôlées visuellement. |
+| Chapitre 7, (7.6)–(7.7), pp. 127–128 (PDF 136–137) et fig. 7.4, p. 132 (PDF 141) | Temps le long d'une caractéristique vers une projection et repère local $(s,n)$ illustré autour d'une caractéristique. | Ces objets ne spécifient pas à eux seuls une transformation globale, son domaine, son inverse et son jacobien. Le repère de la figure est local, et non une preuve de bijectivité globale. |
+| Chapitre 7, (7.12)–(7.15) et (7.20), pp. 129–131 (PDF 138–140) | Entrée $c^+$, quantité $M_C$ annoncée conservée et famille de profils généralisés. | La condition de conservation est revendiquée ; les passages consultés ne dérivent pas un bilan pour cette famille avec jacobien, sources et frontières. Le contrôle ci-dessous donne une condition supplémentaire même en vent uniforme. |
+| Annexe B.2, (B.55)–(B.56), pp. 155–156 (PDF 164–165) ; annexe F, pp. 173–175 (PDF 182–184) | L'annexe B impose un bilan de section dans son exemple de similitude ; l'annexe F étudie des coûts de trajet. | Le premier résultat est conditionnel au cas simplifié de B.2 ; le second ne fournit pas à lui seul un bilan du scalaire ou une transformation globale. Voir la [fiche de lecture](bibliographie/sources/these-brun.md). |
+
+**Bilan de référence.** Pour une concentration $c$, un flux massique total $J$, une source $s$ et un puits $\ell$, la conservation locale $\partial_t c+\nabla\!\cdot J=s-\ell$ donne, sur un volume fixe $\Omega$ et pour la normale sortante $n$,
+
+$$
+\frac{d}{dt}\int_\Omega c\,dV
+=\int_\Omega(s-\ell)\,dV-\int_{\partial\Omega}J\cdot n\,dS.
+$$
+
+La masse du volume n'est constante que si le bilan net sources, puits et frontière s'annule. Pour un volume au-dessus de $H$, la contribution du plan inférieur fait partie de cette frontière ; elle ne disparaît pas du seul fait que l'on a défini l'intégrale verticale de (7.12). Dans un tube de courant stationnaire sans source ni puits, si le flux total à travers les parois latérales est nul, le théorème de divergence relie les flux à ses deux sections. Cette proposition conditionnelle ne démontre pas que les iso-temps historiques sont ces sections ni que leurs parois satisfont cette condition, notamment en présence de diffusion.
+
+**Contrôle analytique en vent uniforme.** La thèse donne en (7.15) une forme axiale exponentielle et une forme radiale exponentielle. Pour tester une reconstruction particulière, prenons ces formes comme des égalités avec $C_0>0$, $a>0$, $b(x)>0$, $U>0$ et $r=\sqrt{y^2+z^2}$ :
+
+$$
+c(x,y,z)=C_0e^{-ax}e^{-b(x)r},\qquad
+Q(x)=\int_{-\infty}^{\infty}\int_0^\infty Uc\,dz\,dy
+=\frac{\pi U C_0e^{-ax}}{b(x)^2}.
+$$
+
+Le facteur $\pi$ correspond à la section demi-plane $z\ge0$. Là où $b$ est dérivable, la constance de $Q$ exige $b'(x)/b(x)=-a/2$. Pour $a=1/L$ et $b(x)=b_0/(1+x/L)$ avec $L,b_0>0$, le profil s'élargit mais $Q(L)/Q(0)=4/e\simeq1{,}47$ : le débit de section n'est pas conservé. Cet exemple reconstruit ne prétend pas reproduire les paramètres ou la sortie historique ; il montre que les **formes seules** n'imposent pas le bilan sans relation supplémentaire entre amplitude et largeur. Une variation de débit exigerait un bilan compatible avec des sources, puits ou autres contributions de flux ; elle ne prouve pas une erreur de la simulation historique.
+
+**Verdict de recherche.** Le repérage et les passages examinés ne mettent pas en évidence de preuve complète de conservation du modèle lointain à champ variable ni de carte globale avec jacobien. Cela ne prouve pas qu'aucune preuve n'existe dans un autre document ou qu'elle serait impossible. La recherche documentaire est effectuée ; la preuve mathématique et la reconstruction du modèle restent ouvertes dans [docs/32](32-conservation-coordonnees-travel-time.md) et [#123](https://github.com/JM-Brun/J-DriftX/issues/123).
+
 ## Conséquence pour l'audit G0-S
 
 Le contrôle croisé de la thèse et du chapitre 2008 établit que la formule problématique est imprimée dans les deux sources, avec la même définition sans dimension de $u^+$ ; il ne démontre pas la filiation de leurs rédactions. Le verdict est une **incohérence dimensionnelle présente dans les deux sources**, pas un artefact OCR. L'intention corrective exacte reste non déterminable à partir de ces sources. Cela ne clôt pas l'issue #123, car le bilan de conservation du modèle lointain reste à démontrer. Conserver trois objets distincts :
@@ -118,15 +152,17 @@ Le contrôle croisé de la thèse et du chapitre 2008 établit que la formule pr
 
 Le théorème conditionnel dans [la note de conservation](32-conservation-coordonnees-travel-time.md) et le cas uniforme explicite dans [la note de transformation τ-η](37-transformation-tau-eta-cas-uniforme.md) restent des résultats séparés. Ils ne constituent pas une preuve rétroactive pour le champ variable historique.
 
-## Contrôles restant à effectuer sur le binaire versionné
+## État des contrôles sur le binaire et la conservation
 
 - [x] Confirmer visuellement la page de titre du PDF versionné.
 - [x] Vérifier les pages imprimées 126–129 sur le PDF versionné : pages PDF 135–138 ; le fichier compte 204 pages PDF.
-- [ ] Consulter d'abord les éléments de provenance déjà archivés pour savoir si la comparaison du binaire versionné avec le fichier HAL déjà obtenu a été réalisée. Si elle ne l'a pas été, comparer les SHA-256 et, en cas de différence, les pages/texte. Ne pas relancer l'acquisition du PDF.
-- [ ] Vérifier les droits de redistribution du binaire présent dans Git.
+- [x] Consulter les éléments de provenance archivés et comparer les copies locales repérées : le fichier joint et le binaire versionné ont la même empreinte ; une autre copie locale diffère uniquement par dix octets de dates PDF. Les détails et limites sont consignés dans le [sidecar](../raw/provenance/Modèles%20à%20complexité%20réduite%20de%20transport%20pour%20applications%20environnementales%20-%20pub00023263.pdf.md). Aucune copie identifiée comme octets originaux HAL n'a été retrouvée dans ce périmètre ; ne pas relancer l'acquisition.
+- [ ] Établir une comparaison binaire indépendante avec les octets originaux HAL si une copie dont la provenance est prouvée ou une empreinte archivée devient disponible. Les copies locales ne permettent pas de clore cette identité.
+- [ ] Établir les droits de redistribution du binaire présent dans Git : la notice bibliographique et les éléments examinés n'établissent pas une autorisation ou licence de redistribution pour ce fichier. Une preuve du titulaire des droits ou des conditions applicables reste nécessaire.
 - [x] Vérifier visuellement sur la copie miroir la page imprimée 129 et les équations (7.12)–(7.13) ; comparer la forme de (7.12) au chapitre 2008 p. 248. Résultat : formule identique et incohérence dimensionnelle présente dans les deux sources. Cette vérification ne certifie pas l'identité du PDF versionné avec HAL.
 - [x] Vérifier visuellement les équations (7.12)–(7.13) sur le PDF versionné, p. 138.
-- [ ] Poursuivre la recherche d'une définition explicite de la transformation de coordonnées et d'une preuve de conservation dans la thèse, sans présumer qu'elle existe.
+- [x] Rechercher dans le texte extrait de la thèse et examiner les passages pertinents pour la transformation et la conservation ; méthode, résultats et limites figurent au §5 ci-dessus. Ce contrôle n'établit ni une preuve générale ni l'impossibilité d'en construire une.
+- [ ] Démontrer ou réfuter la conservation pour une formulation complètement spécifiée du modèle lointain à champ variable, avec domaine, transformation, jacobien, sources/puits et frontières ; ce travail mathématique n'est pas clos par la recherche documentaire.
 
 ## Références
 
