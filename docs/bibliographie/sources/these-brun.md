@@ -361,6 +361,8 @@ Avec la convention directe de (B.5), une dérivation cohérente sur $\mathbb R^3
 
 La thèse considère une source de longueur $H$, de débit total $Q$, sans frontière solide, et une seule direction de diffusion transverse $z$ ; dans cette section, $H$ désigne **la longueur de source**, pas la hauteur de rejet du cas S0. Elle écrit $U\,\partial_x\bar c=K\,\partial^2_z\bar c$ en (B.46), pose $\eta=z/\sigma$ et $\bar c=c_0f(\eta)$, puis obtient $K=(U/2)d\sigma^2/dx$ en (B.54) et le bilan $\int_{\mathbb R}\bar c\,dz=Q/(UH)$ en (B.55).
 
+Une [correspondance exécutable avec le noyau Python](../../audits/these-correspondance-noyau-python.md) utilise $t=x/U$ et une largeur transverse initiale positive pour vérifier un cas de (B.46) et (B.55). Elle ne reproduit ni une source ponctuelle idéale, ni les conditions de canopée ou de dépôt.
+
 L'[analyse des frontières de section](../../audits/these-flux-sections-diffusion.md) dérive le terme diffusif transverse à partir de (B.46) : sa disparition, les limites à l'infini et le bilan de source sont nécessaires pour relier ce calcul à (B.55). Un exemple à section finie illustre une fuite diffusante ; ses conditions ne sont pas celles de l'exemple historique infini.
 
 **Contrôle de l'imprimé, p. 156 (PDF 165).** L'équation (B.59) donne $f(\eta)=\exp(-\eta^2/2)$, alors que (B.61) imprime $I_0=\int_{\mathbb R}\exp(-\eta^2)\,d\eta=1/\sqrt{2\pi}$. Or l'intégrale telle qu'imprimée vaut $\sqrt\pi$ ; pour le profil de (B.59), elle vaut $\sqrt{2\pi}$. L'équation (B.62) imprime ensuite
