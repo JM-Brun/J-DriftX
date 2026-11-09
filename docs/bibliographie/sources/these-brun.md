@@ -440,6 +440,8 @@ Le [protocole de reprise](../../audits/these-annexe-c-protocole-reprise.md) conc
 
 **D — Échelles et stabilité, pp. 163–168 (PDF 172–177).** Le tableau D.1, p. 164 (PDF 173), compare qualitativement modèles gaussien, intégral et 3D, essais de terrain et sur maquette ; ses coûts et domaines d'usage sont des appréciations historiques, non une comparaison actuelle mesurée. La section D.2 présente des échelles et la fréquence de flottabilité ; elle rappelle que les phénomènes peuvent se chevaucher. P. 168 (PDF 177), la première phrase décrit le nombre de Richardson comme rapport cisaillement/flottabilité puis le paragraphe suivant emploie l'ordre inverse. La définition et les conventions de signe de la grandeur exacte doivent être vérifiées avant réutilisation : l'alternance imprimée ne permet pas de choisir automatiquement une formule.
 
+L'[audit des conventions de Richardson](../../audits/these-richardson-conventions.md) distingue une définition de gradient d'une définition de flux et donne les hypothèses de fermeture reliant les deux. Leurs signes, domaines et singularités ne permettent pas de déduire automatiquement la formule historique ou une classe de stabilité discrète.
+
 **E — Calage, pp. 169–172 (PDF 178–181).** L'annexe présente un calage au modèle gaussien en vent uniforme et terrain plat ; la p. 172 montre une interface historique. Ce calage à un modèle et cette interface ne sont pas des données d'évaluation indépendante ; détails dans le tableau « Calage » ci-dessus.
 
 **F — Géométrie directionnelle, pp. 173–175 (PDF 182–184).** L'annexe distingue d'abord une distance minimale sur des courbes d'un temps calculé le long d'une courbe fixée. En (F.10), p. 175 (PDF 184), avec $y\ne0$ et $u(x)\cdot y\ne0$, elle imprime

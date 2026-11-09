@@ -33,7 +33,7 @@ Toutes les parties ci-dessous ont un premier repérage ; « à reprendre » sign
 | Partie | Prochain contrôle ciblé | Tâche |
 |---|---|---|
 | 1 — Transport et dispersion | Réconcilier bilan du scalaire, fermeture et hypothèses du panache mince ; distinguer masse et débit de section. | TH-01, TH-02 |
-| 2 — Météorologie | Vérifier définitions, dimensions et conditions des profils et paramètres de stabilité ; expliciter les conventions alternatives. | TH-01 |
+| 2 — Météorologie | Richardson de gradient distingué du nombre de flux dans l'[audit](these-richardson-conventions.md) ; poursuivre le contrôle des profils, de leurs dimensions et domaines. | TH-01 |
 | 3 — Couvert | Reprendre les moyennes et termes d'interface ainsi que la fermeture après (3.21)–(3.23). | TH-01, TH-06 |
 | 4 — Canopée et inverse | Confronter modèle, couches, bornes, cibles et extension polynomiale aux éléments effectivement utilisés si retrouvés. | TH-01, TH-04, TH-07 |
 | 5 — Jet et source | Vérifier les conventions de similitude et le raccordement, puis relier le calcul de source aux observations du plan. | TH-01, TH-03, TH-08 |
@@ -42,7 +42,7 @@ Toutes les parties ci-dessous ont un premier repérage ; « à reprendre » sign
 | A — Réduction de modèle | Convergence : consistance et stabilité distinguées dans la fiche (DRX-ERR-055) ; préciser les hypothèses d'approximation et le coût de préparation. | TH-01 |
 | B — Panache gaussien | Poursuivre le contrôle des normalisations, signes et hypothèses du noyau et des bilans de section. | TH-01, TH-02 |
 | C — Schéma de Burgers | Transcription et protocole borné réalisés ; rechercher le code et les conditions effectivement employés. | TH-01, TH-07 |
-| D — Échelles et stabilité | Réconcilier les descriptions du nombre de Richardson et les conventions d'échelle. | TH-01 |
+| D — Échelles et stabilité | Contradiction de Richardson et conventions possibles documentées ; poursuivre le contrôle des autres échelles et hypothèses. | TH-01 |
 | E — Calage | Retrouver coefficients, unités, conventions logarithmiques et jeu d'ajustement ; ne pas substituer silencieusement Briggs. | TH-01, TH-04, TH-07 |
 | F — Géométrie | Préciser domaine, signe et singularités du coût directionnel, puis distinguer ce coût du temps projeté du chapitre 7. | TH-01, TH-02 |
 
