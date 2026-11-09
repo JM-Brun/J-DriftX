@@ -81,4 +81,4 @@ Le raffinement réduit l'erreur vis-à-vis de la demi-vitesse dans cet exemple ;
 - Définir les tests de cohérence et d'ordre sur des équations linéaire **et** non linéaire avant de tester la stabilité ou de comparer des trajectoires de canopée.
 - Conserver séparément la transcription, toute reconstruction et son domaine de validité. Aucune de ces étapes ne constitue une validation sur données physiques.
 
-La [fiche de lecture](../bibliographie/sources/these-brun.md) décrit les autres contrôles de l'annexe C et la reproductibilité du modèle historique.
+Le [protocole de reprise](these-annexe-c-protocole-reprise.md) formalise une candidate distincte, ses tests d'ordre et une condition suffisante de stabilité linéarisée. La [fiche de lecture](../bibliographie/sources/these-brun.md) décrit les autres contrôles de l'annexe C et la reproductibilité du modèle historique.
