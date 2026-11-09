@@ -85,6 +85,8 @@ L'annexe C apporte une seconde réserve de reproductibilité : (C.1)–(C.4), p.
 
 Le contrôle du pas de temps (C.23), ainsi qu'un contre-exemple de stabilité propre au seul schéma centré (C.9), sont détaillés dans la [fiche de thèse](bibliographie/sources/these-brun.md) et dans **DRX-ERR-047**. Le diagnostic dimensionnel dépend des unités physiques supposées ; l'analyse de (C.9) ne conclut pas à la stabilité ou à l'instabilité du schéma multi-étapes (C.20).
 
+Un [audit dédié de l'intégration multi-étapes](audits/these-annexe-c-integration-temporelle.md) relève des incohérences de factorisation, de sortie et d'indices dans les lignes imprimées (**DRX-ERR-053/054**). Il distingue ces constats d'une reconstruction hypothétique et de tests de cohérence ; les étapes exécutées historiquement demeurent inconnues.
+
 Le problème inverse cherche le terme de contrôle/puits \(F\) qui rapproche l'état \(u_F\) d'un profil cible. Les équations (4.14) et (4.16), p. imprimée 68, présentent deux critères :
 \[
 J_{LC}(F)=\sum_{i=1}^{n}\alpha^{(i)}
