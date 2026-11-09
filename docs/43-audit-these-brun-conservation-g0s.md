@@ -70,7 +70,7 @@ Une correction dimensionnellement possible dépend de la quantité physique vis�
 
 ### 3.2 Correction recommandée pour une reconstruction cohérente, avec impact minimal sur la thèse
 
-**Reconstruction proposée pour J-DriftX : retenir un inventaire de masse.** Cette option conserve la première branche de (7.12), la définition surfacique de (7.13), le symbole $M_C$ et l'objectif annoncé de conservation d'une quantité totale. Elle ne prouve pas que cette interprétation était l'intention des auteurs, ni qu'un choix a déjà été implémenté ou validé dans le noyau scientifique.
+**Choix documentaire de reconstruction consigné dans [#123](https://github.com/JM-Brun/J-DriftX/issues/123) : retenir un inventaire de masse.** Cette option conserve la première branche de (7.12), la définition surfacique de (7.13), le symbole $M_C$ et l'objectif annoncé de conservation d'une quantité totale. Elle ne prouve pas que cette interprétation était l'intention des auteurs, ni que la conservation historique a été démontrée ou qu'une implémentation a été validée physiquement.
 
 Avec $[c_{loc}]=\mathrm{kg\,m^{-3}}$, définir
 \[
@@ -153,6 +153,8 @@ Le contrôle croisé de la thèse et du chapitre 2008 établit que la formule pr
 Le théorème conditionnel dans [la note de conservation](32-conservation-coordonnees-travel-time.md) et le cas uniforme explicite dans [la note de transformation τ-η](37-transformation-tau-eta-cas-uniforme.md) restent des résultats séparés. Ils ne constituent pas une preuve rétroactive pour le champ variable historique.
 
 ## État des contrôles sur le binaire et la conservation
+
+Les suites opérationnelles, leurs dépendances et leurs critères de clôture sont regroupés dans la [liste des travaux restants](audits/these-travaux-restants.md). Les cases ci-dessous conservent le détail propre à cette note.
 
 - [x] Confirmer visuellement la page de titre du PDF versionné.
 - [x] Vérifier les pages imprimées 126–129 sur le PDF versionné : pages PDF 135–138 ; le fichier compte 204 pages PDF.
