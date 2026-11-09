@@ -31,6 +31,8 @@ Les pages ci-dessous sont les pages imprimées ; pour les passages vérifiés da
 
 Cette carte couvre **tous les chapitres et annexes par repérage ciblé**, sans prétendre à une vérification ligne par ligne de leurs démonstrations ou figures. L'extraction textuelle du PDF a servi au repérage ; les formules faisant l'objet d'un verdict ont été vérifiées visuellement.
 
+Les prochaines lectures, les travaux conditionnés à des sources externes et leurs critères de clôture sont regroupés dans la [liste des travaux restants](../../audits/these-travaux-restants.md).
+
 ## Lecture transversale des chapitres 1 à 6
 
 | Chapitre | Apport documenté | Limite pour J-DriftX |
@@ -395,7 +397,15 @@ résidu non nul en général lorsque $u\ne0$. La formule imprimée résout l'éq
 
 ## Annexes A, C, D, E et F : points de reprise
 
-**A — Réduction, pp. 149–150 (PDF 158–159).** La thèse oppose une réduction par base de solutions précalculées à la construction d'un espace approché à partir d'informations physiques. Cela motive une famille de solutions à bas coût, mais ne fournit ni borne générale d'erreur ni mesure complète du coût de préparation.
+**A — Réduction, pp. 149–150 (PDF 158–159).** La thèse oppose une réduction par base de solutions précalculées à la construction d'un espace approché à partir d'informations physiques. Cela motive une famille de solutions à bas coût, mais ne fournit ni borne générale d'erreur ni mesure complète du coût de préparation. Dans le passage relatif à l'approximation par espaces de dimension croissante, la p. 149 affirme aussi qu'une approche « consistante » converge vers la solution exacte lorsque $N\to\infty$ ; elle ne précise ni le sens de la consistance ni les hypothèses de stabilité. Le passage a été vérifié visuellement.
+
+**Limite logique de la consistance seule.** Si « consistante » signifie que le résidu sur la solution exacte tend vers zéro, cela ne suffit pas à garantir la convergence des solutions numériques. Un contre-exemple reconstruit dans $H=\ell^2$ le montre : soit $A=I$, $f=(1,1/2,1/3,\ldots)$ et $P_N$ la projection sur les $N$ premières coordonnées. Sur $\mathbb R^N$, prenons
+
+$$
+A_N=\operatorname{diag}(1,\ldots,1,1/N),\qquad A_Nu_N=P_Nf.
+$$
+
+Pour tout $v\in\ell^2$, $\lVert A_NP_Nv-P_Nv\rVert=(1-1/N)|v_N|\to0$ : cette consistance forte est satisfaite et les espaces de projection couvrent asymptotiquement $H$. Pourtant $u_N$ a pour dernière coordonnée $1$, alors que $f_N=1/N$ ; après prolongement par zéro, $\lVert u_N-f\rVert\ge1-1/N\to1$. Les inverses vérifient $\lVert A_N^{-1}\rVert=N$ : leur stabilité uniforme manque. Ce n'est pas un contre-exemple à une méthode d'éléments finis particulière ni à la convergence d'une projection orthogonale exacte sur des espaces denses ; il montre la nécessité de préciser le sens de « consistance » et les autres hypothèses de l'affirmation. Voir [DRX-ERR-055](../../46-registre-erreurs-incoherences-documentaires.md).
 
 **C — Schéma de Burgers, pp. 159–161 (PDF 168–170).** L'annexe présente un schéma aux différences finies, une intégration en plusieurs étapes et une condition de pas de temps. L'équation (C.7), p. 159, imprime pour la dérivée seconde le quotient $(u_{i+1}-2u_i+u_{i-1})/(2h)$, alors que (C.9), sur la même page, utilise $h^2$ pour le terme diffusif. Avec $u(x)=x^2$ et $x_i=0$, la dérivée exacte vaut 2 ; le quotient de (C.7) vaut $h$ et tend vers zéro quand $h\to0$. Le quotient à $h^2$ vaut 2. Ce contre-exemple établit l'erreur de la ligne imprimée, sans déterminer le schéma réellement utilisé par le code historique. Le critère CFL et les conditions aux limites doivent être spécifiés et analysés séparément avant toute reproduction numérique ; voir [DRX-ERR-033](../../46-registre-erreurs-incoherences-documentaires.md).
 
