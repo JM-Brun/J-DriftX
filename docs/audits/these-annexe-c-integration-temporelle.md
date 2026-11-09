@@ -43,6 +43,37 @@ dont le coefficient du premier ordre vaut $1/2$. Le même constat se voit sans a
 
 À l'inverse, si l'on choisit à titre illustratif les dénominateurs $3-p$, le polynôme linéaire devient $1+z+z^2/2+z^3/6$. Cela ne suffit pas à établir l'ordre trois pour une équation non linéaire : pour $u'=u^2$, $u(0)=1$, cette récurrence illustrative donne $1+h+h^2+11h^3/12+O(h^4)$, alors que la solution exacte vaut $1/(1-h)=1+h+h^2+h^3+O(h^4)$. Ces dénominateurs ne sont pas attribués au texte ou au code comme correction historique.
 
+## Cas périodique : stable mais transporté à demi-vitesse
+
+Considérons **la reconstruction conditionnelle ci-dessus**, pas une exécution littérale de (C.20). Linéarisons-la autour d'un état spatialement uniforme $U>0$, sur une grille périodique de pas $h=\Delta x$, avec $g=0$ et la seule viscosité numérique (C.22), sans ajouter de viscosité physique. Pour une perturbation $q$, la viscosité de base vaut $Uh/2$. La variation de cette viscosité n'intervient pas au premier ordre, car elle multiplie une différence seconde nulle sur l'état uniforme. L'opérateur spatial linéarisé est donc
+
+$$
+L_h q_j=-U\frac{q_{j+1}-q_{j-1}}{2h}
++\frac{Uh}{2}\frac{q_{j+1}-2q_j+q_{j-1}}{h^2}
+=-U\frac{q_j-q_{j-1}}{h}.
+$$
+
+Posons $C=U\Delta t/h$ et $P_Cq_j=(1-C)q_j+Cq_{j-1}$, de sorte que $\Delta t L_h=P_C-I$. L'application du polynôme $R_{20}$ donne exactement, pour la perturbation linéarisée,
+
+$$
+q^{n+1}=\left(\frac{15}{24}I+\frac7{24}P_C
++\frac1{24}P_C^2+\frac1{24}P_C^3\right)q^n.
+$$
+
+Pour $0\le C\le1$, $P_C$ et ses puissances sont des moyennes convexes de décalages périodiques. Leur combinaison ci-dessus préserve la somme et les constantes, préserve la non-négativité d'une perturbation initialement non négative et est contractante en norme $\ell^\infty$. En particulier, la règle (C.23), appliquée à l'état uniforme $U>0$ avec $g=0$, donne $C=1$ ; l'effet éventuel d'une variation du pas sous une perturbation est d'ordre supérieur ici puisque $L_hU=0$. Ces propriétés portent sur **l'opérateur linéarisé périodique**, pas sur la positivité ou la stabilité du schéma non linéaire, d'autres frontières ou la règle générale de pas.
+
+La préservation et la stabilité ne suffisent pas à établir la cohérence : le déplacement moyen par pas de cette combinaison vaut $C/2$ maille, car $(7+2+3)/24=1/2$. Sa vitesse de transport au premier ordre est donc $U/2$, alors que la linéarisation de Burgers autour de $U$ est $q_t+Uq_x=0$. C'est le même défaut de premier ordre que celui observé avec la source constante, obtenu ici pour le transport spatial.
+
+**Contrôle synthétique de convergence.** Sur $[0,1]$ périodique, prenons $U=1$, $C=1$, $T=0{,}4$ et $q(x,0)=\sin(2\pi x)$. L'erreur quadratique moyenne sur la grille vaut approximativement :
+
+| Nombre de points | Référence transportée à $U/2$ | Référence transportée à $U$ |
+|---:|---:|---:|
+| 200 | 0,01610 | 0,82207 |
+| 400 | 0,00810 | 0,82657 |
+| 800 | 0,00406 | 0,82889 |
+
+Le raffinement réduit l'erreur vis-à-vis de la demi-vitesse dans cet exemple ; il ne rend pas la reconstruction fidèle à la vitesse $U$. Ces valeurs sont des contrôles du calcul reconstruit, sans données de terrain ni sortie du logiciel historique.
+
 ## Conséquences pour la reproduction
 
 - Retrouver le code ou une source primaire décrivant l'ordre des étapes, leurs indices et la variable renvoyée.
