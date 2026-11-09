@@ -77,6 +77,33 @@ Pour reproduire la cible (4.17) avec $0<\beta\le1$, cette reconstruction exige $
 
 La loi semi-empirique (3.46), p. 61 (PDF 70), écrit une décroissance en $e^{-C_Da_{LAD}r}$ : si l'on donne la même valeur numérique au produit dans les deux expressions, son exposant diffère d'un facteur 2 de celui du cas simplifié issu de (4.19). Les deux textes peuvent employer des conventions de traînée différentes ; ce contrôle ne suffit pas à attribuer une erreur au calcul historique. Toute comparaison doit préciser ces conventions et le rôle de la viscosité.
 
+### Cible exponentielle : condition exacte avec viscosité
+
+Les équations (4.8), (4.17)–(4.19), pp. 66–70 (PDF 75–79), ont été contrôlées visuellement. Pour isoler le rôle de la viscosité, considérons une **reconstruction stationnaire** avec $u_l>0$, $L=r_1-r_0>0$, $0<\beta<1$, $\nu\ge0$ constant et un contrôle spatial $k(r)=C_Da_{LAD}$. Posons $q=-\log(\beta)/L>0$ et imposons le profil cible $u(r)=u_l e^{-q(r-r_0)}$. La substitution dans les équations d'état et de traînée donne, pour tout point où $u>0$,
+
+$$
+u u'-\nu u''=-\frac{k(r)}2u^2,
+\qquad
+k_{\rm requis}(r)=2q+\frac{2\nu q^2}{u(r)}
+=2q+\frac{2\nu q^2}{u_l}e^{q(r-r_0)}.
+$$
+
+Les deux termes de $k_{\rm requis}$ sont en m⁻¹. Pour $\nu=0$, on retrouve le contrôle constant $2q$ du cas précédent. Pour $\nu>0$ et $0<\beta<1$, le contrôle exact est croissant en $r$ : **un seul coefficient constant ne peut pas reproduire exactement ce profil stationnaire** dans ce modèle. Des coefficients constants par morceaux ne le représentent pas non plus exactement avec un nombre fini de morceaux ; ils peuvent toutefois l'approcher. Le cas $\beta=1$ est différent : $q=0$ et $k=0$ convient à cette reconstruction.
+
+La borne historique $0\le k\le6$ m⁻¹ impose en particulier
+
+$$
+2q+\frac{2\nu q^2}{\beta u_l}\le6\ \mathrm{m^{-1}}.
+$$
+
+À titre **synthétique**, prenons $L=1$ m, $u_l=10$ m/s, $\beta=0{,}1$ et $\nu=0{,}2$ m²/s. Alors $q\simeq2{,}303$ m⁻¹, $k_{\rm requis}(r_0)\simeq4{,}817$ m⁻¹ et $k_{\rm requis}(r_1)\simeq6{,}726$ m⁻¹. Cette cible stationnaire exacte viole donc la borne 6 dans cet exemple ; à ces mêmes $L,u_l,\beta$, elle la respecte seulement si $\nu\lesssim0{,}1315$ m²/s. La viscosité choisie est illustrative : elle n'est ni extraite de la figure 4.3 ni proposée comme valeur physique pour l'essai historique. Même si la borne est satisfaite, il faut encore définir les conditions aux limites et initiales. La reconstruction stationnaire ne reproduit pas le démarrage à vitesse nulle de (4.8) et ne permet pas de conclure sur l'atteignabilité de la cible à un instant d'un calcul transitoire.
+
+### Existence d'un minimum inverse nul
+
+Après (4.10)–(4.12), p. 67 (PDF 76), la thèse affirme qu'un contrôle $F_{\rm tar}$ fournit un minimum global nul, alors que l'espace admissible est encore à déterminer. Cette affirmation est vraie **si** un tel contrôle admissible existe et produit effectivement la cible dans la norme choisie. Ces deux propriétés ne découlent pas de la seule définition $J(F)=\lVert u_F-u_{\rm tar}\rVert$ ; la reconstruction visqueuse bornée ci-dessus illustre une cible exacte inaccessible **dans le sous-problème stationnaire choisi**, sans réfuter les autres formulations possibles.
+
+Il faut également distinguer l'existence d'un minimum et la valeur de l'infimum : même un infimum nul peut ne pas être atteint si l'ensemble admissible n'est pas fermé ou si l'application contrôle–état manque des propriétés nécessaires. Ce constat ne dit pas que le problème historique est insoluble ; il indique les hypothèses de réalisabilité, de compacité ou de fermeture, de continuité et de conditions aux limites à établir avant de conclure. Voir [DRX-ERR-050](../../46-registre-erreurs-incoherences-documentaires.md).
+
 ### Ce que mesure l'optimisation multicritère
 
 Les équations (4.14) et (4.16), p. 68, proposent respectivement une somme pondérée et le maximum pondéré des écarts à un ensemble de cibles ; les exemples sont des profils idéalisés. Un minimum du second objectif contrôle le pire écart **parmi les cibles et selon les poids et la norme retenus**, pas automatiquement sur toute une parcelle ou sur des profils non observés. Par exemple, si un modèle constant est ajusté en minimax à deux cibles scalaires 0 et 2, la solution 1 a une erreur maximale de 1 sur ces deux cibles ; sa distance à une troisième cible non incluse, 100, vaut 99. Ce contre-exemple ne réfute pas l'utilité de la méthode : il montre pourquoi la couverture des scénarios et l'évaluation sur des données distinctes sont indispensables avant une revendication générale de robustesse.

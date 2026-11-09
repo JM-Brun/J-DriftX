@@ -98,6 +98,8 @@ Le premier minimise une somme pondérée des erreurs (coût moyen) ; le second m
 
 Le profil cible (4.17)–(4.18), p. 68, est exponentiel entre les vitesses d'entrée et de sortie du rang, avec \(u_r^{(i)}=\beta_{veg}u_l^{(i)}\) et \(\beta_{veg}\in[0,1]\). Le contrôle est ensuite discrétisé par morceaux sur \(m\) sous-intervalles, équations (4.20)–(4.24), sous la forme de valeurs constantes du produit \(a_{LAD}C_{Dveg}\), de dimension \(m^{-1}\). La figure 4.2 compare les profils cibles et optimisés ; la figure 4.3 rapporte les paramètres optimaux correspondants. Il s'agit d'une identification de paramétrisation à partir de profils cibles, pas d'une estimation indépendante de \(a_{LAD}\) et \(C_{Dveg}\) séparément.
 
+Une [reconstruction stationnaire visqueuse](bibliographie/sources/these-brun.md) précise les conditions pour qu'un profil exponentiel soit exactement réalisable : pour une viscosité positive, le produit de traînée requis varie dans le rang et peut sortir de la borne autorisée. Cette analyse ne reproduit pas le problème transitoire ni les valeurs de la figure 4.3. L'existence du minimum nul affirmé après (4.12) suppose la réalisabilité de la cible et l'admissibilité du contrôle, à vérifier séparément : **DRX-ERR-050**.
+
 ### 3.2 Chapitre 5 — jets turbulents et application viticole
 
 Le chapitre 5 utilise un jet turbulent rond axisymétrique comme modèle simplifié de l'émission par une buse, puis l'applique au pulvérisateur dans une rangée de vigne assimilée à un milieu poreux homogène. Les paramètres cités comprennent notamment $a_{LAD}$, $C_D$ et les paramètres de perte/efficacité du filet de canopée.
