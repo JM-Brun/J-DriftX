@@ -27,11 +27,17 @@ U, K, Q, H, sigma0 = 3.0, 0.4, 2.0, 4.0, 0.5  # unités SI
 x, z, h = 15.0, 0.7, 0.001  # m
 mass = Q / (U * H)  # kg/m², intégrale transverse
 
+
 def c(x, z):
     return gaussian_advection_diffusion(
-        np.asarray(z), x / U, mass=mass, velocity=0.0,
-        diffusivity=K, initial_sigma=sigma0,
+        np.asarray(z),
+        x / U,
+        mass=mass,
+        velocity=0.0,
+        diffusivity=K,
+        initial_sigma=sigma0,
     )
+
 
 sigma = np.sqrt(sigma0**2 + 2 * K * x / U)
 grid = np.linspace(-12 * sigma, 12 * sigma, 120001)
