@@ -77,6 +77,29 @@ Pour reproduire la cible (4.17) avec $0<\beta\le1$, cette reconstruction exige $
 
 La loi semi-empirique (3.46), p. 61 (PDF 70), écrit une décroissance en $e^{-C_Da_{LAD}r}$ : si l'on donne la même valeur numérique au produit dans les deux expressions, son exposant diffère d'un facteur 2 de celui du cas simplifié issu de (4.19). Les deux textes peuvent employer des conventions de traînée différentes ; ce contrôle ne suffit pas à attribuer une erreur au calcul historique. Toute comparaison doit préciser ces conventions et le rôle de la viscosité.
 
+### Contrôle par morceaux : identification et sensibilité
+
+La p. 71 (PDF 80), équations (4.20)–(4.24), décrit un produit de traînée constant par couche et un problème inverse pour les profils cibles. Pour étudier ce que les données peuvent identifier, considérons une **reconstruction distincte**, stationnaire, sans viscosité, avec $u>0$ et des interfaces $x_0<\cdots<x_m$, $h_i=x_{i+1}-x_i>0$. Sur la couche $i$, posons $k(r)=k_i\ge0$, pour $i=0,\ldots,m-1$. Les équations (4.8) et (4.19) donnent presque partout $u'=-ku/2$ ; avec une vitesse continue aux interfaces,
+
+$$
+u(r)=u_l\exp\!\left[-\frac12\int_{x_0}^{r} k(s)\,ds\right],\qquad
+\frac{u(x_m)}{u_l}=\exp\!\left[-\frac12\sum_{i=0}^{m-1}k_i h_i\right].
+$$
+
+**Une sortie ne détermine pas chaque couche.** Pour deux couches de 0,5 m et $u_l=10$ m/s, les contrôles $(1,3)$ et $(2,2)$ m⁻¹ ont la même intégrale et donnent tous deux $u(x_m)=10e^{-1}\simeq3{,}679$ m/s. Leurs vitesses à l'interface sont pourtant respectivement $10e^{-1/4}\simeq7{,}788$ et $10e^{-1/2}\simeq6{,}065$ m/s. Une mesure de sortie et une mesure d'entrée, même exactes, identifient ici une intégrale de traînée et non les deux valeurs séparées. Ce constat porte sur ce cas analytique, pas sur l'identifiabilité du solveur visqueux historique ni sur toutes les données qui auraient pu être utilisées.
+
+**Des mesures aux interfaces changent le problème.** Si toutes les vitesses aux interfaces $u_i=u(x_i)>0$ sont connues exactement, les contrôles de cette reconstruction sont uniques et valent
+
+$$
+k_i=-\frac{2}{h_i}\log\!\left(\frac{u_{i+1}}{u_i}\right).
+$$
+
+Une donnée croissante entre deux interfaces conduirait à $k_i<0$ : elle ne serait pas compatible exactement avec ce modèle à traînée non négative, sans pour autant invalider la mesure ou un modèle physique plus riche. Si les mesures vérifient $\log u_i^{obs}=\log u_i+\epsilon_i$, alors l'erreur du contrôle obtenu par différences vaut $\Delta k_i=2(\epsilon_i-\epsilon_{i+1})/h_i$. Pour des erreurs indépendantes, centrées et de même variance $\sigma^2$, $\operatorname{sd}(\Delta k_i)=2\sqrt2\,\sigma/h_i$ et deux erreurs voisines ont une covariance $-4\sigma^2/(h_i h_{i+1})$.
+
+À titre synthétique, pour $L=1$ m, des couches égales et $\sigma=0{,}01$ en échelle logarithmique, cet écart-type vaut environ 0,113 m⁻¹ pour 4 couches et 0,566 m⁻¹ pour 20 couches. Il ne s'agit ni d'incertitudes mesurées sur la figure 4.3, ni d'une analyse du modèle visqueux. Le résultat montre le compromis : multiplier les couches accroît la liberté du contrôle, mais la reconstruction directe par différenciation amplifie le bruit si sa variance aux points ne diminue pas.
+
+**Conventions à fixer avant reproduction.** Le texte écrit l'espace admissible $\mathbb R^m$, alors que la p. 70 borne les valeurs physiquement pertinentes à $0\le k\le6$ m⁻¹. $\mathbb R^m$ peut être lu comme espace ambiant et $[0,6]^m$ comme sous-ensemble physique, mais l'optimisation réellement contrainte n'est pas explicitée par ces lignes : une valeur négative serait autorisée par le premier ensemble et interdite par le second. De plus, (4.20) somme les indicatrices $[r_k,r_{k+1}[$ pour $k=1,\ldots,m$ après avoir appelé $[r_0,r_1]$ le domaine entier. Il faut préciser si ces indices désignent deux systèmes de noms différents : utilisés littéralement comme une seule liste ordonnée, ils ne couvrent pas le domaine annoncé. Le dernier intervalle ouvert à droite ne définit pas non plus le coefficient à son extrémité ; ce point seul est sans effet sur une formulation intégrale à égalité presque partout, mais une discrétisation nodale doit fixer sa convention. Ces ambiguïtés documentaires sont suivies sous [DRX-ERR-051](../../46-registre-erreurs-incoherences-documentaires.md) et [DRX-ERR-052](../../46-registre-erreurs-incoherences-documentaires.md), sans présumer le code historique.
+
 ### Cible exponentielle : condition exacte avec viscosité
 
 Les équations (4.8), (4.17)–(4.19), pp. 66–70 (PDF 75–79), ont été contrôlées visuellement. Pour isoler le rôle de la viscosité, considérons une **reconstruction stationnaire** avec $u_l>0$, $L=r_1-r_0>0$, $0<\beta<1$, $\nu\ge0$ constant et un contrôle spatial $k(r)=C_Da_{LAD}$. Posons $q=-\log(\beta)/L>0$ et imposons le profil cible $u(r)=u_l e^{-q(r-r_0)}$. La substitution dans les équations d'état et de traînée donne, pour tout point où $u>0$,
@@ -103,6 +126,22 @@ $$
 Après (4.10)–(4.12), p. 67 (PDF 76), la thèse affirme qu'un contrôle $F_{\rm tar}$ fournit un minimum global nul, alors que l'espace admissible est encore à déterminer. Cette affirmation est vraie **si** un tel contrôle admissible existe et produit effectivement la cible dans la norme choisie. Ces deux propriétés ne découlent pas de la seule définition $J(F)=\lVert u_F-u_{\rm tar}\rVert$ ; la reconstruction visqueuse bornée ci-dessus illustre une cible exacte inaccessible **dans le sous-problème stationnaire choisi**, sans réfuter les autres formulations possibles.
 
 Il faut également distinguer l'existence d'un minimum et la valeur de l'infimum : même un infimum nul peut ne pas être atteint si l'ensemble admissible n'est pas fermé ou si l'application contrôle–état manque des propriétés nécessaires. Ce constat ne dit pas que le problème historique est insoluble ; il indique les hypothèses de réalisabilité, de compacité ou de fermeture, de continuité et de conditions aux limites à établir avant de conclure. Voir [DRX-ERR-050](../../46-registre-erreurs-incoherences-documentaires.md).
+
+### Extension de la traînée et portée des figures
+
+La p. 75 (PDF 84), contrôlée visuellement, propose une famille plus souple pour le terme source de (4.8) :
+
+$$
+F_u=-\frac12u\left(a_0+a_1|u|+a_2|u|^2\right).
+$$
+
+Sous $[u]=\mathrm{m\,s^{-1}}$ et $[F_u]=\mathrm{m\,s^{-2}}$, les unités nécessaires sont $[a_0]=\mathrm{s^{-1}}$, $[a_1]=\mathrm{m^{-1}}$ et $[a_2]=\mathrm{s\,m^{-2}}$. Le cas $a_0=a_2=0$ et $a_1=C_Da_{LAD}$ redonne la traînée de (4.19). La thèse autorise des coefficients dépendant de la position et du temps dans (4.25), puis présente en figure 4.7 un exemple avec trois coefficients constants.
+
+La seule forme polynomiale ne garantit pas que $F_u$ soit toujours une traînée : l'effet sur l'énergie cinétique spécifique est $uF_u=-u^2P(|u|)/2$, où $P(v)=a_0+a_1v+a_2v^2$. Il est dissipatif lorsque $P(v)\ge0$ sur les vitesses étudiées. Par exemple, les choix **synthétiques** $a_0=1$ s⁻¹, $a_1=-3$ m⁻¹, $a_2=1$ s·m⁻² et $u=1$ m/s donnent $P(1)=-1$ s⁻¹ et $F_u=0{,}5$ m/s² : le terme accélère alors l'écoulement. Imposer chaque coefficient non négatif suffirait à garantir $P(v)\ge0$ pour $v\ge0$, mais n'est pas nécessaire ; les contraintes réellement employées ne sont pas établies ici. La conclusion de la thèse, p. 77 (PDF 86), indique elle-même que les termes additionnels augmentent la liberté d'ajustement sans disposer encore d'une interprétation physique suffisante.
+
+Pour identifier **trois coefficients constants** à partir de valeurs de force supposées connues, il faut aussi disposer d'informations suffisantes sur différentes vitesses : pour $u\ne0$, $-2F_u/u=a_0+a_1|u|+a_2|u|^2$. Trois vitesses absolues distinctes détermineraient algébriquement les trois coefficients dans le cas idéal sans bruit ; des vitesses trop proches rendent cette identification sensible aux erreurs. À $u=0$, le terme source est nul pour tous les coefficients et cette division n'est pas définie. Dans l'expérience inverse de la thèse, $F_u$ n'est pas supposé mesuré directement : il faut donc en outre identifier les dérivées, la viscosité et les conditions du problème d'état avant d'appliquer cet argument.
+
+Les figures 4.6–4.8 montrent des comparaisons de profils et d'objectifs pour des cibles idéalisées ; la légende de 4.8 indique des poids tous égaux à 1. Elles illustrent les effets des formulations et des degrés de liberté, mais ne démontrent ni une validation indépendante sur une parcelle, ni l'identifiabilité physique des trois coefficients. Les valeurs complètes, le solveur, les frontières et un protocole d'évaluation restent nécessaires pour les reproduire.
 
 ### Ce que mesure l'optimisation multicritère
 
