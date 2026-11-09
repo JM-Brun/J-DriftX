@@ -130,6 +130,8 @@ $$
 
 La masse du volume n'est constante que si le bilan net sources, puits et frontière s'annule. Pour un volume au-dessus de $H$, la contribution du plan inférieur fait partie de cette frontière ; elle ne disparaît pas du seul fait que l'on a défini l'intégrale verticale de (7.12). Dans un tube de courant stationnaire sans source ni puits, si le flux total à travers les parois latérales est nul, le théorème de divergence relie les flux à ses deux sections. Cette proposition conditionnelle ne démontre pas que les iso-temps historiques sont ces sections ni que leurs parois satisfont cette condition, notamment en présence de diffusion.
 
+**Contrôle du flux latéral.** Un [exemple analytique stationnaire](audits/these-flux-sections-diffusion.md) vérifie le bilan local et l'équation transverse de type (B.46), tout en donnant des flux de section différents : leur écart est exactement le flux diffusif sortant. Le vent est tangent aux parois, ce qui ne suffit donc pas à annuler le flux total. L'exemple utilise une section finie et ne réfute pas le bilan imprimé sur la section infinie de (B.55).
+
 **Contrôle analytique en vent uniforme.** La thèse donne en (7.15) une forme axiale exponentielle et une forme radiale exponentielle. Pour tester une reconstruction particulière, prenons ces formes comme des égalités avec $C_0>0$, $a>0$, $b(x)>0$, $U>0$ et $r=\sqrt{y^2+z^2}$ :
 
 $$

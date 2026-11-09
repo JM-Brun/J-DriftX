@@ -99,6 +99,8 @@ Consequently, equality of the two integrated fluxes follows only when the right-
 
 Even if \(\Phi\) is constant in \(\tau\), identifying its value with the total emitted amount \(Q\) additionally requires a compatible source boundary/control-volume balance, consistent units and normalization, and treatment of all losses and boundaries.
 
+The [finite-section diffusion example](audits/these-flux-sections-diffusion.md) makes the lateral term explicit: even a steady incompressible uniform flow tangent to the sides can have a nonzero *diffusive* lateral flux and unequal section fluxes. It also distinguishes this finite-section balance from the infinite-section assumption in thesis equation (B.55).
+
 ## 5. Why the historical construction is not yet covered
 
 The above derivation assumes a single regular, locally invertible coordinate map \(\chi\). It does not apply automatically to a pairwise projected cost built by projecting a target onto a characteristic through a source. Such a construction need not define a global travel-time coordinate:
