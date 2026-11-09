@@ -33,7 +33,7 @@ Toutes les parties ci-dessous ont un premier repérage ; « à reprendre » sign
 | Partie | Prochain contrôle ciblé | Tâche |
 |---|---|---|
 | 1 — Transport et dispersion | Réconcilier bilan du scalaire, fermeture et hypothèses du panache mince ; distinguer masse et débit de section. | TH-01, TH-02 |
-| 2 — Météorologie | Richardson de gradient distingué du nombre de flux dans l'[audit](these-richardson-conventions.md) ; poursuivre le contrôle des profils, de leurs dimensions et domaines. | TH-01 |
+| 2 — Météorologie | Richardson de gradient distingué du flux ; [profil logarithmique](these-profil-vent-neutre.md), repère et identifiabilité contrôlés. Poursuivre les autres échelles et conditions de stabilité. | TH-01 |
 | 3 — Couvert | Reprendre les moyennes et termes d'interface ainsi que la fermeture après (3.21)–(3.23). | TH-01, TH-06 |
 | 4 — Canopée et inverse | Confronter modèle, couches, bornes, cibles et extension polynomiale aux éléments effectivement utilisés si retrouvés. | TH-01, TH-04, TH-07 |
 | 5 — Jet et source | Vérifier les conventions de similitude et le raccordement, puis relier le calcul de source aux observations du plan. | TH-01, TH-03, TH-08 |
