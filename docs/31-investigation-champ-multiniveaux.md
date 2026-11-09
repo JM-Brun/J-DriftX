@@ -110,13 +110,15 @@ Lecture la plus cohérente avec l'identité de flux (section 1.4) et avec la phr
 
 ### 2.4 Champ total : discontinu aux frontières de niveaux
 
-Sous quelque lecture que ce soit, [S2] définit Ũ par fonctions caractéristiques : le correctif ũ_i s'annule **brutalement** à l'extérieur de ω_i. Sauf coïncidence particulière, Ũ est discontinu à travers ∂ω_i, et la divergence au sens des distributions comprend un terme de saut :
+Sous quelque lecture que ce soit, [S2] définit Ũ par fonctions caractéristiques : le correctif ũ_i s'annule **brutalement** à l'extérieur de ω_i. Sauf coïncidence particulière, Ũ est discontinu à travers ∂ω_i, et la divergence au sens des distributions comprend un terme de saut. Avec $n$ normale **sortante** de $\omega_i$ et un champ suffisamment régulier jusqu'au bord :
 
 $$
-\nabla\cdot(\chi_{\omega_i}\, \tilde u_i) = \chi_{\omega_i}\, \nabla\cdot\tilde u_i + (\tilde u_i \cdot n)\, \delta_{\partial\omega_i}.
+\nabla\cdot(\chi_{\omega_i}\, \tilde u_i) = \chi_{\omega_i}\, \nabla\cdot\tilde u_i - (\tilde u_i \cdot n)\, \delta_{\partial\omega_i}.
 $$
 
-La compatibilité garantie par la construction est donc un **bilan de flux nul par frontière de niveau** (version intégrée), pas une divergence ponctuelle du champ total. Toute formulation ultérieure (« divergence nulle comprise entre niveaux ») doit être lue en ce sens intégré ; l'affirmer ponctuellement à travers ∂ω_i serait inexact.
+Le signe vient de $\nabla\chi_{\omega_i}=-n\delta_{\partial\omega_i}$ pour cette normale ; il serait opposé pour une normale entrante. Sous les hypothèses de R3, le flux **net** sur une frontière est nul, mais cela ne suffit pas à annuler le terme de saut local ni la divergence distributionnelle du champ total. La divergence n'est nulle à travers la frontière que si la composante normale de saut est nulle presque partout, ou si des contributions d'interfaces coïncidentes se compensent distributionnellement.
+
+**Contre-exemple.** Pour $\omega=(0,1)^2$ et $u=(1,0)$ dans $\omega$, la divergence intérieure est nulle et le flux total sortant vaut $-1+1=0$. Pourtant $\nabla\cdot(\chi_\omega u)$ vaut $+\delta_{x=0}-\delta_{x=1}$ sur les deux côtés verticaux (mesures restreintes à $0<y<1$) : deux contributions opposées ne s'annulent pas comme distributions parce qu'elles sont situées sur des côtés distincts. Un bilan global nul ne prouve donc pas la continuité normale locale.
 
 Conséquence pour le coût dirigé : le coût de polyligne intègre 1/|Ũ| le long du chemin ; les sauts de |Ũ| à travers les frontières de niveaux sont intégrables, sous réserve que la garde usuelle (vitesse minimale dans le coût) s'applique de part et d'autre — elle relève du coût, pas du champ.
 
@@ -134,7 +136,7 @@ La règle des quatre points, correctement écrite ∫_ω f = (aire/4) · Σ f(q_
    - divergence ponctuelle par différences finies (contrôle d'implémentation) ;
    - comportement du coût de polyligne à travers une frontière de niveau (sauts intégrables, garde de vitesse minimale) ;
    - bilan de masse de la restriction de concentration [S4] avec sa règle des quatre points (section 2.5).
-3. **Le test « divergence entre niveaux » au sens du champ total** doit être formulé en bilan de flux (section 2.4) : c'est ce que la construction garantit, et rien de plus.
+3. **Le test « divergence entre niveaux » au sens du champ total** doit distinguer flux net et saut normal local (section 2.4) : le premier, même nul, ne suffit pas à garantir le second. La propriété globale exige des conditions de raccordement ou une compensation des sauts démontrées pour la construction retenue.
 
 ## 4. Arbitrage requis avant implémentation
 

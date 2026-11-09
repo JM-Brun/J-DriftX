@@ -104,7 +104,7 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `bibliographie/rom-et-apprentissage.md` | Bibliographie thématique : modèles réduits et apprentissage |
 | `bibliographie/sig-exposition-applications.md` | Bibliographie thématique : SIG, exposition et applications |
 | `bibliographie/spray-drift-et-modeles-operationnels.md` | Bibliographie thématique : dérive de pulvérisation et modèles opérationnels |
-| `bibliographie/sources/these-brun.md` | Fiche source : thèse de J.-M. Brun (année/titre à confirmer sur la page de titre) |
+| `bibliographie/sources/these-brun.md` | Fiche source : page de titre vérifiée, carte de lecture et analyse ciblée des essais de source locale |
 | `bibliographie/sources/mohammadi-brun-2006-cr-mecanique.md` | Fiche source : Mohammadi & Brun (2006), C. R. Mécanique |
 | `bibliographie/sources/mohammadi-brun-pironneau-2006.md` | Fiche de traçabilité d'une référence non retrouvée |
 | `bibliographie/sources/brun-mohammadi-2008-chapitre.md` | Fiche source : chapitre Springer 2008 |

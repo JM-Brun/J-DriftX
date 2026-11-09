@@ -12,7 +12,7 @@ Cette page organise les sources historiques par rôle scientifique : fondements 
 
 **Brun, J.-M., *Modèles à complexité réduite de transport pour applications environnementales*, titre provisoire associé à la notice HAL/INRAE [tel-02589999](https://hal.inrae.fr/tel-02589999/document).**
 
-Le PDF a été obtenu par une voie appropriée et est déjà versionné sous `raw/`; sa provenance est documentée dans le sidecar associé. **Ne pas relancer l'acquisition.** Des passages ciblés, notamment les équations (7.12)–(7.13), p. 129, sont analysés dans [l'audit de thèse](https://github.com/JM-Brun/J-DriftX/blob/main/docs/43-audit-these-brun-conservation-g0s.md). Cela ne signifie pas que la thèse entière a été relue. Les références divergent sur le titre exact et l'année (2006/2007) ; la page de titre et l'identité binaire du fichier versionné avec le PDF HAL restent à vérifier à partir des éléments de provenance existants.
+Le PDF est versionné sous `raw/`. Sa page de titre donne une soutenance le 21 septembre 2007 ; des passages ciblés, dont les essais de source locale, sont présentés dans la [fiche de lecture](https://github.com/JM-Brun/J-DriftX/blob/main/docs/bibliographie/sources/these-brun.md) et la conservation dans [l'audit de thèse](https://github.com/JM-Brun/J-DriftX/blob/main/docs/43-audit-these-brun-conservation-g0s.md). La lecture n'est pas intégrale ; l'identité binaire du fichier versionné avec le PDF HAL reste à établir.
 
 ## L'article de 2006 (C. R. Mécanique) — fondement mathématique, accès direct incomplet
 

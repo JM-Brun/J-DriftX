@@ -83,6 +83,8 @@ avec \(c(r,0)=c_0(r)=c_0\) et \(c(r_0,t)=c_l(t)=c_l\). Le texte interprète \(F_
 
 L'annexe C apporte une seconde réserve de reproductibilité : (C.1)–(C.4), p. imprimée 159 (PDF p. 168), présentent successivement l'équation visqueuse, une forme conservative sans terme visqueux et une forme non conservative sans ce terme ; le schéma explicite (C.9), p. 159, réintroduit \(\nu\), alors que le schéma JST (C.20), p. 160 (PDF p. 169), utilise une viscosité numérique \(\mu_j^{n,p}\) définie en (C.22), sans expliquer si elle remplace ou complète \(\nu\). Cette ambiguïté est enregistrée sous **DRX-ERR-023** dans docs/46. Ces formulations ne doivent pas être assimilées sans reconstituer précisément la branche numérique effectivement utilisée.
 
+Le contrôle du pas de temps (C.23), ainsi qu'un contre-exemple de stabilité propre au seul schéma centré (C.9), sont détaillés dans la [fiche de thèse](bibliographie/sources/these-brun.md) et dans **DRX-ERR-047**. Le diagnostic dimensionnel dépend des unités physiques supposées ; l'analyse de (C.9) ne conclut pas à la stabilité ou à l'instabilité du schéma multi-étapes (C.20).
+
 Le problème inverse cherche le terme de contrôle/puits \(F\) qui rapproche l'état \(u_F\) d'un profil cible. Les équations (4.14) et (4.16), p. imprimée 68, présentent deux critères :
 \[
 J_{LC}(F)=\sum_{i=1}^{n}\alpha^{(i)}

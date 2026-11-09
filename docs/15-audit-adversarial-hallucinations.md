@@ -7,7 +7,7 @@
 Aucune preuve suffisante n'a été trouvée pour qualifier une référence historique centrale de « fausse » au sens strict. Plusieurs entrées sont toutefois **insuffisamment vérifiées ou présentées avec un degré de certitude trop élevé**. Le risque principal observé est la transformation d'une citation secondaire, d'une soumission annoncée ou d'une hypothèse en fait bibliographique/scientifique établi.
 
 Priorités :
-1. résoudre l'identité et l'année de la thèse de Brun (2006/2007, et variantes du titre) ;
+1. conserver la trace des variantes bibliographiques de la thèse de Brun : le titre et la date de soutenance ont été vérifiés sur la [page de titre du PDF versionné](bibliographie/sources/these-brun.md), son identité binaire avec HAL reste distincte ;
 2. ne pas présenter la soumission IJNMF de 2006 comme un article publié ;
 3. vérifier la référence du chapitre Springer 2006 attribué à Mohammadi, Brun et Pironneau à partir d'un catalogue éditeur/bibliothèque ;
 4. vérifier que les résumés exécutifs de la revue systématique sont traités comme documents secondaires, jamais comme preuve primaire ;

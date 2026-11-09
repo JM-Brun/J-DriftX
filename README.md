@@ -17,7 +17,7 @@ Le projet historique est un **socle à reconstruire et à auditer, pas un carcan
 
 | Année | Référence | Support |
 |---|---|---|
-| 2007 (année bibliographique à confirmer sur le binaire) | [Modèles à complexité réduite de transport pour applications environnementales](https://hal.inrae.fr/tel-02589999/document) — J.-M. Brun | Thèse signalée par [AGRIS/INRAE](https://agris.fao.org/search/en/providers/122439/records/647471f379cbb2c2c1b2123c) ; PDF versionné dans `raw/`, obtenu par une voie appropriée déjà documentée. La vérification de l'identité binaire avec HAL et des métadonnées exactes est distincte ; ne pas relancer l'acquisition |
+| 2007 | [Modèles à complexité réduite de transport pour applications environnementales](https://hal.inrae.fr/tel-02589999/document) — J.-M. Brun | Thèse soutenue le 21 septembre 2007 selon la page de titre du PDF versionné. L'identité binaire avec le fichier HAL et les droits de redistribution restent distincts ; voir la [fiche de lecture](docs/bibliographie/sources/these-brun.md) |
 | 2006 | [Similitude généralisée et modélisation géométrique à complexité réduite](https://comptes-rendus.academie-sciences.fr/mecanique/item/10.1016/j.crme.2006.06.007.pdf) — B. Mohammadi & J.-M. Brun | *C. R. Mécanique* 334(10), 634–638 (PDF libre, Académie des sciences) |
 | — | *Reduced order modelling of dispersion* — référence citée avec Mohammadi, Brun & Pironneau (2006) | Référence secondaire attestée, mais recueil et métadonnées éditoriales non confirmés |
 | 2008 | [Reduced-Order Modelling of Dispersion](https://doi.org/10.1007/978-1-4020-8758-5_14) — J.-M. Brun & B. Mohammadi | Springer, CSM vol. 16, chap. 14, p. 245 et s. |

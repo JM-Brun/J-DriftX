@@ -17,13 +17,13 @@ Cette famille constitue le noyau historique directement lié à J-DriftX. Elle d
 - **Limites à conserver :** le papier est court ; les hypothèses sur l'écoulement et la structure du panache sont spécifiques. La pseudo-distance ne satisfait pas nécessairement les axiomes d'une distance métrique.
 - **Statut de lecture indiqué dans le dépôt :** texte intégral relu.
 
-### Brun — *Modélisation à complexité réduite de la dérive* (thèse ; année à confirmer)
+### Brun (2007) — *Modèles à complexité réduite de transport pour applications environnementales*
 
 - **Lien :** source primaire fondatrice directement liée au projet.
-- **Référence :** thèse de doctorat, Université Montpellier II. L'article primaire de Mohammadi & Brun (2006) la cite comme 2007 ; certaines bibliographies secondaires indiquent 2006. La notice HAL/INRAE `tel-02589999` est disponible et le PDF a été obtenu par une voie appropriée puis versionné dans `raw/`; la provenance est documentée dans [l'audit de thèse](../../docs/43-audit-these-brun-conservation-g0s.md) et le fichier de provenance associé. La page de titre et l'année de soutenance restent à confirmer visuellement.
+- **Référence :** thèse de doctorat, Université Montpellier II, soutenue le 21 septembre 2007 selon la page de titre du PDF versionné. L'article de 2006 la cite sous un autre titre ; voir la [fiche source](sources/these-brun.md).
 - **Idées pertinentes :** contexte du modèle multi-échelle, transport lointain et applications à la dérive ; l'audit public `docs/43` examine notamment les équations (7.12)–(7.13) et leur cohérence dimensionnelle.
 - **Conséquence :** exploiter le PDF déjà versionné et compléter l'authentification de version/provenance ; ne pas recommencer son acquisition ni inférer les passages non lus à partir des articles citants.
-- **Statut :** PDF obtenu et passages ciblés examinés ; cette fiche ne prétend pas que la thèse entière a été relue de bout en bout. L'identité binaire entre le PDF versionné et le fichier HAL, ainsi que la page de titre, restent des contrôles distincts.
+- **Statut :** PDF obtenu et passages ciblés examinés ; la thèse entière n'a pas été relue de bout en bout. L'identité binaire entre le PDF versionné et le fichier HAL reste à établir.
 
 ### Mohammadi, Brun & Pironneau (2006) — *Reduced order modelling of dispersion*
 

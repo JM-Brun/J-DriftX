@@ -8,6 +8,8 @@ Le travel-time de Drift-X est un **objet de coût orienté construit à partir d
 
 La géométrie de Randers issue de la **navigation de Zermelo** est un problème différent de la pseudo-distance historique projetée : elle découle d'un ensemble de vitesses contrôlées $v=u+s$, avec $\lVert s\rVert\leq c$, et requiert la condition sous-critique $\lVert u\rVert<c$. La formule et ses hypothèses, y compris le domaine sous-critique où elle définit une métrique de Randers régulière, ainsi que la distinction avec le front instationnaire, sont données dans [Navigation de Zermelo, fronts et Hamilton–Jacobi](navigation-fronts-controllabilite.qmd).
 
+L'annexe F de la thèse imprime également un coût de chemin $F_{\rm wind}=\lVert y\rVert^2/(u\cdot y)$ : il est singulier pour une direction transverse et négatif en amont. Il ne vérifie donc pas les conditions d'une métrique de Finsler positive et régulière sur tout l'espace tangent non nul. Une éventuelle restriction au cône aval est une construction à préciser ; elle ne rend pas ce coût identique au temps projeté du chapitre 7. Voir le [contrôle de la source](https://github.com/JM-Brun/J-DriftX/blob/main/docs/bibliographie/sources/these-brun.md).
+
 ## Place dans le raisonnement et contrat de lecture
 
 Cette page intervient **après la définition du travel-time** : elle classe les objets voisins et compare leurs axiomes, sans conclure qu'ils sont équivalents parce qu'ils partagent une intuition de coût orienté.

@@ -1,5 +1,7 @@
 # Audit de la thèse de Brun — conservation du transport lointain (G0-S)
 
+> **Mise à jour du 8 novembre 2026 :** la page de titre et la page imprimée 129 (PDF 138) ont été vérifiées visuellement dans le PDF versionné ; celui-ci compte 204 pages. La soutenance est datée du 21 septembre 2007. L'empreinte et les limites d'identité sont précisées dans la [provenance](../raw/provenance/Modèles%20à%20complexité%20réduite%20de%20transport%20pour%20applications%20environnementales%20-%20pub00023263.pdf.md) et la [fiche de lecture](bibliographie/sources/these-brun.md). Les paragraphes datés ci-dessous conservent leur contexte historique.
+
 **État au 29 octobre 2026 :** le PDF de thèse associé à HAL `tel-02589999` a déjà été obtenu par une voie appropriée, et cette provenance est documentée dans [`raw/provenance`](../raw/provenance/Modèles%20à%20complexité%20réduite%20de%20transport%20pour%20applications%20environnementales%20-%20pub00023263.pdf.md). Il ne faut pas recommencer l'acquisition. Le texte et la page imprimée 129 (équations 7.12–7.13) ont également été inspectés sur une copie miroir tierce ; la forme imprimée des deux alternatives de $c^+$ est vérifiée visuellement sur cette copie, pas seulement via OCR. Le chapitre Springer 2008 a été inspecté dans une copie tierce et imprime la même alternative avec la même définition sans dimension de $u_l^+$. **Le contrôle d'identité binaire entre le fichier HAL déjà obtenu, le PDF versionné et les copies tierces est une vérification distincte, dont le résultat doit être recherché dans les éléments de provenance existants avant de la déclarer manquante.** Le diagnostic dimensionnel est indépendant de cette identité binaire, car les deux textes consultés montrent la même formule.
 
 ## Sources et niveau de confiance
@@ -15,7 +17,7 @@ La copie miroir présente le contenu de la thèse, mais l'extraction affichée c
 
 ### 1. Définition du temps de migration
 
-Dans le chapitre 7, §7.1.3, pages imprimées 126–127, la distance orientée est définie de façon asymétrique. Si A est au vent de B, le texte définit le temps de migration par une intégrale le long de la caractéristique passant par A jusqu'à la projection B⊥, puis précise que la vitesse locale u est tangente à cette caractéristique. Le texte suppose la caractéristique unique, afin d'éviter les sources et points d'attraction du champ (équations (7.6)–(7.7), p. 127).
+Dans le chapitre 7, §7.1.3, page imprimée 128 (PDF 137), la distance orientée est définie de façon asymétrique. Si A est au vent de B, le texte définit le temps de migration par une intégrale le long de la caractéristique passant par A jusqu'à la projection B⊥, puis précise que la vitesse locale u est tangente à cette caractéristique. Le texte suppose la caractéristique unique et indique comment départager des projections multiples (équations (7.6)–(7.7), p. 128).
 
 Ces pages décrivent un temps de migration construit par trajectoire et projection. Elles ne donnent pas à elles seules une carte globale régulière et bijective (τ, η₁, η₂) ↦ (x, y, z), ni son jacobien. Elles ne justifient donc pas de transposer automatiquement une conservation volumique vers chaque surface iso-τ.
 
@@ -42,16 +44,20 @@ et indique explicitement que cette quantité totale transportée « should be co
 
 ### 3. Contrôle dimensionnel des deux branches de (7.12)
 
-Sous l'interprétation [c_loc] = M L⁻³, cette hypothèse est étayée par la thèse elle-même : au chapitre 5, §5.6.2 « Losses Calculation », pp. imprimées 101–103, les équations (5.54)–(5.55), p. 102 (PDF p. 111), donnent à la concentration liée au modèle local l'unité kg·m⁻³ et au coefficient de calibration l'unité s⁻¹. Les équations (5.61)–(5.63), p. 102, calculent les pertes par intégration volumique ; les équations (5.64)–(5.67), p. 103 (PDF p. 112), formulent le bilan alternatif par flux vertical intégré dans le temps. La section 5.6.3, p. 103, commence après ces équations et décrit l'implémentation numérique. En appliquant ces unités à c_loc dans (7.12), avec z une coordonnée de longueur et dσ une mesure surfacique :
+Sous l'interprétation [c_loc] = M L⁻³, cette hypothèse est étayée par la thèse elle-même : au chapitre 5, §5.6.2 « Losses Calculation », pp. imprimées 101–103, les équations (5.54)–(5.55), p. 102 (PDF p. 111), donnent à la concentration liée au modèle local l'unité kg·m⁻³ et au coefficient de calibration l'unité s⁻¹. Les équations (5.61)–(5.63), p. 102, calculent les pertes par intégration volumique ; les équations (5.64)–(5.67), p. 103 (PDF p. 112), formulent le bilan alternatif par flux vertical intégré dans le temps. La section 5.6.3, p. 103, commence après ces équations et décrit l'implémentation numérique.
+
+**Précision sur le couplage local.** Les équations (5.56)–(5.57) donnent directement à $c_{loc}$ l'unité kg·m⁻³. Le taux volumique normalisé et le flux traversant le plan ont les mêmes unités intégrées mais ne sont pas identiques en général : les hypothèses de leur rapprochement en (5.67) sont analysées dans la [fiche de lecture](bibliographie/sources/these-brun.md) et suivies sous DRX-ERR-042. Cela ne modifie pas le contrôle dimensionnel de (7.12).
+
+En appliquant ces unités à $c_{loc}$ dans (7.12), avec $z$ une coordonnée de longueur et $d\sigma$ une mesure surfacique :
 
 - Branche intégrée en hauteur : [∫ c_loc dz] = M L⁻², donc [M_C] = M. Elle est dimensionnellement compatible avec un inventaire de masse.
 - Branche produit : la thèse définit u⁺_loc = max(0, (u_loc·ẑ)/||u_loc||). Ce rapport est sans dimension. Ainsi [u⁺_loc c_loc] = M L⁻³, puis [M_C] = M L⁻¹ après intégration surfacique.
 
 Les deux branches de (7.12) ne sont donc pas dimensionnellement équivalentes sous ces conventions. La deuxième ne représente pas une masse totale sans facteur ou normalisation supplémentaire. La section 1.2.4 mentionne par ailleurs une concentration sans dimension dans le cadre de la formulation de Fick, mais la partie applicative locale précise explicitement kg·m⁻³ pour $c_{loc}$ ; aucune relation ne redéfinit $c_{loc}$ comme une quantité sans dimension dans le chapitre 7.
 
-### 3.1 Comparaison avec le chapitre Springer de 2008 : l'ambiguïté est antérieure à la thèse
+### 3.1 Comparaison avec le chapitre Springer de 2008 : formule présente dans les deux sources
 
-La copie consultée du chapitre 14, §2.2, p. imprimée 248, présente déjà la même formule : $c^+(x,y)=\int_{z>H}c_l\,dz$ **ou** $c^+(x,y)=u_l^+c_l$, avec $u_l^+=\max(0,(u\cdot\hat z)/\|u\|)$, puis $C=\int_{\mathbb R^2}c^+\,d\sigma$ annoncé comme quantité à conserver. La thèse reprend cette construction en équations (7.12)–(7.13), p. 129, en changeant les indices en $loc$ et en nommant la quantité $M_C$. La formule est donc **déjà présente dans le chapitre de 2008** ; elle n'est ni une erreur d'OCR propre à la thèse, ni une faute isolée que l'on peut attribuer avec preuve à la rédaction de la thèse.
+La copie consultée du chapitre 14, §2.2, p. imprimée 248, présente la même formule : $c^+(x,y)=\int_{z>H}c_l\,dz$ **ou** $c^+(x,y)=u_l^+c_l$, avec $u_l^+=\max(0,(u\cdot\hat z)/\|u\|)$, puis $C=\int_{\mathbb R^2}c^+\,d\sigma$ annoncé comme quantité à conserver. La thèse soutenue en 2007 imprime cette construction en équations (7.12)–(7.13), p. 129, avec les indices $loc$ et la quantité $M_C$. Le chapitre paraît en 2008, après la soutenance ; ces dates et la similitude des textes ne suffisent pas à établir le sens exact de filiation entre leurs versions de rédaction. La formule n'est pas une erreur d'OCR propre à la thèse.
 
 Le diagnostic le plus fort justifié par les sources est une **incohérence dimensionnelle de la spécification publiée**, répétée dans le chapitre et la thèse. Cela constitue une erreur de formulation conceptuelle au niveau du modèle tel qu'il est écrit si les deux branches sont censées être des définitions alternatives de la même quantité conservée. On ne peut toutefois pas établir si la cause historique est une coquille répétée, une variable insuffisamment définie, ou une confusion entre une concentration pondérée par une direction et une quantité intégrée : les sources consultées ne donnent ni facteur de longueur manquant, ni autre convention dimensionnelle explicite. Il faut donc corriger la reconstruction de J-DriftX en choisissant et justifiant une définition cohérente, mais **ne pas modifier silencieusement la transcription historique ni affirmer que l'intention exacte des auteurs est connue**.
 
@@ -86,7 +92,7 @@ Ces propositions sont des corrections à apporter dans une édition corrigée ou
 3. **Équation (7.13) — préciser le domaine d'intégration** : remplacer $\mathbb R^2$ par $\Omega_{xy}$ si le domaine physique/calcul est fini, et indiquer les conditions de décroissance/intégrabilité si $\mathbb R^2$ est conservé.
 4. **Remplacer la phrase « should be conserved » par une proposition conditionnelle vérifiable** : annoncer que la masse totale est conservée seulement pour un bilan fermé sans sources/puits nets, sans dépôt/pertes non comptabilisés, avec conditions aux limites compatibles et sans fuite nette par les frontières latérales/verticales. Si le modèle est censé conserver la masse malgré des sources, puits ou sorties, expliciter le terme de bilan correspondant. La conservation de $M_C$ ne découle pas de la seule définition de $c^+$.
 5. **Séparer inventaire et flux** : ne pas appeler $M_C$ « flux » ou « masse traversant le plan » sans définition supplémentaire. Si la grandeur visée est en réalité un débit massique, définir un flux physique adapté à la concentration massique, par exemple $\mathbf F=c_{loc}\mathbf u-D\nabla c_{loc}$, d'unités kg·m⁻²·s⁻¹, puis $\dot M=\int_S\mathbf F\cdot\mathbf n\,dS$ en kg/s ; la masse transférée s'obtient en intégrant ce débit dans le temps.
-6. **Ajouter une note d'errata traçable** : signaler que la formule publiée en 2008 et reprise en thèse contient deux branches dimensionnellement incompatibles sous les unités explicites ; indiquer que l'édition corrigée retient l'inventaire de masse par intégration verticale, sans prétendre établir l'intention historique.
+6. **Ajouter une note d'errata traçable** : signaler que la formule présente dans la thèse de 2007 et le chapitre de 2008 contient deux branches dimensionnellement incompatibles sous les unités explicites ; indiquer que l'édition corrigée retient l'inventaire de masse par intégration verticale, sans prétendre établir l'intention historique.
 7. **Ne pas revendiquer une preuve du modèle lointain par cette correction** : la cohérence dimensionnelle répare la définition de la grandeur, mais la conservation effective doit encore être démontrée à partir des équations d'évolution, du domaine, des sources/puits et des conditions aux limites.
 
 **Pourquoi ce choix minimise l'impact :** il conserve l'intégrale verticale déjà imprimée, l'intégration horizontale déjà imprimée et le symbole de masse $M_C$ ; il retire seulement l'alternative non équivalente et précise les hypothèses de conservation. La correction est donc locale à la définition et à la portée de l'affirmation. Elle reste une recommandation pour une édition corrigée, pas une affirmation sur l'intention des auteurs ni une preuve que le modèle historique satisfait le bilan.
@@ -97,14 +103,14 @@ Ces propositions sont des corrections à apporter dans une édition corrigée ou
 |---|---|
 | Le modèle lointain introduit c⁺ par deux expressions alternatives | Explicitement imprimé, Eq. (7.12), p. 129 |
 | Le modèle vise à conserver M_C = ∫ c⁺ dσ | Explicitement affirmé, Eq. (7.13), p. 129 |
-| Les deux expressions de c⁺ sont équivalentes dimensionnellement | Non, sous les unités conventionnelles ci-dessus ; la même incohérence est imprimée dans le chapitre 2008 et reprise par la thèse |
+| Les deux expressions de c⁺ sont équivalentes dimensionnellement | Non, sous les unités conventionnelles ci-dessus ; la même incohérence est imprimée dans la thèse de 2007 et le chapitre de 2008 |
 | Une masse globale est conservée sur chaque surface iso-temps de transport | Non démontré dans ce passage |
 | Le modèle historique définit une transformation globale régulière avec jacobien calculable | Non établi par les passages consultés |
 | L'affirmation de conservation est prouvée pour le modèle réduit général | Non : « should be conserved » est un objectif/propriété attendue, sans preuve dans ce passage |
 
 ## Conséquence pour l'audit G0-S
 
-Le contrôle croisé de la thèse et du chapitre 2008 clôt l'ambiguïté sur l'origine de l'écart : la formule problématique est imprimée dans les deux sources, avec la même définition sans dimension de $u^+$. Le verdict est donc **incohérence dimensionnelle publiée et reproduite dans la thèse**, pas artefact OCR. L'intention corrective exacte reste non déterminable à partir de ces sources. Cela ne clôt pas l'issue #123, car le bilan de conservation du modèle lointain reste à démontrer. Conserver trois objets distincts :
+Le contrôle croisé de la thèse et du chapitre 2008 établit que la formule problématique est imprimée dans les deux sources, avec la même définition sans dimension de $u^+$ ; il ne démontre pas la filiation de leurs rédactions. Le verdict est une **incohérence dimensionnelle présente dans les deux sources**, pas un artefact OCR. L'intention corrective exacte reste non déterminable à partir de ces sources. Cela ne clôt pas l'issue #123, car le bilan de conservation du modèle lointain reste à démontrer. Conserver trois objets distincts :
 
 1. **Inventaire global de masse** du scalaire dans un volume ;
 2. **Quantité d'entrée M_C** du modèle réduit, construite à partir de c⁺ sur le plan horizontal ;
@@ -114,11 +120,12 @@ Le théorème conditionnel dans [la note de conservation](32-conservation-coordo
 
 ## Contrôles restant à effectuer sur le binaire versionné
 
-- [ ] Ouvrir le PDF poussé dans la PR et confirmer visuellement la page de titre.
-- [ ] Confirmer le nombre de pages, les numéros de pages imprimées et la présence des pages 126–129.
+- [x] Confirmer visuellement la page de titre du PDF versionné.
+- [x] Vérifier les pages imprimées 126–129 sur le PDF versionné : pages PDF 135–138 ; le fichier compte 204 pages PDF.
 - [ ] Consulter d'abord les éléments de provenance déjà archivés pour savoir si la comparaison du binaire versionné avec le fichier HAL déjà obtenu a été réalisée. Si elle ne l'a pas été, comparer les SHA-256 et, en cas de différence, les pages/texte. Ne pas relancer l'acquisition du PDF.
 - [ ] Vérifier les droits de redistribution du binaire présent dans Git.
 - [x] Vérifier visuellement sur la copie miroir la page imprimée 129 et les équations (7.12)–(7.13) ; comparer la forme de (7.12) au chapitre 2008 p. 248. Résultat : formule identique et incohérence dimensionnelle présente dans les deux sources. Cette vérification ne certifie pas l'identité du PDF versionné avec HAL.
+- [x] Vérifier visuellement les équations (7.12)–(7.13) sur le PDF versionné, p. 138.
 - [ ] Poursuivre la recherche d'une définition explicite de la transformation de coordonnées et d'une preuve de conservation dans la thèse, sans présumer qu'elle existe.
 
 ## Références

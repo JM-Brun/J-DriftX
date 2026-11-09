@@ -54,5 +54,6 @@ Garde : `tests/test_stabilite.py` épingle les coefficients exacts par classe (�
 
 - Les lois documentées sont celles du **site rural** ; aucune variante urbaine n'est fournie.
 - Les conditions typiques sont indicatives (classification d'origine) ; le choix opérationnel de la classe reste une décision de modélisation (paramètre de segment, hypothèse H5).
+- Une classe D par défaut ne constitue pas une borne supérieure universelle des concentrations : dans un [exemple explicite D/F](bibliographie/sources/these-brun.md), le classement s'inverse entre deux récepteurs. Définir la grandeur, les scénarios et le domaine avant de qualifier un choix de conservatif.
 - L'objet ne porte **aucune physique supplémentaire** : pas de dépendance en la rugosité, l'heure ou la saison.
 - Références citées en prose (Pasquill 1961 ; Briggs 1973), sans entrée bibliographique ajoutée, conformément à la discipline anti-hallucination de docs/15.

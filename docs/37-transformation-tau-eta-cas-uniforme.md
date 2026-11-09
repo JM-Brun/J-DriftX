@@ -77,7 +77,7 @@ $$
 \frac{d\Phi}{dx}=\int_{\mathbb R^2}s\;dy\,dz\;\le 0 .
 $$
 
-With deposition, the cross-sectional flux strictly decreases downstream. This formalizes the conflict recorded in docs/32, section 7, point 3: the 2006 global conservation constraint coexists, in the same article, with a deposition sink calibrated on the uniform case, and the two cannot both hold as exact physical statements. The flux equality is an idealization of the lossless steady case, not a general property.
+With a non-positive sink, the cross-sectional flux is non-increasing downstream; it strictly decreases between two sections only when the integrated sink over the intervening volume is strictly negative. This formalizes the conflict recorded in docs/32, section 7, point 3: the 2006 global conservation constraint coexists, in the same article, with a deposition sink calibrated on the uniform case, and the two cannot both hold as exact physical statements. The flux equality is an idealization of the lossless steady case, not a general property.
 
 ## 6. The identity "flux = emitted quantity" is a separate statement
 
@@ -92,7 +92,7 @@ Under (H1)–(H4) plus these three conditions, the precise statement is: **for a
 ## 7. What this note covers — and what it does not
 
 - **Covered (demonstrated):** the explicit chart, its Jacobian, the exact transport relation, the conditional cross-sectional flux theorem, the sink breakdown, and the precise lossless-steady form of the "flux = emission" identity, for the uniform reference field.
-- **Not covered:** the historical projected cost in variable fields. The shear counterexample (PR #213) shows that the projected cost satisfies $\vec u\cdot\nabla\tau=1$ only in the uniform case; in general it defines no global regular chart, so the hypotheses of section 4 fail there. No Jacobian is derived for the historical variable-field construction, and none should be until the sources define the transformation and the conserved quantity unambiguously.
+- **Not covered:** the historical projected cost in variable fields. The shear counterexample (PR #213) shows that the projected cost does not satisfy $\vec u\cdot\nabla\tau=1$ for every variable field; it does not prove that uniformity is necessary. A global regular chart is not established in general, so the hypotheses of section 4 cannot automatically be assumed. No Jacobian is derived for the historical variable-field construction, and none should be until the sources define the transformation and the conserved quantity unambiguously.
 - **Historical claims, kept as printed:** the three audited sources state three different conservation objects (2006: global volume integral; 2008: $C=\int c^+\,d\sigma$ with two printed, dimensionally inequivalent alternatives; 2009: $K$, $C_g$, $C_a$ with printed element mismatches). None is silently reconciled here; see docs/32, sections 6 and 7.
 
 ## 8. Status table
