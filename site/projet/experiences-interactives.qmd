@@ -5,6 +5,8 @@ execute:
   echo: false
 ---
 
+# Explorateur de champs de vent 2D
+
 La formulation correcte est volontairement plus étroite que « simuler le vent » : J-DriftX sait aujourd'hui évaluer et visualiser des champs vectoriels 2D **synthétiques**. Cette page rend ces objets lisibles ; elle ne produit ni prévision météorologique, ni champ corrigé par le relief.
 
 ::: {.callout-warning}

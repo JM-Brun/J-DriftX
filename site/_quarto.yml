@@ -26,7 +26,7 @@ website:
       - href: etat-art/panorama.qmd
         text: "État de l'art"
       - href: glossaire.qmd
-        text: "Ressources"
+        text: "Glossaire"
     tools:
       - icon: github
         url: "https://github.com/JM-Brun/J-DriftX"
@@ -47,12 +47,12 @@ website:
 
       - section: "Le projet"
         contents:
+          - href: projet/heritage.qmd
+            text: "Héritage Drift-X (2006–2009)"
           - href: projet/objectifs.qmd
             text: "Question de recherche & objectifs"
           - href: projet/utilite-scientifique.qmd
             text: "Valeur scientifique à démontrer"
-          - href: projet/heritage.qmd
-            text: "Héritage Drift-X (2006–2009)"
 
       - section: "Comprendre & explorer"
         contents:

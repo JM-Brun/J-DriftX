@@ -2,6 +2,8 @@
 title: "Carte des connaissances"
 ---
 
+# Le graphe des connaissances traçables
+
 Cette page ne décrète rien : elle montre les liens. Concepts, hypothèses, niveaux de modélisation, modules, tests, références et jeux de données y apparaissent comme les nœuds typés d'un graphe, reliés par des arêtes elles-mêmes typées (« s'applique à », « implémenté par », « teste »...).
 
 Le graphe n'est pas dessiné à la main. Il est généré depuis un registre typé (`site/data/graphe-connaissances.toml`) par `uv run python -m jdriftx.graphe_connaissances`, et la CI vérifie sa cohérence avec le dépôt : chaque nœud apparaît dans au moins une vue, chaque arête est rendue, chaque lien pointe vers un fichier réel, chaque clé de `references.bib` et chaque module de `src/jdriftx` a son nœud. Un graphe joli mais faux casserait donc les tests, pas la confiance.
