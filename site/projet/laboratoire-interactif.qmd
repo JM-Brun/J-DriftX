@@ -1,9 +1,18 @@
 ---
 title: "Catalogue du laboratoire numérique"
+subtitle: "Catalogue des expériences et de leur portée réelle"
+date: 2026-11-11
+status: "Outils de vérification ; ne remplacent ni validation scientifique ni tests."
 lang: fr
 ---
 
 # Catalogue du laboratoire numérique
+
+::: {.callout-note title="En bref"}
+Point d'entrée des expériences et outils de vérification : ce qui existe, comment le lancer, et ce que chaque expérience permet réellement de conclure. Inclut les applications Python locales et leurs références analytiques.
+
+**Vous êtes ici :** Comprendre & explorer.
+:::
 
 Cette page est le **point d'entrée** des expériences et outils de vérification de J-DriftX. Elle décrit ce qui existe, comment le lancer et ce que chaque expérience permet réellement de conclure. Elle ne remplace ni la validation scientifique ni l'exécution des tests.
 
@@ -82,3 +91,11 @@ Les tests vérifient des propriétés ciblées sous les hypothèses codées. Ils
 - Aucune des expériences synthétiques ne valide à elle seule une prédiction atmosphérique.
 
 Pour les hypothèses, les baselines et les preuves à fournir avant toute revendication de performance, consulter la [validation scientifique](validation-scientifique.qmd) et le [catalogue des données candidates](catalogue-donnees.qmd).
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Ce que la validation exigera | [Validation scientifique](validation-scientifique.qmd) |
+| Données candidates | [Catalogue des données](catalogue-donnees.qmd) |
+| Explorer les champs de vent | [Expériences interactives](experiences-interactives.qmd) |

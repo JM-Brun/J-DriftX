@@ -1,8 +1,17 @@
 ---
 title: "J-DriftX — dispersion atmosphérique à complexité réduite"
+subtitle: "Modéliser la dispersion atmosphérique autrement, et vérifier si cela apporte réellement quelque chose"
+date: 2026-11-11
+status: "Hypothèse de recherche ; validité en vent non uniforme, coût total et intérêt applicatif non établis."
 ---
 
 # J-DriftX
+
+::: {.callout-note title="En bref"}
+J-DriftX reprend le projet historique Drift-X (2006–2009) et étudie si des solutions de similitude généralisées, dirigées par des temps de transport, peuvent réduire le coût de certaines évaluations de dispersion. Rien de ceci n'est encore établi : le site documente une hypothèse de recherche, ses preuves et ses limites. Quatre portes d'entrée selon votre question ; trois cartes pour ne pas confondre les niveaux.
+
+**Vous êtes ici :** Accueil.
+:::
 
 **Modéliser la dispersion atmosphérique autrement — et vérifier si cela apporte réellement quelque chose.**
 

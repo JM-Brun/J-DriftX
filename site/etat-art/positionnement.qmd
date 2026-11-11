@@ -1,8 +1,17 @@
 ---
 title: "Positionnement de J-DriftX"
+subtitle: "Hypothèses différenciantes, à tester"
+date: 2026-11-11
+status: "Hypothèse de recherche ; pas une revendication de supériorité."
 ---
 
 # Positionnement de J-DriftX en 2026
+
+::: {.callout-note title="En bref"}
+Le positionnement de J-DriftX en 2026 formulé comme hypothèse de recherche : hypothèses différenciantes, références comparatives et conditions de poursuite. Les quatre hypothèses sont à tester, pas à présumer.
+
+**Vous êtes ici :** Comparer & approfondir ▸ État de l'art.
+:::
 
 ## Hypothèse de recherche, pas revendication de supériorité
 
@@ -54,3 +63,12 @@ La comparaison détaillée et les enseignements documentaires sont présentés d
 Voir l'[audit adversarial](https://github.com/JM-Brun/J-DriftX/blob/main/docs/15-audit-adversarial-hallucinations.md), l'[état des jalons](../projet/carte-articulation.qmd), le [cadre de décision et de preuve](https://github.com/JM-Brun/J-DriftX/blob/main/docs/08-decision-utilite-et-preuve.md) dans le dépôt.
 
 **Statut des preuves.** Les hypothèses différenciantes restent des questions à tester, et non des résultats acquis. Voir la [matrice MVP-S de traçabilité](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) pour le périmètre actuel des définitions, de l'implémentation et des tests.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Panorama des méthodes | [Panorama de l'état de l'art](panorama.qmd) |
+| Utilité à démontrer | [Utilité scientifique](../projet/utilite-scientifique.qmd) |
+| Protocole de validation | [Validation scientifique](../projet/validation-scientifique.qmd) |
+| Comparaison des coûts | [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |

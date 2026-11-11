@@ -1,8 +1,17 @@
 ---
 title: "Niveaux de modélisation"
+subtitle: "La chaîne N0–N6 : objets, entrées, sorties"
+date: 2026-11-11
+status: "Cible conceptuelle ; la chaîne n'est pas implémentée ni validée de bout en bout."
 ---
 
 # Les niveaux de modélisation de J-DriftX
+
+::: {.callout-note title="En bref"}
+Carte des objets physiques, mathématiques et numériques du projet, conçue pour qu'une hypothèse formulée à un niveau ne soit pas prise pour un résultat établi à un autre. La chaîne N0–N6 décrit la cible conceptuelle ; le README et la correspondance théorie↔code décrivent l'état effectif.
+
+**Vous êtes ici :** Comprendre & explorer.
+:::
 
 Cette page est la carte des objets physiques, mathématiques et numériques du projet. Son objectif est d'éviter qu'une hypothèse formulée à un niveau soit prise pour un résultat établi à un autre niveau.
 
@@ -132,7 +141,7 @@ Il faut distinguer au minimum quatre niveaux de preuve :
 
 Une CI verte est un signal sur le code et les documents testés ; elle n'établit pas les niveaux 3 ou 4. Voir [Qualité & tests](qualite.qmd), les [hypothèses](../hypotheses/catalogue.qmd) et la [carte d'articulation scientifique](carte-articulation.qmd).
 
-## Pages de référence
+## Pour aller plus loin
 
 - [Modèle direct](../theorie/modele-direct.qmd) — équation de transport et fermeture.
 - [Solutions de similitude](../theorie/similitude.qmd) — hypothèses qui produisent les profils de concentration.

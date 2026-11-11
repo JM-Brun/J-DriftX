@@ -1,8 +1,17 @@
 ---
 title: "Contraintes physiques : statut des preuves"
+subtitle: "Ce que chaque test établit, et ce qu'il n'établit pas"
+date: 2026-11-11
+status: "Tests ciblés (niveau 2) ; aucune propriété démontrée (niveau 3) généralisée à partir d'eux."
 ---
 
 # Contraintes physiques : ce qui est testé et ce qui reste à démontrer
+
+::: {.callout-note title="En bref"}
+Trois niveaux à ne pas confondre : propriété formulée dans une publication, test numérique ciblé, propriété démontrée. La CI verte ne fait pas passer du niveau 2 au niveau 3. État des tests du dépôt, propriété par propriété : conservation, positivité, linéarité, divergence nulle, non-symétrie, adjoint.
+
+**Vous êtes ici :** Construire la théorie ▸ Contraintes et modèles de référence.
+:::
 
 Les publications historiques de Drift-X décrivent des propriétés physiques souhaitées pour la réduction de modèle. Il faut distinguer trois niveaux :
 
@@ -115,3 +124,11 @@ De même, interprétabilité et auditabilité peuvent être des avantages recher
 6. L’adjoint de la référence uniforme et du cas 1D est testé (gradients exacts par différences finies) ; l’état adjoint du champ multi-niveaux historique reste à définir avec le champ lui-même.
 
 Les tests manquants et l'avancement de chaque propriété sont suivis dans l'issue [#42](https://github.com/JM-Brun/J-DriftX/issues/42).
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Hypothèses correspondantes | [Catalogue des hypothèses](../hypotheses/catalogue.qmd) |
+| Registre propriété → test | [Registre de traçabilité](../projet/registre-preuves.qmd) |
+| Protocole S0–S3 | [Validation scientifique](../projet/validation-scientifique.qmd) |

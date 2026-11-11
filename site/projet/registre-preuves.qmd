@@ -1,8 +1,17 @@
 ---
 title: "Registre de traçabilité des preuves"
+subtitle: "Ce que les tests permettent — et ne permettent pas — de conclure"
+date: 2026-11-11
+status: "Revue documentaire manuelle ; « testé par » ne vaut ni démonstration analytique ni validation physique."
 ---
 
 # Objet et statut
+
+::: {.callout-note title="En bref"}
+Registre ciblé des relations propriété → tests, complément du graphe des connaissances (liens typés) : le graphe exprime les liens, le registre qualifie ce qu'ils prouvent. Règle de lecture : un test exerce une propriété dans des conditions indiquées, c'est tout.
+
+**Vous êtes ici :** Vérifier & évaluer.
+:::
 
 Cette page documente un premier lot ciblé de relations du graphe entre propriétés et tests. Elle complète la [carte des connaissances](carte-connaissances.qmd) : le graphe exprime les liens typés, tandis que ce registre précise ce que les tests permettent — et ne permettent pas — de conclure.
 
@@ -68,3 +77,11 @@ Aucune relation ne doit être considérée comme justifiée uniquement parce que
 | Jauge de Randers | `ModeleGZ1.jauge_randers` | Calcul local limité à R'(t)>\|\|u\|\| ; identité de Zermelo testée.<br><span class="badge-status badge-teste">Code testé</span> | Aucune extrapolation au régime critique/supercritique ; le seuil instantané n'est pas une limite de portée cumulée.<br><span class="badge-status badge-limite">Régime borné</span> |
 
 **Statut distinct à conserver :** (1) formule démontrée dans la page théorique et la note 59 ; (2) fonction implémentée dans `src/jdriftx/experiences/zermelo_gaussien.py` ; (3) cohérence exercée par les tests. Aucun de ces statuts ne vaut validation physique.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Le graphe typé (liens) | [Carte des connaissances](carte-connaissances.qmd) |
+| Propriétés et leurs tests | [Contraintes physiques](../theorie/contraintes-physiques.qmd) |
+| Conventions de qualification | [Validation scientifique](validation-scientifique.qmd) |

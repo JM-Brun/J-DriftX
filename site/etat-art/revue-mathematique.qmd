@@ -1,8 +1,17 @@
 ---
 title: "Revue mathématique ciblée"
+subtitle: "La pseudo-distance de Drift-X comparée à ses objets voisins"
+date: 2026-11-11
+status: "Revue ciblée ; pas de conclusion d'originalité."
 ---
 
 # Temps de parcours : clarifier l'objet avant de revendiquer une contribution
+
+::: {.callout-note title="En bref"}
+Comparaison de la définition de la pseudo-distance avec les objets mathématiques voisins : trois objets à ne pas confondre, définition idéale vs algorithme approché, contre-exemple à l'inégalité triangulaire, écart avec le code actuel. Faits rapportés, déductions et questions ouvertes séparés.
+
+**Vous êtes ici :** Comparer & approfondir ▸ État de l'art.
+:::
 
 Cette revue ciblée compare la définition de la pseudo-distance de Drift-X aux objets mathématiques voisins. Elle n'est pas exhaustive et ne conclut pas sur l'originalité. Elle sépare les faits rapportés par les sources, les déductions analytiques et les questions encore ouvertes.
 
@@ -107,3 +116,11 @@ La revendication de conservation du flux sur les surfaces iso-$\tau$ exige une d
 La revue montre que le dépôt doit clarifier l'objet mathématique avant d'implémenter un solveur ou de revendiquer une nouveauté. Elle ne prouve pas que l'approche historique est redondante. La définition de pseudo-distance de l'article de 2006 et l'approximation numérique décrite en 2008 ont été vérifiées. La thèse de Brun reste à examiner; la conservation exacte sur les surfaces iso-$\tau$ n'est pas encore démontrée dans cette reprise.
 
 Voir la [note détaillée dans le dépôt](https://github.com/JM-Brun/J-DriftX/blob/main/docs/14-revue-mathematique-ciblee.md), le [bilan MVP-S 1D](https://github.com/JM-Brun/J-DriftX/blob/main/docs/21-bilan-mvp-s-1d.md) et la [page travel-time actuelle](../theorie/metrique-travel-time.qmd). Voir aussi la [matrice MVP-S de traçabilité définition–hypothèses–démonstration–code–tests–portée](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md), qui distingue explicitement le cas 1D implémenté des résultats analytiques plus généraux.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Définitions des trois objets | [Métrique travel-time](../theorie/metrique-travel-time.qmd) |
+| Géométries voisines | [Métriques non riemanniennes](../theorie/metriques-non-riemanniennes.qmd) |
+| Glossaire mathématique autonome | [Glossaire mathématique (docs/30)](https://github.com/JM-Brun/J-DriftX/blob/main/docs/30-glossaire-mathematique-autonome-g0s.md) |

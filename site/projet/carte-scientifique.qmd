@@ -1,8 +1,17 @@
 ---
 title: "Carte scientifique — phénomènes, hypothèses et modèles"
+subtitle: "Interactions entre phénomènes, hypothèses et constructions"
+date: 2026-11-11
+status: "Représentation des interactions ; n'est pas une preuve."
 ---
 
 # De l'atmosphère aux constructions de J-DriftX
+
+::: {.callout-note title="En bref"}
+Cette carte montre comment objets physiques, processus, hypothèses, constructions mathématiques et objectifs s'articulent. Elle privilégie les interactions scientifiques plutôt que l'inventaire des fichiers ; statut de la représentation explicite : toute relation doit être vérifiée dans les pages de référence.
+
+**Vous êtes ici :** Comprendre & explorer.
+:::
 
 Cette carte montre comment les **objets physiques**, les **processus de transport**, les **hypothèses**, les **constructions mathématiques** et les **objectifs de recherche** s'articulent. Elle complète la [carte des niveaux N0–N6](niveaux-modelisation.qmd) et le [graphe des connaissances traçables](carte-connaissances.qmd) : elle privilégie les interactions scientifiques plutôt que l'inventaire des fichiers, modules et références.
 
@@ -235,7 +244,7 @@ Les diagrammes détaillés ci-dessus donnent une lecture éditoriale du système
 
 Ces vues réutilisent les mêmes identifiants, types, arêtes et libellés que les cartes de traçabilité. Elles ne créent aucune relation supplémentaire. Elles sont complémentaires : le registre ne contient pas encore tous les objets du diagramme physique (par exemple les champs de turbulence et les conditions météorologiques détaillées), qui ne doivent donc pas être artificiellement déduits de ces projections.
 
-## 7. Cartes complémentaires
+## 7. Pour aller plus loin
 
 | Besoin | Représentation adaptée |
 |---|---|

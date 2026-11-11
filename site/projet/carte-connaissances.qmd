@@ -1,8 +1,17 @@
 ---
 title: "Carte des connaissances"
+subtitle: "Le graphe typé des connaissances, généré et vérifié par la CI"
+date: 2026-11-11
+status: "Structure n'est pas validité ; le registre qualifie, le graphe relie."
 ---
 
 # Le graphe des connaissances traçables
+
+::: {.callout-note title="En bref"}
+Cette page ne décrète rien : elle montre les liens. Nœuds typés (concepts, hypothèses, niveaux, modules, tests, références, données) et arêtes typées, générés depuis un registre TOML et vérifiés par la CI. Structure n'est pas validité : la preuve vit dans le registre de traçabilité.
+
+**Vous êtes ici :** Comparer & approfondir ▸ Sources, données et traçabilité.
+:::
 
 Cette page ne décrète rien : elle montre les liens. Concepts, hypothèses, niveaux de modélisation, modules, tests, références et jeux de données y apparaissent comme les nœuds typés d'un graphe, reliés par des arêtes elles-mêmes typées (« s'applique à », « implémenté par », « teste »...).
 
@@ -82,5 +91,13 @@ uv run python -m jdriftx.graphe_connaissances
 ```
 
 et committer le registre avec `site/projet/_graphes-mermaid.md` régénéré. La CI refuse un rendu désynchronisé ; les règles et le workflow sont documentés dans CONTRIBUTING.md.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Ce que les liens prouvent | [Registre des preuves](registre-preuves.qmd) |
+| Carte des niveaux | [Niveaux de modélisation](niveaux-modelisation.qmd) |
+| Articulation des preuves | [Carte d'articulation](carte-articulation.qmd) |
 
 {{< include _graphes-mermaid.md >}}

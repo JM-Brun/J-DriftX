@@ -1,8 +1,17 @@
 ---
 title: "Limites et domaines de validité"
+subtitle: "Domaines de validité et maîtrise du risque"
+date: 2026-11-11
+status: "Limites publiées au même niveau que les résultats."
 ---
 
 # Limites et domaines de validité
+
+::: {.callout-note title="En bref"}
+Une modélisation à complexité réduite honnête publie ses limites au même niveau que ses résultats : météorologiques, de terrain, physico-chimiques, méthodologiques — chacune avec la stratégie de contrôle associée.
+
+**Vous êtes ici :** Vérifier & évaluer.
+:::
 
 Une modélisation à complexité réduite honnête publie ses limites au même niveau que ses résultats. Les voici, par famille, avec la stratégie de contrôle associée.
 
@@ -36,3 +45,11 @@ Une modélisation à complexité réduite honnête publie ses limites au même n
 4. **Estimateur d'erreur inter-niveaux** : jalon M2 — la pièce méthodologique manquante de l'héritage.
 
 **Traçabilité MVP-S.** Pour distinguer les limites documentées des propriétés réellement démontrées, implémentées ou testées, consulter la [matrice publique de traçabilité](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md). Les limites générales du modèle ne sont pas toutes couvertes par le noyau 1D ou les tests actuels.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Hypothèses correspondantes | [Catalogue des hypothèses](catalogue.qmd) |
+| Stratégie de validation | [Validation scientifique](../projet/validation-scientifique.qmd) |
+| Familles et leurs limites | [Panorama de l'état de l'art](../etat-art/panorama.qmd) |
