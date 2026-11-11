@@ -11,7 +11,7 @@ Cette page définit le problème physique de référence avant toute réduction.
 
 Le modèle direct est ici un **problème de référence conceptuel**, pas l'affirmation que J-DriftX résout déjà cette équation générale. Le noyau actuel implémente notamment un panache/puff gaussien dans des cas limités ; il ne reconstruit pas le champ de vent multi-niveaux historique. Voir [Niveaux de modélisation](../projet/niveaux-modelisation.qmd) pour situer cette chaîne dans N0–N6, [Catalogue des hypothèses](../hypotheses/catalogue.qmd) pour les hypothèses traçables, [Contraintes physiques](contraintes-physiques.qmd) pour le statut des preuves et [Solutions de similitude](similitude.qmd) pour la dérivation du panache gaussien.
 
-::: {.callout-note title="En bref"
+::: {.callout-note title="En bref"}
 Cette page est le **premier maillon de la chaîne physique** : elle pose le problème de référence avant toute réduction, sans l'impliquer résolu par le code.
 
 - **Prérequis :** le vocabulaire du [glossaire](../glossaire.qmd) (scalaire passif, fermeture turbulente, champ stationnaire) et la carte des [niveaux de modélisation](../projet/niveaux-modelisation.qmd) (N0–N6).

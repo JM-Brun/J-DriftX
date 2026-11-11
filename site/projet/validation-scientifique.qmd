@@ -9,7 +9,7 @@ status: "Protocole ; aucun résultat de validation rapporté."
 
 Cette page traduit la revue de l’état de l’art en critères de validation pour J-DriftX. Elle distingue le positionnement proposé des résultats qui restent à démontrer.
 
-::: {.callout-note title="En bref"
+::: {.callout-note title="En bref"}
 Cette page est le **point de décision expérimental** : elle précise quelles observations et comparaisons seraient nécessaires pour soutenir ou réfuter les hypothèses du projet. Elle ne rapporte pas, à elle seule, des résultats de validation.
 
 - **Avant de définir un benchmark :** expliciter les [hypothèses](../hypotheses/catalogue.qmd), les [domaines de validité et limites](../hypotheses/limites.qmd) et le [positionnement dans l’état de l’art](../etat-art/positionnement.qmd).

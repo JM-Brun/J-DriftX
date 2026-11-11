@@ -9,7 +9,7 @@ status: "Inventaire de candidats ; la disponibilité d'un jeu ne démontre pas s
 
 Cette page recense des jeux de données publics pouvant aider à évaluer des modèles de transport et de dispersion. **La disponibilité d'un jeu ne démontre pas son adéquation physique** : un traceur gazeux, des gouttelettes, des particules routières et un polluant marin ne partagent pas nécessairement les mêmes équations ni les mêmes observables.
 
-::: {.callout-note title="En bref"
+::: {.callout-note title="En bref"}
 Cette page est un **inventaire de candidats expérimentaux**, pas un benchmark prêt à l'emploi et encore moins une validation de J-DriftX.
 
 - **Prérequis :** connaître le domaine physique visé et les limites du modèle, décrits dans le [catalogue des hypothèses](../hypotheses/catalogue.qmd) et les [domaines de validité](../hypotheses/limites.qmd).

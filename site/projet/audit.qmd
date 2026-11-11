@@ -9,7 +9,7 @@ status: "Audit historique du corpus 2006–2009 ; pas un audit de l'implémentat
 
 > Version complète dans le dépôt : <code>docs/01-audit-heritage-driftx.md</code>. Cette page en donne la synthèse.
 
-::: {.callout-note title="En bref"
+::: {.callout-note title="En bref"}
 Cette page répond à une question historique : **quels éléments du projet Drift-X (2006–2009) méritent d'être repris, et quelles lacunes empêchent de transposer directement ses conclusions ?** Elle synthétise les forces, les limites et le contexte de l'héritage ; elle ne constitue ni une revue bibliographique exhaustive ni un audit de l'implémentation Python actuelle.
 
 - **À consulter après :** [Héritage Drift-X](heritage.qmd), qui décrit les sources et la méthode historique, et [Lectures des sources](lectures.qmd), qui précise le niveau d'accès et de vérification de chaque publication.

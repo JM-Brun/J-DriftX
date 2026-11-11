@@ -9,7 +9,7 @@ status: "Cadre théorique ; pas une fonctionnalité d'assimilation disponible da
 
 Le modèle réduit a des paramètres libres $\theta$ (coefficients de la similitude, fractions d'émission inter-niveaux, calibration du champ de vent). Dans la formulation historique, l'identification de $\theta$ se fait par **assimilation de données partielles** plutôt que par apprentissage d'un surrogate. Une extension hybride n'est pas exclue ; son intérêt et son coût devraient alors être comparés explicitement.
 
-::: {.callout-note title="En bref"
+::: {.callout-note title="En bref"}
 Cette page traite du **problème inverse** : estimer des paramètres ou des intensités de source à partir d'observations, et déterminer si ces quantités sont identifiables avec les données disponibles. Elle ne décrit pas une fonctionnalité d'assimilation déjà disponible dans le noyau actuel.
 
 - **Prérequis :** le modèle direct et ses paramètres ([Modèle direct](modele-direct.qmd)), la famille candidate ([Solutions de similitude](similitude.qmd)) et les hypothèses qui conditionnent la linéarité ([Catalogue des hypothèses](../hypotheses/catalogue.qmd)).

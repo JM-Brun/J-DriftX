@@ -13,7 +13,7 @@ La géométrie de Randers issue de la **navigation de Zermelo** est un problème
 
 L'annexe F de la thèse imprime également un coût de chemin $F_{\rm wind}=\lVert y\rVert^2/(u\cdot y)$ : il est singulier pour une direction transverse et négatif en amont. Il ne vérifie donc pas les conditions d'une métrique de Finsler positive et régulière sur tout l'espace tangent non nul. Une éventuelle restriction au cône aval est une construction à préciser ; elle ne rend pas ce coût identique au temps projeté du chapitre 7. Voir le [contrôle de la source](https://github.com/JM-Brun/J-DriftX/blob/main/docs/bibliographie/sources/these-brun.md).
 
-::: {.callout-note title="En bref"
+::: {.callout-note title="En bref"}
 Cette page intervient **après la définition du travel-time** : elle classe les objets voisins et compare leurs axiomes, sans conclure qu'ils sont équivalents parce qu'ils partagent une intuition de coût orienté.
 
 - **Prérequis :** les trois constructions distinguées dans [Métrique travel-time](metrique-travel-time.qmd) : intégrale le long d'une courbe, temps de première arrivée ($T_{\mathrm{arr}}$), et pseudo-distance projetée historique ($T_{\mathrm{proj}}$, temps après projection).

@@ -7,7 +7,7 @@ status: "Lien historique attesté ; aucune équivalence avec la dispersion loint
 
 # Équation de Burgers : lien avec J-DriftX
 
-::: {.callout-note title="En bref"
+::: {.callout-note title="En bref"}
 **La thèse utilise directement Burgers pour une vitesse locale dans la canopée ; aucune équivalence avec le modèle de dispersion lointaine de J-DriftX n'est établie.**
 
 L'équation de Burgers est un modèle canonique d'advection non linéaire régularisée par diffusion. La thèse de Brun l'emploie pour une vitesse 1D forcée dans un couvert végétal (équation 4.8), accompagnée d'une équation distincte pour le scalaire (4.9). Les applications de ce chapitre sont idéalisées. Elle ne constitue pas, sans dérivation supplémentaire, une équation de concentration ou une validation du transport lointain. Voir la [fiche source](https://github.com/JM-Brun/J-DriftX/blob/main/docs/bibliographie/sources/these-brun.md).

@@ -9,7 +9,7 @@ status: "Démonstration sous hypothèses explicites ; dérivation en vent unifor
 
 Les solutions de similitude des panaches et puffs constituent la brique élémentaire de Drift-X : c'est l'information physique *a priori* qui structure l'espace de recherche. Cette page explique **d'où vient leur forme** : elles ne sont pas posées comme une hypothèse décorative, elles se **dérivent** de l'équation de transport ([Modèle direct](modele-direct.qmd)) sous un jeu d'hypothèses explicites — que J-DriftX héritera ou généralisera.
 
-::: {.callout-note title="En bref"
+::: {.callout-note title="En bref"}
 Cette page est le **deuxième maillon de la chaîne physique** : elle dérive la famille gaussienne sous hypothèses explicites, à partir du problème posé dans [Modèle direct](modele-direct.qmd).
 
 - **Prérequis :** l'équation de transport et la fermeture gradient ([Modèle direct](modele-direct.qmd)) ; le vocabulaire du [glossaire](../glossaire.qmd) (panache, puff, classes de Pasquill).
