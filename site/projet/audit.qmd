@@ -1,12 +1,24 @@
 ---
 title: "Audit de l'héritage"
+subtitle: "Forces et lacunes de l'héritage Drift-X"
+date: 2026-11-11
+status: "Audit historique du corpus 2006–2009 ; pas un audit de l'implémentation actuelle."
 ---
 
 # Audit de l'héritage Drift-X
 
 > Version complète dans le dépôt : <code>docs/01-audit-heritage-driftx.md</code>. Cette page en donne la synthèse.
 
-## Rôle dans le parcours
+::: {.callout-note title="En bref"
+Cette page répond à une question historique : **quels éléments du projet Drift-X (2006–2009) méritent d'être repris, et quelles lacunes empêchent de transposer directement ses conclusions ?** Elle synthétise les forces, les limites et le contexte de l'héritage ; elle ne constitue ni une revue bibliographique exhaustive ni un audit de l'implémentation Python actuelle.
+
+- **À consulter après :** [Héritage Drift-X](heritage.qmd), qui décrit les sources et la méthode historique, et [Lectures des sources](lectures.qmd), qui précise le niveau d'accès et de vérification de chaque publication.
+- **À utiliser pour :** comprendre les raisons de la reprise et les questions restées ouvertes.
+- **À ne pas en déduire :** que les propriétés historiques sont implémentées, reproduites ou validées dans J-DriftX. Pour l'état actuel, consulter [Qualité & tests](qualite.qmd) et le [protocole de validation](validation-scientifique.qmd).
+- **Suite logique :** [Positionnement de J-DriftX](../etat-art/positionnement.qmd), qui transforme les lacunes historiques en hypothèses à confronter aux méthodes actuelles.
+
+**Vous êtes ici :** Comparer & approfondir ▸ Sources, données et traçabilité.
+:::
 
 Cette page répond à une question historique : **quels éléments du projet Drift-X (2006–2009) méritent d'être repris, et quelles lacunes empêchent de transposer directement ses conclusions ?** Elle synthétise les forces, les limites et le contexte de l'héritage ; elle ne constitue ni une revue bibliographique exhaustive ni un audit de l'implémentation Python actuelle.
 
@@ -39,3 +51,11 @@ Cette page répond à une question historique : **quels éléments du projet Dri
 Le corpus historique décrit une hypothèse méthodologique à examiner, mais ne suffit pas à établir sa validité générale, sa nouveauté exhaustive ou un avantage en 2026. Les lacunes concernent aussi la formalisation mathématique, les hypothèses et la validation indépendante ; elles ne sont pas seulement des questions d'exécution.
 
 **Conclusion de cette synthèse :** les sources justifient de poursuivre l'examen critique de l'hypothèse, mais pas de conclure à sa validité, à sa nouveauté ou à son utilité. Toute étape ultérieure doit être justifiée par une question testable, des sources traçables et des critères d'évaluation définis à l'avance.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Chronologie et corpus | [Héritage Drift-X](heritage.qmd) |
+| Fiches source | [Lectures des sources](lectures.qmd) |
+| Objectifs repris | [Objectifs](objectifs.qmd) |

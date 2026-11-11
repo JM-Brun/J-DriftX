@@ -1,12 +1,25 @@
 ---
 title: "Catalogue de données ouvertes pour J-DriftX"
+subtitle: "Candidats expérimentaux ouverts — pas un benchmark prêt à l'emploi"
+date: 2026-11-11
+status: "Inventaire de candidats ; la disponibilité d'un jeu ne démontre pas son adéquation physique."
 ---
 
 # Catalogue de données ouvertes pour J-DriftX
 
 Cette page recense des jeux de données publics pouvant aider à évaluer des modèles de transport et de dispersion. **La disponibilité d'un jeu ne démontre pas son adéquation physique** : un traceur gazeux, des gouttelettes, des particules routières et un polluant marin ne partagent pas nécessairement les mêmes équations ni les mêmes observables.
 
-## Rôle dans le parcours
+::: {.callout-note title="En bref"
+Cette page est un **inventaire de candidats expérimentaux**, pas un benchmark prêt à l'emploi et encore moins une validation de J-DriftX.
+
+- **Prérequis :** connaître le domaine physique visé et les limites du modèle, décrits dans le [catalogue des hypothèses](../hypotheses/catalogue.qmd) et les [domaines de validité](../hypotheses/limites.qmd).
+- **Question traitée :** quels corpus pourraient fournir des observations compatibles avec une question de transport ou de dispersion, et quelles vérifications d'accès, d'unités, de sources et d'indépendance restent nécessaires ?
+- **Résultat transmis :** une présélection à auditer avant toute utilisation ; l'adéquation doit être vérifiée expérience par expérience.
+- **Étape suivante :** appliquer le [protocole de validation scientifique](validation-scientifique.qmd) et séparer les données de calibration des données de validation indépendante.
+- **Limite :** les données analogues (transport fluvial, marin ou trajectoires de flotteurs) peuvent aider à tester des outils mathématiques, mais ne valident pas la physique atmosphérique.
+
+**Vous êtes ici :** Comparer & approfondir ▸ Sources, données et traçabilité.
+:::
 
 Cette page est un **inventaire de candidats expérimentaux**, pas un benchmark prêt à l'emploi et encore moins une validation de J-DriftX.
 
@@ -57,3 +70,11 @@ Le présent catalogue résume les données candidates et leurs limites. Les tâc
 ::: {.callout-note}
 **Suivi (23 octobre 2026).** L'audit technique d'accès, de licences et d'indépendance des quatre corpus prioritaires (DIFLU, DATEM, ETEX, ERIES) est documenté dans [docs/20-audit-technique-jeux-donnees.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/20-audit-technique-jeux-donnees.md). Point clé : la licence ERIES est confirmée (CC BY 4.0) ; la fiche Recherche Data Gouv de DIFLU affiche désormais la Licence Ouverte Etalab 2.0 (le `rightsList` DataCite du même DOI reste vide : conserver la notice et vérifier les métadonnées par fichier) — statut licence mis à jour le 28/10/2026, aligné sur docs/20. L'inspection des fichiers après téléchargement — unités, limites de détection, décompte des lâchers DIFLU — reste le prérequis suivant, suivi dans l'[issue d'audit des données](https://github.com/JM-Brun/J-DriftX/issues/13).
 :::
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Cadre de validation | [Validation scientifique](validation-scientifique.qmd) |
+| Limites du modèle | [Limites](../hypotheses/limites.qmd) |
+| Expériences locales | [Laboratoire interactif](laboratoire-interactif.qmd) |

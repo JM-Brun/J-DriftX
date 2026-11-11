@@ -1,8 +1,17 @@
 ---
 title: "Héritage Drift-X (2006–2009)"
+subtitle: "Le corpus fondateur Drift-X (2006–2009)"
+date: 2026-11-11
+status: "Faits historiques sourcés (corpus vérifié, audit d'octobre 2026) ; aucun statut de preuve physique."
 ---
 
 # Héritage Drift-X
+
+::: {.callout-note title="En bref"}
+Drift-X est né à Montpellier (Cemagref ITAP + I3M, avec B. Mohammadi et O. Pironneau) pour modéliser la dispersion des pesticides en viticulture à un coût compatible avec l'analyse de risque. Cette page présente la chronologie, le corpus fondateur et ce que Drift-X savait déjà faire — avec sa lecture guidée du chapitre Springer 2008.
+
+**Vous êtes ici :** Le projet.
+:::
 
 Le projet **Drift-X** est né à Montpellier entre 2006 et 2009, dans la collaboration entre le Cemagref (unité ITAP, technologies et systèmes d'information pour les agrosystèmes) et le laboratoire I3M (Université Montpellier II, avec B. Mohammadi et O. Pironneau). Son objectif : modéliser la **dispersion atmosphérique des pesticides** pendant la pulvérisation en viticulture, de la parcelle au bassin versant, à un coût de calcul compatible avec l'analyse de risque statistique.
 
@@ -65,3 +74,11 @@ Le chapitre complet est consultable dans le [recueil Springer *Partial Different
 - **Il ne faut pas assimiler les résultats historiques à l'état du code actuel.** Les fonctions implémentées, tests, données et limites sont consignés séparément dans la [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) et la page [Validation scientifique](validation-scientifique.qmd).
 
 Cette lecture complète la [carte des niveaux de modélisation](niveaux-modelisation.qmd) et l'[Audit de l'héritage](audit.qmd). Les détails d'exécution, arbitrages et tâches restantes restent dans le dépôt privé de pilotage, pas dans le site public.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Que disent les papiers, fiche par fiche | [Lectures des sources](lectures.qmd) |
+| Forces et lacunes de l'héritage | [Audit de l'héritage](audit.qmd) |
+| Où l'héritage est repris | [Niveaux de modélisation](niveaux-modelisation.qmd) |
