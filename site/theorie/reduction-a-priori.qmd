@@ -1,12 +1,26 @@
 ---
 title: "Réduction a priori"
+subtitle: "L'idée fondatrice de Drift-X : un espace de recherche physiquement motivé"
+date: 2026-11-11
+status: "Espace candidat ; rien ne garantit qu'il contienne la solution exacte."
 ---
 
 # Réduction a priori de l'espace de recherche
 
 L'idée fondatrice attribuée à Drift-X [@brun2008] est de construire *a priori* un **espace de recherche physiquement motivé**, plutôt que de construire systématiquement une base à partir de *snapshots*. Cet espace est une approximation candidate de la solution, pas un sous-espace dont on sait d'avance qu'il contient la solution exacte.
 
-## Place dans la chaîne et contrat de lecture
+::: {.callout-note title="En bref"
+Cette page prend comme entrées (i) le problème générique de transport et (ii) l'équation parabolique obtenue par hypothèses successives dans [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache), puis la famille gaussienne dérivée dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli). Elle ne redérive ni l'équation générique, ni les hypothèses de réduction, ni le profil gaussien : elle précise le statut de cette famille comme **approximation candidate** d'un problème plus général et les mesures nécessaires pour évaluer la réduction.
+
+- **Prérequis :** connaître le problème de référence, les hypothèses conduisant au panache gaussien et les paramètres de la famille candidate.
+- **Résultat traité ici :** distinguer le modèle direct $V(p)$ — défini dans [Modèle direct](modele-direct.qmd#notation-modele-direct) — du modèle approché $v(p)$ — construit dans [Solutions de similitude](similitude.qmd#famille-candidate-v) —, leur domaine de validité et le coût total à mesurer.
+- **Limite actuelle :** aucune mesure d’erreur, de robustesse ou de gain de coût n’existe encore : la précision de $v(p)$ et sa rapidité relative restent **à mesurer** ; le dépôt n’implémente ni $V(p)$, ni la dérivation à diffusivités constantes (les largeurs implémentées sont calibrées empiriquement).
+- **Étape suivante :** les propriétés physiques et géométriques doivent être établies séparément. Remplacer $x/U$ par un temps $\tau$ dans un champ non uniforme relève de la [page Métrique travel-time](metrique-travel-time.qmd) et ne découle pas de la seule réduction gaussienne.
+
+Le parcours de lecture est donc : **modèle direct → similitude → statut de la famille candidate ici → propriétés à établir séparément** (chaîne géométrique via [Métrique travel-time](metrique-travel-time.qmd)).
+
+**Vous êtes ici :** Construire la théorie ▸ Modèle direct et réduction.
+:::
 
 Cette page prend comme entrées (i) le problème générique de transport et (ii) l'équation parabolique obtenue par hypothèses successives dans [Modèle direct, section 10](modele-direct.qmd#derive-equation-parabolique-panache), puis la famille gaussienne dérivée dans [Solutions de similitude](similitude.qmd#derivation-du-panache-gaussien-regime-etabli). Elle ne redérive ni l'équation générique, ni les hypothèses de réduction, ni le profil gaussien : elle précise le statut de cette famille comme **approximation candidate** d'un problème plus général et les mesures nécessaires pour évaluer la réduction.
 
@@ -88,3 +102,12 @@ La démarche est rapprochée de la famille des *modèles approchés d'état* en 
 ## Ce que cela ne veut pas dire
 
 Réduction a priori ne signifie pas renoncer aux données : la [calibration](assimilation-identification.qmd) par assimilation de données partielles identifie les paramètres libres du modèle approché. La physique structure l'espace de recherche ; les données ferment le problème.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Problème générique | [Modèle direct](modele-direct.qmd) |
+| Famille gaussienne dérivée | [Solutions de similitude](similitude.qmd) |
+| Résolution complète (référence de coût) | [EDP & maillage](edp-et-maillage.qmd) |
+| Où se paie chaque coût | [Comparaison des complexités](comparaison-complexites.qmd) |
