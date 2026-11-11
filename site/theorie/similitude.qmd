@@ -1,12 +1,26 @@
 ---
 title: "Solutions de similitude"
+subtitle: "D'où vient la famille gaussienne"
+date: 2026-11-11
+status: "Démonstration sous hypothèses explicites ; dérivation en vent uniforme, généralisation non justifiée à elle seule."
 ---
 
 # Solutions de similitude : le socle de l'espace de recherche
 
 Les solutions de similitude des panaches et puffs constituent la brique élémentaire de Drift-X : c'est l'information physique *a priori* qui structure l'espace de recherche. Cette page explique **d'où vient leur forme** : elles ne sont pas posées comme une hypothèse décorative, elles se **dérivent** de l'équation de transport ([Modèle direct](modele-direct.qmd)) sous un jeu d'hypothèses explicites — que J-DriftX héritera ou généralisera.
 
-## Place dans la chaîne et contrat de lecture
+::: {.callout-note title="En bref"
+Cette page est le **deuxième maillon de la chaîne physique** : elle dérive la famille gaussienne sous hypothèses explicites, à partir du problème posé dans [Modèle direct](modele-direct.qmd).
+
+- **Prérequis :** l'équation de transport et la fermeture gradient ([Modèle direct](modele-direct.qmd)) ; le vocabulaire du [glossaire](../glossaire.qmd) (panache, puff, classes de Pasquill).
+- **Objet défini ici :** la dérivation du panache et du puff gaussiens — hypothèse par hypothèse — jusqu'à la coordonnée $t'=x/U$ et la table de traçabilité des hypothèses.
+- **Résultat transmis :** la famille gaussienne devient l'espace de recherche candidat, dont le statut d'approximation est précisé dans [Réduction a priori](reduction-a-priori.qmd) ; la substitution de $x/U$ par un temps $\tau$ dans un champ non uniforme est la question d'entrée de [Métrique travel-time](metrique-travel-time.qmd).
+- **Limite actuelle :** les $\sigma$ tabulés (Briggs, Pasquill) calibrent la largeur ; ils ne valident pas la dérivation à diffusivités constantes. La dérivation en vent uniforme ne justifie pas à elle seule la généralisation métrique.
+
+Le parcours de lecture est donc : **modèle direct → similitude → réduction a priori** pour la chaîne physique ; la porte d'entrée vers la chaîne géométrique est la question du temps de transport, ouverte à l'étape 2 de la dérivation.
+
+**Vous êtes ici :** Construire la théorie ▸ Modèle direct et réduction.
+:::
 
 Cette page est le **deuxième maillon de la chaîne physique** : elle dérive la famille gaussienne sous hypothèses explicites, à partir du problème posé dans [Modèle direct](modele-direct.qmd).
 
@@ -427,3 +441,12 @@ La chaîne multi-niveaux de Drift-X :
 2. **Champ lointain** : cette quantité candidate au transport longue distance via les solutions de similitude pour couches de mélange et panaches [@brun2008].
 
 L'étape 2 se fait dans une **métrique généralisée** — l'objet de la page [Métrique travel-time](metrique-travel-time.qmd).
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Équation de transport avant réduction | [Modèle direct](modele-direct.qmd) |
+| Usage dans la réduction | [Réduction a priori](reduction-a-priori.qmd) |
+| Où le code l'implémente | [Registre de traçabilité](../projet/registre-preuves.qmd) |
+| Généralisation dirigée | [Métrique travel-time](metrique-travel-time.qmd) |
