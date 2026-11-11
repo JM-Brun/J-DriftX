@@ -1,8 +1,17 @@
 ---
 title: "Références"
+subtitle: "Corpus historique, fondements méthodologiques, état de l'art moderne"
+date: 2026-11-11
+status: "Bibliographie vérifiée (audit bibliographique d'octobre 2026) ; deux entrées sous réserve résiduelle."
 ---
 
 # Références bibliographiques
+
+::: {.callout-note title="En bref"}
+Références par rôle : corpus historique Drift-X (2006–2010), fondements méthodologiques, sélection d'état de l'art, modèles et logiciels de référence. Vérifiée lors de l'audit bibliographique d'octobre 2026 ; le parcours de lecture en fin de page relie chaque bloc aux pages du site.
+
+**Vous êtes ici :** Comparer & approfondir ▸ Sources, données et traçabilité.
+:::
 
 ## Corpus historique Drift-X (2006–2010)
 

@@ -1,8 +1,17 @@
 ---
 title: "Glossaire"
+subtitle: "Les notions en français simple, leur origine et leur page de référence"
+date: 2026-11-11
+status: "Vocabulaire de référence ; chaque terme renvoie à la page qui le développe."
 ---
 
 # Glossaire — les notions en français simple
+
+::: {.callout-note title="En bref"}
+Le vocabulaire de la dispersion atmosphérique et de la modélisation réduite, expliqué en quelques phrases. Chaque terme indique d'où il vient et renvoie vers la page qui le développe ; symboles et notations en tête de page.
+
+**Vous êtes ici :** S'orienter.
+:::
 
 Le vocabulaire de la dispersion atmosphérique et de la modélisation réduite, expliqué en quelques phrases. Chaque terme indique **d'où il vient** et renvoie vers la page du site qui le développe. Les symboles et notations sont en tête de page.
 
