@@ -1,12 +1,26 @@
 ---
 title: "Validation scientifique et protocole de preuve"
+subtitle: "Protocole de falsification S0–S3 et critères de benchmark"
+date: 2026-11-11
+status: "Protocole ; aucun résultat de validation rapporté."
 ---
 
 # Validation scientifique et protocole de preuve
 
 Cette page traduit la revue de l’état de l’art en critères de validation pour J-DriftX. Elle distingue le positionnement proposé des résultats qui restent à démontrer.
 
-## Place dans le parcours
+::: {.callout-note title="En bref"
+Cette page est le **point de décision expérimental** : elle précise quelles observations et comparaisons seraient nécessaires pour soutenir ou réfuter les hypothèses du projet. Elle ne rapporte pas, à elle seule, des résultats de validation.
+
+- **Avant de définir un benchmark :** expliciter les [hypothèses](../hypotheses/catalogue.qmd), les [domaines de validité et limites](../hypotheses/limites.qmd) et le [positionnement dans l’état de l’art](../etat-art/positionnement.qmd).
+- **Pour vérifier ce qui est déjà acquis :** confronter chaque affirmation au [registre des preuves](registre-preuves.qmd) et à la portée réelle des [tests logiciels](qualite.qmd).
+- **Pour sélectionner des observations :** consulter le [catalogue de données candidates](catalogue-donnees.qmd) ; la présence d’un jeu de données ne vaut ni adéquation physique ni validation indépendante.
+- **Pour revenir au modèle :** la [carte des niveaux de modélisation](niveaux-modelisation.qmd) situe les objets N0–N6 concernés par chaque scénario.
+
+Le parcours est donc bidirectionnel : les hypothèses et le modèle déterminent les tests pertinents ; les résultats des tests doivent ensuite conduire à réviser le domaine de validité ou le statut des affirmations, et non à élargir automatiquement les conclusions.
+
+**Vous êtes ici :** Vérifier & évaluer.
+:::
 
 Cette page est le **point de décision expérimental** : elle précise quelles observations et comparaisons seraient nécessaires pour soutenir ou réfuter les hypothèses du projet. Elle ne rapporte pas, à elle seule, des résultats de validation.
 
@@ -56,3 +70,12 @@ Le protocole détaillé, incluant l’équation conservative, les conditions de 
 Le protocole public de validation est maintenu dans [docs/05-plan-validation-et-integration.md](https://github.com/JM-Brun/J-DriftX/blob/main/docs/05-plan-validation-et-integration.md). Les plans de travail détaillés et le suivi opérationnel des décisions restent dans les notes privées du projet.
 
 **État des preuves du MVP-S.** Le protocole ci-dessus définit les critères à satisfaire ; il ne constitue pas en lui-même une validation. La [matrice de traçabilité MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) répertorie les définitions, hypothèses, démonstrations, fonctions, tests et limites actuellement documentés.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Hypothèses à tester | [Catalogue des hypothèses](../hypotheses/catalogue.qmd) |
+| Limites de validité | [Limites](../hypotheses/limites.qmd) |
+| Positionnement | [Positionnement](../etat-art/positionnement.qmd) |
+| Données candidates | [Catalogue des données](catalogue-donnees.qmd) |

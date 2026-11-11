@@ -1,8 +1,17 @@
 ---
 title: "Lectures des sources"
+subtitle: "Ce que disent les sources historiques, fiche par fiche"
+date: 2026-11-11
+status: "Lecture critique sourcée ; distinguée du vérifié, du partiel et de la synthèse propre."
 ---
 
 # Lectures des sources : que disent les papiers historiques ?
+
+::: {.callout-note title="En bref"}
+Les sources historiques organisées par rôle scientifique : fondements mathématiques, modèle multi-niveaux, extensions applicatives. Pour chaque papier : contenu directement vérifié, extraits partiels, hypothèses de synthèse propres à J-DriftX ; index des fiches dans docs/04.
+
+**Vous êtes ici :** Comparer & approfondir ▸ Sources, données et traçabilité.
+:::
 
 Cette page organise les sources historiques par rôle scientifique : fondements mathématiques, modèle multi-niveaux et extensions applicatives. Elle distingue le contenu directement vérifié, les extraits partiels et les hypothèses de synthèse propres à J-DriftX. L'index des fiches source est <code>docs/04-revues-papiers-sources.md</code> ; les fiches individuelles et leur statut d'accès sont sous <code>docs/bibliographie/sources/</code>, tandis que les fichiers sources disponibles sont sous <code>raw/</code>. Le but est une vue d'ensemble cohérente, pas une uniformisation artificielle des notations ni une liste exhaustive de détails d'implémentation.
 
@@ -103,3 +112,12 @@ Pour une vue cohérente, lire [Modèle direct](../theorie/modele-direct.qmd) →
 Les sources primaires et les versions apparentées ne sont pas toutes intégralement comparées. Les résumés et métadonnées ne permettent pas de reconstituer les équations ou résultats manquants ; aucune conclusion n'est inférée à partir des seules références bibliographiques.
 
 Fiches détaillées et références consultées : [revue des papiers sources](https://github.com/JM-Brun/J-DriftX/blob/main/docs/04-revues-papiers-sources.md). Notions à clarifier ? Voir le [glossaire](../glossaire.qmd).
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Bilan de l'héritage | [Audit de l'héritage](audit.qmd) |
+| Chronologie | [Héritage Drift-X](heritage.qmd) |
+| Notices complètes | [Références](../references.qmd) |
+| Notions | [Glossaire](../glossaire.qmd) |

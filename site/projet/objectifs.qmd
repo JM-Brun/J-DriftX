@@ -1,8 +1,17 @@
 ---
 title: "Objectifs de J-DriftX"
+subtitle: "Vision, axes scientifiques, cibles applicatives"
+date: 2026-11-11
+status: "Cadrage du projet ; pas des résultats."
 ---
 
 # Objectifs de J-DriftX
+
+::: {.callout-note title="En bref"}
+J-DriftX étudie l'hypothèse qu'une représentation à complexité réduite, fondée sur la physique d'abord, peut rendre certains problèmes de dispersion traitables à coût réduit. Vision en trois phases : reprendre et valider l'héritage, étendre intelligemment, dépasser à terme le cas des pesticides (problèmes inverses).
+
+**Vous êtes ici :** Le projet.
+:::
 
 ## Vision
 
@@ -38,3 +47,11 @@ Ces axes structurent le programme de recherche. Ils ne constituent pas une liste
 ## Statut
 
 La documentation, l’audit et la revue structurée de l’état de l’art sont disponibles. La méthode de recherche documentaire doit encore être rendue entièrement reproductible avant de qualifier la revue de systématique. Toute étape technique doit être confirmée par des tests et livrables vérifiables. Voir le [protocole de validation scientifique](validation-scientifique.qmd) et les [issues publiques](https://github.com/JM-Brun/J-DriftX/issues).
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Utilité à démontrer et niveau de preuve | [Utilité scientifique](utilite-scientifique.qmd) |
+| Protocole de validation | [Validation scientifique](validation-scientifique.qmd) |
+| Héritage repris | [Héritage Drift-X](heritage.qmd) |
