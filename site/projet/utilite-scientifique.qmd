@@ -1,8 +1,17 @@
 ---
 title: "Utilité scientifique : question et niveau de preuve"
+subtitle: "Quelle valeur démontrer, à quel niveau de preuve"
+date: 2026-11-11
+status: "Question ouverte (alimente G0-A, issue #43)."
 ---
 
 # Quelle valeur J-DriftX doit-il démontrer ?
+
+::: {.callout-note title="En bref"}
+J-DriftX est une hypothèse de recherche, pas une solution dont les avantages seraient établis. Cette page distingue trois niveaux de contribution possible (mathématique, logicielle, applicative) et l'ordre de preuve requis pour chacun : l'utilité doit être démontrée au niveau effectivement atteint.
+
+**Vous êtes ici :** Le projet.
+:::
 
 J-DriftX est une hypothèse de recherche, pas une solution dont les avantages seraient établis. Une formulation mathématique intéressante, une implémentation fonctionnelle ou une différence par rapport à l'état de l'art ne prouvent pas en elles-mêmes une utilité scientifique ou applicative.
 
@@ -33,7 +42,7 @@ Le far-field de dérive de pulvérisation reste un candidat, pas une cible valid
 
 Le suivi des questions ouvertes est public dans les [issues GitHub](https://github.com/JM-Brun/J-DriftX/issues), notamment l'[audit des données candidates](https://github.com/JM-Brun/J-DriftX/issues/13) et le [cadrage de l'utilité applicative](https://github.com/JM-Brun/J-DriftX/issues/43).
 
-## Pages pour approfondir
+## Pour aller plus loin
 
 - [Validation scientifique et protocole de preuve](validation-scientifique.qmd)
 - [Catalogue des données candidates](catalogue-donnees.qmd)

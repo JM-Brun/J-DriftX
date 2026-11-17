@@ -1,8 +1,17 @@
 ---
 title: "Qualité & tests"
+subtitle: "Portée réelle des vérifications automatisées"
+date: 2026-11-11
+status: "Tests de propriétés ciblées ; ni preuve mathématique ni validation physique."
 ---
 
 # Qualité et tests : portée réelle des vérifications
+
+::: {.callout-note title="En bref"}
+Les tests vérifient des propriétés définies pour des fonctions et des cas précis ; ils ne remplacent ni preuve ni validation physique. « Oracle physique » n'est justifié que si la propriété attendue est correctement formulée et le test la représente effectivement.
+
+**Vous êtes ici :** Vérifier & évaluer.
+:::
 
 Les tests automatisés vérifient des propriétés définies pour des fonctions et des cas précis. Ils ne remplacent ni une preuve mathématique ni une validation physique. Le terme « oracle physique » n'est justifié que si la propriété attendue est correctement formulée, les hypothèses sont explicites et le test représente effectivement cette propriété.
 
@@ -54,3 +63,11 @@ Le projet ne doit donc pas annoncer une propriété comme « vérifiée systéma
 5. Pour chaque jalon, rapporter la couverture réellement obtenue ; ne pas présenter le nombre de tests ou la CI verte comme une preuve de validité scientifique.
 
 Voir la [revue mathématique ciblée](../etat-art/revue-mathematique.qmd), les [contraintes physiques](../theorie/contraintes-physiques.qmd), la [carte d'articulation](carte-articulation.qmd) et l'issue [#42](https://github.com/JM-Brun/J-DriftX/issues/42) (tests des propriétés visées). La [matrice MVP-S de traçabilité](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) indique, propriété par propriété, ce que chaque test couvre et ce qu'il ne prouve pas.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Registre des preuves | [Registre de traçabilité](registre-preuves.qmd) |
+| Protocole de validation | [Validation scientifique](validation-scientifique.qmd) |
+| Expériences exécutables | [Laboratoire interactif](laboratoire-interactif.qmd) |

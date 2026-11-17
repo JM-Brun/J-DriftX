@@ -1,8 +1,17 @@
 ---
 title: "Fallback théorique : un modèle jouet rigoureux"
+subtitle: "Si l'approche n'est pas utile en pratique, que reste-t-il ?"
+date: 2026-11-11
+status: "Raisonnement scientifique possible ; le repli n'est pas adopté, pas un moyen de déclarer l'approche utile après coup."
 ---
 
 # Si l'approche n'est pas utile en pratique, que reste-t-il ?
+
+::: {.callout-note title="En bref"}
+J-DriftX doit pouvoir aboutir à une conclusion négative sur son intérêt applicatif sans abandonner toute piste : réduire l'ambition à un modèle jouet rigoureux — arbre de décision explicite, candidat 1D (transport et temps de parcours dirigé), critères de réussite. Dépend de la décision documentée sur l'utilité.
+
+**Vous êtes ici :** Le projet.
+:::
 
 J-DriftX doit pouvoir aboutir à une conclusion négative sur son intérêt applicatif sans que cela entraîne automatiquement l'abandon de toute piste scientifique. Une autre possibilité est de réduire l'ambition à un modèle jouet mathématique, utile pour isoler une idée, démontrer des propriétés ou enseigner les limites d'une construction.
 
@@ -64,3 +73,11 @@ Un fallback satisfaisant produit une définition non ambiguë, une preuve ou une
 Le protocole de décision, les critères d'acceptation et les limites sont décrits dans cette page et le [cadre d'utilité et de preuve](utilite-scientifique.qmd). Le suivi des questions ouvertes est disponible dans les [issues publiques](https://github.com/JM-Brun/J-DriftX/issues).
 
 **État du noyau actuel.** Le cas 1D à vitesse constante est une référence analytique implémentée ; il ne suffit pas à valider le modèle jouet plus général proposé ici. La [matrice MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) explicite cette différence et les résultats qui restent non établis.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Décision d'utilité en amont | [Utilité scientifique](utilite-scientifique.qmd) |
+| Comparaison avec l'état de l'art | [Positionnement](../etat-art/positionnement.qmd) |
+| Critères de preuve | [Validation scientifique](validation-scientifique.qmd) |

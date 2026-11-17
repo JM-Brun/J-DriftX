@@ -1,8 +1,17 @@
 ---
 title: "Comparaison des complexités"
+subtitle: "Où chaque famille d'approches paie son coût"
+date: 2026-11-11
+status: "Comparaison structurelle ; pas une performance mesurée."
 ---
 
 # Où se paie le coût : comparaison des familles d'approches
+
+::: {.callout-note title="En bref"}
+Trois moments de coût (préparation, évaluation, recalibration) pour les familles côte à côte, y compris la famille des puffs sur trajectoire. Comparaison structurelle : la démonstration d'un coût total inférieur à précision comparable est un jalon de validation, pas un acquis.
+
+**Vous êtes ici :** Construire la théorie ▸ Contraintes et modèles de référence.
+:::
 
 > Comparaison **structurelle** : cette page décrit où chaque famille paie son coût (préparation, évaluation, calibration), pas une performance mesurée. La démonstration d'un coût total inférieur **à précision comparable** est un jalon de validation — voir [Positionnement](../etat-art/positionnement.qmd).
 
@@ -59,3 +68,12 @@ Pour l'identification de source ([Assimilation & identification](assimilation-id
 Ce tableau ne dit rien de la **précision** de chaque famille ni de son domaine de validité. Un modèle à coût $O(1)$ faux reste faux ; un CFD bien résolu reste la référence physique. Le [positionnement](../etat-art/positionnement.qmd) fixe les conditions d'une comparaison honnête — même observable, même régime, coûts complets mesurés (préparation, calibration, inférence, mémoire) — et le [panorama](../etat-art/panorama.qmd) rappelle que les familles ROM/surrogates sont hétérogènes et ne se paient pas toutes de la même façon.
 
 **Portée des résultats J-DriftX.** Cette comparaison est structurelle et ne constitue pas un benchmark mesuré. Pour savoir ce qui est effectivement implémenté, testé ou non établi dans le MVP-S, consulter la [matrice de traçabilité](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md).
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Réduction étudiée | [Réduction a priori](reduction-a-priori.qmd) |
+| Résolution complète | [EDP & maillage](edp-et-maillage.qmd) |
+| Familles du panorama | [Panorama](../etat-art/panorama.qmd) |
+| Jalon de validation du coût | [Positionnement](../etat-art/positionnement.qmd) |

@@ -1,11 +1,20 @@
 ---
 title: "Explorer des champs de vent 2D"
+subtitle: "Évaluer et visualiser des champs vectoriels 2D synthétiques"
+date: 2026-11-11
+status: "Exploration visuelle ; ni prévision météorologique ni champ corrigé par le relief."
 format: html
 execute:
   echo: false
 ---
 
 # Explorateur de champs de vent 2D
+
+::: {.callout-note title="En bref"}
+L'explorateur rend lisibles des champs vectoriels 2D synthétiques : J-DriftX sait aujourd'hui évaluer et visualiser ces champs, pas simuler le vent. La page précise ce que l'exploration établit (visibilité des structures) et ce qu'elle n'établit pas.
+
+**Vous êtes ici :** Comprendre & explorer.
+:::
 
 La formulation correcte est volontairement plus étroite que « simuler le vent » : J-DriftX sait aujourd'hui évaluer et visualiser des champs vectoriels 2D **synthétiques**. Cette page rend ces objets lisibles ; elle ne produit ni prévision météorologique, ni champ corrigé par le relief.
 
@@ -59,3 +68,11 @@ La progression souhaitée est pertinente, mais elle n'est pas encore présente d
 Cette séparation évite un raccourci trompeur : dessiner un relief à côté de flèches ne constitue pas une modélisation de son effet sur le vent. Les expériences de relief synthétique restent disponibles dans le [catalogue du laboratoire numérique](laboratoire-interactif.qmd), avec la même limite.
 
 Pour les hypothèses et le niveau de preuve requis avant une affirmation de performance, voir la [validation scientifique](validation-scientifique.qmd) et le [catalogue des hypothèses](../hypotheses/catalogue.qmd).
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Cadre de validation | [Validation scientifique](validation-scientifique.qmd) |
+| Hypothèses sous-jacentes | [Catalogue des hypothèses](../hypotheses/catalogue.qmd) |
+| Autres expériences | [Laboratoire interactif](laboratoire-interactif.qmd) |

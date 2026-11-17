@@ -1,10 +1,27 @@
 ---
 title: "Équation de Burgers : lien avec J-DriftX"
+subtitle: "Ce que la thèse utilise, et ce que ce n'est pas"
+date: 2026-11-11
+status: "Lien historique attesté ; aucune équivalence avec la dispersion lointaine établie."
 ---
 
 # Équation de Burgers : lien avec J-DriftX
 
-## Conclusion en bref
+::: {.callout-note title="En bref"}
+**La thèse utilise directement Burgers pour une vitesse locale dans la canopée ; aucune équivalence avec le modèle de dispersion lointaine de J-DriftX n'est établie.**
+
+L'équation de Burgers est un modèle canonique d'advection non linéaire régularisée par diffusion. La thèse de Brun l'emploie pour une vitesse 1D forcée dans un couvert végétal (équation 4.8), accompagnée d'une équation distincte pour le scalaire (4.9). Les applications de ce chapitre sont idéalisées. Elle ne constitue pas, sans dérivation supplémentaire, une équation de concentration ou une validation du transport lointain. Voir la [fiche source](https://github.com/JM-Brun/J-DriftX/blob/main/docs/bibliographie/sources/these-brun.md).
+
+Cette page est l'explication développée pour les lecteurs du site. Le cadrage court de la piste et ses limites de décision sont conservés dans la [note de recherche technique](https://github.com/JM-Brun/J-DriftX/blob/main/docs/16-note-burgers-jdriftx.md) ; les deux documents ont des fonctions complémentaires, pas deux versions équivalentes d'un même texte.
+
+Cette page distingue trois niveaux qu'il ne faut pas confondre :
+
+1. **Analogie mathématique** : transport, flux, diffusion et conservation sont des notions communes.
+2. **Outil de test** : Burgers peut fournir un cas d'étude supplémentaire pour un solveur ou une méthode numérique.
+3. **Modèle historique local** : une vitesse dans la canopée est modélisée par Burgers forcée ; l'extension à la dispersion lointaine demanderait une justification et une validation distinctes.
+
+**Vous êtes ici :** Construire la théorie ▸ Contraintes et modèles de référence.
+:::
 
 **La thèse utilise directement Burgers pour une vitesse locale dans la canopée ; aucune équivalence avec le modèle de dispersion lointaine de J-DriftX n'est établie.**
 
@@ -118,3 +135,11 @@ Pour chaque cas, préciser l'inconnue, les unités, les conditions initiales et 
 - Fondements de dispersion réduite et de similitude généralisée dans J-DriftX : [Brun & Mohammadi (2008)](../references.qmd) et [Mohammadi & Brun (2006)](../references.qmd).
 
 **État de conclusion :** analogie mathématique documentée; intérêt comme cas-test plausible; lien de dérivation physique avec J-DriftX non établi. Aucune revendication de validation, d'équivalence ou d'originalité n'est formulée.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Fiche thèse et équations 4.8/4.9 | [Lectures des sources](../projet/lectures.qmd) |
+| Transport du scalaire | [Modèle direct](modele-direct.qmd) |
+| Objets voisins | [Revue mathématique](../etat-art/revue-mathematique.qmd) |

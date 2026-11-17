@@ -1,8 +1,17 @@
 ---
 title: "Catalogue des hypothèses"
+subtitle: "Hypothèses explicites, numérotées, traçables (H1–H8)"
+date: 2026-11-11
+status: "Inventaire vivant ; seule une partie est traduite dans les tests actuels."
 ---
 
 # Catalogue des hypothèses du modèle
+
+::: {.callout-note title="En bref"}
+Chaque hypothèse porte son énoncé, son point d'application (niveaux N0–N6), sa traduction mathématique, sa justification, sa limite et son ancrage dans le code. La traçabilité clôt le catalogue : hypothèse → niveau → test, quand il existe.
+
+**Vous êtes ici :** Vérifier & évaluer.
+:::
 
 Toute modélisation à complexité réduite vit de ses hypothèses. J-DriftX les rend **explicites, numérotées et traçables** : chaque hypothèse porte sa justification, sa conséquence, le point de la documentation où elle opère, et ce que le code en implémente aujourd'hui.
 
@@ -393,3 +402,11 @@ Le tableau récapitule les points d'application et les tests ; la [carte des niv
 | H6 | [Réduction a priori](../theorie/reduction-a-priori.qmd) | estimateur d'erreur (jalon M2) |
 | H7 | [Assimilation](../theorie/assimilation-identification.qmd) | calibration bayésienne (jalon M3) |
 | H8 | [Contraintes](../theorie/contraintes-physiques.qmd) | superposition (test ciblé : un point ; bilans de masse à 0,1 %, y compris classes différentes) |
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Domaines de validité | [Limites](limites.qmd) |
+| Carte N0–N6 | [Niveaux de modélisation](../projet/niveaux-modelisation.qmd) |
+| Ce que prouvent les tests | [Registre des preuves](../projet/registre-preuves.qmd) |

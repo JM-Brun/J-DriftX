@@ -1,8 +1,17 @@
 ---
 title: "Panorama de l'état de l'art (2008 → 2026)"
+subtitle: "Méthodes opérationnelles, réglementaires et de recherche (2008 → 2026)"
+date: 2026-11-11
+status: "Synthèse exploratoire de la revue docs/02 ; ne démontre ni nouveauté ni supériorité."
 ---
 
 # Panorama de l'état de l'art
+
+::: {.callout-note title="En bref"}
+Panorama des familles d'approches : modèles opérationnels et réglementaires, dérive de pulvérisation, réduction de modèle et apprentissage, identification de source, SIG et temps réel. Synthèse exploratoire ; portée et limites en tête, conclusion provisoire.
+
+**Vous êtes ici :** Comparer & approfondir ▸ État de l'art.
+:::
 
 > Synthèse exploratoire de la revue déposée dans le dépôt ([documentation et références](https://github.com/JM-Brun/J-DriftX/blob/main/docs/02-revue-etat-art-2026.md)). La revue reste à rendre entièrement reproductible ; elle ne démontre ni la nouveauté ni la supériorité de J-DriftX.
 
@@ -131,3 +140,11 @@ L'intégration SIG, la rapidité, l'interprétabilité et l'auditabilité peuven
 L'état de l'art justifie une **investigation critique**, pas encore le développement applicatif. La priorité est de choisir un problème étroit, d'identifier l'utilisateur et la décision, puis de fixer une expérience susceptible de réfuter l'hypothèse de valeur. L'[audit adversarial](https://github.com/JM-Brun/J-DriftX/blob/main/docs/15-audit-adversarial-hallucinations.md) consigne les objections ; le [cadre de décision et de preuve](https://github.com/JM-Brun/J-DriftX/blob/main/docs/08-decision-utilite-et-preuve.md) fixe les conditions de poursuite ou d'arrêt.
 
 **Lien avec les preuves du prototype.** Les constats de littérature présentés ici ne démontrent pas les performances de J-DriftX. La [matrice de traçabilité MVP-S](https://github.com/JM-Brun/J-DriftX/blob/main/docs/27-matrice-tracabilite-mvp-s.md) décrit séparément le périmètre du code actuel, les tests et les propriétés non établies.
+
+## Pour aller plus loin
+
+| Besoin | Où |
+|---|---|
+| Positionnement du projet | [Positionnement de J-DriftX](positionnement.qmd) |
+| Revue mathématique ciblée | [Revue mathématique](revue-mathematique.qmd) |
+| Où se paie le coût | [Comparaison des complexités](../theorie/comparaison-complexites.qmd) |

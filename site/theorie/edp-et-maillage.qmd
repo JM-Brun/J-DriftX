@@ -1,8 +1,17 @@
 ---
 title: "EDP & maillage"
+subtitle: "La résolution complète : EDP, turbulence, maillage, et son coût"
+date: 2026-11-11
+status: "Référence de complexité ; résolution complète jamais visée par J-DriftX."
 ---
 
 # La modélisation complète : EDP, turbulence et maillage
+
+::: {.callout-note title="En bref"}
+Ce que serait la résolution complète de l'équation posée par le Modèle direct : fermeture de turbulence, maillage, schémas, coût. C'est la référence par rapport à laquelle se lisent la réduction a priori et la comparaison des complexités.
+
+**Vous êtes ici :** Construire la théorie ▸ Contraintes et modèles de référence.
+:::
 
 La page [Modèle direct](modele-direct.qmd) pose l'équation que J-DriftX approche sans la résoudre. La présente page décrit ce que serait sa **résolution complète** : l'équation aux dérivées partielles (EDP), la fermeture de la turbulence, la génération du maillage, les schémas numériques — et le coût qui en découle. C'est la référence de complexité par rapport à laquelle se lisent la [réduction a priori](reduction-a-priori.qmd) et la [comparaison des complexités](comparaison-complexites.qmd).
 
