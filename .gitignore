@@ -25,3 +25,23 @@ site/.quarto/
 
 # Downloaded research data (keep raw corpus out of Git)
 /data/raw/
+
+# Local agent configuration and credentials
+.claude/settings.local.json
+.claude/*.local.json
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+.aws/credentials
+.ssh/
+.netrc
+.npmrc
+.pypirc
+.docker/config.json
