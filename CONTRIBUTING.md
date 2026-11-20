@@ -60,3 +60,14 @@ Le registre TOML reste la source de vérité des **relations sémantiques revues
 ## Validation et limites des preuves
 
 Écrire dans la PR les commandes réellement exécutées et leurs résultats. Si un contrôle est impossible, expliquer pourquoi. Une CI verte vérifie les contrôles configurés ; elle ne constitue ni une preuve mathématique générale, ni une validation scientifique empirique, ni une démonstration d'utilité applicative.
+
+## Validation locale des brouillons
+
+Ouvrir la PR en brouillon pendant l’itération. Les vérifications hébergées démarrent au passage en revue. Avant ce passage, utiliser les commandes locales du [README](README.md) et la couverture minimale de 91 % de la CI.
+
+```bash
+uv run mypy
+uv run pytest --cov=jdriftx --cov-fail-under=91
+QUARTO_PYTHON="$PWD/.venv/bin/python" quarto render site
+uv run python scripts/check_site_links.py --site-dir site/_site --site-url https://jm-brun.github.io/J-DriftX/
+```
