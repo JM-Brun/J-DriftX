@@ -92,7 +92,7 @@ Le numéro 50 est désormais attribué à `50-protocole-oracle-couts-baseline-un
 | `49-matrice-revendications-baseline.md` | Matrice initiale des revendications historiques : source/version/localisation, unités, hypothèses, preuves et statut de définition |
 | `50-protocole-oracle-couts-baseline-uniforme.md` | Oracle indépendant et protocole de coûts pour le cas S0 uniforme ; protocole implémenté, mesures à exécuter |
 | `51-reference-independante-cas-s0.md` | Comparaison EDP/solution fermée du cas S0, convergence, métriques et limites |
-| `51-niveaux-preuve-mesures-benchmark.md` | Niveaux de preuve des mesures de coût et artefacts de benchmark ; protocole, exécution et artefact versionnés |
+| `51-niveaux-preuve-mesures-benchmark.md` | Règles pour distinguer le protocole de mesure de coût, les mesures d'une exécution et leur archivage |
 | `52-gouvernance-documentaire.md` | Frontière public/privé, sources canoniques, scopes, règles anti-redondance et validation des références |
 | `53-evaluation-puff-source-impulsionnelle.md` | Évaluation dirigée d'une source impulsionnelle (puff) : temps dirigé t = τ, maximum temporel C(t), écart quantifié |
 | `54-transitoire-puff-edp-transitoire-marginale.md` | EDP transitoire du puff : marche en temps de la marginale transverse, structure longitudinale analytique, écarts calibrés |

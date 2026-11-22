@@ -69,5 +69,4 @@ La reproduction locale est un contrôle de portabilité de l'environnement ; ell
 - [Investigation G0-S — définitions, dérivations et contre-exemples](19-investigation-g0s-temps-de-parcours.md)
 - [Code de référence](../src/jdriftx/metric.py)
 - [Tests](../tests/test_metric.py)
-- [Définition du MVP et critères de sortie](https://github.com/JM-Brun/career-knowledge/blob/main/jdriftx/notes/11-mvp-definition-of-done.md)
 - [PR #81 — primitive 1D](https://github.com/JM-Brun/J-DriftX/pull/81)

@@ -1,6 +1,8 @@
 # Audit des corpus de validation — Résultats (critère e de G0)
 
 > **Statut : audit documentaire exécuté le 22 octobre 2026** selon le [protocole](14-protocole-audit-corpus-g0.md), à partir des métadonnées et de la documentation officielles des dépôts. Les vérifications au niveau des fichiers bruts (téléchargement, sommes de contrôle, unités champ par champ, limites de détection, trous) restent un **prérequis G1** avant tout benchmark ; elles ne conditionnent plus la porte G0.
+>
+> **Mise à jour DIFLU.** Les tableaux et verdicts ci-dessous retracent le jalon documentaire G0. L'[audit technique](20-audit-technique-jeux-donnees.md) et le [protocole d'évaluation DIFLU](diflu-observable-evaluation-protocol.md) documentent les contrôles ultérieurs sur fichiers. Le CSV compact contient 19 identifiants de rejet, dont 15 rapprochés des événements de l'article et quatre supplémentaires. Ce comptage ne suffit pas à établir l'indépendance des observations. L'évaluation de l'observable et la décision d'usage restent suivies dans [#221](https://github.com/JM-Brun/J-DriftX/issues/221).
 
 ## Synthèse
 
@@ -70,7 +72,7 @@
 ## Sources de l'audit
 
 - Datacite, métadonnées du jeu DIFLU : [api.datacite.org/dois/10.57745/A9YC3C](https://api.datacite.org/dois/10.57745/A9YC3C) (titre, producteur ASNR, dates des campagnes 2019, description des essais contrôlés).
-- Papier associé : [Investigation of a Gaussian Plume in the Vicinity of an Urban Site](https://doi.org/10.3390/atmos13081223), *Atmosphere* 13(8):1223 — 15 expériences, site du cyclotron de Beuvry (50,51404° N, 2,67255° E), comparaison aux modèles de Doury et Briggs.
+- Papier associé : [Investigation of a Gaussian Plume in the Vicinity of an Urban Cyclotron Using Helium as a Tracer Gas](https://doi.org/10.3390/atmos13081223), *Atmosphere* 13(8):1223 — 15 expériences, site du cyclotron de Beuvry (50,51404° N, 2,67255° E), comparaison aux modèles de Doury et Briggs.
 - ASNR, [projet DIFLU — campagne champ proche à l'hélium](https://recherche-expertise.asnr.fr/page/modelisation-3d-pour-dispersion-atmospherique-radionucleides-champ-proche).
 - NOAA ARL, [DATEM — Data Archive of Tracer Experiments and Meteorology](https://www.arl.noaa.gov/hysplit/datem-tracer-evaluation/datem/) ; R. Draxler, [document de l'archive DATEM](https://www.arl.noaa.gov/documents/datem/document/datem.pdf).
 - JRC, [ETEX — téléchargement des jeux de données](https://remon.jrc.ec.europa.eu/past_activities/etex/site/datasets.htm).
