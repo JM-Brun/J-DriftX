@@ -37,4 +37,3 @@ Cet audit documentaire ne constitue ni une exécution locale des tests, ni une r
 - [Matrice MVP-S](27-matrice-tracabilite-mvp-s.md)
 - [Investigation G0-S](19-investigation-g0s-temps-de-parcours.md)
 - [Bilan MVP-S 1D](21-bilan-mvp-s-1d.md)
-- [Définition du MVP et critères de sortie](https://github.com/JM-Brun/career-knowledge/blob/main/jdriftx/notes/11-mvp-definition-of-done.md)
