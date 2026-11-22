@@ -27,7 +27,7 @@ P=-\overline{u'w'}\,\partial_zU,\qquad
 Ri_f=-\frac{B}{P}\quad(P>0).
 $$
 
-Les deux termes $B$ et $P$ sont en m²/s³. Le signe moins rend $Ri_f>0$ lorsque la flottabilité **consomme** de l'énergie turbulente ($B<0$), et $Ri_f<0$ lorsqu'elle en produit ($B>0$). Si $P=0$, ce rapport n'est pas défini ; si $P<0$, il faut analyser le bilan et ne pas appliquer sans examen ces interprétations. La définition par les flux et celle par les gradients sont distinctes ; voir [Williams et al. (2019), équations (1)–(3)](https://repository.library.noaa.gov/view/noaa/20362/noaa_20362_DS1.pdf).
+Les deux termes $B$ et $P$ sont en m²/s³. Le signe moins rend $Ri_f>0$ lorsque la flottabilité **consomme** de l'énergie turbulente ($B<0$), et $Ri_f<0$ lorsqu'elle en produit ($B>0$). Si $P=0$, ce rapport n'est pas défini ; si $P<0$, il faut analyser le bilan et ne pas appliquer sans examen ces interprétations. La définition par les flux et celle par les gradients sont distinctes ; voir [Williams et al. (2017), équations (1)–(2)](https://repository.library.noaa.gov/view/noaa/20362).
 
 Une relation entre les deux exige une fermeture supplémentaire. Si $K_m,K_h>0$, si $\overline{u'w'}=-K_m\partial_zU$ et $\overline{w'\theta'}=-K_h\partial_z\Theta$, alors $P=K_mS^2$, $B=-K_hN^2$ et
 
